@@ -6,13 +6,13 @@ Usage
 Installation
 ------------
 
- To use MagneticReadoutProcessing library, first install it using the setup scrip:
+ To use MagneticReadoutProcessing library, first install it using the setup script:
 
-.. code-block:: console
-   # RELEASE
-   $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
-   $ cd ./MagneticReadoutProcessing
-   $ python ./setup.py install
+.. .. code-block:: console
+..    # RELEASE
+..    $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
+..    $ cd ./MagneticReadoutProcessing
+..    $ python ./setup.py install
 
 
 

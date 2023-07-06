@@ -6,7 +6,9 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../src'))  # Source code dir relative to this file
+
+sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
+autodoc_mock_imports = ["numpy"]
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,

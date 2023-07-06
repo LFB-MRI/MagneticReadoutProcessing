@@ -1,0 +1,23 @@
+﻿MagneticReadoutProcessing
+=========================
+
+.. automodule:: MagneticReadoutProcessing
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
