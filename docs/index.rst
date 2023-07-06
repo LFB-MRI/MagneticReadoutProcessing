@@ -1,18 +1,13 @@
-.. include:: ../README.rst
+.. .. include:: ../README.rst
 
-Welcome to Lumache's documentation!
+Welcome to the MagneticReadoutProcessing library documentation!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
-
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+**MagneticReadoutProcessing**  is a Python library that makes it possible to store and further process raw data from magnetometers.
+The focus is on the processing of point clouds, on which the points are located on a circular path around a magnetic object to be viewed.
+Measurement data (hemisphere) can later be combined into a full 3D scan, visualized and compared with reference measurements.
 
 .. note::
-
    This project is under active development.
 
 Contents

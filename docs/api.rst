@@ -3,5 +3,5 @@ API
 
 .. autosummary::
    :toctree: generated
-
-   lumache
+   :recursive:
+   MagneticReadoutProcessing

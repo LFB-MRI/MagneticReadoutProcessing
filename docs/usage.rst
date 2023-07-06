@@ -6,29 +6,34 @@ Usage
 Installation
 ------------
 
-To use Lumache, first install it using pip:
+ To use MagneticReadoutProcessing library, first install it using the setup scrip:
 
 .. code-block:: console
+   # RELEASE
+   $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
+   $ cd ./MagneticReadoutProcessing
+   $ python ./setup.py install
 
-   (.venv) $ pip install lumache
 
-Creating recipes
-----------------
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
 
-.. autofunction:: lumache.get_random_ingredients
+..  Creating recipes
+.. ----------------
 
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
+.. To retrieve a list of random ingredients,
+.. you can use the ``lumache.get_random_ingredients()`` function:
 
-.. autoexception:: lumache.InvalidKindError
+.. .. autofunction:: lumache.get_random_ingredients
 
-For example:
+.. The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
+.. or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
+.. will raise an exception.
 
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
+.. .. autoexception:: lumache.InvalidKindError
+
+.. For example:
+
+.. >>> echo "." #import lumache
+.. >>> echo "b" 
+.. ['shells', 'gorgonzola', 'parsley']
 
