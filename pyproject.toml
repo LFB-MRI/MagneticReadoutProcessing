@@ -1,8 +1,8 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["setuptools>=40.8.0", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
-name = "lumache"
-authors = [{name = "Graziella", email = "graziella@lumache"}]
+name = "MagneticReadoutProcessing"
+authors = [{name = "Marcel Ochsendorf", email = "info@marcelochsendorf.com"}]
 dynamic = ["version", "description"]

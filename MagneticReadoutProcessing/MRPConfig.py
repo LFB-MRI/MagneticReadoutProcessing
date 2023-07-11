@@ -2,6 +2,9 @@ import configparser
 
 
 class MRPConfig():
+    """MRPConfig class stores information about the measurement parameters, hardware, and metadata"""
+
+
     # [HARDWARE]
     HARDWARE_GCODE_SERIAL_INTERFACE = str()
     HARDWARE_READOUTUNIT_SERIAL_INTERFACE = str()
@@ -26,7 +29,7 @@ class MRPConfig():
     DISABLE_MOTOR_MOVEMENTS = bool()
 
     def __init__(self, _config: configparser):
-
+        '''loads a'''
 
         if _config is not None:
             # [HARDWARE]

@@ -8,7 +8,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
-autodoc_mock_imports = ["numpy"]
+sys.path.insert(0, os.path.abspath('../../MagneticReadoutProcessing/'))
+autodoc_mock_imports = ["numpy", "MRPHelpers", "MRPAnalysis", "MRPReading"] # ignore MRPHelpers only support functions like map
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,

@@ -1,5 +1,4 @@
-Lumache
+MagneticReadoutProcessing
 =======
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers that
-creates recipes mixing random ingredients.
+**MagneticReadoutProcessing** (/mag-read-proc/) is a Python library to 

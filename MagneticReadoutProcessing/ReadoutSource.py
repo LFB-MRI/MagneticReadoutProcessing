@@ -1,6 +1,6 @@
 """Custom class code """
 from magpylib._src.obj_classes.class_BaseExcitations import BaseSource
-from reading import reading
+from MRPReading import MRPReading
 
 class ReadoutSource(BaseSource):
     """User-defined custom source.
