@@ -11,3 +11,4 @@ tqdm>=4.65.0
 magpylib>=4.2.0
 magpy>=1.0.0
 sphinx-rtd-theme>=1.2.2
+pytest>=7.4.0

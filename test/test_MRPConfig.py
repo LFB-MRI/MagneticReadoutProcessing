@@ -1,0 +1,51 @@
+import pytest
+import unittest
+
+from MagneticReadoutProcessing import MRPConfig
+import configparser
+import os
+class TestMPRConfig(unittest.TestCase):
+    def test_config_init(self):
+        config = MRPConfig.MRPConfig(None)
+        self.assertIsNotNone(config)
+
+        assert (hasattr(config, 'MEASUREMENT_HORIZONTAL_RESOLUTION'))
+        assert (hasattr(config, 'MEASUREMENT_VERTICAL_RESOLUTION'))
+        assert (hasattr(config, 'MEASUREMENT_HORIZONTAL_AXIS_DEGREE'))
+        assert (hasattr(config, 'MEASUREMENT_VERTICAL_AXIS_DEGREE'))
+
+    def test_config_load_default(self):
+        config = MRPConfig.MRPConfig(None)
+        config.load_defaults()
+        self.assertIsNotNone(config)
+
+    def test_config_export(self):
+        config = MRPConfig.MRPConfig(None)
+        config.load_defaults()
+
+        ret = config.get_as_dict()
+
+        measurement = ret['MEASUREMENT']
+        self.assertIsNotNone(measurement)
+
+        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] == config.MEASUREMENT_HORIZONTAL_RESOLUTION)
+        self.assertTrue(measurement['VERTICAL_RESOLUTION'] == config.MEASUREMENT_VERTICAL_RESOLUTION)
+        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] == config.MEASUREMENT_HORIZONTAL_AXIS_DEGREE)
+        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] == config.MEASUREMENT_VERTICAL_AXIS_DEGREE)
+
+    def test_config_configparser(self):
+        CONFIG_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_config_configparser.ini")
+        print("config filepath: ", CONFIG_FILEPATH)
+        IniConfig = configparser.ConfigParser()
+        IniConfig.read(CONFIG_FILEPATH)
+        config = MRPConfig.MRPConfig(IniConfig)
+
+        ret = config.get_as_dict()
+        measurement = ret['MEASUREMENT']
+        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] == config.MEASUREMENT_HORIZONTAL_RESOLUTION)
+        self.assertTrue(measurement['VERTICAL_RESOLUTION'] == config.MEASUREMENT_VERTICAL_RESOLUTION)
+        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] == config.MEASUREMENT_HORIZONTAL_AXIS_DEGREE)
+        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] == config.MEASUREMENT_VERTICAL_AXIS_DEGREE)
+
+if __name__ == '__main__':
+    unittest.main()
