@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
 sys.path.insert(0, os.path.abspath('../../MagneticReadoutProcessing/'))
-autodoc_mock_imports = ["numpy", "MRPHelpers", "MRPAnalysis", "MRPReading"] # ignore MRPHelpers only support functions like map
+autodoc_mock_imports = ["numpy"] # ignore MRPHelpers only support functions like map
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -37,6 +37,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+#    "myst_parser"
 ]
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 
@@ -47,7 +48,7 @@ intersphinx_mapping = {
 }
 intersphinx_disabled_domains = ["std"]
 
-templates_path = ["_templates"]
+templates_path = ["templates"]
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"
@@ -55,7 +56,7 @@ epub_show_urls = "footnote"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["Thumbs.db", ".DS_Store"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -67,4 +68,4 @@ html_theme = "sphinx_rtd_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = ["static"]

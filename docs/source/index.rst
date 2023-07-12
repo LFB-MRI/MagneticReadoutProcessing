@@ -15,8 +15,17 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 4
-   :caption: Contents:
-   Home <self>
-   usage
-   API <api>
+    :maxdepth: 2
+    :caption: Contents
+
+    intro
+    examples
+    modules
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

@@ -106,11 +106,13 @@ class MRPVisualization():
         lax.azim = 0
         lax.dist = 6
         lax.elev = 90
-        # SHOW FIGURE
-        lfig.show()
+
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
             lfig.savefig(_filename)
+        else:
+            lfig.show()
+
         # RESTORE VIEW
         lax.azim = lazim
         lax.dist = ldist
@@ -128,11 +130,13 @@ class MRPVisualization():
         lax.azim = 0
         lax.dist = 6
         lax.elev = 0
-        # SHOW FIGURE
-        lfig.show()
+
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
             lfig.savefig(_filename)
+        else:
+            lfig.show()
+
         # RESTORE VIEW
         lax.azim = lazim
         lax.dist = ldist
@@ -142,9 +146,11 @@ class MRPVisualization():
 
     def plot3d(self, _filename: str = None):
         lax, lfig = self.create_plot()
-        lfig.show()
 
         if _filename is not None:
             lfig.savefig(_filename)
+        else:
+            lfig.show()
+
         plt.close(lfig)
 
