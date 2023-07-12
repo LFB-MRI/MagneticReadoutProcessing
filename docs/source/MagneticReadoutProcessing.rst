@@ -3,9 +3,14 @@ Documentation
 
 The ``MRPConfig`` class
 *****************************
-.. autoclass:: MagneticReadoutProcessing.MRPConfig
-    :members:
-    :undoc-members:
-    :show-inheritance:
+
+.. autosummary::
+    :toctree: _autosummary
+    :template: custom-module-template.rst
+    :recursive:
+
+    MagneticReadoutProcessing
 
 
+.. note::
+   There is a ``MRPHelpers`` file with some general helper functions

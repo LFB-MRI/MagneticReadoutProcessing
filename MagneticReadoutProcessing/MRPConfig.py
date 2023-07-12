@@ -2,7 +2,9 @@ import configparser
 
 
 class MRPConfig():
-    """MRPConfig class stores information about the measurement parameters, hardware, and metadata"""
+    """This is a class implementation of a simple BLE client.
+        test
+    """
 
 
     # [HARDWARE]

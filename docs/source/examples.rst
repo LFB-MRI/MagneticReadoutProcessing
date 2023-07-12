@@ -91,7 +91,7 @@ Create a minimal measurement
 
 
 
-visualization of a measurement
+Visualization of a measurement
 ******************************
 .. code-block:: python
 

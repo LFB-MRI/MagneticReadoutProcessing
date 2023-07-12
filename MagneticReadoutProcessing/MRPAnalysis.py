@@ -8,7 +8,7 @@ class MRPAnalysisException(Exception):
 
 
 
-class MRPanalysis(object):
+class MRPAnalysis(object):
     # TODO BINNING IMPLEMENTIEREN
     #
     @staticmethod
