@@ -38,7 +38,7 @@ class MRPReading(object): # object is needed for pickle export
                 'n_theta': self.config['MEASUREMENT']['VERTICAL_RESOLUTION'],
                 'phi_radians': math.radians(self.config['MEASUREMENT']['HORIZONTAL_AXIS_DEGREE']),
                 'theta_radians': math.radians(self.config['MEASUREMENT']['VERTICAL_AXIS_DEGREE']),
-                'sensor_distance_radius': self.config['MEASUREMENT']['MEASUREMENT_SENSOR_MAGNET_DISTANCE']
+                'sensor_distance_radius': self.config['MEASUREMENT']['SENSOR_MAGNET_DISTANCE']
             })
 
         # THE SENSOR RADIUS CAN DIFFER
@@ -48,7 +48,20 @@ class MRPReading(object): # object is needed for pickle export
         if _sensor_id is not None:
             self.measurement_config['sensor_id'] = _sensor_id
 
-    def load(self, _filepath_name: str):
+    def loads(self, _pickle_binaray: bytes):
+        pl = pickle.loads(_pickle_binaray)
+
+        self.time_start = pl['time_start']
+        self.time_end = pl['time_end']
+        self.data = pl['data']
+        self.measurement_config = pl['measurement_config']
+        # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
+        self.config = pl['config']
+        self.additional_data = pl['additional_data']
+        self.measurement_config = pl['measurement_config']
+
+
+    def load_from_file(self, _filepath_name: str):
         try:
             fint = open(_filepath_name, 'rb')
             pl = pickle.load(fint)
@@ -168,8 +181,6 @@ class MRPReading(object): # object is needed for pickle export
         self.data.append(entry)
 
     def dump(self) -> bytes:
-        dump_time = datetime.now()
-
         final_dataset = dict({
             'dump_time': datetime.now(),
             'time_start': self.time_start,

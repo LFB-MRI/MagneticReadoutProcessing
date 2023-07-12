@@ -114,7 +114,7 @@ Export a reading
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
     # EXPORT TO A DIFFERENT FOLDER
-    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
+    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
     if not os.path.exists(RESULT_FILEPATH):
         os.makedirs(RESULT_FILEPATH)
     # ADD SOME ADDITION META DATA
@@ -123,3 +123,12 @@ Export a reading
     # FINALLY EXPORT
     reading.dump_to_file(RESULT_FILEPATH)
 
+
+Import a reading
+****************
+.. code-block:: python
+
+    # EXTENDS THE `Export a reading` EXAMPLE
+    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
+    reading_imported = MRPReading.MRPReading(None)
+    reading_imported.load_from_file(RESULT_FILEPATH)
