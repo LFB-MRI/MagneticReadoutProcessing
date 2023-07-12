@@ -1,4 +1,4 @@
-ame: docs-env
+name: docs-env
 
 dependencies:
   - Sphinx
