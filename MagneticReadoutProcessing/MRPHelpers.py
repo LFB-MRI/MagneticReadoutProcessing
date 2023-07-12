@@ -1,3 +1,6 @@
+""" Provides some misc functions like translate and other helper functions"""
+
+
 # https://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another
 def translate(self, value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is

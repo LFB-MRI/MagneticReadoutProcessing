@@ -1,3 +1,6 @@
+""" Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""
+
+
 import matplotlib.pyplot as plt
 from matplotlib import cm, colormaps
 from matplotlib.colors import BoundaryNorm
@@ -5,8 +8,8 @@ from matplotlib import cm, colormaps
 import math
 import numpy as np
 # CUSTOM CLASSES
-from MRPReading import MRPReading
-from MRPHelpers import translate as reading_helper_translate
+from MagneticReadoutProcessing import MRPReading
+from MagneticReadoutProcessing import MRPHelpers
 
 class MRPVisualization():
 
@@ -69,7 +72,7 @@ class MRPVisualization():
                     if j == dj and i == di:
                         value = r['value']
                         # BETWEEN -1 and 1 (maybe used in the feature)
-                        normalized_value = reading_helper_translate(value, min_val, max_val, -1.0, 1.0)
+                        normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
                         # FOR PLOTTING BETWEEN 0 - 1
                         color_normalized_value = color_value_normalizer(normalized_value)
                         inp.append([j, i, color_normalized_value])

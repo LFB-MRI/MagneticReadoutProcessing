@@ -1,8 +1,7 @@
 Documentation
 =================
 
-The ``MRPConfig`` class
-*****************************
+.. rubric:: Modules
 
 .. autosummary::
     :toctree: _autosummary

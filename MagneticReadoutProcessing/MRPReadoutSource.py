@@ -1,8 +1,11 @@
-"""Custom class code """
-from magpylib._src.obj_classes.class_BaseExcitations import BaseSource
-from MRPReading import MRPReading
+""" The MRPReadoutSource class is a BaseSource for the Python magpylib (https://magpylib.readthedocs.io/en/latest/)"""
 
-class ReadoutSource(BaseSource):
+
+
+from magpylib._src.obj_classes.class_BaseExcitations import BaseSource
+from MagneticReadoutProcessing import MRPReading
+
+class MRPReadoutSource(BaseSource):
     """User-defined custom source.
 
     Can be used as `sources` input for magnetic field computation.
@@ -83,7 +86,7 @@ class ReadoutSource(BaseSource):
 
     def __init__(
         self,
-        _reading: reading,
+        _reading: MRPReading.MRPReading,
         _field_func=None,
         _dimension: tuple=(0, 0, 0),
         _position: tuple=(0, 0, 0),

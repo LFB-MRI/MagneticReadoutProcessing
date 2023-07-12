@@ -38,13 +38,16 @@ class TestMPRConfig(unittest.TestCase):
         print("config filepath: ", CONFIG_FILEPATH)
         IniConfig = configparser.ConfigParser()
         IniConfig.read(CONFIG_FILEPATH)
-        config = MRPConfig.MRPConfig(IniConfig)
+
+        # LOAD THE INIFILE USING THE MRPConfig class
+        # THE values should be equal to the read values from IniConfig Instance
+        config = MRPConfig.MRPConfig.load_from_ini(CONFIG_FILEPATH)
         ret = config.get_as_dict()
         measurement = ret['MEASUREMENT']
-        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] ==  IniConfig['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', 18))
-        self.assertTrue(measurement['VERTICAL_RESOLUTION'] ==  IniConfig['MEASUREMENT'].getint('VERTICAL_RESOLUTION', 18))
-        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] ==  IniConfig['MEASUREMENT'].getint('HORIZONTAL_AXIS_DEGREE', 18))
-        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] ==  IniConfig['MEASUREMENT'].getint('VERTICAL_AXIS_DEGREE', 18))
+        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] == IniConfig['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', 18))
+        self.assertTrue(measurement['VERTICAL_RESOLUTION'] == IniConfig['MEASUREMENT'].getint('VERTICAL_RESOLUTION', 18))
+        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] == IniConfig['MEASUREMENT'].getint('HORIZONTAL_AXIS_DEGREE', 18))
+        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] == IniConfig['MEASUREMENT'].getint('VERTICAL_AXIS_DEGREE', 18))
 
 if __name__ == '__main__':
     unittest.main()

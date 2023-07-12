@@ -32,6 +32,6 @@
    MagneticReadoutProcessing.MRPConfig
    MagneticReadoutProcessing.MRPHelpers
    MagneticReadoutProcessing.MRPReading
+   MagneticReadoutProcessing.MRPReadoutSource
    MagneticReadoutProcessing.MRPVisualization
-   MagneticReadoutProcessing.ReadoutSource
 

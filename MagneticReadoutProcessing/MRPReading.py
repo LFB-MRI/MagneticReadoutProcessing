@@ -1,24 +1,19 @@
+""" Stores the raw sensor data, including metadata and import/export functions"""
+
 import os.path
 import pickle
 from datetime import datetime
-
 import numpy as np
-from .MRPConfig import MRPConfig
+from MagneticReadoutProcessing import MRPConfig
 import pickle
 import sys
 import math
-from MRPHelpers import translate as reading_helper_translate
+from MagneticReadoutProcessing import MRPHelpers
 
 
-class MRPReading(object):
+class MRPReading(object): # object is needed for pickle export
 
 
-    #time_start = None
-    #time_end = None
-    #data = []
-    #measurement_config = dict()
-    #config = dict()
-    #additional_data = dict()
 
     def __init__(self, _config: MRPConfig = None, _sensor_id: int = 0, _sensor_radius: int = 10) -> None:
         #: Doc comment for instance attribute qux.
@@ -119,7 +114,7 @@ class MRPReading(object):
                         value = r['value']
                         # NORMALIZE IF NEEDED
                         if _normalize:
-                            normalized_value = reading_helper_translate(value, min_val, max_val, -1.0, 1.0)
+                            normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
                             inp.append([j, i, normalized_value])
                         else:
                             inp.append([j, i, value])

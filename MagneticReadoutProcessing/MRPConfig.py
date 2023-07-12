@@ -1,71 +1,87 @@
+""" Stores basic metadata regarding a reading/measurement, all attributes regarding MEASUREMENT are required in order to configure a MRPReading instance"""
+
 import configparser
 
-
 class MRPConfig():
-    """This is a class implementation of a simple BLE client.
-        test
-    """
-
 
     # [HARDWARE]
-    HARDWARE_GCODE_SERIAL_INTERFACE = str()
-    HARDWARE_READOUTUNIT_SERIAL_INTERFACE = str()
-    HARDWARE_AXIS_LIMIT_HORIZONTAL_MIN = int()
-    HARDWARE_AXIS_LIMIT_HORIZONTAL_MAX = int()
-    HARDWARE_AXIS_LIMIT_VERTICAL_MIN = int()
-    HARDWARE_AXIS_LIMIT_VERTICAL_MAX = int()
-    HARDWARE_READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL = bool()
+    HARDWARE_GCODE_SERIAL_INTERFACE = 'socket://magpi.local:10001'
+    HARDWARE_READOUTUNIT_SERIAL_INTERFACE = 'socket://magpi.local:10003'
+    HARDWARE_AXIS_LIMIT_HORIZONTAL_MIN = -4
+    HARDWARE_AXIS_LIMIT_HORIZONTAL_MAX = 355
+    HARDWARE_AXIS_LIMIT_VERTICAL_MIN = -4
+    HARDWARE_AXIS_LIMIT_VERTICAL_MAX = 51
+    HARDWARE_READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL = 1 # 0=protobuf 1=serial
     # [MEASUREMENT]
-    MEASUREMENT_HORIZONTAL_RESOLUTION = int() #REQUIRED
-    MEASUREMENT_VERTICAL_RESOLUTION = int() #REQUIRED
-    MEASUREMENT_HORIZONTAL_AXIS_DEGREE = int() #REQUIRED
-    MEASUREMENT_VERTICAL_AXIS_DEGREE = int() #REQUIRED
-    
-    
-    
-    MEASUREMENT_READOUT_AVERAGING_POINT = bool()
-    MEASUREMENT_SENSOR_MAGNET_DISTANCE = int()
-    MEASUREMENT_SENSOR_Z_AXIS_INVERTED = bool()
+    MEASUREMENT_HORIZONTAL_AXIS_DEGREE = 360  # REQUIRED
+    MEASUREMENT_VERTICAL_AXIS_DEGREE = 90  # REQUIRED
+    MEASUREMENT_HORIZONTAL_RESOLUTION = MEASUREMENT_HORIZONTAL_AXIS_DEGREE/2/10 #REQUIRED
+    MEASUREMENT_VERTICAL_RESOLUTION = MEASUREMENT_VERTICAL_AXIS_DEGREE/10 #REQUIRED
 
-    MEASUREMENT_SENSOR_USE_Z_VALUE_AS_B = bool()
+
+    
+    
+    
+    MEASUREMENT_READOUT_AVERAGING_POINT = 1
+    MEASUREMENT_SENSOR_MAGNET_DISTANCE = 40
+    MEASUREMENT_SENSOR_Z_AXIS_INVERTED = 0
+
+    MEASUREMENT_SENSOR_USE_Z_VALUE_AS_B = 0
     # [DEBUG]
-    DEBUG_USE_SIMULATED_HARDWARE = bool()
-    DEBUG_MOVE_TO_AXIS_LIMITS = bool()
-    DEBUG_PERFORM_READ_SENSOR_TEST = bool()
-    DISABLE_MOTOR_MOVEMENTS = bool()
+    DEBUG_USE_SIMULATED_HARDWARE = 1
+    DEBUG_MOVE_TO_AXIS_LIMITS = 1
+    DEBUG_PERFORM_READ_SENSOR_TEST = 1
+    DEBUG_DISABLE_MOTOR_MOVEMENTS = 1
+
+    @staticmethod
+    def load_from_ini(_config_file_path: str = None) -> any:
+        """Constructor method
+
+            :param _config_file_path: absolute filepath to .ini file with config overwrite entries. See config.ini.EXAMPLE
+            :type _config_file_path: str
+                """
+        IniConfig = configparser.ConfigParser()
+        IniConfig.read(_config_file_path)
+
+        return MRPConfig(IniConfig)
+
+
 
     def __init__(self, _config: configparser):
-        '''loads a'''
+        """Constructor method
+
+            :param _config:
+            :type _config: configparser
+        """
 
         if _config is not None:
-
             # [HARDWARE]
             if 'HARDWARE' in _config:
-                self.HARDWARE_GCODE_SERIAL_INTERFACE = _config['HARDWARE'].get('GCODE_SERIAL_INTERFACE', 'socket://magpi.local:10001')
-                self.HARDWARE_READOUTUNIT_SERIAL_INTERFACE = _config['HARDWARE'].get('READOUTUNIT_SERIAL_INTERFACE', 'socket://magpi.local:10003')
-                self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MIN = _config['HARDWARE'].getint('AXIS_LIMIT_HORIZONTAL_MIN',0)
-                self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MAX = _config['HARDWARE'].getint('AXIS_LIMIT_HORIZONTAL_MAX', 180)
-                self.HARDWARE_AXIS_LIMIT_VERTICAL_MIN = _config['HARDWARE'].getint('AXIS_LIMIT_VERTICAL_MIN', 0)
-                self.HARDWARE_AXIS_LIMIT_VERTICAL_MAX = _config['HARDWARE'].getint('AXIS_LIMIT_VERTICAL_MAX', 360)
-                self.HARDWARE_READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL = _config['HARDWARE'].getboolean('READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL', 1)
+                self.HARDWARE_GCODE_SERIAL_INTERFACE = _config['HARDWARE'].get('GCODE_SERIAL_INTERFACE', self.HARDWARE_GCODE_SERIAL_INTERFACE)
+                self.HARDWARE_READOUTUNIT_SERIAL_INTERFACE = _config['HARDWARE'].get('READOUTUNIT_SERIAL_INTERFACE', self.HARDWARE_READOUTUNIT_SERIAL_INTERFACE)
+                self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MIN = _config['HARDWARE'].getint('AXIS_LIMIT_HORIZONTAL_MIN',self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MIN)
+                self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MAX = _config['HARDWARE'].getint('AXIS_LIMIT_HORIZONTAL_MAX', self.HARDWARE_AXIS_LIMIT_HORIZONTAL_MAX)
+                self.HARDWARE_AXIS_LIMIT_VERTICAL_MIN = _config['HARDWARE'].getint('AXIS_LIMIT_VERTICAL_MIN', self.HARDWARE_AXIS_LIMIT_VERTICAL_MIN)
+                self.HARDWARE_AXIS_LIMIT_VERTICAL_MAX = _config['HARDWARE'].getint('AXIS_LIMIT_VERTICAL_MAX', self.HARDWARE_AXIS_LIMIT_VERTICAL_MAX)
+                self.HARDWARE_READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL = _config['HARDWARE'].getboolean('READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL', self.HARDWARE_READOUTUNIT_USER_ALTERNATIVE_UART_PROTOCOL)
             # [MEASUREMENT]
             if 'MEASUREMENT' in _config:
-                self.MEASUREMENT_HORIZONTAL_RESOLUTION = _config['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', 18)
-                self.MEASUREMENT_VERTICAL_RESOLUTION = _config['MEASUREMENT'].getint('VERTICAL_RESOLUTION', 9)
-                self.MEASUREMENT_READOUT_AVERAGING_POINT = _config['MEASUREMENT'].getint('READOUT_AVERAGING_POINT', 1)
-                self.MEASUREMENT_SENSOR_MAGNET_DISTANCE = _config['MEASUREMENT'].getint('SENSOR_MAGNET_DISTANCE', 40)
-                self.MEASUREMENT_SENSOR_Z_AXIS_INVERTED = _config['MEASUREMENT'].getboolean('SENSOR_Z_AXIS_INVERTED', 0)
-                self.MEASUREMENT_HORIZONTAL_AXIS_DEGREE = _config['MEASUREMENT'].getint('HORIZONTAL_AXIS_DEGREE', 360)
-                self.MEASUREMENT_VERTICAL_AXIS_DEGREE = _config['MEASUREMENT'].getint('VERTICAL_AXIS_DEGREE', 90)
-                self.MEASUREMENT_SENSOR_USE_Z_VALUE_AS_B = _config['MEASUREMENT'].getboolean('SENSOR_USE_Z_VALUE_AS_B', 0)
+                self.MEASUREMENT_HORIZONTAL_RESOLUTION = _config['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', self.MEASUREMENT_HORIZONTAL_RESOLUTION)
+                self.MEASUREMENT_VERTICAL_RESOLUTION = _config['MEASUREMENT'].getint('VERTICAL_RESOLUTION', self.MEASUREMENT_VERTICAL_RESOLUTION)
+                self.MEASUREMENT_READOUT_AVERAGING_POINT = _config['MEASUREMENT'].getint('READOUT_AVERAGING_POINT', self.MEASUREMENT_READOUT_AVERAGING_POINT)
+                self.MEASUREMENT_SENSOR_MAGNET_DISTANCE = _config['MEASUREMENT'].getint('SENSOR_MAGNET_DISTANCE', self.MEASUREMENT_SENSOR_MAGNET_DISTANCE)
+                self.MEASUREMENT_SENSOR_Z_AXIS_INVERTED = _config['MEASUREMENT'].getboolean('SENSOR_Z_AXIS_INVERTED', self.MEASUREMENT_SENSOR_Z_AXIS_INVERTED)
+                self.MEASUREMENT_HORIZONTAL_AXIS_DEGREE = _config['MEASUREMENT'].getint('HORIZONTAL_AXIS_DEGREE', self.MEASUREMENT_HORIZONTAL_AXIS_DEGREE)
+                self.MEASUREMENT_VERTICAL_AXIS_DEGREE = _config['MEASUREMENT'].getint('VERTICAL_AXIS_DEGREE', self.MEASUREMENT_VERTICAL_AXIS_DEGREE)
+                self.MEASUREMENT_SENSOR_USE_Z_VALUE_AS_B = _config['MEASUREMENT'].getboolean('SENSOR_USE_Z_VALUE_AS_B', self.MEASUREMENT_SENSOR_USE_Z_VALUE_AS_B)
 
 
             # [DEBUG]
             if 'DEBUG' in _config:
-                self.DEBUG_USE_SIMULATED_HARDWARE = _config['DEBUG'].getboolean('USE_SIMULATED_HARDWARE', 1)
-                self.DEBUG_MOVE_TO_AXIS_LIMITS = _config['DEBUG'].getboolean('MOVE_TO_AXIS_LIMITS', 0)
-                self.DEBUG_PERFORM_READ_SENSOR_TEST = _config['DEBUG'].getboolean('PERFORM_READ_SENSOR_TEST', 1)
-                self.DEBUG_DISABLE_MOTOR_MOVEMENTS = _config['DEBUG'].getboolean('DISABLE_MOTOR_MOVEMENTS', 1)
+                self.DEBUG_USE_SIMULATED_HARDWARE = _config['DEBUG'].getboolean('USE_SIMULATED_HARDWARE', self.DEBUG_USE_SIMULATED_HARDWARE)
+                self.DEBUG_MOVE_TO_AXIS_LIMITS = _config['DEBUG'].getboolean('MOVE_TO_AXIS_LIMITS', self.DEBUG_MOVE_TO_AXIS_LIMITS)
+                self.DEBUG_PERFORM_READ_SENSOR_TEST = _config['DEBUG'].getboolean('PERFORM_READ_SENSOR_TEST', self.DEBUG_PERFORM_READ_SENSOR_TEST)
+                self.DEBUG_DISABLE_MOTOR_MOVEMENTS = _config['DEBUG'].getboolean('DISABLE_MOTOR_MOVEMENTS', self.DEBUG_DISABLE_MOTOR_MOVEMENTS)
 
         else:
             self.load_defaults()
@@ -95,9 +111,10 @@ class MRPConfig():
                 'USE_SIMULATED_HARDWARE': self.DEBUG_USE_SIMULATED_HARDWARE,
                 'MOVE_TO_AXIS_LIMITS': self.DEBUG_MOVE_TO_AXIS_LIMITS,
                 'PERFORM_READ_SENSOR_TEST': self.DEBUG_PERFORM_READ_SENSOR_TEST,
-                'DISABLE_MOTOR_MOVEMENTS': self.DISABLE_MOTOR_MOVEMENTS
+                'DISABLE_MOTOR_MOVEMENTS': self.DEBUG_DISABLE_MOTOR_MOVEMENTS
             })
         })
+
 
     def load_defaults(self):
         # [HARDWARE]

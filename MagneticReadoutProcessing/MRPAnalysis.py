@@ -1,5 +1,7 @@
+""" Provides functions to merge two reading, apply calibration measurements"""
+
 import numpy
-from MRPReading import MRPReading
+from MagneticReadoutProcessing import MRPReading
 
 class MRPAnalysisException(Exception):
     def __init__(self, message="ReadingAnalysisException thrown"):

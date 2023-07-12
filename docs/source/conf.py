@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
 sys.path.insert(0, os.path.abspath('../../MagneticReadoutProcessing'))
-autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math", "MRPHelpers"] # ignore MRPHelpers only support functions like map
+autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math"]
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
