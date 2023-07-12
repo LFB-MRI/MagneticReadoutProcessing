@@ -17,6 +17,12 @@ class TestMPRReading(unittest.TestCase):
         self.config.load_defaults()
 
 
+        self.import_export_test_folderpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+        if not os.path.exists(self.import_export_test_folderpath):
+            os.makedirs(self.import_export_test_folderpath)
+
+        self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
+
 
     def test_reading_init(self) -> MRPReading:
         reading = MRPReading.MRPReading(self.config)
@@ -43,14 +49,19 @@ class TestMPRReading(unittest.TestCase):
     def test_export_reading(self) -> None:
         reading = self.test_reading_init()
         self.assertIsNotNone(reading)
+        # EXPORT READING TO A FILE
+        reading.dump_to_file(self.import_export_test_filepath)
 
-        RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp/tmp.pkl")
-        if not os.path.exists(RESULT_FILEPATH):
-            os.makedirs(RESULT_FILEPATH)
-        reading.dump_to_file(RESULT_FILEPATH)
+    def test_import_reading(self):
+        # CREATE EMPTY READING
+        reading_imported = MRPReading.MRPReading(None)
+        # LOAD READING FROM FILE
+        reading_imported.load_from_file(self.import_export_test_filepath)
 
-    def test_import_readin(self):
-        pass
+        self.assertIsNotNone(reading_imported.additional_data)
+        self.assertIsNotNone(reading_imported.data)
+
+
 
 if __name__ == '__main__':
     unittest.main()
