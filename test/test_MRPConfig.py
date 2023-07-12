@@ -39,7 +39,6 @@ class TestMPRConfig(unittest.TestCase):
         IniConfig = configparser.ConfigParser()
         IniConfig.read(CONFIG_FILEPATH)
         config = MRPConfig.MRPConfig(IniConfig)
-
         ret = config.get_as_dict()
         measurement = ret['MEASUREMENT']
         self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] ==  IniConfig['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', 18))
