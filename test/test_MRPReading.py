@@ -66,10 +66,6 @@ class TestMPRReading(unittest.TestCase):
         self.assertIsNotNone(reading)
 
 
-        n_phi = 1
-        n_theta = 1
-        # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
-
         reading.insert_reading(random.uniform(0, 1), 0.0, 0.0, 0, 0, random.uniform(0, 1) * 10.0 + 25.0)
         # CONVERT TO CARTESIAN COORDINATES
         cartesian_result = reading.to_numpy_cartesian()
