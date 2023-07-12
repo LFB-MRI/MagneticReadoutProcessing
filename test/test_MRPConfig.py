@@ -42,10 +42,10 @@ class TestMPRConfig(unittest.TestCase):
 
         ret = config.get_as_dict()
         measurement = ret['MEASUREMENT']
-        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] == config.MEASUREMENT_HORIZONTAL_RESOLUTION)
-        self.assertTrue(measurement['VERTICAL_RESOLUTION'] == config.MEASUREMENT_VERTICAL_RESOLUTION)
-        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] == config.MEASUREMENT_HORIZONTAL_AXIS_DEGREE)
-        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] == config.MEASUREMENT_VERTICAL_AXIS_DEGREE)
+        self.assertTrue(measurement['HORIZONTAL_RESOLUTION'] ==  IniConfig['MEASUREMENT'].getint('HORIZONTAL_RESOLUTION', 18))
+        self.assertTrue(measurement['VERTICAL_RESOLUTION'] ==  IniConfig['MEASUREMENT'].getint('VERTICAL_RESOLUTION', 18))
+        self.assertTrue(measurement['HORIZONTAL_AXIS_DEGREE'] ==  IniConfig['MEASUREMENT'].getint('HORIZONTAL_AXIS_DEGREE', 18))
+        self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] ==  IniConfig['MEASUREMENT'].getint('VERTICAL_AXIS_DEGREE', 18))
 
 if __name__ == '__main__':
     unittest.main()
