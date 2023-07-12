@@ -33,7 +33,7 @@ class MRPAnalysis(object):
 
 
         # CREATE NEW READING WITH MODIFED SIZE
-        ret = MRPReading()
+        ret = MRPReading.MRPReading(None)
         ret.measurement_config = _reading_top.measurement_config
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
         #ret.measurement_config['n_theta'] = bottom_n_theta
@@ -77,7 +77,7 @@ class MRPAnalysis(object):
 
         # CHECK FOR ARRAY SHAPE
         if not numpy.shape(np_cal) == numpy.shape(np_curr):
-            raise  MRPAnalysisException("array shape check failed")
+            raise MRPAnalysisException("array shape check failed")
         # SUBTRACT CALC FROM CURRENT DATA
         new_array = numpy.subtract(np_curr, np_cal)
         # UPDATE INPLACE

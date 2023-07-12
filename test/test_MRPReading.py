@@ -72,6 +72,5 @@ class TestMPRReading(unittest.TestCase):
         self.assertIsNotNone(cartesian_result)
         self.assertNotEqual(len(cartesian_result), 0)
 
-
 if __name__ == '__main__':
     unittest.main()
