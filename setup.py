@@ -8,10 +8,6 @@ setup(name='MagneticReadoutProcessing',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
       url='https://github.com/LFB-MRI/MagnetCharacterization/',
-      packages=['MagneticReadoutProcessing',
-                'MagneticReadoutProcessing.MRPAnalysis',
-                'MagneticReadoutProcessing.MRPConfig',
-                'MagneticReadoutProcessing.MRPReading',
-                'MagneticReadoutProcessing.MRPHelpers'
-                ],
+      packages=['MagneticReadoutProcessing'],
+      install_requires=['wheel', 'magpylib', 'numpy', 'matplotlib']
      )
