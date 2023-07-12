@@ -34,7 +34,8 @@ class TestMPRConfig(unittest.TestCase):
         self.assertTrue(measurement['VERTICAL_AXIS_DEGREE'] == config.MEASUREMENT_VERTICAL_AXIS_DEGREE)
 
     def test_config_configparser(self):
-        CONFIG_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_config_configparser.ini")
+        CONFIG_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                       "assets/test_config_configparser.ini")
         print("config filepath: ", CONFIG_FILEPATH)
         IniConfig = configparser.ConfigParser()
         IniConfig.read(CONFIG_FILEPATH)

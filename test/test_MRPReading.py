@@ -42,7 +42,7 @@ class TestMPRReading(unittest.TestCase):
             ii = ii + 1
             for i in theta[:, 0]:
                 jj = jj + 1
-            reading.insert_reading(random.uniform(0, 1), j, i, ii, jj, random.uniform(0, 1)*10.0+25.0)
+                reading.insert_reading(random.uniform(0, 1), j, i, ii, jj, random.uniform(0, 1)*10.0+25.0)
 
         return reading
 
@@ -57,10 +57,24 @@ class TestMPRReading(unittest.TestCase):
         reading_imported = MRPReading.MRPReading(None)
         # LOAD READING FROM FILE
         reading_imported.load_from_file(self.import_export_test_filepath)
-
+        # CHECK IF ENTRIES ARE POPULATED
         self.assertIsNotNone(reading_imported.additional_data)
         self.assertIsNotNone(reading_imported.data)
 
+    def test_cartesian_reading(self):
+        reading = MRPReading.MRPReading(self.config)
+        self.assertIsNotNone(reading)
+
+
+        n_phi = 1
+        n_theta = 1
+        # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
+
+        reading.insert_reading(random.uniform(0, 1), 0.0, 0.0, 0, 0, random.uniform(0, 1) * 10.0 + 25.0)
+        # CONVERT TO CARTESIAN COORDINATES
+        cartesian_result = reading.to_numpy_cartesian()
+        self.assertIsNotNone(cartesian_result)
+        self.assertNotEqual(len(cartesian_result), 0)
 
 
 if __name__ == '__main__':

@@ -85,13 +85,34 @@ class MRPReading(object): # object is needed for pickle export
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
-    def to_numpy_cartesian(self, _normalize: bool = False, _fill_empty_datapoints_with_zero: bool = True) -> np.array:
+    def asCartesian(self, _rthetaphi: (float, float, float) = (0.0, 0.0, 0.0)) -> [float, float, float]:
+        r = _rthetaphi[0]
+        theta = _rthetaphi[1] * math.pi / 180  # to radian
+        phi = _rthetaphi[2] * math.pi / 180
+        x = r * math.sin(theta) * math.cos(phi)
+        y = r * math.sin(theta) * math.sin(phi)
+        z = r * math.cos(theta)
+        return [x, y, z]
+
+    def to_numpy_cartesian(self, _normalize: bool = True, _fill_empty_datapoints_with_zero: bool = False) -> np.array:
         # X Y Z GRID
         sensor_distance_radius = self.measurement_config['sensor_distance_radius']
         polar = self.to_numpy_polar(_normalize, _fill_empty_datapoints_with_zero)
-        #x = sensor_distance_radius * np.sin(self.theta) * np.cos(self.phi)
-        #y = sensor_distance_radius * np.sin(self.theta) * np.sin(self.phi)
-        #z = sensor_distance_radius * np.cos(self.theta)
+
+        inp = []
+
+        for entry in polar:
+
+            phi = entry[0]
+            theta = entry[1]
+            value = entry[2]
+
+            cart = self.asCartesian((value, theta, phi))
+            inp.append(cart)
+        #return np.hypot(x, y), np.degrees(np.arctan2(y, x))
+
+        return inp
+
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
     def to_numpy_polar(self, _normalize: bool = False, _fill_empty_datapoint_with_zero: bool = True) -> np.array:
         n_theta = self.measurement_config['n_theta']
@@ -139,10 +160,10 @@ class MRPReading(object): # object is needed for pickle export
 
         # PERFORM RESHAPE AND NUMPY CONVERSION
         inp = np.array(inp)
-        # reshape the input array to the shape of the x,y,z arrays.
-        reshaped_reading_results = inp[:, 2].reshape((n_phi, n_theta)).T
+        # reshape the input array to the shape of the x,y arrays.
+        #reshaped_reading_results = inp[:, 2].reshape((n_phi, n_theta)).T
 
-        return reshaped_reading_results
+        return inp
 
 
     def update_data_from_numpy_polar(self, _numpy_array: np.ndarray):
