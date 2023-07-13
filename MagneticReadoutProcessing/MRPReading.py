@@ -10,6 +10,11 @@ import sys
 import math
 from MagneticReadoutProcessing import MRPHelpers
 
+class MRPReadingException(Exception):
+    def __init__(self, message="MRPReadingException thrown"):
+        self.message = message
+        super().__init__(self.message)
+
 
 class MRPReading(object): # object is needed for pickle export
 
@@ -85,7 +90,7 @@ class MRPReading(object): # object is needed for pickle export
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
-    def asCartesian(self, _rthetaphi: (float, float, float) = (0.0, 0.0, 0.0)) -> [float, float, float]:
+    def asCartesian(self, _rthetaphi: (float, float, float) = (None, None, None)) -> [float, float, float]:
         r = _rthetaphi[0]
         theta = _rthetaphi[1] * math.pi / 180  # to radian
         phi = _rthetaphi[2] * math.pi / 180
@@ -114,15 +119,7 @@ class MRPReading(object): # object is needed for pickle export
         return inp
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
-    def to_numpy_polar(self, _normalize: bool = False, _fill_empty_datapoint_with_zero: bool = True) -> np.array:
-        n_theta = self.measurement_config['n_theta']
-        n_phi = self.measurement_config['n_phi']
-        theta_radians = self.measurement_config['theta_radians']
-        phi_radians = self.measurement_config['phi_radians']
-
-        # CREATE A POLAR COORDINATE GRID
-        theta, phi = np.mgrid[0.0:theta_radians:n_theta * 1j, 0.0:phi_radians:n_phi * 1j]
-
+    def to_numpy_polar(self, _normalize: bool = False, _fill_empty_datapoint_with_zero: bool = False) -> np.array:
         # NORMALIZE DATA
         min_val = float('inf')
         max_val = -float('inf')
@@ -135,56 +132,64 @@ class MRPReading(object): # object is needed for pickle export
                 if value > max_val:
                     max_val = value + 0.1
 
-        inp = []  # 1D ARRAY WILL BE RESHAPED LATER ON
-        for j in phi[0, :]:
-            for i in theta[:, 0]:
-                added = False
-                # CHECK IF DATA EXSITS
-                for r in self.data:
-                    dj = r['phi']
-                    di = r['theta']
+        arr_1d_data = []  # 1D ARRAY WILL BE RESHAPED LATER ON
 
-                    if j == dj and i == di:
-                        value = r['value']
-                        # NORMALIZE IF NEEDED
-                        if _normalize:
-                            normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
-                            inp.append([j, i, normalized_value])
-                        else:
-                            inp.append([j, i, value])
-                        added = True
-                        break
-                # FILL EMPTY POINTS WITH ZERO IF ENABLED
-                if not added and _fill_empty_datapoint_with_zero:
-                    inp.append([j, i, 0.0])
+        # CONVERT AND NORMALIZE DATA
+        for r in self.data:
+            phi = r['phi']
+            theta = r['theta']
+            value = r['value']
+            # NORMALIZE IF NEEDED
+            if _normalize:
+                normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
+                arr_1d_data.append([phi, theta, normalized_value])
+            else:
+                arr_1d_data.append([phi, theta, value])
+
 
         # PERFORM RESHAPE AND NUMPY CONVERSION
-        inp = np.array(inp)
-        # reshape the input array to the shape of the x,y arrays.
-        #reshaped_reading_results = inp[:, 2].reshape((n_phi, n_theta)).T
-
-        return inp
+        arr_1d_data_np = np.array(arr_1d_data)
+        return arr_1d_data_np
 
 
     def update_data_from_numpy_polar(self, _numpy_array: np.ndarray):
-        n_theta = self.measurement_config['n_theta']
-        n_phi = self.measurement_config['n_phi']
-        theta_radians = self.measurement_config['theta_radians']
-        phi_radians = self.measurement_config['phi_radians']
-        # CREATE A POLAR COORDINATE GRID
-        theta, phi = np.mgrid[0.0:theta_radians:n_theta * 1j, 0.0:phi_radians:n_phi * 1j]
+        """
+        _numpy_array is a (x, 3) shaped array with [[phi, theta, value],...] structured data
+        each matching phi, theta combination in the reading.data structure will be updated with the corresponding value from the _numpy_array entry
+        :param _numpy_array:
+        :return: None
+        """
 
-        for j in self.phi[0, :]:
-            for i in theta[:, 0]:
-                added = False
-                # CHECK IF DATA EXSITS
-                for r in self.data:
-                    dj = r['phi']
-                    di = r['theta']
-        # TODO FIX
-        # DELETE OLD DATA INSERT NEW DATA
-        # SO ITERATE THROUGH NP ARRAY AND SPLIT THE THREE COMPONETNS
+        # CHECK FOR ARRAY/DATA SHAPE
+        # given 1d array [phi, theta, value]
+        if np.shape(_numpy_array)[1] != 3:
+            raise MRPReadingException("array shape check failed")
+        #if not np.shape(_numpy_array) == numpy.shape(np_curr):
+        #    raise MRPAnalysisException("array shape check failed")
 
+        # SKIP IF UPDATE DATA ARE ENTRY
+        if len(_numpy_array) <= 0:
+            return
+
+
+        for update in _numpy_array:
+            update_phi = update[0]
+            update_theta = update[1]
+            update_value = update[2]
+
+
+            for idx, data_entry in enumerate(self.data):
+
+
+                phi = data_entry['phi']
+                theta = data_entry['theta']
+                if phi == update_phi and theta == update_theta:
+                    self.data[idx]['value'] = update_value
+                    break
+        # TODO OPTIMIZE
+
+        # ITERATE OVER UPDATE DATA ENTRIES AND FIND IN DATA DICT
+        # SO IMPORT/EXPORT IS POSSIBLE
 
     def insert_reading(self, _reading: float, _phi: float, _theta: float, _reading_index_phi: int,
                        _reading_index_theta: int, _temp: float = None) -> None:

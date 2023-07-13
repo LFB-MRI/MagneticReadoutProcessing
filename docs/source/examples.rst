@@ -136,3 +136,28 @@ Import a reading
     RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
     reading_imported = MRPReading.MRPReading(None)
     reading_imported.load_from_file(RESULT_FILEPATH)
+
+
+
+Apply a calibration reading
+***************************
+
+The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
+The ``reading_calibration`` is performed with the same settings for all subsequent measurements.
+Afterwards the Function ``apply_calibration_data_inplace`` is called for each new reading.
+
+.. note::
+   Make sure that the sample size (HORIZONTAL_RESOLUTION and VERTICAL_RESOLUTION) for calibration and all further measurements match.
+
+.. note::
+   Attention: Make sure that the environment does not change and the device is not moved.
+
+
+.. code-block:: python
+
+    # reading_calibration => measurement without magnetic source => environment only
+    # reading_A => reading with source placed
+    MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(reading_calibration, reading_A)
+    # THE CALIBRATION_READING IS APPLIED DIRECTLY TO READING_A
+    reading_A.set_additional_data('calibrated', 1)
+    reading.dump_to_file(RESULT_FILEPATH)

@@ -49,10 +49,11 @@ class TestMPRAnalysis(unittest.TestCase):
         # so the result should be zero for all entries
         MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_A)
         self.assertIsNotNone(self.reading_B)
-        
 
-
-
+        # CHECK FOR VALUES ZERO
+        result = self.reading_A.to_numpy_polar()
+        for r in result:
+            self.assertEqual(r[2], 0.0)
 
 
     def test_calibration_analysis_real(self):

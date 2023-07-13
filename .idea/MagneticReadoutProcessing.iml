@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/docs/build" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 3.9.2 (sftp://pi@magpi.local:22/home/pi/.virtualenvs/host_readout/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (MagneticReadoutProcessing)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

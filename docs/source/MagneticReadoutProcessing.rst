@@ -1,6 +1,10 @@
 Documentation
 =================
 
+.. note::
+    The data handling/processing is not optimized!
+    Major changes to the structure may come in the coming versions!
+
 .. rubric:: Modules
 
 .. autosummary::
