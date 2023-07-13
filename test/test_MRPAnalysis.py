@@ -6,6 +6,7 @@ import unittest
 import random
 from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
+from MagneticReadoutProcessing import MRPAnalysis
 import configparser
 import os
 class TestMPRAnalysis(unittest.TestCase):
@@ -22,7 +23,7 @@ class TestMPRAnalysis(unittest.TestCase):
         self.assertIsNotNone(self.reading_B)
 
         self.reading_A.sensor_id = 0
-        self.reading_B.sensor_id = 0
+        self.reading_B.sensor_id = 1
 
         n_phi = self.config.MEASUREMENT_HORIZONTAL_RESOLUTION
         n_theta = self.config.MEASUREMENT_VERTICAL_RESOLUTION
