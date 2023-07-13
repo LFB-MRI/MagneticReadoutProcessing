@@ -84,7 +84,7 @@ class TestMPRAnalysis(unittest.TestCase):
         self.assertIsNotNone(reading_top)
         self.assertIsNotNone(reading_bottom)
 
-        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_top)
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
         self.assertIsNotNone(merged_reading)
 
         # CHECK RESULT

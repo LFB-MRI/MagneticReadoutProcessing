@@ -1,4 +1,5 @@
 """ Provides functions to merge two reading, apply calibration measurements"""
+import math
 
 import numpy
 import numpy as np
@@ -30,20 +31,21 @@ class MRPAnalysis(object):
         # CHECK AXIS LIMITS
         # # TODO CURRENTLY LIMITS NEEDS TO BE EQUALLY... FIX THIS LATER TO ALLOW OTHER n_theta values E.G. MERGE 90DEGREE AND 45 DEGREE READING
         # ONLY CHECK n_phi and radius
-        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius', 'sensor_id']:
+        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius']:
             top_value = _reading_top.measurement_config[key]
             bottom_value = _reading_bottom.measurement_config[key]
             if top_value != bottom_value:
                 raise MRPAnalysisException(
                     "mismatching {0} _reading_top:{1} _reading_bottom:{2}".format(key, top_value, bottom_value))
-
+        # TODO FIX BOTTOM
         # CREATE NEW READING WITH MODIFED SIZE
         ret = MRPReading.MRPReading(None)
         ret.measurement_config = _reading_top.measurement_config
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
         ret.measurement_config['n_theta'] = bottom_n_theta
-        ret.measurement_config['n_theta'] = bottom_n_theta
+        ret.measurement_config['n_phi'] = bottom_n_phi
         ret.measurement_config['theta_radians'] = top_theta_radians + bottom_theta_radians
+        ret.measurement_config['phi_radians'] = top_phi_radians
         ret.measurement_config['sensor_id'] = 42
 
 
@@ -53,25 +55,30 @@ class MRPAnalysis(object):
         max_theta = 0.0
         max_reading_index_phi = 0
         max_reading_index_theta = 0
+        max_reading_theta = 0.0
+        #for entry in _reading_bottom.data:
         for entry in _reading_top.data:
             value = entry['value']
             phi = entry['phi']
             # THEATA IS PONTING DOWN
-            theta = entry['theta']
+            theta = math.pi/2.0 + entry['theta']
             reading_index_phi = entry['reading_index_phi']
             reading_index_theta = entry['reading_index_theta']
             # GET LIMITS FOR INSERTING THE BOTTOM DATA CORRECT ORDER
             max_reading_index_phi = max(max_reading_index_phi, reading_index_phi)
             max_reading_index_theta = max(max_reading_index_theta, reading_index_theta)
-            #           # INSERT DATA
+
+            max_reading_theta = max(max_reading_theta, theta)
+            # INSERT DATA
             ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
 
+        #for entry in _reading_top.data:
         for entry in _reading_bottom.data:
             value = entry['value']
             phi = entry['phi']
             # THEATA IS PONTING DOWN
             # HERE WE NEED TO ADD A OFFSET TO COVER TO BOTTOM HALF
-            theta = top_theta_radians - entry['theta']
+            theta = entry['theta']
             reading_index_phi = max_reading_index_phi + entry['reading_index_phi']
             reading_index_theta = max_reading_index_theta + entry['reading_index_theta']
             ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)

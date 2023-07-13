@@ -49,9 +49,13 @@ class MRPReading(object): # object is needed for pickle export
         # THE SENSOR RADIUS CAN DIFFER
         if _sensor_radius is not None:
             self.measurement_config['sensor_distance_radius'] = _sensor_radius
+        #else:
+        #    self.measurement_config['sensor_distance_radius'] = 10
 
         if _sensor_id is not None:
             self.measurement_config['sensor_id'] = _sensor_id
+        else:
+            self.measurement_config['sensor_id'] = 0
 
     def loads(self, _pickle_binaray: bytes):
         pl = pickle.loads(_pickle_binaray)
