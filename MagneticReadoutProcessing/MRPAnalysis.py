@@ -116,6 +116,7 @@ class MRPAnalysis(object):
         # APPEND SOME METADATA
         _current_reading.set_additional_data('is_calibrated', 1)
         # ADD NAME OF THE CALIBRATION READING
+
         if 'export_filepath' in _calibration_reading.additional_data:
             _current_reading.set_additional_data('calibration_reading_source', _calibration_reading.additional_data['export_filepath'])
         # UPDATE THE DATA ENTRY DIRECTLY

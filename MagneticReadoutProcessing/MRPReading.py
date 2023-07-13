@@ -96,6 +96,9 @@ class MRPReading(object): # object is needed for pickle export
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
+    def set_name(self, _name: str = "unknown"):
+        self.additional_data['name'] = _name
+
     def asCartesian(self, _rthetaphi: (float, float, float) = (None, None, None)) -> [float, float, float]:
         r = _rthetaphi[0]
         theta = _rthetaphi[1] * math.pi / 180  # to radian
@@ -238,7 +241,9 @@ class MRPReading(object): # object is needed for pickle export
         # STORE SOME EXPORT METADATA
         self.set_additional_data('export_filepath', _filepath_name)
         self.set_additional_data('export_filename', os.path.basename(_filepath_name))
-        self.set_additional_data('name', os.path.basename(_filepath_name))
+
+        if self.additional_data['name'] != 'unknown':
+            self.set_additional_data('name', os.path.basename(_filepath_name))
 
         # FINALLY EXPORT TO FILE USING THE self.dump option
         try:
