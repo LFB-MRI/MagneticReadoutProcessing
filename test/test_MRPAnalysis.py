@@ -48,7 +48,7 @@ class TestMPRAnalysis(unittest.TestCase):
         # and will be applied directly onto reading_A
         # so the result should be zero for all entries
         MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_A)
-        self.assertIsNotNone(self.reading_B)
+        self.assertIsNotNone(self.reading_A)
 
         # CHECK FOR VALUES ZERO
         result = self.reading_A.to_numpy_polar()
@@ -57,7 +57,20 @@ class TestMPRAnalysis(unittest.TestCase):
 
 
     def test_calibration_analysis_real(self):
-        pass
+        result_original = self.reading_B.to_numpy_polar()
+        MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_B)
+        self.assertIsNotNone(self.reading_B)
+
+        # CHECK FOR VALUES ZERO
+        result_A = self.reading_A.to_numpy_polar()
+        result_B = self.reading_B.to_numpy_polar()
+
+        # CHECK triangle inequality
+        for idx, a in enumerate(result_A):
+            b = result_B[idx]
+            orig = result_original[idx]
+
+            self.assertAlmostEqual(orig[2], b[2] + a[2])
 
     def test_merge_analysis(self):
         pass
