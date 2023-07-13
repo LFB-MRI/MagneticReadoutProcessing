@@ -12,6 +12,7 @@ import os
 class TestMPRAnalysis(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
+    # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
         # USE DEFAULT CONFIG
         self.config = MRPConfig.MRPConfig(None)
@@ -41,7 +42,14 @@ class TestMPRAnalysis(unittest.TestCase):
     # JUST USED FOR PREPERATION
 
 
-    def test_calibration_analysis(self):
+    def test_calibration_analysis_zero(self):
+        # IF A CALIBRATION READING IS APPLIED ON THE SAME READING THE RESULT SHOULD BE ZERO
+        MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.)
+
+
+        pass
+
+    def test_calibration_analysis_real(self):
         pass
 
     def test_merge_analysis(self):
