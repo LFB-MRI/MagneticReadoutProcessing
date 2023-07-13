@@ -20,6 +20,10 @@ The other method is to use the ``setup.py`` to install ``MagneticReadoutProcessi
     $ python ./setup.py install
 
 
+.. note::
+   There are further detailed examples in the ``test`` folder. There is a seperate test file for each submodule.
+
+
 
 Create a minimal measurement
 ****************************
