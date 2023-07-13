@@ -57,12 +57,12 @@ class MRPAnalysis(object):
         max_reading_index_phi = 0
         max_reading_index_theta = 0
         max_reading_theta = 0.0
-        #for entry in _reading_bottom.data:
-        for entry in _reading_top.data:
+        for idx, entry in enumerate(_reading_top.data):
             value = entry['value']
             phi = entry['phi']
             # THEATA IS PONTING DOWN
-            theta = math.pi/2.0 + entry['theta']
+            theta = entry['theta']
+            print(theta)
             reading_index_phi = entry['reading_index_phi']
             reading_index_theta = entry['reading_index_theta']
             # GET LIMITS FOR INSERTING THE BOTTOM DATA CORRECT ORDER
@@ -73,13 +73,16 @@ class MRPAnalysis(object):
             # INSERT DATA
             ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
 
-        #for entry in _reading_top.data:
-        for entry in _reading_bottom.data:
+
+
+
+        for idx, entry in enumerate(_reading_bottom.data):
             value = entry['value']
             phi = entry['phi']
             # THEATA IS PONTING DOWN
             # HERE WE NEED TO ADD A OFFSET TO COVER TO BOTTOM HALF
-            theta = entry['theta']
+            theta =  math.pi - entry['theta']
+            #print(theta)
             reading_index_phi = max_reading_index_phi + entry['reading_index_phi']
             reading_index_theta = max_reading_index_theta + entry['reading_index_theta']
             ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)

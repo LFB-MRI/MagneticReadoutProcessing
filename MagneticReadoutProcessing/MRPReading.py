@@ -226,6 +226,7 @@ class MRPReading(object): # object is needed for pickle export
             'measurement_config': self.measurement_config,
             'additional_data': self.additional_data
         })
+        # TODO REMOVE REDUNDANCY ?
         # ADD ADDITIONAL USERDATA
         if self.additional_data is not None:
             for item in self.additional_data.items():
