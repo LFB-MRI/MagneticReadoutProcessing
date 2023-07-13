@@ -147,6 +147,7 @@ Visualization of a measurement
 .. image:: _static/example_visualization.png
    :width: 600
 
+
 .. code-block:: python
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
@@ -195,6 +196,9 @@ Afterwards the Function ``apply_calibration_data_inplace`` is called for each ne
 
 Merge two half sphere readings
 ==============================
+
+.. image:: _static/merged_readings_example.png
+   :width: 600
 
 The current mechanical scanner can only scan one magnet side in one pass, so two scann passes are required to scan a full sphere.
 The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two readings (top, bottom) into one.
