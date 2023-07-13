@@ -70,7 +70,7 @@ class MRPAnalysis(object):
 
 
     @staticmethod
-    def apply_calibration_data_inplace(_calibration_reading: MRPReading, _current_reading):
+    def apply_calibration_data_inplace(_calibration_reading: MRPReading, _current_reading: MRPReading) -> None:
         # GET NUMPY ARRAY
         np_cal = _calibration_reading.to_numpy_polar()
         np_curr = _current_reading.to_numpy_polar()
@@ -84,7 +84,7 @@ class MRPAnalysis(object):
         _current_reading.update_data_from_numpy_polar(new_array)
 
 
-    def apply_binning(self, _calibrated_readings: [], _reference_reading: MRPReading, _bins:int = None) -> []:
+    def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading, _bins:int = None) -> list[MRPReading.MRPReading]:
         if _calibrated_readings is None or len(_calibrated_readings) <= 0:
             raise MRPAnalysisException("_calibrated_readings is none or empty")
         if _reference_reading is None:
