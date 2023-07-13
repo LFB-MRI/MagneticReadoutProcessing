@@ -77,8 +77,11 @@ Create a minimal measurement
     phi_radians = math.radians(Config.MEASUREMENT_HORIZONTAL_AXIS_DEGREE)
     theta_radians = math.radians(Config.MEASUREMENT_VERTICAL_AXIS_DEGREE)
     # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
-    theta, phi = np.mgrid[0.0:0.5 * np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
 
+    # HALF SPHERE
+    #theta, phi = np.mgrid[0.0:0.5 * np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
+    # FULL SPHERE
+    theta, phi = np.mgrid[0.0:np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
 
     # FINALLY INSERT THE MEASUREMENT-DATA
     reading_index_theta = 0
