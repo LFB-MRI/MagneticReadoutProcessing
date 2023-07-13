@@ -5,7 +5,7 @@ import numpy as np
 from MagneticReadoutProcessing import MRPAnalysis
 from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
-
+from MagneticReadoutProcessing import MRPVisualization
 
 class TestMPRAnalysis(unittest.TestCase):
 
@@ -84,9 +84,20 @@ class TestMPRAnalysis(unittest.TestCase):
         self.assertIsNotNone(reading_top)
         self.assertIsNotNone(reading_bottom)
 
-        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_top)
         self.assertIsNotNone(merged_reading)
 
         # CHECK RESULT
+
+        visu = MRPVisualization.MRPVisualization(merged_reading)
+
+        # 2D PLOT INTO A WINDOW
+        visu.plot3d(None)
+
+
+        # 3D PLOT TO FILE
+        #visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
+
+
 if __name__ == '__main__':
     unittest.main()

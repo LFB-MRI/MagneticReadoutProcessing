@@ -19,14 +19,18 @@ class MRPAnalysis(object):
     def merge_two_half_sphere_measurements_to_full_sphere(_reading_top: MRPReading, _reading_bottom: MRPReading) -> MRPReading:
         top_n_theta = _reading_top.measurement_config['n_theta']
         top_theta_radians = _reading_top.measurement_config['theta_radians']
+        top_n_phi = _reading_top.measurement_config['n_phi']
+        top_phi_radians = _reading_top.measurement_config['phi_radians']
 
         bottom_n_theta = _reading_bottom.measurement_config['n_theta']
         bottom_theta_radians = _reading_bottom.measurement_config['theta_radians']
+        bottom_n_phi = _reading_bottom.measurement_config['n_phi']
+        bottom_phi_radians = _reading_bottom.measurement_config['phi_radians']
 
         # CHECK AXIS LIMITS
         # # TODO CURRENTLY LIMITS NEEDS TO BE EQUALLY... FIX THIS LATER TO ALLOW OTHER n_theta values E.G. MERGE 90DEGREE AND 45 DEGREE READING
         # ONLY CHECK n_phi and radius
-        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius']:
+        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius', 'sensor_id']:
             top_value = _reading_top.measurement_config[key]
             bottom_value = _reading_bottom.measurement_config[key]
             if top_value != bottom_value:
@@ -37,8 +41,11 @@ class MRPAnalysis(object):
         ret = MRPReading.MRPReading(None)
         ret.measurement_config = _reading_top.measurement_config
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
-        # ret.measurement_config['n_theta'] = bottom_n_theta
+        ret.measurement_config['n_theta'] = bottom_n_theta
+        ret.measurement_config['n_theta'] = bottom_n_theta
         ret.measurement_config['theta_radians'] = top_theta_radians + bottom_theta_radians
+        ret.measurement_config['sensor_id'] = 42
+
 
         print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'],
                                                                     ret.measurement_config['theta_radians']))
