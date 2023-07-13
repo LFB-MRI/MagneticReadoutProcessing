@@ -99,10 +99,10 @@ class MRPReading(object): # object is needed for pickle export
         z = r * math.cos(theta)
         return [x, y, z]
 
-    def to_numpy_cartesian(self, _normalize: bool = True, _fill_empty_datapoints_with_zero: bool = False) -> np.array:
+    def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
         # X Y Z GRID
         sensor_distance_radius = self.measurement_config['sensor_distance_radius']
-        polar = self.to_numpy_polar(_normalize, _fill_empty_datapoints_with_zero)
+        polar = self.to_numpy_polar(_normalize)
 
         inp = []
 
@@ -112,14 +112,18 @@ class MRPReading(object): # object is needed for pickle export
             theta = entry[1]
             value = entry[2]
 
-            cart = self.asCartesian((value, theta, phi))
+            if _use_sensor_distance:
+                cart = self.asCartesian((value, theta, phi))
+            else:
+                cart = self.asCartesian((sensor_distance_radius, theta, phi))
+
             inp.append(cart)
         #return np.hypot(x, y), np.degrees(np.arctan2(y, x))
 
         return inp
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
-    def to_numpy_polar(self, _normalize: bool = False, _fill_empty_datapoint_with_zero: bool = False) -> np.array:
+    def to_numpy_polar(self, _normalize: bool = False) -> np.array:
         # NORMALIZE DATA
         min_val = float('inf')
         max_val = -float('inf')
@@ -177,10 +181,7 @@ class MRPReading(object): # object is needed for pickle export
             update_theta = update[1]
             update_value = update[2]
 
-
             for idx, data_entry in enumerate(self.data):
-
-
                 phi = data_entry['phi']
                 theta = data_entry['theta']
                 if phi == update_phi and theta == update_theta:

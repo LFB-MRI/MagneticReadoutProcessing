@@ -1,14 +1,12 @@
-import math
-
-import numpy as np
-import pytest
-import unittest
+import os
 import random
+import unittest
+import numpy as np
+from MagneticReadoutProcessing import MRPAnalysis
 from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
-from MagneticReadoutProcessing import MRPAnalysis
-import configparser
-import os
+
+
 class TestMPRAnalysis(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
@@ -39,7 +37,7 @@ class TestMPRAnalysis(unittest.TestCase):
                 jj = jj + 1
                 self.reading_A.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
-    # JUST USED FOR PREPERATION
+    # JUST USED FOR PREPARATION
 
 
     def test_calibration_analysis_zero(self):
@@ -73,7 +71,22 @@ class TestMPRAnalysis(unittest.TestCase):
             self.assertAlmostEqual(orig[2], b[2] + a[2])
 
     def test_merge_analysis(self):
-        pass
+        # IMPORT TWO EXISTING READINGS FROM FILE
+        reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
+        reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
+        # IMPORT TOP READING
+        reading_top = MRPReading.MRPReading(None)
+        reading_top.load_from_file(reading_top_filepath)
+        # IMPORT BOTTOM READING
+        reading_bottom = MRPReading.MRPReading(None)
+        reading_bottom.load_from_file(reading_bottom_filepath)
 
+        self.assertIsNotNone(reading_top)
+        self.assertIsNotNone(reading_bottom)
+
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
+        self.assertIsNotNone(merged_reading)
+
+        # CHECK RESULT
 if __name__ == '__main__':
     unittest.main()

@@ -1,15 +1,29 @@
 Examples
-========
+########
 
 Installation/Usage:
 *******************
 As the package has not been published on PyPi yet, it CANNOT be install using pip.
 
+Installation DEV
+================
+
 For now, the suggested method is to copy the ``MagneticReadoutProcessing`` folder into your Python project folder.
 There are some other packages required which are listed in the ``requirements.txt``.
 To install them use ``$ pip3 install -r requirements.txt`` command.
 
+.. code-block:: console
 
+    $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
+    $ cd ./MagneticReadoutProcessing
+    $ pip3 install -r requirements.txt
+    # COPY LIB TO YOUR PROJECT
+    $ cp -R ./MagneticReadoutProcessing ~/yourPythonProject/
+
+
+
+Installation PROD
+=================
 
 The other method is to use the ``setup.py`` to install ``MagneticReadoutProcessing`` as module:
 
@@ -25,8 +39,11 @@ The other method is to use the ``setup.py`` to install ``MagneticReadoutProcessi
 
 
 
+MRPReading Examples
+*******************
+
 Create a minimal measurement
-****************************
+============================
 
 .. code-block:: python
 
@@ -92,28 +109,9 @@ Create a minimal measurement
             progressbar.refresh()
 
 
-
-
-
-Visualization of a measurement
-******************************
-.. code-block:: python
-
-    # EXTENDS THE `Create a minimal measurement` EXAMPLE
-    import MRPVisualization
-    # HERE matplotlib is also used
-
-    visu = MRPVisualization.MRPVisualization(reading)
-
-    # 2D PLOT INTO A WINDOW
-    visu.plot2d_top(None)
-    visu.plot2d_side(None)
-
-    # 3D PLOT TO FILE
-    visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
-
 Export a reading
-****************
+================
+
 .. code-block:: python
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
@@ -129,7 +127,7 @@ Export a reading
 
 
 Import a reading
-****************
+================
 .. code-block:: python
 
     # EXTENDS THE `Export a reading` EXAMPLE
@@ -139,15 +137,46 @@ Import a reading
 
 
 
+
+MRPVisualization Examples
+*************************
+
+Visualization of a measurement
+==============================
+
+.. image:: _static/example_visualization.png
+   :width: 600
+
+.. code-block:: python
+
+    # EXTENDS THE `Create a minimal measurement` EXAMPLE
+    import MRPVisualization
+    # HERE matplotlib is also used
+
+    visu = MRPVisualization.MRPVisualization(reading)
+
+    # 2D PLOT INTO A WINDOW
+    visu.plot2d_top(None)
+    visu.plot2d_side(None)
+
+    # 3D PLOT TO FILE
+    visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
+
+
+
+MRPAnalysis Examples
+*************************
+
+
 Apply a calibration reading
-***************************
+===========================
 
 The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
 The ``reading_calibration`` is performed with the same settings for all subsequent measurements.
 Afterwards the Function ``apply_calibration_data_inplace`` is called for each new reading.
 
 .. note::
-   Make sure that the sample size (HORIZONTAL_RESOLUTION and VERTICAL_RESOLUTION) for calibration and all further measurements match.
+   Make sure that the sample size (``HORIZONTAL_RESOLUTION`` and ``VERTICAL_RESOLUTION``) for calibration and all further measurements match.
 
 .. note::
    Attention: Make sure that the environment does not change and the device is not moved.
@@ -161,3 +190,54 @@ Afterwards the Function ``apply_calibration_data_inplace`` is called for each ne
     # THE CALIBRATION_READING IS APPLIED DIRECTLY TO READING_A
     reading_A.set_additional_data('calibrated', 1)
     reading.dump_to_file(RESULT_FILEPATH)
+
+
+
+Merge two half sphere readings
+==============================
+
+The current mechanical scanner can only scan one magnet side in one pass, so two scann passes are required to scan a full sphere.
+The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two readings (top, bottom) into one.
+
+.. note::
+   Make sure that the sample size (``HORIZONTAL_RESOLUTION`` and ``VERTICAL_RESOLUTION``) for calibration and all further measurements match.
+
+.. code-block:: python
+
+    # IMPORT TWO EXISTING READINGS FROM FILE
+    reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
+    reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
+    # IMPORT TOP READING
+    reading_top = MRPReading.MRPReading(None)
+    reading_top.load_from_file(reading_top_filepath)
+    # IMPORT BOTTOM READING
+    reading_bottom = MRPReading.MRPReading(None)
+    reading_bottom.load_from_file(reading_bottom_filepath)
+    # FINALLY MERGE
+    merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
+
+
+MISC Examples
+*************
+
+Export reading to numpy
+=======================
+
+For further and more advanced analysis the ``MRPReading`` class offers two functions in order to export the ``data`` member into a ``numpy.ndarray``.
+The current implementation returns
+
+.. code-block:: python
+
+    # EXTENDS THE `Create a minimal measurement` EXAMPLE
+
+    # POLAR COORDINATES
+    # [[phi, theta, magnetic_value], ....]
+    numpy_1d_array = reading.to_numpy_polar(_normalize=False)
+
+    # CARTESIAN COORDINATES
+    # [[x, y, z], ....]
+    # THE  CONVERSION TO CARTESIAN IS A BIT SPECIAL
+    # IT USES THE MAGNETIC_VALUE for the radius
+    # SO THE VECTOR IS LONGER IF THE MAGNETIC VALUE IS STRONGER
+    # THIS CONVERSION CAN BE USED WITH VECTOR CALCULATIONS LIKE FIND NEAREST POINT ....
+    numpy_1d_array = reading.to_numpy_polar(_normalize=False)

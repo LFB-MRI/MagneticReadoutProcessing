@@ -16,8 +16,7 @@ class MRPAnalysis(object):
     # TODO BINNING IMPLEMENTIEREN
     #
     @staticmethod
-    def merge_two_90drg_measurements_to_full_sphere(_reading_top: MRPReading,
-                                                    _reading_bottom: MRPReading) -> MRPReading:
+    def merge_two_half_sphere_measurements_to_full_sphere(_reading_top: MRPReading, _reading_bottom: MRPReading) -> MRPReading:
         top_n_theta = _reading_top.measurement_config['n_theta']
         top_theta_radians = _reading_top.measurement_config['theta_radians']
 
