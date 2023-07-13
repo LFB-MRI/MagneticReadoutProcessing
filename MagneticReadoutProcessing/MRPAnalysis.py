@@ -37,6 +37,10 @@ class MRPAnalysis(object):
             if top_value != bottom_value:
                 raise MRPAnalysisException(
                     "mismatching {0} _reading_top:{1} _reading_bottom:{2}".format(key, top_value, bottom_value))
+
+
+
+
         # TODO FIX BOTTOM
         # CREATE NEW READING WITH MODIFED SIZE
         ret = MRPReading.MRPReading(None)
@@ -44,48 +48,70 @@ class MRPAnalysis(object):
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
         ret.measurement_config['n_theta'] = bottom_n_theta
         ret.measurement_config['n_phi'] = bottom_n_phi
-        ret.measurement_config['theta_radians'] = top_theta_radians + bottom_theta_radians
-        ret.measurement_config['phi_radians'] = top_phi_radians
+        ret.measurement_config['theta_radians'] = math.radians(180)
+        ret.measurement_config['phi_radians'] = math.radians(360)
         ret.measurement_config['sensor_id'] = 42
 
         ret.set_additional_data('is_merged_reading', 1)
 
-        print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'],
-                                                                    ret.measurement_config['theta_radians']))
+        print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'], ret.measurement_config['theta_radians']))
+
+
+        # CREATE A POLAR GRID FOR A FULL SPHERE
+        theta, phi = np.mgrid[0.0:ret.measurement_config['theta_radians']:ret.measurement_config['n_theta'] * 1j, 0.0:ret.measurement_config['phi_radians']:ret.measurement_config['n_phi'] * 1j]
+
+
+        for idx_p, p in enumerate(phi[0, :]):
+            for idx_t, t in enumerate(theta[:, 0]):
+                pass
+                # TODO SEARCH FOR ENTIRES IN BOTH READING
+                #   CREATE A NEW FUNCTION IN READING TO TO THIS STEP
+                # SET ELSE NO NULL
+                if t <= math.pi/2.0:
+                    ret.insert_reading(1, p, t, idx_p, idx_t)
+                else:
+                    ret.insert_reading(-1, p, t, idx_p, idx_t)
+
+
+
+
+
+
+
         # MERGE DATA
-        max_theta = 0.0
-        max_reading_index_phi = 0
-        max_reading_index_theta = 0
-        max_reading_theta = 0.0
-        for idx, entry in enumerate(_reading_top.data):
-            value = entry['value']
-            phi = entry['phi']
-            # THEATA IS PONTING DOWN
-            theta = entry['theta']
-            print(theta)
-            reading_index_phi = entry['reading_index_phi']
-            reading_index_theta = entry['reading_index_theta']
-            # GET LIMITS FOR INSERTING THE BOTTOM DATA CORRECT ORDER
-            max_reading_index_phi = max(max_reading_index_phi, reading_index_phi)
-            max_reading_index_theta = max(max_reading_index_theta, reading_index_theta)
+        #max_theta = 0.0
+        #max_reading_index_phi = 0
+        #max_reading_index_theta = 0
+        #max_reading_theta = 0.0
+        #for idx, entry in enumerate(_reading_top.data):
+        #    value = entry['value']
+        #    phi = entry['phi']
+        #    # THEATA IS PONTING DOWN
+        #    theta = entry['theta']
+        #    print(theta)
+        #    reading_index_phi = entry['reading_index_phi']
+        #    reading_index_theta = entry['reading_index_theta']
+        #    # GET LIMITS FOR INSERTING THE BOTTOM DATA CORRECT ORDER
+        #    max_reading_index_phi = max(max_reading_index_phi, reading_index_phi)
+        #    max_reading_index_theta = max(max_reading_index_theta, reading_index_theta)##
 
-            max_reading_theta = max(max_reading_theta, theta)
-            # INSERT DATA
-            ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
-
-
+            #max_reading_theta = max(max_reading_theta, theta)
+            ## INSERT DATA
+            #ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
 
 
-        for idx, entry in enumerate(_reading_bottom.data):
-            value = entry['value']
-            phi = entry['phi']
-            # THEATA IS PONTING DOWN
-            # HERE WE NEED TO ADD A OFFSET TO COVER TO BOTTOM HALF
-            theta =  math.pi - entry['theta']
-            #print(theta)
-            reading_index_phi = max_reading_index_phi + entry['reading_index_phi']
-            reading_index_theta = max_reading_index_theta + entry['reading_index_theta']
-            ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
+
+
+        #for idx, entry in enumerate(_reading_bottom.data):
+        #    value = entry['value']
+        #    phi = entry['phi']
+        #    # THEATA IS PONTING DOWN
+        #    # HERE WE NEED TO ADD A OFFSET TO COVER TO BOTTOM HALF
+        #    theta =  math.pi - entry['theta']
+        #    #print(theta)
+        #    reading_index_phi = max_reading_index_phi + entry['reading_index_phi']
+        #    reading_index_theta = max_reading_index_theta + entry['reading_index_theta']
+        #    ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
         return ret
 
     @staticmethod

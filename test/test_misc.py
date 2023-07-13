@@ -45,10 +45,10 @@ class TestMPRReading(unittest.TestCase):
                 else:
                     reading.insert_reading(-1, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
 
-        visu = MRPVisualization.MRPVisualization(reading)
+        #visu = MRPVisualization.MRPVisualization(reading)
         # 2D PLOT INTO A WINDOW
-        visu.plot3d(None)
-        visu.plot2d_side(None)
+        #visu.plot3d(None)
+        #visu.plot2d_side(None)
 
         # 3D PLOT TO FILE
         # visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))

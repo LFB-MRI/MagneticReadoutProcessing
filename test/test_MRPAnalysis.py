@@ -92,7 +92,7 @@ class TestMPRAnalysis(unittest.TestCase):
         visu = MRPVisualization.MRPVisualization(merged_reading)
 
         # 2D PLOT INTO A WINDOW
-        #visu.plot2d_side(None)
+        visu.plot3d(None)
 
 
         # 3D PLOT TO FILE
