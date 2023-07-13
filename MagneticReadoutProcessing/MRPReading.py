@@ -30,7 +30,7 @@ class MRPReading(object): # object is needed for pickle export
         # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
         self.config = dict()
         self.additional_data = dict()
-
+        self.additional_data['name'] = 'unknown'
         # POPULATE SOMA DEFAULT DATA ABOUT THE READING
         self.measurement_config = dict()
         self.measurement_config['sensor_distance_radius'] = 1.0
@@ -56,6 +56,8 @@ class MRPReading(object): # object is needed for pickle export
             self.measurement_config['sensor_id'] = _sensor_id
         else:
             self.measurement_config['sensor_id'] = 0
+
+
 
     def loads(self, _pickle_binaray: bytes):
         pl = pickle.loads(_pickle_binaray)
@@ -232,6 +234,13 @@ class MRPReading(object): # object is needed for pickle export
         if '.pkl' not in _filepath_name:
             _filepath_name = _filepath_name + '.pkl'
         print("dump_to_file with {0}".format(_filepath_name))
+
+        # STORE SOME EXPORT METADATA
+        self.set_additional_data('export_filepath', _filepath_name)
+        self.set_additional_data('export_filename', os.path.basename(_filepath_name))
+        self.set_additional_data('name', os.path.basename(_filepath_name))
+
+        # FINALLY EXPORT TO FILE USING THE self.dump option
         try:
             fout = open(_filepath_name, 'wb')
             fout.write(self.dump())

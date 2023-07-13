@@ -48,6 +48,7 @@ class MRPAnalysis(object):
         ret.measurement_config['phi_radians'] = top_phi_radians
         ret.measurement_config['sensor_id'] = 42
 
+        ret.set_additional_data('is_merged_reading', 1)
 
         print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'],
                                                                     ret.measurement_config['theta_radians']))
@@ -112,6 +113,11 @@ class MRPAnalysis(object):
         ## UPDATE ALL DATA ENTRIES
         _current_reading.update_data_from_numpy_polar(np_curr)
 
+        # APPEND SOME METADATA
+        _current_reading.set_additional_data('is_calibrated', 1)
+        # ADD NAME OF THE CALIBRATION READING
+        if 'export_filepath' in _calibration_reading.additional_data:
+            _current_reading.set_additional_data('calibration_reading_source', _calibration_reading.additional_data['export_filepath'])
         # UPDATE THE DATA ENTRY DIRECTLY
 
     def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading,
