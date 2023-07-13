@@ -115,6 +115,7 @@ Export a reading
 .. code-block:: python
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
+    import os
     # EXPORT TO A DIFFERENT FOLDER
     RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
     if not os.path.exists(RESULT_FILEPATH):
@@ -125,7 +126,6 @@ Export a reading
     # FINALLY EXPORT
     reading.dump_to_file(RESULT_FILEPATH)
 
-
 Import a reading
 ================
 .. code-block:: python
@@ -134,9 +134,6 @@ Import a reading
     RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
     reading_imported = MRPReading.MRPReading(None)
     reading_imported.load_from_file(RESULT_FILEPATH)
-
-
-
 
 MRPVisualization Examples
 *************************
@@ -152,14 +149,12 @@ Visualization of a measurement
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
     import MRPVisualization
+    import os
     # HERE matplotlib is also used
-
     visu = MRPVisualization.MRPVisualization(reading)
-
     # 2D PLOT INTO A WINDOW
     visu.plot2d_top(None)
     visu.plot2d_side(None)
-
     # 3D PLOT TO FILE
     visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
 
@@ -185,6 +180,7 @@ Afterwards the Function ``apply_calibration_data_inplace`` is called for each ne
 
 .. code-block:: python
 
+    import MRPAnalysis
     # reading_calibration => measurement without magnetic source => environment only
     # reading_A => reading with source placed
     MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(reading_calibration, reading_A)
@@ -207,7 +203,7 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
    Make sure that the sample size (``HORIZONTAL_RESOLUTION`` and ``VERTICAL_RESOLUTION``) for calibration and all further measurements match.
 
 .. code-block:: python
-
+    import MRPAnalysis
     # IMPORT TWO EXISTING READINGS FROM FILE
     reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
     reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
@@ -233,7 +229,7 @@ The current implementation returns
 .. code-block:: python
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
-
+    import numpy as np
     # POLAR COORDINATES
     # [[phi, theta, magnetic_value], ....]
     numpy_1d_array = reading.to_numpy_polar(_normalize=False)
@@ -245,3 +241,5 @@ The current implementation returns
     # SO THE VECTOR IS LONGER IF THE MAGNETIC VALUE IS STRONGER
     # THIS CONVERSION CAN BE USED WITH VECTOR CALCULATIONS LIKE FIND NEAREST POINT ....
     numpy_1d_array = reading.to_numpy_polar(_normalize=False)
+
+    np.shape(numpy_1d_array)
