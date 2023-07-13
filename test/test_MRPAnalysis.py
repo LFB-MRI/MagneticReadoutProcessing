@@ -44,10 +44,14 @@ class TestMPRAnalysis(unittest.TestCase):
 
     def test_calibration_analysis_zero(self):
         # IF A CALIBRATION READING IS APPLIED ON THE SAME READING THE RESULT SHOULD BE ZERO
-        MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.)
+        # reading_A is the calibration reading
+        # and will be applied directly onto reading_B
+        MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_B)
+        self.assertIsNotNone(self.reading_B)
 
 
-        pass
+
+
 
     def test_calibration_analysis_real(self):
         pass
