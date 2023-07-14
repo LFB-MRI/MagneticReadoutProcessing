@@ -31,7 +31,7 @@ class MRPAnalysis(object):
         return None
 
     @staticmethod
-    def search_reading_for_value(_reading: MRPReading. MRPReading, _search: np.ndarray) -> float:
+    def search_reading_for_value_numpy(_reading: MRPReading. MRPReading, _search: np.ndarray) -> float:
         """
         returns a value from a given reading according a given search parameter [_phi, _theata, None]
         :param _reading:
@@ -77,7 +77,6 @@ class MRPAnalysis(object):
         ret.measurement_config['theta_radians'] = math.radians(180)
         ret.measurement_config['phi_radians'] = math.radians(360)
         ret.measurement_config['sensor_id'] = 42
-
         ret.set_additional_data('is_merged_reading', 1)
 
         print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'], ret.measurement_config['theta_radians']))
@@ -87,24 +86,34 @@ class MRPAnalysis(object):
         theta, phi = np.mgrid[0.0:ret.measurement_config['theta_radians']:ret.measurement_config['n_theta'] * 1j, 0.0:ret.measurement_config['phi_radians']:ret.measurement_config['n_phi'] * 1j]
 
 
+        index_t = 0
         for idx_p, p in enumerate(phi[0, :]):
+            index_t = 0
             for idx_t, t in enumerate(theta[:, 0]):
                 pass
                 # TODO SEARCH FOR ENTIRES IN BOTH READING
                 #   CREATE A NEW FUNCTION IN READING TO TO THIS STEP
                 # SET ELSE NO NULL
 
+
+                # INSERT TOP READING DATA
                 value = MRPAnalysis.search_reading_for_value(_reading_top, p, t)
-
-
                 if value is None:
                     ret.insert_reading(0, p, t, idx_p, idx_t, None, False)
                 else:
                     ret.insert_reading(value, p, t, idx_p, idx_t, None, True)
-                #if t <= math.pi/2.0:
-                #    ret.insert_reading(1, p, t, idx_p, idx_t)
-                #else:
-                #   ret.insert_reading(-1, p, t, idx_p, idx_t)
+                index_t = index_t +1
+                # INSERT BOTTOM READING DATA
+                # HERE WE NEED shift the theta value
+                value = MRPAnalysis.search_reading_for_value(_reading_bottom, p, t)
+                # INSERT FROM THE BOTTOM
+                theta = math.pi - t
+                # insert
+                if value is None:
+                    ret.insert_reading(0, p, theta, idx_p, idx_t, None, False)
+                else:
+                    ret.insert_reading(value, p, theta, idx_p, idx_t, None, True)
+                index_t = index_t + 1
 
 
 
