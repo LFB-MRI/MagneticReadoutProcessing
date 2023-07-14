@@ -14,6 +14,32 @@ class MRPAnalysisException(Exception):
 
 
 class MRPAnalysis(object):
+    @staticmethod
+    def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
+        """
+        returns a value from a given reading according a given _phi _theta values
+        :param _reading: reading with data to search in
+        :param _phi:
+        :param _theta:
+        :return: value if value found else None
+        """
+        for idx, data_entry in enumerate(_reading.data):
+            phi = data_entry['phi']
+            theta = data_entry['theta']
+            if phi == _phi and theta == _theta:
+                return data_entry['value']
+        return None
+
+    @staticmethod
+    def search_reading_for_value(_reading: MRPReading. MRPReading, _search: np.ndarray) -> float:
+        """
+        returns a value from a given reading according a given search parameter [_phi, _theata, None]
+        :param _reading:
+        :param _search: numpy.ndarray [phi, theta, X]
+        :return:
+        """
+        return MRPAnalysis.search_reading_for_value(_reading, _search[0], _search[1])
+
     # TODO BINNING IMPLEMENTIEREN
     #
     @staticmethod
@@ -67,10 +93,18 @@ class MRPAnalysis(object):
                 # TODO SEARCH FOR ENTIRES IN BOTH READING
                 #   CREATE A NEW FUNCTION IN READING TO TO THIS STEP
                 # SET ELSE NO NULL
-                if t <= math.pi/2.0:
-                    ret.insert_reading(1, p, t, idx_p, idx_t)
+
+                value = MRPAnalysis.search_reading_for_value(_reading_top, p, t)
+
+
+                if value is None:
+                    ret.insert_reading(0, p, t, idx_p, idx_t, None, False)
                 else:
-                    ret.insert_reading(-1, p, t, idx_p, idx_t)
+                    ret.insert_reading(value, p, t, idx_p, idx_t, None, True)
+                #if t <= math.pi/2.0:
+                #    ret.insert_reading(1, p, t, idx_p, idx_t)
+                #else:
+                #   ret.insert_reading(-1, p, t, idx_p, idx_t)
 
 
 
@@ -128,17 +162,7 @@ class MRPAnalysis(object):
         # REWORK EVERYTHING TO MATRICES
         # CURRENTLY WE CANT MAKE SURE THAT THE DATA ORDER IS IN BOTH ARRAYS EQUAL SO WE NEED TO SEARCH
 
-        for idx, curr in enumerate(np_curr):
-            curr_phi = curr[0]
-            curr_theta = curr[1]
 
-            for cal in np_cal:
-                cal_phi = cal[0]
-                cal_theta = cal[1]
-
-                if cal_phi == curr_phi and cal_theta == curr_theta:
-                    np_curr[idx][2] = curr[2] - cal[2]
-                    break
         ## UPDATE ALL DATA ENTRIES
         _current_reading.update_data_from_numpy_polar(np_curr)
 
@@ -152,6 +176,10 @@ class MRPAnalysis(object):
 
     def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading,
                       _bins: int = None) -> list[MRPReading.MRPReading]:
+
+        # TODO ONLY FOR 360 DRG ARRYS SO CHECK THETA PHI RANGE BEFORE
+        # CONVERT TO MATTRIX
+        # CALCULATE NUMPY SUB MATRIX -> SUMUP FOR DEVIATION
         if _calibrated_readings is None or len(_calibrated_readings) <= 0:
             raise MRPAnalysisException("_calibrated_readings is none or empty")
         if _reference_reading is None:

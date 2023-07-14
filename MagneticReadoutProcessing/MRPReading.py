@@ -202,7 +202,7 @@ class MRPReading(object): # object is needed for pickle export
         # SO IMPORT/EXPORT IS POSSIBLE
 
     def insert_reading(self, _reading: float, _phi: float, _theta: float, _reading_index_phi: int,
-                       _reading_index_theta: int, _temp: float = None) -> None:
+                       _reading_index_theta: int, _temp: float = None, _is_valid: bool = True) -> None:
         if len(self.data) <= 0:
             self.time_start = datetime.now()
         self.time_end = datetime.now()
@@ -212,7 +212,8 @@ class MRPReading(object): # object is needed for pickle export
             "theta": _theta,
             "reading_index_phi": _reading_index_phi,
             "reading_index_theta": _reading_index_theta,
-            "temperature": _temp
+            "temperature": _temp,
+            "is_valid": _is_valid
         })
         self.data.append(entry)
 
