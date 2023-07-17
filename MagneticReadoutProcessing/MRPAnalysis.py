@@ -100,38 +100,16 @@ class MRPAnalysis(object):
                 if value_top is not None:
                     ret.insert_reading(value_top, p, t, idx_p, index_t, None, True)
                     inserted = True
-
-                if value_bottom is not None:
-                    t_corrected = t
-                    if t <= 0.0:
-                        continue
-
-                    ret.insert_reading(value_bottom, p, math.pi- t_corrected, idx_p, index_t, None, True)
+                # SKIP FIRST LINE FROM THE BOTTOM READING DUE TO OVERLAPPING WITH THE ROP ONE
+                if value_bottom is not None and t > 0.0:
+                    ret.insert_reading(value_bottom, p, math.pi- t, idx_p, index_t, None, True)
                     inserted = True
 
                 if not inserted:
                     ret.insert_reading(0, p, t, idx_p, index_t, None, False)
 
                 index_t = index_t + 1
-        print("TOP readings inserted {0} readings into the 360° sphere".format(len(ret.data)))
-
-
-        #for idx_p, p in enumerate(phi[0, :]):
-        #    index_t = bottom_n_theta # add the second half
-        #    for t in theta[:, 0]:
-        #        if t == 0.0:
-        #            continue
-        #        # INSERT BOTTOM READING DATA
-        #        value_bottom = MRPAnalysis.search_reading_for_value(_reading_bottom, p, t)
-        #        # HERE WE NEED TO SHIFT THE THETA VALUE
-        #        t_corrected = math.pi - t
-        #        # insert
-        #        if value_bottom is not None:
-        #            ret.insert_reading(value_bottom, p, t_corrected, idx_p, index_t, None, True)
-        #            index_t = index_t + 1
-
-        #print("BOTTOM readings inserted {0} readings into the 360° sphere".format(len(ret.data)))
-
+        print("readings inserted {0} readings into the 360° sphere".format(len(ret.data)))
         return ret
 
     @staticmethod

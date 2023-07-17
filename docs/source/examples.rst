@@ -228,6 +228,28 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
 MISC Examples
 *************
 
+Get meta-data
+=======================
+
+Each reading contains some meta-data about the reading.
+To access these, there is a ``measurement_config`` dict present in the ``MRPReading`` class
+
+.. code-block:: python
+
+    # EXTENDS THE `Import a reading` EXAMPLE
+    # PRINT METADATA
+    print(reading_imported.measurement_config)
+    # ACCESS WITH
+    r = reading_imported.measurement_config['sensor_distance_radius']
+
+Currently the following keys are present:
+
+* ``sensor_distance_radius`` - distance between hall-sensor - magnet in ``mm``, can be used as radius for converting polar coordinates into cartesian
+* ``sensor_id`` - which hall-sensor was used to collect samples
+
+In addition there is another dict called ``additional_data`` with user defined data.
+
+
 Export reading to numpy
 =======================
 
@@ -248,6 +270,6 @@ The current implementation returns
     # IT USES THE MAGNETIC_VALUE for the radius
     # SO THE VECTOR IS LONGER IF THE MAGNETIC VALUE IS STRONGER
     # THIS CONVERSION CAN BE USED WITH VECTOR CALCULATIONS LIKE FIND NEAREST POINT ....
-    numpy_1d_array = reading.to_numpy_polar(_normalize=False)
-
+    # def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
+    numpy_1d_array = reading.to_numpy_cartesian(_normalize=False, True)
     np.shape(numpy_1d_array)
