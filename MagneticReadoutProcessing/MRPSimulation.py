@@ -4,7 +4,8 @@ import random
 import numpy as np
 from MagneticReadoutProcessing import MRPReading, MRPHelpers
 import magpylib as magpy
-import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation as R
+import vg
 class MRPSimulation(object):
     @staticmethod
     def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization=False,
@@ -12,24 +13,29 @@ class MRPSimulation(object):
 
 
         # CREATE MAGNET IN THE CENTER
-        magnet = magpy.magnet.Cuboid(magnetization=(0,0,100), dimension= (_size_mm, _size_mm, _size_mm), position=(0, 0, 0))
-
+        magnet = magpy.magnet.Cuboid(magnetization=(0, 0, 100), dimension= (_size_mm, _size_mm, _size_mm), position=(0, 0, 0))
+        magnet.rotate_from_rotvec((0,90,0), degrees=True)
         # CREATE ONE HALLSENSOR PROBE
-        hallsensor = magpy.Sensor(style_label='S1')
-        simulation_collection = magpy.Collection(magnet, hallsensor, style_label='simulation_collection')
 
+        hallsensor_center = magpy.Sensor(position=(0, 0, 0), style_label='S1')
+        hallsensor_r1 = magpy.Sensor(position=(0, 0, _sensor_distance_radius_mm), style_label='S1')
+        hallsensor_r2 = magpy.Sensor(position=(0, 0, -_sensor_distance_radius_mm), style_label='S1')
+
+
+        sensor_collection = magpy.Collection(hallsensor_center, hallsensor_r1,hallsensor_r2, style_label='sensor_collection')
+        simulation_collection = magpy.Collection(magnet,sensor_collection,  style_label='simulation_collection')
 
         # CREATE READING
         reading = MRPReading.MRPReading(None, _sensor_id=0, _sensor_radius=_sensor_distance_radius_mm)
-        reading.measurement_config['n_theta'] = 18
-        reading.measurement_config['n_phi'] = 36
+        reading.measurement_config['n_theta'] = 9#18
+        reading.measurement_config['n_phi'] = 18#36
         reading.measurement_config['theta_radians'] = math.radians(180)
         reading.measurement_config['phi_radians'] = math.radians(360)
         reading.set_additional_data('is_generated_reading', 1)
         reading.set_additional_data('generation_source', 'magpylib')
 
         reading.set_additional_data('magnet_type', 'cuboid')
-        reading.set_additional_data('magnet_dimension', 'magpylib')
+        reading.set_additional_data('magnet_dimension', '12x12x12')
 
 
         # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
@@ -38,25 +44,36 @@ class MRPSimulation(object):
 
         for index_phi, p in enumerate(phi[0, :]):
             for index_theta, t in enumerate(theta[:, 0]):
+                horizontal_degree = math.degrees(p)
+                vertical_degree = math.degrees(t)
 
+                sensor_collection.reset_path()
+                sensor_collection.rotate_from_euler(horizontal_degree, 'y', degrees=True)
                 # CALC X Y Z
+                horizontal_degree = math.degrees(t)
+                vertical_degree = math.degrees(p)
+                pos = MRPHelpers.asCartesian_degree((_sensor_distance_radius_mm, horizontal_degree, vertical_degree))
 
-                hallsensor.position = MRPHelpers.asCartesian((_sensor_distance_radius_mm, t, p))
+
+
 
                 #print(hallsensor.position)
-                #plot = magpy.show(simulation_collection)
+                # GET BFIELD OF SENSOR
+                readres = hallsensor_r1.getB(magnet)
+                # CALCULATE B FIELD MAGNITUDE
+                value = np.sqrt(readres.dot(readres))
 
-                magpy.show(simulation_collection)
+                if readres[2] < 0:
+                    value = -value
 
-
-                # TODO SET ORIENTATION OF SENSOR PROBE
-                # TODO CORRECT IMAGE
-                readres = hallsensor.getB(magnet)
-
-                value = math.sqrt(math.pow(readres[0],2.0)+ math.pow(readres[1],2.0)+ math.pow(readres[2],2.0))
-                print(value)
+                if _randomize_magnetization:
+                    value = value * random.uniform(0.9, 1)
+                #print(value)
                 reading.insert_reading(value, p, t, index_phi, index_theta, 25.0, True)
 
+            # FOR DEBUGGING
+        magpy.show(simulation_collection)
+        i =0
 
         return reading
 

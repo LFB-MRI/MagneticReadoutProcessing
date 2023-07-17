@@ -28,10 +28,11 @@ class TestMPRSimulation(unittest.TestCase):
         #visu.plot3d(None)
 
     def test_simulation_cubic_magnet(self):
-        no_samples = 1
+        no_samples = 10
         magnet_size = 12 # mm
+        add_random_factor = True
         for sample in range(no_samples):
-            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size)
+            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size, add_random_factor)
             visu = MRPVisualization.MRPVisualization(reading)
             visu.plot3d(None)
 
