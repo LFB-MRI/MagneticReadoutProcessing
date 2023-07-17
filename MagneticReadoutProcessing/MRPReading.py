@@ -99,14 +99,7 @@ class MRPReading(object): # object is needed for pickle export
     def set_name(self, _name: str = "unknown"):
         self.additional_data['name'] = _name
 
-    def asCartesian(self, _rthetaphi: (float, float, float) = (None, None, None)) -> [float, float, float]:
-        r = _rthetaphi[0]
-        theta = _rthetaphi[1] * math.pi / 180  # to radian
-        phi = _rthetaphi[2] * math.pi / 180
-        x = r * math.sin(theta) * math.cos(phi)
-        y = r * math.sin(theta) * math.sin(phi)
-        z = r * math.cos(theta)
-        return [x, y, z]
+
 
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
         # X Y Z GRID
@@ -122,9 +115,9 @@ class MRPReading(object): # object is needed for pickle export
             value = entry[2]
 
             if _use_sensor_distance:
-                cart = self.asCartesian((value, theta, phi))
+                cart =  MRPHelpers.asCartesian((value, theta, phi))
             else:
-                cart = self.asCartesian((sensor_distance_radius, theta, phi))
+                cart = MRPHelpers.asCartesian((sensor_distance_radius, theta, phi))
 
             inp.append(cart)
         #return np.hypot(x, y), np.degrees(np.arctan2(y, x))

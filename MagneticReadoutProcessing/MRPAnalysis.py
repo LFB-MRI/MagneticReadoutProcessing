@@ -83,7 +83,7 @@ class MRPAnalysis(object):
 
 
         # CREATE A POLAR GRID FOR A FULL SPHERE
-        theta, phi = np.mgrid[0.0:ret.measurement_config['theta_radians']:ret.measurement_config['n_theta'] * 1j, 0.0:ret.measurement_config['phi_radians']:ret.measurement_config['n_phi'] * 1j]
+        theta, phi = np.mgrid[0.0:ret.measurement_config['theta_radians']:ret.measurement_config['n_theta'] * 1j, 0.0:2.0*ret.measurement_config['phi_radians']:ret.measurement_config['n_phi'] * 1j]
 
 
         index_t = 0

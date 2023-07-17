@@ -225,11 +225,61 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
    :width: 600
 
 
+
+MRPSimulation Examples
+**********************
+
+The ``MRPSimulation`` class contains functions to generate sample data.
+Here random ``MRPReading`` class instances can be generated.
+
+Full sphere with polarization
+=============================
+.. image:: _static/simulation_random_1.png
+   :width: 600
+
+.. code-block:: python
+
+        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(False)
+        visu = MRPVisualization.MRPVisualization(reading)
+        visu.plot3d(None)
+
+
+Fully random sphere
+===================
+
+.. image:: _static/simulation_random_2.png
+   :width: 600
+
+.. code-block:: python
+
+        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(True)
+        visu = MRPVisualization.MRPVisualization(reading)
+        visu.plot3d(None)
+
+
+
+
+Magpylib based sphere
+===================
+
+To generate some more real testdata
+
+.. image:: _static/simulation_random_3.png
+   :width: 600
+
+.. code-block:: python
+
+        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(True)
+        visu = MRPVisualization.MRPVisualization(reading)
+        visu.plot3d(None)
+
+
+
 MISC Examples
 *************
 
 Get meta-data
-=======================
+=============
 
 Each reading contains some meta-data about the reading.
 To access these, there is a ``measurement_config`` dict present in the ``MRPReading`` class

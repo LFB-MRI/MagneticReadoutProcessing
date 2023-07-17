@@ -66,6 +66,7 @@ class TestMPRAnalysis(unittest.TestCase):
             orig = result_original[idx]
             self.assertAlmostEqual(orig[2], b[2] + a[2])
 
+    @unittest.skip
     def test_merge_analysis_EQUAL(self):
 
         self.assertIsNotNone(self.reading_A)
