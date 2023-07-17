@@ -8,12 +8,17 @@ from scipy.spatial.transform import Rotation as R
 import vg
 class MRPSimulation(object):
     @staticmethod
-    def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization=False,
+    def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization:bool = False, _add_random_polarisation:bool = False,
                                _sensor_distance_radius_mm: int = 40) -> MRPReading.MRPReading:
 
 
         # CREATE MAGNET IN THE CENTER
-        magnet = magpy.magnet.Cuboid(magnetization=(0, 0, 100), dimension= (_size_mm, _size_mm, _size_mm), position=(0, 0, 0))
+        magnetization = (0, 0, 100)
+        if _add_random_polarisation:
+            magnetization = (0, 100 * random.uniform(0, 0.5), 100 * random.uniform(0.5, 1))
+
+
+        magnet = magpy.magnet.Cuboid(magnetization=magnetization, dimension= (_size_mm, _size_mm, _size_mm), position=(0, 0, 0))
         magnet.rotate_from_rotvec((0,90,0), degrees=True)
         # CREATE ONE HALLSENSOR PROBE
 
@@ -72,7 +77,7 @@ class MRPSimulation(object):
                 reading.insert_reading(value, p, t, index_phi, index_theta, 25.0, True)
 
             # FOR DEBUGGING
-        magpy.show(simulation_collection)
+        #magpy.show(simulation_collection)
         i =0
 
         return reading
