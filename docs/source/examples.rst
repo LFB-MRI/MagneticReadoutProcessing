@@ -206,6 +206,7 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
    Make sure that the sample size (``HORIZONTAL_RESOLUTION`` and ``VERTICAL_RESOLUTION``) for calibration and all further measurements match.
 
 .. code-block:: python
+
     import MRPAnalysis
     # IMPORT TWO EXISTING READINGS FROM FILE
     reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
@@ -218,6 +219,10 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
     reading_bottom.load_from_file(reading_bottom_filepath)
     # FINALLY MERGE
     merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
+
+
+.. image:: _static/merged_readings_example_random.png
+   :width: 600
 
 
 MISC Examples

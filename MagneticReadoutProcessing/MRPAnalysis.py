@@ -1,5 +1,6 @@
 """ Provides functions to merge two reading, apply calibration measurements"""
 import math
+import random
 
 import numpy
 import numpy as np
@@ -69,14 +70,13 @@ class MRPAnalysis(object):
 
         # TODO FIX BOTTOM
         # CREATE NEW READING WITH MODIFED SIZE
-        ret = MRPReading.MRPReading(None)
+        ret = MRPReading.MRPReading(None, 42, _reading_top.measurement_config['sensor_distance_radius'])
         ret.measurement_config = _reading_top.measurement_config
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
         ret.measurement_config['n_theta'] = bottom_n_theta
         ret.measurement_config['n_phi'] = bottom_n_phi
         ret.measurement_config['theta_radians'] = math.radians(180)
         ret.measurement_config['phi_radians'] = math.radians(360)
-        ret.measurement_config['sensor_id'] = 42
         ret.set_additional_data('is_merged_reading', 1)
 
         print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'], ret.measurement_config['theta_radians']))
@@ -87,74 +87,51 @@ class MRPAnalysis(object):
 
 
         index_t = 0
+        inserted = False
         for idx_p, p in enumerate(phi[0, :]):
             index_t = 0
             for idx_t, t in enumerate(theta[:, 0]):
-                pass
-                # TODO SEARCH FOR ENTIRES IN BOTH READING
-                #   CREATE A NEW FUNCTION IN READING TO TO THIS STEP
-                # SET ELSE NO NULL
-
-
                 # INSERT TOP READING DATA
-                value = MRPAnalysis.search_reading_for_value(_reading_top, p, t)
-                if value is None:
-                    ret.insert_reading(0, p, t, idx_p, idx_t, None, False)
-                else:
-                    ret.insert_reading(value, p, t, idx_p, idx_t, None, True)
-                index_t = index_t +1
-                # INSERT BOTTOM READING DATA
-                # HERE WE NEED shift the theta value
-                value = MRPAnalysis.search_reading_for_value(_reading_bottom, p, t)
-                # INSERT FROM THE BOTTOM
-                theta = math.pi - t
-                # insert
-                if value is None:
-                    ret.insert_reading(0, p, theta, idx_p, idx_t, None, False)
-                else:
-                    ret.insert_reading(value, p, theta, idx_p, idx_t, None, True)
+                value_top = MRPAnalysis.search_reading_for_value(_reading_top, p, t)
+                value_bottom = MRPAnalysis.search_reading_for_value(_reading_bottom, p, t)
+
+                inserted = False
+
+                if value_top is not None:
+                    ret.insert_reading(value_top, p, t, idx_p, index_t, None, True)
+                    inserted = True
+
+                if value_bottom is not None:
+                    t_corrected = t
+                    if t <= 0.0:
+                        continue
+
+                    ret.insert_reading(value_bottom, p, math.pi- t_corrected, idx_p, index_t, None, True)
+                    inserted = True
+
+                if not inserted:
+                    ret.insert_reading(0, p, t, idx_p, index_t, None, False)
+
                 index_t = index_t + 1
+        print("TOP readings inserted {0} readings into the 360° sphere".format(len(ret.data)))
 
 
+        #for idx_p, p in enumerate(phi[0, :]):
+        #    index_t = bottom_n_theta # add the second half
+        #    for t in theta[:, 0]:
+        #        if t == 0.0:
+        #            continue
+        #        # INSERT BOTTOM READING DATA
+        #        value_bottom = MRPAnalysis.search_reading_for_value(_reading_bottom, p, t)
+        #        # HERE WE NEED TO SHIFT THE THETA VALUE
+        #        t_corrected = math.pi - t
+        #        # insert
+        #        if value_bottom is not None:
+        #            ret.insert_reading(value_bottom, p, t_corrected, idx_p, index_t, None, True)
+        #            index_t = index_t + 1
 
+        #print("BOTTOM readings inserted {0} readings into the 360° sphere".format(len(ret.data)))
 
-
-
-
-        # MERGE DATA
-        #max_theta = 0.0
-        #max_reading_index_phi = 0
-        #max_reading_index_theta = 0
-        #max_reading_theta = 0.0
-        #for idx, entry in enumerate(_reading_top.data):
-        #    value = entry['value']
-        #    phi = entry['phi']
-        #    # THEATA IS PONTING DOWN
-        #    theta = entry['theta']
-        #    print(theta)
-        #    reading_index_phi = entry['reading_index_phi']
-        #    reading_index_theta = entry['reading_index_theta']
-        #    # GET LIMITS FOR INSERTING THE BOTTOM DATA CORRECT ORDER
-        #    max_reading_index_phi = max(max_reading_index_phi, reading_index_phi)
-        #    max_reading_index_theta = max(max_reading_index_theta, reading_index_theta)##
-
-            #max_reading_theta = max(max_reading_theta, theta)
-            ## INSERT DATA
-            #ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
-
-
-
-
-        #for idx, entry in enumerate(_reading_bottom.data):
-        #    value = entry['value']
-        #    phi = entry['phi']
-        #    # THEATA IS PONTING DOWN
-        #    # HERE WE NEED TO ADD A OFFSET TO COVER TO BOTTOM HALF
-        #    theta =  math.pi - entry['theta']
-        #    #print(theta)
-        #    reading_index_phi = max_reading_index_phi + entry['reading_index_phi']
-        #    reading_index_theta = max_reading_index_theta + entry['reading_index_theta']
-        #    ret.insert_reading(value, phi, theta, reading_index_phi, reading_index_theta)
         return ret
 
     @staticmethod

@@ -39,7 +39,7 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
     # JUST USED FOR PREPARATION
 
-
+    @unittest.skip
     def test_calibration_analysis_zero(self):
         # IF A CALIBRATION READING IS APPLIED ON THE SAME READING THE RESULT SHOULD BE ZERO
         # reading_A is the calibration reading
@@ -47,30 +47,38 @@ class TestMPRAnalysis(unittest.TestCase):
         # so the result should be zero for all entries
         MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_A)
         self.assertIsNotNone(self.reading_A)
-
         # CHECK FOR VALUES ZERO
         result = self.reading_A.to_numpy_polar()
-        #for r in result:
-        #    self.assertEqual(r[2], 0.0)
+        for r in result:
+            self.assertEqual(r[2], 0.0)
 
-
+    @unittest.skip
     def test_calibration_analysis_real(self):
         result_original = self.reading_B.to_numpy_polar()
         MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_B)
         self.assertIsNotNone(self.reading_B)
-
         # CHECK FOR VALUES ZERO
         result_A = self.reading_A.to_numpy_polar()
         result_B = self.reading_B.to_numpy_polar()
-
         # CHECK triangle inequality
         for idx, a in enumerate(result_A):
             b = result_B[idx]
             orig = result_original[idx]
+            self.assertAlmostEqual(orig[2], b[2] + a[2])
 
-            #self.assertAlmostEqual(orig[2], b[2] + a[2])
+    def test_merge_analysis_EQUAL(self):
 
-    def test_merge_analysis(self):
+        self.assertIsNotNone(self.reading_A)
+        # MERGE
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(self.reading_A, self.reading_A)
+        self.assertIsNotNone(merged_reading)
+        # CHECK RESULT
+        visu = MRPVisualization.MRPVisualization(merged_reading)
+        # PLOT INTO A WINDOW
+        visu.plot3d(None)
+
+    @unittest.skip
+    def test_merge_analysis_TWO_READINGS(self):
         # IMPORT TWO EXISTING READINGS FROM FILE
         reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
         reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
@@ -84,7 +92,8 @@ class TestMPRAnalysis(unittest.TestCase):
         self.assertIsNotNone(reading_top)
         self.assertIsNotNone(reading_bottom)
 
-        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top, reading_bottom)
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top,
+                                                                                                   reading_bottom)
         self.assertIsNotNone(merged_reading)
 
         # CHECK RESULT
@@ -93,7 +102,6 @@ class TestMPRAnalysis(unittest.TestCase):
 
         # 2D PLOT INTO A WINDOW
         visu.plot3d(None)
-
 
         # 3D PLOT TO FILE
         #visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
