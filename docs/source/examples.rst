@@ -129,6 +129,7 @@ Export a reading
     # FINALLY EXPORT
     reading.dump_to_file(RESULT_FILEPATH)
 
+
 Import a reading
 ================
 .. code-block:: python
@@ -164,7 +165,7 @@ Visualization of a measurement
 
 
 MRPAnalysis Examples
-*************************
+********************
 
 
 Apply a calibration reading
@@ -260,7 +261,7 @@ Fully random sphere
 
 
 Magpylib based sphere
-===================
+=====================
 
 His example shows, how to generate readings using the ``magpylib``.
 Here ``MRPReading`` class instances with datasets from a simulated cubic magnets can be generated.
@@ -285,6 +286,36 @@ The two additional parameters for the random factor make it possible to add a ce
             name = os.path.join(self.batch_generation_folder_path, 'test_simulation_cubic_magnet_' + str(magnet_size) + "mm_" + str(sample) + "_randompolarisation")
             visu.plot3d(name + ".mag.pkl.png")
             reading.dump_to_file( name + ".mag.pkl")
+
+
+
+MRPReadoutSource Examples
+*************************
+
+In this example category the main goal of this library is shown.
+To use a reading and convert it to a magnet, which can be used as ``MagPyLib`` source.
+
+.. note::
+    CURRENTLY IT IS ONLY  POSSIBLE TO USE FULL SPHERE READING!!
+
+.. note::
+    Please see all step by step examples located in ``test_MRPReadoutSource.py``
+
+
+.. code-block:: python
+
+        # GENERATE A SAMPLE READING USING A SIMULATED 12x12x12 CUBIC MAGNET
+        magnet_size = 12 # mm
+        generated_reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size)
+        # CREATE CUSTOM READOUT SOURCE INSTANCE
+        gen_magnet = MRPReadoutSource.MRPReadoutSource(generated_reading)
+        # PLACE SENSOR PROBE
+        gen_sensor = magpy.Sensor(position=(50, 0, 0), style_label='S1')
+        # CREATE COLLECTIONS
+        gen_collection = magpy.Collection(gen_magnet, gen_sensor,style_label='gen_collection')
+        # READOUT SENSOR
+        gen_value = gen_sensor.getB(gen_magnet)
+        gen_mag_value = np.sqrt(gen_value.dot(gen_value)) # [mT]
 
 
 

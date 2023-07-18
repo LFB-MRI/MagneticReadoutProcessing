@@ -1,4 +1,4 @@
-test.ann\_module2
+﻿test.ann\_module2
 =================
 
 .. currentmodule:: test

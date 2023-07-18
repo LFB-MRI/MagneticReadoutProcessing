@@ -42,6 +42,9 @@ def plot_field_lines_two_sources(_source1: magpy.magnet, _source2: magpy.magnet)
     plt.colorbar(sp_gen.lines, ax=ax2, label='[mT]')
     plt.tight_layout()
     plt.show()
+
+
+
 class TestMPRSimulation(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
@@ -66,7 +69,7 @@ class TestMPRSimulation(unittest.TestCase):
         # TODO PLOT FLIED FOR TESTING
 
         # SETUP REFERENCE MAGNET
-        ref_magnet = magpy.magnet.Cuboid(magnetization=(0,0,100), dimension=(magnet_size, magnet_size, magnet_size),position=(0, 0, 0))
+        ref_magnet = magpy.magnet.Cuboid(magnetization=(0, 0, 100), dimension=(magnet_size, magnet_size, magnet_size),position=(0, 0, 0))
 
         # CREATE SENSORS
         gen_sensor = magpy.Sensor(position=(0, 0, 0), style_label='S1')
