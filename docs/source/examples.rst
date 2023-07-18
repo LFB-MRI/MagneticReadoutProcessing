@@ -239,7 +239,7 @@ Full sphere with polarization
 
 .. code-block:: python
 
-        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(False)
+        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(_full_random=False)
         visu = MRPVisualization.MRPVisualization(reading)
         visu.plot3d(None)
 
@@ -252,7 +252,7 @@ Fully random sphere
 
 .. code-block:: python
 
-        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(True)
+        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(_full_random=True)
         visu = MRPVisualization.MRPVisualization(reading)
         visu.plot3d(None)
 
@@ -262,16 +262,29 @@ Fully random sphere
 Magpylib based sphere
 ===================
 
-To generate some more real testdata
+His example shows, how to generate readings using the ``magpylib``.
+Here ``MRPReading`` class instances with datasets from a simulated cubic magnets can be generated.
+The ``generate_cubic_reading`` functions uses ``magpy.magnet.Cuboid`` instance to generate a dataset.
+The two additional parameters for the random factor make it possible to add a certain random deviation to the measured value.
+
 
 .. image:: _static/simulation_random_3.png
    :width: 600
 
 .. code-block:: python
 
-        reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(True)
-        visu = MRPVisualization.MRPVisualization(reading)
-        visu.plot3d(None)
+        no_samples = 10
+        magnet_size = 12 # mm
+        add_random_factor = True
+        add_random_polarisation = True
+        for sample in range(no_samples):
+            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size, add_random_factor, add_random_polarisation)
+            visu = MRPVisualization.MRPVisualization(reading)
+            visu.plot3d(None)
+
+            name = os.path.join(self.batch_generation_folder_path, 'test_simulation_cubic_magnet_' + str(magnet_size) + "mm_" + str(sample) + "_randompolarisation")
+            visu.plot3d(name + ".mag.pkl.png")
+            reading.dump_to_file( name + ".mag.pkl")
 
 
 
