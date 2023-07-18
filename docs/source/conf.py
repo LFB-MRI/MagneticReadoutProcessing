@@ -9,7 +9,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
 sys.path.insert(0, os.path.abspath('../../MagneticReadoutProcessing'))
-autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math"]
+sys.path.insert(0, os.path.abspath('../../test'))
+autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math", "vg"]
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,

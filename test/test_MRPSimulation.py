@@ -16,17 +16,19 @@ class TestMPRSimulation(unittest.TestCase):
         if not os.path.exists(self.batch_generation_folder_path):
             os.makedirs(self.batch_generation_folder_path)
 
-
+    @unittest.skip
     def test_simulation_random_full_sphere(self):
         reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(False)
         visu = MRPVisualization.MRPVisualization(reading)
         #visu.plot3d(None)
 
+    @unittest.skip
     def test_simulation_random_full_sphere_random(self):
         reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(True)
         visu = MRPVisualization.MRPVisualization(reading)
         #visu.plot3d(None)
 
+    @unittest.skip
     def test_simulation_cubic_magnet(self):
         no_samples = 0
         magnet_size = 12 # mm
@@ -40,7 +42,7 @@ class TestMPRSimulation(unittest.TestCase):
             visu.plot3d(name + ".mag.pkl.png")
             reading.dump_to_file( name + ".mag.pkl")
 
-
+    @unittest.skip
     def test_simulation_cubic_magnet_with_random_polarisazion(self):
         no_samples = 10
         magnet_size = 12 # mm

@@ -5,3 +5,4 @@ Module: MagneticReadoutProcessing
     :maxdepth: 4
 
     MagneticReadoutProcessing
+    Tests
