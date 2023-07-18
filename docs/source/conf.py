@@ -9,8 +9,28 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../../'))  # Source code dir relative to this file
 sys.path.insert(0, os.path.abspath('../../MagneticReadoutProcessing'))
-sys.path.insert(0, os.path.abspath('../../test'))
-autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math", "vg"]
+#sys.path.insert(0, os.path.abspath('../../test'))
+autodoc_mock_imports = ["numpy",
+                        "configparser",
+                        "google",
+                        "matplotlib",
+                        "math",
+                        "vg",
+                        "support",
+                        "test_support",
+                        "libregrtest",
+                        "regrtest",
+                        "ann_module3",
+                        "ann_module2",
+                        "ann_module",
+                        "test",
+                        "testsupport"]
+
+
+autodoc_default_options = {
+    "private-members": False,
+    "inherited-members": True,
+}
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -27,7 +47,11 @@ autodoc_mock_imports = ["numpy", "configparser", "google", "matplotlib", "math",
 project = "MagneticReadoutProcessing"
 copyright = "2023, Marcel Ochsendorf"
 author = "Marcel Ochsendorf"
+master_doc = "index"
+language = "en"
 
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = "sphinx"
 
 # -- General configuration ---------------------------------------------------
 # -- General configuration

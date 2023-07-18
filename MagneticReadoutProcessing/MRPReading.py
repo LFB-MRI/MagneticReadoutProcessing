@@ -1,4 +1,4 @@
-""" Stores the raw sensor data, including metadata and import/export functions"""
+
 
 import os.path
 import pickle
@@ -17,18 +17,36 @@ class MRPReadingException(Exception):
 
 
 class MRPReading(object): # object is needed for pickle export
-
+    """ Stores the raw sensor data, including metadata and import/export functions"""
 
 
     def __init__(self, _config: MRPConfig = None, _sensor_id: int = 0, _sensor_radius: int = 10) -> None:
-        #: Doc comment for instance attribute qux.
+        """
+        The constructor create a new empty reading with some predefined meta-data.
+
+
+        :param _config:
+        :type _config: MRPConfig
+
+        :param _sensor_id: used hallsensor sensor id for the reading
+        :type _sensor_id: int
+
+        :param _sensor_radius: distance between hallsensor and magnet
+        :type _sensor_radius: int
+
+
+
+        """
         self.time_start = None
         self.time_end = None
+        # holds the reading data samples
         self.data = []
+        # stores import measurement information like
         self.measurement_config = dict()
         self.sensor_id = 0
         # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
         self.config = dict()
+        # user defined metadata storage as kv pair
         self.additional_data = dict()
         self.additional_data['name'] = 'unknown'
         # POPULATE SOMA DEFAULT DATA ABOUT THE READING
@@ -73,6 +91,14 @@ class MRPReading(object): # object is needed for pickle export
 
 
     def load_from_file(self, _filepath_name: str):
+        """
+        Loads a given .mag.pkl file from a previous dump_to_file().
+        It restores all meta-data and datapoints.
+
+        :param _filepath_name: ABS or REL Filepath-string filepath to .mag.pkl
+        :type _filepath_name: str
+
+        """
         try:
             fint = open(_filepath_name, 'rb')
             pl = pickle.load(fint)
@@ -93,15 +119,33 @@ class MRPReading(object): # object is needed for pickle export
             sys.stderr.write(str(e))
 
     def set_additional_data(self, _k: str, _v: any):
+        """
+        Set a custom user meta-data entry.
+        For example if the ``apply_calibration_data_inplace`` is used on a reading, a custom entry `is_calibrated`=1 is added to the reading using this function.
+
+
+        :param _k: Key
+        :type _k: str
+
+        :param _v: Value
+        :type _v: str
+        """
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
     def set_name(self, _name: str = "unknown"):
+        """
+        Sets the name of the reading
+
+        :param _name: name of the reading
+        :type _name: str
+        """
         self.additional_data['name'] = _name
 
 
 
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
+
         # X Y Z GRID
         sensor_distance_radius = self.measurement_config['sensor_distance_radius']
         polar = self.to_numpy_polar(_normalize)
@@ -115,7 +159,7 @@ class MRPReading(object): # object is needed for pickle export
             value = entry[2]
 
             if _use_sensor_distance:
-                cart =  MRPHelpers.asCartesian((value, theta, phi))
+                cart = MRPHelpers.asCartesian((value, theta, phi))
             else:
                 cart = MRPHelpers.asCartesian((sensor_distance_radius, theta, phi))
 
@@ -126,6 +170,19 @@ class MRPReading(object): # object is needed for pickle export
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
     def to_numpy_polar(self, _normalize: bool = False) -> np.array:
+        """
+        Generates a 2D numpy array from the stored datapoints.
+        Note: only the value entry is included
+        RETURN FORMAT: [[phi, theta, value],...]
+
+
+        :param _normalize: Optional; If True the currently stored values will be normalized from -1.0 to 1.0
+        :type _normalize: bool
+
+        :return result: Returns currently saved data as numpy polar array [[phi, theta, value],...]
+        :rtype result: np.array
+
+        """
         # NORMALIZE DATA
         min_val = float('inf')
         max_val = -float('inf')
@@ -162,8 +219,11 @@ class MRPReading(object): # object is needed for pickle export
         """
         _numpy_array is a (x, 3) shaped array with [[phi, theta, value],...] structured data
         each matching phi, theta combination in the reading.data structure will be updated with the corresponding value from the _numpy_array entry
-        :param _numpy_array:
-        :return: None
+
+        :param _numpy_array: datapoints to update: [[phi, theta, value],...]
+        :type _numpy_array: np.ndarray
+
+
         """
 
         # CHECK FOR ARRAY/DATA SHAPE
@@ -229,6 +289,18 @@ class MRPReading(object): # object is needed for pickle export
         return pickle.dumps(final_dataset)
 
     def dump_to_file(self, _filepath_name: str) -> str:
+        """
+        Dumps the reading class instance into a binary file.
+        Including datapoints, config, measurement_config and additional_data as metadata
+
+        :param _filepath_name: File path to which the file will be exported
+        :type _filepath_name: str
+
+
+
+        :return result: File path to which the file is exported, including filename
+        :rtype result: str
+        """
         if '.pkl' not in _filepath_name:
             _filepath_name = _filepath_name + '.pkl'
         print("dump_to_file with {0}".format(_filepath_name))

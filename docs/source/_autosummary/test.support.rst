@@ -1,6 +1,6 @@
-test.support
+﻿test.support
 ============
 
 .. currentmodule:: test
 
-.. automodule:: support
+.. autodata:: support

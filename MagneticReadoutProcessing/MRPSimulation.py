@@ -1,4 +1,3 @@
-""" This class generates simulated readings, so its possible to generate a reading using a simulated ideal 10x10x10 magnet """
 import math
 import random
 import numpy as np
@@ -6,11 +5,26 @@ from MagneticReadoutProcessing import MRPReading, MRPHelpers
 import magpylib as magpy
 from scipy.spatial.transform import Rotation as R
 import vg
-class MRPSimulation(object):
+class MRPSimulation():
+    """ This class generates simulated readings, so its possible to generate a reading using a simulated ideal 10x10x10 magnet """
     @staticmethod
-    def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization:bool = False, _add_random_polarisation:bool = False,
-                               _sensor_distance_radius_mm: int = 40) -> MRPReading.MRPReading:
+    def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization:bool = False, _add_random_polarisation:bool = False, _sensor_distance_radius_mm: int = 40) -> MRPReading.MRPReading:
+        """
+        Generate a cubic magnet using components from magpylib to simulate a magnet and hallsensor.
+        Then the virtual hallsensor is moved around the magnet and the values are stored in a reading.
 
+        :param _size_mm: Optional;cubic magnet edge length in mm
+        :type _size_mm: int
+        :param _add_random_polarisation: Optional; add a random factor for the magnetization vector value
+        :type _add_random_polarisation: bool
+        :param _randomize_magnetization: Optional; appy a random factor to the hallsensor readouts
+        :type _randomize_magnetization: bool
+        :param _sensor_distance_radius_mm: distance between magnet and hallsensor
+        :type _sensor_distance_radius_mm: int
+        :return MRPReading: a generated MRPReading with set meta-data
+        :rtype MRPReading: MRPReading
+
+        """
 
         # CREATE MAGNET IN THE CENTER
         magnetization = (0, 0, 100)
@@ -85,6 +99,17 @@ class MRPSimulation(object):
 
     @staticmethod
     def generate_random_full_sphere_reading(_full_random: bool = False) -> MRPReading.MRPReading:
+        """
+        Generate a full sphere reading with random field values and predefined meta-data.
+
+
+        :param _full_random: Optional; if true each inserted datapoint is random in polarity and strength
+        :type _full_random: bool
+
+        :return MRPReading: a generated MRPReading with set meta-data
+        :rtype MRPReading: MRPReading
+
+        """
         reading = MRPReading.MRPReading(None)
         reading.sensor_id = 0
 

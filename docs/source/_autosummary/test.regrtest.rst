@@ -3,4 +3,4 @@
 
 .. currentmodule:: test
 
-.. automodule:: regrtest
+.. autodata:: regrtest

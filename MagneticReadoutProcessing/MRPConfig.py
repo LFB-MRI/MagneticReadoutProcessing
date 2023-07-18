@@ -1,8 +1,7 @@
-""" Stores basic metadata regarding a reading/measurement, all attributes regarding MEASUREMENT are required in order to configure a MRPReading instance"""
-
 import configparser
 
 class MRPConfig():
+    """ Stores basic metadata regarding a reading/measurement, all attributes regarding MEASUREMENT are required in order to configure a MRPReading instance"""
 
     # [HARDWARE]
     HARDWARE_GCODE_SERIAL_INTERFACE = 'socket://magpi.local:10001'
@@ -34,12 +33,15 @@ class MRPConfig():
     DEBUG_DISABLE_MOTOR_MOVEMENTS = 1
 
     @staticmethod
-    def load_from_ini(_config_file_path: str = None) -> any:
-        """Constructor method
+    def load_from_ini(_config_file_path: str = None):
+        """
+        loads a given .ini file and parses the entries.
+        If valid entries are present, these values will be overwritten
 
-            :param _config_file_path: absolute filepath to .ini file with config overwrite entries. See config.ini.EXAMPLE
-            :type _config_file_path: str
-                """
+        :param _config_file_path: absolute filepath to .ini file with config overwrite entries. See config.ini.EXAMPLE
+        :type _config_file_path: str
+
+        """
         IniConfig = configparser.ConfigParser()
         IniConfig.read(_config_file_path)
 
@@ -47,11 +49,15 @@ class MRPConfig():
 
 
 
-    def __init__(self, _config: configparser):
-        """Constructor method
+    def __init__(self, _config: configparser = None):
+        """
+        Inits the config holder class and:
+        A) loads default values if _config is None
+        B) uses a configparser instance to load valid entries in
 
-            :param _config:
-            :type _config: configparser
+        :param _config: Optional; load entries from config parser
+        :type _config: configparser
+
         """
 
         if _config is not None:
@@ -86,7 +92,15 @@ class MRPConfig():
         else:
             self.load_defaults()
 
-    def get_as_dict(self):
+    def get_as_dict(self) -> dict:
+        """
+        returns the current config as dict.
+        This dict is also stored in a exported MRPReading
+
+        :return config: the current config
+        :rtype config: dict
+
+        """
         return dict({
             'HARDWARE': dict({
                 'GCODE_SERIAL_INTERFACE': self.HARDWARE_GCODE_SERIAL_INTERFACE,
@@ -117,6 +131,10 @@ class MRPConfig():
 
 
     def load_defaults(self):
+        """
+        Set all values to default.
+
+        """
         # [HARDWARE]
         self.HARDWARE_GCODE_SERIAL_INTERFACE = "socket://127.0.0.1:10001"
         self.HARDWARE_READOUTUNIT_SERIAL_INTERFACE = "socket://127.0.0.1:10003"

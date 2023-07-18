@@ -3,4 +3,4 @@
 
 .. currentmodule:: test
 
-.. automodule:: ann_module
+.. autodata:: ann_module

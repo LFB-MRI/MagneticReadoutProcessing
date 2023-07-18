@@ -3,4 +3,4 @@
 
 .. currentmodule:: test
 
-.. automodule:: test_support
+.. autodata:: test_support

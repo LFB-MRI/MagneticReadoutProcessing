@@ -1,7 +1,5 @@
-""" Provides functions to merge two reading, apply calibration measurements"""
 import math
 import random
-
 import numpy
 import numpy as np
 
@@ -14,15 +12,25 @@ class MRPAnalysisException(Exception):
         super().__init__(self.message)
 
 
-class MRPAnalysis(object):
+class MRPAnalysis():
+    """ Provides functions to merge two reading, apply calibration measurements"""
+
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """
         returns a value from a given reading according a given _phi _theta values
+
         :param _reading: reading with data to search in
-        :param _phi:
-        :param _theta:
+        :type _reading: MRPReading
+
+        :param _phi: polar coordinates phi value
+        :type _phi: float
+
+        :param _theta: polar coordinates theta value
+        :type _theta: float
+
         :return: value if value found else None
+        :rtype value: float
         """
         for idx, data_entry in enumerate(_reading.data):
             phi = data_entry['phi']
@@ -35,9 +43,15 @@ class MRPAnalysis(object):
     def search_reading_for_value_numpy(_reading: MRPReading. MRPReading, _search: np.ndarray) -> float:
         """
         returns a value from a given reading according a given search parameter [_phi, _theata, None]
-        :param _reading:
+
+        :param _reading: reading with data to search in
+        :type _reading: MRPReading
+
         :param _search: numpy.ndarray [phi, theta, X]
-        :return:
+        :type _search: numpy.ndarray
+
+        :return: value if value found else None
+        :rtype value: float
         """
         return MRPAnalysis.search_reading_for_value(_reading, _search[0], _search[1])
 
@@ -114,6 +128,22 @@ class MRPAnalysis(object):
 
     @staticmethod
     def apply_calibration_data_inplace(_calibration_reading: MRPReading, _current_reading: MRPReading):
+        """
+        apply a reference reading as baseline to a given reading.
+        If a given datapoint is present in both readings the following calculation will be applied:
+        current[datapoint].value = current[datapoint].value - calibration[datapoint].value
+
+        _current_reading is a reference and modified values are updated directly.
+
+
+        :param _calibration_reading: reference reading, will be applied to _current_reading
+        :type _calibration_reading: MRPReading
+        :param _current_reading: to this
+        :type _current_reading: MRPReading
+
+
+
+        """
         # GET NUMPY ARRAY
         np_cal = _calibration_reading.to_numpy_polar()
         np_curr = _current_reading.to_numpy_polar()
@@ -122,10 +152,20 @@ class MRPAnalysis(object):
         if not numpy.shape(np_cal) == numpy.shape(np_curr):
             raise MRPAnalysisException("array shape check failed")
 
-        # TODO OPTIMIZE ITS A BIT SHITTY
-        # REWORK EVERYTHING TO MATRICES
-        # CURRENTLY WE CANT MAKE SURE THAT THE DATA ORDER IS IN BOTH ARRAYS EQUAL SO WE NEED TO SEARCH
 
+        # TODO REWORK EVERYTHING TO MATRICES
+        # CURRENTLY WE CANT MAKE SURE THAT THE DATA ORDER IS IN BOTH ARRAYS EQUAL SO WE NEED TO SEARCH
+        for idx, curr in enumerate(np_curr):
+            curr_phi = curr[0]
+            curr_theta = curr[1]
+
+            for cal in np_cal:
+                cal_phi = cal[0]
+                cal_theta = cal[1]
+
+                if cal_phi == curr_phi and cal_theta == curr_theta:
+                    np_curr[idx][2] = curr[2] - cal[2]
+                    break
 
         ## UPDATE ALL DATA ENTRIES
         _current_reading.update_data_from_numpy_polar(np_curr)

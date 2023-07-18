@@ -39,7 +39,6 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
     # JUST USED FOR PREPARATION
 
-    @unittest.skip
     def test_calibration_analysis_zero(self):
         # IF A CALIBRATION READING IS APPLIED ON THE SAME READING THE RESULT SHOULD BE ZERO
         # reading_A is the calibration reading
@@ -52,7 +51,7 @@ class TestMPRAnalysis(unittest.TestCase):
         for r in result:
             self.assertEqual(r[2], 0.0)
 
-    @unittest.skip
+
     def test_calibration_analysis_real(self):
         result_original = self.reading_B.to_numpy_polar()
         MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace(self.reading_A, self.reading_B)

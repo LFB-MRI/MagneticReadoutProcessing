@@ -105,4 +105,4 @@ class MRPReadoutSource(BaseSource):
             self._field_func_kwargs_ndim['diameter'] = _reading.measurement_config['sensor_distance_radius']
 
 
-        super().__init__(_position, _orientation, magnetization, style, **kwargs
+        super().__init__(_position, _orientation, magnetization, style, **kwargs)

@@ -3,4 +3,4 @@
 
 .. currentmodule:: test
 
-.. automodule:: libregrtest
+.. autodata:: libregrtest
