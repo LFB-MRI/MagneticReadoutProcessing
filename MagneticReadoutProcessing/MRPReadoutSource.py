@@ -84,36 +84,25 @@ class MRPReadoutSource(BaseSource):
      [70.71067812 70.71067812  0.        ]
      [70.71067812 70.71067812  0.        ]]
     """
-    @staticmethod
-    def make_Cylinder(
-            obj,
-            style=None,
-            base=50,
-            **kwargs,
-    ) -> dict:
-        """
-        Create the plotly mesh3d parameters for a Cylinder Magnet in a dictionary based on the
-        provided arguments.
-        """
-        style = obj.style if style is None else style
-        diameter, height = obj.dimension
-        d = [unit_prefix(d / 1000) for d in (diameter, height)]
-        trace = make_BasePrism(
-            "plotly-dict", base=base, diameter=diameter, height=height, color=style.color
-        )
-        default_suffix = f" (D={d[0]}m, H={d[1]}m)"
-        update_trace_name(trace, "Cylinder", default_suffix, style)
-        return {**trace, **kwargs}
+
 
     _editable_field_func = True
 
 
     _field_func = None #staticmethod(magnet_cuboid_field)
-    _field_func_kwargs_ndim = {"magnetization": 2, "dimension": 2}
-    _draw_func = make_Cylinder
+    _field_func_kwargs_ndim = {"magnetization": 2, "diameter": 1}
+    # HERE A VISAL REPRESENTATION IS NOT NESSESSARY DUE TO THE READING ONLY CONTAINS POINTDATA, SO WE ARE USING A SIMPLE SPHERE
+    _draw_func = make_Sphere
 
 
 
     def __init__(self, _reading: MRPReading.MRPReading, _position: tuple=(0, 0, 0), _orientation:tuple=None, _style=None, **kwargs,):
         # init inheritance
-        super().__init__(_position, None, self._field_func, _style, **kwargs)
+        magnetization = None
+        style = None
+
+        if 'sensor_distance_radius' in _reading.measurement_config:
+            self._field_func_kwargs_ndim['diameter'] = _reading.measurement_config['sensor_distance_radius']
+
+
+        super().__init__(_position, _orientation, magnetization, style, **kwargs
