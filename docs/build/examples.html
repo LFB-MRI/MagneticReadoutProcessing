@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; MagneticReadoutProcessing  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module: MagneticReadoutProcessing" href="modules.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MagneticReadoutProcessing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-usage">Installation/Usage:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-dev">Installation DEV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-prod">Installation PROD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrpreading-examples">MRPReading Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-minimal-measurement">Create a minimal measurement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export-a-reading">Export a reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-a-reading">Import a reading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrpvisualization-examples">MRPVisualization Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#visualization-of-a-measurement">Visualization of a measurement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrpanalysis-examples">MRPAnalysis Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#apply-a-calibration-reading">Apply a calibration reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge-two-half-sphere-readings">Merge two half sphere readings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrpsimulation-examples">MRPSimulation Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#full-sphere-with-polarization">Full sphere with polarization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fully-random-sphere">Fully random sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#magpylib-based-sphere">Magpylib based sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrpreadoutsource-examples">MRPReadoutSource Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#misc-examples">MISC Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-meta-data">Get meta-data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export-reading-to-numpy">Export reading to numpy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module: MagneticReadoutProcessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MagneticReadoutProcessing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
+<section id="installation-usage">
+<h2>Installation/Usage:<a class="headerlink" href="#installation-usage" title="Permalink to this heading"></a></h2>
+<p>As the package has not been published on PyPi yet, it CANNOT be install using pip.</p>
+<section id="installation-dev">
+<h3>Installation DEV<a class="headerlink" href="#installation-dev" title="Permalink to this heading"></a></h3>
+<p>For now, the suggested method is to copy the <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code> folder into your Python project folder.
+There are some other packages required which are listed in the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>.
+To install them use <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing
+<span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="gp"># </span>COPY<span class="w"> </span>LIB<span class="w"> </span>TO<span class="w"> </span>YOUR<span class="w"> </span>PROJECT
+<span class="gp">$ </span>cp<span class="w"> </span>-R<span class="w"> </span>./MagneticReadoutProcessing<span class="w"> </span>~/yourPythonProject/
+</pre></div>
+</div>
+</section>
+<section id="installation-prod">
+<h3>Installation PROD<a class="headerlink" href="#installation-prod" title="Permalink to this heading"></a></h3>
+<p>The other method is to use the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> to install <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code> as module:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing
+<span class="gp">$ </span>python<span class="w"> </span>./setup.py<span class="w"> </span>install
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are further detailed examples in the <code class="docutils literal notranslate"><span class="pre">test</span></code> folder. There is a seperate test file for each submodule.</p>
+</div>
+</section>
+</section>
+<section id="mrpreading-examples">
+<h2>MRPReading Examples<a class="headerlink" href="#mrpreading-examples" title="Permalink to this heading"></a></h2>
+<section id="create-a-minimal-measurement">
+<h3>Create a minimal measurement<a class="headerlink" href="#create-a-minimal-measurement" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPConfig</span>
+<span class="kn">import</span> <span class="nn">MRPReading</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="c1"># CREATE A CONFIG INSTANCE</span>
+<span class="c1"># HERE SOME PARAMETERS ABOUT THE READING AND MEASUREMENTS ARE STORED</span>
+<span class="c1"># ITS POSSIBLE TO LOAD THESE VALUES USING A INI FILE</span>
+<span class="c1"># PLEASE NOTICE THE MRPConfig MEMBERS</span>
+<span class="n">Config</span> <span class="o">=</span> <span class="n">MRPConfig</span><span class="o">.</span><span class="n">MRPConfig</span><span class="p">()</span>
+
+<span class="c1"># SETUP SOME DETAILS ABOUT THE MEASUREMENT</span>
+<span class="c1"># WE WANT TO CREATE A HALF-SPHERE SCAN</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_HORIZONTAL_RESOLUTION</span> <span class="o">=</span> <span class="mi">36</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_VERTICAL_RESOLUTION</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_HORIZONTAL_AXIS_DEGREE</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_VERTICAL_AXIS_DEGREE</span> <span class="o">=</span> <span class="mi">180</span>
+
+
+
+<span class="c1"># CREATE A READING INSTANCE TO STORE THE READ DATA IN</span>
+<span class="c1"># HERE THE Config FROM ABOVE IS PASSED TO SET THE METADATA</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="n">Config</span><span class="p">)</span>
+
+<span class="c1"># CREATE A POLAR HALF SPHERE GRID TO ITERATE OVER</span>
+<span class="n">n_phi</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_HORIZONTAL_RESOLUTION</span>
+<span class="n">n_theta</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_VERTICAL_RESOLUTION</span>
+<span class="n">phi_radians</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_HORIZONTAL_AXIS_DEGREE</span><span class="p">)</span>
+<span class="n">theta_radians</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">MEASUREMENT_VERTICAL_AXIS_DEGREE</span><span class="p">)</span>
+<span class="c1"># CREATE A POLAR COORDINATE GRID TO ITERATE OVER</span>
+
+<span class="c1"># HALF SPHERE</span>
+<span class="c1">#theta, phi = np.mgrid[0.0:0.5 * np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]</span>
+<span class="c1"># FULL SPHERE</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mf">0.0</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">n_theta</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">:</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="n">n_phi</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">]</span>
+
+<span class="c1"># FINALLY INSERT THE MEASUREMENT-DATA</span>
+<span class="n">reading_index_theta</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">reading_index_phi</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># TQDM IS USED TO SHOW A PROGRESSBAR IN RUNNING SHELL</span>
+<span class="n">progressbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">desc</span> <span class="o">=</span><span class="s2">&quot;Progress: &quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">progressbar</span><span class="p">:</span>
+    <span class="n">reading_index_phi</span> <span class="o">=</span> <span class="n">reading_index_phi</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">reading_index_theta</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">theta</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]:</span>
+        <span class="n">reading_index_theta</span> <span class="o">=</span> <span class="n">reading_index_theta</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1"># i = VERTICAL 0-90</span>
+        <span class="c1"># j = HORIZONTAL 0-360</span>
+        <span class="n">horizontal_degree</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">vertical_degree</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+        <span class="c1"># READOUT THE SENSOR</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># mT</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="mf">25.0</span> <span class="c1"># DEGREE C</span>
+
+        <span class="c1"># SAVE RESULT</span>
+        <span class="n">reading</span><span class="o">.</span><span class="n">insert_reading</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">reading_index_phi</span><span class="p">,</span> <span class="n">reading_index_theta</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+
+
+        <span class="c1"># UPDATE CONSOLE OUTPUT WITH THE CURRENT READOUT AND POSITION</span>
+        <span class="n">progressbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;X:</span><span class="si">{0}</span><span class="s2"> X:</span><span class="si">{1}</span><span class="s2"> = </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">horizontal_degree</span><span class="p">,</span> <span class="n">vertical_degree</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="n">progressbar</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="export-a-reading">
+<h3>Export a reading<a class="headerlink" href="#export-a-reading" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># EXPORT TO A DIFFERENT FOLDER</span>
+<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.pkl&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
+<span class="c1"># ADD SOME ADDITION META DATA</span>
+<span class="n">reading_storage</span><span class="o">.</span><span class="n">set_additional_data</span><span class="p">(</span><span class="s1">&#39;filepath&#39;</span><span class="p">,</span> <span class="n">RESULT_FILEPATH</span><span class="p">)</span>
+<span class="n">reading_storage</span><span class="o">.</span><span class="n">set_additional_data</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;a new nice reading&#39;</span><span class="p">)</span>
+<span class="c1"># FINALLY EXPORT</span>
+<span class="n">reading</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="import-a-reading">
+<h3>Import a reading<a class="headerlink" href="#import-a-reading" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Export a reading` EXAMPLE</span>
+<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.pkl&quot;</span><span class="p">)</span>
+<span class="n">reading_imported</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">reading_imported</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mrpvisualization-examples">
+<h2>MRPVisualization Examples<a class="headerlink" href="#mrpvisualization-examples" title="Permalink to this heading"></a></h2>
+<section id="visualization-of-a-measurement">
+<h3>Visualization of a measurement<a class="headerlink" href="#visualization-of-a-measurement" title="Permalink to this heading"></a></h3>
+<a class="reference internal image-reference" href="_static/example_visualization.png"><img alt="_static/example_visualization.png" src="_static/example_visualization.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
+<span class="kn">import</span> <span class="nn">MRPVisualization</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># HERE matplotlib is also used</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="c1"># 2D PLOT INTO A WINDOW</span>
+<span class="n">visu</span><span class="o">.</span><span class="n">plot2d_top</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">visu</span><span class="o">.</span><span class="n">plot2d_side</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="c1"># 3D PLOT TO FILE</span>
+<span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s1">&#39;plot3d_3d.png&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mrpanalysis-examples">
+<h2>MRPAnalysis Examples<a class="headerlink" href="#mrpanalysis-examples" title="Permalink to this heading"></a></h2>
+<section id="apply-a-calibration-reading">
+<h3>Apply a calibration reading<a class="headerlink" href="#apply-a-calibration-reading" title="Permalink to this heading"></a></h3>
+<p>The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
+The <code class="docutils literal notranslate"><span class="pre">reading_calibration</span></code> is performed with the same settings for all subsequent measurements.
+Afterwards the Function <code class="docutils literal notranslate"><span class="pre">apply_calibration_data_inplace</span></code> is called for each new reading.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that the sample size (<code class="docutils literal notranslate"><span class="pre">HORIZONTAL_RESOLUTION</span></code> and <code class="docutils literal notranslate"><span class="pre">VERTICAL_RESOLUTION</span></code>) for calibration and all further measurements match.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Attention: Make sure that the environment does not change and the device is not moved.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPAnalysis</span>
+<span class="c1"># reading_calibration =&gt; measurement without magnetic source =&gt; environment only</span>
+<span class="c1"># reading_A =&gt; reading with source placed</span>
+<span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">apply_calibration_data_inplace</span><span class="p">(</span><span class="n">reading_calibration</span><span class="p">,</span> <span class="n">reading_A</span><span class="p">)</span>
+<span class="c1"># THE CALIBRATION_READING IS APPLIED DIRECTLY TO READING_A</span>
+<span class="n">reading_A</span><span class="o">.</span><span class="n">set_additional_data</span><span class="p">(</span><span class="s1">&#39;calibrated&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">reading</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="merge-two-half-sphere-readings">
+<h3>Merge two half sphere readings<a class="headerlink" href="#merge-two-half-sphere-readings" title="Permalink to this heading"></a></h3>
+<a class="reference internal image-reference" href="_static/merged_readings_example.png"><img alt="_static/merged_readings_example.png" src="_static/merged_readings_example.png" style="width: 600px;" /></a>
+<p>The current mechanical scanner can only scan one magnet side in one pass, so two scann passes are required to scan a full sphere.
+The <code class="docutils literal notranslate"><span class="pre">merge_two_half_sphere_measurements_to_full_sphere</span></code> function combine two readings (top, bottom) into one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that the sample size (<code class="docutils literal notranslate"><span class="pre">HORIZONTAL_RESOLUTION</span></code> and <code class="docutils literal notranslate"><span class="pre">VERTICAL_RESOLUTION</span></code>) for calibration and all further measurements match.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPAnalysis</span>
+<span class="c1"># IMPORT TWO EXISTING READINGS FROM FILE</span>
+<span class="n">reading_top_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114N2.mag.pkl&quot;</span><span class="p">)</span>
+<span class="n">reading_bottom_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114S2.mag.pkl&quot;</span><span class="p">)</span>
+<span class="c1"># IMPORT TOP READING</span>
+<span class="n">reading_top</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">reading_top</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">reading_top_filepath</span><span class="p">)</span>
+<span class="c1"># IMPORT BOTTOM READING</span>
+<span class="n">reading_bottom</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">reading_bottom</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">reading_bottom_filepath</span><span class="p">)</span>
+<span class="c1"># FINALLY MERGE</span>
+<span class="n">merged_reading</span> <span class="o">=</span> <span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">merge_two_half_sphere_measurements_to_full_sphere</span><span class="p">(</span><span class="n">reading_top</span><span class="p">,</span> <span class="n">reading_bottom</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_static/merged_readings_example_random.png"><img alt="_static/merged_readings_example_random.png" src="_static/merged_readings_example_random.png" style="width: 600px;" /></a>
+</section>
+</section>
+<section id="mrpsimulation-examples">
+<h2>MRPSimulation Examples<a class="headerlink" href="#mrpsimulation-examples" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MRPSimulation</span></code> class contains functions to generate sample data.
+Here random <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class instances can be generated.</p>
+<section id="full-sphere-with-polarization">
+<h3>Full sphere with polarization<a class="headerlink" href="#full-sphere-with-polarization" title="Permalink to this heading"></a></h3>
+<a class="reference internal image-reference" href="_static/simulation_random_1.png"><img alt="_static/simulation_random_1.png" src="_static/simulation_random_1.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="fully-random-sphere">
+<h3>Fully random sphere<a class="headerlink" href="#fully-random-sphere" title="Permalink to this heading"></a></h3>
+<a class="reference internal image-reference" href="_static/simulation_random_2.png"><img alt="_static/simulation_random_2.png" src="_static/simulation_random_2.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="magpylib-based-sphere">
+<h3>Magpylib based sphere<a class="headerlink" href="#magpylib-based-sphere" title="Permalink to this heading"></a></h3>
+<p>His example shows, how to generate readings using the <code class="docutils literal notranslate"><span class="pre">magpylib</span></code>.
+Here <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class instances with datasets from a simulated cubic magnets can be generated.
+The <code class="docutils literal notranslate"><span class="pre">generate_cubic_reading</span></code> functions uses <code class="docutils literal notranslate"><span class="pre">magpy.magnet.Cuboid</span></code> instance to generate a dataset.
+The two additional parameters for the random factor make it possible to add a certain random deviation to the measured value.</p>
+<a class="reference internal image-reference" href="_static/simulation_random_3.png"><img alt="_static/simulation_random_3.png" src="_static/simulation_random_3.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">no_samples</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">magnet_size</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># mm</span>
+<span class="n">add_random_factor</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">add_random_polarisation</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_samples</span><span class="p">):</span>
+    <span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_cubic_reading</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">,</span> <span class="n">add_random_factor</span><span class="p">,</span> <span class="n">add_random_polarisation</span><span class="p">)</span>
+    <span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+    <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_generation_folder_path</span><span class="p">,</span> <span class="s1">&#39;test_simulation_cubic_magnet_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;mm_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_randompolarisation&quot;</span><span class="p">)</span>
+    <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.pkl.png&quot;</span><span class="p">)</span>
+    <span class="n">reading</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.pkl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mrpreadoutsource-examples">
+<h2>MRPReadoutSource Examples<a class="headerlink" href="#mrpreadoutsource-examples" title="Permalink to this heading"></a></h2>
+<p>In this example category the main goal of this library is shown.
+To use a reading and convert it to a magnet, which can be used as <code class="docutils literal notranslate"><span class="pre">MagPyLib</span></code> source.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CURRENTLY IT IS ONLY  POSSIBLE TO USE FULL SPHERE READING!!</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please see all step by step examples located in <code class="docutils literal notranslate"><span class="pre">test_MRPReadoutSource.py</span></code></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># GENERATE A SAMPLE READING USING A SIMULATED 12x12x12 CUBIC MAGNET</span>
+<span class="n">magnet_size</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># mm</span>
+<span class="n">generated_reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_cubic_reading</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">)</span>
+<span class="c1"># CREATE CUSTOM READOUT SOURCE INSTANCE</span>
+<span class="n">gen_magnet</span> <span class="o">=</span> <span class="n">MRPReadoutSource</span><span class="o">.</span><span class="n">MRPReadoutSource</span><span class="p">(</span><span class="n">generated_reading</span><span class="p">)</span>
+<span class="c1"># PLACE SENSOR PROBE</span>
+<span class="n">gen_sensor</span> <span class="o">=</span> <span class="n">magpy</span><span class="o">.</span><span class="n">Sensor</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">style_label</span><span class="o">=</span><span class="s1">&#39;S1&#39;</span><span class="p">)</span>
+<span class="c1"># CREATE COLLECTIONS</span>
+<span class="n">gen_collection</span> <span class="o">=</span> <span class="n">magpy</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">gen_magnet</span><span class="p">,</span> <span class="n">gen_sensor</span><span class="p">,</span><span class="n">style_label</span><span class="o">=</span><span class="s1">&#39;gen_collection&#39;</span><span class="p">)</span>
+<span class="c1"># READOUT SENSOR</span>
+<span class="n">gen_value</span> <span class="o">=</span> <span class="n">gen_sensor</span><span class="o">.</span><span class="n">getB</span><span class="p">(</span><span class="n">gen_magnet</span><span class="p">)</span>
+<span class="n">gen_mag_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gen_value</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gen_value</span><span class="p">))</span> <span class="c1"># [mT]</span>
+</pre></div>
+</div>
+</section>
+<section id="misc-examples">
+<h2>MISC Examples<a class="headerlink" href="#misc-examples" title="Permalink to this heading"></a></h2>
+<section id="get-meta-data">
+<h3>Get meta-data<a class="headerlink" href="#get-meta-data" title="Permalink to this heading"></a></h3>
+<p>Each reading contains some meta-data about the reading.
+To access these, there is a <code class="docutils literal notranslate"><span class="pre">measurement_config</span></code> dict present in the <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Import a reading` EXAMPLE</span>
+<span class="c1"># PRINT METADATA</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reading_imported</span><span class="o">.</span><span class="n">measurement_config</span><span class="p">)</span>
+<span class="c1"># ACCESS WITH</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">reading_imported</span><span class="o">.</span><span class="n">measurement_config</span><span class="p">[</span><span class="s1">&#39;sensor_distance_radius&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Currently the following keys are present:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_distance_radius</span></code> - distance between hall-sensor - magnet in <code class="docutils literal notranslate"><span class="pre">mm</span></code>, can be used as radius for converting polar coordinates into cartesian</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_id</span></code> - which hall-sensor was used to collect samples</p></li>
+</ul>
+<p>In addition there is another dict called <code class="docutils literal notranslate"><span class="pre">additional_data</span></code> with user defined data.</p>
+</section>
+<section id="export-reading-to-numpy">
+<h3>Export reading to numpy<a class="headerlink" href="#export-reading-to-numpy" title="Permalink to this heading"></a></h3>
+<p>For further and more advanced analysis the <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class offers two functions in order to export the <code class="docutils literal notranslate"><span class="pre">data</span></code> member into a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.
+The current implementation returns</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># POLAR COORDINATES</span>
+<span class="c1"># [[phi, theta, magnetic_value], ....]</span>
+<span class="n">numpy_1d_array</span> <span class="o">=</span> <span class="n">reading</span><span class="o">.</span><span class="n">to_numpy_polar</span><span class="p">(</span><span class="n">_normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># CARTESIAN COORDINATES</span>
+<span class="c1"># [[x, y, z], ....]</span>
+<span class="c1"># THE  CONVERSION TO CARTESIAN IS A BIT SPECIAL</span>
+<span class="c1"># IT USES THE MAGNETIC_VALUE for the radius</span>
+<span class="c1"># SO THE VECTOR IS LONGER IF THE MAGNETIC VALUE IS STRONGER</span>
+<span class="c1"># THIS CONVERSION CAN BE USED WITH VECTOR CALCULATIONS LIKE FIND NEAREST POINT ....</span>
+<span class="c1"># def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -&gt; np.array:</span>
+<span class="n">numpy_1d_array</span> <span class="o">=</span> <span class="n">reading</span><span class="o">.</span><span class="n">to_numpy_cartesian</span><span class="p">(</span><span class="n">_normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">numpy_1d_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Module: MagneticReadoutProcessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marcel Ochsendorf.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
