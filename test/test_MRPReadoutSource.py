@@ -64,6 +64,7 @@ class TestMPRSimulation(unittest.TestCase):
 
         generated_reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size)
         gen_magnet = MRPReadoutSource.MRPReadoutSource(generated_reading)
+        
 
 
         # TODO PLOT FLIED FOR TESTING

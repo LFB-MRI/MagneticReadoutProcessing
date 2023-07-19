@@ -14,7 +14,9 @@ class MRPAnalysisException(Exception):
 
 class MRPAnalysis():
     """ Provides functions to merge two reading, apply calibration measurements"""
-
+    @staticmethod
+    def get_magnetization_vector(_reading: MRPReading) -> np.ndarray:
+        return []
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """

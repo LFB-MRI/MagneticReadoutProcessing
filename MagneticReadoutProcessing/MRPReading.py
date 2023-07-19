@@ -87,7 +87,6 @@ class MRPReading(object): # object is needed for pickle export
             self.measurement_config['sensor_id'] = 0
 
 
-
     def loads(self, _pickle_binaray: bytes):
         pl = pickle.loads(_pickle_binaray)
 
