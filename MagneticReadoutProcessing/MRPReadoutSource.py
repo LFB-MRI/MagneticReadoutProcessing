@@ -10,7 +10,7 @@ from magpylib._src.obj_classes.class_BaseExcitations import BaseSource, BaseMagn
 from magpylib._src.utility import unit_prefix
 from magpylib._src.display.traces_base import make_Prism as make_BasePrism
 from magpylib._src.display.traces_generic import make_Sphere
-from MagneticReadoutProcessing import MRPReading
+from MagneticReadoutProcessing import MRPReading, MRPAnalysis
 
 class MRPReadoutSource(BaseMagnet):
     """User-defined custom source.
@@ -103,10 +103,11 @@ class MRPReadoutSource(BaseMagnet):
 
     def __init__(self, _reading: MRPReading.MRPReading, _position: tuple=(0, 0, 0), _orientation:tuple=None, _style=None, **kwargs,):
         # init inheritance
-        
+
         # TODO CALC MAGNETIZATION VECTOR
         # MITTELS ID LUT FÜR READING DATA MACHEN ?
-        magnetization = None # CAN BE NONE
+        magnetization = MRPAnalysis.MRPAnalysis.calculate_magnetization(_reading)
+
         style = None
 
         if 'sensor_distance_radius' in _reading.measurement_config:

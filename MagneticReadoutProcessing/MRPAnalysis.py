@@ -12,11 +12,11 @@ class MRPAnalysisException(Exception):
         super().__init__(self.message)
 
 
-class MRPAnalysis():
+class MRPAnalysis:
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
-    def get_magnetization_vector(_reading: MRPReading) -> np.ndarray:
-        return []
+    def calculate_magnetization(_reading: MRPReading) -> np.ndarray:
+        return (0.0, 0.0, 0.0) # TODO ?
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """
@@ -220,9 +220,4 @@ class MRPAnalysis():
     def __init__(self, _reading: MRPReading):
         pass
 
-    # cube = magpy.magnet.Cuboid(magnetization=(0,0,100), dimension=(1,1,1))
-    def calculate_magnetization(self):
-        pass
 
-    def create_magpy_magnet(self):
-        pass
