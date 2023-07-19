@@ -1,8 +1,12 @@
 Examples
 ########
 
-Installation/Usage:
-*******************
+.. note::
+   There are further detailed examples in the ``test`` folder. There is a seperate test file for each submodule.
+
+
+Installation/Usage
+******************
 As the package has not been published on PyPi yet, it CANNOT be install using pip.
 
 Installation DEV
@@ -33,9 +37,6 @@ The other method is to use the ``setup.py`` to install ``MagneticReadoutProcessi
     $ cd ./MagneticReadoutProcessing
     $ python ./setup.py install
 
-
-.. note::
-   There are further detailed examples in the ``test`` folder. There is a seperate test file for each submodule.
 
 
 

@@ -6,6 +6,7 @@ import unittest
 import random
 from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
+from MagneticReadoutProcessing import MRPSimulation
 import configparser
 import os
 class TestMPRReading(unittest.TestCase):
@@ -22,6 +23,18 @@ class TestMPRReading(unittest.TestCase):
             os.makedirs(self.import_export_test_folderpath)
 
         self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
+
+    def test_matrix_init(self):
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading(12, False, False,40)
+        matrix = reading.to_numpy_matrix()
+
+        n_phi = reading.measurement_config['n_phi']
+        n_theta = reading.measurement_config['n_theta']
+        # CHECK MATRIX SHAPE
+        self.assertTrue(matrix.shape != (n_theta, ) and len(matrix.shape) <= n_phi)
+
+
+
 
 
     def test_reading_init(self) -> MRPReading:

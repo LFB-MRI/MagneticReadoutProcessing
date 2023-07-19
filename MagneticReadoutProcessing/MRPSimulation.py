@@ -50,8 +50,8 @@ class MRPSimulation():
 
         # CREATE READING
         reading = MRPReading.MRPReading(None, _sensor_id=0, _sensor_radius=_sensor_distance_radius_mm)
-        reading.measurement_config['n_theta'] = 9#18
-        reading.measurement_config['n_phi'] = 18#36
+        reading.measurement_config['n_theta'] = 18
+        reading.measurement_config['n_phi'] = 36
         reading.measurement_config['theta_radians'] = math.radians(180)
         reading.measurement_config['phi_radians'] = math.radians(360)
         reading.set_additional_data('is_generated_reading', 1)

@@ -2,6 +2,11 @@
 import math
 import numpy as np
 
+
+def is_np_shape_allowed(arr):
+  return arr.shape != (0, ) and len(arr.shape) <= 2
+
+
 # https://gist.github.com/pghazanfari/8ff2c5c84544bae466191f7f674491b6
 def perspective_fov(fov, aspect_ratio, near_plane, far_plane):
     num = 1.0 / np.tan(fov / 2.0)

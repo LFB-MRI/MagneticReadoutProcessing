@@ -16,9 +16,22 @@ class MRPAnalysis:
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
     def calculate_magnetization(_reading: MRPReading) -> np.ndarray:
+        """
+        Function calculates the polarisation vector of a given reading.
+        By searching for the max positive value in the matrix representation of the reading
+
+        :param _reading: Optional; If True the currently stored values will be normalized from -1.0 to 1.0
+        :type _reading: MRPReading
+
+        :returns: Returns a vector which probably represents the polarization direction
+        :rtype: np.ndarray
+        """
+        matrix = _reading.to_numpy_matrix()
+
+
         # TO MATRIX
         # FIND HIGHEST VALUE IN MATRIX => GET DIRECTION INTO CARTESIAN
-        return (0.0, 0.0, 0.0) # TODO ?
+        return np.array([0.0, 0.0, 0.0]) # TODO ?
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """

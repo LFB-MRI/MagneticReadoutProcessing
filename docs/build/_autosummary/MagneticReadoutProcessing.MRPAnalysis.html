@@ -95,11 +95,11 @@
 <span id="magneticreadoutprocessing-mrpanalysis"></span><h1>MagneticReadoutProcessing.MRPAnalysis<a class="headerlink" href="#module-MRPAnalysis" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPAnalysis.MRPAnalysis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPAnalysis.</span></span><span class="sig-name descname"><span class="pre">MRPAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/Users/marcelochsendorf/Downloads/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysis" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPAnalysis.</span></span><span class="sig-name descname"><span class="pre">MRPAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/home/marcel/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysis" title="Permalink to this definition"></a></dt>
 <dd><p>Provides functions to merge two reading, apply calibration measurements</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply_calibration_data_inplace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_calibration_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/Users/marcelochsendorf/Downloads/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/Users/marcelochsendorf/Downloads/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply_calibration_data_inplace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_calibration_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/home/marcel/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/home/marcel/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysis.apply_calibration_data_inplace" title="Permalink to this definition"></a></dt>
 <dd><p>apply a reference reading as baseline to a given reading.
 If a given datapoint is present in both readings the following calculation will be applied:
 current[datapoint].value = current[datapoint].value - calibration[datapoint].value</p>
@@ -110,6 +110,24 @@ current[datapoint].value = current[datapoint].value - calibration[datapoint].val
 <li><p><strong>_calibration_reading</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading</em></a>) – reference reading, will be applied to _current_reading</p></li>
 <li><p><strong>_current_reading</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading</em></a>) – to this</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPAnalysis.MRPAnalysis.calculate_magnetization">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_magnetization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_reading:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPReading'</span> <span class="pre">from</span> <span class="pre">'/home/marcel/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPReading.py'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#MRPAnalysis.MRPAnalysis.calculate_magnetization" title="Permalink to this definition"></a></dt>
+<dd><p>Function calculates the polarisation vector of a given reading.
+By searching for the max positive value in the matrix representation of the reading</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_reading</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading</em></a>) – Optional; If True the currently stored values will be normalized from -1.0 to 1.0</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a vector which probably represents the polarization direction</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

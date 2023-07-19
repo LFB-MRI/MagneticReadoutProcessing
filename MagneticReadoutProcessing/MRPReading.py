@@ -4,6 +4,8 @@ import os.path
 import pickle
 from datetime import datetime
 import numpy as np
+from numpy import ndarray
+
 from MagneticReadoutProcessing import MRPConfig
 import pickle
 import sys
@@ -177,6 +179,58 @@ class MRPReading(object): # object is needed for pickle export
         #return np.hypot(x, y), np.degrees(np.arctan2(y, x))
 
         return inp
+
+    def to_numpy_matrix(self) -> np.ndarray:
+        """
+        Generates a matrix representation of the reading.
+        Here eah datapoint will be
+        Note: only the value entry is included
+        RETURN FORMAT: [[phi, theta, value],...]
+
+
+
+
+        :returns: Returns the matrix with shape ()
+        :rtype: np.ndarray
+
+        """
+
+        # CHECK FOR CONTINUOUS NUMBERING
+        n_phi = self.measurement_config['n_phi']
+        n_theta = self.measurement_config['n_theta']
+
+        if not len(self.data) == n_phi*n_theta:
+            raise MRPReadingException("data length count invalid")
+
+        values_present_phi = {}
+        values_present_theta = {}
+        for entry in self.data:
+
+            #if values_present_phi[str(entry['reading_index_phi'])] is not None and values_present_phi[str(entry['reading_index_theta'])] is not None:
+            #    raise MRPReadingException("DUPLICATE DATA ENTRY WITH EQUAL INDEXING FOUND")
+
+            values_present_phi[str(entry['reading_index_phi'])] = 1
+            values_present_theta[str(entry['reading_index_theta'])] = 1
+
+
+        for i in range(n_phi):
+            if str(i) not in values_present_phi:
+                raise MRPReadingException("CHECK FOR CONTINUOUS NUMBERING FAILED FOR PHI")
+
+        for i in range(n_theta):
+            if str(i) not in values_present_theta:
+                raise MRPReadingException("CHECK FOR CONTINUOUS NUMBERING FAILED FOR THETA")
+
+        # CREATE MATRIX
+        result_matrix = np.zeros((n_theta, n_phi))
+        # https://towardsdatascience.com/spherical-projection-for-point-clouds-56a2fc258e6c
+        # https://www.quora.com/Can-we-project-a-sphere-in-a-2-dimensional-surface
+        for entry in self.data:
+            p = entry['reading_index_phi']
+            t = entry['reading_index_theta']
+            v = entry['value']
+            result_matrix.itemset((t, p), v)
+        return result_matrix
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
     def to_numpy_polar(self, _normalize: bool = False) -> np.ndarray:
