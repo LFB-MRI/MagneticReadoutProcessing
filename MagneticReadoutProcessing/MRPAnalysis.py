@@ -16,6 +16,8 @@ class MRPAnalysis:
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
     def calculate_magnetization(_reading: MRPReading) -> np.ndarray:
+        # TO MATRIX
+        # FIND HIGHEST VALUE IN MATRIX => GET DIRECTION INTO CARTESIAN
         return (0.0, 0.0, 0.0) # TODO ?
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
