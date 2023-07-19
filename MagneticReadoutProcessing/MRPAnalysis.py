@@ -29,8 +29,8 @@ class MRPAnalysis():
         :param _theta: polar coordinates theta value
         :type _theta: float
 
-        :return: value if value found else None
-        :rtype value: float
+        :returns: value, if value found else None
+        :rtype: float
         """
         for idx, data_entry in enumerate(_reading.data):
             phi = data_entry['phi']
@@ -50,8 +50,8 @@ class MRPAnalysis():
         :param _search: numpy.ndarray [phi, theta, X]
         :type _search: numpy.ndarray
 
-        :return: value if value found else None
-        :rtype value: float
+        :returns: value if value found else None
+        :rtype: float
         """
         return MRPAnalysis.search_reading_for_value(_reading, _search[0], _search[1])
 

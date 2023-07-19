@@ -15,14 +15,18 @@ class MRPSimulation():
 
         :param _size_mm: Optional;cubic magnet edge length in mm
         :type _size_mm: int
+
         :param _add_random_polarisation: Optional; add a random factor for the magnetization vector value
         :type _add_random_polarisation: bool
+
         :param _randomize_magnetization: Optional; appy a random factor to the hallsensor readouts
         :type _randomize_magnetization: bool
+
         :param _sensor_distance_radius_mm: distance between magnet and hallsensor
         :type _sensor_distance_radius_mm: int
-        :return MRPReading: a generated MRPReading with set meta-data
-        :rtype MRPReading: MRPReading
+
+        :returns: a generated MRPReading with set meta-data
+        :rtype: MRPReading
 
         """
 
@@ -102,12 +106,11 @@ class MRPSimulation():
         """
         Generate a full sphere reading with random field values and predefined meta-data.
 
-
         :param _full_random: Optional; if true each inserted datapoint is random in polarity and strength
         :type _full_random: bool
 
-        :return MRPReading: a generated MRPReading with set meta-data
-        :rtype MRPReading: MRPReading
+        :returns: a generated MRPReading with set meta-data
+        :rtype: MRPReading
 
         """
         reading = MRPReading.MRPReading(None)

@@ -97,8 +97,8 @@ class MRPConfig():
         returns the current config as dict.
         This dict is also stored in a exported MRPReading
 
-        :return config: the current config
-        :rtype config: dict
+        :returns: the current config
+        :rtype: dict
 
         """
         return dict({

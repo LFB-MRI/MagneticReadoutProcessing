@@ -28,10 +28,10 @@ class MRPReading(object): # object is needed for pickle export
         :param _config:
         :type _config: MRPConfig
 
-        :param _sensor_id: used hallsensor sensor id for the reading
+        :param _sensor_id: Optional; used hallsensor sensor id for the reading
         :type _sensor_id: int
 
-        :param _sensor_radius: distance between hallsensor and magnet
+        :param _sensor_radius: Optional; distance between hallsensor and magnet
         :type _sensor_radius: int
 
 
@@ -63,6 +63,17 @@ class MRPReading(object): # object is needed for pickle export
                 'theta_radians': math.radians(self.config['MEASUREMENT']['VERTICAL_AXIS_DEGREE']),
                 'sensor_distance_radius': self.config['MEASUREMENT']['SENSOR_MAGNET_DISTANCE']
             })
+        else:
+            self.measurement_config.update({
+                'n_phi': 0,
+                'n_theta': 0,
+                'phi_radians': 0,
+                'theta_radians': 0,
+                'sensor_distance_radius': 10
+            })
+
+
+
 
         # THE SENSOR RADIUS CAN DIFFER
         if _sensor_radius is not None:
@@ -169,7 +180,7 @@ class MRPReading(object): # object is needed for pickle export
         return inp
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
-    def to_numpy_polar(self, _normalize: bool = False) -> np.array:
+    def to_numpy_polar(self, _normalize: bool = False) -> np.ndarray:
         """
         Generates a 2D numpy array from the stored datapoints.
         Note: only the value entry is included
@@ -179,8 +190,8 @@ class MRPReading(object): # object is needed for pickle export
         :param _normalize: Optional; If True the currently stored values will be normalized from -1.0 to 1.0
         :type _normalize: bool
 
-        :return result: Returns currently saved data as numpy polar array [[phi, theta, value],...]
-        :rtype result: np.array
+        :returns: Returns currently saved data as numpy polar array [[phi, theta, value],...]
+        :rtype: np.ndarray
 
         """
         # NORMALIZE DATA
@@ -254,13 +265,35 @@ class MRPReading(object): # object is needed for pickle export
         # ITERATE OVER UPDATE DATA ENTRIES AND FIND IN DATA DICT
         # SO IMPORT/EXPORT IS POSSIBLE
 
-    def insert_reading(self, _reading: float, _phi: float, _theta: float, _reading_index_phi: int,
-                       _reading_index_theta: int, _temp: float = None, _is_valid: bool = True) -> None:
+    def insert_reading(self, _read_value: float, _phi: float, _theta: float, _reading_index_phi: int,
+                       _reading_index_theta: int, _temp: float = None, _is_valid: bool = True, _autoupdate_measurement_config: bool = True):
+        """
+        Inserts a new reading into the dataset.
+        The _phi, _theta values need to be valid polar coordinates
+
+
+        :param _read_value: hallsensor reading in [mT]
+        :type _read_value: float
+
+        :param _phi: polar coordinates of the datapoint: phi
+        :type _phi: float
+
+        :param _theta: polar coordinates of the datapoint: theta
+        :type _theta: float
+
+        :param _reading_index_phi: index of the phi coordinate count = resolution for phi axis
+        :type _reading_index_phi: int
+
+        :param _reading_index_theta: index of the theta coordinate count = resolution for theta axis
+        :type _reading_index_theta: int
+
+
+        """
         if len(self.data) <= 0:
             self.time_start = datetime.now()
         self.time_end = datetime.now()
         entry = dict({
-            "value": _reading,
+            "value": _read_value,
             "phi": _phi,
             "theta": _theta,
             "reading_index_phi": _reading_index_phi,
@@ -270,6 +303,13 @@ class MRPReading(object): # object is needed for pickle export
         })
         self.data.append(entry)
 
+
+        # UPDATE measurement_config VALUES
+        if _autoupdate_measurement_config:
+            self.measurement_config['phi_radians'] = max(self.measurement_config['phi_radians'], _phi)
+            self.measurement_config['theta_radians'] = max(self.measurement_config['theta_radians'], _theta)
+            self.measurement_config['n_phi'] = max(self.measurement_config['n_phi'], _reading_index_phi)
+            self.measurement_config['n_theta'] = max(self.measurement_config['n_theta'], _reading_index_theta)
     def dump(self) -> bytes:
         final_dataset = dict({
             'dump_time': datetime.now(),
@@ -298,8 +338,8 @@ class MRPReading(object): # object is needed for pickle export
 
 
 
-        :return result: File path to which the file is exported, including filename
-        :rtype result: str
+        :returns: File path to which the file is exported, including filename
+        :rtype: str
         """
         if '.pkl' not in _filepath_name:
             _filepath_name = _filepath_name + '.pkl'

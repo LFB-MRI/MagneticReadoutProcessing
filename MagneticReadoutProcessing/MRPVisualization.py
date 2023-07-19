@@ -1,4 +1,4 @@
-""" Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""
+
 
 
 import matplotlib.pyplot as plt
@@ -12,7 +12,7 @@ from MagneticReadoutProcessing import MRPReading
 from MagneticReadoutProcessing import MRPHelpers
 
 class MRPVisualization():
-
+    """ Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""
 
     measurement = None
     theta = None
@@ -24,6 +24,13 @@ class MRPVisualization():
     theta_radians = 0.5 * math.pi # 90 degree half phere
     phi_radians = 2 * math.pi # 360 degree
     def __init__(self, _reading: MRPReading):
+        """
+        Creates a MRPVisualization instance to plot a given reading in 2D/3D
+
+        :param _reading: MRPReading instance of the reading to visualize
+        :type _reading: MRPReading
+
+        """
         self.measurement = _reading # REFERENCE!
 
         self.n_theta = self.measurement.measurement_config ['n_theta']
@@ -100,6 +107,13 @@ class MRPVisualization():
 
 
     def plot2d_top(self, _filename: str = None):
+        """
+        Visualize the reading as 2D top-down plot
+
+        :param _filename: If set to a valid filepath, the plot will be saved to a .png file
+        :type _filename: MRPReading
+
+        """
         lax, lfig = self.create_plot()
         # SAVE CURRENT VIEW
         lazim = lax.azim
@@ -124,6 +138,13 @@ class MRPVisualization():
         plt.close(lfig)
 
     def plot2d_side(self, _filename: str = None):
+        """
+        Visualize the reading as 2D side view plot
+
+        :param _filename: If set to a valid filepath, the plot will be saved to a .png file
+        :type _filename: MRPReading
+
+        """
         lax, lfig = self.create_plot()
         # SAVE CURRENT VIEW
         lazim = lax.azim
@@ -148,6 +169,13 @@ class MRPVisualization():
         plt.close(lfig)
 
     def plot3d(self, _filename: str = None):
+        """
+        Visualize the reading as 3D plot
+
+        :param _filename: If set to a valid filepath, the plot will be saved to a .png file
+        :type _filename: MRPReading
+
+        """
         lax, lfig = self.create_plot()
 
         if _filename is not None:
