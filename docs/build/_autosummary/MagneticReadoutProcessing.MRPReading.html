@@ -95,7 +95,7 @@
 <span id="magneticreadoutprocessing-mrpreading"></span><h1>MagneticReadoutProcessing.MRPReading<a class="headerlink" href="#module-MRPReading" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPReading.MRPReading">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPReading.</span></span><span class="sig-name descname"><span class="pre">MRPReading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPConfig'</span> <span class="pre">from</span> <span class="pre">'/home/marcel/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPConfig.py'&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_radius:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPReading.MRPReading" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPReading.</span></span><span class="sig-name descname"><span class="pre">MRPReading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPConfig'</span> <span class="pre">from</span> <span class="pre">'/Users/marcelochsendorf/Downloads/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPConfig.py'&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_radius:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPReading.MRPReading" title="Permalink to this definition"></a></dt>
 <dd><p>Stores the raw sensor data, including metadata and import/export functions</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPReading.MRPReading.dump_to_file">
@@ -174,18 +174,16 @@ For example if the <code class="docutils literal notranslate"><span class="pre">
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPReading.MRPReading.to_numpy_matrix">
 <span class="sig-name descname"><span class="pre">to_numpy_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#MRPReading.MRPReading.to_numpy_matrix" title="Permalink to this definition"></a></dt>
-<dd><p>Generates a 2D numpy array from the stored datapoints.
+<dd><p>Generates a matrix representation of the reading.
+Here eah datapoint will be
 Note: only the value entry is included
 RETURN FORMAT: [[phi, theta, value],…]</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>_normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; If True the currently stored values will be normalized from -1.0 to 1.0</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns the matrix with shape ()</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns currently saved data as numpy polar array [[phi, theta, value],…]</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -204,7 +202,21 @@ RETURN FORMAT: [[phi, theta, value],…]</p>
 <dd class="field-even"><p>Returns currently saved data as numpy polar array [[phi, theta, value],…]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p>(np.ndarray, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPReading.MRPReading.to_value_array">
+<span class="sig-name descname"><span class="pre">to_value_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#MRPReading.MRPReading.to_value_array" title="Permalink to this definition"></a></dt>
+<dd><p>Returns all values as 1d array in order of insertion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns [value, value]</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

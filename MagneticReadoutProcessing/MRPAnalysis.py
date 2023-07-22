@@ -2,6 +2,9 @@ import math
 import random
 import numpy
 import numpy as np
+from matplotlib import pyplot as plt
+from scipy.fft import fft, fftfreq
+from scipy.signal import find_peaks
 
 from MagneticReadoutProcessing import MRPReading
 
@@ -13,6 +16,44 @@ class MRPAnalysisException(Exception):
 
 
 class MRPAnalysis:
+
+    @staticmethod
+    def calculate_fft(_reading: MRPReading, _normalize: bool = False, _plot: bool = False):
+        """
+        Calculates the FFT of a reading using the inserted datapoint.value property
+
+        :param _reading:
+        :type _reading: MRPReading
+
+        :returns:Returns the caclulcated fft vaöues
+        :rtype: np.ndarray
+        """
+        values = _reading.to_value_array()
+
+        if _normalize:
+            min_value = np.min(values)
+            values = values - min_value # SHIFT INTO POSITIVE
+            values = values / np.linalg.norm(values)
+        # sampling rate
+        sr = len(values)
+        # sampling interval
+        ts = 1.0 / sr
+        t = np.arange(0, 1, ts)
+
+        n = values.size  # The number of points in the data
+        freq = fftfreq(n, d=ts)
+
+
+        yf = fft(values, norm='forward')
+        height_threshold = 0.05
+        peaks_index, properties = find_peaks(np.abs(yf), height=height_threshold)
+
+        plt.plot(freq, np.abs(yf), '-', freq[peaks_index], properties['peak_heights'], 'x')
+        plt.xlabel("Frequency")
+        plt.ylabel("Amplitude")
+        plt.show()
+        plt.show()
+
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
     def calculate_magnetization(_reading: MRPReading) -> np.ndarray:
@@ -20,7 +61,7 @@ class MRPAnalysis:
         Function calculates the polarisation vector of a given reading.
         By searching for the max positive value in the matrix representation of the reading
 
-        :param _reading: Optional; If True the currently stored values will be normalized from -1.0 to 1.0
+        :param _reading: reading
         :type _reading: MRPReading
 
         :returns: Returns a vector which probably represents the polarization direction

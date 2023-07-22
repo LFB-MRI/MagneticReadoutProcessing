@@ -6,6 +6,7 @@ from MagneticReadoutProcessing import MRPAnalysis
 from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
 from MagneticReadoutProcessing import MRPVisualization
+from MagneticReadoutProcessing import MRPSimulation
 
 class TestMPRAnalysis(unittest.TestCase):
 
@@ -38,6 +39,12 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_A.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
     # JUST USED FOR PREPARATION
+
+
+    def test_calibration_fft(self):
+        reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
+
+        res = MRPAnalysis.MRPAnalysis.calculate_fft(reading_ideal, True, True)
 
     def test_calibration_analysis_zero(self):
         # IF A CALIBRATION READING IS APPLIED ON THE SAME READING THE RESULT SHOULD BE ZERO

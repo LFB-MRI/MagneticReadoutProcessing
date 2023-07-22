@@ -11,7 +11,7 @@ import pickle
 import sys
 import math
 from MagneticReadoutProcessing import MRPHelpers
-
+from MagneticReadoutProcessing import MRPReadingEntry
 class MRPReadingException(Exception):
     def __init__(self, message="MRPReadingException thrown"):
         self.message = message
@@ -160,15 +160,14 @@ class MRPReading(object): # object is needed for pickle export
 
         # X Y Z GRID
         sensor_distance_radius = self.measurement_config['sensor_distance_radius']
-        polar = self.to_numpy_polar(_normalize)
 
         inp = []
+        # TO ENSURE
+        for entry in self.data:
 
-        for entry in polar:
-
-            phi = entry[0]
-            theta = entry[1]
-            value = entry[2]
+            phi = entry['phi']
+            theta = entry['theta']
+            value = entry['value']
 
             if _use_sensor_distance:
                 cart = MRPHelpers.asCartesian((value, theta, phi))
@@ -176,9 +175,24 @@ class MRPReading(object): # object is needed for pickle export
                 cart = MRPHelpers.asCartesian((sensor_distance_radius, theta, phi))
 
             inp.append(cart)
-        #return np.hypot(x, y), np.degrees(np.arctan2(y, x))
+
 
         return inp
+
+
+    def to_value_array(self) -> np.ndarray:
+        """
+            Returns all values as 1d array in order of insertion.
+
+            :returns: Returns [value, value]
+            :rtype: np.ndarray
+
+            """
+        ret = []
+        for entry in self.data:
+           ret.append(entry['value'])
+        return np.array(ret)
+
 
     def to_numpy_matrix(self) -> np.ndarray:
         """
@@ -186,9 +200,6 @@ class MRPReading(object): # object is needed for pickle export
         Here eah datapoint will be
         Note: only the value entry is included
         RETURN FORMAT: [[phi, theta, value],...]
-
-
-
 
         :returns: Returns the matrix with shape ()
         :rtype: np.ndarray
@@ -225,11 +236,22 @@ class MRPReading(object): # object is needed for pickle export
         result_matrix = np.zeros((n_theta, n_phi))
         # https://towardsdatascience.com/spherical-projection-for-point-clouds-56a2fc258e6c
         # https://www.quora.com/Can-we-project-a-sphere-in-a-2-dimensional-surface
-        for entry in self.data:
-            p = entry['reading_index_phi']
-            t = entry['reading_index_theta']
-            v = entry['value']
-            result_matrix.itemset((t, p), v)
+
+        # CONVERT TO XYZ + value
+        # XYZ TO UV + value
+        # MAP UV TO MATRIX = value
+
+        polar = self.to_numpy_polar(_normalize=False)
+        min_value = np.min(polar)
+        max_value = np.max(polar)
+        polar_normalized = self.to_numpy_polar(_normalize=True)
+
+
+        #for entry in self.data:
+        #    p = entry['reading_index_phi']
+        #    t = entry['reading_index_theta']
+        #    v = entry['value']
+        #    result_matrix.itemset((t, p), v)
         return result_matrix
 
     # TODO MERGE WITH VISUALISATION ROUTINES AND ALLOW NORMALISATION FLAG
@@ -244,7 +266,7 @@ class MRPReading(object): # object is needed for pickle export
         :type _normalize: bool
 
         :returns: Returns currently saved data as numpy polar array [[phi, theta, value],...]
-        :rtype: np.ndarray
+        :rtype: (np.ndarray, float, float)
 
         """
         # NORMALIZE DATA

@@ -3,8 +3,8 @@ import math
 import numpy as np
 
 
-def is_np_shape_allowed(arr):
-  return arr.shape != (0, ) and len(arr.shape) <= 2
+def is_np_shape_allowed(_arr, _shape:[int]):
+  return _arr.shape != (_shape[0], ) and len(_arr.shape) <= _shape[1]
 
 
 # https://gist.github.com/pghazanfari/8ff2c5c84544bae466191f7f674491b6
