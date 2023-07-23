@@ -1,17 +1,15 @@
 
-
 import os.path
 import pickle
 from datetime import datetime
 import numpy as np
-from numpy import ndarray
-
-from MagneticReadoutProcessing import MRPConfig
 import pickle
 import sys
 import math
-from MagneticReadoutProcessing import MRPHelpers
-from MagneticReadoutProcessing import MRPReadingEntry
+from numpy import ndarray
+from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry
+
+
 class MRPReadingException(Exception):
     def __init__(self, message="MRPReadingException thrown"):
         self.message = message
@@ -80,14 +78,13 @@ class MRPReading(object): # object is needed for pickle export
         # THE SENSOR RADIUS CAN DIFFER
         if _sensor_radius is not None:
             self.measurement_config['sensor_distance_radius'] = _sensor_radius
-        #else:
+        # else:
         #    self.measurement_config['sensor_distance_radius'] = 10
 
         if _sensor_id is not None:
             self.measurement_config['sensor_id'] = _sensor_id
         else:
             self.measurement_config['sensor_id'] = 0
-
 
     def loads(self, _pickle_binaray: bytes):
         pl = pickle.loads(_pickle_binaray)
@@ -100,7 +97,6 @@ class MRPReading(object): # object is needed for pickle export
         self.config = pl['config']
         self.additional_data = pl['additional_data']
         self.measurement_config = pl['measurement_config']
-
 
     def load_from_file(self, _filepath_name: str):
         """
@@ -154,8 +150,6 @@ class MRPReading(object): # object is needed for pickle export
         """
         self.additional_data['name'] = _name
 
-
-
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
 
         # X Y Z GRID
@@ -165,9 +159,9 @@ class MRPReading(object): # object is needed for pickle export
         # TO ENSURE
         for entry in self.data:
 
-            phi = entry['phi']
-            theta = entry['theta']
-            value = entry['value']
+            phi = entry.phi
+            theta = entry.theta
+            value = entry.value
 
             if _use_sensor_distance:
                 cart = MRPHelpers.asCartesian((value, theta, phi))
@@ -190,7 +184,7 @@ class MRPReading(object): # object is needed for pickle export
             """
         ret = []
         for entry in self.data:
-           ret.append(entry['value'])
+           ret.append(entry.value())
         return np.array(ret)
 
 
@@ -210,18 +204,15 @@ class MRPReading(object): # object is needed for pickle export
         n_phi = self.measurement_config['n_phi']
         n_theta = self.measurement_config['n_theta']
 
-        if not len(self.data) == n_phi*n_theta:
+        if not len(self.data) == (n_phi * n_theta):
             raise MRPReadingException("data length count invalid")
 
         values_present_phi = {}
         values_present_theta = {}
+
         for entry in self.data:
-
-            #if values_present_phi[str(entry['reading_index_phi'])] is not None and values_present_phi[str(entry['reading_index_theta'])] is not None:
-            #    raise MRPReadingException("DUPLICATE DATA ENTRY WITH EQUAL INDEXING FOUND")
-
-            values_present_phi[str(entry['reading_index_phi'])] = 1
-            values_present_theta[str(entry['reading_index_theta'])] = 1
+            values_present_phi[str(entry.reading_index_phi)] = 1
+            values_present_theta[str(entry.reading_index_theta)] = 1
 
 
         for i in range(n_phi):
@@ -246,8 +237,7 @@ class MRPReading(object): # object is needed for pickle export
         max_value = np.max(polar)
         polar_normalized = self.to_numpy_polar(_normalize=True)
 
-
-        #for entry in self.data:
+        # for entry in self.data:
         #    p = entry['reading_index_phi']
         #    t = entry['reading_index_theta']
         #    v = entry['value']
@@ -275,7 +265,7 @@ class MRPReading(object): # object is needed for pickle export
         # GET MIN MAX VALUE
         if _normalize:
             for r in self.data:
-                value = r['value']
+                value = r.value
                 if value < min_val:
                     min_val = value - 0.1
                 if value > max_val:
@@ -285,9 +275,9 @@ class MRPReading(object): # object is needed for pickle export
 
         # CONVERT AND NORMALIZE DATA
         for r in self.data:
-            phi = r['phi']
-            theta = r['theta']
-            value = r['value']
+            phi = r.phi
+            theta = r.theta
+            value = r.value
             # NORMALIZE IF NEEDED
             if _normalize:
                 normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
@@ -316,7 +306,7 @@ class MRPReading(object): # object is needed for pickle export
         # given 1d array [phi, theta, value]
         if np.shape(_numpy_array)[1] != 3:
             raise MRPReadingException("array shape check failed")
-        #if not np.shape(_numpy_array) == numpy.shape(np_curr):
+        # if not np.shape(_numpy_array) == numpy.shape(np_curr):
         #    raise MRPAnalysisException("array shape check failed")
 
         # SKIP IF UPDATE DATA ARE ENTRY
@@ -330,10 +320,10 @@ class MRPReading(object): # object is needed for pickle export
             update_value = update[2]
 
             for idx, data_entry in enumerate(self.data):
-                phi = data_entry['phi']
-                theta = data_entry['theta']
+                phi = data_entry.phi
+                theta = data_entry.theta
                 if phi == update_phi and theta == update_theta:
-                    self.data[idx]['value'] = update_value
+                    self.data[idx].value = update_value
                     break
         # TODO OPTIMIZE
 
@@ -341,10 +331,11 @@ class MRPReading(object): # object is needed for pickle export
         # SO IMPORT/EXPORT IS POSSIBLE
 
     def insert_reading(self, _read_value: float, _phi: float, _theta: float, _reading_index_phi: int,
-                       _reading_index_theta: int, _temp: float = None, _is_valid: bool = True, _autoupdate_measurement_config: bool = True):
+                       _reading_index_theta: int, _is_valid: bool = True, _autoupdate_measurement_config: bool = True):
         """
         Inserts a new reading into the dataset.
         The _phi, _theta values need to be valid polar coordinates
+
 
 
         :param _read_value: hallsensor reading in [mT]
@@ -362,20 +353,14 @@ class MRPReading(object): # object is needed for pickle export
         :param _reading_index_theta: index of the theta coordinate count = resolution for theta axis
         :type _reading_index_theta: int
 
+        :param _autoupdate_measurement_config:
+        :type _autoupdate_measurement_config: bool
 
         """
         if len(self.data) <= 0:
             self.time_start = datetime.now()
         self.time_end = datetime.now()
-        entry = dict({
-            "value": _read_value,
-            "phi": _phi,
-            "theta": _theta,
-            "reading_index_phi": _reading_index_phi,
-            "reading_index_theta": _reading_index_theta,
-            "temperature": _temp,
-            "is_valid": _is_valid
-        })
+        entry = MRPReadingEntry.MRPReadingEntry(len(self.data), _read_value, _phi, _theta, _reading_index_phi, _reading_index_theta, _is_valid)
         self.data.append(entry)
 
 

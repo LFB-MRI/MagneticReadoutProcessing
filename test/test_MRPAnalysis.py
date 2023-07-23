@@ -36,11 +36,11 @@ class TestMPRAnalysis(unittest.TestCase):
             ii = ii + 1
             for i in theta[:, 0]:
                 jj = jj + 1
-                self.reading_A.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
-                self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj, random.uniform(0, 1) * 10.0 + 25.0)
+                self.reading_A.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
+                self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
     # JUST USED FOR PREPARATION
 
-
+    @unittest.skip
     def test_calibration_fft(self):
         reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
 

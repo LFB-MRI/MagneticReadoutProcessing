@@ -105,7 +105,7 @@ Create a minimal measurement
             temp = 25.0 # DEGREE C
 
             # SAVE RESULT
-            reading.insert_reading(value, j, i, reading_index_phi, reading_index_theta, temp)
+            reading.insert_reading(value, j, i, reading_index_phi, reading_index_theta)
 
 
             # UPDATE CONSOLE OUTPUT WITH THE CURRENT READOUT AND POSITION
