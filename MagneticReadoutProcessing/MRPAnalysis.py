@@ -91,10 +91,10 @@ class MRPAnalysis:
         :rtype: float
         """
         for idx, data_entry in enumerate(_reading.data):
-            phi = data_entry['phi']
-            theta = data_entry['theta']
+            phi = data_entry.phi
+            theta = data_entry.theta
             if phi == _phi and theta == _theta:
-                return data_entry['value']
+                return data_entry.value
         return None
 
     @staticmethod

@@ -43,7 +43,6 @@ class TestMPRAnalysis(unittest.TestCase):
     @unittest.skip
     def test_calibration_fft(self):
         reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
-
         res = MRPAnalysis.MRPAnalysis.calculate_fft(reading_ideal, True, True)
 
     def test_calibration_analysis_zero(self):
@@ -72,7 +71,7 @@ class TestMPRAnalysis(unittest.TestCase):
             orig = result_original[idx]
             self.assertAlmostEqual(orig[2], b[2] + a[2])
 
-    @unittest.skip
+    #@unittest.skip
     def test_merge_analysis_EQUAL(self):
 
         self.assertIsNotNone(self.reading_A)
@@ -84,7 +83,7 @@ class TestMPRAnalysis(unittest.TestCase):
         # PLOT INTO A WINDOW
         visu.plot3d(None)
 
-    @unittest.skip
+
     def test_merge_analysis_TWO_READINGS(self):
         # IMPORT TWO EXISTING READINGS FROM FILE
         reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")

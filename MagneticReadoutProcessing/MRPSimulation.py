@@ -92,7 +92,7 @@ class MRPSimulation():
                 if _randomize_magnetization:
                     value = value * random.uniform(0.9, 1)
                 #print(value)
-                reading.insert_reading(value, p, t, index_phi, index_theta, 25.0, True)
+                reading.insert_reading(value, p, t, index_phi, index_theta)
 
             # FOR DEBUGGING
         #magpy.show(simulation_collection)
@@ -134,12 +134,12 @@ class MRPSimulation():
                 # - on lower
 
                 if _full_random:
-                    reading.insert_reading(-100 + random.uniform(0, 1) * 200.0, p, t, index_phi, index_theta, 25.0)
+                    reading.insert_reading(-100 + random.uniform(0, 1) * 200.0, p, t, index_phi, index_theta)
                 else:
                     if t > center:
-                        reading.insert_reading(-80 + random.uniform(0, 1) * 40.0, p, t, index_phi, index_theta, 25.0)
+                        reading.insert_reading(-80 + random.uniform(0, 1) * 40.0, p, t, index_phi, index_theta)
                     else:
-                        reading.insert_reading(80 + random.uniform(0, 1) * 40.0, p, t, index_phi, index_theta, 25.0)
+                        reading.insert_reading(80 + random.uniform(0, 1) * 40.0, p, t, index_phi, index_theta)
 
         # ADD METADATA
         # ADD NAME, MAGNET INFORMATION

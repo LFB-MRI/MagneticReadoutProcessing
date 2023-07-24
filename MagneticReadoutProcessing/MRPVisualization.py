@@ -57,7 +57,7 @@ class MRPVisualization():
         center_val =(max_val-min_val)
         # GET MIN MAX VALUE
         for r in self.measurement.data:
-            value = r['value']
+            value = r.value
             if value < min_val:
                 min_val = value - 0.1
             if value > max_val:
@@ -73,11 +73,11 @@ class MRPVisualization():
                 added = False
                 # CHECK IF DATA EXSITS
                 for r in self.measurement.data:
-                    dj = r['phi']
-                    di = r['theta']
+                    dj = r.phi
+                    di = r.theta
 
                     if j == dj and i == di:
-                        value = r['value']
+                        value = r.value
                         # BETWEEN -1 and 1 (maybe used in the feature)
                         normalized_value = MRPHelpers.translate(value, min_val, max_val, -1.0, 1.0)
                         # FOR PLOTTING BETWEEN 0 - 1

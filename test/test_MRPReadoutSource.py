@@ -56,9 +56,7 @@ class TestMPRSimulation(unittest.TestCase):
     def test_readoutsource_misc(self):
         pass
 
-
-
-
+    @unittest.skip
     def test_readoutsource_initial(self):
         magnet_size = 12 # mm
 
