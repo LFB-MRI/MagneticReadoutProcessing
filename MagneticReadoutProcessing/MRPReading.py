@@ -16,7 +16,7 @@ class MRPReadingException(Exception):
         super().__init__(self.message)
 
 
-class MRPReading(object): # object is needed for pickle export
+class MRPReading:
     """ Stores the raw sensor data, including metadata and import/export functions"""
 
 
@@ -33,8 +33,6 @@ class MRPReading(object): # object is needed for pickle export
 
         :param _sensor_radius: Optional; distance between hallsensor and magnet
         :type _sensor_radius: int
-
-
 
         """
         self.time_start = None
@@ -91,7 +89,14 @@ class MRPReading(object): # object is needed for pickle export
 
         self.time_start = pl['time_start']
         self.time_end = pl['time_end']
-        self.data = pl['data']
+
+        # HANDLE DATA IMPORT DIFFERENTLY
+        # DUE WE NEED TO CONVERT IT TO MRPReadingEntry
+        self.data = []
+        for idx, entry in enumerate(pl['data']):
+            _re = MRPReadingEntry.MRPReadingEntry()
+            _re.from_dict(entry)
+            self.data.append(_re)
         self.measurement_config = pl['measurement_config']
         # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
         self.config = pl['config']
@@ -113,7 +118,13 @@ class MRPReading(object): # object is needed for pickle export
 
             self.time_start = pl['time_start']
             self.time_end = pl['time_end']
-            self.data = pl['data']
+            # HANDLE DATA IMPORT DIFFERENTLY
+            # DUE WE NEED TO CONVERT IT TO MRPReadingEntry
+            self.data = []
+            for idx, entry in enumerate(pl['data']):
+                _re = MRPReadingEntry.MRPReadingEntry()
+                _re.from_dict(entry)
+                self.data.append(_re)
             self.measurement_config = pl['measurement_config']
             # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
             self.config = pl['config']
@@ -376,10 +387,15 @@ class MRPReading(object): # object is needed for pickle export
             'time_start': self.time_start,
             'time_end': self.time_end,
             'config': self.config,
-            'data': self.data,
             'measurement_config': self.measurement_config,
             'additional_data': self.additional_data
         })
+
+
+        # TODO REAL OBJECT SERIALIZATION
+        final_dataset['data'] = []
+        for entry in self.data:
+            final_dataset['data'].append(entry.to_dict())
         # TODO REMOVE REDUNDANCY ?
         # ADD ADDITIONAL USERDATA
         if self.additional_data is not None:

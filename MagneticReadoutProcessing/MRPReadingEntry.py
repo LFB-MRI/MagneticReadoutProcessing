@@ -1,5 +1,10 @@
 
-class MRPReadingEntry(object):
+class MRPReadingEntryException(Exception):
+    def __init__(self, message="MRPReadingEntryException thrown"):
+        self.message = message
+        super().__init__(self.message)
+
+class MRPReadingEntry:
     """ Class holds all values for one read entry such as value and position"""
     _value = None # [mT]
     _phi = None
@@ -77,7 +82,37 @@ class MRPReadingEntry(object):
             self._reading_index_theta = p_rit
             self._is_valid = p_is_valid
 
-    def __dict__(self):
+    def from_dict(self, _dict: dict):
+        errors = 0
+        if 'value' in _dict:
+            self._value = float(_dict['value'])
+            errors = errors + 1
+
+        if 'phi' in _dict:
+            self._phi = float(_dict['phi'])
+            errors = errors + 1
+
+        if 'theta' in _dict:
+            self._theta = float(_dict['theta'])
+            errors = errors + 1
+        if 'reading_index_phi' in _dict:
+            self._reading_index_phi = int(_dict['reading_index_phi'])
+            errors = errors + 1
+
+        if 'reading_index_theta' in _dict:
+            self._reading_index_theta = int(_dict['reading_index_theta'])
+            errors = errors + 1
+
+        if 'is_valid' in _dict:
+            self._is_valid = bool(_dict['is_valid'])
+            errors = errors + 1
+        if 'id' in _dict:
+            self._id = int(_dict['id'])
+            errors = errors + 1
+
+        if errors < len(self.__dict__()):
+            raise MRPReadingEntryException("from_dict import failed")
+    def __dict__(self) -> dict:
         return {
             'value': self._value,
             'phi': self._phi,
@@ -87,3 +122,5 @@ class MRPReadingEntry(object):
             'is_valid': self._is_valid,
             'id': self._id
         }
+    def to_dict(self) -> dict:
+        return self.__dict__()

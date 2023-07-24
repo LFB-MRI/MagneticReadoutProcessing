@@ -70,6 +70,7 @@ class TestMPRReading(unittest.TestCase):
         reading_imported = MRPReading.MRPReading(None)
         # LOAD READING FROM FILE
         reading_imported.load_from_file(self.import_export_test_filepath)
+
         # CHECK IF ENTRIES ARE POPULATED
         self.assertIsNotNone(reading_imported.additional_data)
         self.assertIsNotNone(reading_imported.data)
