@@ -40,7 +40,7 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
     # JUST USED FOR PREPARATION
 
-    @unittest.skip
+
     def test_calibration_fft(self):
         reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
         res = MRPAnalysis.MRPAnalysis.calculate_fft(reading_ideal, True, True)
