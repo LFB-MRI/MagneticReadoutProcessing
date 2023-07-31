@@ -7,7 +7,7 @@ from MagneticReadoutProcessing import MRPConfig
 from MagneticReadoutProcessing import MRPReading
 from MagneticReadoutProcessing import MRPVisualization
 from MagneticReadoutProcessing import MRPSimulation
-
+from MagneticReadoutProcessing import MRPMagnetTypes
 class TestMPRAnalysis(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
@@ -56,6 +56,21 @@ class TestMPRAnalysis(unittest.TestCase):
         result = self.reading_A.to_numpy_polar()
         for r in result:
             self.assertEqual(r[2], 0.0)
+
+    def calculate_center_of_gravity(self):
+        # TODO
+        # CALULATE CENTER OF GRAVITY
+        # STORE MAGNET TYPE IN READING -> DROP DOWN
+        # CREATE FROM CoG a magpylib instance with magnet type
+        # generate hallbach arrray with count a ring
+
+        reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
+
+        result_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading_ideal)
+        # SETTING THE MAGNET TYPE IS NEEDED FOR LATER OPENSCAD GENERATION
+        reading_ideal.set_magnet_type(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12)
+
+        # result_vector
 
 
     def test_calibration_analysis_real(self):

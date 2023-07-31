@@ -7,7 +7,7 @@ import pickle
 import sys
 import math
 from numpy import ndarray
-from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry
+from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes
 
 
 class MRPReadingException(Exception):
@@ -59,7 +59,8 @@ class MRPReading:
                 'n_theta': self.config['MEASUREMENT']['VERTICAL_RESOLUTION'],
                 'phi_radians': math.radians(self.config['MEASUREMENT']['HORIZONTAL_AXIS_DEGREE']),
                 'theta_radians': math.radians(self.config['MEASUREMENT']['VERTICAL_AXIS_DEGREE']),
-                'sensor_distance_radius': self.config['MEASUREMENT']['SENSOR_MAGNET_DISTANCE']
+                'sensor_distance_radius': self.config['MEASUREMENT']['SENSOR_MAGNET_DISTANCE'],
+                'magnet_type': self.config['MEASUREMENT']['MAGNET_TYPE']
             })
         else:
             self.measurement_config.update({
@@ -67,7 +68,8 @@ class MRPReading:
                 'n_theta': 0,
                 'phi_radians': 0,
                 'theta_radians': 0,
-                'sensor_distance_radius': 10
+                'sensor_distance_radius': 10,
+                'magnet_type': MRPMagnetTypes.MagnetType.NOT_SPECIFIED
             })
 
 
@@ -160,6 +162,16 @@ class MRPReading:
         :type _name: str
         """
         self.additional_data['name'] = _name
+
+    def set_magnet_type(self, _type: MRPMagnetTypes.MagnetType):
+        self.measurement_config['magnet_type'] = int(_type)
+
+    def get_magnet_type(self) -> MRPMagnetTypes.MagnetType:
+        val = self.measurement_config['magnet_type']
+        if val is None:
+            return MRPMagnetTypes.MagnetType.NOT_SPECIFIED
+        ret = MRPMagnetTypes.MagnetType.from_int(val)
+        return ret
 
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
 

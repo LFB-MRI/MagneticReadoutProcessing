@@ -56,7 +56,7 @@ class MRPAnalysis:
 
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
-    def calculate_magnetization(_reading: MRPReading) -> np.ndarray:
+    def calculate_center_of_gravity(_reading: MRPReading) -> np.ndarray:
         """
         Function calculates the polarisation vector of a given reading.
         By searching for the max positive value in the matrix representation of the reading
@@ -67,7 +67,8 @@ class MRPAnalysis:
         :returns: Returns a vector which probably represents the polarization direction
         :rtype: np.ndarray
         """
-        matrix = _reading.to_numpy_matrix()
+        # VECTOR
+        #matrix = _reading
 
 
         # TO MATRIX

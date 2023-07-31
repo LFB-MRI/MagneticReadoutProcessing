@@ -12,3 +12,6 @@ magpylib>=4.2.0
 magpy>=1.0.0
 sphinx-rtd-theme>=1.2.2
 pytest>=7.4.0
+solid>=0.2.0
+openpyscad>=0.5.0
+
