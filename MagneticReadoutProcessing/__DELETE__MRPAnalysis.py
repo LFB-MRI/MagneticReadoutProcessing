@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from scipy.fft import fft, fftfreq
 from scipy.signal import find_peaks
 
-from MagneticReadoutProcessing import MRPReading, MRPMeasurementConfig, MRPMagnetTypes
+from MagneticReadoutProcessing import MRPReading
 
 
 class MRPAnalysisException(Exception):
@@ -18,7 +18,7 @@ class MRPAnalysisException(Exception):
 class MRPAnalysis:
 
     @staticmethod
-    def calculate_fft(_reading: MRPReading.MRPReading, _normalize: bool = False, _plot: bool = False):
+    def calculate_fft(_reading: MRPReading, _normalize: bool = False, _plot: bool = False):
         """
         Calculates the FFT of a reading using the inserted datapoint.value property
 
@@ -56,7 +56,7 @@ class MRPAnalysis:
 
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
-    def calculate_center_of_gravity(_reading: MRPReading.MRPReading) -> np.ndarray:
+    def calculate_center_of_gravity(_reading: MRPReading) -> np.ndarray:
         """
         Function calculates the polarisation vector of a given reading.
         By searching for the max positive value in the matrix representation of the reading
@@ -69,6 +69,8 @@ class MRPAnalysis:
         """
         # VECTOR
         #matrix = _reading
+
+
         # TO MATRIX
         # FIND HIGHEST VALUE IN MATRIX => GET DIRECTION INTO CARTESIAN
         return np.array([0.0, 0.0, 0.0]) # TODO ?
@@ -115,25 +117,23 @@ class MRPAnalysis:
     # TODO BINNING IMPLEMENTIEREN
     #
     @staticmethod
-    def merge_two_half_sphere_measurements_to_full_sphere(_reading_top: MRPReading.MRPReading, _reading_bottom: MRPReading.MRPReading) -> MRPReading.MRPReading:
-        top_n_theta = _reading_top.measurement_config.n_theta
-        top_theta_radians = _reading_top.measurement_config.theta_radians
-        top_n_phi = _reading_top.measurement_config.n_phi
-        top_phi_radians = _reading_top.measurement_config.phi_radians
+    def merge_two_half_sphere_measurements_to_full_sphere(_reading_top: MRPReading, _reading_bottom: MRPReading) -> MRPReading:
+        top_n_theta = _reading_top.measurement_config['n_theta']
+        top_theta_radians = _reading_top.measurement_config['theta_radians']
+        top_n_phi = _reading_top.measurement_config['n_phi']
+        top_phi_radians = _reading_top.measurement_config['phi_radians']
 
-        bottom_n_theta = _reading_bottom.measurement_config.n_theta
-        bottom_theta_radians = _reading_bottom.measurement_config.theta_radians
-        bottom_n_phi = _reading_bottom.measurement_config.n_phi
-        bottom_phi_radians = _reading_bottom.measurement_config.phi_radians
+        bottom_n_theta = _reading_bottom.measurement_config['n_theta']
+        bottom_theta_radians = _reading_bottom.measurement_config['theta_radians']
+        bottom_n_phi = _reading_bottom.measurement_config['n_phi']
+        bottom_phi_radians = _reading_bottom.measurement_config['phi_radians']
 
         # CHECK AXIS LIMITS
         # # TODO CURRENTLY LIMITS NEEDS TO BE EQUALLY... FIX THIS LATER TO ALLOW OTHER n_theta values E.G. MERGE 90DEGREE AND 45 DEGREE READING
         # ONLY CHECK n_phi and radius
-        rtd = _reading_top.measurement_config.to_dict()
-        rbd = _reading_bottom.measurement_config.to_dict()
-        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius', 'magnet_type']:
-            top_value = rtd[key]
-            bottom_value = rbd[key]
+        for key in ['n_phi', 'phi_radians', 'sensor_distance_radius']:
+            top_value = _reading_top.measurement_config[key]
+            bottom_value = _reading_bottom.measurement_config[key]
             if top_value != bottom_value:
                 raise MRPAnalysisException(
                     "mismatching {0} _reading_top:{1} _reading_bottom:{2}".format(key, top_value, bottom_value))
@@ -143,20 +143,20 @@ class MRPAnalysis:
 
         # TODO FIX BOTTOM
         # CREATE NEW READING WITH MODIFED SIZE
-        ret = MRPReading.MRPReading(_reading_top.measurement_config)
-        ret.measurement_config.sensor_id = 42
+        ret = MRPReading.MRPReading(None, 42, _reading_top.measurement_config['sensor_distance_radius'])
+        ret.measurement_config = _reading_top.measurement_config
         # NEW VALUES FOR THE VERTICAL AXIS WHICH GOINT FROM + (top scan) to - (bottom scan)
-        ret.measurement_config.n_theta = bottom_n_theta
-        ret.measurement_config.n_phi = bottom_n_phi
-        ret.measurement_config.theta_radians = math.radians(180)
-        ret.measurement_config.phi_radians = math.radians(360)
+        ret.measurement_config['n_theta'] = bottom_n_theta
+        ret.measurement_config['n_phi'] = bottom_n_phi
+        ret.measurement_config['theta_radians'] = math.radians(180)
+        ret.measurement_config['phi_radians'] = math.radians(360)
         ret.set_additional_data('is_merged_reading', 1)
 
-        print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config.n_theta, ret.measurement_config.theta_radians))
+        print("new calculated n_theta:{0} theta_radians:{1}".format(ret.measurement_config['n_theta'], ret.measurement_config['theta_radians']))
 
 
         # CREATE A POLAR GRID FOR A FULL SPHERE
-        theta, phi = np.mgrid[0.0:ret.measurement_config.theta_radians:ret.measurement_config.n_theta * 1j, 0.0:2.0*ret.measurement_config.phi_radians:ret.measurement_config.n_phi * 1j]
+        theta, phi = np.mgrid[0.0:ret.measurement_config['theta_radians']:ret.measurement_config['n_theta'] * 1j, 0.0:2.0*ret.measurement_config['phi_radians']:ret.measurement_config['n_phi'] * 1j]
 
 
         index_t = 0
@@ -175,7 +175,7 @@ class MRPAnalysis:
                     inserted = True
                 # SKIP FIRST LINE FROM THE BOTTOM READING DUE TO OVERLAPPING WITH THE ROP ONE
                 if value_bottom is not None and t > 0.0:
-                    ret.insert_reading(value_bottom, p, math.pi - t, idx_p, index_t)
+                    ret.insert_reading(value_bottom, p, math.pi- t, idx_p, index_t)
                     inserted = True
 
                 if not inserted:
@@ -186,7 +186,7 @@ class MRPAnalysis:
         return ret
 
     @staticmethod
-    def apply_calibration_data_inplace(_calibration_reading: MRPReading.MRPReading, _current_reading: MRPReading.MRPReading):
+    def apply_calibration_data_inplace(_calibration_reading: MRPReading, _current_reading: MRPReading):
         """
         apply a reference reading as baseline to a given reading.
         If a given datapoint is present in both readings the following calculation will be applied:
@@ -237,7 +237,7 @@ class MRPAnalysis:
             _current_reading.set_additional_data('calibration_reading_source', _calibration_reading.additional_data['export_filepath'])
         # UPDATE THE DATA ENTRY DIRECTLY
 
-    def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading.MRPReading,
+    def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading,
                       _bins: int = None) -> list[MRPReading.MRPReading]:
 
         # TODO ONLY FOR 360 DRG ARRYS SO CHECK THETA PHI RANGE BEFORE

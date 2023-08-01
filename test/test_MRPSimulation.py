@@ -28,9 +28,9 @@ class TestMPRSimulation(unittest.TestCase):
         visu = MRPVisualization.MRPVisualization(reading)
         #visu.plot3d(None)
 
-    @unittest.skip
+    #@unittest.skip
     def test_simulation_cubic_magnet(self):
-        no_samples = 0
+        no_samples = 10
         magnet_size = 12 # mm
         add_random_factor = True
         for sample in range(no_samples):
@@ -42,7 +42,7 @@ class TestMPRSimulation(unittest.TestCase):
             visu.plot3d(name + ".mag.pkl.png")
             reading.dump_to_file( name + ".mag.pkl")
 
-    @unittest.skip
+    #@unittest.skip
     def test_simulation_cubic_magnet_with_random_polarisazion(self):
         no_samples = 10
         magnet_size = 12 # mm

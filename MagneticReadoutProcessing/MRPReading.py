@@ -1,13 +1,14 @@
-
 import os.path
 import pickle
 from datetime import datetime
 import numpy as np
-import pickle
+import json
 import sys
+import copy
 import math
 from numpy import ndarray
-from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes
+from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
+
 
 
 class MRPReadingException(Exception):
@@ -18,92 +19,64 @@ class MRPReadingException(Exception):
 
 class MRPReading:
     """ Stores the raw sensor data, including metadata and import/export functions"""
+    EXPORT_TIME_FORMAT: str = "%a %b %d %H:%M:%S %Y"
 
 
-    def __init__(self, _config: MRPConfig = None, _sensor_id: int = 0, _sensor_radius: int = 10) -> None:
+
+    def __init__(self, _config: MRPMeasurementConfig.MRPMeasurementConfig = None):
         """
         The constructor create a new empty reading with some predefined meta-data.
 
-
         :param _config:
-        :type _config: MRPConfig
-
-        :param _sensor_id: Optional; used hallsensor sensor id for the reading
-        :type _sensor_id: int
-
-        :param _sensor_radius: Optional; distance between hallsensor and magnet
-        :type _sensor_radius: int
+        :type _config: MRPMeasurementConfig.MRPMeasurementConfig
 
         """
-        self.time_start = None
-        self.time_end = None
+        self.time_start: datetime = None
+        self.time_end: datetime = None
         # holds the reading data samples
-        self.data = []
+        self.data: [MRPReadingEntry.MRPReadingEntry] = []
         # stores import measurement information like
-        self.measurement_config = dict()
-        self.sensor_id = 0
-        # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
-        self.config = dict()
+        self.measurement_config: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
         # user defined metadata storage as kv pair
-        self.additional_data = dict()
+        self.additional_data: dict = dict()
         self.additional_data['name'] = 'unknown'
         # POPULATE SOMA DEFAULT DATA ABOUT THE READING
-        self.measurement_config = dict()
-        self.measurement_config['sensor_distance_radius'] = 1.0
-        self.measurement_config['sensor_id'] = 0
+        self.measurement_config: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
+
+
 
         if _config is not None:
-            self.config = _config.get_as_dict()
-            self.measurement_config.update({
-                'n_phi': self.config['MEASUREMENT']['HORIZONTAL_RESOLUTION'],
-                'n_theta': self.config['MEASUREMENT']['VERTICAL_RESOLUTION'],
-                'phi_radians': math.radians(self.config['MEASUREMENT']['HORIZONTAL_AXIS_DEGREE']),
-                'theta_radians': math.radians(self.config['MEASUREMENT']['VERTICAL_AXIS_DEGREE']),
-                'sensor_distance_radius': self.config['MEASUREMENT']['SENSOR_MAGNET_DISTANCE'],
-                'magnet_type': self.config['MEASUREMENT']['MAGNET_TYPE']
-            })
+            # using deepcopy without using deepcopy :)
+            self.measurement_config.from_dict(_config.to_dict())
         else:
-            self.measurement_config.update({
-                'n_phi': 0,
-                'n_theta': 0,
-                'phi_radians': 0,
-                'theta_radians': 0,
-                'sensor_distance_radius': 10,
-                'magnet_type': MRPMagnetTypes.MagnetType.NOT_SPECIFIED
-            })
+            self.measurement_config = MRPMeasurementConfig.MRPMeasurementConfig()
+            self.measurement_config.configure_fullsphere()
+            self.measurement_config.sensor_distance_radius = 1
+            self.measurement_config.sensor_id = 0
 
 
-
-
-        # THE SENSOR RADIUS CAN DIFFER
-        if _sensor_radius is not None:
-            self.measurement_config['sensor_distance_radius'] = _sensor_radius
-        # else:
-        #    self.measurement_config['sensor_distance_radius'] = 10
-
-        if _sensor_id is not None:
-            self.measurement_config['sensor_id'] = _sensor_id
-        else:
-            self.measurement_config['sensor_id'] = 0
-
-    def loads(self, _pickle_binaray: bytes):
-        pl = pickle.loads(_pickle_binaray)
-
-        self.time_start = pl['time_start']
-        self.time_end = pl['time_end']
+    def load_from_dict(self, _jsondict: dict):
+        self.time_start = None
+        if len(_jsondict['time_start']) > 0:
+            t = _jsondict['time_start']
+            self.time_start = datetime.strptime(t, self.EXPORT_TIME_FORMAT)
+        self.time_end = None
+        if len(_jsondict['time_end']) > 0:
+            self.time_end = datetime.strptime(_jsondict['time_end'], self.EXPORT_TIME_FORMAT)
 
         # HANDLE DATA IMPORT DIFFERENTLY
         # DUE WE NEED TO CONVERT IT TO MRPReadingEntry
         self.data = []
-        for idx, entry in enumerate(pl['data']):
+        for idx, entry in enumerate(_jsondict['data']):
             _re = MRPReadingEntry.MRPReadingEntry()
             _re.from_dict(entry)
             self.data.append(_re)
-        self.measurement_config = pl['measurement_config']
+
+        self.measurement_config = MRPMeasurementConfig.MRPMeasurementConfig()
+        self.measurement_config.from_dict(_jsondict['measurement_config'])
+
         # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
-        self.config = pl['config']
-        self.additional_data = pl['additional_data']
-        self.measurement_config = pl['measurement_config']
+        self.additional_data = _jsondict['additional_data']
 
     def load_from_file(self, _filepath_name: str):
         """
@@ -115,24 +88,9 @@ class MRPReading:
 
         """
         try:
-            fint = open(_filepath_name, 'rb')
-            pl = pickle.load(fint)
-
-            self.time_start = pl['time_start']
-            self.time_end = pl['time_end']
-            # HANDLE DATA IMPORT DIFFERENTLY
-            # DUE WE NEED TO CONVERT IT TO MRPReadingEntry
-            self.data = []
-            for idx, entry in enumerate(pl['data']):
-                _re = MRPReadingEntry.MRPReadingEntry()
-                _re.from_dict(entry)
-                self.data.append(_re)
-            self.measurement_config = pl['measurement_config']
-            # ADD ONLY THE IMPORTANT MEASUREMENT CONFIG ENTRIES
-            self.config = pl['config']
-            self.additional_data = pl['additional_data']
-            self.measurement_config = pl['measurement_config']
-
+            fint = open(_filepath_name, 'r')
+            pl = json.load(fint)
+            self.load_from_dict(pl)
             # CLOSE FILE
             fint.close()
             return pl
@@ -164,19 +122,15 @@ class MRPReading:
         self.additional_data['name'] = _name
 
     def set_magnet_type(self, _type: MRPMagnetTypes.MagnetType):
-        self.measurement_config['magnet_type'] = int(_type)
+        self.measurement_config.magnet_type = _type
 
     def get_magnet_type(self) -> MRPMagnetTypes.MagnetType:
-        val = self.measurement_config['magnet_type']
-        if val is None:
-            return MRPMagnetTypes.MagnetType.NOT_SPECIFIED
-        ret = MRPMagnetTypes.MagnetType.from_int(val)
-        return ret
+        return self.measurement_config.magnet_type
 
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
 
         # X Y Z GRID
-        sensor_distance_radius = self.measurement_config['sensor_distance_radius']
+        sensor_distance_radius = self.measurement_config.sensor_distance_radius
 
         inp = []
         # TO ENSURE
@@ -193,9 +147,7 @@ class MRPReading:
 
             inp.append(cart)
 
-
         return inp
-
 
     def to_value_array(self) -> np.ndarray:
         """
@@ -207,9 +159,8 @@ class MRPReading:
             """
         ret = []
         for entry in self.data:
-           ret.append(entry.value())
+            ret.append(entry.value)
         return np.array(ret)
-
 
     def to_numpy_matrix(self) -> np.ndarray:
         """
@@ -224,8 +175,8 @@ class MRPReading:
         """
 
         # CHECK FOR CONTINUOUS NUMBERING
-        n_phi = self.measurement_config['n_phi']
-        n_theta = self.measurement_config['n_theta']
+        n_phi = self.measurement_config.n_phi
+        n_theta = self.measurement_config.n_theta
 
         if not len(self.data) == (n_phi * n_theta):
             raise MRPReadingException("data length count invalid")
@@ -236,7 +187,6 @@ class MRPReading:
         for entry in self.data:
             values_present_phi[str(entry.reading_index_phi)] = 1
             values_present_theta[str(entry.reading_index_theta)] = 1
-
 
         for i in range(n_phi):
             if str(i) not in values_present_phi:
@@ -308,11 +258,9 @@ class MRPReading:
             else:
                 arr_1d_data.append([phi, theta, value])
 
-
         # PERFORM RESHAPE AND NUMPY CONVERSION
         arr_1d_data_np = np.array(arr_1d_data)
         return arr_1d_data_np
-
 
     def update_data_from_numpy_polar(self, _numpy_array: np.ndarray):
         """
@@ -335,7 +283,6 @@ class MRPReading:
         # SKIP IF UPDATE DATA ARE ENTRY
         if len(_numpy_array) <= 0:
             return
-
 
         for update in _numpy_array:
             update_phi = update[0]
@@ -383,38 +330,39 @@ class MRPReading:
         if len(self.data) <= 0:
             self.time_start = datetime.now()
         self.time_end = datetime.now()
-        entry = MRPReadingEntry.MRPReadingEntry(len(self.data), _read_value, _phi, _theta, _reading_index_phi, _reading_index_theta, _is_valid)
+        entry = MRPReadingEntry.MRPReadingEntry(len(self.data), _read_value, _phi, _theta, _reading_index_phi,
+                                                _reading_index_theta, _is_valid)
         self.data.append(entry)
-
 
         # UPDATE measurement_config VALUES
         if _autoupdate_measurement_config:
-            self.measurement_config['phi_radians'] = max(self.measurement_config['phi_radians'], _phi)
-            self.measurement_config['theta_radians'] = max(self.measurement_config['theta_radians'], _theta)
-            self.measurement_config['n_phi'] = max(self.measurement_config['n_phi'], _reading_index_phi)
-            self.measurement_config['n_theta'] = max(self.measurement_config['n_theta'], _reading_index_theta)
-    def dump(self) -> bytes:
+            self.measurement_config.phi_radians = max(self.measurement_config.phi_radians, _phi)
+            self.measurement_config.theta_radians = max(self.measurement_config.theta_radians, _theta)
+            self.measurement_config.n_phi = max(self.measurement_config.n_phi, _reading_index_phi)
+            self.measurement_config.n_theta = max(self.measurement_config.n_theta, _reading_index_theta)
+
+    def dump(self) -> str:
+
         final_dataset = dict({
-            'dump_time': datetime.now(),
-            'time_start': self.time_start,
-            'time_end': self.time_end,
-            'config': self.config,
-            'measurement_config': self.measurement_config,
+            'dump_time': datetime.now().strftime(self.EXPORT_TIME_FORMAT),
+            'time_start': self.time_start.strftime(self.EXPORT_TIME_FORMAT),
+            'time_end': self.time_end.strftime(self.EXPORT_TIME_FORMAT),
             'additional_data': self.additional_data
         })
-
 
         # TODO REAL OBJECT SERIALIZATION
         final_dataset['data'] = []
         for entry in self.data:
             final_dataset['data'].append(entry.to_dict())
+
+        final_dataset['measurement_config'] = self.measurement_config.to_dict()
         # TODO REMOVE REDUNDANCY ?
         # ADD ADDITIONAL USERDATA
         if self.additional_data is not None:
             for item in self.additional_data.items():
                 final_dataset[str(item[0])] = item[1]
-        # DUMP TO PICKLE BYTES
-        return pickle.dumps(final_dataset)
+        # DUMP TO BYTES
+        return json.dumps(final_dataset)
 
     def dump_to_file(self, _filepath_name: str) -> str:
         """
@@ -429,8 +377,8 @@ class MRPReading:
         :returns: File path to which the file is exported, including filename
         :rtype: str
         """
-        if '.pkl' not in _filepath_name:
-            _filepath_name = _filepath_name + '.pkl'
+        if '.mag.json' not in _filepath_name:
+            _filepath_name = _filepath_name + '.mag.json'
         print("dump_to_file with {0}".format(_filepath_name))
 
         # STORE SOME EXPORT METADATA
@@ -442,10 +390,9 @@ class MRPReading:
 
         # FINALLY EXPORT TO FILE USING THE self.dump option
         try:
-            fout = open(_filepath_name, 'wb')
+            fout = open(_filepath_name, 'w')
             fout.write(self.dump())
             fout.close()
         except Exception as e:
             sys.stderr.write(str(e))
-            return None
         return _filepath_name

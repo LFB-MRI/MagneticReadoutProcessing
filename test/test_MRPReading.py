@@ -13,9 +13,6 @@ class TestMPRReading(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
     def setUp(self) -> None:
-        # USE DEFAULT CONFIG
-        self.config = MRPConfig.MRPConfig(None)
-        self.config.load_defaults()
 
 
         self.import_export_test_folderpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
@@ -25,11 +22,11 @@ class TestMPRReading(unittest.TestCase):
         self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
 
     def test_matrix_init(self):
-        reading = MRPSimulation.MRPSimulation.generate_cubic_reading(12, False, False,40)
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading(12, False, False, 40)
         matrix = reading.to_numpy_matrix()
 
-        n_phi = reading.measurement_config['n_phi']
-        n_theta = reading.measurement_config['n_theta']
+        n_phi = reading.measurement_config.n_phi
+        n_theta = reading.measurement_config.n_theta
         # CHECK MATRIX SHAPE
         self.assertTrue(matrix.shape != (n_theta, ) and len(matrix.shape) <= n_phi)
 
@@ -38,14 +35,15 @@ class TestMPRReading(unittest.TestCase):
 
 
     def test_reading_init(self) -> MRPReading:
-        reading = MRPReading.MRPReading(self.config)
+        reading = MRPReading.MRPReading()
+        reading.measurement_config.configure_fullsphere()
         self.assertIsNotNone(reading)
 
         reading.set_additional_data('test', 1)
         reading.sensor_id = 0
 
-        n_phi = self.config.MEASUREMENT_HORIZONTAL_RESOLUTION
-        n_theta = self.config.MEASUREMENT_VERTICAL_RESOLUTION
+        n_phi = reading.measurement_config.n_phi
+        n_theta = reading.measurement_config.n_theta
         # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
         theta, phi = np.mgrid[0.0:0.5 * np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
 
@@ -56,7 +54,6 @@ class TestMPRReading(unittest.TestCase):
             for i in theta[:, 0]:
                 jj = jj + 1
                 reading.insert_reading(random.uniform(0, 1), j, i, ii, jj)
-
         return reading
 
     def test_export_reading(self) -> None:
@@ -76,7 +73,7 @@ class TestMPRReading(unittest.TestCase):
         self.assertIsNotNone(reading_imported.data)
 
     def test_cartesian_reading(self):
-        reading = MRPReading.MRPReading(self.config)
+        reading = MRPReading.MRPReading()
         self.assertIsNotNone(reading)
 
 

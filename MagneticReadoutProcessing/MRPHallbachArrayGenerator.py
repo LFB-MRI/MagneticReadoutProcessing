@@ -1,6 +1,7 @@
+import magpylib
+
 from MRPReading import MRPReading, MRPReadingEntry
 from solid import *
-import magpylib as magpy
 
 from MagneticReadoutProcessing import MRPAnalysis
 
@@ -12,6 +13,10 @@ class MRPHallbachArrayGeneratorException(Exception):
 
 class MRPHallbachArrayGenerator:
 
+
+    @staticmethod
+    def magpylib_magnet_to_openscad(_magnet: magpylib.magnet):
+        pass
     @staticmethod
     def generate_1k_hallbach_using_polarisation_direction(_reading: [MRPReading]):
 
@@ -27,20 +32,20 @@ class MRPHallbachArrayGenerator:
         # USING GRAVITY OF CENTER
         magpylib_instances = []
         for idx, reading in enumerate(_reading):
-            type = reading.get_magnet_type()
+            magtype = reading.get_magnet_type()
 
             magnetization_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading)
             # CHECK
             if magnetization_vector is None or magnetization_vector[0] is None:
                 raise MRPHallbachArrayGeneratorException("calculation of calculate_center_of_gravity failed: {}".format(idx))
 
-            dimension_vector = type.get_dimension()
+            dimension_vector = magtype.get_dimension()
 
             # CREATE MAGPYLIB INSTANCES
-            if type.is_cubic():
-                magpylib_instances.append(magpy.magnet.Cuboid(magnetization=magnetization_vector, dimension=dimension_vector))
-            elif type.is_cylinder():
-                magpylib_instances.append(magpy.magnet.Cylinder(magnetization=magnetization_vector, dimension=(dimension_vector[0], dimension_vector[1])))
+            if magtype.is_cubic():
+                magpylib_instances.append(magpylib.magnet.Cuboid(magnetization=magnetization_vector, dimension=dimension_vector))
+            elif magtype.is_cylindrical():
+                magpylib_instances.append(magpylib.magnet.Cylinder(magnetization=magnetization_vector, dimension=(dimension_vector[0], dimension_vector[1])))
             else:
                 raise MRPHallbachArrayGeneratorException("magnet type not implemented: {}".format(idx))
 

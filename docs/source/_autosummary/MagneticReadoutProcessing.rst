@@ -30,7 +30,9 @@
 
    MagneticReadoutProcessing.MRPAnalysis
    MagneticReadoutProcessing.MRPConfig
+   MagneticReadoutProcessing.MRPHallbachArrayGenerator
    MagneticReadoutProcessing.MRPHelpers
+   MagneticReadoutProcessing.MRPMagnetTypes
    MagneticReadoutProcessing.MRPReading
    MagneticReadoutProcessing.MRPReadingEntry
    MagneticReadoutProcessing.MRPReadoutSource

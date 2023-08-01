@@ -9,15 +9,19 @@ class MagnetType(Enum):
     # GENERAL NOTATION <type>_<shape>_size
     # CUBIC_XxYxZ # dimensions in mm
     NOT_SPECIFIED = 0
-    N45_CUBIC_12x12x12 = 1
-    N45_CUBIC_15x15x15 = 2
-    N45_CUBIC_9x9x9 = 3
+    RANDOM_MAGNET = 1
+    # CUBE
+    N45_CUBIC_12x12x12 = 2
+    N45_CUBIC_15x15x15 = 3
+    N45_CUBIC_9x9x9 = 4
 
-    N45_CYLINDER_5x10 = 4
+    # CYLINDER
+    N45_CYLINDER_5x10 = 5
+
+    # SPHERE
+    N45_SPHERE_10 = 6 # 10mm sphere
 
 
-    def __init__(self):
-        pass
 
 
     @staticmethod
@@ -43,7 +47,7 @@ class MagnetType(Enum):
             return True
         return False
 
-    def is_cylinder(self):
+    def is_cylindrical(self):
         if 'cylinder' in str(self.name).lower():
             return True
         return False

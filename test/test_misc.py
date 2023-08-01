@@ -4,16 +4,13 @@ import numpy as np
 import pytest
 import unittest
 import random
-from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading
+from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig
 import configparser
 import os
 class TestMPRReading(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
     def setUp(self) -> None:
-        # USE DEFAULT CONFIG
-        self.config = MRPConfig.MRPConfig(None)
-        self.config.load_defaults()
 
         self.import_export_test_folderpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
         if not os.path.exists(self.import_export_test_folderpath):
@@ -22,14 +19,15 @@ class TestMPRReading(unittest.TestCase):
         self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
 
     def test_full_sphere_reading(self) -> MRPReading:
-        reading = MRPReading.MRPReading(self.config)
+        reading = MRPReading.MRPReading()
+        reading.measurement_config.configure_fullsphere()
         self.assertIsNotNone(reading)
 
         reading.set_additional_data('test', 1)
         reading.sensor_id = 0
 
-        n_phi = self.config.MEASUREMENT_HORIZONTAL_RESOLUTION
-        n_theta = self.config.MEASUREMENT_VERTICAL_RESOLUTION
+        n_phi = reading.measurement_config.n_phi
+        n_theta = reading.measurement_config.n_theta
         # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
         theta, phi = np.mgrid[0.0:np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
 

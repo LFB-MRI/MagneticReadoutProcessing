@@ -10,6 +10,7 @@ import numpy as np
 # CUSTOM CLASSES
 from MagneticReadoutProcessing import MRPReading
 from MagneticReadoutProcessing import MRPHelpers
+from MagneticReadoutProcessing import MRPMeasurementConfig
 
 class MRPVisualization():
     """ Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""
@@ -23,7 +24,7 @@ class MRPVisualization():
     sensor_id = int()
     theta_radians = 0.5 * math.pi # 90 degree half phere
     phi_radians = 2 * math.pi # 360 degree
-    def __init__(self, _reading: MRPReading):
+    def __init__(self, _reading: MRPReading.MRPReading):
         """
         Creates a MRPVisualization instance to plot a given reading in 2D/3D
 
@@ -31,14 +32,14 @@ class MRPVisualization():
         :type _reading: MRPReading
 
         """
-        self.measurement = _reading # REFERENCE!
+        self.measurement: MRPReading.MRPReading = _reading # REFERENCE!
 
-        self.n_theta = self.measurement.measurement_config ['n_theta']
-        self.n_phi = self.measurement.measurement_config['n_phi']
-        self.sensor_distance_radius = self.measurement.measurement_config['sensor_distance_radius']
-        self.sensor_id = self.measurement.measurement_config['sensor_id']
-        self.theta_radians = self.measurement.measurement_config['theta_radians']
-        self.phi_radians = self.measurement.measurement_config['phi_radians']
+        self.n_theta: int = self.measurement.measurement_config.n_theta
+        self.n_phi: int = self.measurement.measurement_config.n_phi
+        self.sensor_distance_radius: int = self.measurement.measurement_config.sensor_distance_radius
+        self.sensor_id: int = self.measurement.measurement_config.sensor_id
+        self.theta_radians: float = self.measurement.measurement_config.theta_radians
+        self.phi_radians:float = self.measurement.measurement_config.phi_radians
 
         # CREATE A POLAR COORDINATE GRID
         self.theta, self.phi = np.mgrid[0.0:self.theta_radians:self.n_theta * 1j, 0.0:self.phi_radians:self.n_phi * 1j]

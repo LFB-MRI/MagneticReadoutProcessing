@@ -14,19 +14,21 @@ class TestMPRAnalysis(unittest.TestCase):
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
         # USE DEFAULT CONFIG
-        self.config = MRPConfig.MRPConfig(None)
-        self.config.load_defaults()
 
-        self.reading_A = MRPReading.MRPReading(self.config)
-        self.reading_B = MRPReading.MRPReading(self.config)
+
+        self.reading_A = MRPReading.MRPReading()
+        self.reading_A.measurement_config.configure_halfsphere()
         self.assertIsNotNone(self.reading_A)
+
+        self.reading_B = MRPReading.MRPReading()
+        self.reading_B.measurement_config.configure_halfsphere()
         self.assertIsNotNone(self.reading_B)
 
         self.reading_A.sensor_id = 0
         self.reading_B.sensor_id = 1
 
-        n_phi = self.config.MEASUREMENT_HORIZONTAL_RESOLUTION
-        n_theta = self.config.MEASUREMENT_VERTICAL_RESOLUTION
+        n_phi = self.reading_A.measurement_config.n_phi
+        n_theta = self.reading_A.measurement_config.n_theta
         # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
         theta, phi = np.mgrid[0.0:0.5 * np.pi:n_theta * 1j, 0.0:2.0 * np.pi:n_phi * 1j]
 
@@ -100,21 +102,13 @@ class TestMPRAnalysis(unittest.TestCase):
 
 
     def test_merge_analysis_TWO_READINGS(self):
-        # IMPORT TWO EXISTING READINGS FROM FILE
-        reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
-        reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
-        # IMPORT TOP READING
-        reading_top = MRPReading.MRPReading(None)
-        reading_top.load_from_file(reading_top_filepath)
-        # IMPORT BOTTOM READING
-        reading_bottom = MRPReading.MRPReading(None)
-        reading_bottom.load_from_file(reading_bottom_filepath)
 
-        self.assertIsNotNone(reading_top)
-        self.assertIsNotNone(reading_bottom)
 
-        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(reading_top,
-                                                                                                   reading_bottom)
+        self.assertIsNotNone(self.reading_A)
+        self.assertIsNotNone(self.reading_B)
+
+        merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(self.reading_A,
+                                                                                                   self.reading_B)
         self.assertIsNotNone(merged_reading)
 
         # CHECK RESULT
