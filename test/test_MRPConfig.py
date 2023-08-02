@@ -4,6 +4,8 @@ import unittest
 from MagneticReadoutProcessing import MRPConfig
 import configparser
 import os
+
+# TODO REWRITE TEST FOR CONFIG
 class TestMPRConfig(unittest.TestCase):
     def test_config_init(self):
         config = MRPConfig.MRPConfig(None)

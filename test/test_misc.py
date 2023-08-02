@@ -7,7 +7,7 @@ import random
 from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig
 import configparser
 import os
-class TestMPRReading(unittest.TestCase):
+class TestMRPReading(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
     def setUp(self) -> None:

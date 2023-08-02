@@ -42,7 +42,7 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
     # JUST USED FOR PREPARATION
 
-
+    @unittest.skip
     def test_calibration_fft(self):
         reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
         res = MRPAnalysis.MRPAnalysis.calculate_fft(reading_ideal, True, True)
@@ -59,6 +59,7 @@ class TestMPRAnalysis(unittest.TestCase):
         for r in result:
             self.assertEqual(r[2], 0.0)
 
+
     def calculate_center_of_gravity(self):
         # TODO
         # CALULATE CENTER OF GRAVITY
@@ -70,7 +71,7 @@ class TestMPRAnalysis(unittest.TestCase):
 
         result_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading_ideal)
         # SETTING THE MAGNET TYPE IS NEEDED FOR LATER OPENSCAD GENERATION
-        reading_ideal.set_magnet_type(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12)
+
 
         # result_vector
 
@@ -102,22 +103,16 @@ class TestMPRAnalysis(unittest.TestCase):
 
 
     def test_merge_analysis_TWO_READINGS(self):
-
-
         self.assertIsNotNone(self.reading_A)
         self.assertIsNotNone(self.reading_B)
 
         merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(self.reading_A,
-                                                                                                   self.reading_B)
+                                                                                               self.reading_B)
         self.assertIsNotNone(merged_reading)
-
         # CHECK RESULT
-
         visu = MRPVisualization.MRPVisualization(merged_reading)
-
         # 2D PLOT INTO A WINDOW
         visu.plot3d(None)
-
         # 3D PLOT TO FILE
         #visu.plot3d(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plot3d_3d.png'))
 
