@@ -14,32 +14,67 @@ class MRPHallbachArrayGeneratorException(Exception):
 class MRPHallbachArrayGenerator:
 
     @staticmethod
-    def plot_vectors(_vectors: [vector.Vector3D]):
+    def plot_vectors(_vectors: [vector.Vector3D], _name: str = "Vector Plot", _file: str = None):
+        """
+        Helperfunction to plot a list of 3D vectors using matplotlib
+        :param _vectors: reading
+        :type _vectors: [vector.Vector3D]
+
+        :param _name: headline of the plot
+        :type _name: str
+
+        :param _file: if set, saves the plot as png to given path
+        :type _file: str
+
+
+        """
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
 
-        v1 = np.array([1, 2, 3])
-        v2 = np.array([-2, 1, 4])
 
-        # VECTOR 1
-        ax.quiver(0, 0, 0, v1[0], v1[1], v1[2], color='r', arrow_length_ratio=0.1)
-        # VECTOR 2
-        ax.quiver(0, 0, 0, v2[0], v2[1], v2[2], color='b', arrow_length_ratio=0.1)
+        min_x, min_y, min_z = (-2, -2, -2)
+        max_x, max_y, max_z = (2, 2, 2)
 
-        ax.set_xlim([-3, 3])
-        ax.set_ylim([-3, 3])
-        ax.set_zlim([-3, 3])
+        colors = ["red", "green", "blue", "yellow", "black"]
+        for idx, v in enumerate(_vectors):
+
+            x = float(v.x)
+            y = float(v.y)
+            z = float(v.z)
+
+
+            min_x = min(min_x, x)
+            max_x = max(max_x, x)
+            min_y = min(min_y, y)
+            max_y = max(max_y, y)
+            min_z = min(min_z, z)
+            max_z = max(max_z, z)
+            # ADD VECTOR
+            ax.quiver(0, 0, 0, x, y, z, color=colors[idx % len(colors)], arrow_length_ratio=0.1)
+
+        ax.plot(0, 0, marker="o", markersize=10, markeredgecolor="black", markerfacecolor="black")
+
+        ax.set_xlim([min_x, max_x])
+        ax.set_ylim([min_y, max_y])
+        ax.set_zlim([min_z, max_z])
 
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
-        plt.title('3D Vector Plot')
+        plt.title(_name)
 
-        plt.show()
+        if _file is None:
+            plt.show()
+        else:
+            if '.png' not in _file:
+                _file = _file + ".png"
+            plt.savefig(_file)
 
     @staticmethod
     def magpylib_magnet_to_openscad(_magnet: magpylib.magnet):
         pass
+
+
     @staticmethod
     def generate_1k_hallbach_using_polarisation_direction(_reading: [MRPReading]):
 
@@ -74,14 +109,16 @@ class MRPHallbachArrayGenerator:
 
         # ON A 2d PLANCE
         target_orientation = vector.obj(x=1.0, y=0.0, z=0.0)
+
         for idx, magnet in enumerate(magpylib_instances):
 
             # 1 step roate magnet so the mag_vecotr is aligned to a XY PLANE
             mag = magnet.magnetization
             orientation = magnet.orientation
 
+            mag_vector = vector.obj(x=mag[0], y=mag[1], z=mag[2])
             print("{}".format(mag))
-            MRPHallbachArrayGenerator.plot_vectors([target_orientation, vector.Vector3D(x=mag[0], y=mag[1], z=mag[2]), ])
+            MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector])
 
 
 

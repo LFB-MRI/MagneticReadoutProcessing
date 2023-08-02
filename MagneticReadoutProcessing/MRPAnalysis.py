@@ -71,7 +71,7 @@ class MRPAnalysis:
         #matrix = _reading
         # TO MATRIX
         # FIND HIGHEST VALUE IN MATRIX => GET DIRECTION INTO CARTESIAN
-        return np.array([0.0, 0.0, 0.0]) # TODO ?
+        return np.array([0.0, 1.0, 1.0]) # X Y Z TODO ?
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """

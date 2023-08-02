@@ -7,6 +7,7 @@ import random
 from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig, MRPSimulation, MRPHallbachArrayGenerator
 import configparser
 import os
+import vector
 class TestMRPHallbachArrayGenerator(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
@@ -17,10 +18,18 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
             os.makedirs(self.import_export_test_folderpath)
 
 
-    def test_full_sphere_reading(self):
-        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
 
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(reading)
+    def test_helper_plot_vectors(self):
+        vectors = [vector.obj(x=1, y=-2, z=-3), vector.obj(x=-4, y=4, z=2)]
+        # NORMAL PLOT
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors(vectors)
+        # SAVE TO FIG PLOT
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors(vectors, "test vector plot saved", self.import_export_test_folderpath + "/vector_save.png")
+
+    def test_generate_1k_hallbach_initial(self):
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        readings = [reading]
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
 
 
 if __name__ == '__main__':
