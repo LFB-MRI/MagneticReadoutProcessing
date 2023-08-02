@@ -51,8 +51,12 @@
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html">MagneticReadoutProcessing.MRPHallbachArrayGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPSimulation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPVisualization.html">MagneticReadoutProcessing.MRPVisualization</a></li>
@@ -115,7 +119,7 @@ Then the virtual hallsensor is moved around the magnet and the values are stored
 <dd class="field-even"><p>a generated MRPReading with set meta-data</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -132,7 +136,24 @@ Then the virtual hallsensor is moved around the magnet and the values are stored
 <dd class="field-even"><p>a generated MRPReading with set meta-data</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_randum_half_sphere_reading">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_randum_half_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_randum_half_sphere_reading" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a half sphere reading with random field values and predefined meta-data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_full_random</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; if true each inserted datapoint is random in polarity and strength</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a generated MRPReading with set meta-data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
 </dd>
 </dl>
 </dd></dl>

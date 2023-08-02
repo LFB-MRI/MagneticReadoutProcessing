@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="MagneticReadoutProcessing.MRPReadingEntry" href="MagneticReadoutProcessing.MRPReadingEntry.html" />
-    <link rel="prev" title="MagneticReadoutProcessing.MRPHelpers" href="MagneticReadoutProcessing.MRPHelpers.html" /> 
+    <link rel="prev" title="MagneticReadoutProcessing.MRPMeasurementConfig" href="MagneticReadoutProcessing.MRPMeasurementConfig.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,7 +51,10 @@
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html">MagneticReadoutProcessing.MRPHallbachArrayGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
@@ -96,7 +99,7 @@
 <span id="magneticreadoutprocessing-mrpreading"></span><h1>MagneticReadoutProcessing.MRPReading<a class="headerlink" href="#module-MRPReading" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPReading.MRPReading">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPReading.</span></span><span class="sig-name descname"><span class="pre">MRPReading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config:</span> <span class="pre">&lt;module</span> <span class="pre">'MagneticReadoutProcessing.MRPConfig'</span> <span class="pre">from</span> <span class="pre">'/Users/marcelochsendorf/Downloads/MagneticReadoutProcessing/MagneticReadoutProcessing/MRPConfig.py'&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_radius:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPReading.MRPReading" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPReading.</span></span><span class="sig-name descname"><span class="pre">MRPReading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MRPMeasurementConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPReading.MRPReading" title="Permalink to this definition"></a></dt>
 <dd><p>Stores the raw sensor data, including metadata and import/export functions</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPReading.MRPReading.dump_to_file">
@@ -255,7 +258,7 @@ set self.__traceback__ to tb and return self.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="MagneticReadoutProcessing.MRPHelpers.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPHelpers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MagneticReadoutProcessing.MRPMeasurementConfig.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPMeasurementConfig" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="MagneticReadoutProcessing.MRPReadingEntry.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPReadingEntry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

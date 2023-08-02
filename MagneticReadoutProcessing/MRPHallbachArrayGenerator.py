@@ -12,11 +12,12 @@ class MRPHallbachArrayGeneratorException(Exception):
         super().__init__(self.message)
 
 class MRPHallbachArrayGenerator:
-
+    """ Contains static functions to generate a 3D CAD Model of a Hallbach-Magnet using given readings."""
     @staticmethod
     def plot_vectors(_vectors: [vector.Vector3D], _name: str = "Vector Plot", _file: str = None):
         """
         Helperfunction to plot a list of 3D vectors using matplotlib
+
         :param _vectors: reading
         :type _vectors: [vector.Vector3D]
 
@@ -76,12 +77,18 @@ class MRPHallbachArrayGenerator:
 
 
     @staticmethod
-    def generate_1k_hallbach_using_polarisation_direction(_reading: [MRPReading]):
+    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading]):
+        """
+        Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction
 
-        if _reading is None or len(_reading) <= 0:
+        :param _readings: a list of readings to generate a 1k hallbach array
+        :type _readings: MRPReading.MRPReading
+
+        """
+        if _readings is None or len(_readings) <= 0:
             raise MRPHallbachArrayGeneratorException("get_magnet_type is not set for reading: {}".format(idx))
 
-        for idx, reading in enumerate(_reading):
+        for idx, reading in enumerate(_readings):
             if reading.get_magnet_type() is None or reading.get_magnet_type().is_invalid():
                 raise MRPHallbachArrayGeneratorException("get_magnet_type is not set for reading: {}".format(idx))
 
@@ -89,7 +96,7 @@ class MRPHallbachArrayGenerator:
         # PROCESS EACH MAGNET TO A MAGPYLIB INSTANCE
         # USING GRAVITY OF CENTER
         magpylib_instances = []
-        for idx, reading in enumerate(_reading):
+        for idx, reading in enumerate(_readings):
             magtype = reading.get_magnet_type()
 
             magnetization_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading)
@@ -114,7 +121,7 @@ class MRPHallbachArrayGenerator:
 
             # 1 step roate magnet so the mag_vecotr is aligned to a XY PLANE
             mag = magnet.magnetization
-            orientation = magnet.orientation
+            orientation = magnet.orientation # CURRENT MAGNET ORIENTATION
 
             mag_vector = vector.obj(x=mag[0], y=mag[1], z=mag[2])
             print("{}".format(mag))

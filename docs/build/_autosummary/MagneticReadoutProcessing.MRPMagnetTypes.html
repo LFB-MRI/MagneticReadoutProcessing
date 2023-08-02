@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MagneticReadoutProcessing.MRPAnalysis &mdash; MagneticReadoutProcessing  documentation</title>
+  <title>MagneticReadoutProcessing.MRPMagnetTypes &mdash; MagneticReadoutProcessing  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MagneticReadoutProcessing.MRPConfig" href="MagneticReadoutProcessing.MRPConfig.html" />
-    <link rel="prev" title="MagneticReadoutProcessing" href="MagneticReadoutProcessing.html" /> 
+    <link rel="next" title="MagneticReadoutProcessing.MRPMeasurementConfig" href="MagneticReadoutProcessing.MRPMeasurementConfig.html" />
+    <link rel="prev" title="MagneticReadoutProcessing.MRPHelpers" href="MagneticReadoutProcessing.MRPHelpers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,11 +49,11 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module: MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Documentation</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPAnalysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html">MagneticReadoutProcessing.MRPHallbachArrayGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
@@ -85,9 +85,9 @@
           <li class="breadcrumb-item"><a href="../modules.html">Module: MagneticReadoutProcessing</a></li>
           <li class="breadcrumb-item"><a href="../MagneticReadoutProcessing.html">Documentation</a></li>
           <li class="breadcrumb-item"><a href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a></li>
-      <li class="breadcrumb-item active">MagneticReadoutProcessing.MRPAnalysis</li>
+      <li class="breadcrumb-item active">MagneticReadoutProcessing.MRPMagnetTypes</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/_autosummary/MagneticReadoutProcessing.MRPAnalysis.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/MagneticReadoutProcessing.MRPMagnetTypes.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -95,18 +95,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-MRPAnalysis">
-<span id="magneticreadoutprocessing-mrpanalysis"></span><h1>MagneticReadoutProcessing.MRPAnalysis<a class="headerlink" href="#module-MRPAnalysis" title="Permalink to this heading"></a></h1>
-<dl class="py exception">
-<dt class="sig sig-object py" id="MRPAnalysis.MRPAnalysisException">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPAnalysis.</span></span><span class="sig-name descname"><span class="pre">MRPAnalysisException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPAnalysisException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysisException" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="MRPAnalysis.MRPAnalysisException.with_traceback">
-<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPAnalysis.MRPAnalysisException.with_traceback" title="Permalink to this definition"></a></dt>
-<dd><p>Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.</p>
-</dd></dl>
-
+  <section id="module-MRPMagnetTypes">
+<span id="magneticreadoutprocessing-mrpmagnettypes"></span><h1>MagneticReadoutProcessing.MRPMagnetTypes<a class="headerlink" href="#module-MRPMagnetTypes" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MRPMagnetTypes.MagnetType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPMagnetTypes.</span></span><span class="sig-name descname"><span class="pre">MagnetType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPMagnetTypes.MagnetType" title="Permalink to this definition"></a></dt>
+<dd><p>An enumeration.</p>
 </dd></dl>
 
 </section>
@@ -115,8 +109,8 @@ set self.__traceback__ to tb and return self.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="MagneticReadoutProcessing.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="MagneticReadoutProcessing.MRPConfig.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPConfig" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="MagneticReadoutProcessing.MRPHelpers.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPHelpers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MagneticReadoutProcessing.MRPMeasurementConfig.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPMeasurementConfig" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
