@@ -1,7 +1,18 @@
 """ Provides some misc functions like translate and other helper functions"""
 import math
 import numpy as np
+import vector
 
+
+
+def normalize_3d_vector(_vector: vector.obj) -> vector.obj:
+
+    vmag = _vector.mag
+
+    if vmag == 0.0:
+        return vector.obj(x=0.0, y=0.0, z=0.0)
+
+    return vector.obj(x=_vector.x/vmag, y=_vector.y/vmag, z=_vector.z/vmag)
 
 def is_np_shape_allowed(_arr, _shape:[int]):
   return _arr.shape != (_shape[0], ) and len(_arr.shape) <= _shape[1]

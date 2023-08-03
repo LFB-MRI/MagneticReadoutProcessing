@@ -4,7 +4,7 @@ import vector
 import matplotlib.pyplot as plt
 import numpy as np
 
-from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes
+from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes, MRPHelpers
 
 class MRPHallbachArrayGeneratorException(Exception):
     def __init__(self, message="MRPHallbachArrayGeneratorException thrown"):
@@ -123,7 +123,9 @@ class MRPHallbachArrayGenerator:
             mag = magnet.magnetization
             orientation = magnet.orientation # CURRENT MAGNET ORIENTATION
 
-            mag_vector = vector.obj(x=mag[0], y=mag[1], z=mag[2])
+            mag_vector = MRPHelpers.normalize_3d_vector(vector.obj(x=mag[0], y=mag[1], z=mag[2]))
+
+            rot = mag_vector.deltaangle(target_orientation)
             print("{}".format(mag))
             MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector])
 

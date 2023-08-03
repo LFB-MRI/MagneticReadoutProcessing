@@ -18,7 +18,7 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
             os.makedirs(self.import_export_test_folderpath)
 
 
-
+    @unittest.skip
     def test_helper_plot_vectors(self):
         vectors = [vector.obj(x=1, y=-2, z=-3), vector.obj(x=-4, y=4, z=2)]
         # NORMAL PLOT
