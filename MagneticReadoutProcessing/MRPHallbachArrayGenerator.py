@@ -179,10 +179,13 @@ class MRPHallbachArrayGenerator:
         zero_crossing = 0
         for idx, magnet in enumerate(magpylib_instances):
             # 180 DEGREE REACHED
-            if idx == no_magnets/2:
-                zero_crossing = 1
+            #if idx == no_magnets/2 and zero_crossing == 0:
+            #    zero_crossing = 1
 
-            print("zero_crossing:{}".format(zero_crossing))
+
+
+            magnet_rotation = idx * rotation_per_magnet
+            print("zero_crossing:{} magnet_rotation:{}".format(zero_crossing, magnet_rotation))
 
 
 
