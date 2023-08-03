@@ -15,5 +15,5 @@ pytest>=7.4.0
 solid>=0.2.0
 openpyscad>=0.5.0
 vector>=1.1.0
-
+vg>=2.0.0
 

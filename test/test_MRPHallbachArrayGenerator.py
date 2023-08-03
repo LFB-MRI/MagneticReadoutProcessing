@@ -26,9 +26,19 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         # SAVE TO FIG PLOT
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors(vectors, "test vector plot saved", self.import_export_test_folderpath + "/vector_save.png")
 
-    def test_generate_1k_hallbach_initial(self):
+    @unittest.skip
+    def test_generate_1k_hallbach_TWO_IDEAL(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
-        readings = [reading]
+        readings = [reading, reading]
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+
+
+    def test_generate_1k_hallbach_EIGHT_IDEAL(self):
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        readings= []
+        for idx in range(8):
+            readings.append(reading)
+
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
 
 

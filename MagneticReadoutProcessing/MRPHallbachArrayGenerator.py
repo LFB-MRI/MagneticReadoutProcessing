@@ -32,7 +32,7 @@ class MRPHallbachArrayGenerator:
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
 
-
+        # DEFAULT GRID SIZE
         min_x, min_y, min_z = (-2, -2, -2)
         max_x, max_y, max_z = (2, 2, 2)
 
@@ -43,7 +43,7 @@ class MRPHallbachArrayGenerator:
             y = float(v.y)
             z = float(v.z)
 
-
+            # EXPAND GRID IF NEEDED
             min_x = min(min_x, x)
             max_x = max(max_x, x)
             min_y = min(min_y, y)
@@ -53,6 +53,7 @@ class MRPHallbachArrayGenerator:
             # ADD VECTOR
             ax.quiver(0, 0, 0, x, y, z, color=colors[idx % len(colors)], arrow_length_ratio=0.1)
 
+        # ADD ORIGIN AS BLACK DOT
         ax.plot(0, 0, marker="o", markersize=10, markeredgecolor="black", markerfacecolor="black")
 
         ax.set_xlim([min_x, max_x])
@@ -62,6 +63,9 @@ class MRPHallbachArrayGenerator:
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
+        if _name is None:
+            _name = "Vector Plot"
+
         plt.title(_name)
 
         if _file is None:
@@ -71,22 +75,34 @@ class MRPHallbachArrayGenerator:
                 _file = _file + ".png"
             plt.savefig(_file)
 
-    @staticmethod
-    def magpylib_magnet_to_openscad(_magnet: magpylib.magnet):
-        pass
 
 
     @staticmethod
-    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading]):
+    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _slice_inner_diameter:float=20, _slice_outher_diameter: float = 50):
         """
-        Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction
+        Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction.
 
         :param _readings: a list of readings to generate a 1k hallbach array
         :type _readings: MRPReading.MRPReading
 
+        :param _slice_inner_diameter: hallbach ring inner diameter
+        :type _slice_inner_diameter: float
+
+        :param _slice_outher_diameter: hallbach ring outher diameter
+        :type _slice_outher_diameter: float
+
         """
+
+        # CHECK USER INPUT
+
+        if _slice_inner_diameter > _slice_outher_diameter:
+            raise MRPHallbachArrayGeneratorException("_slice_inner_diameter is bigger than _slice_outher_diameter")
+
         if _readings is None or len(_readings) <= 0:
-            raise MRPHallbachArrayGeneratorException("get_magnet_type is not set for reading: {}".format(idx))
+            raise MRPHallbachArrayGeneratorException("_readings is None or len is <= 0")
+
+        if len(_readings) % 2 != 0:
+            raise MRPHallbachArrayGeneratorException("_readings len is odd")
 
         for idx, reading in enumerate(_readings):
             if reading.get_magnet_type() is None or reading.get_magnet_type().is_invalid():
@@ -110,6 +126,7 @@ class MRPHallbachArrayGenerator:
             if magtype.is_cubic():
                 magpylib_instances.append(magpylib.magnet.Cuboid(magnetization=magnetization_vector, dimension=dimension_vector))
             elif magtype.is_cylindrical():
+                # dimension is (D,H)
                 magpylib_instances.append(magpylib.magnet.Cylinder(magnetization=magnetization_vector, dimension=(dimension_vector[0], dimension_vector[1])))
             else:
                 raise MRPHallbachArrayGeneratorException("magnet type not implemented: {}".format(idx))
@@ -125,9 +142,52 @@ class MRPHallbachArrayGenerator:
 
             mag_vector = MRPHelpers.normalize_3d_vector(vector.obj(x=mag[0], y=mag[1], z=mag[2]))
 
-            rot = mag_vector.deltaangle(target_orientation)
+            needed_rotation = mag_vector.cross(target_orientation)
             print("{}".format(mag))
-            MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector])
+            MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector, needed_rotation], "Magnet {} CURRENT STATE".format(idx))
+
+            # ROTATE MAGNET TO TARGET DIRECTION
+            # ADD orientation
+            nr_x = needed_rotation.x
+            nr_y = needed_rotation.y
+            nr_z = needed_rotation.z
+            magpylib_instances[idx].rotate_from_rotvec((nr_x, nr_y, nr_z), degrees=True)
+            print(magnet.orientation)
+
+
+        for idx, magnet in enumerate(magpylib_instances):
+            # CHECK RESULTS
+            # ALL VECTORS SHOULD ALIGN
+            magnetization = vector.obj(x=magnet.magnetization[0], y=magnet.magnetization[1], z=magnet.magnetization[2])
+            print(magnet.orientation)
+            #position = vector.obj(x=magnetization.)
+            mag_vector = MRPHelpers.normalize_3d_vector(vector.obj(x=magnetization.x, y=magnetization.y, z=magnetization.z))
+            needed_rotation = mag_vector.cross(target_orientation)
+            MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector], "Magnet {} ROTATED STATE".format(idx))
+
+
+
+        # GENERATE MAGNET SLICE
+
+
+        magnet_diamater: float = _slice_outher_diameter - _slice_inner_diameter
+        no_magnets: int = len(_readings)
+        rotation_per_magnet: float = 180 / no_magnets/2
+        print("no_magnets:{} rotation_per_magnet:{} magnet_diamater:{}".format(no_magnets, rotation_per_magnet, magnet_diamater))
+        i = 0
+
+        zero_crossing = 0
+        for idx, magnet in enumerate(magpylib_instances):
+            # 180 DEGREE REACHED
+            if idx == no_magnets/2:
+                zero_crossing = 1
+
+            print("zero_crossing:{}".format(zero_crossing))
+
+
+
+
+
 
 
 
