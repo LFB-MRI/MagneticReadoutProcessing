@@ -9,5 +9,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (MagneticReadoutProcessing)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="OpenSCAD Libraries" level="application" />
   </component>
 </module>

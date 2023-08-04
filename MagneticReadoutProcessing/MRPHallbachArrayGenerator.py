@@ -83,25 +83,25 @@ class MRPHallbachArrayGenerator:
 
 
     @staticmethod
-    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _slice_inner_diameter:float=30, _slice_outer_diameter_safety_margin:float = 50):
+    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _min_slice_inner_diameter:float = 20, _slice_outer_diameter_safety_margin:float = 0):
         """
         Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction.
 
         :param _readings: a list of readings to generate a 1k hallbach array
         :type _readings: MRPReading.MRPReading
 
-        :param _slice_inner_diameter: hallbach ring inner diameter
-        :type _slice_inner_diameter: float
+        :param _min_slice_inner_diameter: minimum hallbach ring inner diameter can be bigger depending the magnet size
+        :type _min_slice_inner_diameter: float
 
-        :param _slice_outer_diameter: hallbach ring outher diameter
-        :type _slice_outer_diameter: float
+        :param _slice_outer_diameter_safety_margin: additional
+        :type _slice_outer_diameter_safety_margin: float
 
         """
 
         # CHECK USER INPUT
 
-        if _slice_inner_diameter <= 0:
-            raise MRPHallbachArrayGeneratorException("_slice_inner_diameter cant be smaller than zero :)")
+        if _min_slice_inner_diameter <= 0:
+            raise MRPHallbachArrayGeneratorException("_min_slice_inner_diameter cant be smaller than zero :)")
 
         if _readings is None or len(_readings) <= 0:
             raise MRPHallbachArrayGeneratorException("_readings is None or len is <= 0")
@@ -190,36 +190,44 @@ class MRPHallbachArrayGenerator:
         # GENERATE A SLICE INCLUDING CUTOUTS FOR THE MAGNET
 
         ## CALCULATE THE OUTER DIAMETER OF THE CIRCULAR DISC
-        slice_outer_diameter:float = _slice_inner_diameter + 2*max_magnet_height
-        magnet_trajectory: float = (_slice_inner_diameter /2) + (max_magnet_height*2/3)  # PLACE MAGNETS IN A CIRCLE BETWEEN
+        slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height*4])
+        slice_outer_diameter: float = slice_inner_diameter + 4*max_magnet_height #  to add 2 time the magnet size on each side
+        magnet_trajectory: float = (slice_inner_diameter / 2) + (max_magnet_height*2/3)  # PLACE MAGNETS IN A CIRCLE BETWEEN
         # CONSTRUCTOR CREATES A SLICE BODY
-        slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(_slice_inner_diameter, slice_outer_diameter+_slice_outer_diameter_safety_margin, max_magnet_height)
+        slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter+_slice_outer_diameter_safety_margin, max_magnet_height)
 
         ## APPLY MAGNET CUTOUTS
 
         ## ONE HALF OF THE HALLBACH ARRAY IS A 360-DEGREE ROTATION OF HALF OF THE AMOUNTS OF THE MANGETS
         no_magnets: int = len(_readings)
-        rotation_per_magnet: float = 2*(360 / no_magnets / 2) # ROTATION PER MAGNET IN A HALLBACH ARRAY
+        quadrants = 4
+        rotation_per_magnet: float = (360) / (no_magnets / quadrants) # ROTATION PER MAGNET IN A HALLBACH ARRAY
         print("no_magnets:{} rotation_per_magnet:{} ".format(no_magnets, rotation_per_magnet))
 
-
+        zero_crossing = 0
         for idx, magnet in enumerate(magpylib_instances):
             # 180 DEGREE REACHED
-            #if idx == no_magnets/2 and zero_crossing == 0:
-            #    zero_crossing = 1
+            if idx == no_magnets/2 and zero_crossing == 0:
+                zero_crossing = 1
 
             # ROTATE MAGNET
-            magnet_rotation = idx * rotation_per_magnet
+            magnet_rotation = (idx * rotation_per_magnet)
             print("magnet_rotation:{}".format(magnet_rotation))
 
-            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, rotation_per_magnet)
+            # due to hallbach configuration, flip orientation at 180 zero_crossing*180 = 1k hallbach
+            magnet_rotation_itself = zero_crossing*180
+            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, "mag{}".format(idx))
+
+            slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=False)
 
 
-
-
+        # ADD ITEM MOUNTING HOLES
+        hole_spacing = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
+        hole_spacing = round(hole_spacing / 10) * 10 # ROUND TO NEXT
+        slice.append_mounting_holes_to_base_slice(hole_spacing)
 
         # EXPORT OPNESCAD OBJECT
-        slice.export_scad("slice_1khallbach_test".format(len(_readings),_slice_inner_diameter, slice_outer_diameter))
+        slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)
 
 
 
