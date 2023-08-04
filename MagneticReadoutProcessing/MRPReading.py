@@ -29,7 +29,6 @@ class MRPReading:
 
         :param _config:
         :type _config: MRPMeasurementConfig.MRPMeasurementConfig
-
         """
         self.time_start: datetime = None
         self.time_end: datetime = None
@@ -85,7 +84,6 @@ class MRPReading:
 
         :param _filepath_name: ABS or REL Filepath-string filepath to .mag.pkl
         :type _filepath_name: str
-
         """
         try:
             fint = open(_filepath_name, 'r')
@@ -101,7 +99,6 @@ class MRPReading:
         """
         Set a custom user meta-data entry.
         For example if the ``apply_calibration_data_inplace`` is used on a reading, a custom entry `is_calibrated`=1 is added to the reading using this function.
-
 
         :param _k: Key
         :type _k: str
@@ -151,12 +148,11 @@ class MRPReading:
 
     def to_value_array(self) -> np.ndarray:
         """
-            Returns all values as 1d array in order of insertion.
+        Returns all values as 1d array in order of insertion.
 
-            :returns: Returns [value, value]
-            :rtype: np.ndarray
-
-            """
+        :returns: Returns [value, value]
+        :rtype: np.ndarray
+        """
         ret = []
         for entry in self.data:
             ret.append(entry.value)
@@ -171,7 +167,6 @@ class MRPReading:
 
         :returns: Returns the matrix with shape ()
         :rtype: np.ndarray
-
         """
 
         # CHECK FOR CONTINUOUS NUMBERING
@@ -224,13 +219,11 @@ class MRPReading:
         Note: only the value entry is included
         RETURN FORMAT: [[phi, theta, value],...]
 
-
         :param _normalize: Optional; If True the currently stored values will be normalized from -1.0 to 1.0
         :type _normalize: bool
 
         :returns: Returns currently saved data as numpy polar array [[phi, theta, value],...]
         :rtype: (np.ndarray, float, float)
-
         """
         # NORMALIZE DATA
         min_val = float('inf')
@@ -269,8 +262,6 @@ class MRPReading:
 
         :param _numpy_array: datapoints to update: [[phi, theta, value],...]
         :type _numpy_array: np.ndarray
-
-
         """
 
         # CHECK FOR ARRAY/DATA SHAPE
@@ -305,8 +296,6 @@ class MRPReading:
         """
         Inserts a new reading into the dataset.
         The _phi, _theta values need to be valid polar coordinates
-
-
 
         :param _read_value: hallsensor reading in [mT]
         :type _read_value: float
@@ -371,8 +360,6 @@ class MRPReading:
 
         :param _filepath_name: File path to which the file will be exported
         :type _filepath_name: str
-
-
 
         :returns: File path to which the file is exported, including filename
         :rtype: str

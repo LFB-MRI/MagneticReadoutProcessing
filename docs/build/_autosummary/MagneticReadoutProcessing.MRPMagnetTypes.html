@@ -55,6 +55,7 @@
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPOpenSCADGenerator.html">MagneticReadoutProcessing.MRPOpenSCADGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
@@ -100,7 +101,37 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPMagnetTypes.MagnetType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPMagnetTypes.</span></span><span class="sig-name descname"><span class="pre">MagnetType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPMagnetTypes.MagnetType" title="Permalink to this definition"></a></dt>
-<dd><p>An enumeration.</p>
+<dd><p>Enum class for holding some basic information about a measured magnet.
+Please add further magnet definition here.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPMagnetTypes.MagnetType.get_dimension">
+<span class="sig-name descname"><span class="pre">get_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPMagnetTypes.MagnetType.get_dimension" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the dimension in mm from the selected magnet type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns (x, y, z)  on a cubic magnet, (d h, 0) on a cylindrical magnet</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPMagnetTypes.MagnetType.get_height">
+<span class="sig-name descname"><span class="pre">get_height</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#MRPMagnetTypes.MagnetType.get_height" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the maximum height of the selected magnet type.
+The function returns the max value of (x,y,z) or (d,h)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>max value of the dimension vector</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MagneticReadoutProcessing.MRPConfig &mdash; MagneticReadoutProcessing  documentation</title>
+  <title>MagneticReadoutProcessing.MRPOpenSCADGenerator &mdash; MagneticReadoutProcessing  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MagneticReadoutProcessing.MRPHallbachArrayGenerator" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html" />
-    <link rel="prev" title="MagneticReadoutProcessing.MRPAnalysis" href="MagneticReadoutProcessing.MRPAnalysis.html" /> 
+    <link rel="next" title="MagneticReadoutProcessing.MRPReading" href="MagneticReadoutProcessing.MRPReading.html" />
+    <link rel="prev" title="MagneticReadoutProcessing.MRPMeasurementConfig" href="MagneticReadoutProcessing.MRPMeasurementConfig.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,12 +50,12 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Documentation</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html">MagneticReadoutProcessing.MRPHallbachArrayGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
-<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPOpenSCADGenerator.html">MagneticReadoutProcessing.MRPOpenSCADGenerator</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPOpenSCADGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
@@ -86,9 +86,9 @@
           <li class="breadcrumb-item"><a href="../modules.html">Module: MagneticReadoutProcessing</a></li>
           <li class="breadcrumb-item"><a href="../MagneticReadoutProcessing.html">Documentation</a></li>
           <li class="breadcrumb-item"><a href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a></li>
-      <li class="breadcrumb-item active">MagneticReadoutProcessing.MRPConfig</li>
+      <li class="breadcrumb-item active">MagneticReadoutProcessing.MRPOpenSCADGenerator</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/_autosummary/MagneticReadoutProcessing.MRPConfig.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/MagneticReadoutProcessing.MRPOpenSCADGenerator.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -96,43 +96,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-MRPConfig">
-<span id="magneticreadoutprocessing-mrpconfig"></span><h1>MagneticReadoutProcessing.MRPConfig<a class="headerlink" href="#module-MRPConfig" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="MRPConfig.MRPConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPConfig.</span></span><span class="sig-name descname"><span class="pre">MRPConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config:</span> <span class="pre">&lt;module</span> <span class="pre">'configparser'</span> <span class="pre">from</span> <span class="pre">'/usr/lib/python3.9/configparser.py'&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPConfig.MRPConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Stores basic metadata regarding a reading/measurement, all attributes regarding MEASUREMENT are required in order to configure a MRPReading instance</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="MRPConfig.MRPConfig.get_as_dict">
-<span class="sig-name descname"><span class="pre">get_as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#MRPConfig.MRPConfig.get_as_dict" title="Permalink to this definition"></a></dt>
-<dd><p>returns the current config as dict.
-This dict is also stored in a exported MRPReading</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the current config</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MRPConfig.MRPConfig.load_defaults">
-<span class="sig-name descname"><span class="pre">load_defaults</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPConfig.MRPConfig.load_defaults" title="Permalink to this definition"></a></dt>
-<dd><p>Set all values to default.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MRPConfig.MRPConfig.load_from_ini">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_ini</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_config_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPConfig.MRPConfig.load_from_ini" title="Permalink to this definition"></a></dt>
-<dd><p>loads a given .ini file and parses the entries.
-If valid entries are present, these values will be overwritten</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>_config_file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – absolute filepath to .ini file with config overwrite entries. See config.ini.EXAMPLE</p>
-</dd>
-</dl>
+  <section id="module-MRPOpenSCADGenerator">
+<span id="magneticreadoutprocessing-mrpopenscadgenerator"></span><h1>MagneticReadoutProcessing.MRPOpenSCADGenerator<a class="headerlink" href="#module-MRPOpenSCADGenerator" title="Permalink to this heading"></a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="MRPOpenSCADGenerator.MRPOpenSCADGeneratorException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPOpenSCADGenerator.</span></span><span class="sig-name descname"><span class="pre">MRPOpenSCADGeneratorException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPOpenSCADGeneratorException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPOpenSCADGenerator.MRPOpenSCADGeneratorException" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="MRPOpenSCADGenerator.MRPOpenSCADGeneratorException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPOpenSCADGenerator.MRPOpenSCADGeneratorException.with_traceback" title="Permalink to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>
@@ -143,8 +116,8 @@ If valid entries are present, these values will be overwritten</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="MagneticReadoutProcessing.MRPAnalysis.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPAnalysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPHallbachArrayGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="MagneticReadoutProcessing.MRPMeasurementConfig.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPMeasurementConfig" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MagneticReadoutProcessing.MRPReading.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPReading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

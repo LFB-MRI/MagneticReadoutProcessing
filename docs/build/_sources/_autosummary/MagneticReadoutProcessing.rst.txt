@@ -34,6 +34,7 @@
    MagneticReadoutProcessing.MRPHelpers
    MagneticReadoutProcessing.MRPMagnetTypes
    MagneticReadoutProcessing.MRPMeasurementConfig
+   MagneticReadoutProcessing.MRPOpenSCADGenerator
    MagneticReadoutProcessing.MRPReading
    MagneticReadoutProcessing.MRPReadingEntry
    MagneticReadoutProcessing.MRPReadoutSource

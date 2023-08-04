@@ -5,7 +5,10 @@ from enum import Enum
 
 
 class MagnetType(Enum):
-
+    """
+    Enum class for holding some basic information about a measured magnet.
+    Please add further magnet definition here.
+    """
     # GENERAL NOTATION <type>_<shape>_size
     # CUBIC_XxYxZ # dimensions in mm
     NOT_SPECIFIED = 0
@@ -52,12 +55,28 @@ class MagnetType(Enum):
             return True
         return False
     def get_dimension(self) -> (int, int, int):
+        """
+        Returns the dimension in mm from the selected magnet type
+
+        :returns: Returns (x, y, z)  on a cubic magnet, (d h, 0) on a cylindrical magnet
+        :rtype: tuple
+        """
         if self.is_cubic():
             sp = str(self.name).split('_')[2].split("x")
-            return (sp[0], sp[1], sp[2])
+            return (int(sp[0]), int(sp[1]), int(sp[2]))
         elif self.is_cubic():
             sp = str(self.name).split('_')[2].split("x")
-            return (sp[0], sp[1])
+            return (int(sp[0]), int(sp[1]), 0)
 
         return None
 
+    def get_height(self) -> int:
+        """
+        Returns the maximum height of the selected magnet type.
+        The function returns the max value of (x,y,z) or (d,h)
+
+        :returns: max value of the dimension vector
+        :rtype: int
+        """
+        dim = self.get_dimension()
+        return max([dim[0], dim[0], dim[0]])

@@ -55,6 +55,7 @@
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPOpenSCADGenerator.html">MagneticReadoutProcessing.MRPOpenSCADGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
@@ -103,11 +104,15 @@
 <dd><p>Contains static functions to generate a 3D CAD Model of a Hallbach-Magnet using given readings.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_1k_hallbach_using_polarisation_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MagneticReadoutProcessing.MRPReading.MRPReading'&gt;]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction" title="Permalink to this definition"></a></dt>
-<dd><p>Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_1k_hallbach_using_polarisation_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MagneticReadoutProcessing.MRPReading.MRPReading'&gt;],</span> <span class="pre">_slice_inner_diameter:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">30,</span> <span class="pre">_slice_outer_diameter_safety_margin:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">50</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction" title="Permalink to this definition"></a></dt>
+<dd><p>Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>_readings</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a>) – a list of readings to generate a 1k hallbach array</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_readings</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a>) – a list of readings to generate a 1k hallbach array</p></li>
+<li><p><strong>_slice_inner_diameter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – hallbach ring inner diameter</p></li>
+<li><p><strong>_slice_outer_diameter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – hallbach ring outher diameter</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
