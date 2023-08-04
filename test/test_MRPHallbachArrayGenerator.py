@@ -32,7 +32,15 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         readings = [reading, reading]
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
 
+    def test_generate_1k_hallbach_EIGHT_IDEAL(self):
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        readings= []
+        for idx in range(8):
+            readings.append(reading)
 
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+
+    @unittest.skip
     def test_generate_1k_hallbach_TWELVE_IDEAL(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
         readings= []

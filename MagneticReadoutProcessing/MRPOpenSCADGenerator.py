@@ -16,7 +16,7 @@ class MRPOpenSCADGenerator():
     objects_to_subtract: [ops.Union] = []
     objects_to_add: [ops.Union] = []
     object_command_order_info: [str] = [] # STORE SOME INFO ABOUT THE ORDER OF FUNCTION CALLS
-    def create_magnet_cutout(self, _magnet: magpylib.magnet, _magnet_trajectory: float, _rotation_drg_x:float, _cube_rotation_itself:int, _annotation: str= None, _safety_margin_mm: float = 0.05):
+    def create_magnet_cutout(self, _magnet: magpylib.magnet, _magnet_trajectory: float, _rotation_drg_x:float, _cube_rotation_itself:float, _annotation: str= None, _safety_margin_mm: float = 0.05):
         if _magnet is None:
             raise MRPOpenSCADGeneratorException("_magnet is None")
 
@@ -33,8 +33,8 @@ class MRPOpenSCADGenerator():
         ## THEN APPLY THE ROTATION
         if isinstance(_magnet, magpylib.magnet.Cuboid):
             pos = [_magnet_trajectory + _magnet.position[0],_magnet.position[1],_magnet.position[2]] # X Y Z
-            rot = [0, 0, _rotation_drg_x]
-            in_magnet_rotation = [0, 0, _cube_rotation_itself]
+            rot = [0, 0, _rotation_drg_x%360]
+            in_magnet_rotation = [0, 0, _cube_rotation_itself%360]
             dim = [_magnet.dimension[0]+2*_safety_margin_mm, _magnet.dimension[1]+2*_safety_margin_mm, _magnet.dimension[2]+ 2*_safety_margin_mm] # X Y Z
 
             # FIRST APPLY CUBE ROTATION
@@ -45,7 +45,7 @@ class MRPOpenSCADGenerator():
 
             # APPEND ANOTHER SMALL CUTOUT TO INDICATE THE INSERTION DIRECTION
             max_w = max(dim)
-            cube.append(ops.Cylinder(d=max([max_w/3, 2]), h=self.BASE_SLICE_THICKNESS*2).translate([_magnet_trajectory+ dim[0]/2,0,-dim[2]]).comment("annotation_cube_d{}_h{}".format(max_w, self.BASE_SLICE_THICKNESS)))
+            cube.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([_magnet_trajectory+ dim[0]/2,0,-dim[2]]).comment("annotation_cube_d{}_h{}".format(max_w, self.BASE_SLICE_THICKNESS)))
 
             # ADD INFORMATION TEXT
             if _annotation is not None and len(_annotation) > 0:

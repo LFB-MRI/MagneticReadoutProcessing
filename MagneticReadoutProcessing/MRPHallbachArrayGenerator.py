@@ -1,3 +1,5 @@
+import math
+
 import magpylib
 from solid import *
 import vector
@@ -173,11 +175,13 @@ class MRPHallbachArrayGenerator:
 
         # GET MAX MAGNET HEIGHT TO DETERM THE SLICE THICKNESS
         max_magnet_height: float = 0.0  # thickness of the slide = max value of the thickness
+
         for magnet in _readings:
             t = magnet.get_magnet_type()
             mh = t.get_height()
             max_magnet_height = max([mh, max_magnet_height])
-        print("max_magnet_height:{}".format(max_magnet_height))
+        max_magnet_height_mag = math.sqrt(max_magnet_height * max_magnet_height)
+        print("max_magnet_height:{} max_magnet_height_mag:{}".format(max_magnet_height, max_magnet_height_mag))
 
 
 
@@ -190,9 +194,10 @@ class MRPHallbachArrayGenerator:
         # GENERATE A SLICE INCLUDING CUTOUTS FOR THE MAGNET
 
         ## CALCULATE THE OUTER DIAMETER OF THE CIRCULAR DISC
-        slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height*4])
-        slice_outer_diameter: float = slice_inner_diameter + 4*max_magnet_height #  to add 2 time the magnet size on each side
-        magnet_trajectory: float = (slice_inner_diameter / 2) + (max_magnet_height*2/3)  # PLACE MAGNETS IN A CIRCLE BETWEEN
+
+        slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height*2])
+        slice_outer_diameter: float = slice_inner_diameter + 4*max_magnet_height_mag #  to add 2 time the magnet size on each side
+        magnet_trajectory: float = (slice_inner_diameter / 2) + max_magnet_height_mag  # PLACE MAGNETS IN A CIRCLE BETWEEN
         # CONSTRUCTOR CREATES A SLICE BODY
         slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter+_slice_outer_diameter_safety_margin, max_magnet_height)
 
@@ -200,30 +205,36 @@ class MRPHallbachArrayGenerator:
 
         ## ONE HALF OF THE HALLBACH ARRAY IS A 360-DEGREE ROTATION OF HALF OF THE AMOUNTS OF THE MANGETS
         no_magnets: int = len(_readings)
-        quadrants = 4
-        rotation_per_magnet: float = (360) / (no_magnets / quadrants) # ROTATION PER MAGNET IN A HALLBACH ARRAY
+        rotation_per_magnet: float = 2*(360 / no_magnets / 2) # ROTATION PER MAGNET IN A HALLBACH ARRAY
         print("no_magnets:{} rotation_per_magnet:{} ".format(no_magnets, rotation_per_magnet))
 
-        zero_crossing = 0
+        # SECOND ROTATION FOR THE MAGNET ITSELF IS A 180 DEGREE ROTATION FOR EACH OF THE 4 QUADRANTS
+
+        quadrants = 4
+        # 360 / 2 halfs / magnets per quadrant
+        rotation_per_magnet_per_quadrant: float = (180 / 2) / (no_magnets / quadrants)  # THE ADDITIONAL /2 IS TO COMPENSATE THE ROTATION OF THE MAGNET ON THE TRAJECTORY
+
+        zero_crossing:int =0
         for idx, magnet in enumerate(magpylib_instances):
-            # 180 DEGREE REACHED
-            if idx == no_magnets/2 and zero_crossing == 0:
+            # 180 DEGREE REACHED ROATE EVERY MAGNET ITSELF AROUND 180°
+            if idx == (no_magnets/2) and zero_crossing == 0:
                 zero_crossing = 1
+
 
             # ROTATE MAGNET
             magnet_rotation = (idx * rotation_per_magnet)
             print("magnet_rotation:{}".format(magnet_rotation))
 
             # due to hallbach configuration, flip orientation at 180 zero_crossing*180 = 1k hallbach
-            magnet_rotation_itself = zero_crossing*180
+            magnet_rotation_itself = ((180*zero_crossing)+rotation_per_magnet_per_quadrant * idx)
             slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, "mag{}".format(idx))
 
             slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=False)
 
 
         # ADD ITEM MOUNTING HOLES
-        hole_spacing = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
-        hole_spacing = round(hole_spacing / 10) * 10 # ROUND TO NEXT
+        hole_spacing:float = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
+        hole_spacing:float = round(hole_spacing / 10) * 10 # ROUND TO NEXT
         slice.append_mounting_holes_to_base_slice(hole_spacing)
 
         # EXPORT OPNESCAD OBJECT
