@@ -3,8 +3,9 @@ from solid import *
 import vector
 import matplotlib.pyplot as plt
 import numpy as np
+from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
+import openpyscad as ops
 
-from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes, MRPHelpers
 
 class MRPHallbachArrayGeneratorException(Exception):
     def __init__(self, message="MRPHallbachArrayGeneratorException thrown"):
@@ -74,6 +75,10 @@ class MRPHallbachArrayGenerator:
             if '.png' not in _file:
                 _file = _file + ".png"
             plt.savefig(_file)
+
+
+
+
 
 
 
@@ -172,20 +177,32 @@ class MRPHallbachArrayGenerator:
 
         magnet_diamater: float = _slice_outher_diameter - _slice_inner_diameter
         no_magnets: int = len(_readings)
-        rotation_per_magnet: float = 180 / no_magnets/2
+        # ONE HALF OF THE HALLBACH ARRAY IS A 360-DEGREE ROTATION OF HALF OF THE AMOUNTS OF THE MANGETS
+        rotation_per_magnet: float = 360 / no_magnets / 2
         print("no_magnets:{} rotation_per_magnet:{} magnet_diamater:{}".format(no_magnets, rotation_per_magnet, magnet_diamater))
         i = 0
 
         zero_crossing = 0
+
+
+        # FINALLY GENERATE SLICE
+        slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator()
+
+        ## CREATE SLICE BODY
+        slice.create_cylinder_with_cutout()
+
         for idx, magnet in enumerate(magpylib_instances):
             # 180 DEGREE REACHED
             #if idx == no_magnets/2 and zero_crossing == 0:
             #    zero_crossing = 1
 
-
-
+            # ROTATE MAGNET
             magnet_rotation = idx * rotation_per_magnet
             print("zero_crossing:{} magnet_rotation:{}".format(zero_crossing, magnet_rotation))
+
+
+
+
 
 
 
