@@ -108,8 +108,8 @@ class MRPHallbachArrayGenerator:
         if _readings is None or len(_readings) <= 0:
             raise MRPHallbachArrayGeneratorException("_readings is None or len is <= 0")
 
-        if len(_readings) % 2 != 0:
-            raise MRPHallbachArrayGeneratorException("_readings len is odd")
+        if len(_readings) % 4 != 0:
+            raise MRPHallbachArrayGeneratorException("_readings len is odd or needs to be a multiple of 4")
 
         for idx, reading in enumerate(_readings):
             if reading.get_magnet_type() is None or reading.get_magnet_type().is_invalid():
@@ -209,40 +209,51 @@ class MRPHallbachArrayGenerator:
         print("no_magnets:{} rotation_per_magnet:{} ".format(no_magnets, rotation_per_magnet))
 
         # SECOND ROTATION FOR THE MAGNET ITSELF IS A 180 DEGREE ROTATION FOR EACH OF THE 4 QUADRANTS
+        magnet_initial_rotation = 180
+        quadrants:int = 4
+        magnet_rotation_per_quadrant = 180
+        inner_magnets_per_quadrant = int((no_magnets/quadrants)) # defines the inner magnets per quadrant for a n=8 array with 4 quadrants n=8 =1 inner magnet, due the outer ones are sharing the same quadrant
+        magnets_per_quadrant: float = quadrants/no_magnets
+        rotation_per_magnet_per_quadrant: float = magnet_rotation_per_quadrant/inner_magnets_per_quadrant
 
-        quadrants = 4
-        # 360 / 2 halfs / magnets per quadrant
-        rotation_per_magnet_per_quadrant: float = (180 / 2) / (no_magnets / quadrants)  # THE ADDITIONAL /2 IS TO COMPENSATE THE ROTATION OF THE MAGNET ON THE TRAJECTORY
 
-        # TODO DEVELOP FORMULAR TO ROTATE MAGNETS RIGHT FOR 0- 360 without zero crossing
-        zero_crossing:int =0
         for idx, magnet in enumerate(magpylib_instances):
-            # 180 DEGREE REACHED ROATE EVERY MAGNET ITSELF AROUND 180°
-            if idx == (no_magnets/2) and zero_crossing == 0:
-                zero_crossing = 1
 
-
-            # ROTATE MAGNET
+            # ROTATE MAGNET AROUND TRAJECTORY
             magnet_rotation = (idx * rotation_per_magnet)
             print("magnet_rotation:{}".format(magnet_rotation))
 
-            # due to hallbach configuration, flip orientation at 180 zero_crossing*180 = 1k hallbach
-            magnet_rotation_itself = ((180*zero_crossing)+rotation_per_magnet_per_quadrant * idx)
 
+            # CALCULATE NEW POSTION OF THE MANGET
+            # TODO SET magnet.position here
+            magnet.orientation.from_euler('xyz',[0, 0, 0], degrees=True)
+
+
+
+            # ROTATE THE MAGNET ITSELF FOR EACH STEP TO CANCEL OUT THE FIELDS
+            magnet_rotation_itself = magnet_initial_rotation + rotation_per_magnet_per_quadrant*idx
+            magnet_rotation_itself = magnet_rotation_itself % 360 # back to 0
+            # TODO SET magnet.orientation here
 
             # ADD MANGET ID AS ANNOTATION ON TOP OF THE CAD SURFACE
             annotation = "mag{}".format(idx)
             if _readings[idx] is not None:
                 annotation = "id{}".format(_readings[idx].measurement_config.id)
-            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, annotation)
 
+            # CREATE MAGNET
+#            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, annotation)
+            slice.create_magnet_cutout(magnet)#, magnet_trajectory, magnet_rotation, magnet_rotation_itself)
+
+
+            # TEST EXPORT FOR DEBUGGING
             slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=False)
 
+            break
 
         # ADD ITEM MOUNTING HOLES
-        hole_spacing:float = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
-        hole_spacing:float = round(hole_spacing / 10) * 10 # ROUND TO NEXT
-        slice.append_mounting_holes_to_base_slice(hole_spacing)
+        hole_spacing: float = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
+        hole_spacing: float = round(hole_spacing / 10) * 10 # ROUND TO NEXT
+        slice.append_mounting_holes_to_base_slice(hole_spacing, "test")
 
         # EXPORT OPNESCAD OBJECT
         slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)

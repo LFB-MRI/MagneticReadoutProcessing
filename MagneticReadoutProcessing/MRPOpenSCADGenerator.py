@@ -10,18 +10,18 @@ class MRPOpenSCADGeneratorException(Exception):
 class MRPOpenSCADGenerator():
 
 
-    CUTOUT_MARGIN:float = 0.00001
+    CUTOUT_MARGIN:float = 0.001 #mm
+    CUTOUT_TOLERANCE_MARGIN: float = 0.05 #mm
     MAGNET_ANNOTATION_MARKER_SIZE = 1 # SEE create_magnet_cutout
 
     objects_to_subtract: [ops.Union] = []
     objects_to_add: [ops.Union] = []
     object_command_order_info: [str] = [] # STORE SOME INFO ABOUT THE ORDER OF FUNCTION CALLS
-    def create_magnet_cutout(self, _magnet: magpylib.magnet, _magnet_trajectory: float, _rotation_drg_x:float, _cube_rotation_itself:float, _annotation: str= None, _safety_margin_mm: float = 0.05):
+    def create_magnet_cutout(self, _magnet: magpylib.magnet, _annotation:str = None): #_magnet_trajectory: float, _rotation_drg_x:float, _cube_rotation_itself:float, _annotation: str= None, _safety_margin_mm: float = 0.05):
         if _magnet is None:
             raise MRPOpenSCADGeneratorException("_magnet is None")
 
-        if _safety_margin_mm is None:
-            _safety_margin_mm = self.CUTOUT_MARGIN
+
 
         ops_magnet = ops.Union()
 
@@ -30,32 +30,50 @@ class MRPOpenSCADGenerator():
         ## HERE THE POSITION OFFSET IS THE NOT THE FINAL POSITION ON THE CYLINDER
         ## POSITON ARGUMENT IS USED TO FINE ADJUST THE POSITION ON THE CYLINDRIC BASE TRAJECTORIE
 
-        ## THEN APPLY THE ROTATION
+        pos = [_magnet.position[0], _magnet.position[1], _magnet.position[2]]  # X Y Z
+        mrot = _magnet.orientation.as_euler('xyz', degrees=True)
+        rot = [mrot[0], mrot[1], mrot[2]]
+        # ANNOTATION TEXT SETTINGS
+        text_size = 2
+        text_offset: float = len(_annotation) * text_size * 0.3
+
+
         if isinstance(_magnet, magpylib.magnet.Cuboid):
-            pos = [_magnet_trajectory + _magnet.position[0],_magnet.position[1],_magnet.position[2]] # X Y Z
-            rot = [0, 0, _rotation_drg_x%360]
-            in_magnet_rotation = [0, 0, _cube_rotation_itself%360]
-            dim = [_magnet.dimension[0]+2*_safety_margin_mm, _magnet.dimension[1]+2*_safety_margin_mm, _magnet.dimension[2]+ 2*_safety_margin_mm] # X Y Z
-
-            # FIRST APPLY CUBE ROTATION
-            ## TRANSLATE TO ORBIT
-            ## ROTATE AROUND ORBIT
-            cube= ops.Cube(size=dim,center=True).rotate(in_magnet_rotation).translate(pos).rotate(rot)
-            ops_magnet.comment("create_magnet_pos{}rot{}".format(pos, rot)) # ADD COMMENT TO PARENT OBJECT
-
-            # APPEND ANOTHER SMALL CUTOUT TO INDICATE THE INSERTION DIRECTION
+            dim = [_magnet.dimension[0]+2*self.CUTOUT_TOLERANCE_MARGIN, _magnet.dimension[1]+2*self.CUTOUT_TOLERANCE_MARGIN, _magnet.dimension[2]+ 2*self.CUTOUT_TOLERANCE_MARGIN] # X Y Z
+            # CREATE CUBE
+            cube = ops.Cube(size=dim, center=True)
+            ops_magnet.append(cube)
+            # APPEND CUTOUT INDICATOR
             max_w = max(dim)
-            cube.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([_magnet_trajectory+ dim[0]/2,0,-dim[2]]).comment("annotation_cube_d{}_h{}".format(max_w, self.BASE_SLICE_THICKNESS)))
+            ops_magnet.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,0]))
+            # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
+            ops_magnet = ops_magnet.translate(pos).rotate(rot)
+
+            # ADD ANNOTATION TEXT
+            if _annotation is not None and len(_annotation) > 0:
+
+        elif isinstance(_magnet, magpylib.magnet.Cylinder):
+            # [r_inner, r_outer, h, section_angle_1, section_angle_2]
+            r = _magnet.dimension[1] + 2 * self.CUTOUT_TOLERANCE_MARGIN # outer radius of the
+            h = _magnet.dimension[2] + 2 * self.CUTOUT_TOLERANCE_MARGIN #
+
+            cylinder = ops.Cylinder(r=r, h=h, center=True)
+            ops_magnet.append(cylinder)
+
+            # ADD ANNOTATION CUBE
+            ops_magnet.append(ops.Cylinder(d=max([r / 3, 3]), h=self.BASE_SLICE_THICKNESS * 2).translate([r, 0, 0]))
+
+
 
             # ADD INFORMATION TEXT
-            if _annotation is not None and len(_annotation) > 0:
-                # PLEASE NOTE '"<TEXT>"' IS NEEDED HERE TO AVOID THAT <TEXT> WILL BE PARSED AS VARIABLE
-                text_size= 2
-                text_offset:float = len(_annotation) * text_size*0.3
-                # 1 linear extrude a 2d textobject
-                ## the text needs to be rotated 90° and movec above the indication cube
-                ## finally mirror the text itself to make the text readable in 2d and 3d export mode
-                cube.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).rotate([0,0,90])).translate([5+_magnet_trajectory + dim[0]/2,text_offset,0]))
+            #if _annotation is not None and len(_annotation) > 0:
+            #    # PLEASE NOTE '"<TEXT>"' IS NEEDED HERE TO AVOID THAT <TEXT> WILL BE PARSED AS VARIABLE
+             #   text_size= 2
+             #   text_offset:float = len(_annotation) * text_size*0.3
+             #   # 1 linear extrude a 2d textobject
+             #   ## the text needs to be rotated 90° and movec above the indication cube
+             #   ## finally mirror the text itself to make the text readable in 2d and 3d export mode
+             #   cube.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).rotate([0,0,90])).translate([5+_magnet_trajectory + dim[0]/2,text_offset,0]))
             # APPEND TO MAGNET ASSEMBLY
             ops_magnet += cube
 
@@ -94,7 +112,7 @@ class MRPOpenSCADGenerator():
         cylinder_base.comment("create_cylinder_with_cutout_inner_{}mm_outer{}mm_thickness{}mm".format(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm))
         cylinder_outer: ops.Cylinder = ops.Cylinder(d=_outer_diameter_mm, h=_thickness_mm, center=True)
 
-        if _inner_diameter_mm is not None and _inner_diameter_mm > 0.0:
+        if False and _inner_diameter_mm is not None and _inner_diameter_mm > 0.0:
             cylinder_inner: ops.Cylinder = ops.Cylinder(d=_inner_diameter_mm, h=_thickness_mm+self.CUTOUT_MARGIN, center=True)
             cylinder_base.append(cylinder_outer - cylinder_inner)
         else:
