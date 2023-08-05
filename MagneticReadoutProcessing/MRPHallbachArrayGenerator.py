@@ -214,6 +214,7 @@ class MRPHallbachArrayGenerator:
         # 360 / 2 halfs / magnets per quadrant
         rotation_per_magnet_per_quadrant: float = (180 / 2) / (no_magnets / quadrants)  # THE ADDITIONAL /2 IS TO COMPENSATE THE ROTATION OF THE MAGNET ON THE TRAJECTORY
 
+        # TODO DEVELOP FORMULAR TO ROTATE MAGNETS RIGHT FOR 0- 360 without zero crossing
         zero_crossing:int =0
         for idx, magnet in enumerate(magpylib_instances):
             # 180 DEGREE REACHED ROATE EVERY MAGNET ITSELF AROUND 180°
@@ -227,7 +228,13 @@ class MRPHallbachArrayGenerator:
 
             # due to hallbach configuration, flip orientation at 180 zero_crossing*180 = 1k hallbach
             magnet_rotation_itself = ((180*zero_crossing)+rotation_per_magnet_per_quadrant * idx)
-            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, "mag{}".format(idx))
+
+
+            # ADD MANGET ID AS ANNOTATION ON TOP OF THE CAD SURFACE
+            annotation = "mag{}".format(idx)
+            if _readings[idx] is not None:
+                annotation = "id{}".format(_readings[idx].measurement_config.id)
+            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, annotation)
 
             slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=False)
 

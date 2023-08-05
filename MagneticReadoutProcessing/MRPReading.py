@@ -23,7 +23,7 @@ class MRPReading:
 
 
 
-    def __init__(self, _config: MRPMeasurementConfig.MRPMeasurementConfig = None):
+    def __init__(self, _config: MRPMeasurementConfig.MRPMeasurementConfig = None, _magnet_id:int = 0):
         """
         The constructor create a new empty reading with some predefined meta-data.
 
@@ -52,6 +52,12 @@ class MRPReading:
             self.measurement_config.configure_fullsphere()
             self.measurement_config.sensor_distance_radius = 1
             self.measurement_config.sensor_id = 0
+
+            if _magnet_id is not None:
+                self.measurement_config.id = _magnet_id
+            else:
+                self.measurement_config.id = 0
+
 
 
     def load_from_dict(self, _jsondict: dict):

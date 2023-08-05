@@ -18,7 +18,7 @@ class MRPMeasurementConfig:
     _sensor_distance_radius: float = 1.0
     _sensor_id: int = 0
     _magnet_type: MRPMagnetTypes.MagnetType = MRPMagnetTypes.MagnetType.NOT_SPECIFIED
-
+    _id: int = 0
 
     @property
     def n_phi(self) -> int:
@@ -76,7 +76,15 @@ class MRPMeasurementConfig:
     def magnet_type(self, value: MRPMagnetTypes.MagnetType):
         self._magnet_type = value
 
-    def __init__(self, p_magnettype: MRPMagnetTypes.MagnetType = MRPMagnetTypes.MagnetType.NOT_SPECIFIED, p_nphi: int = None, p_ntheta: int = None, p_phiradians: float = None,
+    @property
+    def id(self) -> int:
+        return self._id
+
+    @id.setter
+    def id(self, value: int):
+        self._id = value
+
+    def __init__(self,p_id: int = 0, p_magnettype: MRPMagnetTypes.MagnetType = MRPMagnetTypes.MagnetType.NOT_SPECIFIED, p_nphi: int = None, p_ntheta: int = None, p_phiradians: float = None,
                  p_thetaradians: float = None, p_sensordistanceradius: float = 1.0, p_sensorid: int = 0):
 
         self._n_phi: int = p_nphi
@@ -86,6 +94,7 @@ class MRPMeasurementConfig:
         self._sensor_distance_radius: float = p_sensordistanceradius
         self._sensor_id: int = p_sensorid
         self._magnet_type: MRPMagnetTypes.MagnetType = p_magnettype
+        self._id: int = p_id
 
 
 
@@ -106,6 +115,7 @@ class MRPMeasurementConfig:
         self.phi_radians = math.radians(360)
     def __dict__(self) -> dict:
         return {
+            'id': self._id,
             'n_phi': self._n_phi,
             'n_theta': self._n_theta,
             'theta_radians': self._phi_radians,
@@ -120,6 +130,9 @@ class MRPMeasurementConfig:
 
     def from_dict(self, _dict: dict):
         errors = 0
+        if 'id' in _dict:
+            self._id = int(_dict['id'])
+            errors = errors + 1
         if 'n_phi' in _dict:
             self._n_phi = int(_dict['n_phi'])
             errors = errors + 1
