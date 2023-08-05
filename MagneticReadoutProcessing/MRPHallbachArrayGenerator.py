@@ -242,7 +242,7 @@ class MRPHallbachArrayGenerator:
 
             # CREATE MAGNET
 #            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, annotation)
-            slice.create_magnet_cutout(magnet)#, magnet_trajectory, magnet_rotation, magnet_rotation_itself)
+            slice.create_magnet_cutout(magnet, "test")#, magnet_trajectory, magnet_rotation, magnet_rotation_itself)
 
 
             # TEST EXPORT FOR DEBUGGING
@@ -253,7 +253,7 @@ class MRPHallbachArrayGenerator:
         # ADD ITEM MOUNTING HOLES
         hole_spacing: float = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
         hole_spacing: float = round(hole_spacing / 10) * 10 # ROUND TO NEXT
-        slice.append_mounting_holes_to_base_slice(hole_spacing, "test")
+        slice.append_mounting_holes_to_base_slice(hole_spacing)
 
         # EXPORT OPNESCAD OBJECT
         slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)

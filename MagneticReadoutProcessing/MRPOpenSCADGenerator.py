@@ -1,3 +1,5 @@
+import math
+
 import magpylib
 import openpyscad as ops
 import os
@@ -13,7 +15,7 @@ class MRPOpenSCADGenerator():
     CUTOUT_MARGIN:float = 0.001 #mm
     CUTOUT_TOLERANCE_MARGIN: float = 0.05 #mm
     MAGNET_ANNOTATION_MARKER_SIZE = 1 # SEE create_magnet_cutout
-
+    BASE_SLICE_THICKNESS: float = 10
     objects_to_subtract: [ops.Union] = []
     objects_to_add: [ops.Union] = []
     object_command_order_info: [str] = [] # STORE SOME INFO ABOUT THE ORDER OF FUNCTION CALLS
@@ -45,12 +47,15 @@ class MRPOpenSCADGenerator():
             ops_magnet.append(cube)
             # APPEND CUTOUT INDICATOR
             max_w = max(dim)
-            ops_magnet.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,0]))
+            max_w_mag = math.sqrt(max_w*max_w)
+            ops_magnet.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,-self.BASE_SLICE_THICKNESS/2]))
             # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
             ops_magnet = ops_magnet.translate(pos).rotate(rot)
 
             # ADD ANNOTATION TEXT
             if _annotation is not None and len(_annotation) > 0:
+                 ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])).debug())
+
 
         elif isinstance(_magnet, magpylib.magnet.Cylinder):
             # [r_inner, r_outer, h, section_angle_1, section_angle_2]
@@ -60,8 +65,6 @@ class MRPOpenSCADGenerator():
             cylinder = ops.Cylinder(r=r, h=h, center=True)
             ops_magnet.append(cylinder)
 
-            # ADD ANNOTATION CUBE
-            ops_magnet.append(ops.Cylinder(d=max([r / 3, 3]), h=self.BASE_SLICE_THICKNESS * 2).translate([r, 0, 0]))
 
 
 
