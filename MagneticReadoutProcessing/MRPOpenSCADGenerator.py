@@ -47,20 +47,20 @@ class MRPOpenSCADGenerator():
         if isinstance(_magnet, magpylib.magnet.Cuboid):
             dim = [_magnet.dimension[0]+2*self.CUTOUT_TOLERANCE_MARGIN, _magnet.dimension[1]+2*self.CUTOUT_TOLERANCE_MARGIN, _magnet.dimension[2]+ 2*self.CUTOUT_TOLERANCE_MARGIN] # X Y Z
             # CREATE CUBE
-            cube = ops.Cube(size=dim, center=True)
+            cube = ops.Cube(size=dim, center=True).comment("magpylib.magnet.Cuboid")
             ops_magnet.append(cube)
             # APPEND CUTOUT INDICATOR
             max_w = max(dim)
             max_w_mag = math.sqrt(max_w*max_w)
-            ops_magnet.append(ops.Cylinder(d=max([max_w/2, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,-self.BASE_SLICE_THICKNESS/2]))
+            ops_magnet.append(ops.Cylinder(d=max([max_w/2, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,-self.BASE_SLICE_THICKNESS/2]).comment("annotation_cube"))
 
 
             # ADD ANNOTATION TEXT
             if _annotation is not None and len(_annotation) > 0:
-                 ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])))
+                 ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])).comment("annotation_text"))
 
             # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
-            ops_magnet = ops_magnet.translate(pos).rotate(rot)
+            ops_magnet = ops_magnet.translate(pos).rotate(rot).comment("ops_magnet_{}".format(_annotation))
 
 
 
