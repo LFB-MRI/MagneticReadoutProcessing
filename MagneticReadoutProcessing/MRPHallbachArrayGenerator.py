@@ -4,6 +4,7 @@ import magpylib
 from solid import *
 import vector
 import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation as R
 import numpy as np
 from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
 import openpyscad as ops
@@ -150,6 +151,10 @@ class MRPHallbachArrayGenerator:
             mag_vector = MRPHelpers.normalize_3d_vector(vector.obj(x=mag[0], y=mag[1], z=mag[2]))
 
             needed_rotation = mag_vector.cross(target_orientation)
+            # TODO ONLY MODIFY Z ALIGNMENT
+            # ALIGN RESET TO XY
+            #R.from_rotvec(in_mag_rotation_applied, degrees=True)
+
             print("{}".format(mag))
             #MRPHallbachArrayGenerator.plot_vectors([target_orientation, mag_vector, needed_rotation], "Magnet {} CURRENT STATE".format(idx))
 
@@ -199,7 +204,7 @@ class MRPHallbachArrayGenerator:
         slice_outer_diameter: float = slice_inner_diameter + 4*max_magnet_height_mag #  to add 2 time the magnet size on each side
         magnet_trajectory: float = (slice_inner_diameter / 2) + max_magnet_height_mag  # PLACE MAGNETS IN A CIRCLE BETWEEN
         # CONSTRUCTOR CREATES A SLICE BODY
-        slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter+_slice_outer_diameter_safety_margin, max_magnet_height)
+        hallbach_slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter+_slice_outer_diameter_safety_margin, max_magnet_height)
 
         ## APPLY MAGNET CUTOUTS
 
@@ -218,45 +223,55 @@ class MRPHallbachArrayGenerator:
 
 
         for idx, magnet in enumerate(magpylib_instances):
+            reading: MRPReading.MRPReading = _readings[idx]
 
-            # ROTATE MAGNET AROUND TRAJECTORY
-            magnet_rotation = (idx * rotation_per_magnet)
-            print("magnet_rotation:{}".format(magnet_rotation))
 
 
             # CALCULATE NEW POSTION OF THE MANGET
-            # TODO SET magnet.position here
-            magnet.orientation.from_euler('xyz',[0, 0, 0], degrees=True)
+            ## MOVE MAGNET TO TO MAGNET_TRAJECTORY
+            # ROTATE MAGNET AROUND TRAJECTORY
+            magnet_rotation: float = (idx * rotation_per_magnet)
+            magnet_rotation_rad: float = math.radians(magnet_rotation % 360) # ROTATION TO RADIANS
+            magnet.position = [magnet_trajectory * math.cos(magnet_rotation_rad), magnet_trajectory * math.sin(magnet_rotation_rad), 0]
+            print("magnet_rotation:{}".format(magnet.position))
+
+            # CALCULATE ROTATION OF THE MAGNET
+            ## => APPLY IN MAGNET ROTATION FOR HALLBACH CANCEL OUT=> Z AXIS ROTATION
+            magnet_rotation_itself: float = magnet_initial_rotation + rotation_per_magnet_per_quadrant * idx
+            magnet_rotation_itself = magnet_rotation_itself % 360  # back to 0
+
+            old_rot = magnet.orientation.as_rotvec(degrees=True) * np.array([0, 0, 1]) # ONLY EXTRACT Z AXIS
+            in_mag_rotation_applied = old_rot + (magnet_rotation_itself * np.array([0, 0, 1]))
+            magnet.orientation = R.from_rotvec(in_mag_rotation_applied, degrees=True) #([0, 20, 0], degrees=True)
 
 
 
             # ROTATE THE MAGNET ITSELF FOR EACH STEP TO CANCEL OUT THE FIELDS
-            magnet_rotation_itself = magnet_initial_rotation + rotation_per_magnet_per_quadrant*idx
-            magnet_rotation_itself = magnet_rotation_itself % 360 # back to 0
+
             # TODO SET magnet.orientation here
 
             # ADD MANGET ID AS ANNOTATION ON TOP OF THE CAD SURFACE
             annotation = "mag{}".format(idx)
             if _readings[idx] is not None:
-                annotation = "id{}".format(_readings[idx].measurement_config.id)
+                annotation = "t{}:i{}".format(reading.measurement_config.magnet_type.to_int(), reading.measurement_config.id)
 
             # CREATE MAGNET
-#            slice.create_magnet_cutout(magnet, magnet_trajectory, magnet_rotation, magnet_rotation_itself, annotation)
-            slice.create_magnet_cutout(magnet, "test")#, magnet_trajectory, magnet_rotation, magnet_rotation_itself)
+            hallbach_slice.create_magnet_cutout(magnet, annotation)
 
 
             # TEST EXPORT FOR DEBUGGING
-            slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=False)
+            hallbach_slice.export_scad("./tmp/slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)
 
-            break
+            i = 0
+
 
         # ADD ITEM MOUNTING HOLES
         hole_spacing: float = max([(slice_outer_diameter+_slice_outer_diameter_safety_margin), 200])
         hole_spacing: float = round(hole_spacing / 10) * 10 # ROUND TO NEXT
-        slice.append_mounting_holes_to_base_slice(hole_spacing)
+        hallbach_slice.append_mounting_holes_to_base_slice(hole_spacing)
 
         # EXPORT OPNESCAD OBJECT
-        slice.export_scad("slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)
+        hallbach_slice.export_scad("./tmp/slice_1khallbach_test".format(len(_readings), slice_inner_diameter, slice_outer_diameter), _add_2d_projection=True)
 
 
 

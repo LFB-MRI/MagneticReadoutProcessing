@@ -4,6 +4,10 @@ import magpylib
 import openpyscad as ops
 import os
 from pathlib import Path
+
+import scipy
+
+
 class MRPOpenSCADGeneratorException(Exception):
     def __init__(self, message="MRPOpenSCADGeneratorException thrown"):
         self.message = message
@@ -33,7 +37,7 @@ class MRPOpenSCADGenerator():
         ## POSITON ARGUMENT IS USED TO FINE ADJUST THE POSITION ON THE CYLINDRIC BASE TRAJECTORIE
 
         pos = [_magnet.position[0], _magnet.position[1], _magnet.position[2]]  # X Y Z
-        mrot = _magnet.orientation.as_euler('xyz', degrees=True)
+        mrot: scipy.spatial.transform.rotation.Rotation = _magnet.orientation.as_rotvec(degrees=True)
         rot = [mrot[0], mrot[1], mrot[2]]
         # ANNOTATION TEXT SETTINGS
         text_size = 2
@@ -48,37 +52,28 @@ class MRPOpenSCADGenerator():
             # APPEND CUTOUT INDICATOR
             max_w = max(dim)
             max_w_mag = math.sqrt(max_w*max_w)
-            ops_magnet.append(ops.Cylinder(d=max([max_w/3, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,-self.BASE_SLICE_THICKNESS/2]))
-            # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
-            ops_magnet = ops_magnet.translate(pos).rotate(rot)
+            ops_magnet.append(ops.Cylinder(d=max([max_w/2, 3]), h=self.BASE_SLICE_THICKNESS*2).translate([dim[0]/2,0,-self.BASE_SLICE_THICKNESS/2]))
+
 
             # ADD ANNOTATION TEXT
             if _annotation is not None and len(_annotation) > 0:
-                 ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])).debug())
+                 ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])))
+
+            # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
+            ops_magnet = ops_magnet.translate(pos).rotate(rot)
+
 
 
         elif isinstance(_magnet, magpylib.magnet.Cylinder):
+
             # [r_inner, r_outer, h, section_angle_1, section_angle_2]
             r = _magnet.dimension[1] + 2 * self.CUTOUT_TOLERANCE_MARGIN # outer radius of the
             h = _magnet.dimension[2] + 2 * self.CUTOUT_TOLERANCE_MARGIN #
 
             cylinder = ops.Cylinder(r=r, h=h, center=True)
             ops_magnet.append(cylinder)
+            raise MRPOpenSCADGeneratorException("Cylinder: not implemented cutout function")
 
-
-
-
-            # ADD INFORMATION TEXT
-            #if _annotation is not None and len(_annotation) > 0:
-            #    # PLEASE NOTE '"<TEXT>"' IS NEEDED HERE TO AVOID THAT <TEXT> WILL BE PARSED AS VARIABLE
-             #   text_size= 2
-             #   text_offset:float = len(_annotation) * text_size*0.3
-             #   # 1 linear extrude a 2d textobject
-             #   ## the text needs to be rotated 90° and movec above the indication cube
-             #   ## finally mirror the text itself to make the text readable in 2d and 3d export mode
-             #   cube.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).rotate([0,0,90])).translate([5+_magnet_trajectory + dim[0]/2,text_offset,0]))
-            # APPEND TO MAGNET ASSEMBLY
-            ops_magnet += cube
 
 
         else:
