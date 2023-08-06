@@ -1,13 +1,15 @@
 import math
 
+import magpy
 import magpylib
-from solid import *
+from magpylib import Collection, getB
 import vector
 import matplotlib.pyplot as plt
+from matplotlib.colors import to_rgba
 from scipy.spatial.transform import Rotation as R
 import numpy as np
-from MagneticReadoutProcessing import MRPReading, MRPReadingEntry, MRPAnalysis, MRPMeasurementConfig, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
-import openpyscad as ops
+from MagneticReadoutProcessing import MRPReading, MRPAnalysis, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
+
 
 
 class MRPHallbachArrayGeneratorException(Exception):
@@ -19,6 +21,7 @@ class MRPHallbachArrayGeneratorException(Exception):
 
 class MRPHallbachArrayResult():
     """ contains the generated data returned after calling a generation method e.g. generate_1k_hallbach_using_polarisation_direction"""
+    description: str = "---"
     slice_inner_diameter: float = 0.0
     slice_outer_diameter: float = 0.0
     max_magnet_height: float = 0.0
@@ -96,6 +99,22 @@ class MRPHallbachArrayGenerator:
 
     @staticmethod
     def generate_openscad_model(_computed_magnet_data: MRPHallbachArrayResult, _save_filename: str = None, _2d_object_code: bool = True, _add_mounting_holes: bool = True):
+        """
+        Generates a Hallbach OpenSCAD file of a given MRPHallbachArrayResult object
+
+        :param _computed_magnet_data: a magnet result object MRPHallbachArrayResult containing computed magnets
+        :type _computed_magnet_data: MRPHallbachArrayResult.MRPHallbachArrayResult
+
+        :param _save_filename: save .scad file to filepath e.g. ./tmp/export.scad
+        :type _save_filename: str
+
+        :param _2d_object_code: adds openscad projection(cut = true) to allow the generation of dxf files
+        :type _2d_object_code: bool
+
+        :param _add_mounting_holes: adds additional mounting holes
+        :type _add_mounting_holes: bool
+
+        """
         # CHECK USER INPUT
         if len(_computed_magnet_data.magnets) != len(_computed_magnet_data.annotations):
             raise MRPHallbachArrayGeneratorException("generate_openscad_model: magnets and annotations len are not equal")
@@ -117,18 +136,85 @@ class MRPHallbachArrayGenerator:
         # EXPORT OPNESCAD OBJECT
         hallbach_slice.export_scad(_save_filename.format(len(_computed_magnet_data.magnets), _computed_magnet_data.slice_inner_diameter, _computed_magnet_data.slice_outer_diameter), _add_2d_projection=_2d_object_code)
 
+
+
     @staticmethod
-    def generate_magnet_streamplot(_computed_magnet_data: MRPHallbachArrayResult, save_filename:str = None):
-        pass
+    def generate_magnet_streamplot(_computed_magnet_data: MRPHallbachArrayResult, _save_filename:str = None):
+        """
+        Generates a Hallbach Stream-Field Line Plot of a given MRPHallbachArrayResult object
+
+        :param _computed_magnet_data: a magnet result object MRPHallbachArrayResult containing computed magnets
+        :type _computed_magnet_data: MRPHallbachArrayResult.MRPHallbachArrayResult
+
+        :param _save_filename: save .scad file to filepath e.g. ./tmp/export.scad
+        :type _save_filename: str
+        """
+
+        # CHECK USER INPUT
+        if len(_computed_magnet_data.magnets) <= 0:
+            raise MRPHallbachArrayGeneratorException(
+                "generate_openscad_model: magnets is empty")
 
 
+        # CREATE FIGURE
+        fig, [ax1, ax2] = plt.subplots(1, 2, figsize=(13, 5))
+        #CREATE GRID
+        xy_size: int = int(_computed_magnet_data.slice_outer_diameter * 1.5) #mm
+        ts = np.linspace(-xy_size, xy_size, xy_size)
+        grid = np.array([[(x, 0, z) for x in ts] for z in ts])
+
+        # POPULATE COLLECTION
+        magnet_collection:Collection = Collection(style_label=_computed_magnet_data.description)
+        for magnet in _computed_magnet_data.magnets:
+            magnet_collection.add(magnet)
+
+        # COMPUTE PLOT OF magnet_collection
+        B = getB(magnet_collection, grid)
+        Bamp = np.linalg.norm(B, axis=2)
+        Bamp /= np.amax(Bamp)
+
+        sp = ax1.streamplot(
+            grid[:, :, 0], grid[:, :, 2], B[:, :, 0], B[:, :, 2],
+            density=2,
+            color=Bamp,
+            linewidth=np.sqrt(Bamp) * 3,
+            cmap='coolwarm',
+        )
+
+        ax1.set(
+            title='Magnetic field of coil1',
+            xlabel='x-position [mm]',
+            ylabel='z-position [mm]',
+            aspect=1,
+        )
+        plt.colorbar(sp.lines, ax=ax1, label='[mT]')
+
+
+
+        # SHOW MAGNET CONFIGURATION IN PLOT 2
+
+        for magnet in _computed_magnet_data.magnets:
+            if isinstance(magnet, magpylib.magnet.Cuboid):
+                x_start, x_end, y_start, y_end = #magnet_to_points(magnet)
+                ax1.add_patch(plt.Rectangle((x_start, y_start), x_end - x_start, y_end - y_start, facecolor=to_rgba('crimson', 0.01), edgecolor='black', lw=2))
+
+
+        plt.tight_layout()
+
+
+        if _save_filename is None or len(_save_filename) <= 0:
+            plt.savefig(_save_filename)
+        else:
+            plt.show()
 
     @staticmethod
     def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _min_slice_inner_diameter:float = 20, _slice_outer_diameter_safety_margin:float = 0) -> MRPHallbachArrayResult:
         """
-        Generates a Hallbach OpenSCAD file of a given list of readings using calculate_center_of_gravity algorithm to rotate the magnet into the right direction and z axis alignment.
+        Generates a 1K hallbach array out of given readings. The result is a set of magpylib magnets with set rotation, position and dimension.
+        The magnetization is calculated using the calculate_center_of_gravity function.
+        Magnets are aligned on their Z axis.
 
-        :param _readings: a list of readings to generate a 1k hallbach array
+        :param _readings: a list of readings to generate a 1k hallbach array, length needs to be multiply of 4
         :type _readings: MRPReading.MRPReading
 
         :param _min_slice_inner_diameter: minimum hallbach ring inner diameter can be bigger depending the magnet size
@@ -137,8 +223,8 @@ class MRPHallbachArrayGenerator:
         :param _slice_outer_diameter_safety_margin: additional
         :type _slice_outer_diameter_safety_margin: float
 
-        :returns: returns magnet (maglibpy) instances with set dimensions, rotation and position
-        :rtype: [MRPHallbachArrayGenerator]
+        :returns: returns magnet (magpylib) instances with set dimensions, rotation and position
+        :rtype: MRPHallbachArrayGenerator.MRPHallbachArrayResult
         """
         # CHECK USER INPUT
         if _min_slice_inner_diameter <= 0:
@@ -282,6 +368,7 @@ class MRPHallbachArrayGenerator:
             result.magnets.append(magnet)
             result.annotations.append(annotation)
 
+        result.description = "generate_1k_hallbach_using_polarisation_direction"
         result.max_magnet_height = max_magnet_height_mag
         result.slice_inner_diameter = slice_inner_diameter
         result.slice_outer_diameter = slice_outer_diameter
