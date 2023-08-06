@@ -195,7 +195,7 @@ class MRPHallbachArrayGenerator:
 
         for magnet in _computed_magnet_data.magnets:
             if isinstance(magnet, magpylib.magnet.Cuboid):
-                x_start, x_end, y_start, y_end = #magnet_to_points(magnet)
+                x_start, x_end, y_start, y_end = #TODO magnet_to_points(magnet)
                 ax1.add_patch(plt.Rectangle((x_start, y_start), x_end - x_start, y_end - y_start, facecolor=to_rgba('crimson', 0.01), edgecolor='black', lw=2))
 
 
