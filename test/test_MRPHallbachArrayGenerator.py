@@ -26,28 +26,26 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         # SAVE TO FIG PLOT
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors(vectors, "test vector plot saved", self.import_export_test_folderpath + "/vector_save.png")
 
-    @unittest.skip
-    def test_generate_1k_hallbach_TWO_IDEAL(self):
-        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
-        readings = [reading, reading]
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
 
-    def test_generate_1k_hallbach_EIGHT_IDEAL(self):
+    def test_generate_1k_hallbach_EIGHT_IDEAL_OPENSCAD(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
         readings= []
         for idx in range(8):
             readings.append(reading)
 
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test_generate_1k_hallbach_EIGHT_IDEAL_OPENSCAD.scad")
 
     @unittest.skip
     def test_generate_1k_hallbach_TWELVE_IDEAL(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
-        readings= []
-        for idx in range(12):
+        readings = []
+        for idx in range(18):
             readings.append(reading)
 
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
+            readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test_generate_1k_hallbach_TWELVE_IDEAL.scad")
 
 
 if __name__ == '__main__':

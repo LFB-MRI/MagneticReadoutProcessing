@@ -1,18 +1,42 @@
 projection(cut = true) union(){
     difference(){
         union(){
-            cylinder(h=12, d=72.0, center=true);
-        }; // create_cylinder_with_cutout_inner_24mm_outer72.0mm_thickness12mm
+            union(){
+                difference(){
+                    cylinder(h=12.0, d=72.0, center=true);
+                    cylinder(h=12.001, d=24, center=true);
+                };
+            }; // create_cylinder_with_cutout_inner_24mm_outer72.0mm_thickness12.0mm
+            union(){
+                difference(){
+                    cylinder(h=12.0, d=71.0, center=true);
+                    cylinder(h=12.0, d=77.0, center=true);
+                }; // mount_contruction_helper_cylinder
+                translate(v=[0, -42.5, 0]){
+                    difference(){
+                        cube(size=[100, 20, 12.0], center=true); // mount_base
+                        union(){
+                            translate(v=[40.0, 0, 0]){
+                                cylinder(h=12.0, d=10);
+                            }; // mount_hole_a
+                            translate(v=[-40.0, 0, 0]){
+                                cylinder(h=12.0, d=10);
+                            }; // mount_hole_a
+                        };
+                    };
+                }; // mount_bar_top
+            }; // append_mounting_holes_to_base_slice_10_100
+        };
         rotate(a=[0.0, 0.0, 179.29289321881345]){
             translate(v=[24.0, 0.0, 0.0]){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -27,11 +51,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -46,11 +70,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -65,11 +89,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -84,11 +108,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -103,11 +127,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -122,11 +146,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -141,11 +165,11 @@ projection(cut = true) union(){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true);
                     translate(v=[6.05, 0, -6.0]){
-                        cylinder(h=24, d=6.05);
+                        cylinder(h=24.0, d=6.05);
                     };
-                    linear_extrude(height=12){
+                    linear_extrude(height=12.0){
                         rotate(a=[0, 0, 0]){
-                            translate(v=[9.0, 6.383333333333333, -12]){
+                            translate(v=[9.0, 6.383333333333333, -12.0]){
                                 mirror([1, 0, 0]){
                                     text(text="t2:i0", size=2);
                                 };
@@ -158,7 +182,7 @@ projection(cut = true) union(){
     };
 };
 
-// 0_create_cylinder_with_cutout_inner_24mm_outer72.0mm_thickness12mm 
+// 0_create_cylinder_with_cutout_inner_24mm_outer72.0mm_thickness12.0mm 
 // 1_None 
 // 2_None 
 // 3_None 

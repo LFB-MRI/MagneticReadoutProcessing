@@ -81,18 +81,42 @@ class MRPOpenSCADGenerator():
 
 
 
-            # APPEND TO OBJECTS
+         # APPEND TO OBJECTS
         self.objects_to_subtract.append(ops_magnet)
         self.object_command_order_info.append("{}_{}".format(len(self.object_command_order_info), ops_magnet._comment))
 
-    def append_mounting_holes_to_base_slice(self, _hole_distance:float = 100):
+    def append_mounting_holes_to_base_slice(self, _outer_diameter_mm: float = None, _thickness_mm:float = None, _hole_width: float = 10, _hole_distance:float = 100, _add_both_side_bars = False):
+        if _outer_diameter_mm is None:
+            raise MRPOpenSCADGeneratorException("_outer_diameter_mm cant be none")
+        if _thickness_mm is None:
+            raise MRPOpenSCADGeneratorException("_thickness_mm cant be none")
         # USING INTERSECT
-        pass
+        mount = ops.Union()
+        diameter_addition = 5
+        dim = [_hole_distance,_hole_width*2,_thickness_mm]  # X Y Z
+        # APPEN A BIT BIGGER CYLINDER FOR PLACING THE MOUNT CONSTRUCTION
+        mount.append(ops.Difference().append(ops.Cylinder(d=_outer_diameter_mm-1, h=_thickness_mm, center=True)).append(ops.Cylinder(d=_outer_diameter_mm+diameter_addition, h=_thickness_mm, center=True)).comment("mount_contruction_helper_cylinder"))
+
+        # ADD MOUNTING BARS
+        mount_base = ops.Cube(dim, center=True).comment("mount_base")
+        mount_hole_a = ops.Cylinder(d=_hole_width, h=_thickness_mm).translate([(_hole_distance/2)-_hole_width, 0, 0]).comment("mount_hole_a")
+        mount_hole_b = ops.Cylinder(d=_hole_width, h=_thickness_mm).translate([-(_hole_distance/2)+_hole_width, 0, 0]).comment("mount_hole_a")
+
+        # DISTANCE FROM CENTER TO MOUNTING BARS
+        bar_distance = (_outer_diameter_mm/2) + diameter_addition*1.3
+        ## TOP first BAR then SCREW HOLE
+        mount.append(ops.Difference().append(mount_base).append(ops.Union().append(mount_hole_a).append(mount_hole_b)).translate([0, -bar_distance, 0]).comment("mount_bar_top"))
+        ## BOTTOM
+        if _add_both_side_bars:
+            mount.append(ops.Difference().append(mount_base).append(ops.Union().append(mount_hole_a).append(mount_hole_b)).translate([0, bar_distance, 0]).comment("mount_bar_bottom"))
+
+        mount.comment("append_mounting_holes_to_base_slice_{}_{}".format(_hole_width, _hole_distance))
+        self.BASE_SLICE.append(mount)
 
 
     def create_cylinder_with_cutout(self, _inner_diameter_mm:float = None, _outer_diameter_mm:float = None, _thickness_mm: float = None) -> ops.Union:
         """
-        Create the hallbach cylindrical baseplate (for the later magnet cutouts)
+        Creates the cylindrical hallbach slice baseplate (for the later magnet cutouts)
 
         :param _add_2d_projection: adds a projection(cut=True) command before the object string to allow the creation of a 2D dfx drawing of the final object
         :type _add_2d_projection: bool
@@ -110,12 +134,11 @@ class MRPOpenSCADGenerator():
         cylinder_base.comment("create_cylinder_with_cutout_inner_{}mm_outer{}mm_thickness{}mm".format(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm))
         cylinder_outer: ops.Cylinder = ops.Cylinder(d=_outer_diameter_mm, h=_thickness_mm, center=True)
 
-        if False and _inner_diameter_mm is not None and _inner_diameter_mm > 0.0:
+        if _inner_diameter_mm is not None and _inner_diameter_mm > 0.0:
             cylinder_inner: ops.Cylinder = ops.Cylinder(d=_inner_diameter_mm, h=_thickness_mm+self.CUTOUT_MARGIN, center=True)
             cylinder_base.append(cylinder_outer - cylinder_inner)
         else:
             cylinder_base.append(cylinder_outer)
-
 
 
         self.object_command_order_info.append("{}_{}".format(len(self.object_command_order_info), cylinder_base._comment))
@@ -126,8 +149,12 @@ class MRPOpenSCADGenerator():
 
     def __init__(self, _inner_diameter_mm:float, _outer_diameter_mm: float, _thickness_mm: float):
         self.openscad_objects: ops.Union = ops.Union()
-        self.BASE_SLICE = self.create_cylinder_with_cutout(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm)
-        self.BASE_SLICE_THICKNESS =_thickness_mm
+        self.BASE_SLICE = ops.Union()
+
+        # APPEND CYLINDRICAL BASE WITH OUTOUT
+        self.BASE_SLICE.append(self.create_cylinder_with_cutout(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm))
+
+        self.BASE_SLICE_THICKNESS = _thickness_mm
         self.openscad_objects.append(self.BASE_SLICE)
 
 
