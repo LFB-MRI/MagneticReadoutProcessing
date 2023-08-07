@@ -121,7 +121,7 @@ Export a reading
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
     import os
     # EXPORT TO A DIFFERENT FOLDER
-    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
+    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test")
     if not os.path.exists(RESULT_FILEPATH):
         os.makedirs(RESULT_FILEPATH)
     # ADD SOME ADDITION META DATA
@@ -136,7 +136,7 @@ Import a reading
 .. code-block:: python
 
     # EXTENDS THE `Export a reading` EXAMPLE
-    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.pkl")
+    RESULT_FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out/test.mag.json")
     reading_imported = MRPReading.MRPReading(None)
     reading_imported.load_from_file(RESULT_FILEPATH)
 
@@ -211,8 +211,8 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
 
     import MRPAnalysis
     # IMPORT TWO EXISTING READINGS FROM FILE
-    reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.pkl")
-    reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.pkl")
+    reading_top_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114N2.mag.json")
+    reading_bottom_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/114S2.mag.json")
     # IMPORT TOP READING
     reading_top = MRPReading.MRPReading(None)
     reading_top.load_from_file(reading_top_filepath)
@@ -276,17 +276,17 @@ The two additional parameters for the random factor make it possible to add a ce
 .. code-block:: python
 
         no_samples = 10
-        magnet_size = 12 # mm
+
         add_random_factor = True
         add_random_polarisation = True
         for sample in range(no_samples):
-            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size, add_random_factor, add_random_polarisation)
+            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15, add_random_factor, add_random_polarisation)
             visu = MRPVisualization.MRPVisualization(reading)
             visu.plot3d(None)
 
-            name = os.path.join(self.batch_generation_folder_path, 'test_simulation_cubic_magnet_' + str(magnet_size) + "mm_" + str(sample) + "_randompolarisation")
-            visu.plot3d(name + ".mag.pkl.png")
-            reading.dump_to_file( name + ".mag.pkl")
+            name = os.path.join(self.batch_generation_folder_path, 'test_simulation_cubic_magnet_' + str(magnet_size) + "mm_" + str(sample) + "_random")
+            visu.plot3d(name + ".mag.json.png")
+            reading.dump_to_file( name + ".mag.json")
 
 
 
@@ -317,6 +317,78 @@ To use a reading and convert it to a magnet, which can be used as ``MagPyLib`` s
         # READOUT SENSOR
         gen_value = gen_sensor.getB(gen_magnet)
         gen_mag_value = np.sqrt(gen_value.dot(gen_value)) # [mT]
+
+
+
+Hallbach-Array Examples
+***********************
+
+Generate OpenSCAD out of magpylib.magnet OBJECTS
+================================================
+
+This example shows how to generate a Hallbach-OpenSCAD model out of a given set of ``magpylib.magnet`` instances.
+The ``generate_1k_hallbach_using_polarisation_direction`` function generates a hallbach array by modifying the ``.position``, ``.rotation`` attributes of the ``magpylib.magnet`` instance.
+It also calculates the the inner and outer cylinder dimensions.
+
+
+Finally the ``generate_openscad_model`` function generated the OpenScad model out of the generated information stored in ``MRPHallbachArrayResult``.
+
+
+.. image:: _static/1k_8_hallbach.png
+   :width: 600
+
+.. code-block:: python
+
+    from MagneticReadoutProcessing import MRPHallbachArrayGenerator, MRPMagnetTypes
+    # GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS
+    reading = MRPSimulation.MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15)
+    readings = []
+
+    for idx in range(8):
+        readings.append(reading)
+    # PLEASE NOTE len(readings) % 4 = 0 so 4,8,12,16,...
+
+
+    ## RESULT TYPE IS MRPHallbachArrayResult WHICH CONTAINS A magpylib.magnet ARRAY
+    hallbach_array: MRPHallbachArrayGenerator.MRPHallbachArrayResult = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+
+    # EXPORT TO OPENSCAD
+    ## USING MRPHallbachArrayResult AND USES THE magpylib.magnet.position, magpylib.magnet.orientation PROPERTIES TO GENERATE THE OPENSCAD MODEL
+    ## 2D MODE DXF e.g. for lasercutting
+    MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./2d_test.scad",_2d_object_code=True)
+    ## 3D MODE e.g. for 3D printing
+    MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./3d_test.scad",_2d_object_code=False)
+
+
+
+
+
+Generate Hallbach-Streamplot out of magpylib.magnet OBJECTS
+===========================================================
+
+For verification of the generated hallbach array, it is possible to generate a streamplot of the generated magnets.
+
+.. image:: _static/1k_2_hallbach_streamplot.png
+   :width: 600
+
+
+
+.. code-block:: python
+
+    from MagneticReadoutProcessing import MRPHallbachArrayGenerator, MRPMagnetTypes
+    # GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS
+    reading = MRPSimulation.MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15)
+    readings = []
+
+    for idx in range(2):
+        readings.append(reading)
+
+
+    ## RESULT TYPE IS MRPHallbachArrayResult WHICH CONTAINS A magpylib.magnet ARRAY
+    hallbach_array: MRPHallbachArrayGenerator.MRPHallbachArrayResult = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+
+    # GENERATE STREAMPLOT
+    MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot([res_8], "./streamplot.png")
 
 
 

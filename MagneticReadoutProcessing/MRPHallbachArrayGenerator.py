@@ -148,7 +148,7 @@ class MRPHallbachArrayGenerator:
                 max_magnet_height = max([max_magnet_height, res.max_magnet_height])
 
         # CONSTRUCTOR CREATES A SLICE BODY
-        hallbach_slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter, max_magnet_height)
+        hallbach_slice = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter, max_magnet_height)
 
         # ADD MOUNTING HOLES
         if _add_mounting_holes:
@@ -200,7 +200,7 @@ class MRPHallbachArrayGenerator:
             else:
                 slice_outer_diameter = max([slice_outer_diameter, res.slice_outer_diameter])
         # CREATE FIGURE
-        fig, [ax1, ax2] = plt.subplots(1, 2, figsize=(13, 5))
+        fig, ax1 = plt.subplots(figsize=(9, 8))
         #CREATE GRID
         xy_size: int = int(slice_outer_diameter * 1.5) #mm
         ts = np.linspace(-xy_size, xy_size, xy_size)
@@ -238,10 +238,10 @@ class MRPHallbachArrayGenerator:
 
 
         # SHOW MAGNET CONFIGURATION IN PLOT 2
-
-        for magnet in _computed_magnet_data.magnets:
-            if isinstance(magnet, magpylib.magnet.Cuboid):
-                pass
+        for res in _computed_magnet_data:
+            for magnet in res.magnets:
+                if isinstance(magnet, magpylib.magnet.Cuboid):
+                    pass
                 #x_start, x_end, y_start, y_end = #TODO magnet_to_points(magnet)
                 #ax1.add_patch(plt.Rectangle((x_start, y_start), x_end - x_start, y_end - y_start, facecolor=to_rgba('crimson', 0.01), edgecolor='black', lw=2))
 

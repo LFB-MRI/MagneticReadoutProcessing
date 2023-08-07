@@ -17,6 +17,8 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         if not os.path.exists(self.import_export_test_folderpath):
             os.makedirs(self.import_export_test_folderpath)
 
+    def tearDown(self):
+        pass
 
     @unittest.skip
     def test_helper_plot_vectors(self):
@@ -28,41 +30,41 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
 
 
 
-    #@unittest.skip
+    @unittest.skip
     def test_generate_1k_hallbach_8_OPENSCAD_3D(self):
         reading = MRPSimulation.MRPSimulation.generate_reading()
         readings = []
         for idx in range(8):
             readings.append(reading)
 
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
+        res83d = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
             readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res],
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res83d],
                                                                                     self.import_export_test_folderpath + "/test_generate_1k_hallbach_8_OPENSCAD_3D.scad",
                                                                                     _2d_object_code=False, _add_annotations=True)
 
-    #@unittest.skip
+    @unittest.skip
     def test_generate_1k_hallbach_12_OPENSCAD_2D(self):
         reading = MRPSimulation.MRPSimulation.generate_reading()
         readings = []
         for idx in range(12):
             readings.append(reading)
 
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
+        res12 = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
             readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res], self.import_export_test_folderpath + "/test_generate_1k_hallbach_12_OPENSCAD_2D.scad", _add_annotations=False)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res12], self.import_export_test_folderpath + "/test_generate_1k_hallbach_12_OPENSCAD_2D.scad", _add_annotations=False)
 
-    #@unittest.skip
+    @unittest.skip
     def test_generate_1k_hallbach_32_OPENSCAD_2D(self):
         reading = MRPSimulation.MRPSimulation.generate_reading()
         readings = []
         for idx in range(32):
             readings.append(reading)
 
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction( readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res], self.import_export_test_folderpath + "/test_generate_1k_hallbach_32_OPENSCAD_2D.scad", _add_annotations=False)
+        res32 = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction( readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res32], self.import_export_test_folderpath + "/test_generate_1k_hallbach_32_OPENSCAD_2D.scad", _add_annotations=False)
 
-    #@unittest.skip
+    @unittest.skip
     def test_generat_1k_hallbach_8_24_OPENSCAD_2D(self):
         reading = MRPSimulation.MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15)
         reading_15 = []
@@ -94,8 +96,8 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         for idx in range(8):
             readings.append(reading)
 
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot([res], self.import_export_test_folderpath + "/test.png")
+        res_8 = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot([res_8], self.import_export_test_folderpath + "/test_generate_1k_hallbach_EIGHT_IDEAL_PLOT.png")
 
 
 

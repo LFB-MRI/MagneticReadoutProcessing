@@ -73,6 +73,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpreadoutsource-examples">MRPReadoutSource Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hallbach-array-examples">Hallbach-Array Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generate-openscad-out-of-magpylib-magnet-objects">Generate OpenSCAD out of magpylib.magnet OBJECTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-hallbach-streamplot-out-of-magpylib-magnet-objects">Generate Hallbach-Streamplot out of magpylib.magnet OBJECTS</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#misc-examples">MISC Examples</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#get-meta-data">Get meta-data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#export-reading-to-numpy">Export reading to numpy</a></li>
@@ -214,7 +219,7 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="c1"># EXPORT TO A DIFFERENT FOLDER</span>
-<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.pkl&quot;</span><span class="p">)</span>
+<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
 <span class="c1"># ADD SOME ADDITION META DATA</span>
@@ -228,7 +233,7 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 <section id="import-a-reading">
 <h3>Import a reading<a class="headerlink" href="#import-a-reading" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Export a reading` EXAMPLE</span>
-<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.pkl&quot;</span><span class="p">)</span>
+<span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.json&quot;</span><span class="p">)</span>
 <span class="n">reading_imported</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">reading_imported</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">RESULT_FILEPATH</span><span class="p">)</span>
 </pre></div>
@@ -290,8 +295,8 @@ The <code class="docutils literal notranslate"><span class="pre">merge_two_half_
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPAnalysis</span>
 <span class="c1"># IMPORT TWO EXISTING READINGS FROM FILE</span>
-<span class="n">reading_top_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114N2.mag.pkl&quot;</span><span class="p">)</span>
-<span class="n">reading_bottom_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114S2.mag.pkl&quot;</span><span class="p">)</span>
+<span class="n">reading_top_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114N2.mag.json&quot;</span><span class="p">)</span>
+<span class="n">reading_bottom_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;assets/114S2.mag.json&quot;</span><span class="p">)</span>
 <span class="c1"># IMPORT TOP READING</span>
 <span class="n">reading_top</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">reading_top</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">reading_top_filepath</span><span class="p">)</span>
@@ -335,17 +340,17 @@ The <code class="docutils literal notranslate"><span class="pre">generate_cubic_
 The two additional parameters for the random factor make it possible to add a certain random deviation to the measured value.</p>
 <a class="reference internal image-reference" href="_static/simulation_random_3.png"><img alt="_static/simulation_random_3.png" src="_static/simulation_random_3.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">no_samples</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">magnet_size</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># mm</span>
+
 <span class="n">add_random_factor</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">add_random_polarisation</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_samples</span><span class="p">):</span>
-    <span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_cubic_reading</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">,</span> <span class="n">add_random_factor</span><span class="p">,</span> <span class="n">add_random_polarisation</span><span class="p">)</span>
+    <span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_cubic_reading</span><span class="p">(</span><span class="n">MRPMagnetTypes</span><span class="o">.</span><span class="n">MagnetType</span><span class="o">.</span><span class="n">N45_CUBIC_15x15x15</span><span class="p">,</span> <span class="n">add_random_factor</span><span class="p">,</span> <span class="n">add_random_polarisation</span><span class="p">)</span>
     <span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
     <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
-    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_generation_folder_path</span><span class="p">,</span> <span class="s1">&#39;test_simulation_cubic_magnet_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;mm_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_randompolarisation&quot;</span><span class="p">)</span>
-    <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.pkl.png&quot;</span><span class="p">)</span>
-    <span class="n">reading</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.pkl&quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_generation_folder_path</span><span class="p">,</span> <span class="s1">&#39;test_simulation_cubic_magnet_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">magnet_size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;mm_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_random&quot;</span><span class="p">)</span>
+    <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.json.png&quot;</span><span class="p">)</span>
+    <span class="n">reading</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.mag.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -376,6 +381,59 @@ To use a reading and convert it to a magnet, which can be used as <code class="d
 <span class="n">gen_mag_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gen_value</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gen_value</span><span class="p">))</span> <span class="c1"># [mT]</span>
 </pre></div>
 </div>
+</section>
+<section id="hallbach-array-examples">
+<h2>Hallbach-Array Examples<a class="headerlink" href="#hallbach-array-examples" title="Permalink to this heading"></a></h2>
+<section id="generate-openscad-out-of-magpylib-magnet-objects">
+<h3>Generate OpenSCAD out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-openscad-out-of-magpylib-magnet-objects" title="Permalink to this heading"></a></h3>
+<p>This example shows how to generate a Hallbach-OpenSCAD model out of a given set of <code class="docutils literal notranslate"><span class="pre">magpylib.magnet</span></code> instances.
+The <code class="docutils literal notranslate"><span class="pre">generate_1k_hallbach_using_polarisation_direction</span></code> function generates a hallbach array by modifying the <code class="docutils literal notranslate"><span class="pre">.position</span></code>, <code class="docutils literal notranslate"><span class="pre">.rotation</span></code> attributes of the <code class="docutils literal notranslate"><span class="pre">magpylib.magnet</span></code> instance.
+It also calculates the the inner and outer cylinder dimensions.</p>
+<p>Finally the <code class="docutils literal notranslate"><span class="pre">generate_openscad_model</span></code> function generated the OpenScad model out of the generated information stored in <code class="docutils literal notranslate"><span class="pre">MRPHallbachArrayResult</span></code>.</p>
+<a class="reference internal image-reference" href="_static/1k_8_hallbach.png"><img alt="_static/1k_8_hallbach.png" src="_static/1k_8_hallbach.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MagneticReadoutProcessing</span> <span class="kn">import</span> <span class="n">MRPHallbachArrayGenerator</span><span class="p">,</span> <span class="n">MRPMagnetTypes</span>
+<span class="c1"># GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_reading</span><span class="p">(</span><span class="n">MRPMagnetTypes</span><span class="o">.</span><span class="n">MagnetType</span><span class="o">.</span><span class="n">N45_CUBIC_15x15x15</span><span class="p">)</span>
+<span class="n">readings</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">readings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="c1"># PLEASE NOTE len(readings) % 4 = 0 so 4,8,12,16,...</span>
+
+
+<span class="c1">## RESULT TYPE IS MRPHallbachArrayResult WHICH CONTAINS A magpylib.magnet ARRAY</span>
+<span class="n">hallbach_array</span><span class="p">:</span> <span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayResult</span> <span class="o">=</span> <span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">generate_1k_hallbach_using_polarisation_direction</span><span class="p">(</span><span class="n">readings</span><span class="p">)</span>
+
+<span class="c1"># EXPORT TO OPENSCAD</span>
+<span class="c1">## USING MRPHallbachArrayResult AND USES THE magpylib.magnet.position, magpylib.magnet.orientation PROPERTIES TO GENERATE THE OPENSCAD MODEL</span>
+<span class="c1">## 2D MODE DXF e.g. for lasercutting</span>
+<span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">generate_openscad_model</span><span class="p">([</span><span class="n">hallbach_array</span><span class="p">],</span> <span class="s2">&quot;./2d_test.scad&quot;</span><span class="p">,</span><span class="n">_2d_object_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">## 3D MODE e.g. for 3D printing</span>
+<span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">generate_openscad_model</span><span class="p">([</span><span class="n">hallbach_array</span><span class="p">],</span> <span class="s2">&quot;./3d_test.scad&quot;</span><span class="p">,</span><span class="n">_2d_object_code</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="generate-hallbach-streamplot-out-of-magpylib-magnet-objects">
+<h3>Generate Hallbach-Streamplot out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-hallbach-streamplot-out-of-magpylib-magnet-objects" title="Permalink to this heading"></a></h3>
+<p>For verification of the generated hallbach array, it is possible to generate a streamplot of the generated magnets.</p>
+<a class="reference internal image-reference" href="_static/1k_2_hallbach_streamplot.png"><img alt="_static/1k_2_hallbach_streamplot.png" src="_static/1k_2_hallbach_streamplot.png" style="width: 600px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MagneticReadoutProcessing</span> <span class="kn">import</span> <span class="n">MRPHallbachArrayGenerator</span><span class="p">,</span> <span class="n">MRPMagnetTypes</span>
+<span class="c1"># GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_reading</span><span class="p">(</span><span class="n">MRPMagnetTypes</span><span class="o">.</span><span class="n">MagnetType</span><span class="o">.</span><span class="n">N45_CUBIC_15x15x15</span><span class="p">)</span>
+<span class="n">readings</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">readings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+
+
+<span class="c1">## RESULT TYPE IS MRPHallbachArrayResult WHICH CONTAINS A magpylib.magnet ARRAY</span>
+<span class="n">hallbach_array</span><span class="p">:</span> <span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayResult</span> <span class="o">=</span> <span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">generate_1k_hallbach_using_polarisation_direction</span><span class="p">(</span><span class="n">readings</span><span class="p">)</span>
+
+<span class="c1"># GENERATE STREAMPLOT</span>
+<span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">MRPHallbachArrayGenerator</span><span class="o">.</span><span class="n">generate_magnet_streamplot</span><span class="p">([</span><span class="n">res_8</span><span class="p">],</span> <span class="s2">&quot;./streamplot.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="misc-examples">
 <h2>MISC Examples<a class="headerlink" href="#misc-examples" title="Permalink to this heading"></a></h2>

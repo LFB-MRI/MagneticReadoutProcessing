@@ -103,29 +103,6 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulation</span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation" title="Permalink to this definition"></a></dt>
 <dd><p>This class generates simulated readings, so its possible to generate a reading using a simulated ideal 10x10x10 magnet</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_cubic_reading">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_cubic_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_size_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_randomize_magnetization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_add_random_polarisation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_distance_radius_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_cubic_reading" title="Permalink to this definition"></a></dt>
-<dd><p>Generate a cubic magnet using components from magpylib to simulate a magnet and hallsensor.
-Then the virtual hallsensor is moved around the magnet and the values are stored in a reading.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>_size_mm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Optional;cubic magnet edge length in mm</p></li>
-<li><p><strong>_add_random_polarisation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; add a random factor for the magnetization vector value</p></li>
-<li><p><strong>_randomize_magnetization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; appy a random factor to the hallsensor readouts</p></li>
-<li><p><strong>_sensor_distance_radius_mm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – distance between magnet and hallsensor</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a generated MRPReading with set meta-data</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_random_full_sphere_reading">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_full_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_full_sphere_reading" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a full sphere reading with random field values and predefined meta-data.</p>
@@ -143,8 +120,8 @@ Then the virtual hallsensor is moved around the magnet and the values are stored
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_randum_half_sphere_reading">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_randum_half_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_randum_half_sphere_reading" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_random_half_sphere_reading">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_half_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_half_sphere_reading" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a half sphere reading with random field values and predefined meta-data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -157,6 +134,41 @@ Then the virtual hallsensor is moved around the magnet and the values are stored
 <dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_reading">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MagnetType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MagnetType.N45_CUBIC_12x12x12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_randomize_magnetization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_add_random_polarisation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_distance_radius_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_reading" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a cubic magnet using components from magpylib to simulate a magnet and hallsensor.
+Then the virtual hallsensor is moved around the magnet and the values are stored in a reading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_type</strong> (<a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html#MRPMagnetTypes.MagnetType" title="MRPMagnetTypes.MagnetType"><em>MRPMagnetTypes.MagnetType</em></a>) – Type of magnet</p></li>
+<li><p><strong>_add_random_polarisation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; add a random factor for the magnetization vector value</p></li>
+<li><p><strong>_randomize_magnetization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Optional; appy a random factor to the hallsensor readouts</p></li>
+<li><p><strong>_sensor_distance_radius_mm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – distance between magnet and hallsensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a generated MRPReading with set meta-data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="MRPSimulation.MRPSimulationException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulationException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPSimulationException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="MRPSimulation.MRPSimulationException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException.with_traceback" title="Permalink to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>

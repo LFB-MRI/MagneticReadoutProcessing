@@ -164,7 +164,11 @@ class MRPOpenSCADGenerator():
         self.objects_to_add = []
 
     def __del__(self):
-        print("dest")
+        self.BASE_SLICE = ops.Union()
+        self.openscad_objects: ops.Union = ops.Union()
+        self.openscad_objects = []
+        self.objects_to_subtract = []
+        self.objects_to_add = []
 
     def to_scad(self, _add_2d_projection: bool = True) -> str:
         """
