@@ -44,7 +44,7 @@ class TestMPRAnalysis(unittest.TestCase):
 
     @unittest.skip
     def test_calibration_fft(self):
-        reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        reading_ideal = MRPSimulation.MRPSimulation.generate_reading()
         res = MRPAnalysis.MRPAnalysis.calculate_fft(reading_ideal, True, True)
 
     def test_calibration_analysis_zero(self):
@@ -67,7 +67,7 @@ class TestMPRAnalysis(unittest.TestCase):
         # CREATE FROM CoG a magpylib instance with magnet type
         # generate hallbach arrray with count a ring
 
-        reading_ideal = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        reading_ideal = MRPSimulation.MRPSimulation.generate_reading()
 
         result_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading_ideal)
         # SETTING THE MAGNET TYPE IS NEEDED FOR LATER OPENSCAD GENERATION

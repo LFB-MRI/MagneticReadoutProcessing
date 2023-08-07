@@ -60,7 +60,7 @@ class TestMPRSimulation(unittest.TestCase):
     def test_readoutsource_initial(self):
         magnet_size = 12 # mm
 
-        generated_reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size)
+        generated_reading = MRPSimulation.MRPSimulation.generate_reading(magnet_size)
         gen_magnet = MRPReadoutSource.MRPReadoutSource(generated_reading)
 
 

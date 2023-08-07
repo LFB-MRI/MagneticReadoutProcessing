@@ -7,19 +7,24 @@ from scipy.spatial.transform import Rotation as R
 import vg
 
 
+class MRPSimulationException(Exception):
+    def __init__(self, message="MRPSimulationException thrown"):
+        self.message = message
+        super().__init__(self.message)
+
 class MRPSimulation():
     """ This class generates simulated readings, so its possible to generate a reading using a simulated ideal 10x10x10 magnet """
 
     @staticmethod
-    def generate_cubic_reading(_size_mm: int = 12, _randomize_magnetization: bool = False,
-                               _add_random_polarisation: bool = False,
-                               _sensor_distance_radius_mm: int = 40) -> MRPReading.MRPReading:
+    def generate_reading(_type: MRPMagnetTypes.MagnetType = MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12, _randomize_magnetization: bool = False,
+                         _add_random_polarisation: bool = False,
+                         _sensor_distance_radius_mm: int = 40) -> MRPReading.MRPReading:
         """
         Generate a cubic magnet using components from magpylib to simulate a magnet and hallsensor.
         Then the virtual hallsensor is moved around the magnet and the values are stored in a reading.
 
-        :param _size_mm: Optional;cubic magnet edge length in mm
-        :type _size_mm: int
+        :param _type: Type of magnet
+        :type _type: MRPMagnetTypes.MagnetType
 
         :param _add_random_polarisation: Optional; add a random factor for the magnetization vector value
         :type _add_random_polarisation: bool
@@ -40,8 +45,17 @@ class MRPSimulation():
         if _add_random_polarisation:
             magnetization = (0, 100 * random.uniform(0, 0.5), 100 * random.uniform(0.5, 1))
 
-        magnet = magpy.magnet.Cuboid(magnetization=magnetization, dimension=(_size_mm, _size_mm, _size_mm),
-                                     position=(0, 0, 0))
+        dim = _type.get_dimension()
+
+        magnet: magpy.magnet = None
+        if _type.is_cubic():
+            magnet = magpy.magnet.Cuboid(magnetization=magnetization, dimension=_type.get_dimension())
+        elif _type.is_cylindrical():
+            magnet = magpy.magnet.Cylinder(magnetization=magnetization, dimension=(dim[0], dim[1]))
+        else:
+            raise MRPSimulationException("magnet type not implemented yet :/")
+
+
         magnet.rotate_from_rotvec((0, 90, 0), degrees=True)
         # CREATE ONE HALLSENSOR PROBE
 
@@ -56,13 +70,10 @@ class MRPSimulation():
         # CREATE READING
         reading = MRPReading.MRPReading()
         reading.measurement_config.configure_fullsphere()
-        reading.measurement_config.magnet_type = MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12
+        reading.measurement_config.magnet_type = _type
 
         reading.set_additional_data('is_generated_reading', 1)
         reading.set_additional_data('generation_source', 'magpylib')
-
-        reading.set_additional_data('magnet_type', 'cuboid')
-        reading.set_additional_data('magnet_dimension', '12x12x12')
 
         # CREATE A POLAR COORDINATE GRID TO ITERATE OVER
         theta, phi = np.mgrid[0.0:np.pi:reading.measurement_config.n_theta * 1j,
@@ -130,7 +141,7 @@ class MRPSimulation():
         return _configured_reading
 
     @staticmethod
-    def generate_randum_half_sphere_reading(_full_random: bool = False) -> MRPReading.MRPReading:
+    def generate_random_half_sphere_reading(_full_random: bool = False) -> MRPReading.MRPReading:
         """
                 Generate a half sphere reading with random field values and predefined meta-data.
 

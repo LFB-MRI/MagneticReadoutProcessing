@@ -22,7 +22,7 @@ class TestMPRReading(unittest.TestCase):
         self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
 
     def test_matrix_init(self):
-        reading = MRPSimulation.MRPSimulation.generate_cubic_reading(12, False, False, 40)
+        reading = MRPSimulation.MRPSimulation.generate_reading(12, False, False, 40)
         matrix = reading.to_numpy_matrix()
 
         n_phi = reading.measurement_config.n_phi

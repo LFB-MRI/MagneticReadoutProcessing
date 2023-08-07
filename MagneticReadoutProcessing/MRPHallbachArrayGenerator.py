@@ -98,12 +98,12 @@ class MRPHallbachArrayGenerator:
             plt.savefig(_file)
 
     @staticmethod
-    def generate_openscad_model(_computed_magnet_data: MRPHallbachArrayResult, _save_filename: str = None, _2d_object_code: bool = True, _add_mounting_holes: bool = True):
+    def generate_openscad_model(_computed_magnet_data: [MRPHallbachArrayResult], _save_filename: str = None, _2d_object_code: bool = True, _add_mounting_holes: bool = True, _add_annotations:bool = True):
         """
         Generates a Hallbach OpenSCAD file of a given MRPHallbachArrayResult object
 
-        :param _computed_magnet_data: a magnet result object MRPHallbachArrayResult containing computed magnets
-        :type _computed_magnet_data: MRPHallbachArrayResult.MRPHallbachArrayResult
+        :param _computed_magnet_data: a list of magnet result object MRPHallbachArrayResult containing computed magnets
+        :type _computed_magnet_data: [MRPHallbachArrayResult.MRPHallbachArrayResult]
 
         :param _save_filename: save .scad file to filepath e.g. ./tmp/export.scad
         :type _save_filename: str
@@ -114,60 +114,105 @@ class MRPHallbachArrayGenerator:
         :param _add_mounting_holes: adds additional mounting holes
         :type _add_mounting_holes: bool
 
+        :param _add_annotations: adds text annotations using magnet_id and type
+        :type _add_annotations: bool
+
         """
         # CHECK USER INPUT
-        if len(_computed_magnet_data.magnets) != len(_computed_magnet_data.annotations):
-            raise MRPHallbachArrayGeneratorException("generate_openscad_model: magnets and annotations len are not equal")
+        if _computed_magnet_data is None or len(_computed_magnet_data) <= 0:
+            raise MRPHallbachArrayGeneratorException("_computed_magnet_data: is empty")
+
+        for res in _computed_magnet_data:
+            if _add_annotations and len(res.magnets) != len(res.annotations):
+                raise MRPHallbachArrayGeneratorException("generate_openscad_model: magnets and annotations len are not equal")
+
+        # FIND BIGGEST OUTER DIAMETER AND SMALLEST INNER DIAMETER
+        slice_inner_diameter: float = 999
+        slice_outer_diameter: float = -999
+        max_magnet_height: float = -999
+
+        for res in _computed_magnet_data:
+            if slice_inner_diameter is None:
+                slice_inner_diameter = res.slice_inner_diameter
+            else:
+                slice_inner_diameter = min([slice_inner_diameter, res.slice_inner_diameter])
+
+            if slice_outer_diameter is None:
+                slice_inner_diameter = res.slice_outer_diameter
+            else:
+                slice_outer_diameter = max([slice_outer_diameter, res.slice_outer_diameter])
+
+            if max_magnet_height is None:
+                max_magnet_height = res.max_magnet_height
+            else:
+                max_magnet_height = max([max_magnet_height, res.max_magnet_height])
 
         # CONSTRUCTOR CREATES A SLICE BODY
-        hallbach_slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(_computed_magnet_data.slice_inner_diameter, _computed_magnet_data.slice_outer_diameter, _computed_magnet_data.max_magnet_height)
+        hallbach_slice: MRPOpenSCADGenerator.MRPOpenSCADGenerator = MRPOpenSCADGenerator.MRPOpenSCADGenerator(slice_inner_diameter, slice_outer_diameter, max_magnet_height)
 
         # ADD MOUNTING HOLES
         if _add_mounting_holes:
-            hole_distance = round(_computed_magnet_data.slice_outer_diameter / 10) * 10
-            hallbach_slice.append_mounting_holes_to_base_slice(_computed_magnet_data.slice_outer_diameter, _computed_magnet_data.max_magnet_height, _hole_distance=hole_distance)
+            hole_distance = round(slice_outer_diameter / 10) * 10
+            hallbach_slice.append_mounting_holes_to_base_slice(slice_outer_diameter, max_magnet_height, _hole_distance=hole_distance)
 
 
         # GENERATE MAGNET CUTOUTS
         # HERE FOR EACH MAGNET THE SET PROPERTIES dim, pos, rot is USED TO GENERATE THE CUTOUT
-        for idx, _ in enumerate(_computed_magnet_data.magnets):
-            # CREATE MAGNET CUTOUT WITH ANNOTATION
-            hallbach_slice.create_magnet_cutout(_computed_magnet_data.magnets[idx], None)#_computed_magnet_data.annotations[idx])
+        for res in _computed_magnet_data:
+            for idx, _ in enumerate(res.magnets):
+                # CREATE MAGNET CUTOUT WITH ANNOTATION
+                if _add_annotations:
+                    hallbach_slice.create_magnet_cutout(res.magnets[idx], res.annotations[idx])
+                else:
+                    hallbach_slice.create_magnet_cutout(res.magnets[idx], None)
 
         # EXPORT OPNESCAD OBJECT
-        hallbach_slice.export_scad(_save_filename.format(len(_computed_magnet_data.magnets), _computed_magnet_data.slice_inner_diameter, _computed_magnet_data.slice_outer_diameter), _add_2d_projection=_2d_object_code)
+        hallbach_slice.export_scad(_save_filename, _add_2d_projection=_2d_object_code)
+        hallbach_slice.__del__()
 
 
 
     @staticmethod
-    def generate_magnet_streamplot(_computed_magnet_data: MRPHallbachArrayResult, _save_filename:str = None):
+    def generate_magnet_streamplot(_computed_magnet_data: [MRPHallbachArrayResult], _save_filename:str = None):
         """
         Generates a Hallbach Stream-Field Line Plot of a given MRPHallbachArrayResult object
 
-        :param _computed_magnet_data: a magnet result object MRPHallbachArrayResult containing computed magnets
-        :type _computed_magnet_data: MRPHallbachArrayResult.MRPHallbachArrayResult
+        :param _computed_magnet_data: a list of magnet result object MRPHallbachArrayResult containing computed magnets
+        :type _computed_magnet_data: [MRPHallbachArrayResult.MRPHallbachArrayResult]
 
         :param _save_filename: save .scad file to filepath e.g. ./tmp/export.scad
         :type _save_filename: str
         """
 
         # CHECK USER INPUT
-        if len(_computed_magnet_data.magnets) <= 0:
-            raise MRPHallbachArrayGeneratorException(
-                "generate_openscad_model: magnets is empty")
+        if _computed_magnet_data is None or len(_computed_magnet_data) <= 0:
+            raise MRPHallbachArrayGeneratorException("_computed_magnet_data: is empty")
 
+        for res in _computed_magnet_data:
+            if len(res.magnets) <= 0:
+                raise MRPHallbachArrayGeneratorException(
+                    "generate_openscad_model: magnets is empty")
 
+        slice_outer_diameter:float = None
+        for res in _computed_magnet_data:
+            if slice_outer_diameter is None:
+                slice_outer_diameter = res.slice_outer_diameter
+            else:
+                slice_outer_diameter = max([slice_outer_diameter, res.slice_outer_diameter])
         # CREATE FIGURE
         fig, [ax1, ax2] = plt.subplots(1, 2, figsize=(13, 5))
         #CREATE GRID
-        xy_size: int = int(_computed_magnet_data.slice_outer_diameter * 1.5) #mm
+        xy_size: int = int(slice_outer_diameter * 1.5) #mm
         ts = np.linspace(-xy_size, xy_size, xy_size)
         grid = np.array([[(x, 0, z) for x in ts] for z in ts])
 
         # POPULATE COLLECTION
-        magnet_collection:Collection = Collection(style_label=_computed_magnet_data.description)
-        for magnet in _computed_magnet_data.magnets:
-            magnet_collection.add(magnet)
+        magnet_collection:Collection = Collection(style_label="generate_magnet_streamplot")
+
+        # ADD ALL THE MAGNETS
+        for res in _computed_magnet_data:
+            for magnet in res.magnets:
+                magnet_collection.add(magnet)
 
         # COMPUTE PLOT OF magnet_collection
         B = getB(magnet_collection, grid)
@@ -210,7 +255,7 @@ class MRPHallbachArrayGenerator:
             plt.show()
 
     @staticmethod
-    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _min_slice_inner_diameter:float = 20, _slice_outer_diameter_safety_margin:float = 0) -> MRPHallbachArrayResult:
+    def generate_1k_hallbach_using_polarisation_direction(_readings: [MRPReading.MRPReading], _min_slice_inner_diameter:float = 20, _slice_outer_diameter_safety_margin:float = 10) -> MRPHallbachArrayResult:
         """
         Generates a 1K hallbach array out of given readings. The result is a set of magpylib magnets with set rotation, position and dimension.
         The magnetization is calculated using the calculate_center_of_gravity function.
@@ -239,7 +284,7 @@ class MRPHallbachArrayGenerator:
             raise MRPHallbachArrayGeneratorException("_readings len is odd or needs to be a multiple of 4")
 
         for idx, reading in enumerate(_readings):
-            if reading.get_magnet_type() is None or reading.get_magnet_type().is_invalid():
+            if reading.measurement_config.magnet_type is None or reading.measurement_config.magnet_type.is_invalid():
                 raise MRPHallbachArrayGeneratorException("get_magnet_type is not set for reading: {}".format(idx))
 
 
@@ -320,13 +365,12 @@ class MRPHallbachArrayGenerator:
 
         # GENERATE A SLICE INCLUDING CUTOUTS FOR THE MAGNET
         ## CALCULATE THE OUTER DIAMETER OF THE CYLINDRICAL DISC
-        no_magnets_per_quadrant: int = len(_readings) / 4
-        min_magnet_spacing = max([_min_slice_inner_diameter, max_magnet_height*no_magnets_per_quadrant])
-        magnet_trajectory: float = min_magnet_spacing/2 + max_magnet_height_mag*1.5
+        no_magnets_per_quadrant: int = max([len(_readings) / 4, 2])
+        min_magnet_spacing = max([_min_slice_inner_diameter, max_magnet_height*(no_magnets_per_quadrant-1)])
+        magnet_trajectory: float = min_magnet_spacing*1.5 # add a bit more space between the magnet to ensure material stability
 
-        slice_inner_diameter: float = max([_min_slice_inner_diameter, magnet_trajectory+max_magnet_height_mag])
-        slice_outer_diameter: float = _slice_outer_diameter_safety_margin + slice_inner_diameter*1.5 + 2*max_magnet_height_mag# *1.5 = add some additinal space #  to add 2 time the magnet size on each side
-
+        slice_inner_diameter: float = (magnet_trajectory*2) - max_magnet_height_mag*1.2 # mtrajectory is R for the slices diameter is needed - the max magnet size
+        slice_outer_diameter: float = _slice_outer_diameter_safety_margin + slice_inner_diameter + 2*max_magnet_height_mag*1.2 # same for outer diameter but adding 2 times the max magnet size
         #slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height * no_magnets_per_quadrant])
         #slice_outer_diameter: float = slice_inner_diameter + no_magnets_per_quadrant * max_magnet_height_mag  # *1.5 = add some additinal space #  to add 2 time the magnet size on each side
         #magnet_trajectory: float =  (slice_inner_diameter)/2+max_magnet_height_mag*1.5#+slice_inner_diameter #+ 2#(slice_inner_diameter / 2) + max_magnet_height_mag  # PLACE MAGNETS IN A CIRCLE BETWEEN

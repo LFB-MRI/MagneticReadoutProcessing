@@ -17,7 +17,7 @@ class MRPOpenSCADGenerator():
 
 
     CUTOUT_MARGIN:float = 0.001 #mm
-    CUTOUT_TOLERANCE_MARGIN: float = 0.5 #mm
+    CUTOUT_TOLERANCE_MARGIN: float = 0.1 #mm depending you 3d printer/lasercutter tolerances
     MAGNET_ANNOTATION_MARKER_SIZE = 1 # SEE create_magnet_cutout
     BASE_SLICE_THICKNESS: float = 10
     objects_to_subtract: [ops.Union] = []
@@ -62,9 +62,9 @@ class MRPOpenSCADGenerator():
                  ops_magnet.append(ops.Linear_Extrude(self.BASE_SLICE_THICKNESS).append(ops.Text(size=text_size, text='"{}"'.format(_annotation)).mirror([1,0,0]).translate([3*text_offset, (text_size/2/3)+(max_w_mag/2), -self.BASE_SLICE_THICKNESS]).rotate([0, 0 , 0])).comment("annotation_text"))
 
             # APPLY FINAL TRANSLATE TO DESTINATION POSITION AND ROTATION
-            ops_magnet = ops_magnet.translate(pos).rotate(rot).comment("ops_magnet_{}".format(_annotation))
+            #ops_magnet = ops_magnet.translate(pos).rotate(rot).comment("ops_magnet_{}".format(_annotation))
 
-
+            self.objects_to_subtract.append(ops.Union().append( ops_magnet.translate(pos).rotate(rot).comment("ops_magnet_{}".format(_annotation))))
 
         elif isinstance(_magnet, magpylib.magnet.Cylinder):
 
@@ -83,8 +83,7 @@ class MRPOpenSCADGenerator():
 
 
 
-         # APPEND TO OBJECTS
-        self.objects_to_subtract.append(ops_magnet)
+
         self.object_command_order_info.append("{}_{}".format(len(self.object_command_order_info), ops_magnet._comment))
 
     def append_mounting_holes_to_base_slice(self, _outer_diameter_mm: float = None, _thickness_mm:float = None, _hole_width: float = 10, _hole_distance:float = 100, _add_both_side_bars = False):
@@ -101,7 +100,7 @@ class MRPOpenSCADGenerator():
 
         # ADD MOUNTING BARS
         mount_base = ops.Cube(dim, center=True).comment("mount_base")
-        mount_hole_a = ops.Cylinder(d=_hole_width, h=1.5*_thickness_mm+ 2*self.CUTOUT_TOLERANCE_MARGIN).translate([(_hole_distance/2)-_hole_width, 0, -_thickness_mm]).comment("mount_hole_a").debug()
+        mount_hole_a = ops.Cylinder(d=_hole_width, h=1.5*_thickness_mm+ 2*self.CUTOUT_TOLERANCE_MARGIN).translate([(_hole_distance/2)-_hole_width, 0, -_thickness_mm]).comment("mount_hole_a")
         mount_hole_b = ops.Cylinder(d=_hole_width, h=1.5*_thickness_mm+ 2*self.CUTOUT_TOLERANCE_MARGIN).translate([-(_hole_distance/2)+_hole_width, 0,-_thickness_mm]).comment("mount_hole_a")
 
         # DISTANCE FROM CENTER TO MOUNTING BARS
@@ -114,7 +113,6 @@ class MRPOpenSCADGenerator():
 
         mount.comment("append_mounting_holes_to_base_slice_{}_{}".format(_hole_width, _hole_distance))
         self.BASE_SLICE.append(mount)
-
 
     def create_cylinder_with_cutout(self, _inner_diameter_mm:float = None, _outer_diameter_mm:float = None, _thickness_mm: float = None) -> ops.Union:
         """
@@ -130,7 +128,7 @@ class MRPOpenSCADGenerator():
             raise MRPOpenSCADGeneratorException("_thickness cant be none")
         if _inner_diameter_mm > _outer_diameter_mm:
             raise MRPOpenSCADGeneratorException("_inner_diameter is bigger than _outher_diameter")
-
+        _thickness_mm = _thickness_mm + 2*self.CUTOUT_TOLERANCE_MARGIN
         cylinder_base:ops.Union = ops.Union()
         # here the comment section is reused as step identifier
         cylinder_base.comment("create_cylinder_with_cutout_inner_{}mm_outer{}mm_thickness{}mm".format(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm))
@@ -151,16 +149,22 @@ class MRPOpenSCADGenerator():
 
     def __init__(self, _inner_diameter_mm:float, _outer_diameter_mm: float, _thickness_mm: float):
         self.openscad_objects: ops.Union = ops.Union()
-        self.BASE_SLICE = ops.Union()
+
 
         # APPEND CYLINDRICAL BASE WITH OUTOUT
+        self.BASE_SLICE = ops.Union()
         self.BASE_SLICE.append(self.create_cylinder_with_cutout(_inner_diameter_mm, _outer_diameter_mm, _thickness_mm))
-
         self.BASE_SLICE_THICKNESS = _thickness_mm
+
+
+        self.openscad_objects = []
         self.openscad_objects.append(self.BASE_SLICE)
 
+        self.objects_to_subtract = []
+        self.objects_to_add = []
 
-
+    def __del__(self):
+        print("dest")
 
     def to_scad(self, _add_2d_projection: bool = True) -> str:
         """

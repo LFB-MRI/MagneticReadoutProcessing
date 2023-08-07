@@ -34,7 +34,7 @@ class TestMPRSimulation(unittest.TestCase):
         magnet_size = 12 # mm
         add_random_factor = True
         for sample in range(no_samples):
-            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size, add_random_factor)
+            reading = MRPSimulation.MRPSimulation.generate_reading(magnet_size, add_random_factor)
             visu = MRPVisualization.MRPVisualization(reading)
             visu.plot3d(None)
 
@@ -49,7 +49,7 @@ class TestMPRSimulation(unittest.TestCase):
         add_random_factor = True
         add_random_polarisation = True
         for sample in range(no_samples):
-            reading = MRPSimulation.MRPSimulation.generate_cubic_reading(magnet_size, add_random_factor, add_random_polarisation)
+            reading = MRPSimulation.MRPSimulation.generate_reading(magnet_size, add_random_factor, add_random_polarisation)
             visu = MRPVisualization.MRPVisualization(reading)
             visu.plot3d(None)
 
