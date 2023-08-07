@@ -40,7 +40,7 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
     def test_generate_1k_hallbach_TWELVE_OPENSCAD(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
         readings = []
-        for idx in range(8):
+        for idx in range(12):
             readings.append(reading)
 
         res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
