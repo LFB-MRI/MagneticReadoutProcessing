@@ -131,7 +131,7 @@ class MRPHallbachArrayGenerator:
         # HERE FOR EACH MAGNET THE SET PROPERTIES dim, pos, rot is USED TO GENERATE THE CUTOUT
         for idx, _ in enumerate(_computed_magnet_data.magnets):
             # CREATE MAGNET CUTOUT WITH ANNOTATION
-            hallbach_slice.create_magnet_cutout(_computed_magnet_data.magnets[idx], _computed_magnet_data.annotations[idx])
+            hallbach_slice.create_magnet_cutout(_computed_magnet_data.magnets[idx], None)#_computed_magnet_data.annotations[idx])
 
         # EXPORT OPNESCAD OBJECT
         hallbach_slice.export_scad(_save_filename.format(len(_computed_magnet_data.magnets), _computed_magnet_data.slice_inner_diameter, _computed_magnet_data.slice_outer_diameter), _add_2d_projection=_2d_object_code)
@@ -195,8 +195,9 @@ class MRPHallbachArrayGenerator:
 
         for magnet in _computed_magnet_data.magnets:
             if isinstance(magnet, magpylib.magnet.Cuboid):
-                x_start, x_end, y_start, y_end = #TODO magnet_to_points(magnet)
-                ax1.add_patch(plt.Rectangle((x_start, y_start), x_end - x_start, y_end - y_start, facecolor=to_rgba('crimson', 0.01), edgecolor='black', lw=2))
+                pass
+                #x_start, x_end, y_start, y_end = #TODO magnet_to_points(magnet)
+                #ax1.add_patch(plt.Rectangle((x_start, y_start), x_end - x_start, y_end - y_start, facecolor=to_rgba('crimson', 0.01), edgecolor='black', lw=2))
 
 
         plt.tight_layout()
@@ -312,15 +313,23 @@ class MRPHallbachArrayGenerator:
             t = magnet.get_magnet_type()
             mh = t.get_height()
             max_magnet_height = max([mh, max_magnet_height])
-        max_magnet_height_mag = math.sqrt(max_magnet_height * max_magnet_height)
+        max_magnet_height_mag = math.sqrt(max_magnet_height * max_magnet_height+max_magnet_height * max_magnet_height+max_magnet_height * max_magnet_height)
         print("max_magnet_height:{} max_magnet_height_mag:{}".format(max_magnet_height, max_magnet_height_mag))
 
 
         # GENERATE A SLICE INCLUDING CUTOUTS FOR THE MAGNET
         ## CALCULATE THE OUTER DIAMETER OF THE CYLINDRICAL DISC
-        slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height*2])
-        slice_outer_diameter: float = slice_inner_diameter + 4*max_magnet_height_mag #  to add 2 time the magnet size on each side
-        magnet_trajectory: float = (slice_inner_diameter / 2) + max_magnet_height_mag  # PLACE MAGNETS IN A CIRCLE BETWEEN
+        no_magnets_per_quadrant: int = len(_readings) / 4
+        min_magnet_spacing = max([_min_slice_inner_diameter, max_magnet_height*no_magnets_per_quadrant])
+        magnet_trajectory: float = min_magnet_spacing/2 + max_magnet_height_mag*1.5
+
+        slice_inner_diameter: float = max([_min_slice_inner_diameter, magnet_trajectory+max_magnet_height_mag])
+        slice_outer_diameter: float = _slice_outer_diameter_safety_margin + slice_inner_diameter*1.5 + 2*max_magnet_height_mag# *1.5 = add some additinal space #  to add 2 time the magnet size on each side
+
+        #slice_inner_diameter: float = max([_min_slice_inner_diameter, max_magnet_height * no_magnets_per_quadrant])
+        #slice_outer_diameter: float = slice_inner_diameter + no_magnets_per_quadrant * max_magnet_height_mag  # *1.5 = add some additinal space #  to add 2 time the magnet size on each side
+        #magnet_trajectory: float =  (slice_inner_diameter)/2+max_magnet_height_mag*1.5#+slice_inner_diameter #+ 2#(slice_inner_diameter / 2) + max_magnet_height_mag  # PLACE MAGNETS IN A CIRCLE BETWEEN
+
 
 
 
@@ -335,10 +344,11 @@ class MRPHallbachArrayGenerator:
         magnet_initial_rotation: float = 180
         quadrants: int = 4
         magnet_rotation_per_quadrant: float = 180
-        inner_magnets_per_quadrant = int((no_magnets/quadrants)) # defines the inner magnets per quadrant for a n=8 array with 4 quadrants n=8 =1 inner magnet, due the outer ones are sharing the same quadrant
+
+        inner_magnets_per_quadrant = int((no_magnets/quadrants))# defines the inner magnets per quadrant for a n=8 array with 4 quadrants n=8 =1 inner magnet, due the outer ones are sharing the same quadrant
         rotation_per_magnet_per_quadrant: float = magnet_rotation_per_quadrant/inner_magnets_per_quadrant
 
-
+        I = 0
         for idx, magnet in enumerate(magpylib_instances):
             reading: MRPReading.MRPReading = _readings[idx]
 
@@ -352,7 +362,7 @@ class MRPHallbachArrayGenerator:
 
             # CALCULATE ROTATION OF THE MAGNET
             ## => APPLY IN MAGNET ROTATION FOR HALLBACH CANCEL OUT=> Z AXIS ROTATION
-            magnet_rotation_itself: float = (magnet_initial_rotation + rotation_per_magnet_per_quadrant * idx) % 360 # 0-180 DEGREE PER QUADRANT
+            magnet_rotation_itself: float = (magnet_initial_rotation - rotation_per_magnet_per_quadrant * idx) % 360 # 0-180 DEGREE PER QUADRANT
             old_rot = magnet.orientation.as_rotvec(degrees=True) * np.array([0, 0, 1]) # ONLY EXTRACT Z AXIS ROTATION
             in_mag_rotation_applied = old_rot + (magnet_rotation_itself * np.array([0, 0, 1])) # ADD NEW TO OLD ONE = OPTIMIZED ROTATION
             magnet.orientation = R.from_rotvec(in_mag_rotation_applied, degrees=True)

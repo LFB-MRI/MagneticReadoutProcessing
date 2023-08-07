@@ -17,7 +17,7 @@ class MRPOpenSCADGenerator():
 
 
     CUTOUT_MARGIN:float = 0.001 #mm
-    CUTOUT_TOLERANCE_MARGIN: float = 0.05 #mm
+    CUTOUT_TOLERANCE_MARGIN: float = 0.5 #mm
     MAGNET_ANNOTATION_MARKER_SIZE = 1 # SEE create_magnet_cutout
     BASE_SLICE_THICKNESS: float = 10
     objects_to_subtract: [ops.Union] = []
@@ -40,6 +40,8 @@ class MRPOpenSCADGenerator():
         mrot: scipy.spatial.transform.rotation.Rotation = _magnet.orientation.as_rotvec(degrees=True)
         rot = [mrot[0], mrot[1], mrot[2]]
         # ANNOTATION TEXT SETTINGS
+        if _annotation is None:
+            _annotation = ""
         text_size = 2
         text_offset: float = len(_annotation) * text_size * 0.3
 

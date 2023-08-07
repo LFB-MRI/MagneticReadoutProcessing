@@ -27,36 +27,38 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors(vectors, "test vector plot saved", self.import_export_test_folderpath + "/vector_save.png")
 
     @unittest.skip
-    def test_generate_1k_hallbach_EIGHT_IDEAL_OPENSCAD(self):
+    def test_generate_1k_hallbach_EIGHT_OPENSCAD(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
         readings= []
         for idx in range(8):
             readings.append(reading)
 
         res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test_generate_1k_hallbach_EIGHT_IDEAL_OPENSCAD.scad")
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test.scad")
+
+    #@unittest.skip
+    def test_generate_1k_hallbach_TWELVE_OPENSCAD(self):
+        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
+        readings = []
+        for idx in range(12):
+            readings.append(reading)
+
+        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
+            readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test.scad")
 
 
+
+    @unittest.skip
     def test_generate_1k_hallbach_EIGHT_IDEAL_PLOT(self):
         reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
         readings = []
         for idx in range(8):
             readings.append(reading)
 
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
-            readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot(res, self.import_export_test_folderpath + "/test_generate_1k_hallbach_EIGHT_IDEAL_OPENSCAD.png")
+        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot(res, self.import_export_test_folderpath + "/test.png")
 
-    @unittest.skip
-    def test_generate_1k_hallbach_TWELVE_IDEAL(self):
-        reading = MRPSimulation.MRPSimulation.generate_cubic_reading()
-        readings = []
-        for idx in range(18):
-            readings.append(reading)
-
-        res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
-            readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test_generate_1k_hallbach_TWELVE_IDEAL.scad")
 
 
 if __name__ == '__main__':
