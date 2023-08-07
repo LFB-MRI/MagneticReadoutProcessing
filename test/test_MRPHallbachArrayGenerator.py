@@ -45,7 +45,7 @@ class TestMRPHallbachArrayGenerator(unittest.TestCase):
 
         res = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(
             readings)
-        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test.scad")
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model(res, self.import_export_test_folderpath + "/test.scad", _2d_object_code=False)
 
 
 

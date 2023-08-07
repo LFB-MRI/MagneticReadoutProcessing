@@ -124,7 +124,8 @@ class MRPHallbachArrayGenerator:
 
         # ADD MOUNTING HOLES
         if _add_mounting_holes:
-            hallbach_slice.append_mounting_holes_to_base_slice(_computed_magnet_data.slice_outer_diameter, _computed_magnet_data.max_magnet_height)
+            hole_distance = round(_computed_magnet_data.slice_outer_diameter / 10) * 10
+            hallbach_slice.append_mounting_holes_to_base_slice(_computed_magnet_data.slice_outer_diameter, _computed_magnet_data.max_magnet_height, _hole_distance=hole_distance)
 
 
         # GENERATE MAGNET CUTOUTS
@@ -379,7 +380,7 @@ class MRPHallbachArrayGenerator:
             result.annotations.append(annotation)
 
         result.description = "generate_1k_hallbach_using_polarisation_direction"
-        result.max_magnet_height = max_magnet_height_mag
+        result.max_magnet_height = max_magnet_height # SLICE THICKNESS ON Z AXIS
         result.slice_inner_diameter = slice_inner_diameter
         result.slice_outer_diameter = slice_outer_diameter
 

@@ -94,18 +94,18 @@ class MRPOpenSCADGenerator():
             raise MRPOpenSCADGeneratorException("_thickness_mm cant be none")
         # USING INTERSECT
         mount = ops.Union()
-        diameter_addition = 5
+        diameter_addition = 2
         dim = [_hole_distance,_hole_width*2,_thickness_mm]  # X Y Z
         # APPEN A BIT BIGGER CYLINDER FOR PLACING THE MOUNT CONSTRUCTION
         mount.append(ops.Difference().append(ops.Cylinder(d=_outer_diameter_mm-1, h=_thickness_mm, center=True)).append(ops.Cylinder(d=_outer_diameter_mm+diameter_addition, h=_thickness_mm, center=True)).comment("mount_contruction_helper_cylinder"))
 
         # ADD MOUNTING BARS
         mount_base = ops.Cube(dim, center=True).comment("mount_base")
-        mount_hole_a = ops.Cylinder(d=_hole_width, h=_thickness_mm).translate([(_hole_distance/2)-_hole_width, 0, 0]).comment("mount_hole_a")
-        mount_hole_b = ops.Cylinder(d=_hole_width, h=_thickness_mm).translate([-(_hole_distance/2)+_hole_width, 0, 0]).comment("mount_hole_a")
+        mount_hole_a = ops.Cylinder(d=_hole_width, h=1.5*_thickness_mm+ 2*self.CUTOUT_TOLERANCE_MARGIN).translate([(_hole_distance/2)-_hole_width, 0, -_thickness_mm]).comment("mount_hole_a").debug()
+        mount_hole_b = ops.Cylinder(d=_hole_width, h=1.5*_thickness_mm+ 2*self.CUTOUT_TOLERANCE_MARGIN).translate([-(_hole_distance/2)+_hole_width, 0,-_thickness_mm]).comment("mount_hole_a")
 
         # DISTANCE FROM CENTER TO MOUNTING BARS
-        bar_distance = (_outer_diameter_mm/2) + diameter_addition*1.3
+        bar_distance = (_outer_diameter_mm/2) + diameter_addition
         ## TOP first BAR then SCREW HOLE
         mount.append(ops.Difference().append(mount_base).append(ops.Union().append(mount_hole_a).append(mount_hole_b)).translate([0, -bar_distance, 0]).comment("mount_bar_top"))
         ## BOTTOM
