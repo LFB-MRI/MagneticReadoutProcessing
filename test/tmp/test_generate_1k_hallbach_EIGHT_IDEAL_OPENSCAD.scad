@@ -46,7 +46,7 @@ projection(cut = true) union(){
                 };
             };
         }; // ops_magnet_t2:i0
-        rotate(a=[-0.0, -0.0, -90.70710678118654]){
+        rotate(a=[-0.0, -0.0, -90.70710678118655]){
             translate(v=[16.970562748477143, 16.97056274847714, 0.0]){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true); // magpylib.magnet.Cuboid
@@ -122,7 +122,7 @@ projection(cut = true) union(){
                 };
             };
         }; // ops_magnet_t2:i0
-        rotate(a=[-0.0, -0.0, -90.70710678118654]){
+        rotate(a=[-0.0, -0.0, -90.70710678118655]){
             translate(v=[-16.970562748477143, -16.97056274847714, 0.0]){
                 union(){
                     cube(size=[12.1, 12.1, 12.1], center=true); // magpylib.magnet.Cuboid
