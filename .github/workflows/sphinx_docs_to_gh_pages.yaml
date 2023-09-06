@@ -19,7 +19,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: 3.9    # Python version to build the html sphinx documentation
-          environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
+          environment-file: src/devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
@@ -31,7 +31,7 @@ jobs:
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.1.0
         with:
           branch: main
-          dir_docs: docs/source
+          dir_docs: src/MagneticReadoutProcessing_docs/source
           sphinxapiopts: '--separate -o . ../'
           sphinxapiexclude: '../*setup* ../*.ipynb'
           sphinxopts: ''
