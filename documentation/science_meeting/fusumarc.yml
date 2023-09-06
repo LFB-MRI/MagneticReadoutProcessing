@@ -1,0 +1,34 @@
+meta:
+  title: A short introduction into the MagneticReadoutProcessing ecosystem
+  thumbnail:
+  description: Science Meeting Presentation - MagneticReadoutProcessing
+  sns:
+    - twitter
+slide:
+  loop: true
+  sidebar: true
+  targetBlank: true
+  showIndex: true
+  isVertical: false
+  ui:
+    sidebar: true
+    vertical: false
+    pagination:  bullets #| progressbar | fraction
+    effect: fade # #| cube | flip
+  code:
+    languages:
+      - javascript
+      - python
+      - html
+    plugins:
+      - line-numbers
+    theme: pop #default
+  chart: true
+  math: true
+extends:
+  js:
+  css: ./style.css
+  webpack:
+build:
+  ssr: true
+  useCache: true

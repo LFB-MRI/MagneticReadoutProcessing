@@ -1,0 +1,21 @@
+{
+  "name": "scienceslampresentation",
+  "version": "1.0.0",
+  "description": "Science Meeting Presentation - MagneticReadoutProcessing",
+  "author": "Marcel Ochsendorf",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.1",
+    "@fusuma/task-pdf": "^2.8.4",
+    "abab": "^2.0.6",
+    "fusuma": "^1.16.0",
+    "xterm": "^4.13.0",
+    "xterm-addon-attach": "^0.6.0",
+    "xterm-addon-fit": "^0.5.0"
+  },
+  "start": "fusuma start",
+  "start:prod": "fusuma start-prod",
+  "build": "fusuma build",
+  "deploy": "npm run build && fusuma deploy",
+  "pdf": "npm run build && fusuma pdf"
+}

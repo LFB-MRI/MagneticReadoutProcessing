@@ -1,7 +1,0 @@
-name: docs-env
-
-dependencies:
-  - Sphinx
-  - sphinx_rtd_theme
-  - pip
-  - python

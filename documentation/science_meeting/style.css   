@@ -1,0 +1,6 @@
+.title {
+  color: #3498db;
+}
+.main {
+  background: #f5f5f5;
+}
