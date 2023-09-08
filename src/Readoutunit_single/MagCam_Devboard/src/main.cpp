@@ -10,10 +10,8 @@
 // CLASSES
 TCA9548A tca9584a(SENSOR_WIRE);
 
-
 HardwareSerial Serial1(PA3, PA2); // RX TX  // FOR SERIAL ANC
 sync_timer readout_timer(1000, false);
-
 
 long readout_index = 0;
 int sensor_number = 0;
@@ -21,15 +19,14 @@ sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SE
 sensor_result sensor_results[MAX_TLV_SENSORS] = {sensor_result()};
 System_State system_state = System_State_Error;
 
-
-bool i2c_scan(TwoWire &_wire_instance, int _check_for_addr = -1, bool _log = true)
+bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const bool _log = true)
 {
   byte error, address;
   int nDevices;
 
   if (_log)
   {
-    Serial.println("Scanning...");
+    LOGGING_SERIAL.println("Scanning...");
   }
 
   bool addr_found = false;
@@ -45,20 +42,23 @@ bool i2c_scan(TwoWire &_wire_instance, int _check_for_addr = -1, bool _log = tru
     {
       if (error == 0)
       {
-        Serial.print("I2C device found at address 0x");
+        LOGGING_SERIAL.print("I2C device found at address 0x");
         if (address < 16)
-          Serial.print("0");
-        Serial.print(address, HEX);
-        Serial.println("  !");
+        {
+          LOGGING_SERIAL.print("0");
+        }
+        LOGGING_SERIAL.print(address, HEX);
+        LOGGING_SERIAL.println("  !");
 
         nDevices++;
       }
       else if (error == 4)
       {
-        Serial.print("Unknown error at address 0x");
-        if (address < 16)
-          Serial.print("0");
-        Serial.println(address, HEX);
+        LOGGING_SERIAL.print("Unknown error at address 0x");
+        if (address < 16){
+          LOGGING_SERIAL.print("0");
+        }
+        LOGGING_SERIAL.println(address, HEX);
       }
     }
 
@@ -71,11 +71,11 @@ bool i2c_scan(TwoWire &_wire_instance, int _check_for_addr = -1, bool _log = tru
   {
     if (nDevices == 0)
     {
-      Serial.println("No I2C devices found\n");
+      LOGGING_SERIAL.println("No I2C devices found\n");
     }
     else
     {
-      Serial.println("done\n");
+      LOGGING_SERIAL.println("done\n");
     }
   }
 
@@ -84,23 +84,23 @@ bool i2c_scan(TwoWire &_wire_instance, int _check_for_addr = -1, bool _log = tru
 
 void error(const bool _critical, const int _code)
 {
-  pinMode(error_led, OUTPUT);
+  pinMode(ERROR_LED_PIN, OUTPUT);
   while (_critical)
   {
     for (int i = 0; i < _code; i++)
     {
-      digitalWrite(error_led, 1);
+      digitalWrite(ERROR_LED_PIN, HIGH);
       delay(100);
-      digitalWrite(error_led, 0);
+      digitalWrite(ERROR_LED_PIN, LOW);
       delay(100);
     }
     delay(1000);
 
-    Serial.println("error:" + System_Error_Code_STR[_code]);
+    LOGGING_SERIAL.println("error:" + System_Error_Code_STR[_code]);
   }
 }
 
-bool is_i2c_device_present(TwoWire &_i2c_interface, byte _addr)
+bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
 {
   return i2c_scan(_i2c_interface, _addr, false);
 }
@@ -109,10 +109,10 @@ void setup()
 {
   system_state = System_State_SETUP;
 
-  Serial.begin(115200);
-  Serial.println("setup");
+  LOGGING_SERIAL.begin(115200);
+  LOGGING_SERIAL.println("setup");
+  pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
 
-  
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
   SENSOR_WIRE.setSDA(SENSOR_WIRE_SDA_PIN);
   SENSOR_WIRE.begin();
@@ -177,45 +177,54 @@ void setup()
   }
 
   // SETUP ANC SERIAL
-  volatile int ii = 0;
-
-  
-  system_state = System_State_READOUT_LOOP;
+  system_state = System_State_WAIT_FOR_ANC;
 }
 
 void loop()
 {
   // HANDLE SYSTEM STATE
-  // IMPLEMENT IRQ
-
-  // TRIGGER READOUT
-  if (readout_timer.expired())
+  // WAIt FOR THE ANC PACKET
+  if (system_state == System_State_WAIT_FOR_ANC)
   {
+    if (!digitalRead(SINGLE_MODE_PIN))
+    {
+      system_state = System_State_ANC_GOT_SYNC_PACKET;
+    }
+  }
+  else if (system_state == System_State_ANC_GOT_SYNC_PACKET)
+  {
+  }
+  else if (system_state == System_State_READOUT_LOOP)
+  {
+    // TRIGGER READOUT
+    if (readout_timer.expired())
+    {
+      for (int i = 0; i < sensor_number; i++)
+      {
+        sensor_info *sensor = &sensors_found[i];
+        tca9584a.setChannel(sensor->tca_channel, true);
+        sensor->sensor_instance.updateData();
+        tca9584a.setChannel(sensor->tca_channel, false);
+      }
+      readout_index++;
+    }
+
+    // READ RESULT
     for (int i = 0; i < sensor_number; i++)
     {
       sensor_info *sensor = &sensors_found[i];
+      sensor_result *result = &sensor_results[i];
+
       tca9584a.setChannel(sensor->tca_channel, true);
-      sensor->sensor_instance.updateData();
+      result->x = sensor->sensor_instance.getX();
+      result->y = sensor->sensor_instance.getY();
+      result->z = sensor->sensor_instance.getZ();
+      result->b = sensor->sensor_instance.getAmount();
+      result->ts = readout_index;
       tca9584a.setChannel(sensor->tca_channel, false);
+
+      LOGGING_SERIAL.println(result->b);
     }
-    readout_index++;
-  }
-
-  // READ RESULT
-  for (int i = 0; i < sensor_number; i++)
-  {
-    sensor_info *sensor = &sensors_found[i];
-    sensor_result *result = &sensor_results[i];
-
-    tca9584a.setChannel(sensor->tca_channel, true);
-    result->x = sensor->sensor_instance.getX();
-    result->y = sensor->sensor_instance.getY();
-    result->z = sensor->sensor_instance.getZ();
-    result->b = sensor->sensor_instance.getAmount();
-    result->ts = readout_index;
-    tca9584a.setChannel(sensor->tca_channel, false);
-
-    Serial.println(result->b);
   }
 
   delay(10);

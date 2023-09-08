@@ -14,11 +14,11 @@
 
 
 #define ERROR_LED_PIN PD15
-
+#define SINGLE_MODE_PIN PC1
 #define SENSOR_WIRE_SCL_PIN PB6
 #define SENSOR_WIRE_SDA_PIN PB9
 #define SENSOR_WIRE Wire
-
+#define LOGGING_SERIAL Serial
 
 #define MAX_TLV_SENSORS (TCA9548A_Channels * 2)
 
@@ -29,7 +29,7 @@ typedef enum System_Error_Code{
     System_Error_Code_UNKNWON = 3,
 }System_Error_Code_t;
 
-String System_Error_Code_STR[2] = {
+String System_Error_Code_STR[3] = {
     "System_Error_Code_TCA_SCAN_FAILED",
     "System_Error_Code_TLV_NO_SENSORS_FOUND",
     "System_Error_Code_UNKNWON"
@@ -40,7 +40,8 @@ typedef enum System_State{
     System_State_Error = 0,
     System_State_SETUP = 1,
     System_State_WAIT_FOR_ANC = 2,
-    System_State_READOUT_LOOP = 3,
+    System_State_ANC_GOT_SYNC_PACKET = 3,
+    System_State_READOUT_LOOP = 4,
 }System_State_t;
 
 
