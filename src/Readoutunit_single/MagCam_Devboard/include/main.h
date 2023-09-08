@@ -10,7 +10,7 @@
 // PRIVATE LIBS
 #include <Tlv493d.h>
 #include <CommandParser.h>
-
+#include "ArduinoUniqueID.h"
 
 
 
@@ -29,7 +29,7 @@
 
 
 #define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
-#define READOUT_SPEED_IN_SINGLEMODE (1000/READOUT_SPEED_IN_SINGLEMODE_HZ) // Hz
+#define READOUT_SPEED_IN_SINGLEMODE_DELAY (1000/READOUT_SPEED_IN_SINGLEMODE_HZ)
 
 
 #define MAX_TLV_SENSORS (TCA9548A_Channels * 2) // each TLV493d can have two possible addresses and the i2c multiplexer has 8 channels

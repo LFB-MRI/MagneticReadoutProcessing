@@ -21,7 +21,7 @@ private:
     unsigned long interval_ms;
     unsigned long start_timestamp;
     bool started;
-   
+    bool manual_expire;
     bool one_shot;
 };
 
