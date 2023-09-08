@@ -8,6 +8,12 @@ sync_timer::sync_timer(const unsigned long _interval_ms, const bool _one_shot)
     started = false;
 }
 
+
+void sync_timer::trigger_timer_expire(){
+
+}
+
+
 void sync_timer::start()
 {
     start_timestamp = millis();
@@ -29,7 +35,7 @@ bool sync_timer::expired()
     }
     else if (current_time - start_timestamp > interval_ms)
     {
-        if (!one_shot)
+        if (one_shot)
         {
             started = false;
         }

@@ -1,12 +1,18 @@
 #ifndef __main_h__
 #define __main_h__
 
+#include "version.h"
+
 #ifdef USING_PLATFORMIO
     #include <Arduino.h>
 #endif
 
 // PRIVATE LIBS
 #include <Tlv493d.h>
+#include <CommandParser.h>
+
+
+
 
 // PRIVATE CLASSES
 #include "TCA9458A.h"
@@ -14,14 +20,22 @@
 
 
 #define ERROR_LED_PIN PD15
+#define STATUS_LED_PIN PD14
 #define SINGLE_MODE_PIN PC1
 #define SENSOR_WIRE_SCL_PIN PB6
 #define SENSOR_WIRE_SDA_PIN PB9
 #define SENSOR_WIRE Wire
 #define LOGGING_SERIAL Serial
 
-#define MAX_TLV_SENSORS (TCA9548A_Channels * 2)
 
+#define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
+#define READOUT_SPEED_IN_SINGLEMODE (1000/READOUT_SPEED_IN_SINGLEMODE_HZ) // Hz
+
+
+#define MAX_TLV_SENSORS (TCA9548A_Channels * 2) // each TLV493d can have two possible addresses and the i2c multiplexer has 8 channels
+
+
+typedef CommandParser<> DBGCommandParser;
 
 typedef enum System_Error_Code{
     System_Error_Code_TCA_SCAN_FAILED = 1,
@@ -29,7 +43,7 @@ typedef enum System_Error_Code{
     System_Error_Code_UNKNWON = 3,
 }System_Error_Code_t;
 
-String System_Error_Code_STR[3] = {
+const String System_Error_Code_STR[3] = {
     "System_Error_Code_TCA_SCAN_FAILED",
     "System_Error_Code_TLV_NO_SENSORS_FOUND",
     "System_Error_Code_UNKNWON"
@@ -44,6 +58,13 @@ typedef enum System_State{
     System_State_READOUT_LOOP = 4,
 }System_State_t;
 
+const String System_State_STR[5] = {
+    "System_State_Error",
+    "System_State_SETUP",
+    "System_State_WAIT_FOR_ANC",
+    "System_State_ANC_GOT_SYNC_PACKET",
+    "System_State_READOUT_LOOP"
+};
 
 
 struct sensor_info{
@@ -65,10 +86,15 @@ struct sensor_result{
     float y;
     float z;
     float b;
+    float t;
     long ts;
 
     sensor_result(){
 
     };
 }sensor_result_t;
+
+
+
+
 #endif

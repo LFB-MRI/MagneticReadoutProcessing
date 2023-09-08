@@ -15,7 +15,7 @@ public:
 
     bool operator()();
     bool expired();
-
+    void trigger_timer_expire();
     
 private:
     unsigned long interval_ms;

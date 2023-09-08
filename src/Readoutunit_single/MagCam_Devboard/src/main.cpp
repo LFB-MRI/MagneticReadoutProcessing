@@ -10,8 +10,10 @@
 // CLASSES
 TCA9548A tca9584a(SENSOR_WIRE);
 
+DBGCommandParser debug_command_parser;
+
 HardwareSerial Serial1(PA3, PA2); // RX TX  // FOR SERIAL ANC
-sync_timer readout_timer(1000, false);
+sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE, false);
 
 long readout_index = 0;
 int sensor_number = 0;
@@ -55,7 +57,8 @@ bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const boo
       else if (error == 4)
       {
         LOGGING_SERIAL.print("Unknown error at address 0x");
-        if (address < 16){
+        if (address < 16)
+        {
           LOGGING_SERIAL.print("0");
         }
         LOGGING_SERIAL.println(address, HEX);
@@ -105,20 +108,122 @@ bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
   return i2c_scan(_i2c_interface, _addr, false);
 }
 
+
+// RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
+void temp_debug(DBGCommandParser::Argument *args, char *response)
+{
+  float temp = 0.0f;
+  int c = 0;
+  for (int i = 0; i < sensor_number; i++)
+  {
+    sensor_info *sensor = &sensors_found[i];
+    if(sensor->valid){
+      sensor_result *result = &sensor_results[i];
+      temp += result->t;
+      c++;
+    }
+  }
+  LOGGING_SERIAL.println(temp / c*1.0);
+};
+
+void readsensor_debug(DBGCommandParser::Argument *args, char *response)
+{
+  const String axis = args[0].asString;
+  const int id = (int32_t)args[1].asInt64;
+
+  if (id < 0 && id > sensor_number)
+  {
+    return;
+  }
+
+  sensor_result *result = &sensor_results[id];
+
+  switch (axis.charAt(0))
+  {
+  case 'x':
+    LOGGING_SERIAL.println(result->x);
+    break;
+  case 'y':
+    LOGGING_SERIAL.println(result->y);
+    break;
+  case 'z':
+    LOGGING_SERIAL.println(result->z);
+    break;
+  case 'b':
+    LOGGING_SERIAL.println(result->b);
+    break;
+  default:
+    break;
+  }
+
+  digitalWrite(STATUS_LED_PIN, LOW);
+
+  strlcpy(response, "success", DBGCommandParser::MAX_RESPONSE_SIZE);
+}
+
 void setup()
 {
   system_state = System_State_SETUP;
+  LOGGING_SERIAL.println("sysstate_" + System_State_STR[system_state]);
 
   LOGGING_SERIAL.begin(115200);
   LOGGING_SERIAL.println("setup");
-  pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
+  // SETUP DEBUG COMMAND PARSER TO ALLOW SOME DEBUGGING
+  debug_command_parser.registerCommand("help", "", [](DBGCommandParser::Argument *args, char *response)
+                                       {
+      LOGGING_SERIAL.println(F("============================================================================================="));
+      LOGGING_SERIAL.println(F("> help                       shows this message"));
+      LOGGING_SERIAL.println(F("> sysstate                   returns current system state machine state"));
+      LOGGING_SERIAL.println(F("> opmode                     returns 1 if in single mode"));
+      LOGGING_SERIAL.println(F("> senorcount                 returns found sensorcount"));
+      LOGGING_SERIAL.println(F("> readsensor x <0-senorcount>  returns the readout result for a given sensor index for X axis"));
+      LOGGING_SERIAL.println(F("> readsensor y <0-senorcount>  returns the readout result for a given sensor index for Y axis"));
+      LOGGING_SERIAL.println(F("> readsensor z <0-senorcount>  returns the readout result for a given sensor index for Z axis"));
+      LOGGING_SERIAL.println(F("> readsensor b <0-senorcount>  returns the readout result for a given sensor index for B axis"));
+      LOGGING_SERIAL.println(F("> temp  returns the system temperature"));
+      LOGGING_SERIAL.println(F("=============================================================================================")); });
 
+  debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { LOGGING_SERIAL.println(System_State_STR[system_state]); });
+
+  debug_command_parser.registerCommand("opmode", "", [](DBGCommandParser::Argument *args, char *response)
+                                       {
+    if (!digitalRead(SINGLE_MODE_PIN))
+  {
+    LOGGING_SERIAL.println("SingleModeEnabled");
+  }else{
+    LOGGING_SERIAL.println("SingleModeDisabled");
+  } });
+
+  debug_command_parser.registerCommand("senorcount", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { LOGGING_SERIAL.println(sensor_number); });
+
+  // readsensor command accepts an int as argument for the given sensor id and x/y/z/b for the axis
+  debug_command_parser.registerCommand("readsensor", "si", &readsensor_debug);
+
+  debug_command_parser.registerCommand("temp", "", &temp_debug);
+
+  // GPIO SETUP
+  pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
+  pinMode(STATUS_LED_PIN, OUTPUT);
+  digitalWrite(STATUS_LED_PIN, LOW);
+
+  // I2C SENSOR INTERFACE SETUP
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
   SENSOR_WIRE.setSDA(SENSOR_WIRE_SDA_PIN);
   SENSOR_WIRE.begin();
 
-  i2c_scan(SENSOR_WIRE);
-  // CHECK IF TCA9584A IS PRESENT
+  if (!digitalRead(SINGLE_MODE_PIN))
+  {
+    LOGGING_SERIAL.println("log_singlemodeenabled");
+  }
+  else
+  {
+    LOGGING_SERIAL.println("log_singlemodedisabled");
+  }
+
+  // i2c_scan(SENSOR_WIRE);
+  //  CHECK IF TCA9584A IS PRESENT
   if (!is_i2c_device_present(SENSOR_WIRE, TCA9548A_ADDRESS0))
   {
     error(true, System_Error_Code_TCA_SCAN_FAILED);
@@ -126,8 +231,6 @@ void setup()
   tca9584a.begin(TCA9548A_ADDRESS0);
 
   // SCAN FOR TLV SENSORS
-  bool found = false;
-
   tca9584a.resetChannels();
   for (int i = 0; i < TCA9548A_Channels; i++)
   {
@@ -193,12 +296,23 @@ void loop()
   }
   else if (system_state == System_State_ANC_GOT_SYNC_PACKET)
   {
+    // SETUP SLICE COMMUNICATION SETTINGS
+
+    // FINALLY SWITCH TO SENSOR READOUT
+    system_state = System_State_READOUT_LOOP;
+    // START READOUT TIMER
+    // IF IN SINGLEMODE WE WARE USING A SECOND TIMER TO READOUT THE SENSORS
+    if (!digitalRead(SINGLE_MODE_PIN))
+    {
+      readout_timer.start();
+    }
   }
   else if (system_state == System_State_READOUT_LOOP)
   {
     // TRIGGER READOUT
     if (readout_timer.expired())
     {
+      digitalWrite(STATUS_LED_PIN, HIGH);
       for (int i = 0; i < sensor_number; i++)
       {
         sensor_info *sensor = &sensors_found[i];
@@ -207,25 +321,36 @@ void loop()
         tca9584a.setChannel(sensor->tca_channel, false);
       }
       readout_index++;
-    }
 
-    // READ RESULT
-    for (int i = 0; i < sensor_number; i++)
-    {
-      sensor_info *sensor = &sensors_found[i];
-      sensor_result *result = &sensor_results[i];
+      // READ RESULT // TODO OPTIMIZE
+      for (int i = 0; i < sensor_number; i++)
+      {
+        sensor_info *sensor = &sensors_found[i];
+        sensor_result *result = &sensor_results[i];
 
-      tca9584a.setChannel(sensor->tca_channel, true);
-      result->x = sensor->sensor_instance.getX();
-      result->y = sensor->sensor_instance.getY();
-      result->z = sensor->sensor_instance.getZ();
-      result->b = sensor->sensor_instance.getAmount();
-      result->ts = readout_index;
-      tca9584a.setChannel(sensor->tca_channel, false);
+        result->x = sensor->sensor_instance.getX();
+        result->y = sensor->sensor_instance.getY();
+        result->z = sensor->sensor_instance.getZ();
+        result->b = sensor->sensor_instance.getAmount();
+        result->t = sensor->sensor_instance.getTemp();
+        result->ts = readout_index;
 
-      LOGGING_SERIAL.println(result->b);
+        digitalWrite(STATUS_LED_PIN, LOW);
+      }
     }
   }
 
-  delay(10);
+  if (Serial.available())
+  {
+    char line[128];
+    size_t lineLength = Serial.readBytesUntil('\n', line, 127);
+    line[lineLength] = '\0';
+
+    char response[DBGCommandParser::MAX_RESPONSE_SIZE];
+    debug_command_parser.processCommand(line, response);
+    Serial.println(response);
+  }
+
+
+
 }
