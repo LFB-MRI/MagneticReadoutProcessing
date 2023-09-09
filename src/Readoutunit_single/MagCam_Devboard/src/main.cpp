@@ -11,15 +11,18 @@
 TCA9548A tca9584a(SENSOR_WIRE);
 
 DBGCommandParser debug_command_parser;
+HostCommandParser host_command_parser;
 
-HardwareSerial Serial1(PA3, PA2); // RX TX  // FOR SERIAL ANC
+HardwareSerial HOST_SERIAL(HOST_SERIAL_RX, HOST_SERIAL_TX); // RX TX  // FOR SERIAL ANC
 sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 
-long readout_index = 0;
-int sensor_number = 0;
 sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SENSORS PER TCA CHANNEL S0 16 SENSORS PER SLICE
 sensor_result sensor_results[MAX_TLV_SENSORS] = {sensor_result()};
 System_State system_state = System_State_Error;
+
+long readout_index = 0;
+int sensor_number = 0;
+int anc_base_id = -1;
 
 bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const bool _log = true)
 {
@@ -28,7 +31,7 @@ bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const boo
 
   if (_log)
   {
-    LOGGING_SERIAL.println("Scanning...");
+    DEBUG_SERIAL.println("Scanning...");
   }
 
   bool addr_found = false;
@@ -44,24 +47,24 @@ bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const boo
     {
       if (error == 0)
       {
-        LOGGING_SERIAL.print("I2C device found at address 0x");
+        DEBUG_SERIAL.print("I2C device found at address 0x");
         if (address < 16)
         {
-          LOGGING_SERIAL.print("0");
+          DEBUG_SERIAL.print("0");
         }
-        LOGGING_SERIAL.print(address, HEX);
-        LOGGING_SERIAL.println("  !");
+        DEBUG_SERIAL.print(address, HEX);
+        DEBUG_SERIAL.println("  !");
 
         nDevices++;
       }
       else if (error == 4)
       {
-        LOGGING_SERIAL.print("Unknown error at address 0x");
+        DEBUG_SERIAL.print("Unknown error at address 0x");
         if (address < 16)
         {
-          LOGGING_SERIAL.print("0");
+          DEBUG_SERIAL.print("0");
         }
-        LOGGING_SERIAL.println(address, HEX);
+        DEBUG_SERIAL.println(address, HEX);
       }
     }
 
@@ -74,11 +77,11 @@ bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const boo
   {
     if (nDevices == 0)
     {
-      LOGGING_SERIAL.println("No I2C devices found\n");
+      DEBUG_SERIAL.println("No I2C devices found\n");
     }
     else
     {
-      LOGGING_SERIAL.println("done\n");
+      DEBUG_SERIAL.println("done\n");
     }
   }
 
@@ -99,7 +102,7 @@ void error(const bool _critical, const int _code)
     }
     delay(1000);
 
-    LOGGING_SERIAL.println("error:" + System_Error_Code_STR[_code]);
+    DEBUG_SERIAL.println("error:" + System_Error_Code_STR[_code]);
   }
 }
 
@@ -125,7 +128,7 @@ void temp_debug(DBGCommandParser::Argument *args, char *response)
   }
   if (c > 0)
   {
-    LOGGING_SERIAL.println(temp / c * 1.0);
+    DEBUG_SERIAL.println(temp / c * 1.0);
   }
   else
   {
@@ -148,16 +151,16 @@ void readsensor_debug(DBGCommandParser::Argument *args, char *response)
   switch (axis.charAt(0))
   {
   case 'x':
-    LOGGING_SERIAL.println(result->x);
+    DEBUG_SERIAL.println(result->x);
     break;
   case 'y':
-    LOGGING_SERIAL.println(result->y);
+    DEBUG_SERIAL.println(result->y);
     break;
   case 'z':
-    LOGGING_SERIAL.println(result->z);
+    DEBUG_SERIAL.println(result->z);
     break;
   case 'b':
-    LOGGING_SERIAL.println(result->b);
+    DEBUG_SERIAL.println(result->b);
     break;
   default:
     strlcpy(response, "error", DBGCommandParser::MAX_RESPONSE_SIZE);
@@ -165,6 +168,17 @@ void readsensor_debug(DBGCommandParser::Argument *args, char *response)
   }
 }
 
+void process_anc_information(DBGCommandParser::Argument *args, char *response)
+{
+  const int base_id = (int32_t)args[0].asInt64;
+  if (system_state == System_State_WAIT_FOR_ANC && base_id >= 0){
+    anc_base_id = base_id;
+    system_state = System_State_ANC_GOT_SYNC_PACKET;
+
+  }else{
+    strlcpy(response, "error not in right system state or invalid base_id", HostCommandParser::MAX_RESPONSE_SIZE);
+  }
+}
 void scan_for_tlv493d_sensors()
 
 {
@@ -200,58 +214,57 @@ void scan_for_tlv493d_sensors()
   }
 }
 
-
 void setup()
 {
-  system_state = System_State_SETUP;
-  LOGGING_SERIAL.println("sysstate_" + System_State_STR[system_state]);
+  DEBUG_SERIAL.begin(GENERAL_SERIAL_SPEED);
+  DEBUG_SERIAL.println("setup");
 
-  LOGGING_SERIAL.begin(115200);
-  LOGGING_SERIAL.println("setup");
+  // SETUP HOST SERIAL ANC
+  HOST_SERIAL.begin(GENERAL_SERIAL_SPEED);
+
+  system_state = System_State_SETUP;
+  DEBUG_SERIAL.println("sysstate_" + System_State_STR[system_state]);
+
   // SETUP DEBUG COMMAND PARSER TO ALLOW SOME DEBUGGING
   debug_command_parser.registerCommand("help", "", [](DBGCommandParser::Argument *args, char *response)
                                        {
-      LOGGING_SERIAL.println(F("============================================================================================="));
-      LOGGING_SERIAL.println(F("> help                         shows this message"));
-      LOGGING_SERIAL.println(F("> version                      prints version information"));
-      LOGGING_SERIAL.println(F("> id                           sensor serial number for identification purposes"));
-      LOGGING_SERIAL.println(F("> sysstate                     returns current system state machine state"));
-      LOGGING_SERIAL.println(F("> opmode                       returns 1 if in single mode"));
-      LOGGING_SERIAL.println(F("> sensorscan                   scans i2c bus for sensors"));
-      LOGGING_SERIAL.println(F("> senorcount                   returns found sensorcount"));
-      LOGGING_SERIAL.println(F("> readsensor x <0-senorcount>  returns the readout result for a given sensor index for X axis"));
-      LOGGING_SERIAL.println(F("> readsensor y <0-senorcount>  returns the readout result for a given sensor index for Y axis"));
-      LOGGING_SERIAL.println(F("> readsensor z <0-senorcount>  returns the readout result for a given sensor index for Z axis"));
-      LOGGING_SERIAL.println(F("> readsensor b <0-senorcount>  returns the readout result for a given sensor index for B axis"));
-      LOGGING_SERIAL.println(F("> temp                         returns the system temperature"));
-      LOGGING_SERIAL.println(F("=============================================================================================")); });
+      DEBUG_SERIAL.println(F("============================================================================================="));
+      DEBUG_SERIAL.println(F("> help                         shows this message"));
+      DEBUG_SERIAL.println(F("> version                      prints version information"));
+      DEBUG_SERIAL.println(F("> id                           sensor serial number for identification purposes"));
+      DEBUG_SERIAL.println(F("> sysstate                     returns current system state machine state"));
+      DEBUG_SERIAL.println(F("> opmode                       returns 1 if in single mode"));
+      DEBUG_SERIAL.println(F("> sensorscan                   scans i2c bus for sensors"));
+      DEBUG_SERIAL.println(F("> senorcount                   returns found sensorcount"));
+      DEBUG_SERIAL.println(F("> readsensor x <0-senorcount>  returns the readout result for a given sensor index for X axis"));
+      DEBUG_SERIAL.println(F("> readsensor y <0-senorcount>  returns the readout result for a given sensor index for Y axis"));
+      DEBUG_SERIAL.println(F("> readsensor z <0-senorcount>  returns the readout result for a given sensor index for Z axis"));
+      DEBUG_SERIAL.println(F("> readsensor b <0-senorcount>  returns the readout result for a given sensor index for B axis"));
+      DEBUG_SERIAL.println(F("> temp                         returns the system temperature"));
+      DEBUG_SERIAL.println(F("> anc <base_id>                perform a autonumbering sequence manually"));
+      DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { LOGGING_SERIAL.printf("v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION); });
+                                       { DEBUG_SERIAL.printf("v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION); });
 
   debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response)
                                        { 
-                                        for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println();
-                                        });
-
-
-  
-
+                                        for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
 
   debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { LOGGING_SERIAL.println(System_State_STR[system_state]); });
+                                       { DEBUG_SERIAL.println(System_State_STR[system_state]); });
 
   debug_command_parser.registerCommand("opmode", "", [](DBGCommandParser::Argument *args, char *response)
                                        {
     if (!digitalRead(SINGLE_MODE_PIN))
   {
-    LOGGING_SERIAL.println("SingleModeEnabled");
+    DEBUG_SERIAL.println("SingleModeEnabled");
   }else{
-    LOGGING_SERIAL.println("SingleModeDisabled");
+    DEBUG_SERIAL.println("SingleModeDisabled");
   } });
 
   debug_command_parser.registerCommand("senorcount", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { LOGGING_SERIAL.println(sensor_number); });
+                                       { DEBUG_SERIAL.println(sensor_number); });
 
   // readsensor command accepts an int as argument for the given sensor id and x/y/z/b for the axis
   debug_command_parser.registerCommand("readsensor", "si", &readsensor_debug);
@@ -260,9 +273,10 @@ void setup()
 
   debug_command_parser.registerCommand("sensorscan", "", [](DBGCommandParser::Argument *args, char *response)
                                        { scan_for_tlv493d_sensors();
-                                       LOGGING_SERIAL.println(sensor_number); });
+                                       DEBUG_SERIAL.println(sensor_number); });
 
-                                    
+  debug_command_parser.registerCommand("anc", "i", &process_anc_information);
+  host_command_parser.registerCommand("anc", "i", &process_anc_information);
 
   // GPIO SETUP
   pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
@@ -276,11 +290,11 @@ void setup()
 
   if (!digitalRead(SINGLE_MODE_PIN))
   {
-    LOGGING_SERIAL.println("log_singlemodeenabled");
+    DEBUG_SERIAL.println("log_singlemodeenabled");
   }
   else
   {
-    LOGGING_SERIAL.println("log_singlemodedisabled");
+    DEBUG_SERIAL.println("log_singlemodedisabled");
   }
 
   // i2c_scan(SENSOR_WIRE);
@@ -312,6 +326,7 @@ void setup()
 
   // SETUP ANC SERIAL
   system_state = System_State_WAIT_FOR_ANC;
+  anc_base_id = -1;
 }
 
 void loop()
@@ -324,11 +339,24 @@ void loop()
     {
       system_state = System_State_ANC_GOT_SYNC_PACKET;
     }
+    else if (anc_base_id >= 0)
+    {
+      //
+    }
   }
   else if (system_state == System_State_ANC_GOT_SYNC_PACKET)
   {
+    // IF GOT ANC INFORMATION ARE INVALID WAIT FOR NEXT CYCLE
+    if (anc_base_id < 0)
+    {
+      system_state = System_State_WAIT_FOR_ANC;
+      anc_base_id = -1;
+    }
     // SETUP SLICE COMMUNICATION SETTINGS
+    const int next_slice_id = anc_base_id + sensor_number + 1;
 
+    // FORWARD NEXT ID TO NEXT SENSOR SLICE
+    HOST_SERIAL.printf("anc %i", anc_base_id);
     // FINALLY SWITCH TO SENSOR READOUT
     system_state = System_State_READOUT_LOOP;
     // START READOUT TIMER
@@ -371,14 +399,25 @@ void loop()
     }
   }
 
-  if (Serial.available())
+  if (DEBUG_SERIAL.available())
   {
     char line[128];
-    size_t lineLength = Serial.readBytesUntil('\n', line, 127);
+    size_t lineLength = DEBUG_SERIAL.readBytesUntil('\n', line, 127);
     line[lineLength] = '\0';
 
     char response[DBGCommandParser::MAX_RESPONSE_SIZE];
     debug_command_parser.processCommand(line, response);
-    Serial.println(response);
+    DEBUG_SERIAL.println(response);
+  }
+
+  if (HOST_SERIAL.available())
+  {
+    char line[128];
+    size_t lineLength = HOST_SERIAL.readBytesUntil('\n', line, 127);
+    line[lineLength] = '\0';
+
+    char response[HostCommandParser::MAX_RESPONSE_SIZE];
+    host_command_parser.processCommand(line, response);
+    HOST_SERIAL.println(response);
   }
 }

@@ -1,6 +1,7 @@
 #ifndef __main_h__
 #define __main_h__
 
+#include "plattform.h"
 #include "version.h"
 
 #ifdef USING_PLATFORMIO
@@ -19,14 +20,6 @@
 #include "sync_timer.h"
 
 
-#define ERROR_LED_PIN PD15
-#define STATUS_LED_PIN PD14
-#define SINGLE_MODE_PIN PC1
-#define SENSOR_WIRE_SCL_PIN PB6
-#define SENSOR_WIRE_SDA_PIN PB9
-#define SENSOR_WIRE Wire
-#define LOGGING_SERIAL Serial
-
 
 #define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
 #define READOUT_SPEED_IN_SINGLEMODE_DELAY (1000/READOUT_SPEED_IN_SINGLEMODE_HZ)
@@ -36,7 +29,7 @@
 
 
 typedef CommandParser<> DBGCommandParser;
-
+typedef CommandParser<> HostCommandParser;
 typedef enum System_Error_Code{
     System_Error_Code_TCA_SCAN_FAILED = 1,
     System_Error_Code_TLV_NO_SENSORS_FOUND = 2,
