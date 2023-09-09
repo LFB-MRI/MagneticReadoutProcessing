@@ -168,6 +168,13 @@ void readsensor_debug(DBGCommandParser::Argument *args, char *response)
   }
 }
 
+
+//WILL BE CALLED IF HOST REQUESTS A MEASUREMENT
+void sync_irq_function(){
+  //HERE WE MANUALLY EXIPRES THE TIMER FROM THE MAIN LOOP
+  readout_timer.trigger_timer_expire();
+}
+
 void process_anc_information(DBGCommandParser::Argument *args, char *response)
 {
   const int base_id = (int32_t)args[0].asInt64;
@@ -242,6 +249,8 @@ void setup()
       DEBUG_SERIAL.println(F("> readsensor b <0-senorcount>  returns the readout result for a given sensor index for B axis"));
       DEBUG_SERIAL.println(F("> temp                         returns the system temperature"));
       DEBUG_SERIAL.println(F("> anc <base_id>                perform a autonumbering sequence manually"));
+      DEBUG_SERIAL.println(F("> ancid                        returns the current set autonumbering base id (-1 in singlemode)"));
+      DEBUG_SERIAL.println(F("> reset                        performs reset of the system"));
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
@@ -276,12 +285,33 @@ void setup()
                                        DEBUG_SERIAL.println(sensor_number); });
 
   debug_command_parser.registerCommand("anc", "i", &process_anc_information);
+
+  debug_command_parser.registerCommand("ancid", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { DEBUG_SERIAL.println(anc_base_id); });
+
+
+  debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { DEBUG_SERIAL.println("performing_reset"); RESET_SYSTEM_FUNCTION(); });
+
+
+  //REGISTER HOST COMMANDS
   host_command_parser.registerCommand("anc", "i", &process_anc_information);
+
+  debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { HOST_SERIAL.println("reset"); RESET_SYSTEM_FUNCTION(); });
 
   // GPIO SETUP
   pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
   pinMode(STATUS_LED_PIN, OUTPUT);
   digitalWrite(STATUS_LED_PIN, LOW);
+
+  pinMode(SYNC_PIN_STATUS_LED, OUTPUT);
+  digitalWrite(SYNC_PIN_STATUS_LED, LOW);
+
+  pinMode(SYNC_PIN_IRQ_INPUT, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
+
+  
 
   // I2C SENSOR INTERFACE SETUP
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
@@ -341,7 +371,7 @@ void loop()
     }
     else if (anc_base_id >= 0)
     {
-      //
+      // TODO SETUP CAN
     }
   }
   else if (system_state == System_State_ANC_GOT_SYNC_PACKET)

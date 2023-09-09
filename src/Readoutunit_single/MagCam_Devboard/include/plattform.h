@@ -8,7 +8,8 @@
         #define ERROR_LED_PIN PD15
         #define STATUS_LED_PIN PD14
         #define SINGLE_MODE_PIN PC1
-        #define SYNC_PIN
+        #define SYNC_PIN_IRQ_INPUT PA0
+        #define SYNC_PIN_STATUS_LED PD13
         
         //I2C INTERFACE TO COMMUNICATE WITH ATTACHED SENSORS
         #define SENSOR_WIRE_SCL_PIN PB6
@@ -21,6 +22,10 @@
         #define HOST_SERIAL_RX PA3
         #define HOST_SERIAL_TX PA2
         #define HOST_SERIAL Serial1
+
+
+        //PERFORMS HARD RESET OF THE CHIP
+        #define RESET_SYSTEM_FUNCTION() NVIC_SystemReset()
     #endif
 
 #endif
