@@ -297,6 +297,28 @@ class MRPReading:
         # ITERATE OVER UPDATE DATA ENTRIES AND FIND IN DATA DICT
         # SO IMPORT/EXPORT IS POSSIBLE
 
+
+    def insert_reading_instance(self, _measurement: MRPReadingEntry.MRPReadingEntry, _autoupdate_measurement_config:bool = True):
+        """
+        Inserts a new reading into the dataset using an instance of MRPReadingEntry
+
+        :param _measurement: reading measurement
+        :type _measurement: MRPReadingEntry.MRPReadingEntry
+
+        :param _autoupdate_measurement_config:
+        :type _autoupdate_measurement_config: bool
+        """
+        if _measurement is None:
+            raise MRPReadingException()
+
+        self.data.append(_measurement)
+
+        if _autoupdate_measurement_config:
+            self.measurement_config.phi_radians = max(self.measurement_config.phi_radians, _measurement.phi)
+            self.measurement_config.theta_radians = max(self.measurement_config.theta_radians, _measurement.theta)
+            self.measurement_config.n_phi = max(self.measurement_config.n_phi, _measurement.reading_index_phi)
+            self.measurement_config.n_theta = max(self.measurement_config.n_theta, _measurement.reading_index_theta)
+
     def insert_reading(self, _read_value: float, _phi: float, _theta: float, _reading_index_phi: int,
                        _reading_index_theta: int, _is_valid: bool = True, _autoupdate_measurement_config: bool = True):
         """
@@ -327,14 +349,8 @@ class MRPReading:
         self.time_end = datetime.now()
         entry = MRPReadingEntry.MRPReadingEntry(len(self.data), _read_value, _phi, _theta, _reading_index_phi,
                                                 _reading_index_theta, _is_valid)
-        self.data.append(entry)
 
-        # UPDATE measurement_config VALUES
-        if _autoupdate_measurement_config:
-            self.measurement_config.phi_radians = max(self.measurement_config.phi_radians, _phi)
-            self.measurement_config.theta_radians = max(self.measurement_config.theta_radians, _theta)
-            self.measurement_config.n_phi = max(self.measurement_config.n_phi, _reading_index_phi)
-            self.measurement_config.n_theta = max(self.measurement_config.n_theta, _reading_index_theta)
+        self.insert_reading_instance(entry, _autoupdate_measurement_config)
 
     def dump(self) -> str:
 

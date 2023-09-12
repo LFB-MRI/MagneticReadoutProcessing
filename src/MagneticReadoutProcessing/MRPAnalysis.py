@@ -17,6 +17,40 @@ class MRPAnalysisException(Exception):
 
 class MRPAnalysis:
 
+
+    @staticmethod
+    def calculate_mean(_reading: MRPReading.MRPReading) -> float:
+        values: np.ndarray = _reading.to_value_array()
+
+        if len(values) <= 0:
+            raise MRPAnalysisException("_reading contains to reading entries")
+        sum = np.sum(values)
+
+        return sum/len(values)
+
+
+    @staticmethod
+    def calculate_variance(_reading: MRPReading.MRPReading) -> float:
+        mean = MRPAnalysis.calculate_mean(_reading)
+
+        values: np.ndarray = _reading.to_value_array()
+
+        if len(values) <= 0:
+            raise MRPAnalysisException("_reading contains to reading entries")
+
+
+        variance:float  = 0
+        for value in values:
+            variance += (mean - value) ** 2
+
+        return variance / len(values)
+    @staticmethod
+    def calculate_std_deviation(_reading: MRPReading.MRPReading) -> float:
+        variance = MRPAnalysis.calculate_variance(_reading)
+        return np.sqrt(variance)
+
+
+
     @staticmethod
     def calculate_fft(_reading: MRPReading.MRPReading, _normalize: bool = False, _plot: bool = False):
         """
