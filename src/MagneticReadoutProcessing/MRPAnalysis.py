@@ -20,6 +20,15 @@ class MRPAnalysis:
 
     @staticmethod
     def calculate_mean(_reading: MRPReading.MRPReading) -> float:
+        """
+        Calculates the standard variance of MRPReading values
+
+        :param _reading:
+        :type _reading: MRPReading
+
+        :returns: Returns the calculated variance value
+        :rtype: float
+        """
         values: np.ndarray = _reading.to_value_array()
 
         if len(values) <= 0:
@@ -31,6 +40,15 @@ class MRPAnalysis:
 
     @staticmethod
     def calculate_variance(_reading: MRPReading.MRPReading) -> float:
+        """
+        Calculates the standard variance of MRPReading values
+
+        :param _reading:
+        :type _reading: MRPReading
+
+        :returns: Returns the calculated variance value
+        :rtype: float
+        """
         mean = MRPAnalysis.calculate_mean(_reading)
 
         values: np.ndarray = _reading.to_value_array()
@@ -46,6 +64,15 @@ class MRPAnalysis:
         return variance / len(values)
     @staticmethod
     def calculate_std_deviation(_reading: MRPReading.MRPReading) -> float:
+        """
+        Calculates the standard deviation of MRPReading values
+
+        :param _reading:
+        :type _reading: MRPReading
+
+        :returns: Returns the calculated std deviation
+        :rtype: float
+        """
         variance = MRPAnalysis.calculate_variance(_reading)
         return np.sqrt(variance)
 
@@ -59,7 +86,7 @@ class MRPAnalysis:
         :param _reading:
         :type _reading: MRPReading
 
-        :returns:Returns the caclulcated fft vaöues
+        :returns:Returns the caclulcated fft values
         :rtype: np.ndarray
         """
         values = _reading.to_value_array()

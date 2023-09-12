@@ -1,6 +1,6 @@
 import serial
 
-import MRPReading
+import MRPReading, MRPMeasurementConfig
 
 
 class MRPHalException(Exception):
@@ -17,6 +17,7 @@ class MRPPHal:
 
 
     def read_sensor_capabilities(self):
+
 
         commands_to_request = [
             'version', 'id', 'senorcount'
