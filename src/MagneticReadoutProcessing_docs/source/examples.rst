@@ -143,7 +143,7 @@ Import a reading
 MRPVisualization Examples
 *************************
 
-Visualization of a measurement
+Visualization of a polar measurement
 ==============================
 
 .. image:: _static/example_visualization.png
@@ -153,10 +153,10 @@ Visualization of a measurement
 .. code-block:: python
 
     # EXTENDS THE `Create a minimal measurement` EXAMPLE
-    import MRPVisualization
+    import MRPPolarVisualization
     import os
     # HERE matplotlib is also used
-    visu = MRPVisualization.MRPVisualization(reading)
+    visu = MRPPolarVisualization.MRPPolarVisualization(reading)
     # 2D PLOT INTO A WINDOW
     visu.plot2d_top(None)
     visu.plot2d_side(None)
@@ -168,9 +168,56 @@ Visualization of a measurement
 MRPAnalysis Examples
 ********************
 
+Sensor bias compensation
+=======================
 
-Apply a calibration reading
-===========================
+
+.. note::
+    Please see testcases in `test_SensorAnalysis.py` for further examples
+
+.. note::
+   Attention: Make sure that the environment (objects around, temperature) does not change and the device is not moved. 
+
+.. code-block:: python
+    import MRPAnalysis
+    import MRPHal
+
+    # Connect to a realworld sensor
+    sensor = MRPHal.MRPHal()
+    sensor.connect("/dev/ttySensorInterface_4242")
+    
+    # Create a empty reading with no settings. Only the raw values are needed, no metadata
+    reading = MRPReading.MRPReading()
+    # take a few measurements
+    for i in range(1000):
+        measurement = MRPReadingEntry.MRPReadingEntry()
+        # readout sensor or use dummy data and assign result
+        measurement.value = sensor.read_value()
+        reading.insert_reading_instance(measurement, False)
+        time.sleep(1)
+
+
+    # OPTIONAL: plot deviation
+    import MRPDataVisualization
+    MRPDataVisualization.MRPDataVisualization.plot_symetrical_error(reading)
+
+
+    # APPLY COMPENSATION
+    # Here the ``calculate_mean`` function is used
+    # see MRPAnalysis module for alternatives
+    reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
+    # we want to subtract the mean value from all readings
+
+    reading_mean_value = -reading_mean_value
+    # apply value
+    MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
+
+    # APPLY
+
+
+
+Apply a calibration/reference reading
+=====================================
 
 The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
 The ``reading_calibration`` is performed with the same settings for all subsequent measurements.
@@ -242,7 +289,7 @@ Full sphere with polarization
 .. code-block:: python
 
         reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(_full_random=False)
-        visu = MRPVisualization.MRPVisualization(reading)
+        visu = MRPPolarVisualization.MRPVisualization(reading)
         visu.plot3d(None)
 
 
@@ -255,7 +302,7 @@ Fully random sphere
 .. code-block:: python
 
         reading = MRPSimulation.MRPSimulation.generate_random_full_sphere_reading(_full_random=True)
-        visu = MRPVisualization.MRPVisualization(reading)
+        visu = MRPPolarVisualization.MRPVisualization(reading)
         visu.plot3d(None)
 
 

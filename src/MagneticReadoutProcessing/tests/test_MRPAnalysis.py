@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 
 
-import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation
+import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation, MRPReadingEntry
 
 class TestMPRAnalysis(unittest.TestCase):
 
@@ -42,6 +42,26 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_A.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
     # JUST USED FOR PREPARATION
+
+
+    def test_apply_global_offset_inplace(self):
+        reading = MRPReading.MRPReading()
+        # take a few measurements
+        for i in range(1000):
+            measurement = MRPReadingEntry.MRPReadingEntry()
+            # readout sensor or use dummy data and assign result
+            measurement.value = 1.0
+            reading.insert_reading_instance(measurement, False)
+
+        reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
+        reading_mean_value = -reading_mean_value
+        MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
+
+        # TEST
+        for entry in reading.data:
+            self.assertEquals(entry.value, 0.0) # should be zero :)
+
+
 
     @unittest.skip
     def test_calibration_fft(self):

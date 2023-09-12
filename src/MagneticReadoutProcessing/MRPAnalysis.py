@@ -37,7 +37,6 @@ class MRPAnalysis:
 
         return sum/len(values)
 
-
     @staticmethod
     def calculate_variance(_reading: MRPReading.MRPReading) -> float:
         """
@@ -298,6 +297,15 @@ class MRPAnalysis:
             _current_reading.set_additional_data('calibration_reading_source', _calibration_reading.additional_data['export_filepath'])
         # UPDATE THE DATA ENTRY DIRECTLY
 
+    @staticmethod
+    def apply_global_offset_inplace(_reading: MRPReading.MRPReading, _bias_value: float = 0.0):
+        for idx, curr in enumerate(_reading.data):
+            _reading.data[idx].value = _reading.data[idx].value + _bias_value
+
+        # APPEND SOME METADATA
+        _reading.set_additional_data('global_offset_inplace', _bias_value)
+
+    # TODO FIX
     def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading.MRPReading,
                       _bins: int = None) -> list[MRPReading.MRPReading]:
 
