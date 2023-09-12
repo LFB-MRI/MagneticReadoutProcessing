@@ -26,6 +26,7 @@ jobs:
       - name: Installing the library
         shell: bash -l {0}
         run: |
+          cd src/MagneticReadoutProcessing
           python setup.py install
       - name: Running the Sphinx to gh-pages Action
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.1.0
