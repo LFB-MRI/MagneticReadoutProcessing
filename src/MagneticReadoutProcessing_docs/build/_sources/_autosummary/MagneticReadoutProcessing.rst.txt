@@ -30,14 +30,17 @@
 
    MagneticReadoutProcessing.MRPAnalysis
    MagneticReadoutProcessing.MRPConfig
+   MagneticReadoutProcessing.MRPDataVisualization
+   MagneticReadoutProcessing.MRPHal
    MagneticReadoutProcessing.MRPHallbachArrayGenerator
    MagneticReadoutProcessing.MRPHelpers
    MagneticReadoutProcessing.MRPMagnetTypes
    MagneticReadoutProcessing.MRPMeasurementConfig
    MagneticReadoutProcessing.MRPOpenSCADGenerator
+   MagneticReadoutProcessing.MRPPolarVisualization
    MagneticReadoutProcessing.MRPReading
    MagneticReadoutProcessing.MRPReadingEntry
    MagneticReadoutProcessing.MRPReadoutSource
    MagneticReadoutProcessing.MRPSimulation
-   MagneticReadoutProcessing.MRPVisualization
+   MagneticReadoutProcessing.setup
 

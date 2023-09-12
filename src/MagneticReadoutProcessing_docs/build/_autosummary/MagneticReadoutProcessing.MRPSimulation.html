@@ -11,15 +11,14 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MagneticReadoutProcessing.MRPVisualization" href="MagneticReadoutProcessing.MRPVisualization.html" />
     <link rel="prev" title="MagneticReadoutProcessing.MRPReadoutSource" href="MagneticReadoutProcessing.MRPReadoutSource.html" /> 
 </head>
 
@@ -51,16 +50,18 @@
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPDataVisualization.html">MagneticReadoutProcessing.MRPDataVisualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHal.html">MagneticReadoutProcessing.MRPHal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHallbachArrayGenerator.html">MagneticReadoutProcessing.MRPHallbachArrayGenerator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHelpers.html">MagneticReadoutProcessing.MRPHelpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html">MagneticReadoutProcessing.MRPMagnetTypes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPMeasurementConfig.html">MagneticReadoutProcessing.MRPMeasurementConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPOpenSCADGenerator.html">MagneticReadoutProcessing.MRPOpenSCADGenerator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPPolarVisualization.html">MagneticReadoutProcessing.MRPPolarVisualization</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html">MagneticReadoutProcessing.MRPReading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPSimulation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPVisualization.html">MagneticReadoutProcessing.MRPVisualization</a></li>
 </ul>
 </li>
 </ul>
@@ -97,14 +98,14 @@
            <div itemprop="articleBody">
              
   <section id="module-MRPSimulation">
-<span id="magneticreadoutprocessing-mrpsimulation"></span><h1>MagneticReadoutProcessing.MRPSimulation<a class="headerlink" href="#module-MRPSimulation" title="Permalink to this heading"></a></h1>
+<span id="magneticreadoutprocessing-mrpsimulation"></span><h1>MagneticReadoutProcessing.MRPSimulation<a class="headerlink" href="#module-MRPSimulation" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulation</span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulation</span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation" title="Link to this definition"></a></dt>
 <dd><p>This class generates simulated readings, so its possible to generate a reading using a simulated ideal 10x10x10 magnet</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_random_full_sphere_reading">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_full_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_full_sphere_reading" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_full_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><span class="pre">MRPReading</span></a></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_full_sphere_reading" title="Link to this definition"></a></dt>
 <dd><p>Generate a full sphere reading with random field values and predefined meta-data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -121,7 +122,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_random_half_sphere_reading">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_half_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_half_sphere_reading" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_random_half_sphere_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_full_random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><span class="pre">MRPReading</span></a></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_random_half_sphere_reading" title="Link to this definition"></a></dt>
 <dd><p>Generate a half sphere reading with random field values and predefined meta-data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -138,7 +139,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulation.generate_reading">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MagnetType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MagnetType.N45_CUBIC_12x12x12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_randomize_magnetization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_add_random_polarisation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_distance_radius_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MRPReading</span></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_reading" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="MagneticReadoutProcessing.MRPMagnetTypes.html#MRPMagnetTypes.MagnetType" title="MRPMagnetTypes.MagnetType"><span class="pre">MagnetType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MagnetType.N45_CUBIC_12x12x12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_randomize_magnetization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_add_random_polarisation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_sensor_distance_radius_mm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="MagneticReadoutProcessing.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><span class="pre">MRPReading</span></a></span></span><a class="headerlink" href="#MRPSimulation.MRPSimulation.generate_reading" title="Link to this definition"></a></dt>
 <dd><p>Generate a cubic magnet using components from magpylib to simulate a magnet and hallsensor.
 Then the virtual hallsensor is moved around the magnet and the values are stored in a reading.</p>
 <dl class="field-list simple">
@@ -163,10 +164,10 @@ Then the virtual hallsensor is moved around the magnet and the values are stored
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulationException">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulationException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPSimulationException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPSimulation.</span></span><span class="sig-name descname"><span class="pre">MRPSimulationException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPSimulationException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException" title="Link to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="MRPSimulation.MRPSimulationException.with_traceback">
-<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException.with_traceback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPSimulation.MRPSimulationException.with_traceback" title="Link to this definition"></a></dt>
 <dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>
@@ -180,7 +181,6 @@ set self.__traceback__ to tb and return self.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="MagneticReadoutProcessing.MRPReadoutSource.html" class="btn btn-neutral float-left" title="MagneticReadoutProcessing.MRPReadoutSource" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="MagneticReadoutProcessing.MRPVisualization.html" class="btn btn-neutral float-right" title="MagneticReadoutProcessing.MRPVisualization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
