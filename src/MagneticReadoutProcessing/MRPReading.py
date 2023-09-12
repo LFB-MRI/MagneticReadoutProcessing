@@ -7,7 +7,7 @@ import sys
 import copy
 import math
 from numpy import ndarray
-import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
+import MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
 
 
 

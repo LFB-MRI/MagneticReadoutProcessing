@@ -11,7 +11,7 @@ import numpy as np
 import MRPReading, MRPHelpers, MRPMeasurementConfig
 
 
-class MRPVisualization():
+class MRPPolarVisualization():
     """ Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""
 
     measurement = None

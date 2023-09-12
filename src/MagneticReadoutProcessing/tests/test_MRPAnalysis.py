@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 
 
-import MRPAnalysis, MRPReading, MRPVisualization, MRPSimulation
+import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation
 
 class TestMPRAnalysis(unittest.TestCase):
 
@@ -98,7 +98,7 @@ class TestMPRAnalysis(unittest.TestCase):
         merged_reading = MRPAnalysis.MRPAnalysis.merge_two_half_sphere_measurements_to_full_sphere(self.reading_A, self.reading_A)
         self.assertIsNotNone(merged_reading)
         # CHECK RESULT
-        visu = MRPVisualization.MRPVisualization(merged_reading)
+        visu = MRPPolarVisualization.MRPPolarVisualization(merged_reading)
         # PLOT INTO A WINDOW
         visu.plot3d(None)
 
@@ -111,7 +111,7 @@ class TestMPRAnalysis(unittest.TestCase):
                                                                                                self.reading_B)
         self.assertIsNotNone(merged_reading)
         # CHECK RESULT
-        visu = MRPVisualization.MRPVisualization(merged_reading)
+        visu = MRPPolarVisualization.MRPPolarVisualization(merged_reading)
         # 2D PLOT INTO A WINDOW
         visu.plot3d(None)
         # 3D PLOT TO FILE

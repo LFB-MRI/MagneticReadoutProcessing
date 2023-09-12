@@ -6,7 +6,7 @@ import random
 import unittest
 import numpy as np
 
-import MRPVisualization, MRPSimulation
+import MRPPolarVisualization, MRPSimulation
 class TestMPRSimulation(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
