@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgba
 from scipy.spatial.transform import Rotation as R
 import numpy as np
-from MagneticReadoutProcessing import MRPReading, MRPAnalysis, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
+import MRPReading, MRPAnalysis, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
 
 
 

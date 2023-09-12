@@ -7,7 +7,7 @@ import sys
 import copy
 import math
 from numpy import ndarray
-from MagneticReadoutProcessing import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
+import MRPConfig, MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
 
 
 

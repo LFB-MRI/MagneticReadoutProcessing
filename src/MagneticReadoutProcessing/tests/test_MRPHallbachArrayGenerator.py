@@ -1,13 +1,12 @@
-import math
+from fix_import import __fix_import__fix_import
+__fix_import__fix_import()
 
-import numpy as np
-import pytest
+
 import unittest
-import random
-from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig, MRPSimulation, MRPHallbachArrayGenerator, MRPMagnetTypes
-import configparser
 import os
 import vector
+
+import MRPSimulation, MRPHallbachArrayGenerator, MRPMagnetTypes
 class TestMRPHallbachArrayGenerator(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE

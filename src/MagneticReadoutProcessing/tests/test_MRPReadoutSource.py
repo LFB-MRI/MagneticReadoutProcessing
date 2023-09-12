@@ -1,10 +1,13 @@
+from fix_import import __fix_import__fix_import
+__fix_import__fix_import()
+
 import unittest
 
 import magpylib as magpy
 import numpy as np
 from matplotlib import pyplot as plt
 
-from MagneticReadoutProcessing import MRPSimulation, MRPVisualization, MRPReadoutSource
+import MRPSimulation, MRPReadoutSource
 
 """
 TODO

@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from scipy.fft import fft, fftfreq
 from scipy.signal import find_peaks
 
-from MagneticReadoutProcessing import MRPReading, MRPMeasurementConfig, MRPMagnetTypes
+import MRPReading, MRPMeasurementConfig, MRPMagnetTypes
 
 
 class MRPAnalysisException(Exception):

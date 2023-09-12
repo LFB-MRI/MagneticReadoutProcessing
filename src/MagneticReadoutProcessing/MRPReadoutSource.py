@@ -1,16 +1,15 @@
 """ The MRPReadoutSource class is a BaseSource for the Python magpylib (https://magpylib.readthedocs.io/en/latest/)"""
 import numpy as np
-from magpylib._src.display.traces_generic import update_trace_name
 from magpylib._src.fields.field_BH_sphere import magnet_sphere_field
-from magpylib._src.input_checks import check_field_input
+
 # https://github.com/magpylib/magpylib/blob/main/magpylib/_src/fields/field_BH_cuboid.py#L10
 
 
 from magpylib._src.obj_classes.class_BaseExcitations import BaseSource, BaseMagnet
-from magpylib._src.utility import unit_prefix
-from magpylib._src.display.traces_base import make_Prism as make_BasePrism
-from magpylib._src.display.traces_generic import make_Sphere
-from MagneticReadoutProcessing import MRPReading, MRPAnalysis
+
+
+
+import MRPReading, MRPAnalysis
 
 class MRPReadoutSource(BaseMagnet):
     """User-defined custom source.
@@ -97,7 +96,7 @@ class MRPReadoutSource(BaseMagnet):
     _field_func = staticmethod(magnet_sphere_field) # TODO REPLACE
     _field_func_kwargs_ndim = {"magnetization": 2, "diameter": 1}
     # HERE A VISAL REPRESENTATION IS NOT NESSESSARY DUE TO THE READING ONLY CONTAINS POINTDATA, SO WE ARE USING A SIMPLE SPHERE
-    _draw_func = make_Sphere
+    #_draw_func = make_Sphere
 
 
 

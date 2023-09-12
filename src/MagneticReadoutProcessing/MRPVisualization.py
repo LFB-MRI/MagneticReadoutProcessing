@@ -8,9 +8,8 @@ from matplotlib import cm, colormaps
 import math
 import numpy as np
 # CUSTOM CLASSES
-from MagneticReadoutProcessing import MRPReading
-from MagneticReadoutProcessing import MRPHelpers
-from MagneticReadoutProcessing import MRPMeasurementConfig
+import MRPReading, MRPHelpers, MRPMeasurementConfig
+
 
 class MRPVisualization():
     """ Provides simple functions to plot a MRPReading using matplotlib in 2d or 3d"""

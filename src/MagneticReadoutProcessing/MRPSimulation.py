@@ -1,8 +1,11 @@
 import math
 import random
 import numpy as np
-from MagneticReadoutProcessing import MRPReading, MRPHelpers, MRPMagnetTypes
 import magpylib as magpy
+
+
+import MRPReading, MRPHelpers, MRPMagnetTypes
+
 from scipy.spatial.transform import Rotation as R
 import vg
 

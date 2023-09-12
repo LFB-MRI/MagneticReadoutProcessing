@@ -1,13 +1,14 @@
+from fix_import import __fix_import__fix_import
+__fix_import__fix_import()
+
 import os
 import random
 import unittest
 import numpy as np
-from MagneticReadoutProcessing import MRPAnalysis
-from MagneticReadoutProcessing import MRPConfig
-from MagneticReadoutProcessing import MRPReading
-from MagneticReadoutProcessing import MRPVisualization
-from MagneticReadoutProcessing import MRPSimulation
-from MagneticReadoutProcessing import MRPMagnetTypes
+
+
+import MRPAnalysis, MRPReading, MRPVisualization, MRPSimulation
+
 class TestMPRAnalysis(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE

@@ -2,7 +2,10 @@ from enum import Enum
 
 
 
-
+class MRPMagnetTypeException(Exception):
+    def __init__(self, message="MRPMagnetTypeException thrown"):
+        self.message = message
+        super().__init__(self.message)
 
 class MagnetType(Enum):
     """
@@ -30,7 +33,7 @@ class MagnetType(Enum):
     @staticmethod
     def from_int(_val: int):
         try:
-            return MagnetType(_val).name
+            return MagnetType(_val)
         except:
             return None
 
@@ -64,11 +67,12 @@ class MagnetType(Enum):
         if self.is_cubic():
             sp = str(self.name).split('_')[2].split("x")
             return (int(sp[0]), int(sp[1]), int(sp[2]))
-        elif self.is_cubic():
+        elif self.is_cylindrical():
             sp = str(self.name).split('_')[2].split("x")
             return (int(sp[0]), int(sp[1]), 0)
 
-        return None
+
+        raise MRPMagnetTypeException("get_dimension for this MagnetType not implemented")
 
     def get_height(self) -> int:
         """
@@ -78,5 +82,9 @@ class MagnetType(Enum):
         :returns: max value of the dimension vector
         :rtype: int
         """
+
         dim = self.get_dimension()
-        return max([dim[0], dim[0], dim[0]])
+        if dim is None:
+            raise MRPMagnetTypeException("get_height returned None")
+
+        return max([dim[0], dim[1], dim[2]])

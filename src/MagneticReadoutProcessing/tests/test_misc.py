@@ -1,12 +1,15 @@
-import math
+from fix_import import __fix_import__fix_import
+__fix_import__fix_import()
 
+import math
 import numpy as np
 import pytest
 import unittest
 import random
-from MagneticReadoutProcessing import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig
 import configparser
 import os
+
+import MRPConfig, MRPVisualization, MRPReading, MRPMeasurementConfig
 class TestMRPReading(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE

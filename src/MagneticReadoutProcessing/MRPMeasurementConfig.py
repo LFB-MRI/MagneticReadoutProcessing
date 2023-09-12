@@ -1,6 +1,6 @@
 import math
 
-from MagneticReadoutProcessing import MRPMagnetTypes
+import MRPMagnetTypes
 
 class MRPReadingEntryException(Exception):
     def __init__(self, message="MRPReadingEntryException thrown"):

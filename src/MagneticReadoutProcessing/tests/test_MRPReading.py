@@ -1,13 +1,17 @@
-import math
+from fix_import import __fix_import__fix_import
+__fix_import__fix_import()
 
+import math
 import numpy as np
 import pytest
 import unittest
 import random
-from MagneticReadoutProcessing import MRPConfig
-from MagneticReadoutProcessing import MRPReading
-from MagneticReadoutProcessing import MRPSimulation
-import configparser
+
+import MRPReading, MRPSimulation
+
+
+
+
 import os
 class TestMPRReading(unittest.TestCase):
 
@@ -19,10 +23,10 @@ class TestMPRReading(unittest.TestCase):
         if not os.path.exists(self.import_export_test_folderpath):
             os.makedirs(self.import_export_test_folderpath)
 
-        self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp.pkl")
+        self.import_export_test_filepath = os.path.join(self.import_export_test_folderpath, "tmp")
 
     def test_matrix_init(self):
-        reading = MRPSimulation.MRPSimulation.generate_reading(12, False, False, 40)
+        reading = MRPSimulation.MRPSimulation.generate_reading()
         matrix = reading.to_numpy_matrix()
 
         n_phi = reading.measurement_config.n_phi
