@@ -68,7 +68,7 @@ class TestMRPDataVisualization(unittest.TestCase):
 
     def test_error_visualisation(self):
         export_filepath = os.path.join(self.import_export_test_folderpath, "test_error_visualisation.png")
-        rset: [MRPReading.MRPReading] = [ self.reading_zero, self.reading_one, self.reading_set_a]
+        rset: [MRPReading.MRPReading] = [self.reading_zero, self.reading_one, self.reading_set_a]
         MRPDataVisualization.MRPDataVisualization.plot_error(rset, "test_error_visualisation", export_filepath)
 
     def test_scatter_visualisation(self):

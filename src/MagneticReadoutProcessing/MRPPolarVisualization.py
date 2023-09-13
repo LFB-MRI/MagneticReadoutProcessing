@@ -157,7 +157,7 @@ class MRPPolarVisualization():
 
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
-            lfig.savefig(_filename)
+            lfig.savefig(_filename, dpi=1200)
         else:
             lfig.show()
 
@@ -179,7 +179,7 @@ class MRPPolarVisualization():
         lax, lfig = self.create_plot()
 
         if _filename is not None:
-            lfig.savefig(_filename)
+            lfig.savefig(_filename, dpi=1200)
         else:
             lfig.show()
 

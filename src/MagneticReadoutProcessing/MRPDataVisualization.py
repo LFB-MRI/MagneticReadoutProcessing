@@ -38,8 +38,8 @@ class MRPDataVisualization:
 
 
         # TABLE
-        clust_data = np.random.random((len(_readings), 4))
-        collabel = ("Mean", "STD Deviation", "Variance", "Data-Points")
+        clust_data = []#np.random.random((len(_readings), 5))
+        collabel = ("Reading [id:sensor_id]", "Mean", "STD Deviation", "Variance", "Data-Points")
         labels = []
 
         for idx, reading in enumerate(_readings):
@@ -55,7 +55,7 @@ class MRPDataVisualization:
 
             variance = MRPAnalysis.MRPAnalysis.calculate_variance(reading)
 
-            clust_data[idx] = [mean, deviation, variance, len(reading.data)]
+            clust_data.append(['{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id),"{:.2f}".format(mean), "{:.2f}".format(deviation), "{:.2f}".format(variance), len(reading.data)])
 
         # error bar values w/ different -/+ errors
         #lower_error = 0.4 * error
@@ -64,7 +64,7 @@ class MRPDataVisualization:
 
         fig, (ax0, ax1) = plt.subplots(2,1)
 
-
+        fig.dpi = 300
         # Add a table at the bottom of the axes
         ax0.axis('tight')
         ax0.axis('off')
@@ -80,7 +80,7 @@ class MRPDataVisualization:
 
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
-            plt.savefig(_filename)
+            plt.savefig(_filename, dpi=1200)
         else:
             plt.show()
 
@@ -134,7 +134,7 @@ class MRPDataVisualization:
 
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
-            plt.savefig(_filename)
+            plt.savefig(_filename, dpi=1200)
         else:
             plt.show()
 
