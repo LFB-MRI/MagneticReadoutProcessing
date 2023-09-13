@@ -14,12 +14,35 @@ class TestMPRHal(unittest.TestCase):
     # PREPARE A INITIAL CONFIGURATION FILE
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
-        self.DEVICE_SERIAl_PORT = "/dev/tty.usbmodem3867315334391"
-        self.hal_instance = MRPHal.MRPPHal()
-    def test_connection(self):
-        ports = MRPHal.MRPPHal.list_serial_ports()
 
-        i = 0
+        # for testing this need to be set to a valid system port
+        self.DEVICE_SERIAl_PORT = "/dev/tty.usbmodem3867315334391"
+    def test_list_serial_ports(self):
+        ports = MRPHal.MRPPHal.list_serial_ports()
+        self.assertNotEqual(len(ports), 0)
+
+
+    def test_connect_failed(self):
+        port = MRPHal.MRPHalSerialPortInformation(_path="/dev/42")
+        hal_instance = MRPHal.MRPPHal(port)
+        with self.assertRaises(MRPHal.MRPHalException):
+            hal_instance.connect()
+
+    def test_connect_failed(self):
+        port = MRPHal.MRPHalSerialPortInformation(_path=self.DEVICE_SERIAl_PORT)
+        hal_instance = MRPHal.MRPPHal(port)
+        with self.assertRaises(MRPHal.MRPHalException):
+            hal_instance.connect()
+
+    def test_connect_ok(self):
+        port = MRPHal.MRPHalSerialPortInformation(_path=self.DEVICE_SERIAl_PORT)
+        hal_instance = MRPHal.MRPPHal(port)
+
+        hal_instance.connect()
+
+
+
+
 
     def test_sensor_readout(self):
         pass

@@ -112,6 +112,11 @@ bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
 }
 
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
+void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response){
+  //todo check which sensor Tpes are presnet
+  DEBUG_SERIAL.println("[static]");
+}
+// RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void temp_debug(DBGCommandParser::Argument *args, char *response)
 {
   float temp = 0.0f;
@@ -186,6 +191,9 @@ void process_anc_information(DBGCommandParser::Argument *args, char *response)
     strlcpy(response, "error not in right system state or invalid base_id", HostCommandParser::MAX_RESPONSE_SIZE);
   }
 }
+
+
+
 void scan_for_tlv493d_sensors()
 
 {
@@ -251,6 +259,7 @@ void setup()
       DEBUG_SERIAL.println(F("> anc <base_id>                perform a autonumbering sequence manually"));
       DEBUG_SERIAL.println(F("> ancid                        returns the current set autonumbering base id (-1 in singlemode)"));
       DEBUG_SERIAL.println(F("> reset                        performs reset of the system"));
+      DEBUG_SERIAL.println(F("> capabilities                 logs sensor capabilities"));
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
@@ -300,6 +309,7 @@ void setup()
   debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
                                        { HOST_SERIAL.println("reset"); RESET_SYSTEM_FUNCTION(); });
 
+  debug_command_parser.registerCommand("capabilities", "", &list_sensor_capabilities);
   // GPIO SETUP
   pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
   pinMode(STATUS_LED_PIN, OUTPUT);

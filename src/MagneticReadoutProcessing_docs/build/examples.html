@@ -281,8 +281,9 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 <span class="kn">import</span> <span class="nn">MRPHal</span>
 
 <span class="c1"># Connect to a realworld sensor</span>
-<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">()</span>
-<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;/dev/ttySensorInterface_4242&quot;</span><span class="p">)</span>
+<span class="n">port</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHalSerialPortInformation</span><span class="p">(</span><span class="s2">&quot;/dev/ttySensorInterface_4242&quot;</span><span class="p">)</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 
 <span class="c1"># Create a empty reading with no settings. Only the raw values are needed, no metadata</span>
 <span class="n">reading</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">()</span>
@@ -376,11 +377,14 @@ Always use the bundled (same release version / commit) firmware and library vers
 <section id="sensor-connection">
 <h3>Sensor connection<a class="headerlink" href="#sensor-connection" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPHal</span>
-
-<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">()</span>
+<span class="c1"># first we want to find all serial ports on the system</span>
+<span class="n">system_ports</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">list_serial_ports</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system_ports</span><span class="p">)</span>
+<span class="c1"># connect to a found port</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">(</span><span class="n">system_ports</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="c1"># use the serial connection of the connected sensor here:</span>
-<span class="c1"># as device path /dev/ttyUSB0</span>
-<span class="c1"># using sockets socket://&lt;host&gt;:&lt;port&gt;</span>
+<span class="c1"># as device path MRPHalSerialPortInformation(/dev/ttyUSB0)</span>
+<span class="c1"># using sockets MRPHalSerialPortInformation(socket://&lt;host&gt;:&lt;port&gt;)</span>
 <span class="c1">## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html</span>
 <span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;/dev/ttyUSB0&#39;</span><span class="p">)</span>
 

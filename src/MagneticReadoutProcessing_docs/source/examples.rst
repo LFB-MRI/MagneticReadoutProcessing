@@ -183,22 +183,15 @@ Sensor bias compensation
 .. code-block:: python
     
     import MRPAnalysis
-    import MRPHal
-
-    # Connect to a realworld sensor
-    sensor = MRPHal.MRPHal()
-    sensor.connect("/dev/ttySensorInterface_4242")
-    
     # Create a empty reading with no settings. Only the raw values are needed, no metadata
     reading = MRPReading.MRPReading()
     # take a few measurements
     for i in range(1000):
         measurement = MRPReadingEntry.MRPReadingEntry()
         # readout sensor or use dummy data and assign result
-        measurement.value = sensor.read_value()
+        measurement.value = (random.random() -0.5) * 2
         reading.insert_reading_instance(measurement, False)
         time.sleep(1)
-
 
     # OPTIONAL: plot deviation
     import MRPDataVisualization
@@ -293,13 +286,12 @@ MRPHal Examples
 
 The ``MRPHal`` class provides functions to access several different Hall Magnetic Sensors using a unified Arduino based firmware for low costs hardware.
 
-
 .. note::
     Please see the hardware firmware folder ``/src/UnifiedMagBoardFirmware`` in order to setup the sensor hardware.
     Always use the bundled (same release version / commit) firmware and library version in order to use all implemented features.
 
-
-    
+.. note::
+    Please see testcases in `hwtest_MRPHal.py.py` for further examples
 
 
 Sensor connection
@@ -308,14 +300,21 @@ Sensor connection
 .. code-block:: python
 
     import MRPHal
-    
-    sensor = MRPHal.MRPHal()
+    # first we want to find all serial ports on the system
+    system_ports = MRPHal.list_serial_ports()
+    print(system_ports)
+    # connect to a found port
+    sensor = MRPHal.MRPHal(system_ports[0])
     # use the serial connection of the connected sensor here:
-    # as device path /dev/ttyUSB0
-    # using sockets socket://<host>:<port>
+    # as device path MRPHalSerialPortInformation(/dev/ttyUSB0)
+    # using sockets MRPHalSerialPortInformation(socket://<host>:<port>)
     ## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html
-    sensor.connect('/dev/ttyUSB0')
+
     
+    sensor.connect()
+    
+
+
     # After a sensor connection is made, it can be used to collect datapoints
 
 

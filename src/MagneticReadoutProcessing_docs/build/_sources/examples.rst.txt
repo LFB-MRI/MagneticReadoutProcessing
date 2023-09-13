@@ -186,8 +186,9 @@ Sensor bias compensation
     import MRPHal
 
     # Connect to a realworld sensor
-    sensor = MRPHal.MRPHal()
-    sensor.connect("/dev/ttySensorInterface_4242")
+    port = MRPHal.MRPHalSerialPortInformation("/dev/ttySensorInterface_4242")
+    sensor = MRPHal.MRPHal(port)
+    sensor.connect()
     
     # Create a empty reading with no settings. Only the raw values are needed, no metadata
     reading = MRPReading.MRPReading()
@@ -293,13 +294,11 @@ MRPHal Examples
 
 The ``MRPHal`` class provides functions to access several different Hall Magnetic Sensors using a unified Arduino based firmware for low costs hardware.
 
-
 .. note::
     Please see the hardware firmware folder ``/src/UnifiedMagBoardFirmware`` in order to setup the sensor hardware.
     Always use the bundled (same release version / commit) firmware and library version in order to use all implemented features.
 
 
-    
 
 
 Sensor connection
@@ -308,11 +307,14 @@ Sensor connection
 .. code-block:: python
 
     import MRPHal
-    
-    sensor = MRPHal.MRPHal()
+    # first we want to find all serial ports on the system
+    system_ports = MRPHal.list_serial_ports()
+    print(system_ports)
+    # connect to a found port
+    sensor = MRPHal.MRPHal(system_ports[0])
     # use the serial connection of the connected sensor here:
-    # as device path /dev/ttyUSB0
-    # using sockets socket://<host>:<port>
+    # as device path MRPHalSerialPortInformation(/dev/ttyUSB0)
+    # using sockets MRPHalSerialPortInformation(socket://<host>:<port>)
     ## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html
     sensor.connect('/dev/ttyUSB0')
     

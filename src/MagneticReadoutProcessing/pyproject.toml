@@ -5,4 +5,5 @@ build-backend = "setuptools.build_meta:__legacy__"
 [project]
 name = "MagneticReadoutProcessing"
 authors = [{name = "Marcel Ochsendorf", email = "info@marcelochsendorf.com"}]
-dynamic = ["version", "description"]
+dynamic = ["version", "description", "dependencies"]
+dependencies = 'requirements.txt'
