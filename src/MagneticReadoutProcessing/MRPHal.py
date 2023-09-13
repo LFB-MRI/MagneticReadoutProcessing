@@ -47,6 +47,10 @@ class MRPHalSerialPortInformation():
         :returns: returns true if the path is valid (path exists)
         :rtype: bool
         """
+
+        if self.baudrate is None or self.baudrate not in serial.SerialBase.BAUDRATES:
+            return False
+
         if self.device_path is None or len(self.device_path) <= 0:
             return False
 
@@ -196,18 +200,21 @@ class MRPPHal:
         if self.current_port is None or not self.current_port.is_valid():
             raise MRPHalException("set serial port information are invalid")
 
-        # CREATE serial INSTANCE
+        # CREATE AND OEPN serial INSTANCE
         if self.serial_port_instance is None:
-            self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate)
+            try:
+                # call opens directly
+                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True)
+            except Exception as e: # remap exception ugly i know:)
+                raise MRPHalException(str(e))
         else:
-            self.serial_port_instance.baudrate = self.DEFAULT_BAUDRATE
+            self.serial_port_instance.baudrate = self.current_port.baudrate
             self.serial_port_instance.port = self.current_port.device_path
-
-        # TRY TO OPEN
-        try:
-            self.serial_port_instance.open()
-        except Exception as e: # remap exception ugly i know:)
-            raise MRPHalException(str(e))
+            # OPEN
+            try:
+                self.serial_port_instance.open()
+            except Exception as e: # remap exception ugly i know:)
+                raise MRPHalException(str(e))
 
 
 
@@ -232,9 +239,29 @@ class MRPPHal:
             self.serial_port_instance.close()
 
 
+
     def read_value(self):
-        if self.is_connected():
+        if not self.is_connected():
             raise MRPHalException("sensor isn't connected. use connect() first")
+
+
+
+    def send_command(self, _cmd: str) -> str:
+        """
+        sends a command to the sensor
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns sensor response
+        :rtype: str
+        """
+        if not self.is_connected():
+            raise MRPHalException("sensor isn't connected. use connect() first")
+
+        self.serial_port_instance.flush()
+
+
 
 
     def read_sensor_capabilities(self):

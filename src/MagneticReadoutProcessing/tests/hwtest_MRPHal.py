@@ -41,6 +41,20 @@ class TestMPRHal(unittest.TestCase):
         hal_instance.connect()
 
 
+        hal_instance.disconnect()
+
+    def test_sensor_connection(self):
+        port = MRPHal.MRPHalSerialPortInformation(_path=self.DEVICE_SERIAl_PORT)
+        hal_instance = MRPHal.MRPPHal(port)
+
+        hal_instance.connect()
+
+
+
+
+        hal_instance.disconnect()
+
+
 
 
 
