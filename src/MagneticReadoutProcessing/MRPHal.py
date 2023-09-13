@@ -3,7 +3,11 @@ import serial.tools.list_ports
 from enum import Enum
 import re
 import os
+import io
 from pathlib import Path
+
+from docutils.io import unicode
+
 import MRPReading, MRPMeasurementConfig
 
 
@@ -56,6 +60,8 @@ class MRPHalSerialPortInformation():
 
         if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
             return True
+        elif 'loop://' in self.device_path:
+            return True
         elif os.path.exists(self.device_path): # os.path.exists is needed for fs access pathlib is not working for /dev on mac
             return True
         return False
@@ -71,6 +77,8 @@ class MRPPHal:
     Baseclass for hardware sensor interaction
     """
 
+    TERMINATION_CHARACTER = '\n'
+
     @staticmethod
     def check_serial_number(_serial_number: str) -> bool:
         """
@@ -85,10 +93,10 @@ class MRPPHal:
         :rtype: bool
         """
 
-        SERIAL_LUT = {
+        SERIAL_LUT = [
             '386731533439'  # FIRST EVER BUILD SENSOR :)
-            '0483:5740'     # USB VID:PID IS WORKING TOO
-        }
+            #'0483:5740'     # USB VID:PID IS WORKING TOO
+        ]
 
         if len(_serial_number) < 0:
             raise MRPHalException("MRPHalSensorType from_serial_number _serial_number is empty")
@@ -163,6 +171,7 @@ class MRPPHal:
 
     current_port: MRPHalSerialPortInformation = None
     serial_port_instance: serial = None
+    sio: io.TextIOWrapper = None
 
     def __init__(self, _selected_port: MRPHalSerialPortInformation):
         self.current_port = _selected_port
@@ -182,7 +191,6 @@ class MRPPHal:
         if self.current_port is None or not self.current_port.is_valid():
             raise MRPHalException("set serial port information are invalid")
         self.current_port = _port
-
 
     def connect(self) -> bool:
         """
@@ -204,7 +212,10 @@ class MRPPHal:
         if self.serial_port_instance is None:
             try:
                 # call opens directly
-                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True)
+                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True, timeout=1.2)
+
+                # CREATE A BUFFERED READ/WRITE INSTANCE TO HANDlE send/rec over the port
+                self.sio = io.TextIOWrapper(io.BufferedRWPair(self.serial_port_instance, self.serial_port_instance))
             except Exception as e: # remap exception ugly i know:)
                 raise MRPHalException(str(e))
         else:
@@ -230,10 +241,9 @@ class MRPPHal:
             return True
         return False
 
-
     def disconnect(self):
         """
-        disconnects a may opened serial port
+        disconnects a opened serial port
         """
         if self.is_connected():
             self.serial_port_instance.close()
@@ -246,21 +256,53 @@ class MRPPHal:
 
 
 
-    def send_command(self, _cmd: str) -> str:
+    def send_command(self, _cmd: str) -> [str]:
         """
         sends a command to the sensor
 
         :param _cmd: command like help id read...
         :type _cmd: str
 
-        :returns: returns sensor response
-        :rtype: str
+        :returns: returns sensor response as line splitted by '\n'
+        :rtype: [str]
         """
+        if _cmd is None or len(_cmd) <= 0:
+            raise MRPHalException("_cmd is empty")
+
         if not self.is_connected():
             raise MRPHalException("sensor isn't connected. use connect() first")
 
-        self.serial_port_instance.flush()
+        # end eof character
+        if self.TERMINATION_CHARACTER not in _cmd:
+            _cmd = _cmd + self.TERMINATION_CHARACTER
 
+        # send cmd
+        self.sio.write(_cmd)
+        # send data directly to avoid timeout issues on readline
+        self.sio.flush()
+
+        # wait for response
+        result: str = ""
+        for i in range(5):
+            result = self.sio.readline()
+            if len(result) > 0:
+                break
+
+        # REPLACE WINDOW NEWLINE CHARS
+        result = result.replace('\r', '')
+
+        # remove last termination character
+        result = ''.join(result.rsplit('\n', 1))
+
+
+        if self.TERMINATION_CHARACTER in result:
+            return result.split(self.TERMINATION_CHARACTER).remove('')
+
+
+        return result
+
+
+       # print(hello == unicode("hello\n"))
 
 
 

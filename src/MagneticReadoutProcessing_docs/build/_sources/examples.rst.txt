@@ -300,8 +300,8 @@ The ``MRPHal`` class provides functions to access several different Hall Magneti
 
 
 
-Sensor connection
-=================
+Connect a physical sensor
+=========================
 
 .. code-block:: python
 
@@ -316,14 +316,32 @@ Sensor connection
     # using sockets MRPHalSerialPortInformation(socket://<host>:<port>)
     ## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html
 
-    
     sensor.connect()
-    
+
+Query Sensor capabilities
+=========================
+
+After a sensor connection is made, its possible to interact with the sensor.
+The next step is to get some information about the connected sensor.
+Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.
+
+.. code-block:: python
+
+     # EXTENDS THE `Connect a physical sensor` EXAMPLE
 
 
-    # After a sensor connection is made, it can be used to collect datapoints
+Raw sensor interaction
+======================
 
+Its possible to interface the sensor using raw commands like ``id``, ``version``, ``readout x 0``.
+These commands are implemented into the sensors firmware and allows debugging of the sensor.
 
+.. code-block:: python
+
+    # EXTENDS THE `Connect a physical sensor` EXAMPLE
+    # sends a cmd over sensors debug interface
+    ret = sensor.send_command("version")
+    print(ret)
 
 
 MRPSimulation Examples

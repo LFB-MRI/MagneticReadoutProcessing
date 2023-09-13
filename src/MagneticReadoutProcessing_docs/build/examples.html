@@ -68,7 +68,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrphal-examples">MRPHal Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#sensor-connection">Sensor connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connect-a-physical-sensor">Connect a physical sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-sensor-capabilities">Query Sensor capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raw-sensor-interaction">Raw sensor interaction</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpsimulation-examples">MRPSimulation Examples</a><ul>
@@ -375,8 +377,8 @@ Always use the bundled (same release version / commit) firmware and library vers
 <p>On Linux system please make sure the user is in the  dialout group, to allow non root serial port access.
 <cite>$ sudo usermod -a -G dialout $USER</cite></p>
 </div>
-<section id="sensor-connection">
-<h3>Sensor connection<a class="headerlink" href="#sensor-connection" title="Link to this heading"></a></h3>
+<section id="connect-a-physical-sensor">
+<h3>Connect a physical sensor<a class="headerlink" href="#connect-a-physical-sensor" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPHal</span>
 <span class="c1"># first we want to find all serial ports on the system</span>
 <span class="n">system_ports</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">list_serial_ports</span><span class="p">()</span>
@@ -388,12 +390,27 @@ Always use the bundled (same release version / commit) firmware and library vers
 <span class="c1"># using sockets MRPHalSerialPortInformation(socket://&lt;host&gt;:&lt;port&gt;)</span>
 <span class="c1">## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html</span>
 
-
 <span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-
-
-
-<span class="c1"># After a sensor connection is made, it can be used to collect datapoints</span>
+</pre></div>
+</div>
+</section>
+<section id="query-sensor-capabilities">
+<h3>Query Sensor capabilities<a class="headerlink" href="#query-sensor-capabilities" title="Link to this heading"></a></h3>
+<p>After a sensor connection is made, its possible to interact with the sensor.
+The next step is to get some information about the connected sensor.
+Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Connect a physical sensor` EXAMPLE</span>
+</pre></div>
+</div>
+</section>
+<section id="raw-sensor-interaction">
+<h3>Raw sensor interaction<a class="headerlink" href="#raw-sensor-interaction" title="Link to this heading"></a></h3>
+<p>Its possible to interface the sensor using raw commands like <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>, <code class="docutils literal notranslate"><span class="pre">readout</span> <span class="pre">x</span> <span class="pre">0</span></code>.
+These commands are implemented into the sensors firmware and allows debugging of the sensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Connect a physical sensor` EXAMPLE</span>
+<span class="c1"># sends a cmd over sensors debug interface</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
