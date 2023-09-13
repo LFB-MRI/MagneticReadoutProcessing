@@ -7,13 +7,20 @@ import unittest
 import numpy as np
 
 
-import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation, MRPReadingEntry
+import MRPAnalysis, MRPReading, MRPSimulation, MRPReadingEntry, MRPDataVisualization
 
-class TestMPRAnalysis(unittest.TestCase):
+class TestMRPDataVisualization(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
+        # TMP FOLDER FOR GRAPH EXPORTS
+        self.import_export_test_folderpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+        if not os.path.exists(self.import_export_test_folderpath):
+            os.makedirs(self.import_export_test_folderpath)
+
+
+
         self.reading_zero = MRPReading.MRPReading()
 
 
@@ -49,6 +56,12 @@ class TestMPRAnalysis(unittest.TestCase):
 
         variance_set_a = MRPAnalysis.MRPAnalysis.calculate_variance(self.reading_set_a)
         self.assertAlmostEquals(variance_set_a, 36.034, 2)
+
+    def test_error_visualisation(self):
+        export_filepath = os.path.join(self.import_export_test_folderpath, "test_error_visualisation.png")
+
+        rset: [MRPReading.MRPReading] = [ self.reading_zero, self.reading_set_a]
+        MRPDataVisualization.MRPDataVisualization.plot_error(rset, "test_error_visualisation", export_filepath)
 
 
 

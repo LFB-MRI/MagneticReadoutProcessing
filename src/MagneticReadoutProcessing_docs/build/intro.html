@@ -45,7 +45,10 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#motivation-for-magneticreadoutprocessing">Motivation for <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivation-for-magneticreadoutprocessing">Motivation for <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-structure">General structure</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#limitations">Limitations</a></li>
 </ul>
 </li>
@@ -81,8 +84,15 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
 <section id="motivation-for-magneticreadoutprocessing">
 <h2>Motivation for <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code><a class="headerlink" href="#motivation-for-magneticreadoutprocessing" title="Link to this heading"></a></h2>
-<p>This library was created for the Low-Field Breast MRI project and allows processing of data measured by magnetic field sensors.
+<p>This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors.
 The focus is on visualization, followed by the provision of simple interfaces to work with this data.</p>
+<section id="general-structure">
+<h3>General structure<a class="headerlink" href="#general-structure" title="Link to this heading"></a></h3>
+<a class="reference internal image-reference" href="_static/MRP_COMPLETE_FLOW.png"><img alt="_static/MRP_COMPLETE_FLOW.png" src="_static/MRP_COMPLETE_FLOW.png" style="width: 600px;" /></a>
+<p>The picture above, illustrates the general idea of this library.
+Each component provides for itself minimal functionality needed for a dataflow from sensor data qcquisition to analysis to export.</p>
+<p>The user can implement additional functionalities in each stage to get the desired output.</p>
+</section>
 </section>
 <section id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Link to this heading"></a></h2>

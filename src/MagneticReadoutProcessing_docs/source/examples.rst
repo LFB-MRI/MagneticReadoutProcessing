@@ -2,7 +2,8 @@ Examples
 ########
 
 .. note::
-   There are further detailed examples in the ``test`` folder. There is a seperate test file for each submodule.
+   There are further detailed examples in the ``test`` folder.
+   In gerneral there is a seperate test file for each submodule.
 
 
 Installation/Usage
@@ -165,11 +166,12 @@ Visualization of a polar measurement
 
 
 
+
 MRPAnalysis Examples
 ********************
 
 Sensor bias compensation
-=======================
+========================
 
 
 .. note::
@@ -179,6 +181,7 @@ Sensor bias compensation
    Attention: Make sure that the environment (objects around, temperature) does not change and the device is not moved. 
 
 .. code-block:: python
+    
     import MRPAnalysis
     import MRPHal
 
@@ -199,21 +202,23 @@ Sensor bias compensation
 
     # OPTIONAL: plot deviation
     import MRPDataVisualization
-    MRPDataVisualization.MRPDataVisualization.plot_symetrical_error(reading)
-
+    MRPDataVisualization.MRPDataVisualization.plot_error([reading])
 
     # APPLY COMPENSATION
     # Here the ``calculate_mean`` function is used
     # see MRPAnalysis module for alternatives
     reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
     # we want to subtract the mean value from all readings
-
     reading_mean_value = -reading_mean_value
-    # apply value
+    # modify measurement values
     MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
 
-    # APPLY
 
+The ``MRPDataVisualization.plot_error`` function plots the ``mean``, ``std deviation`` and ``variance`` values for given readings.
+These information are useful for furhter sensor calibration routines.
+
+.. image:: _static/test_error_visualisation.png
+   :width: 600
 
 
 Apply a calibration/reference reading
@@ -272,6 +277,40 @@ The ``merge_two_half_sphere_measurements_to_full_sphere`` function combine two r
 
 .. image:: _static/merged_readings_example_random.png
    :width: 600
+
+
+
+
+MRPHal Examples
+********************
+
+The ``MRPHal`` class provides functions to access several different Hall Magnetic Sensors using a unified Arduino based firmware for low costs hardware.
+
+
+.. note::
+    Please see the hardware firmware folder ``/src/UnifiedMagBoardFirmware`` in order to setup the sensor hardware.
+    Always use the bundled (same release version / commit) firmware and library version in order to use all implemented features.
+
+
+    
+
+
+Sensor connection
+=================
+
+.. code-block:: python
+
+    import MRPHal
+    
+    sensor = MRPHal.MRPHal()
+    # use the serial connection of the connected sensor here:
+    # as device path /dev/ttyUSB0
+    # using sockets socket://<host>:<port>
+    ## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html
+    sensor.connect('/dev/ttyUSB0')
+    
+    # After a sensor connection is made, it can be used to collect datapoints
+
 
 
 

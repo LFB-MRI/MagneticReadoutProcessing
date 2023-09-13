@@ -4,8 +4,21 @@ Introduction
 Motivation for ``MagneticReadoutProcessing``
 ********************************************
 
-This library was created for the Low-Field Breast MRI project and allows processing of data measured by magnetic field sensors.
+This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors.
 The focus is on visualization, followed by the provision of simple interfaces to work with this data.
+
+General structure
+-----------------
+
+.. image:: _static/MRP_COMPLETE_FLOW.png
+   :width: 600
+
+The picture above, illustrates the general idea of this library.
+Each component provides for itself minimal functionality needed for a dataflow from sensor data qcquisition to analysis to export.
+
+The user can implement additional functionalities in each stage to get the desired output.
+
+
 
 
 Limitations

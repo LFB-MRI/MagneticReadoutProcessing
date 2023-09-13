@@ -59,7 +59,7 @@ class TestMPRAnalysis(unittest.TestCase):
 
         # TEST
         for entry in reading.data:
-            self.assertEquals(entry.value, 0.0) # should be zero :)
+            self.assertEquals(entry.value, 0.0) # 1.0 - 1.0 should be zero :)
 
 
 
@@ -81,7 +81,7 @@ class TestMPRAnalysis(unittest.TestCase):
             self.assertEqual(r[2], 0.0)
 
 
-    def calculate_center_of_gravity(self):
+    def test_calculate_center_of_gravity(self):
         # TODO
         # CALULATE CENTER OF GRAVITY
         # STORE MAGNET TYPE IN READING -> DROP DOWN
@@ -91,6 +91,7 @@ class TestMPRAnalysis(unittest.TestCase):
         reading_ideal = MRPSimulation.MRPSimulation.generate_reading()
 
         result_vector = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(reading_ideal)
+
         # SETTING THE MAGNET TYPE IS NEEDED FOR LATER OPENSCAD GENERATION
 
 

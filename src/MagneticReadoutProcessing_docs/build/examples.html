@@ -58,12 +58,17 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpvisualization-examples">MRPVisualization Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#visualization-of-a-measurement">Visualization of a measurement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualization-of-a-polar-measurement">Visualization of a polar measurement</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpanalysis-examples">MRPAnalysis Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#apply-a-calibration-reading">Apply a calibration reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-bias-compensation">Sensor bias compensation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apply-a-calibration-reference-reading">Apply a calibration/reference reading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#merge-two-half-sphere-readings">Merge two half sphere readings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mrphal-examples">MRPHal Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sensor-connection">Sensor connection</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpsimulation-examples">MRPSimulation Examples</a><ul>
@@ -116,7 +121,8 @@
 <h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There are further detailed examples in the <code class="docutils literal notranslate"><span class="pre">test</span></code> folder. There is a seperate test file for each submodule.</p>
+<p>There are further detailed examples in the <code class="docutils literal notranslate"><span class="pre">test</span></code> folder.
+In gerneral there is a seperate test file for each submodule.</p>
 </div>
 <section id="installation-usage">
 <h2>Installation/Usage<a class="headerlink" href="#installation-usage" title="Link to this heading"></a></h2>
@@ -242,14 +248,14 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="mrpvisualization-examples">
 <h2>MRPVisualization Examples<a class="headerlink" href="#mrpvisualization-examples" title="Link to this heading"></a></h2>
-<section id="visualization-of-a-measurement">
-<h3>Visualization of a measurement<a class="headerlink" href="#visualization-of-a-measurement" title="Link to this heading"></a></h3>
+<section id="visualization-of-a-polar-measurement">
+<h3>Visualization of a polar measurement<a class="headerlink" href="#visualization-of-a-polar-measurement" title="Link to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/example_visualization.png"><img alt="_static/example_visualization.png" src="_static/example_visualization.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
-<span class="kn">import</span> <span class="nn">MRPVisualization</span>
+<span class="kn">import</span> <span class="nn">MRPPolarVisualization</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="c1"># HERE matplotlib is also used</span>
-<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPPolarVisualization</span><span class="o">.</span><span class="n">MRPPolarVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
 <span class="c1"># 2D PLOT INTO A WINDOW</span>
 <span class="n">visu</span><span class="o">.</span><span class="n">plot2d_top</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">visu</span><span class="o">.</span><span class="n">plot2d_side</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -261,8 +267,54 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="mrpanalysis-examples">
 <h2>MRPAnalysis Examples<a class="headerlink" href="#mrpanalysis-examples" title="Link to this heading"></a></h2>
-<section id="apply-a-calibration-reading">
-<h3>Apply a calibration reading<a class="headerlink" href="#apply-a-calibration-reading" title="Link to this heading"></a></h3>
+<section id="sensor-bias-compensation">
+<h3>Sensor bias compensation<a class="headerlink" href="#sensor-bias-compensation" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please see testcases in <cite>test_SensorAnalysis.py</cite> for further examples</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Attention: Make sure that the environment (objects around, temperature) does not change and the device is not moved.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPAnalysis</span>
+<span class="kn">import</span> <span class="nn">MRPHal</span>
+
+<span class="c1"># Connect to a realworld sensor</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">()</span>
+<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;/dev/ttySensorInterface_4242&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a empty reading with no settings. Only the raw values are needed, no metadata</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">()</span>
+<span class="c1"># take a few measurements</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">MRPReadingEntry</span><span class="o">.</span><span class="n">MRPReadingEntry</span><span class="p">()</span>
+    <span class="c1"># readout sensor or use dummy data and assign result</span>
+    <span class="n">measurement</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">read_value</span><span class="p">()</span>
+    <span class="n">reading</span><span class="o">.</span><span class="n">insert_reading_instance</span><span class="p">(</span><span class="n">measurement</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># OPTIONAL: plot deviation</span>
+<span class="kn">import</span> <span class="nn">MRPDataVisualization</span>
+<span class="n">MRPDataVisualization</span><span class="o">.</span><span class="n">MRPDataVisualization</span><span class="o">.</span><span class="n">plot_error</span><span class="p">([</span><span class="n">reading</span><span class="p">])</span>
+
+<span class="c1"># APPLY COMPENSATION</span>
+<span class="c1"># Here the ``calculate_mean`` function is used</span>
+<span class="c1"># see MRPAnalysis module for alternatives</span>
+<span class="n">reading_mean_value</span> <span class="o">=</span> <span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">calculate_mean</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="c1"># we want to subtract the mean value from all readings</span>
+<span class="n">reading_mean_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">reading_mean_value</span>
+<span class="c1"># modify measurement values</span>
+<span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">MRPAnalysis</span><span class="o">.</span><span class="n">apply_global_offset_inplace</span><span class="p">(</span><span class="n">reading</span><span class="p">,</span> <span class="n">reading_mean_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">MRPDataVisualization.plot_error</span></code> function plots the <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">std</span> <span class="pre">deviation</span></code> and <code class="docutils literal notranslate"><span class="pre">variance</span></code> values for given readings.
+These information are useful for furhter sensor calibration routines.</p>
+<a class="reference internal image-reference" href="_static/test_error_visualisation.png"><img alt="_static/test_error_visualisation.png" src="_static/test_error_visualisation.png" style="width: 600px;" /></a>
+</section>
+<section id="apply-a-calibration-reference-reading">
+<h3>Apply a calibration/reference reading<a class="headerlink" href="#apply-a-calibration-reference-reading" title="Link to this heading"></a></h3>
 <p>The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
 The <code class="docutils literal notranslate"><span class="pre">reading_calibration</span></code> is performed with the same settings for all subsequent measurements.
 Afterwards the Function <code class="docutils literal notranslate"><span class="pre">apply_calibration_data_inplace</span></code> is called for each new reading.</p>
@@ -310,6 +362,30 @@ The <code class="docutils literal notranslate"><span class="pre">merge_two_half_
 <a class="reference internal image-reference" href="_static/merged_readings_example_random.png"><img alt="_static/merged_readings_example_random.png" src="_static/merged_readings_example_random.png" style="width: 600px;" /></a>
 </section>
 </section>
+<section id="mrphal-examples">
+<h2>MRPHal Examples<a class="headerlink" href="#mrphal-examples" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MRPHal</span></code> class provides functions to access several different Hall Magnetic Sensors using a unified Arduino based firmware for low costs hardware.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please see the hardware firmware folder <code class="docutils literal notranslate"><span class="pre">/src/UnifiedMagBoardFirmware</span></code> in order to setup the sensor hardware.
+Always use the bundled (same release version / commit) firmware and library version in order to use all implemented features.</p>
+</div>
+<section id="sensor-connection">
+<h3>Sensor connection<a class="headerlink" href="#sensor-connection" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPHal</span>
+
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">()</span>
+<span class="c1"># use the serial connection of the connected sensor here:</span>
+<span class="c1"># as device path /dev/ttyUSB0</span>
+<span class="c1"># using sockets socket://&lt;host&gt;:&lt;port&gt;</span>
+<span class="c1">## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html</span>
+<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;/dev/ttyUSB0&#39;</span><span class="p">)</span>
+
+<span class="c1"># After a sensor connection is made, it can be used to collect datapoints</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="mrpsimulation-examples">
 <h2>MRPSimulation Examples<a class="headerlink" href="#mrpsimulation-examples" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">MRPSimulation</span></code> class contains functions to generate sample data.
@@ -318,7 +394,7 @@ Here random <code class="docutils literal notranslate"><span class="pre">MRPRead
 <h3>Full sphere with polarization<a class="headerlink" href="#full-sphere-with-polarization" title="Link to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/simulation_random_1.png"><img alt="_static/simulation_random_1.png" src="_static/simulation_random_1.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPPolarVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
 <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -327,7 +403,7 @@ Here random <code class="docutils literal notranslate"><span class="pre">MRPRead
 <h3>Fully random sphere<a class="headerlink" href="#fully-random-sphere" title="Link to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/simulation_random_2.png"><img alt="_static/simulation_random_2.png" src="_static/simulation_random_2.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+<span class="n">visu</span> <span class="o">=</span> <span class="n">MRPPolarVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
 <span class="n">visu</span><span class="o">.</span><span class="n">plot3d</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>

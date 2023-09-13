@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from scipy.fft import fft, fftfreq
 from scipy.signal import find_peaks
 
-import MRPReading, MRPMeasurementConfig, MRPMagnetTypes
+import MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry
 
 
 class MRPAnalysisException(Exception):
@@ -116,7 +116,7 @@ class MRPAnalysis:
 
     """ Provides functions to merge two reading, apply calibration measurements"""
     @staticmethod
-    def calculate_center_of_gravity(_reading: MRPReading.MRPReading) -> np.ndarray:
+    def calculate_center_of_gravity(_reading: MRPReading.MRPReading) -> (float, float, float):
         """
         Function calculates the polarisation vector of a given reading.
         By searching for the max positive value in the matrix representation of the reading
@@ -124,14 +124,31 @@ class MRPAnalysis:
         :param _reading: reading
         :type _reading: MRPReading
 
-        :returns: Returns a vector which probably represents the polarization direction
-        :rtype: np.ndarray
+        :returns: Returns a tuple vector (x,y,z) which probably represents the polarization direction
+        :rtype: tuple
         """
-        # VECTOR
-        #matrix = _reading
-        # TO MATRIX
-        # FIND HIGHEST VALUE IN MATRIX => GET DIRECTION INTO CARTESIAN
-        return np.array([0.0, 1.0, 1.0]) # X Y Z TODO ?
+
+        if len(_reading.data) <= 0:
+            raise MRPAnalysisException("No points provided")
+
+        total_x = 0
+        total_y = 0
+        total_z = 0
+
+
+        datapoints_cartesian = _reading.to_numpy_cartesian(_normalize=False, _use_sensor_distance=False)
+        for point in datapoints_cartesian:
+            x, y, z = point
+            total_x += x
+            total_y += y
+            total_z += z
+
+        num_points = len(_reading.data)
+        center_x = total_x / num_points
+        center_y = total_y / num_points
+        center_z = total_z / num_points
+
+        return (center_x, center_y, center_z)
     @staticmethod
     def search_reading_for_value(_reading: MRPReading.MRPReading, _phi: float, _theta: float) -> float:
         """
