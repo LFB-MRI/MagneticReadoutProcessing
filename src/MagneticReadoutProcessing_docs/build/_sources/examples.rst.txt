@@ -294,6 +294,12 @@ The ``MRPHal`` class provides functions to access several different Hall Magneti
     Please see testcases in `hwtest_MRPHal.py.py` for further examples
 
 
+.. note::
+    On Linux system please make sure the user is in the  dialout group, to allow non root serial port access.
+    `$ sudo usermod -a -G dialout $USER`
+
+
+
 Sensor connection
 =================
 

@@ -370,6 +370,11 @@ Always use the bundled (same release version / commit) firmware and library vers
 <p class="admonition-title">Note</p>
 <p>Please see testcases in <cite>hwtest_MRPHal.py.py</cite> for further examples</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Linux system please make sure the user is in the  dialout group, to allow non root serial port access.
+<cite>$ sudo usermod -a -G dialout $USER</cite></p>
+</div>
 <section id="sensor-connection">
 <h3>Sensor connection<a class="headerlink" href="#sensor-connection" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPHal</span>
