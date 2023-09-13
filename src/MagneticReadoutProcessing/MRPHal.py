@@ -19,10 +19,26 @@ class MRPHalSerialPortInformation():
     """
     name: str = "Unknown"
     device_path: str = ""
+    baudrate = 115200
 
-    def __init__(self, _path: str, _name: str = "MRP Unified Sensor"):
+    def __init__(self, _path: str, _name: str = "Unified Sensor", _baudrate: int = 115200):
+        """
+        contructor to save some information about the serial port
+
+        :param _path: filesystem serial port path such e.g. /dev/ttyUSB0
+        :type _path: str
+
+        :param _name: human readable name
+        :type _name: str
+
+        :param _baud: baudrate such as 9600 115200 (default 115200 for UnifiedSensorBaudrate)
+        :type _baud: int
+        """
         self.name = _name
         self.device_path = _path
+
+        if _baudrate > 0:
+            self.baudrate = _baudrate
 
     def is_valid(self) -> bool:
         """
@@ -120,7 +136,7 @@ class MRPPHal:
             if port.serial_number is not None and len(port.serial_number) > 0:
                 if MRPPHal.check_serial_number(port.serial_number):
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "MRP Unified Sensor {}".format(port.serial_number)))
+                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(port.serial_number)))
                 else:
                     valid_ports.append(
                         MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number)))
@@ -128,7 +144,7 @@ class MRPPHal:
                 combined = "{}:{}".format(port.pid, port.vid)
                 if MRPPHal.check_serial_number(port.serial_number):
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "MRP Unified Sensor {}".format(combined)))
+                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(combined)))
                 else:
                     valid_ports.append(
                         MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number)))
@@ -141,13 +157,16 @@ class MRPPHal:
         return valid_ports
 
 
-
-
     current_port: MRPHalSerialPortInformation = None
-
+    serial_port_instance: serial = None
 
     def __init__(self, _selected_port: MRPHalSerialPortInformation):
         self.current_port = _selected_port
+
+
+
+    def __del__(self):
+        self.disconnect()
 
     def set_serial_port_information(self, _port: MRPHalSerialPortInformation):
         """
@@ -168,18 +187,55 @@ class MRPPHal:
         :returns: returns true if a serial connection was made
         :rtype: bool
         """
-        # first check for a valid port
+
+        # DISCONNECT FIRST
+        if self.is_connected():
+            self.disconnect()
+
+        # CHECK PORT FILE EXISTS
         if self.current_port is None or not self.current_port.is_valid():
             raise MRPHalException("set serial port information are invalid")
 
+        # CREATE serial INSTANCE
+        if self.serial_port_instance is None:
+            self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate)
+        else:
+            self.serial_port_instance.baudrate = self.DEFAULT_BAUDRATE
+            self.serial_port_instance.port = self.current_port.device_path
 
-        # open serial port
-        # check version
-        # check id
+        # TRY TO OPEN
+        try:
+            self.serial_port_instance.open()
+        except Exception as e: # remap exception ugly i know:)
+            raise MRPHalException(str(e))
+
+
+
+        return self.serial_port_instance.isOpen()
+    def is_connected(self) -> bool:
+        """
+        returns true if the serial port is open
+
+        :returns: returns true if a serial connection is open
+        :rtype: bool
+        """
+        if self.serial_port_instance is not None and self.serial_port_instance.is_open:
+            return True
+        return False
+
+
+    def disconnect(self):
+        """
+        disconnects a may opened serial port
+        """
+        if self.is_connected():
+            self.serial_port_instance.close()
+
 
     def read_value(self):
-        pass
-        # AXIS
+        if self.is_connected():
+            raise MRPHalException("sensor isn't connected. use connect() first")
+
 
     def read_sensor_capabilities(self):
 

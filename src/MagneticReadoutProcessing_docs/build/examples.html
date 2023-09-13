@@ -278,23 +278,15 @@ To install them use <code class="docutils literal notranslate"><span class="pre"
 <p>Attention: Make sure that the environment (objects around, temperature) does not change and the device is not moved.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPAnalysis</span>
-<span class="kn">import</span> <span class="nn">MRPHal</span>
-
-<span class="c1"># Connect to a realworld sensor</span>
-<span class="n">port</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHalSerialPortInformation</span><span class="p">(</span><span class="s2">&quot;/dev/ttySensorInterface_4242&quot;</span><span class="p">)</span>
-<span class="n">sensor</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">MRPHal</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
-<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-
 <span class="c1"># Create a empty reading with no settings. Only the raw values are needed, no metadata</span>
 <span class="n">reading</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">()</span>
 <span class="c1"># take a few measurements</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
     <span class="n">measurement</span> <span class="o">=</span> <span class="n">MRPReadingEntry</span><span class="o">.</span><span class="n">MRPReadingEntry</span><span class="p">()</span>
     <span class="c1"># readout sensor or use dummy data and assign result</span>
-    <span class="n">measurement</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">read_value</span><span class="p">()</span>
+    <span class="n">measurement</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
     <span class="n">reading</span><span class="o">.</span><span class="n">insert_reading_instance</span><span class="p">(</span><span class="n">measurement</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
 
 <span class="c1"># OPTIONAL: plot deviation</span>
 <span class="kn">import</span> <span class="nn">MRPDataVisualization</span>
@@ -374,6 +366,10 @@ The <code class="docutils literal notranslate"><span class="pre">merge_two_half_
 <p>Please see the hardware firmware folder <code class="docutils literal notranslate"><span class="pre">/src/UnifiedMagBoardFirmware</span></code> in order to setup the sensor hardware.
 Always use the bundled (same release version / commit) firmware and library version in order to use all implemented features.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please see testcases in <cite>hwtest_MRPHal.py.py</cite> for further examples</p>
+</div>
 <section id="sensor-connection">
 <h3>Sensor connection<a class="headerlink" href="#sensor-connection" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MRPHal</span>
@@ -386,7 +382,11 @@ Always use the bundled (same release version / commit) firmware and library vers
 <span class="c1"># as device path MRPHalSerialPortInformation(/dev/ttyUSB0)</span>
 <span class="c1"># using sockets MRPHalSerialPortInformation(socket://&lt;host&gt;:&lt;port&gt;)</span>
 <span class="c1">## For more details refer to: https://pyserial.readthedocs.io/en/latest/url_handlers.html</span>
-<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;/dev/ttyUSB0&#39;</span><span class="p">)</span>
+
+
+<span class="n">sensor</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+
 
 <span class="c1"># After a sensor connection is made, it can be used to collect datapoints</span>
 </pre></div>
