@@ -220,6 +220,13 @@ These information are useful for furhter sensor calibration routines.
 .. image:: _static/test_error_visualisation.png
    :width: 600
 
+Furthermore a simple scatter plot is implemented to plot the reading data on a 1d axis.
+The orange dor marks the mean value of the reading and the other ones are representing the deviation.
+
+.. image:: _static/test_scatter_visualisation.png
+   :width: 600
+
+
 
 Apply a calibration/reference reading
 =====================================

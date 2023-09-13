@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import deque
 
 import MRPReading, MRPAnalysis
 
@@ -39,10 +40,12 @@ class MRPDataVisualization:
         # TABLE
         clust_data = np.random.random((len(_readings), 4))
         collabel = ("Mean", "STD Deviation", "Variance", "Data-Points")
-
+        labels = []
 
         for idx, reading in enumerate(_readings):
             x.append(idx)
+
+            labels.append('{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id))
 
             mean = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
             y.append(mean)
@@ -70,15 +73,12 @@ class MRPDataVisualization:
 
 
         ax1.errorbar(x, y, yerr=error, fmt='o')
-        ax1.set_xticks(range(0, len(_readings)))
-        ax1.set_xlabel("Reading Index")
-        ax1.set_ylabel("Error")
+        ax1.set_xticks(range(0, len(_readings)), labels)
+        ax1.set_xlabel("Reading [id:sensor_id]")
+        ax1.set_ylabel("Error (Variance)")
 
 
-
-
-
-    # SAVE FIGURE IF NEEDED
+        # SAVE FIGURE IF NEEDED
         if _filename is not None:
             plt.savefig(_filename)
         else:
@@ -86,3 +86,56 @@ class MRPDataVisualization:
 
         plt.close()
 
+    @staticmethod
+    def plot_scatter(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None):
+        """
+        Plots a1 1d scatter plot of the reading data
+
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+
+        if _readings is None or len(_readings) <= 0:
+            raise MRPDataVisualizationException("no readings in _reading given")
+
+        x: [float] = []
+        y: [int] = []
+        labels: [str] = []
+        coloring: [int] = []
+
+        for idx, reading in enumerate(_readings):
+            values = reading.to_value_array()
+            labels.append('{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id))
+            # TODO USE deque()
+            for v in values:
+                y.append(idx)
+                x.append(v)
+                coloring.append('blue') # COLOR DOTS BLACK
+
+            # ADD MEAN DOT
+            y.append(idx)
+            x.append(MRPAnalysis.MRPAnalysis.calculate_mean(reading))
+            coloring.append('orange')  # COLOR MEAN DOT DIFFERENT
+
+
+
+
+        plt.scatter(x, y, color=coloring)
+        plt.title('{} - Scatter'.format(_title))
+        plt.xlabel("values")
+        plt.ylabel("reading [id:sensor_id]")
+        plt.yticks(range(0, len(_readings)),  labels)
+
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename)
+        else:
+            plt.show()
+
+        plt.close()

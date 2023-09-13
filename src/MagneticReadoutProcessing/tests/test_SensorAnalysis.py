@@ -22,15 +22,24 @@ class TestMRPDataVisualization(unittest.TestCase):
 
 
         self.reading_zero = MRPReading.MRPReading()
+        self.reading_zero.measurement_config.id = 0
 
+        self.reading_one = MRPReading.MRPReading()
+        self.reading_one.measurement_config.id = 1
 
         for i in range(100):
-            measurement = MRPReadingEntry.MRPReadingEntry()
-            measurement.value = 0.0
-            self.reading_zero.insert_reading_instance(measurement, False)
+            measurement_a = MRPReadingEntry.MRPReadingEntry()
+            measurement_a.value = 0.0
+            self.reading_zero.insert_reading_instance(measurement_a, False)
+
+            measurement_b = MRPReadingEntry.MRPReadingEntry()
+            measurement_b.value = (random.random() -0.5) * 0.05
+            self.reading_one.insert_reading_instance(measurement_b, False)
 
 
         self.reading_set_a = MRPReading.MRPReading()
+        self.reading_set_a.measurement_config.id = 2
+
         values = [10, 5, 12, 2, 20, 4.5]
         for value in values:
             measurement = MRPReadingEntry.MRPReadingEntry()
@@ -59,10 +68,13 @@ class TestMRPDataVisualization(unittest.TestCase):
 
     def test_error_visualisation(self):
         export_filepath = os.path.join(self.import_export_test_folderpath, "test_error_visualisation.png")
-
-        rset: [MRPReading.MRPReading] = [ self.reading_zero, self.reading_set_a]
+        rset: [MRPReading.MRPReading] = [ self.reading_zero, self.reading_one, self.reading_set_a]
         MRPDataVisualization.MRPDataVisualization.plot_error(rset, "test_error_visualisation", export_filepath)
 
+    def test_scatter_visualisation(self):
+        export_filepath = os.path.join(self.import_export_test_folderpath, "test_scatter_visualisation.png")
+        rset: [MRPReading.MRPReading] = [self.reading_zero, self.reading_one, self.reading_set_a]
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(rset, "test_scatter_visualisation", export_filepath)
 
 
 
