@@ -79,3 +79,17 @@ class MRPBaseSensor(Exception):
         """
 
         return self.get_reading('b', _sensor_id)
+
+    def get_vector(self, _sensor_id: int = 0) -> (float, float, float):
+        """
+        returns the x,y,z vector from 3D magnetometer sensors value for a given sensor id
+        trigger a readout first using the query_readout function
+
+        :param _sensor_id: get b axis from specified sensor_id in range from 0 to self.sensor_count
+        :type _sensor_id: int
+
+        :returns: returns the latest (x, y, z) field value
+        :rtype: (float, float, float)
+        """
+
+        return (self.get_reading('x', _sensor_id), self.get_reading('y', _sensor_id), self.get_reading('z', _sensor_id))

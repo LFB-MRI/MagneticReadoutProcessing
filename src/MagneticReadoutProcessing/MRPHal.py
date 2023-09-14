@@ -70,7 +70,8 @@ class MRPPHal:
     """
 
     TERMINATION_CHARACTER = '\n'
-
+    READLINE_TIMEOUT = 0.1
+    READLINE_RETRY_ATTEMPT = 5
     @staticmethod
     def check_serial_number(_serial_number: str) -> bool:
         """
@@ -202,8 +203,7 @@ class MRPPHal:
         if self.serial_port_instance is None:
             try:
                 # call opens directly
-                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True, timeout=1.2)
-
+                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True, timeout=self.READLINE_TIMEOUT)
                 # CREATE A BUFFERED READ/WRITE INSTANCE TO HANDlE send/rec over the port
                 self.sio = io.TextIOWrapper(io.BufferedRWPair(self.serial_port_instance, self.serial_port_instance))
             except Exception as e: # remap exception ugly i know:)
@@ -267,7 +267,7 @@ class MRPPHal:
 
         # wait for response
         result: str = ""
-        for i in range(5):
+        for i in range(min(self.READLINE_RETRY_ATTEMPT, 1)):
             result = self.sio.readline()
             if len(result) > 0:
                 break
