@@ -23,8 +23,7 @@ class TestMPRHal(unittest.TestCase):
         if not os.path.exists(self.import_export_test_folderpath):
             os.makedirs(self.import_export_test_folderpath)
 
-        self.reading_calibration = MRPReading.MRPReading()
-        self.reading_calibration.measurement_config.id = 0
+
 
 
 
@@ -56,26 +55,39 @@ class TestMPRHal(unittest.TestCase):
         self.assertIsNotNone(basesensor.get_b())
 
 
+
+    
+
+
+
+    #@unittest.skip
     def test_basesensor_create_calibration_reading(self):
+        reading_calibrations: [MRPReading.MRPReading] = []
+
 
         samples = 1000
         basesensor: MRPBaseSensor.MRPBaseSensor = MRPBaseSensor.MRPBaseSensor(self.hal_instance)
 
-        for i in range(samples):
-            print("capture: {}".format(i))
-            basesensor.query_readout()
+        reading:MRPReading.MRPReading = None
+        for senid in range(basesensor.sensor_count):
+            reading: MRPReading.MRPReading = MRPReading.MRPReading()
+            reading.measurement_config.id = senid
 
-            measurement_a = MRPReadingEntry.MRPReadingEntry()
-            measurement_a.value = basesensor.get_b()
-            self.reading_calibration.insert_reading_instance(measurement_a, False)
+            for i in range(samples):
+                print("capture: {}".format(i))
+                basesensor.query_readout()
+
+                measurement_a = MRPReadingEntry.MRPReadingEntry()
+                measurement_a.value = basesensor.get_b(senid)
+                reading.insert_reading_instance(measurement_a, False)
+
+        reading_calibrations.append(reading)
 
         export_filepath = os.path.join(self.import_export_test_folderpath, "test_basesensor_create_calibration_reading_error_{}.png".format(samples))
-        rset: [MRPReading.MRPReading] = [self.reading_calibration]
-        MRPDataVisualization.MRPDataVisualization.plot_error(rset, "test_basesensor_create_calibration_reading_error", export_filepath)
+        MRPDataVisualization.MRPDataVisualization.plot_error(reading, "test_basesensor_create_calibration_reading_error", export_filepath)
 
         export_filepath = os.path.join(self.import_export_test_folderpath, "test_basesensor_create_calibration_reading_scatter_{}.png".format(samples))
-        rset: [MRPReading.MRPReading] = [self.reading_calibration]
-        MRPDataVisualization.MRPDataVisualization.plot_scatter(rset, "test_basesensor_create_calibration_reading_scatter", export_filepath)
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(reading, "test_basesensor_create_calibration_reading_scatter", export_filepath)
 
 
 
