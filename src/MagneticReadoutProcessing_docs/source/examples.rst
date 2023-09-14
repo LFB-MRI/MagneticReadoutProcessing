@@ -361,7 +361,7 @@ Here the goal is get the value ``b`` in ``mT``.
     # EXTENDS THE `Query Sensor capabilities` EXAMPLE
     # The MRPHal instance sensor is already connected to a hardware sensor
     basesensor = MRPBaseSensor.MRPBaseSensor(sensor)
-    # query a complete readout of all connected sensors and their axis
+    # queries a complete readout of all connected sensors and their axis
     basesensor.query_readout()
     # readout default sensor
     print(basesensor.get_b())

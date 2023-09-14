@@ -118,6 +118,30 @@ set self.__traceback__ to tb and return self.</p>
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPBaseSensor.</span></span><span class="sig-name descname"><span class="pre">MRPBaseSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="MagneticReadoutProcessing.MRPHal.html#MRPHal.MRPPHal" title="MRPHal.MRPPHal"><span class="pre">MRPPHal</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor" title="Link to this definition"></a></dt>
 <dd><p>Baseclass for the simplest sensor</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.get_b">
+<span class="sig-name descname"><span class="pre">get_b</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.get_b" title="Link to this definition"></a></dt>
+<dd><p>returns the b field value for a given sensor id
+trigger a readout first using the query_readout function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_sensor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – get b axis from specified sensor_id in range from 0 to self.sensor_count</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the latest b field value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.query_readout">
+<span class="sig-name descname"><span class="pre">query_readout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.query_readout" title="Link to this definition"></a></dt>
+<dd><p>queries a complete readout of all connected sensors and their axis</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.with_traceback">
 <span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.with_traceback" title="Link to this definition"></a></dt>
 <dd><p>Exception.with_traceback(tb) –

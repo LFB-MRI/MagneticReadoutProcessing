@@ -50,7 +50,9 @@ class MRPBaseSensor(Exception):
         self.sensor_connection = _sensor_connection
 
     def query_readout(self):
-
+        """
+        queries a complete readout of all connected sensors and their axis
+        """
         for sensor_id in range(0,self.sensor_count):
             for axis in self.sensor_axis:
                 self.readout_result[sensor_id][axis] = self.sensor_connection.query_command_float("readsensor {} {}".format(axis, sensor_id))
@@ -65,4 +67,15 @@ class MRPBaseSensor(Exception):
 
         return self.readout_result[_sensor_id][_axis]
     def get_b(self, _sensor_id: int = 0) -> float:
+        """
+        returns the b field value for a given sensor id
+        trigger a readout first using the query_readout function
+
+        :param _sensor_id: get b axis from specified sensor_id in range from 0 to self.sensor_count
+        :type _sensor_id: int
+
+        :returns: returns the latest b field value
+        :rtype: float
+        """
+
         return self.get_reading('b', _sensor_id)
