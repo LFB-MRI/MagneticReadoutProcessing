@@ -29,6 +29,7 @@
    :recursive:
 
    MagneticReadoutProcessing.MRPAnalysis
+   MagneticReadoutProcessing.MRPBaseSensor
    MagneticReadoutProcessing.MRPConfig
    MagneticReadoutProcessing.MRPDataVisualization
    MagneticReadoutProcessing.MRPHal

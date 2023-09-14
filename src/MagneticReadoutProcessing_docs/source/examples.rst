@@ -318,18 +318,6 @@ Connect a physical sensor
 
     sensor.connect()
 
-Query Sensor capabilities
-=========================
-
-After a sensor connection is made, its possible to interact with the sensor.
-The next step is to get some information about the connected sensor.
-Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.
-
-.. code-block:: python
-
-     # EXTENDS THE `Connect a physical sensor` EXAMPLE
-
-
 Raw sensor interaction
 ======================
 
@@ -342,6 +330,46 @@ These commands are implemented into the sensors firmware and allows debugging of
     # sends a cmd over sensors debug interface
     ret = sensor.send_command("version")
     print(ret)
+
+
+
+Query Sensor capabilities
+=========================
+
+After a sensor connection is made, its possible to interact with the sensor.
+The next step is to get some information about the connected sensor.
+Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.
+
+.. code-block:: python
+
+    # EXTENDS THE `Connect a physical sensor` EXAMPLE
+    cap = sensor.get_sensor_capabilities() # => e.g. [static]
+    id = sensor.get_sensor_id() # => 24ab42
+    sc = sensor.get_sensor_count() # => 2
+
+
+
+Readout Value Readout
+=====================
+
+This readout example queries the sensor for a measurement.
+In this example we are using a ``static`` sensor, so just  one sensor.
+Here the goal is get the value ``b`` in ``mT``.
+
+.. code-block:: python
+
+    # EXTENDS THE `Query Sensor capabilities` EXAMPLE
+    # The MRPHal instance sensor is already connected to a hardware sensor
+    basesensor = MRPBaseSensor.MRPBaseSensor(sensor)
+    # query a complete readout of all connected sensors and their axis
+    basesensor.query_readout()
+    # readout default sensor
+    print(basesensor.get_b())
+    # readout the sensor with id 1
+    print(basesensor.get_b(1))
+
+
+
 
 
 MRPSimulation Examples

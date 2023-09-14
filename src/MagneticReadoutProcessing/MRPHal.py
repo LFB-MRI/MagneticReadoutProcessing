@@ -1,14 +1,9 @@
 import serial
 import serial.tools.list_ports
-from enum import Enum
 import re
 import os
 import io
-from pathlib import Path
 
-from docutils.io import unicode
-
-import MRPReading, MRPMeasurementConfig
 
 
 class MRPHalException(Exception):
@@ -17,7 +12,7 @@ class MRPHalException(Exception):
         super().__init__(self.message)
 
 
-class MRPHalSerialPortInformation():
+class MRPHalSerialPortInformation:
     """
     A little helper-class to store name and serial port device path
     """
@@ -68,13 +63,10 @@ class MRPHalSerialPortInformation():
 
 
 
-class MRPHalSensorState:
-    pass
-
-
 class MRPPHal:
     """
-    Baseclass for hardware sensor interaction
+    Baseclass for hardware sensor interaction using a serial interface.
+    It contains functions to send rec commands from/to the sensor but no interpretation
     """
 
     TERMINATION_CHARACTER = '\n'
@@ -176,8 +168,6 @@ class MRPPHal:
     def __init__(self, _selected_port: MRPHalSerialPortInformation):
         self.current_port = _selected_port
 
-
-
     def __del__(self):
         self.disconnect()
 
@@ -227,8 +217,6 @@ class MRPPHal:
             except Exception as e: # remap exception ugly i know:)
                 raise MRPHalException(str(e))
 
-
-
         return self.serial_port_instance.isOpen()
     def is_connected(self) -> bool:
         """
@@ -248,13 +236,9 @@ class MRPPHal:
         if self.is_connected():
             self.serial_port_instance.close()
 
-
-
     def read_value(self):
         if not self.is_connected():
             raise MRPHalException("sensor isn't connected. use connect() first")
-
-
 
     def send_command(self, _cmd: str) -> [str]:
         """
@@ -298,18 +282,104 @@ class MRPPHal:
         if self.TERMINATION_CHARACTER in result:
             return result.split(self.TERMINATION_CHARACTER).remove('')
 
-
         return result
 
 
-       # print(hello == unicode("hello\n"))
+    def query_command_str(self,_cmd: str) -> str:
+        """
+        queries a sensor command and returns the response as string
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the response as concat string
+        :rtype: str
+        """
+        res = self.send_command(_cmd)
+        if 'parse error' in res:
+            raise MRPHalException("sensor returned invalid command or command not implemented for {}".format(_cmd))
+
+        return "".join(str(e) for e in res)
+
+    def query_command_int(self, _cmd: str) -> int:
+        """
+        queries a sensor command and returns the response as int
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the as int parsed result
+        :rtype: int
+        """
+        res = self.query_command_str(_cmd)
+        if len(res) > 0:
+            if '0x' in res:
+                return int(res, base=16)
+            return int(res)
+        raise MRPHalException("cant parse result {} for query {} into int".format(res, _cmd))
+
+
+    def query_command_float(self, _cmd: str) -> float:
+        """
+        queries a sensor command and returns the response as float
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the as float parsed result
+        :rtype: float
+        """
+        res = self.query_command_str(_cmd)
+        if len(res) > 0:
+            return float(res)
+        raise MRPHalException("cant parse result {} for query {} into int".format(res, _cmd))
+
+
+    def get_sensor_id(self) -> str:
+        """
+        returns the sensors id
+
+        :returns: id as string default unknown
+        :rtype: str
+        """
+        res = self.query_command_str('id')
+        if len(res) > 0:
+            return res
+        return "unknown"
+
+
+    def get_sensor_count(self) -> int:
+        """
+        returns the connected sensors relevant for chained sensors
+
+       :returns: sensor count
+       :rtype: str
+       """
+        try:
+            return self.query_command_int('sensorcnt')
+        except MRPHalException as e:
+            return 0
+
+    def get_sensor_capabilities(self) -> [str]:
+        """
+        returns the sensor capabilities defined in the sensor firmware as string list
+
+        :returns: capabilities e.g. static, axis_x,..
+        :rtype: [str]
+        """
+        try:
+            res:str = self.query_command_str('info')
+            if ',' in res:
+                return res.split(',')
+            return res
+        except MRPHalException as e:
+            return []
 
 
 
-    def read_sensor_capabilities(self):
 
-        commands_to_request = [
-            'version', 'id', 'senorcount'
-        ]
+
+
+
 
 

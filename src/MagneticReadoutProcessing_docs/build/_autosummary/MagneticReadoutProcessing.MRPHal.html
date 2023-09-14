@@ -50,6 +50,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Documentation</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPBaseSensor.html">MagneticReadoutProcessing.MRPBaseSensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPDataVisualization.html">MagneticReadoutProcessing.MRPDataVisualization</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">MagneticReadoutProcessing.MRPHal</a></li>
@@ -135,7 +136,8 @@ set self.__traceback__ to tb and return self.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="MRPHal.MRPPHal">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPHal.</span></span><span class="sig-name descname"><span class="pre">MRPPHal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_selected_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#MRPHal.MRPHalSerialPortInformation" title="MRPHal.MRPHalSerialPortInformation"><span class="pre">MRPHalSerialPortInformation</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHal.MRPPHal" title="Link to this definition"></a></dt>
-<dd><p>Baseclass for hardware sensor interaction</p>
+<dd><p>Baseclass for hardware sensor interaction using a serial interface.
+It contains functions to send rec commands from/to the sensor but no interpretation</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="MRPHal.MRPPHal.check_serial_number">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_serial_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_serial_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.check_serial_number" title="Link to this definition"></a></dt>
@@ -176,6 +178,50 @@ Add your own sensor ids into the SERIAL_LUT variable</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.get_sensor_capabilities">
+<span class="sig-name descname"><span class="pre">get_sensor_capabilities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'str'&gt;]</span></span></span><a class="headerlink" href="#MRPHal.MRPPHal.get_sensor_capabilities" title="Link to this definition"></a></dt>
+<dd><p>returns the sensor capabilities defined in the sensor firmware as string list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>capabilities e.g. static, axis_x,..</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.get_sensor_count">
+<span class="sig-name descname"><span class="pre">get_sensor_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.get_sensor_count" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>returns the connected sensors relevant for chained sensors</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sensor count</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.get_sensor_id">
+<span class="sig-name descname"><span class="pre">get_sensor_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.get_sensor_id" title="Link to this definition"></a></dt>
+<dd><p>returns the sensors id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>id as string default unknown</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="MRPHal.MRPPHal.is_connected">
 <span class="sig-name descname"><span class="pre">is_connected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.is_connected" title="Link to this definition"></a></dt>
 <dd><p>returns true if the serial port is open</p>
@@ -211,18 +257,79 @@ The function returns the max value of (x,y,z) or (d,h)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="MRPHal.MRPPHal.send_command">
-<span class="sig-name descname"><span class="pre">send_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.send_command" title="Link to this definition"></a></dt>
-<dd><p>sends a command to the sensor</p>
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.query_command_float">
+<span class="sig-name descname"><span class="pre">query_command_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.query_command_float" title="Link to this definition"></a></dt>
+<dd><p>queries a sensor command and returns the response as float</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>_cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – command like help id read…</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>returns sensor response</p>
+<dd class="field-even"><p>returns the as float parsed result</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.query_command_int">
+<span class="sig-name descname"><span class="pre">query_command_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.query_command_int" title="Link to this definition"></a></dt>
+<dd><p>queries a sensor command and returns the response as int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – command like help id read…</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the as int parsed result</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.query_command_str">
+<span class="sig-name descname"><span class="pre">query_command_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#MRPHal.MRPPHal.query_command_str" title="Link to this definition"></a></dt>
+<dd><p>queries a sensor command and returns the response as string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – command like help id read…</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the response as concat string</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHal.MRPPHal.send_command">
+<span class="sig-name descname"><span class="pre">send_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'str'&gt;]</span></span></span><a class="headerlink" href="#MRPHal.MRPPHal.send_command" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>sends a command to the sensor</p>
+<dl class="field-list simple">
+<dt class="field-odd">param _cmd<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command like help id read…</p>
+</dd>
+<dt class="field-even">type _cmd<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>returns sensor response as line splitted by ‘</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>‘</dt><dd><dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[str]</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>

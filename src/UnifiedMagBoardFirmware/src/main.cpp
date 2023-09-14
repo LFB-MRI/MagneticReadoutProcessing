@@ -114,7 +114,7 @@ bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response){
   //todo check which sensor Tpes are presnet
-  DEBUG_SERIAL.println("[static]");
+  DEBUG_SERIAL.println("static,axis_b");
 }
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void temp_debug(DBGCommandParser::Argument *args, char *response)
@@ -249,8 +249,8 @@ void setup()
       DEBUG_SERIAL.println(F("> id                           sensor serial number for identification purposes"));
       DEBUG_SERIAL.println(F("> sysstate                     returns current system state machine state"));
       DEBUG_SERIAL.println(F("> opmode                       returns 1 if in single mode"));
-      DEBUG_SERIAL.println(F("> sensorscan                   scans i2c bus for sensors"));
-      DEBUG_SERIAL.println(F("> senorcount                   returns found sensorcount"));
+      DEBUG_SERIAL.println(F("> sensorscn                   scans i2c bus for sensors"));
+      DEBUG_SERIAL.println(F("> sensorcnt                   returns found sensorcount"));
       DEBUG_SERIAL.println(F("> readsensor x <0-senorcount>  returns the readout result for a given sensor index for X axis"));
       DEBUG_SERIAL.println(F("> readsensor y <0-senorcount>  returns the readout result for a given sensor index for Y axis"));
       DEBUG_SERIAL.println(F("> readsensor z <0-senorcount>  returns the readout result for a given sensor index for Z axis"));
@@ -259,7 +259,7 @@ void setup()
       DEBUG_SERIAL.println(F("> anc <base_id>                perform a autonumbering sequence manually"));
       DEBUG_SERIAL.println(F("> ancid                        returns the current set autonumbering base id (-1 in singlemode)"));
       DEBUG_SERIAL.println(F("> reset                        performs reset of the system"));
-      DEBUG_SERIAL.println(F("> capabilities                 logs sensor capabilities"));
+      DEBUG_SERIAL.println(F("> info                         logs sensor capabilities"));
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
@@ -281,7 +281,7 @@ void setup()
     DEBUG_SERIAL.println("SingleModeDisabled");
   } });
 
-  debug_command_parser.registerCommand("senorcount", "", [](DBGCommandParser::Argument *args, char *response)
+  debug_command_parser.registerCommand("sensorcnt", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(sensor_number); });
 
   // readsensor command accepts an int as argument for the given sensor id and x/y/z/b for the axis
@@ -289,7 +289,7 @@ void setup()
 
   debug_command_parser.registerCommand("temp", "", &temp_debug);
 
-  debug_command_parser.registerCommand("sensorscan", "", [](DBGCommandParser::Argument *args, char *response)
+  debug_command_parser.registerCommand("sensorscn", "", [](DBGCommandParser::Argument *args, char *response)
                                        { scan_for_tlv493d_sensors();
                                        DEBUG_SERIAL.println(sensor_number); });
 
@@ -309,7 +309,7 @@ void setup()
   debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
                                        { HOST_SERIAL.println("reset"); RESET_SYSTEM_FUNCTION(); });
 
-  debug_command_parser.registerCommand("capabilities", "", &list_sensor_capabilities);
+  debug_command_parser.registerCommand("info", "", &list_sensor_capabilities);
   // GPIO SETUP
   pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
   pinMode(STATUS_LED_PIN, OUTPUT);

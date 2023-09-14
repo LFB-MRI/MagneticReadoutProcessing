@@ -69,8 +69,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrphal-examples">MRPHal Examples</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#connect-a-physical-sensor">Connect a physical sensor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#query-sensor-capabilities">Query Sensor capabilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#raw-sensor-interaction">Raw sensor interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-sensor-capabilities">Query Sensor capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#readout-value-readout">Readout Value Readout</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mrpsimulation-examples">MRPSimulation Examples</a><ul>
@@ -394,15 +395,6 @@ Always use the bundled (same release version / commit) firmware and library vers
 </pre></div>
 </div>
 </section>
-<section id="query-sensor-capabilities">
-<h3>Query Sensor capabilities<a class="headerlink" href="#query-sensor-capabilities" title="Link to this heading"></a></h3>
-<p>After a sensor connection is made, its possible to interact with the sensor.
-The next step is to get some information about the connected sensor.
-Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Connect a physical sensor` EXAMPLE</span>
-</pre></div>
-</div>
-</section>
 <section id="raw-sensor-interaction">
 <h3>Raw sensor interaction<a class="headerlink" href="#raw-sensor-interaction" title="Link to this heading"></a></h3>
 <p>Its possible to interface the sensor using raw commands like <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>, <code class="docutils literal notranslate"><span class="pre">readout</span> <span class="pre">x</span> <span class="pre">0</span></code>.
@@ -411,6 +403,35 @@ These commands are implemented into the sensors firmware and allows debugging of
 <span class="c1"># sends a cmd over sensors debug interface</span>
 <span class="n">ret</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">send_command</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="query-sensor-capabilities">
+<h3>Query Sensor capabilities<a class="headerlink" href="#query-sensor-capabilities" title="Link to this heading"></a></h3>
+<p>After a sensor connection is made, its possible to interact with the sensor.
+The next step is to get some information about the connected sensor.
+Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Connect a physical sensor` EXAMPLE</span>
+<span class="n">cap</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_sensor_capabilities</span><span class="p">()</span> <span class="c1"># =&gt; e.g. [static]</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_sensor_id</span><span class="p">()</span> <span class="c1"># =&gt; 24ab42</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_sensor_count</span><span class="p">()</span> <span class="c1"># =&gt; 2</span>
+</pre></div>
+</div>
+</section>
+<section id="readout-value-readout">
+<h3>Readout Value Readout<a class="headerlink" href="#readout-value-readout" title="Link to this heading"></a></h3>
+<p>This readout example queries the sensor for a measurement.
+In this example we are using a <code class="docutils literal notranslate"><span class="pre">static</span></code> sensor, so just  one sensor.
+Here the goal is get the value <code class="docutils literal notranslate"><span class="pre">b</span></code> in <code class="docutils literal notranslate"><span class="pre">mT</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Query Sensor capabilities` EXAMPLE</span>
+<span class="c1"># The MRPHal instance sensor is already connected to a hardware sensor</span>
+<span class="n">basesensor</span> <span class="o">=</span> <span class="n">MRPBaseSensor</span><span class="o">.</span><span class="n">MRPBaseSensor</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span>
+<span class="c1"># query a complete readout of all connected sensors and their axis</span>
+<span class="n">basesensor</span><span class="o">.</span><span class="n">query_readout</span><span class="p">()</span>
+<span class="c1"># readout default sensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basesensor</span><span class="o">.</span><span class="n">get_b</span><span class="p">())</span>
+<span class="c1"># readout the sensor with id 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basesensor</span><span class="o">.</span><span class="n">get_b</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>

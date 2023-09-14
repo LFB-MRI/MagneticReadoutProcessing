@@ -1,0 +1,68 @@
+import MRPHal
+
+
+class MMRPBaseSensorException(Exception):
+    def __init__(self, message="MMRPBaseSensorException thrown"):
+        self.message = message
+        super().__init__(self.message)
+
+
+class MRPBaseSensor(Exception):
+    """
+    Baseclass for the simplest sensor
+    """
+
+    sensor_connection: MRPHal.MRPPHal = None
+    readout_result: dict = {}
+    capabilities: list[str] = []
+    sensor_axis: list = []
+    sensor_count: int = 0
+    def __init__(self, _sensor_connection: MRPHal.MRPPHal):
+        if not _sensor_connection.is_connected():
+            raise MMRPBaseSensorException("sensor is not connected please use _sensor_connection.connect() first")
+
+        # CHECK CONNECTED SENSORS
+        self.sensor_count = _sensor_connection.get_sensor_count()
+        if self.sensor_count <= 0:
+            raise MMRPBaseSensorException("connected sensor board has no connected sensors")
+
+        # CHECK REQUIRED CAPS
+        self.capabilities = _sensor_connection.get_sensor_capabilities()
+        if 'static' not in self.capabilities:
+            raise MMRPBaseSensorException("sensor capabilities list does not includes static so MRPBaseSensor is not the right interface for this sensor")
+
+        # EXTRACT sensor AXIS
+        for cap in self.capabilities:
+            if 'axis_' in cap:
+                self.sensor_axis.append(cap.split('_')[1])
+
+        if len(self.sensor_axis) <= 0:
+            raise MMRPBaseSensorException("sensor capabilities has no axis to readout such as axis_b axis_x")
+
+
+        # POPULATE RESULT DICT
+        for sc in range(self.sensor_count):
+            self.readout_result[sc] = {}
+            for axis in self.sensor_axis:
+                self.readout_result[sc][axis] = 0.0
+
+
+        self.sensor_connection = _sensor_connection
+
+    def query_readout(self):
+
+        for sensor_id in range(0,self.sensor_count):
+            for axis in self.sensor_axis:
+                self.readout_result[sensor_id][axis] = self.sensor_connection.query_command_float("readsensor {} {}".format(axis, sensor_id))
+
+
+    def get_reading(self, _axis:str = 'b', _sensor_id: int = 0) -> float:
+        if _sensor_id > self.sensor_count:
+            raise MMRPBaseSensorException("given _sensor_id is out of range (max:{})".format(self.sensor_count))
+
+        if _axis not in self.sensor_axis:
+            raise MMRPBaseSensorException("sensor does not implement this axis {}".format(_axis))
+
+        return self.readout_result[_sensor_id][_axis]
+    def get_b(self, _sensor_id: int = 0) -> float:
+        return self.get_reading('b', _sensor_id)

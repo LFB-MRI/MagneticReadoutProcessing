@@ -59,30 +59,22 @@ class TestMPRHal(unittest.TestCase):
         self.assertRegex(ret, "v[0-9]+.[0-9]+.[0-9]+")
 
 
-
-
-    def test_sensor_connection(self):
-        port = MRPHal.MRPHalSerialPortInformation(_path=self.DEVICE_SERIAl_PORT)
-        hal_instance = MRPHal.MRPPHal(port)
-
+    def test_sensor_capabilities(self):
+        # GET A UNIFIED SENSOR
+        ports: [MRPHal.MRPHalSerialPortInformation] = MRPHal.MRPPHal.list_serial_ports()
+        selected_port:MRPHal.MRPHalSerialPortInformation = None
+        for port in ports:
+            if 'Unified Sensor' in port.name:
+                selected_port = port
+                print(port)
+        # CONNECT
+        hal_instance: MRPHal.MRPPHal = MRPHal.MRPPHal(selected_port)
         hal_instance.connect()
 
-
-
-
-        hal_instance.disconnect()
-
-
-
-
-
-    def test_sensor_readout(self):
-        pass
-
-
-
-
-
+        # TRy to read basic commands
+        cap = hal_instance.get_sensor_capabilities()
+        id = hal_instance.get_sensor_id()
+        sc = hal_instance.get_sensor_count()
 
 
 
