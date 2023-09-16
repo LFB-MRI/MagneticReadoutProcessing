@@ -124,8 +124,6 @@ class MRPDataVisualization:
             coloring.append('orange')  # COLOR MEAN DOT DIFFERENT
 
 
-
-
         plt.scatter(x, y, color=coloring)
         plt.title('{} - Scatter'.format(_title))
         plt.xlabel("values")
@@ -139,3 +137,75 @@ class MRPDataVisualization:
             plt.show()
 
         plt.close()
+
+
+    @staticmethod
+    def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None):
+        """
+        Plots a temperature plot of the reading data
+
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+
+        if _readings is None or len(_readings) <= 0:
+            raise MRPDataVisualizationException("no readings in _reading given")
+        num_readings = len(_readings)
+        # Read in the relevant data from our input file
+       # dt = np.dtype([('month', np.int), ('day', np.int), ('T', np.float)])
+       # data = np.genfromtxt('boston2012.dat', dtype=dt, usecols=(1, 2, 3),delimiter=(4, 2, 2, 6))
+
+        # In our heatmap, nan will mean "no such date", e.g. 31 June
+
+        ylabels: [str] = []
+
+        max_len_datapoints = 0
+        for r in _readings:
+            max_len_datapoints = max([max_len_datapoints, len(r.data)])
+
+        heatmap = np.empty((num_readings, max_len_datapoints))
+        heatmap[:] = np.nan
+
+        for reading_idx, reading in enumerate(_readings):
+            # add reading label
+            ylabels.append('{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id))
+            # add datapoints for each reading
+            for idx, dp in enumerate(reading.data):
+                heatmap[reading_idx, idx] = dp.temperature
+
+        # Plot the heatmap, customize and label the ticks
+        fig = plt.figure()
+        im = fig.imshow(heatmap, interpolation='nearest')
+        fig.set_yticks(range(num_readings))
+
+        ax.set_yticklabels(ylabels)
+
+
+        #days = np.array(range(0, 31, 2))
+        #ax.set_xticks(days)
+        #ax.set_xticklabels(['{:d}'.format(day + 1) for day in days])
+        ax.set_xlabel('Temperature')
+        ax.set_ylabel('reading [id:sensor_id]')
+
+        ax.set_title('{} - Scatter'.format(_title))
+
+        # Add a colour bar along the bottom and label it
+        cbar = fig.colorbar(ax=ax, mappable=im, orientation='horizontal')
+        cbar.set_label('Temperature, $^\circ\mathrm{C}$')
+
+        plt.show()
+
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename, dpi=1200)
+        else:
+            plt.show()
+
+        plt.close()
+

@@ -56,7 +56,7 @@ class TestMPRHal(unittest.TestCase):
 
 
 
-    
+
 
 
 
@@ -79,6 +79,7 @@ class TestMPRHal(unittest.TestCase):
 
                 measurement_a = MRPReadingEntry.MRPReadingEntry()
                 measurement_a.value = basesensor.get_b(senid)
+                measurement_a.temperature = basesensor.get_temp(senid)
                 reading.insert_reading_instance(measurement_a, False)
 
         reading_calibrations.append(reading)

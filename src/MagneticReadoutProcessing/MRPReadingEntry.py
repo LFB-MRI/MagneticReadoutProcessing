@@ -13,6 +13,16 @@ class MRPReadingEntry:
     _reading_index_theta = None
     _is_valid = False
     _id = None
+    _temperature = -254.0
+
+    @property
+    def temperature(self):
+        return self._temperature
+
+    @temperature.setter
+    def temperature(self, value: float):
+        self._temperature = value
+
     @property
     def value(self):
         return self._value
@@ -73,7 +83,7 @@ class MRPReadingEntry:
         self._id = value
 
 
-    def __init__(self, p_id: int = None, p_value: float = None, p_phi: float = None, p_theta: float = None, p_rip: int = None, p_rit: int = None, p_is_valid: bool = False):
+    def __init__(self, p_id: int = None, p_value: float = None, p_phi: float = None, p_theta: float = None, p_rip: int = None, p_rit: int = None, p_is_valid: bool = False, p_temperature: float = -254.0):
             self._id = p_id
             self._value = p_value
             self._phi = p_phi
@@ -81,6 +91,7 @@ class MRPReadingEntry:
             self._reading_index_phi = p_rip
             self._reading_index_theta = p_rit
             self._is_valid = p_is_valid
+            self._temperature = p_temperature
 
     def from_dict(self, _dict: dict):
         errors = 0
@@ -110,6 +121,10 @@ class MRPReadingEntry:
             self._id = int(_dict['id'])
             errors = errors + 1
 
+        if 'temperature' in _dict:
+            self._temperature = int(_dict['temperature'])
+            errors = errors + 1
+
         if errors < len(self.__dict__()):
             raise MRPReadingEntryException("from_dict import failed")
     def __dict__(self) -> dict:
@@ -120,7 +135,8 @@ class MRPReadingEntry:
             'reading_index_phi': self._reading_index_phi,
             'reading_index_theta': self._reading_index_theta,
             'is_valid': self._is_valid,
-            'id': self._id
+            'id': self._id,
+            'temperature': self._temperature
         }
     def to_dict(self) -> dict:
         return self.__dict__()

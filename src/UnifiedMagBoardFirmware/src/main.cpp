@@ -114,7 +114,7 @@ bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response){
   //todo check which sensor Tpes are presnet
-  DEBUG_SERIAL.println("static,axis_b");
+  DEBUG_SERIAL.println("static, axis_b, axis_x, axis_y, axis_z, axis_temp");
 }
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void temp_debug(DBGCommandParser::Argument *args, char *response)

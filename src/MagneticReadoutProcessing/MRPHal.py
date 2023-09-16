@@ -368,7 +368,11 @@ class MRPPHal:
         :rtype: [str]
         """
         try:
-            res:str = self.query_command_str('info')
+            res: str = self.query_command_str('info')
+
+            if ' ' in res:
+                res = res.replace(' ', '')
+
             if ',' in res:
                 return res.split(',')
             return res

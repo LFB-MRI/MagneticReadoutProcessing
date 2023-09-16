@@ -66,6 +66,23 @@ class MRPBaseSensor(Exception):
             raise MMRPBaseSensorException("sensor does not implement this axis {}".format(_axis))
 
         return self.readout_result[_sensor_id][_axis]
+
+    def get_temp(self, _sensor_id: int = 0) -> float:
+        """
+        returns the sensors temperature
+        trigger a readout first using the query_readout function
+
+        :param _sensor_id: get b axis from specified sensor_id in range from 0 to self.sensor_count
+        :type _sensor_id: int
+
+        :returns: returns the temperature if not able to read temperature the result will be -254.0
+        :rtype: float
+        """
+
+        if 'temp' in self.sensor_axis:
+            return self.get_reading('temp', _sensor_id)
+        return -254.0
+
     def get_b(self, _sensor_id: int = 0) -> float:
         """
         returns the b field value for a given sensor id

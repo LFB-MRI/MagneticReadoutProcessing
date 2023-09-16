@@ -30,10 +30,12 @@ class TestMRPDataVisualization(unittest.TestCase):
         for i in range(100):
             measurement_a = MRPReadingEntry.MRPReadingEntry()
             measurement_a.value = 0.0
+            measurement_a.temperature = (random.random() - 0.5) * 50.0
             self.reading_zero.insert_reading_instance(measurement_a, False)
 
             measurement_b = MRPReadingEntry.MRPReadingEntry()
             measurement_b.value = (random.random() -0.5) * 0.05
+            measurement_b.temperature = (random.random() - 0.5) * 25.0
             self.reading_one.insert_reading_instance(measurement_b, False)
 
 
@@ -44,6 +46,7 @@ class TestMRPDataVisualization(unittest.TestCase):
         for value in values:
             measurement = MRPReadingEntry.MRPReadingEntry()
             measurement.value = value
+            measurement.temperature = value * 2.0
             self.reading_set_a.insert_reading_instance(measurement, False)
     def test_std_deviation(self):
         deviation_zero = MRPAnalysis.MRPAnalysis.calculate_std_deviation(self.reading_zero)
@@ -75,6 +78,13 @@ class TestMRPDataVisualization(unittest.TestCase):
         export_filepath = os.path.join(self.import_export_test_folderpath, "test_scatter_visualisation.png")
         rset: [MRPReading.MRPReading] = [self.reading_zero, self.reading_one, self.reading_set_a]
         MRPDataVisualization.MRPDataVisualization.plot_scatter(rset, "test_scatter_visualisation", export_filepath)
+
+
+    def test_temperature_visualisation(self):
+        export_filepath = os.path.join(self.import_export_test_folderpath, "test_temperature_visualisation.png")
+        rset: [MRPReading.MRPReading] = [self.reading_zero, self.reading_one, self.reading_set_a]
+        MRPDataVisualization.MRPDataVisualization.plot_temperature(rset, "test_temperature_visualisation", export_filepath)
+
 
 
 
