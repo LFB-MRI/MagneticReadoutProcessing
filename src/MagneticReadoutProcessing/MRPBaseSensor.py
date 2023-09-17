@@ -87,6 +87,7 @@ class MRPBaseSensor(Exception):
         """
         returns the b field value for a given sensor id
         trigger a readout first using the query_readout function
+        if the sensor has z measurement capabilities, this axis will be used to read out the measurement prefix sign
 
         :param _sensor_id: get b axis from specified sensor_id in range from 0 to self.sensor_count
         :type _sensor_id: int
@@ -94,8 +95,14 @@ class MRPBaseSensor(Exception):
         :returns: returns the latest b field value
         :rtype: float
         """
-
-        return self.get_reading('b', _sensor_id)
+        b = self.get_reading('b', _sensor_id)
+        # if the sensor has z measurement capabilities
+        # use z to correct the reading sign +/-
+        if 'z' in self.sensor_axis:
+            z = self.get_reading('z', _sensor_id)
+            if z < 0.0:
+                b = b * (-1.0)
+        return
 
     def get_vector(self, _sensor_id: int = 0) -> (float, float, float):
         """
