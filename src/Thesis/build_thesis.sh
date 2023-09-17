@@ -174,7 +174,8 @@ rm -Rf tmp
 
 
 # COPY INTO BUILD FOLDER
-cp thesis.pdf ./build
+cp thesis.pdf ./build_out
+cp -Rf ./build ./build_out
 
 DIR="/tmp/"
 if [ -d "$DIR" ]; then
