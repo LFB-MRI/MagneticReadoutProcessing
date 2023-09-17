@@ -180,9 +180,11 @@ class MRPDataVisualization:
                 heatmap[reading_idx, idx] = dp.temperature
 
         # Plot the heatmap, customize and label the ticks
-        fig = plt.figure()
-        im = fig.imshow(heatmap, interpolation='nearest')
-        fig.set_yticks(range(num_readings))
+        fig, ax = plt.subplots(1,1,figsize=(16, num_readings))
+        #ax = fig.subplots(1,1, =(15, 15))
+        ratio =  (num_readings*max_len_datapoints) / max_len_datapoints
+        im = ax.imshow(heatmap, interpolation='nearest', origin = 'upper', extent=[0,max_len_datapoints,0,num_readings], aspect=ratio)
+        ax.set_yticks(range(num_readings))
 
         ax.set_yticklabels(ylabels)
 
@@ -193,13 +195,13 @@ class MRPDataVisualization:
         ax.set_xlabel('Temperature')
         ax.set_ylabel('reading [id:sensor_id]')
 
-        ax.set_title('{} - Scatter'.format(_title))
+        ax.set_title('{} - Temperature'.format(_title))
 
         # Add a colour bar along the bottom and label it
-        cbar = fig.colorbar(ax=ax, mappable=im, orientation='horizontal')
+        cbar = fig.colorbar(mappable=im, orientation='horizontal')
         cbar.set_label('Temperature, $^\circ\mathrm{C}$')
 
-        plt.show()
+        #plt.show()
 
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
