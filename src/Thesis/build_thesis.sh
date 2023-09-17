@@ -171,4 +171,9 @@ rm -f *.fdb_latexmk
 rm -f *.run.xml
 rm -Rf tmp
 
+
+
+# TODO IF ENV IS sET
+# START HTTP SERVER
+
 exit 0
