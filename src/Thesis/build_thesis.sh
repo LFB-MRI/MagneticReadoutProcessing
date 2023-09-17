@@ -174,13 +174,14 @@ rm -Rf tmp
 
 
 # COPY INTO BUILD FOLDER
-cp thesis.pdf ./build_out
-cp -Rf ./build ./build_out
+rm -f ./build_out/*.*
+cp thesis.pdf ./build_out/
+cp -Rf ./deploly_server ./build_out
 
-DIR="/tmp/"
+DIR="/tmp/thesis_build"
 if [ -d "$DIR" ]; then
-  echo "copy pdf into ${DIR}/thesis_build"
-  cp -Rf ./build $DIR/thesis_build
+  echo "copy build into ${DIR}"
+  cp -Rf ./build_out/ $DIR
 fi
 # TODO IF ENV IS sET
 # START HTTP SERVER
