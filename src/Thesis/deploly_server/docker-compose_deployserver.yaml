@@ -1,0 +1,9 @@
+services:
+  mrptheis:
+    image: mrpthesisdeployserver:latest
+    container_name: mrpthesisdeployserver
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"

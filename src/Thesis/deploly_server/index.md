@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Markdown Examples
-      link: /markdown-examples
+      link: /thesis.pdf
 
 
 
