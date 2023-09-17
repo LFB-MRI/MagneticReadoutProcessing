@@ -173,6 +173,14 @@ rm -Rf tmp
 
 
 
+# COPY INTO BUILD FOLDER
+cp thesis.pdf ./build
+
+DIR="/tmp/"
+if [ -d "$DIR" ]; then
+  echo "copy pdf into ${DIR}/thesis_build"
+  cp -Rf ./build $DIR/thesis_build
+fi
 # TODO IF ENV IS sET
 # START HTTP SERVER
 
