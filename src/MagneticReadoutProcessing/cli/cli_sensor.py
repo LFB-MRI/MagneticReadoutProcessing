@@ -6,7 +6,7 @@ import typer
 import cli_helper
 import cli_datastorage
 import MRPHal
-
+import MRPBaseSensor
 app = typer.Typer()
 
 
@@ -16,17 +16,20 @@ def connect_sensor_using_config() -> MRPHal.MRPPHal:
     path = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH)
     name = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME)
     if len(path) < 0:
+        print("please connect sensor first using connect")
         raise typer.Abort("please connect sensor first using connect")
 
     device_path = MRPHal.MRPHalSerialPortInformation(_path=path, _name=name)
 
     if not device_path.is_valid():
+        print("invalid sensor config, please re-run connect command")
         raise typer.Abort("invalid sensor config, please re-run connect command")
 
     sensor_connection = MRPHal.MRPPHal(device_path)
     sensor_connection.connect()
 
     if not sensor_connection.is_connected():
+        print("sensor connection failed, please check dialout permissions")
         raise typer.Abort("sensor connection failed, please check dialout permissions")
 
     return sensor_connection
@@ -48,7 +51,27 @@ def info(ctx: typer.Context):
 
 
 
+@app.command()
+def measure(ctx: typer.Context):
 
+    sensor_connection: MRPHal.MRPPHal = connect_sensor_using_config()
+
+    if 'static' in sensor_connection.get_sensor_capabilities():
+        sensor: MRPBaseSensor.MRPBaseSensor = MRPBaseSensor.MRPBaseSensor(sensor_connection)
+        print("> B:{}".format(sensor.get_b()))
+        print("> XYZ:{}".format(sensor.get_vector()))
+        print("> TEMP:{}".format(sensor.get_temp()))
+    else:
+        print("sensor readout for this type isn't currently implemented")
+        raise typer.Abort("sensor readout for this type isn't currently implemented")
+
+
+
+
+
+
+
+    sensor_connection.disconnect()
 
 
 
@@ -68,6 +91,7 @@ def connect(ctx: typer.Context, path: Optional[str] = None):
     if path is None or len(path) <= 0:
         ports = MRPHal.MRPPHal.list_serial_ports()
         if len(ports) <= 0:
+            print("no connected sensors found")
             raise typer.Abort("no connected sensors found")
 
 
@@ -99,6 +123,7 @@ def connect(ctx: typer.Context, path: Optional[str] = None):
 
     # check for valid device path if user specified
     if not device_path.is_valid():
+        print("given device path {} is not valid".format(device_path.device_path))
         raise typer.Abort("given device path {} is not valid".format(device_path.device_path))
 
 

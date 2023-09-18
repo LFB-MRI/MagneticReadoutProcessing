@@ -3,26 +3,37 @@ import os
 from dataclasses import dataclass
 from enum import Enum
 from tinydb import TinyDB, Query
-
+from pathlib import Path
 class CLIDatastorageEntries(Enum):
     SENSOR_SERIAL_DEVICE_PATH = 0
     SENSOR_SERIAL_NAME = 1
-    READING_PREFIX = 2
-    READING_OUTPUT_FOLDER = 3
-    READING_DATAPOINT_COUNT = 4
-    READING_AVERAGE_COUNT = 5
+    CONFIG_NAME = 2
+    READING_PREFIX = 3
+    READING_OUTPUT_FOLDER = 4
+    READING_DATAPOINT_COUNT = 5
+    READING_AVERAGE_COUNT = 6
 
 class CLIDatastorage:
 
 
     db: TinyDB
+
+
     @staticmethod
-    def get_dotenv_path() ->str:
-        return (os.path.dirname(__file__)+'/config.json')
+    def get_conif_basepath() ->str:
+        return (os.path.dirname(__file__)+'/configs/')
+
+    @staticmethod
+    def get_conif_filepath() ->str:
+        return (CLIDatastorage.get_conif_basepath()+'config.json')
+
+
 
 
     def __init__(self):
-        self.db = TinyDB(CLIDatastorage.get_dotenv_path())
+
+        Path(CLIDatastorage.get_conif_basepath()).mkdir(parents=True, exist_ok=True)
+        self.db = TinyDB(CLIDatastorage.get_conif_filepath())
 
 
     def init(self):
