@@ -19,3 +19,5 @@ vg>=2.0.0
 click>=8.1.0
 typer>=0.9.0
 #typer-cli>=0.0.13
+python-dotenv>=1.0.0
+tinydb>=4.8.0
