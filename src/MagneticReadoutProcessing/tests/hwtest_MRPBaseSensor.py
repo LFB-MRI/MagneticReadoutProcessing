@@ -24,10 +24,6 @@ class TestMPRHal(unittest.TestCase):
             os.makedirs(self.import_export_test_folderpath)
 
 
-
-
-
-
         # for testing this need to be set to a valid system port
         self.DEVICE_SERIAl_PORT = "/dev/tty.usbmodem3867315334391"
         # GET A UNIFIED SENSOR
@@ -53,11 +49,6 @@ class TestMPRHal(unittest.TestCase):
         basesensor.query_readout()
 
         self.assertIsNotNone(basesensor.get_b())
-
-
-
-
-
 
 
     #@unittest.skip

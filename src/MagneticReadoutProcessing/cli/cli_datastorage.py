@@ -7,7 +7,10 @@ from tinydb import TinyDB, Query
 class CLIDatastorageEntries(Enum):
     SENSOR_SERIAL_DEVICE_PATH = 0
     SENSOR_SERIAL_NAME = 1
-    READING_ID = 2
+    READING_PREFIX = 2
+    READING_OUTPUT_FOLDER = 3
+    READING_DATAPOINT_COUNT = 4
+    READING_AVERAGE_COUNT = 5
 
 class CLIDatastorage:
 
@@ -15,7 +18,7 @@ class CLIDatastorage:
     db: TinyDB
     @staticmethod
     def get_dotenv_path() ->str:
-        return (os.path.dirname(__file__)+'/.cli_env')
+        return (os.path.dirname(__file__)+'/config.json')
 
 
     def __init__(self):

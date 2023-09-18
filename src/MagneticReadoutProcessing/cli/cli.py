@@ -1,12 +1,13 @@
 import typer
 import cli_datastorage
 import cli_sensor
-
+import cli_reading
 import cli_helper
 
 #load_dotenv()
 app = typer.Typer(add_completion=True)
 app.add_typer(cli_sensor.app, name="sensor")
+app.add_typer(cli_reading.app, name="reading")
 
 
 @app.callback(invoke_without_command=True)

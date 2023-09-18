@@ -36,11 +36,13 @@ def info(ctx: typer.Context):
 
     sensor_connection: MRPHal.MRPPHal = connect_sensor_using_config()
 
-    print("SENSOR INFORMATION FOR {}".format(sensor_connection.current_port.name))
-
+    print("SENSOR INFORMATION")
+    print("NAME:".format(sensor_connection.current_port.name))
     print("ID: {}".format(sensor_connection.get_sensor_id()))
     print("CONNECTED SENSORS: {}".format(sensor_connection.get_sensor_count()))
     print("CAPABILITIES: {}".format(sensor_connection.get_sensor_capabilities()))
+
+
 
     sensor_connection.disconnect()
 
