@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import unittest
 from unittest import TestSuite
+import os
 import configparser
 
 
@@ -8,7 +9,7 @@ import configparser
 def load_tests(loader, tests, pattern):
     ''' Discover and load all unit tests in all files named ``*_test.py`` in ``./src/`` '''
     config = configparser.ConfigParser()
-    config.read('./test_config.ini')
+    config.read(os.path.dirname(__file__)+'/test_config.ini')
 
 
     # add normal tests
