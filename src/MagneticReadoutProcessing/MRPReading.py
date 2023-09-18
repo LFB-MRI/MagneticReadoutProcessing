@@ -164,6 +164,19 @@ class MRPReading:
             ret.append(entry.value)
         return np.array(ret)
 
+    def to_temperature_value_array(self) -> np.ndarray:
+        """
+        Returns all temperature values as 1d array in order of insertion.
+
+        :returns: Returns [value, value]
+        :rtype: np.ndarray
+        """
+        ret = []
+        for entry in self.data:
+            ret.append(entry.temperature)
+        return np.array(ret)
+
+
     def to_numpy_matrix(self) -> np.ndarray:
         """
         Generates a matrix representation of the reading.

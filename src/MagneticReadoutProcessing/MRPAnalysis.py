@@ -19,7 +19,7 @@ class MRPAnalysis:
 
 
     @staticmethod
-    def calculate_mean(_reading: MRPReading.MRPReading) -> float:
+    def calculate_mean(_reading: MRPReading.MRPReading, _temperature_axis:bool=False) -> float:
         """
         Calculates the standard variance of MRPReading values
 
@@ -29,7 +29,11 @@ class MRPAnalysis:
         :returns: Returns the calculated variance value
         :rtype: float
         """
-        values: np.ndarray = _reading.to_value_array()
+        values: np.ndarray = None
+        if _temperature_axis:
+            values = _reading.to_temperature_value_array()
+        else:
+            values = _reading.to_value_array()
 
         if len(values) <= 0:
             raise MRPAnalysisException("_reading contains to reading entries")
@@ -38,7 +42,7 @@ class MRPAnalysis:
         return sum/len(values)
 
     @staticmethod
-    def calculate_variance(_reading: MRPReading.MRPReading) -> float:
+    def calculate_variance(_reading: MRPReading.MRPReading, _temperature_axis:bool=False) -> float:
         """
         Calculates the standard variance of MRPReading values
 
@@ -48,9 +52,13 @@ class MRPAnalysis:
         :returns: Returns the calculated variance value
         :rtype: float
         """
-        mean = MRPAnalysis.calculate_mean(_reading)
+        mean = MRPAnalysis.calculate_mean(_reading, _temperature_axis=_temperature_axis)
 
-        values: np.ndarray = _reading.to_value_array()
+        values: np.ndarray = None
+        if _temperature_axis:
+            values= _reading.to_temperature_value_array()
+        else:
+            values = _reading.to_value_array()
 
         if len(values) <= 0:
             raise MRPAnalysisException("_reading contains to reading entries")
@@ -62,7 +70,7 @@ class MRPAnalysis:
 
         return variance / len(values)
     @staticmethod
-    def calculate_std_deviation(_reading: MRPReading.MRPReading) -> float:
+    def calculate_std_deviation(_reading: MRPReading.MRPReading, _temperature_axis:bool=False) -> float:
         """
         Calculates the standard deviation of MRPReading values
 
@@ -72,7 +80,7 @@ class MRPAnalysis:
         :returns: Returns the calculated std deviation
         :rtype: float
         """
-        variance = MRPAnalysis.calculate_variance(_reading)
+        variance = MRPAnalysis.calculate_variance(_reading, _temperature_axis=_temperature_axis)
         return np.sqrt(variance)
 
 

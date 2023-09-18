@@ -157,12 +157,25 @@ class MRPDataVisualization:
         if _readings is None or len(_readings) <= 0:
             raise MRPDataVisualizationException("no readings in _reading given")
         num_readings = len(_readings)
-        # Read in the relevant data from our input file
-       # dt = np.dtype([('month', np.int), ('day', np.int), ('T', np.float)])
-       # data = np.genfromtxt('boston2012.dat', dtype=dt, usecols=(1, 2, 3),delimiter=(4, 2, 2, 6))
 
-        # In our heatmap, nan will mean "no such date", e.g. 31 June
+        # TABLE
+        clust_data = []  # np.random.random((len(_readings), 5))
+        collabel = ("Reading [id:sensor_id]", "Mean", "STD Deviation", "Variance", "Data-Points")
+        labels = []
 
+        for idx, reading in enumerate(_readings):
+
+            labels.append('{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id))
+
+            mean = MRPAnalysis.MRPAnalysis.calculate_mean(reading, _temperature_axis=True)
+            deviation = MRPAnalysis.MRPAnalysis.calculate_std_deviation(reading, _temperature_axis=True) / 2.0
+            variance = MRPAnalysis.MRPAnalysis.calculate_variance(reading, _temperature_axis=True)
+
+            clust_data.append(['{}:{}'.format(reading.measurement_config.id, reading.measurement_config.sensor_id),
+                               "{:.2f}".format(mean), "{:.2f}".format(deviation), "{:.2f}".format(variance),
+                               len(reading.data)])
+
+        ## TEMP HEATMAP PlOT
         ylabels: [str] = []
 
         max_len_datapoints = 0
@@ -180,24 +193,23 @@ class MRPDataVisualization:
                 heatmap[reading_idx, idx] = dp.temperature
 
         # Plot the heatmap, customize and label the ticks
-        fig, ax = plt.subplots(1,1,figsize=(16, num_readings))
-        #ax = fig.subplots(1,1, =(15, 15))
-        ratio =  (num_readings*max_len_datapoints) / max_len_datapoints
-        im = ax.imshow(heatmap, interpolation='nearest', origin = 'upper', extent=[0,max_len_datapoints,0,num_readings], aspect=ratio)
-        ax.set_yticks(range(num_readings))
+        fig, (ax1, ax0) = plt.subplots(2,1, figsize=(16, num_readings*2)) # num_readings*2 for height for table and heatmap plot
 
-        ax.set_yticklabels(ylabels)
+        ax1.axis('tight')
+        ax1.axis('off')
+        ax1.set_title('{} - Temperature-Error'.format(_title))
+        tbl = ax1.table(cellText=clust_data, colLabels=collabel, loc='center')
 
 
-        #days = np.array(range(0, 31, 2))
-        #ax.set_xticks(days)
-        #ax.set_xticklabels(['{:d}'.format(day + 1) for day in days])
-        ax.set_xlabel('Temperature')
-        ax.set_ylabel('reading [id:sensor_id]')
-
-        ax.set_title('{} - Temperature'.format(_title))
-
-        # Add a colour bar along the bottom and label it
+        # ADD HEATMAP COLORPLOT
+        ratio = (num_readings*max_len_datapoints) / max_len_datapoints
+        im = ax0.imshow(heatmap, interpolation='nearest', origin = 'upper', extent=[0,max_len_datapoints,0,num_readings], aspect=ratio)
+        ax0.set_yticks(range(num_readings))
+        ax0.set_yticklabels(ylabels)
+        ax0.set_xlabel('Temperature')
+        ax0.set_ylabel('reading [id:sensor_id]')
+        ax0.set_title('{} - Temperature'.format(_title))
+        # ADD COLOR BAR
         cbar = fig.colorbar(mappable=im, orientation='horizontal')
         cbar.set_label('Temperature, $^\circ\mathrm{C}$')
 
