@@ -102,7 +102,7 @@ class MRPBaseSensor(Exception):
             z = self.get_reading('z', _sensor_id)
             if z < 0.0:
                 b = b * (-1.0)
-        return
+        return b
 
     def get_vector(self, _sensor_id: int = 0) -> (float, float, float):
         """

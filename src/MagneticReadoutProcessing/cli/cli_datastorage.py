@@ -27,6 +27,15 @@ class CLIDatastorage:
     def get_config_filepath() ->str:
         return (CLIDatastorage.get_config_basepath() + 'global_config.json')
 
+    @staticmethod
+    def list_configs():
+        bp = CLIDatastorage.get_config_basepath()
+        files = [f for f in os.listdir(bp)]
+        r = []
+        for f in files:
+            if f.endswith('_config.json'):
+                r.append(os.path.splitext(f)[0].replace('_config', ''))
+        return r
 
 
     def __init__(self, _alternative_config_file:str = None):
@@ -46,14 +55,12 @@ class CLIDatastorage:
         Path(CLIDatastorage.get_config_basepath()).mkdir(parents=True, exist_ok=True)
         self.db = TinyDB(pf)
         self.cfgfp = pf
+        # INIT DEFAULT VALUES
         self.init()
 
     def config_filepath(self) -> str:
         return self.cfgfp
-    def list_configs(self):
-        bp = CLIDatastorage.get_config_basepath()
-        files = [f for f in os.listdir(bp) if os.path.isfile(f) and f.endswith('_config.json')]
-        return files
+
 
         # lists all found config .json files in folder
 
