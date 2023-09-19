@@ -52,7 +52,7 @@ def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
 
 @app.command()
-def measure(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def query(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
     sensor_connection: MRPHal.MRPPHal = connect_sensor_using_config(_configname=configname)
 
@@ -75,7 +75,7 @@ def measure(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
-    ctx.obj = cli_datastorage.Common()
+    pass
 
 
 

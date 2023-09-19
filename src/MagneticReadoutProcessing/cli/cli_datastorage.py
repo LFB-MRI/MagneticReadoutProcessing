@@ -45,6 +45,7 @@ class CLIDatastorage:
 
         Path(CLIDatastorage.get_config_basepath()).mkdir(parents=True, exist_ok=True)
         self.db = TinyDB(pf)
+        self.init()
 
     def list_configs(self):
         bp = CLIDatastorage.get_config_basepath()
@@ -66,6 +67,7 @@ class CLIDatastorage:
     def set_value(self, _key: CLIDatastorageEntries, _value:str):
         q = Query()
         self.db.update({'value': _value}, q.key == _key.name)
+        #self.db.storage.
 
 
     def get_value(self, _key:CLIDatastorageEntries) -> str:

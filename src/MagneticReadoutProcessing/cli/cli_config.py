@@ -21,7 +21,7 @@ def list(ctx: typer.Context):
 
 
 @app.command()
-def measurement(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
     cfg = cli_datastorage.CLIDatastorage(configname)
 
 
@@ -72,10 +72,10 @@ def measurement(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
 
 
 @app.command()
-def sensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()], path: Optional[str] = None):
+def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()], path: Optional[str] = None):
 
     device_path: MRPHal.MRPHalSerialPortInformation = None
-    # If not defualt path is given by the  user promt the user with a list of ports
+    # If the user gives no default path, prompt with a list of ports
     if path is None or len(path) <= 0:
         ports = MRPHal.MRPPHal.list_serial_ports()
         if len(ports) <= 0:
@@ -103,7 +103,7 @@ def sensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()], pat
                     selected_sensor = -1
 
         #  ASSIGN
-        device_path =ports[selected_sensor]
+        device_path = ports[selected_sensor]
         print("selected sensor: {} - {}".format(device_path.name, device_path.device_path))
 
     else:
@@ -118,7 +118,7 @@ def sensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()], pat
     # TEST CONNECTION
     sensor_connection = MRPHal.MRPPHal(device_path)
     sensor_connection.connect()
-    print(f"sensor connected: {sensor_connection.is_connected()}")
+    print("sensor connected: ".format(sensor_connection.is_connected()))
     sensor_connection.disconnect()
 
     # UPDATE CONFIG
@@ -145,7 +145,7 @@ def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
-    ctx.obj = cli_datastorage.Common()
+    pass
 
 
 
