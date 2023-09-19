@@ -17,7 +17,7 @@ class CLIDatastorage:
 
 
     db: TinyDB
-
+    cfgfp: str = ""
 
     @staticmethod
     def get_config_basepath() ->str:
@@ -45,8 +45,11 @@ class CLIDatastorage:
 
         Path(CLIDatastorage.get_config_basepath()).mkdir(parents=True, exist_ok=True)
         self.db = TinyDB(pf)
+        self.cfgfp = pf
         self.init()
 
+    def config_filepath(self) -> str:
+        return self.cfgfp
     def list_configs(self):
         bp = CLIDatastorage.get_config_basepath()
         files = [f for f in os.listdir(bp) if os.path.isfile(f) and f.endswith('_config.json')]

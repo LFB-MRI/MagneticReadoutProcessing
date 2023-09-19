@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="cli_config_help" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="cli_config_help" type="PythonConfigurationType" factoryName="Python" folderName="CLI">
     <module name="MagneticReadoutProcessing" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />

@@ -21,7 +21,7 @@ def list(ctx: typer.Context):
 
 
 @app.command()
-def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
     cfg = cli_datastorage.CLIDatastorage(configname)
 
 
@@ -69,10 +69,12 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
     else:
         cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT, str(resp))
 
+    print("MEASUREMENT SETUP COMPLETE: {}".format(cfg.config_filepath()))
+
 
 
 @app.command()
-def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()], path: Optional[str] = None):
+def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", path: Optional[str] = None):
 
     device_path: MRPHal.MRPHalSerialPortInformation = None
     # If the user gives no default path, prompt with a list of ports
@@ -126,11 +128,12 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH, device_path.device_path)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME, device_path.name)
 
+    print("SENSOR SETUP COMPLETE: {}".format(cfg.config_filepath()))
 
 
 
 @app.command()
-def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
     cfg = cli_datastorage.CLIDatastorage(configname)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH, "")
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME, "")
@@ -138,7 +141,7 @@ def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, BASEPATH)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT, "1")
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT, "1")
-    print("READING CONFIG RESET SUCCESS")
+    print("READING CONFIG RESET SUCCESS".format(cfg.config_filepath()))
 
 
 
