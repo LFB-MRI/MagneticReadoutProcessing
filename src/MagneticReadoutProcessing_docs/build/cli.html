@@ -231,16 +231,23 @@ run
 
 <span class="c1"># RUN ALL FOUND CONFIGURATIONS</span>
 $<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run
+STARTING<span class="w"> </span>MEASUREMENT<span class="w"> </span>RUN<span class="w"> </span>WITH<span class="w"> </span>FOLLOWING<span class="w"> </span>CONFIGS:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;testcfg&#39;</span>,<span class="w"> </span><span class="s1">&#39;calibrationreading&#39;</span><span class="o">]</span>
 <span class="c1"># RUN SPECIFIED CONFIGURATION</span>
 <span class="c1"># ./cli.py measure run &lt;configname&gt;</span>
 $<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run<span class="w"> </span>testcfg
-
-
 STARTING<span class="w"> </span>MEASUREMENT<span class="w"> </span>RUN<span class="w"> </span>WITH<span class="w"> </span>FOLLOWING<span class="w"> </span>CONFIGS:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;testcfg&#39;</span><span class="o">]</span>
+
+
 PRERUN<span class="w"> </span>CHECK<span class="w"> </span>FOR<span class="w"> </span>testcfg<span class="w"> </span><span class="o">[</span>cli/configs/testcfg_config.json<span class="o">]</span>
 &gt;<span class="w"> </span>config-test:<span class="w"> </span>OK
 &gt;<span class="w"> </span>sensor-connection-test:<span class="w"> </span>OK
 START<span class="w"> </span>MEASUREMENT<span class="w"> </span>CYCLE
+perform_measurement<span class="w"> </span><span class="k">for</span><span class="w"> </span>testcfg
+sampling<span class="w"> </span><span class="m">10</span><span class="w"> </span>datapoints<span class="w"> </span>with<span class="w"> </span><span class="m">100</span><span class="w"> </span>average<span class="w"> </span>readings
+SID:0<span class="w"> </span>DP:0<span class="w"> </span>B:47.35999999999999<span class="w"> </span>TEMP:23.55443
+SID:0<span class="w"> </span>DP:1<span class="w"> </span>B:47.35999999999999<span class="w"> </span>TEMP:23.55443
+....
+dump_to_file<span class="w"> </span>testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12.mag.json
 </pre></div>
 </div>
 </section>

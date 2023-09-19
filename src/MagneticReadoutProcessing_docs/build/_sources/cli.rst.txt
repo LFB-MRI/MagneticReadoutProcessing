@@ -177,14 +177,22 @@ The system performs a precheck of the sensor and configuration to avoid any misc
 
     # RUN ALL FOUND CONFIGURATIONS
     $ python3 cli.py measure run 
+    STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg', 'calibrationreading']
     # RUN SPECIFIED CONFIGURATION
     # ./cli.py measure run <configname>
     $ python3 cli.py measure run testcfg 
-
-
     STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg']
+
+
     PRERUN CHECK FOR testcfg [cli/configs/testcfg_config.json]
     > config-test: OK
     > sensor-connection-test: OK
     START MEASUREMENT CYCLE
+    perform_measurement for testcfg
+    sampling 10 datapoints with 100 average readings
+    SID:0 DP:0 B:47.35999999999999 TEMP:23.55443
+    SID:0 DP:1 B:47.35999999999999 TEMP:23.55443
+    ....
+    dump_to_file testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12.mag.json
+
 

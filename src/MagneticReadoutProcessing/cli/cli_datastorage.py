@@ -12,6 +12,7 @@ class CLIDatastorageEntries(Enum):
     READING_OUTPUT_FOLDER = 4
     READING_DATAPOINT_COUNT = 5
     READING_AVERAGE_COUNT = 6
+    READING_MAGNET_TYPE = 7
 
 class CLIDatastorage:
 
@@ -78,6 +79,9 @@ class CLIDatastorage:
         self.set_value(CLIDatastorageEntries.READING_OUTPUT_FOLDER, CLIDatastorage.get_readings_basepath())
         self.set_value(CLIDatastorageEntries.READING_DATAPOINT_COUNT, "1")
         self.set_value(CLIDatastorageEntries.READING_AVERAGE_COUNT, "1")
+        self.set_value(CLIDatastorageEntries.READING_MAGNET_TYPE, "0")
+
+
     def init(self):
         # check if each key is present int the config file, else add them and write file back
         for data in CLIDatastorageEntries:

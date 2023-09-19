@@ -30,8 +30,8 @@ class MRPReading:
         :param _config:
         :type _config: MRPMeasurementConfig.MRPMeasurementConfig
         """
-        self.time_start: datetime = None
-        self.time_end: datetime = None
+        self.time_start: datetime = datetime.now()
+        self.time_end: datetime = datetime.now()
         # holds the reading data samples
         self.data: [MRPReadingEntry.MRPReadingEntry] = []
         # stores import measurement information like
@@ -115,7 +115,18 @@ class MRPReading:
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
-    def set_name(self, _name: str = "unknown"):
+
+    def get_name(self) -> str:
+        """
+        Returns the name of the reading
+
+        :returns: Returns reading name set using set_name(_name_)
+        :rtype: str
+        """
+        if 'name' not in self.additional_data:
+            self.set_name('unknown')
+        return self.additional_data['name']
+    def set_name(self, _name: str = 'unknown'):
         """
         Sets the name of the reading
 

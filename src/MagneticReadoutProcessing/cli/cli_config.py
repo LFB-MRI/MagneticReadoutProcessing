@@ -3,6 +3,7 @@ from typing import Annotated, Optional
 import typer
 
 import MRPHal
+import MRPMagnetTypes
 import cli_helper
 import cli_datastorage
 import os
@@ -41,8 +42,32 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
 
     if not os.path.exists(resp):
         print("note folder does not exists: {}. please create first before running a measurement cycle".format(BASEPATH))
-    if not os.path.exists(resp):
-        cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, resp)
+
+    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, resp)
+
+
+
+    print("SUPPORTED MAGNET TYPES")
+    curr = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE)
+    if len(curr) <= 0:
+        curr = 0
+    for idx, magnet in enumerate(MRPMagnetTypes.MagnetType):
+        print("{} > {}".format(magnet.value, magnet.name))
+
+    selected_magnet: int = 0
+    while (not selected_magnet) or selected_magnet < 0:
+        # DISPLAY USER MESSAGE
+        resp = typer.prompt("Please select one of the listed magnet types [0-{}]".format(len(MRPMagnetTypes.MagnetType) - 1), curr)
+        # EVALUATE USER INPUT
+        if resp and len(resp) > 0:
+            try:
+                selected_magnet = int(resp)
+                if selected_magnet < len(MRPMagnetTypes.MagnetType) and selected_magnet >= 0:
+                    break
+            except Exception as e:
+                selected_magnet = 0
+    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE, str(selected_magnet))
+
 
 
 
@@ -87,7 +112,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
         for idx, port in enumerate(ports):
             print("{} > {} - {}".format(idx, port.name, port.device_path))
 
-        selected_sensor:int = -1
+        selected_sensor: int = -1
         while (not selected_sensor) or selected_sensor < 0:
             # DISPLAY USER MESSAGE
             if len(ports) == 1:
