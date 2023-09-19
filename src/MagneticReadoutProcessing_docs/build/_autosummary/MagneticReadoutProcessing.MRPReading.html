@@ -46,10 +46,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI - Commandline Interface</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module: MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Documentation</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="MagneticReadoutProcessing.html">MagneticReadoutProcessing</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPAnalysis.html">MagneticReadoutProcessing.MRPAnalysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPBaseSensor.html">MagneticReadoutProcessing.MRPBaseSensor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPConfig.html">MagneticReadoutProcessing.MRPConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPDataVisualization.html">MagneticReadoutProcessing.MRPDataVisualization</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPHal.html">MagneticReadoutProcessing.MRPHal</a></li>
@@ -63,6 +65,7 @@
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadingEntry.html">MagneticReadoutProcessing.MRPReadingEntry</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPReadoutSource.html">MagneticReadoutProcessing.MRPReadoutSource</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.MRPSimulation.html">MagneticReadoutProcessing.MRPSimulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MagneticReadoutProcessing.cli.html">MagneticReadoutProcessing.cli</a></li>
 </ul>
 </li>
 </ul>
@@ -225,6 +228,20 @@ RETURN FORMAT: [[phi, theta, value],…]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>(np.ndarray, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPReading.MRPReading.to_temperature_value_array">
+<span class="sig-name descname"><span class="pre">to_temperature_value_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#MRPReading.MRPReading.to_temperature_value_array" title="Link to this definition"></a></dt>
+<dd><p>Returns all temperature values as 1d array in order of insertion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns [value, value]</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

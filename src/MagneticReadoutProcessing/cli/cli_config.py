@@ -119,7 +119,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
     # TEST CONNECTION
     sensor_connection = MRPHal.MRPPHal(device_path)
     sensor_connection.connect()
-    print("sensor connected: ".format(sensor_connection.is_connected()))
+    print("sensor connected: {} ID:{}".format(sensor_connection.is_connected(), sensor_connection.get_sensor_id()))
     sensor_connection.disconnect()
 
     # UPDATE CONFIG

@@ -8,6 +8,9 @@ app = typer.Typer()
 
 
 
+def perform_measurement():
+    pass
+
 
 @app.command()
 def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", ignoreinvalid: Annotated[bool, typer.Argument()] = True):
@@ -44,7 +47,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
             raise typer.Abort("precheckfail: READING_OUTPUT_FOLDER is invalid: {} ".format(c))
 
         print("> config-test: OK".format())
-        
+
 
         # check sensor connection
         conn: MRPHal = cli_helper.connect_sensor_using_config(_configname=cfgname)#cli_helper.connect_sensor_using_config(_configname=c)
@@ -55,9 +58,13 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
 
         conn.disconnect()
 
-
-
         cfg_to_run.append(c)
+
+
+
+    print("START MEASUREMENT CYCLE".format())
+    for cfg in cfg_to_run:
+        pass
 
 
 

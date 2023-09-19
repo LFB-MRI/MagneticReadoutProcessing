@@ -43,5 +43,6 @@
    MagneticReadoutProcessing.MRPReadingEntry
    MagneticReadoutProcessing.MRPReadoutSource
    MagneticReadoutProcessing.MRPSimulation
+   MagneticReadoutProcessing.cli
    MagneticReadoutProcessing.setup
 

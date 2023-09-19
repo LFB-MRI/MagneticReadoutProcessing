@@ -27,6 +27,7 @@ Contents
 
     intro
     examples
+    cli
     modules
 
 

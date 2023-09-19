@@ -1,0 +1,6 @@
+MagneticReadoutProcessing.cli
+=============================
+
+.. currentmodule:: MagneticReadoutProcessing
+
+.. automodule:: cli
