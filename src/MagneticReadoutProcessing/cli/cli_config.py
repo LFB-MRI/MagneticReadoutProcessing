@@ -130,7 +130,6 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
     print("SENSOR SETUP COMPLETE: {}".format(cfg.config_filepath()))
 
 
-
 @app.command()
 def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
     cfg = cli_datastorage.CLIDatastorage(configname)
@@ -138,15 +137,9 @@ def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
     print("READING CONFIG RESET SUCCESS".format(cfg.config_filepath()))
 
 
-
-
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
     pass
-
-
-
-
 
 
 if __name__ == "__main__":

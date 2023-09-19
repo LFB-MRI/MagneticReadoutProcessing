@@ -18,7 +18,7 @@ class CLIDatastorage:
 
     db: TinyDB
     cfgfp: str = ""
-
+    cfgname: str = "global"
     @staticmethod
     def get_config_basepath() ->str:
         return (os.path.dirname(__file__)+'/configs/')
@@ -55,10 +55,13 @@ class CLIDatastorage:
 
             pf = CLIDatastorage.get_config_basepath() + _alternative_config_file
 
+            self.cfgname = _alternative_config_file
+
 
         Path(CLIDatastorage.get_config_basepath()).mkdir(parents=True, exist_ok=True)
         self.db = TinyDB(pf)
         self.cfgfp = pf
+
         # INIT DEFAULT VALUES
         self.init()
 
@@ -81,13 +84,12 @@ class CLIDatastorage:
             q = Query()
             r = self.db.search(q.key == data.name)
             if len(r) <= 0:
-                self.db.insert({'key': data.name, 'value': ''})
+                self.db.insert({'key': data.name, 'value': '', 'cfg_name': self.cfgname})
 
 
     def set_value(self, _key: CLIDatastorageEntries, _value:str):
         q = Query()
-        self.db.update({'value': _value}, q.key == _key.name)
-        #self.db.storage.
+        self.db.update({'value': _value, 'cfg_name': self.cfgname}, q.key == _key.name)
 
 
     def get_value(self, _key:CLIDatastorageEntries) -> str:

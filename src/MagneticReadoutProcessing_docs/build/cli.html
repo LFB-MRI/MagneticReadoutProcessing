@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CLI - Commandline Interface &mdash; MagneticReadoutProcessing  documentation</title>
+  <title>CLI - Command-Line Interface &mdash; MagneticReadoutProcessing  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -46,7 +46,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">CLI - Commandline Interface</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CLI - Command-Line Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
@@ -74,7 +74,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">CLI - Commandline Interface</li>
+      <li class="breadcrumb-item active">CLI - Command-Line Interface</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/cli.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -84,8 +84,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cli-commandline-interface">
-<h1>CLI - Commandline Interface<a class="headerlink" href="#cli-commandline-interface" title="Link to this heading"></a></h1>
+  <section id="cli-command-line-interface">
+<h1>CLI - Command-Line Interface<a class="headerlink" href="#cli-command-line-interface" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For the following cli examples a working sensor with <a href="#id1"><span class="problematic" id="id2">``</span></a>UnifiedMagBoardFirmware``is required.</p>
@@ -106,8 +106,7 @@ So for the CLI, the same installation procedure is used as for the main <code cl
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># python3 ./cli.py --help</span>
-$<span class="w"> </span>python3<span class="w"> </span>./cli.py<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --install-completion<span class="w">  </span>Install<span class="w"> </span>completion<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>shell.
@@ -131,8 +130,7 @@ For this task a new configuration is needed.
 The <a href="#id3"><span class="problematic" id="id4">``</span></a>configname``parameter is equal to the filename of the generated configfile.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">setupsensor</span></code> parameter launchs the sensor configuration wizard.
 Here all connected sensors are listed. If an other sensor hardware is used (with different vid/pid), its possible to specify the port manually</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./cli.py config --help</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>config<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
@@ -143,25 +141,24 @@ setup
 setupsensor
 
 
-<span class="c1"># ./cli.py config setupsensor &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>./cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg
+<span class="c1"># cli.py config setupsensor &lt;configname&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg
 <span class="m">0</span><span class="w"> </span>&gt;<span class="w"> </span>Unified<span class="w"> </span>Sensor<span class="w"> </span><span class="m">386731533439</span><span class="w"> </span>-<span class="w"> </span>/dev/cu.usbmodem3867315334391
 Please<span class="w"> </span><span class="k">select</span><span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>found<span class="w"> </span>sensors<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span>:
 sensor<span class="w"> </span>connected:<span class="w"> </span>True<span class="w"> </span><span class="m">1243455</span>
-SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>./configs/testcfg_config.json
+SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>cli/configs/testcfg_config.json
 
-<span class="c1"># ./cli.py config setupsensor &lt;configname&gt; &lt;device_path&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>./cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg<span class="w"> </span>/dev/tty
+<span class="c1"># cli.py config setupsensor &lt;configname&gt; &lt;device_path&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg<span class="w"> </span>/dev/tty
 sensor<span class="w"> </span>connected:<span class="w"> </span>True<span class="w"> </span><span class="m">54224326</span>
-SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>./configs/testcfg_config.json
+SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>cli/configs/testcfg_config.json
 </pre></div>
 </div>
 </section>
 <section id="sensor-information-and-readout">
 <h3>Sensor information and readout<a class="headerlink" href="#sensor-information-and-readout" title="Link to this heading"></a></h3>
 <p>After the sensor setup is finished for this sensor. Its possible to query the sensor manually.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./cli.py sensor --help</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>sensor<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>--help
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
 Commands:
@@ -169,8 +166,8 @@ info
 query
 
 
-<span class="c1"># ./cli.py sensor info &lt;configname&gt;</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>sensor<span class="w"> </span>info<span class="w"> </span>testcfg
+<span class="c1"># cli.py sensor info &lt;configname&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>info<span class="w"> </span>testcfg
 SENSOR<span class="w"> </span>INFORMATION
 NAME:
 ID:<span class="w"> </span><span class="m">525771256544952</span>
@@ -178,8 +175,8 @@ CONNECTED<span class="w"> </span>SENSORS:<span class="w"> </span><span class="m"
 CAPABILITIES:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;static&#39;</span>,<span class="w"> </span><span class="s1">&#39;axis_b&#39;</span><span class="o">]</span>
 
 
-<span class="c1"># ./cli.py sensor query &lt;configname&gt;</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>sensor<span class="w"> </span>query<span class="w"> </span>testcfg
+<span class="c1"># cli.py sensor query &lt;configname&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>query<span class="w"> </span>testcfg
 QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> </span>SENSOR_ID:525771256544952<span class="w"> </span>SENSOR_NUMBER:0
 &gt;<span class="w"> </span>B:47.66
 QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> </span>SENSOR_ID:525771256544952<span class="w"> </span>SENSOR_NUMBER:1
@@ -192,14 +189,14 @@ QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> <
 <p>After a manual readout-test, the configfile can be modified to allow automatic measurements with specified settings.
 The config also contains information about type of reading, number datapoints and averaging.
 To set these the <code class="docutils literal notranslate"><span class="pre">config</span></code> option offers a setup wizard.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./cli.py config setup &lt;configname&gt;</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>config<span class="w"> </span>setup<span class="w"> </span>testcfg
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cli.py config setup &lt;configname&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setup<span class="w"> </span>testcfg
 CONFIGURE<span class="w"> </span>testcfg
 READING-NAME:<span class="w"> </span><span class="o">[</span>testreading<span class="o">]</span>:<span class="w"> </span>testreading
 OUTPUT-FOLDER<span class="w"> </span><span class="o">[</span>/cli/reading<span class="o">]</span>:<span class="w"> </span>/tmp/reading_folder_path
 NUMBER<span class="w"> </span>DATAPOINTS:<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span><span class="m">10</span>
 NUMBER<span class="w"> </span>AVERAGE<span class="w"> </span>READINGS<span class="w"> </span>PER<span class="w"> </span>DATAPOINT:<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span><span class="m">100</span>
-MEASUREMENT<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>./configs/testcfg_config.json
+MEASUREMENT<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>cli/configs/testcfg_config.json
 </pre></div>
 </div>
 <div class="admonition note">
@@ -215,23 +212,35 @@ To edit a configuration, re-run the commands.</p>
 <section id="run-automatic-measurement">
 <h3>Run automatic measurement<a class="headerlink" href="#run-automatic-measurement" title="Link to this heading"></a></h3>
 <p>After this step it is possible to execute a measurement using all saved configuration files.
-First its possible to list all found configuration files inside od the <code class="docutils literal notranslate"><span class="pre">/cli/configs/</span></code> folder.
-.. code-block:: bash</p>
-<blockquote>
-<div><p># ./cli.py config list
-$ ./cli.py config list
-FOUND CONFIGURATIONS IN. /cli/configs/
-0&gt; testcfg
-1&gt; calibration</p>
-</div></blockquote>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./cli.py measure --help</span>
-$<span class="w"> </span>./cli.py<span class="w"> </span>measure<span class="w"> </span>--help
+First its possible to list all found configuration files inside od the <code class="docutils literal notranslate"><span class="pre">cli/configs/</span></code> folder.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>list
+FOUND<span class="w"> </span>CONFIGURATIONS<span class="w"> </span>IN.<span class="w"> </span>cli/configs/
+<span class="m">0</span>&gt;<span class="w"> </span>testcfg
+<span class="m">1</span>&gt;<span class="w"> </span>calibration
+</pre></div>
+</div>
+<p>To start a measurement run the <code class="docutils literal notranslate"><span class="pre">measure</span> <span class="pre">run``option</span> <span class="pre">is</span> <span class="pre">used.</span>
+<span class="pre">Its</span> <span class="pre">possible</span> <span class="pre">to</span> <span class="pre">run</span> <span class="pre">all</span> <span class="pre">or</span> <span class="pre">a</span> <span class="pre">specified</span> <span class="pre">configuration</span> <span class="pre">by</span> <span class="pre">using</span> <span class="pre">the</span> <span class="pre">``&lt;configname&gt;</span></code> parameter.</p>
+<p>The system performs a precheck of the sensor and configuration to avoid any misconfiguration errors before a long measurement run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
-
 Commands:
 run
+
+<span class="c1"># RUN ALL FOUND CONFIGURATIONS</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run
+<span class="c1"># RUN SPECIFIED CONFIGURATION</span>
+<span class="c1"># ./cli.py measure run &lt;configname&gt;</span>
+$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run<span class="w"> </span>testcfg
+
+
+STARTING<span class="w"> </span>MEASUREMENT<span class="w"> </span>RUN<span class="w"> </span>WITH<span class="w"> </span>FOLLOWING<span class="w"> </span>CONFIGS:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;testcfg&#39;</span><span class="o">]</span>
+PRERUN<span class="w"> </span>CHECK<span class="w"> </span>FOR<span class="w"> </span>testcfg<span class="w"> </span><span class="o">[</span>cli/configs/testcfg_config.json<span class="o">]</span>
+&gt;<span class="w"> </span>config-test:<span class="w"> </span>OK
+&gt;<span class="w"> </span>sensor-connection-test:<span class="w"> </span>OK
+START<span class="w"> </span>MEASUREMENT<span class="w"> </span>CYCLE
 </pre></div>
 </div>
 </section>
