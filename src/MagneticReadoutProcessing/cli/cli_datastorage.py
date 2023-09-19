@@ -20,20 +20,38 @@ class CLIDatastorage:
 
 
     @staticmethod
-    def get_conif_basepath() ->str:
+    def get_config_basepath() ->str:
         return (os.path.dirname(__file__)+'/configs/')
 
     @staticmethod
-    def get_conif_filepath() ->str:
-        return (CLIDatastorage.get_conif_basepath()+'config.json')
+    def get_config_filepath() ->str:
+        return (CLIDatastorage.get_config_basepath() + 'global_config.json')
 
 
 
+    def __init__(self, _alternative_config_file:str = None):
 
-    def __init__(self):
+        pf = CLIDatastorage.get_config_filepath()
 
-        Path(CLIDatastorage.get_conif_basepath()).mkdir(parents=True, exist_ok=True)
-        self.db = TinyDB(CLIDatastorage.get_conif_filepath())
+        if _alternative_config_file is not None and len(_alternative_config_file) > 0:
+            # remove last .extention
+            _alternative_config_file = os.path.splitext(_alternative_config_file)[0]
+            # append new one todo rework
+            if not _alternative_config_file.endswith('_config.json'):
+                _alternative_config_file = _alternative_config_file + '_config.json'
+
+            pf = CLIDatastorage.get_config_basepath() + _alternative_config_file
+
+
+        Path(CLIDatastorage.get_config_basepath()).mkdir(parents=True, exist_ok=True)
+        self.db = TinyDB(pf)
+
+    def list_configs(self):
+        bp = CLIDatastorage.get_config_basepath()
+        files = [f for f in os.listdir(bp) if os.path.isfile(f) and f.endswith('_config.json')]
+        return files
+
+        # lists all found config .json files in folder
 
 
     def init(self):
