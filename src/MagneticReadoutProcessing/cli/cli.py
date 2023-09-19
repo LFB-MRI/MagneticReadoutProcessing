@@ -16,7 +16,7 @@ app.add_typer(cli_measure.app, name="measure")
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
     pass
-    ctx.obj = cli_datastorage.Common()
+
 
 
 

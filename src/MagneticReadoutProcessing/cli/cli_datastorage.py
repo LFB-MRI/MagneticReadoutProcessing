@@ -24,6 +24,10 @@ class CLIDatastorage:
         return (os.path.dirname(__file__)+'/configs/')
 
     @staticmethod
+    def get_readings_basepath() -> str:
+        return (os.path.dirname(__file__) + '/readings/')
+
+    @staticmethod
     def get_config_filepath() ->str:
         return (CLIDatastorage.get_config_basepath() + 'global_config.json')
 
@@ -64,7 +68,13 @@ class CLIDatastorage:
 
         # lists all found config .json files in folder
 
-
+    def reset(self):
+        self.set_value(CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH, "")
+        self.set_value(CLIDatastorageEntries.SENSOR_SERIAL_NAME, "")
+        self.set_value(CLIDatastorageEntries.READING_PREFIX, "")
+        self.set_value(CLIDatastorageEntries.READING_OUTPUT_FOLDER, CLIDatastorage.get_readings_basepath())
+        self.set_value(CLIDatastorageEntries.READING_DATAPOINT_COUNT, "1")
+        self.set_value(CLIDatastorageEntries.READING_AVERAGE_COUNT, "1")
     def init(self):
         # check if each key is present int the config file, else add them and write file back
         for data in CLIDatastorageEntries:
@@ -86,12 +96,4 @@ class CLIDatastorage:
         if len(r) <= 0:
             return ""
         return r[0]['value']
-
-
-
-
-
-@dataclass
-class Common:
-    storage: CLIDatastorage = None
 

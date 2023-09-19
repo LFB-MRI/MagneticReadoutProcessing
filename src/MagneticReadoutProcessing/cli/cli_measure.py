@@ -22,25 +22,37 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
     print("STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: {}".format(configs))
 
     cfg_to_run: [str] = []
-    for c in configs:
+    for cfgname in configs:
 
-        cfg = cli_datastorage.CLIDatastorage(c)
-        print("PRERUN CHECK FOR {} [{}]".format(c, cfg.config_filepath()))
-
+        cfg = cli_datastorage.CLIDatastorage(cfgname)
+        print("PRERUN CHECK FOR {} [{}]".format(cfgname, cfg.config_filepath()))
 
         # check config valid
+        c = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
+        if c <= 0 and not ignoreinvalid:
+            print("precheckfail: READING_DATAPOINT_COUNT <= 0")
+            raise typer.Abort("precheckfail: READING_DATAPOINT_COUNT <= 0")
+
+        c = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT))
+        if c <= 0 and not ignoreinvalid:
+            print("precheckfail: READING_AVERAGE_COUNT <= 0")
+            raise typer.Abort("precheckfail: READING_AVERAGE_COUNT <= 0")
+
+        c = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
+        if len(c) <= 0 and not ignoreinvalid:
+            print("precheckfail: READING_OUTPUT_FOLDER is invalid: {} ".format(c))
+            raise typer.Abort("precheckfail: READING_OUTPUT_FOLDER is invalid: {} ".format(c))
+
+        print("> config-test: OK".format())
+        
 
         # check sensor connection
-
-        print("> sensor-connection-test".format())
-        conn: MRPHal = cli_helper.connect_sensor_using_config(c)
-
+        conn: MRPHal = cli_helper.connect_sensor_using_config(_configname=cfgname)#cli_helper.connect_sensor_using_config(_configname=c)
         if not ignoreinvalid and not conn.is_connected():
             print("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
             raise typer.Abort("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
-
         print("> sensor-connection-test: OK".format(conn.get_sensor_id()))
-        
+
         conn.disconnect()
 
 
@@ -52,7 +64,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
-    ctx.obj = cli_datastorage.Common()
+    pass
 
 
 

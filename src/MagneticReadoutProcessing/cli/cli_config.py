@@ -14,9 +14,8 @@ BASEPATH = os.path.dirname(__file__)+'/'
 
 @app.command()
 def list(ctx: typer.Context):
-    cfg = cli_datastorage.CLIDatastorage()
     print("FOUND CONFIGURATIONS IN {}".format(cli_datastorage.CLIDatastorage.get_config_basepath()))
-    for idx, e in enumerate(cfg.list_configs()):
+    for idx, e in enumerate(cli_datastorage.CLIDatastorage.list_configs()):
         print("{}> {}".format(idx, e))
 
 
@@ -135,12 +134,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
 @app.command()
 def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
     cfg = cli_datastorage.CLIDatastorage(configname)
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH, "")
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME, "")
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX, "")
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, BASEPATH)
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT, "1")
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT, "1")
+    cfg.reset()
     print("READING CONFIG RESET SUCCESS".format(cfg.config_filepath()))
 
 

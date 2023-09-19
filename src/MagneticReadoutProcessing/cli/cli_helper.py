@@ -1,6 +1,6 @@
 import typer
 import MRPHal
-from cli import cli_datastorage
+import cli_datastorage
 
 
 def __fix_import__fix_import():
