@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Annotated
 import typer
 import cli_helper
@@ -83,9 +84,14 @@ def perform_measurement(configname: str):
             reading.insert_reading_instance(rentry, _autoupdate_measurement_config=False)
 
         # EXPORT TO FILESYSTEM
-        filename = reading.get_name().replace('/', '/').replace('.', '')
+        filename = reading.get_name().replace('/', '').replace('.', '')
         target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
+        # RESOLVE REL TO ABS PATH
+        if not str(target_folder).startswith('/'):
+            target_folder = str(Path(target_folder).resolve())
+        # CREATE COMPLETE PATH WITH FILENAME
         complete_path = os.sep.join([target_folder, filename])
+        # EXPORT
         print("exported reading: ".format(reading.dump_to_file(complete_path)))
 
 
@@ -120,9 +126,15 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
             raise typer.Abort("precheckfail: READING_AVERAGE_COUNT <= 0")
 
         c = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
-        if len(c) <= 0 and not os.path.isdir(c) and not ignoreinvalid:
+        if len(c) <= 0 and not ignoreinvalid:
             print("precheckfail: READING_OUTPUT_FOLDER is invalid: {} ".format(c))
             raise typer.Abort("precheckfail: READING_OUTPUT_FOLDER is invalid: {} ".format(c))
+        # CREATE FOLDER IF NEEDED
+        if not os.path.exists(c):
+            if not str(c).startswith('/'):
+                c = str(Path(c).resolve())
+                Path(c).mkdir(parents=True, exist_ok=True)
+
 
         print("> config-test: OK".format())
 

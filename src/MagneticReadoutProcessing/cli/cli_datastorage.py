@@ -93,7 +93,7 @@ class CLIDatastorage:
 
     def set_value(self, _key: CLIDatastorageEntries, _value:str):
         q = Query()
-        self.db.update({'value': _value, 'cfg_name': self.cfgname}, q.key == _key.name)
+        self.db.update({'value': str(_value), 'cfg_name': self.cfgname}, q.key == _key.name)
 
 
     def get_value(self, _key:CLIDatastorageEntries) -> str:

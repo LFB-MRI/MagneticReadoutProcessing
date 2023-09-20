@@ -12,7 +12,7 @@ from MRP import MRPMagnetTypes, MRPHal
 
 app = typer.Typer()
 
-BASEPATH = Path(str(os.path.dirname(__file__))).parent.joinpath('readings/')#.parts+'/../readings/'
+BASEPATH = '../readings'
 
 @app.command()
 def list(ctx: typer.Context):
@@ -29,6 +29,8 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
     print("CONFIGURE READING")
 
     curr = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX)
+    if len(curr) <= 0:
+        curr = configname
     resp = typer.prompt("READING-NAME:", curr)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX, resp)
 
@@ -41,14 +43,19 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
         print("user response empty: so setting the default path")
         resp = BASEPATH
     # REL TO ABS PATHS
-    if not str(resp).startswith('/'):
-        resp = str(Path(resp).resolve())
+
     # TRY TO CREATE FOLDER
+    path_to_create = resp
+    if not str(resp).startswith('/'):
+        path_to_create = str(Path(resp).resolve())
+
     if not os.path.exists(resp):
-        if typer.prompt("Should now try to create the path {} ?  [y/n]".format(resp), 'y') == 'y':
-            Path(resp).mkdir(parents=True, exist_ok=True)
-        if not os.path.exists(resp):
-            print("note folder does not exists: {}. please create first before running a measurement cycle".format(resp))
+        if typer.prompt("Should now try to create the path {} ?  [y/n]".format(path_to_create), 'y') == 'y':
+            Path(path_to_create).mkdir(parents=True, exist_ok=True)
+        if not os.path.exists(path_to_create):
+            print("note folder does not exists: {}. please create first before running a measurement cycle".format(path_to_create))
+    else:
+        print("final output path for reading {}".format(path_to_create))
 
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, resp)
 
