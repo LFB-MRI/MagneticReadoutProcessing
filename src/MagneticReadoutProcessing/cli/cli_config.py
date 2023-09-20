@@ -3,15 +3,16 @@ import typer
 import cli_helper
 import cli_datastorage
 import os
+from pathlib import Path
 
 from import_MRP import __fix_import__
 __fix_import__()
+from MRP import MRPMagnetTypes, MRPHal
 
 
 app = typer.Typer()
 
-BASEPATH = os.path.dirname(__file__)+'/'
-
+BASEPATH = Path(str(os.path.dirname(__file__))).parent.joinpath('readings/')#.parts+'/../readings/'
 
 @app.command()
 def list(ctx: typer.Context):
@@ -39,9 +40,15 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
     if len(curr) <= 0:
         print("user response empty: so setting the default path")
         resp = BASEPATH
-
+    # REL TO ABS PATHS
+    if not str(resp).startswith('/'):
+        resp = str(Path(resp).resolve())
+    # TRY TO CREATE FOLDER
     if not os.path.exists(resp):
-        print("note folder does not exists: {}. please create first before running a measurement cycle".format(BASEPATH))
+        if typer.prompt("Should now try to create the path {} ?  [y/n]".format(resp), 'y') == 'y':
+            Path(resp).mkdir(parents=True, exist_ok=True)
+        if not os.path.exists(resp):
+            print("note folder does not exists: {}. please create first before running a measurement cycle".format(resp))
 
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER, resp)
 
