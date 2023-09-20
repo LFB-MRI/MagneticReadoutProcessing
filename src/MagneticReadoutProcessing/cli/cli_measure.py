@@ -3,12 +3,11 @@ from typing import Annotated
 import typer
 import cli_helper
 import cli_datastorage
-import  MRPHal
-import MRPReading
-import MRPMeasurementConfig
-import MRPMagnetTypes
-import MRPReadingEntry
-import MRPBaseSensor
+
+from import_MRP import __fix_import__
+__fix_import__()
+from MRP import  MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
+
 app = typer.Typer()
 
 

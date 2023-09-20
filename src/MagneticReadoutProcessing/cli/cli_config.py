@@ -1,12 +1,12 @@
 from typing import Annotated, Optional
-
 import typer
-
-import MRPHal
-import MRPMagnetTypes
 import cli_helper
 import cli_datastorage
 import os
+
+from import_MRP import __fix_import__
+__fix_import__()
+
 
 app = typer.Typer()
 

@@ -4,6 +4,9 @@ from dataclasses import dataclass
 # from dotenv import load_dotenv
 import typer
 import cli_helper
+
+from import_MRP import __fix_import__
+__fix_import__()
 from MRP import MRPHal, MRPBaseSensor
 
 app = typer.Typer()

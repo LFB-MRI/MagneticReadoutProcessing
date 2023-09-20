@@ -1,12 +1,11 @@
-import sys
-sys.path.insert(0, '..')
-
 import typer
 import cli_sensor
 import cli_config
 import cli_helper
 import cli_measure
 
+from import_MRP import __fix_import__
+__fix_import__()
 
 #load_dotenv()
 app = typer.Typer(add_completion=True)

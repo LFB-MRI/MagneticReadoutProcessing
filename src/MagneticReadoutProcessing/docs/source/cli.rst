@@ -18,14 +18,15 @@ Installation
     So for the CLI, the same installation procedure is used as for the main ``MagneticReadoutProcessing`` package.
 
 
-.. code-block:: console
+.. code-block:: bash
 
     $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
     $ cd ./MagneticReadoutProcessing
     $ pip3 install -r requirements.txt
-    $ cd ./cli
 
 
+    # RUNNING THE CLI USING VENV (if library is not installed on system)
+    $ ./venv/bin/python3.9 ./cli/cli.py --help
 
 
 

@@ -1,6 +1,10 @@
 import typer
-from MRP import MRPHal
 import cli_datastorage
+
+from import_MRP import __fix_import__
+__fix_import__()
+from MRP import MRPHal
+
 
 
 def __fix_import__fix_import():
