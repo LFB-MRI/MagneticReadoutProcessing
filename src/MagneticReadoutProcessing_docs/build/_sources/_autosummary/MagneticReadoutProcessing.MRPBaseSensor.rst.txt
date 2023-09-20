@@ -1,6 +1,0 @@
-MagneticReadoutProcessing.MRPBaseSensor
-=======================================
-
-.. currentmodule:: MagneticReadoutProcessing
-
-.. automodule:: MRPBaseSensor

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MRP.MRPHallbachArrayGenerator &mdash; MagneticReadoutProcessing  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MRP.MRPHelpers" href="MRP.MRPHelpers.html" />
+    <link rel="prev" title="MRP.MRPHal" href="MRP.MRPHal.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MagneticReadoutProcessing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI - Command-Line Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MRP.html">MRP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPAnalysis.html">MRP.MRPAnalysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPBaseSensor.html">MRP.MRPBaseSensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPConfig.html">MRP.MRPConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPDataVisualization.html">MRP.MRPDataVisualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPHal.html">MRP.MRPHal</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MRP.MRPHallbachArrayGenerator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator"><code class="docutils literal notranslate"><span class="pre">MRPHallbachArrayGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGeneratorException"><code class="docutils literal notranslate"><span class="pre">MRPHallbachArrayGeneratorException</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MRPHallbachArrayGenerator.MRPHallbachArrayResult"><code class="docutils literal notranslate"><span class="pre">MRPHallbachArrayResult</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPHelpers.html">MRP.MRPHelpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPMagnetTypes.html">MRP.MRPMagnetTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPMeasurementConfig.html">MRP.MRPMeasurementConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPOpenSCADGenerator.html">MRP.MRPOpenSCADGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPPolarVisualization.html">MRP.MRPPolarVisualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReading.html">MRP.MRPReading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReadingEntry.html">MRP.MRPReadingEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReadoutSource.html">MRP.MRPReadoutSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPSimulation.html">MRP.MRPSimulation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MagneticReadoutProcessing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
+          <li class="breadcrumb-item"><a href="MRP.html">MRP</a></li>
+      <li class="breadcrumb-item active">MRP.MRPHallbachArrayGenerator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/MRP.MRPHallbachArrayGenerator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-MRPHallbachArrayGenerator">
+<span id="mrp-mrphallbacharraygenerator"></span><h1>MRP.MRPHallbachArrayGenerator<a class="headerlink" href="#module-MRPHallbachArrayGenerator" title="Link to this heading"></a></h1>
+<p>generates magnet structures out of given readings and export hallbach rings</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPHallbachArrayGenerator.</span></span><span class="sig-name descname"><span class="pre">MRPHallbachArrayGenerator</span></span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator" title="Link to this definition"></a></dt>
+<dd><p>Contains static functions to generate a 3D CAD Model of a Hallbach-Magnet using given readings.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_1k_hallbach_using_polarisation_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRPReading.MRPReading'&gt;],</span> <span class="pre">_min_slice_inner_diameter:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">20,</span> <span class="pre">_slice_outer_diameter_safety_margin:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">10</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#MRPHallbachArrayGenerator.MRPHallbachArrayResult" title="MRPHallbachArrayGenerator.MRPHallbachArrayResult"><span class="pre">MRPHallbachArrayResult</span></a></span></span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction" title="Link to this definition"></a></dt>
+<dd><p>Generates a 1K hallbach array out of given readings. The result is a set of magpylib magnets with set rotation, position and dimension.
+The magnetization is calculated using the calculate_center_of_gravity function.
+Magnets are aligned on their Z axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_readings</strong> (<a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a>) – a list of readings to generate a 1k hallbach array, length needs to be multiply of 4</p></li>
+<li><p><strong>_min_slice_inner_diameter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – minimum hallbach ring inner diameter can be bigger depending the magnet size</p></li>
+<li><p><strong>_slice_outer_diameter_safety_margin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – additional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns magnet (magpylib) instances with set dimensions, rotation and position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MRPHallbachArrayGenerator.MRPHallbachArrayResult" title="MRPHallbachArrayGenerator.MRPHallbachArrayResult">MRPHallbachArrayGenerator.MRPHallbachArrayResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_magnet_streamplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_computed_magnet_data:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRPHallbachArrayGenerator.MRPHallbachArrayResult'&gt;],</span> <span class="pre">_save_filename:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_magnet_streamplot" title="Link to this definition"></a></dt>
+<dd><p>Generates a Hallbach Stream-Field Line Plot of a given MRPHallbachArrayResult object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_computed_magnet_data</strong> (<em>[</em><em>MRPHallbachArrayResult.MRPHallbachArrayResult</em><em>]</em>) – a list of magnet result object MRPHallbachArrayResult containing computed magnets</p></li>
+<li><p><strong>_save_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – save .scad file to filepath e.g. ./tmp/export.scad</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_openscad_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_computed_magnet_data:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRPHallbachArrayGenerator.MRPHallbachArrayResult'&gt;],</span> <span class="pre">_save_filename:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">_2d_object_code:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">_add_mounting_holes:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">_add_annotations:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model" title="Link to this definition"></a></dt>
+<dd><p>Generates a Hallbach OpenSCAD file of a given MRPHallbachArrayResult object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_computed_magnet_data</strong> (<em>[</em><em>MRPHallbachArrayResult.MRPHallbachArrayResult</em><em>]</em>) – a list of magnet result object MRPHallbachArrayResult containing computed magnets</p></li>
+<li><p><strong>_save_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – save .scad file to filepath e.g. ./tmp/export.scad</p></li>
+<li><p><strong>_2d_object_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – adds openscad projection(cut = true) to allow the generation of dxf files</p></li>
+<li><p><strong>_add_mounting_holes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – adds additional mounting holes</p></li>
+<li><p><strong>_add_annotations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – adds text annotations using magnet_id and type</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">_vectors:</span> <span class="pre">[&lt;class</span> <span class="pre">'vector._methods.Vector3D'&gt;],</span> <span class="pre">_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Vector</span> <span class="pre">Plot',</span> <span class="pre">_file:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors" title="Link to this definition"></a></dt>
+<dd><p>Helperfunction to plot a list of 3D vectors using matplotlib</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_vectors</strong> (<em>[</em><em>vector.Vector3D</em><em>]</em>) – reading</p></li>
+<li><p><strong>_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – headline of the plot</p></li>
+<li><p><strong>_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – if set, saves the plot as png to given path</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGeneratorException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPHallbachArrayGenerator.</span></span><span class="sig-name descname"><span class="pre">MRPHallbachArrayGeneratorException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MRPHallbachArrayGeneratorException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGeneratorException" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayGeneratorException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayGeneratorException.with_traceback" title="Link to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MRPHallbachArrayGenerator.MRPHallbachArrayResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPHallbachArrayGenerator.</span></span><span class="sig-name descname"><span class="pre">MRPHallbachArrayResult</span></span><a class="headerlink" href="#MRPHallbachArrayGenerator.MRPHallbachArrayResult" title="Link to this definition"></a></dt>
+<dd><p>contains the generated data returned after calling a generation method e.g. generate_1k_hallbach_using_polarisation_direction</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MRP.MRPHal.html" class="btn btn-neutral float-left" title="MRP.MRPHal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MRP.MRPHelpers.html" class="btn btn-neutral float-right" title="MRP.MRPHelpers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marcel Ochsendorf.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

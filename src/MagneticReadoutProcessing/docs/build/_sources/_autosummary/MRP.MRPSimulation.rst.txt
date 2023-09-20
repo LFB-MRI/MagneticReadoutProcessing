@@ -1,0 +1,6 @@
+MRP.MRPSimulation
+=================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPSimulation

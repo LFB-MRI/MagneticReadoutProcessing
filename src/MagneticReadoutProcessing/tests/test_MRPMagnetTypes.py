@@ -7,7 +7,7 @@ import pytest
 import unittest
 import random
 
-import MRPMagnetTypes
+from MRP import MRPMagnetTypes
 
 
 

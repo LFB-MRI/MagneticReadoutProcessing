@@ -9,7 +9,7 @@ import random
 import configparser
 import os
 
-import MRPConfig, MRPPolarVisualization, MRPReading, MRPMeasurementConfig
+from MRP import MRPConfig, MRPPolarVisualization, MRPReading, MRPMeasurementConfig
 class TestMRPReading(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE

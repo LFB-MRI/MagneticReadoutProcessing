@@ -1,0 +1,6 @@
+MRP.MRPOpenSCADGenerator
+========================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPOpenSCADGenerator

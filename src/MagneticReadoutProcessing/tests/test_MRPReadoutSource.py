@@ -7,7 +7,7 @@ import magpylib as magpy
 import numpy as np
 from matplotlib import pyplot as plt
 
-import MRPSimulation, MRPReadoutSource
+from MRP import MRPSimulation, MRPReadoutSource
 
 """
 TODO

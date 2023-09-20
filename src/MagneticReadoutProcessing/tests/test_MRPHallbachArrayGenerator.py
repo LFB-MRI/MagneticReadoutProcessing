@@ -6,7 +6,7 @@ import unittest
 import os
 import vector
 
-import MRPSimulation, MRPHallbachArrayGenerator, MRPMagnetTypes
+from MRP import MRPSimulation, MRPHallbachArrayGenerator, MRPMagnetTypes
 class TestMRPHallbachArrayGenerator(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE

@@ -1,0 +1,6 @@
+MRP.MRPHal
+==========
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPHal

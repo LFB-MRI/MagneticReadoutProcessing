@@ -1,0 +1,6 @@
+MRP.MRPBaseSensor
+=================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPBaseSensor

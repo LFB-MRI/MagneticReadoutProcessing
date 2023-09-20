@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 
 
-import MRPHal
+from MRP import MRPHal
 
 class TestMPRHal(unittest.TestCase):
 

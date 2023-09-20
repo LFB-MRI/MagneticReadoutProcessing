@@ -7,13 +7,13 @@ import unittest
 import numpy as np
 
 
-import MRPAnalysis, MRPReading, MRPSimulation, MRPReadingEntry, MRPDataVisualization
+from MRP import MRPAnalysis, MRPReading, MRPSimulation, MRPReadingEntry, MRPDataVisualization
 
 class TestMRPDataVisualization(unittest.TestCase):
 
     # PREPARE A INITIAL CONFIGURATION FILE
     # CALLED BEFORE EACH SUB-TESTCASE
-    def setUp(self) -> None:
+    def setUp(self):
         # TMP FOLDER FOR GRAPH EXPORTS
         self.import_export_test_folderpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
         if not os.path.exists(self.import_export_test_folderpath):

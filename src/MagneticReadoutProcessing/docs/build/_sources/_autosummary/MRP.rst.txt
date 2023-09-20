@@ -1,0 +1,46 @@
+﻿MRP
+===
+
+.. automodule:: MRP
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst                 <-- add this line
+   :recursive:
+
+   MRP.MRPAnalysis
+   MRP.MRPBaseSensor
+   MRP.MRPConfig
+   MRP.MRPDataVisualization
+   MRP.MRPHal
+   MRP.MRPHallbachArrayGenerator
+   MRP.MRPHelpers
+   MRP.MRPMagnetTypes
+   MRP.MRPMeasurementConfig
+   MRP.MRPOpenSCADGenerator
+   MRP.MRPPolarVisualization
+   MRP.MRPReading
+   MRP.MRPReadingEntry
+   MRP.MRPReadoutSource
+   MRP.MRPSimulation
+

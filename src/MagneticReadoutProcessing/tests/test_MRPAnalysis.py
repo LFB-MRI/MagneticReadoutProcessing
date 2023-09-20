@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 
 
-import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation, MRPReadingEntry
+from MRP import MRPAnalysis, MRPReading, MRPPolarVisualization, MRPSimulation, MRPReadingEntry
 
 class TestMPRAnalysis(unittest.TestCase):
 

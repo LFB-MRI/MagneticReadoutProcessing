@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MRP.MRPBaseSensor &mdash; MagneticReadoutProcessing  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MRP.MRPConfig" href="MRP.MRPConfig.html" />
+    <link rel="prev" title="MRP.MRPAnalysis" href="MRP.MRPAnalysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MagneticReadoutProcessing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI - Command-Line Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MRP.html">MRP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPAnalysis.html">MRP.MRPAnalysis</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MRP.MRPBaseSensor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#MRPBaseSensor.MMRPBaseSensorException"><code class="docutils literal notranslate"><span class="pre">MMRPBaseSensorException</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#MRPBaseSensor.MRPBaseSensor"><code class="docutils literal notranslate"><span class="pre">MRPBaseSensor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPConfig.html">MRP.MRPConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPDataVisualization.html">MRP.MRPDataVisualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPHal.html">MRP.MRPHal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPHallbachArrayGenerator.html">MRP.MRPHallbachArrayGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPHelpers.html">MRP.MRPHelpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPMagnetTypes.html">MRP.MRPMagnetTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPMeasurementConfig.html">MRP.MRPMeasurementConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPOpenSCADGenerator.html">MRP.MRPOpenSCADGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPPolarVisualization.html">MRP.MRPPolarVisualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReading.html">MRP.MRPReading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReadingEntry.html">MRP.MRPReadingEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPReadoutSource.html">MRP.MRPReadoutSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MRP.MRPSimulation.html">MRP.MRPSimulation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MagneticReadoutProcessing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
+          <li class="breadcrumb-item"><a href="MRP.html">MRP</a></li>
+      <li class="breadcrumb-item active">MRP.MRPBaseSensor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/MRP.MRPBaseSensor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-MRPBaseSensor">
+<span id="mrp-mrpbasesensor"></span><h1>MRP.MRPBaseSensor<a class="headerlink" href="#module-MRPBaseSensor" title="Link to this heading"></a></h1>
+<p>base class to query (b-value and temp) values from a hardware sensor running the UnifiedSensorFirmware</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="MRPBaseSensor.MMRPBaseSensorException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPBaseSensor.</span></span><span class="sig-name descname"><span class="pre">MMRPBaseSensorException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MMRPBaseSensorException</span> <span class="pre">thrown'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MMRPBaseSensorException" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MMRPBaseSensorException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MMRPBaseSensorException.with_traceback" title="Link to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MRPBaseSensor.</span></span><span class="sig-name descname"><span class="pre">MRPBaseSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="MRP.MRPHal.html#MRPHal.MRPPHal" title="MRPHal.MRPPHal"><span class="pre">MRPPHal</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor" title="Link to this definition"></a></dt>
+<dd><p>Baseclass for the simplest sensor with static and axis_b capabilities</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.get_b">
+<span class="sig-name descname"><span class="pre">get_b</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.get_b" title="Link to this definition"></a></dt>
+<dd><p>returns the b field value for a given sensor id
+trigger a readout first using the query_readout function
+if the sensor has z measurement capabilities, this axis will be used to read out the measurement prefix sign</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_sensor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – get b axis from specified sensor_id in range from 0 to self.sensor_count</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the latest b field value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.get_temp">
+<span class="sig-name descname"><span class="pre">get_temp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.get_temp" title="Link to this definition"></a></dt>
+<dd><p>returns the sensors temperature
+trigger a readout first using the query_readout function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_sensor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – get b axis from specified sensor_id in range from 0 to self.sensor_count</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the temperature if not able to read temperature the result will be -254.0</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.get_vector">
+<span class="sig-name descname"><span class="pre">get_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_sensor_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'float'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'float'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'float'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.get_vector" title="Link to this definition"></a></dt>
+<dd><p>returns the x,y,z vector from 3D magnetometer sensors value for a given sensor id
+trigger a readout first using the query_readout function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_sensor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – get b axis from specified sensor_id in range from 0 to self.sensor_count</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns the latest (x, y, z) field value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.query_readout">
+<span class="sig-name descname"><span class="pre">query_readout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.query_readout" title="Link to this definition"></a></dt>
+<dd><p>queries a complete readout of all connected sensors and their axis</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MRPBaseSensor.MRPBaseSensor.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MRPBaseSensor.MRPBaseSensor.with_traceback" title="Link to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MRP.MRPAnalysis.html" class="btn btn-neutral float-left" title="MRP.MRPAnalysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MRP.MRPConfig.html" class="btn btn-neutral float-right" title="MRP.MRPConfig" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Marcel Ochsendorf.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

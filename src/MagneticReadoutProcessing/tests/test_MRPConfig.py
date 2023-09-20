@@ -5,7 +5,7 @@ import unittest
 import configparser
 import os
 
-import MRPConfig
+from MRP import MRPConfig
 
 # TODO REWRITE TEST FOR CONFIG
 class TestMPRConfig(unittest.TestCase):

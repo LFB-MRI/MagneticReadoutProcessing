@@ -1,0 +1,6 @@
+MRP.MRPConfig
+=============
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPConfig

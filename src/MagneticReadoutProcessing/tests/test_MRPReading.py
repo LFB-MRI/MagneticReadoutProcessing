@@ -7,7 +7,7 @@ import pytest
 import unittest
 import random
 
-import MRPReading, MRPSimulation
+from MRP import MRPReading, MRPSimulation
 
 
 

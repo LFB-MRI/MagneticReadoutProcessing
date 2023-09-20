@@ -1,6 +1,3 @@
-import MRPDataVisualization
-import MRPReading
-import MRPReadingEntry
 from fix_import import __fix_import__fix_import
 __fix_import__fix_import()
 
@@ -9,8 +6,8 @@ import random
 import unittest
 import numpy as np
 
-import MRPHal
-import MRPBaseSensor
+from MRP import MRPHal, MRPBaseSensor, MRPDataVisualization, MRPReading, MRPReadingEntry
+
 
 class TestMPRHal(unittest.TestCase):
     hal_instance: MRPHal.MRPPHal = None

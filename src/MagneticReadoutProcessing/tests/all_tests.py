@@ -5,12 +5,10 @@ import os
 import configparser
 
 
-
 def load_tests(loader, tests, pattern):
     ''' Discover and load all unit tests in all files named ``*_test.py`` in ``./src/`` '''
     config = configparser.ConfigParser()
-    config.read(os.path.dirname(__file__)+'/test_config.ini')
-
+    config.read(os.path.dirname(__file__) + '/test_config.ini')
 
     # add normal tests
     suite = TestSuite()
@@ -24,11 +22,8 @@ def load_tests(loader, tests, pattern):
             for test_suite in all_test_suite:
                 suite.addTests(test_suite)
 
-
-
-
-
     return suite
+
 
 if __name__ == '__main__':
     unittest.main()
