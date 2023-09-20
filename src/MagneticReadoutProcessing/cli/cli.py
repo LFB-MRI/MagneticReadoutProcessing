@@ -1,5 +1,7 @@
+import sys
+sys.path.insert(0, '..')
+
 import typer
-import cli_datastorage
 import cli_sensor
 import cli_config
 import cli_helper

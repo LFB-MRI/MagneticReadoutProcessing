@@ -1,9 +1,9 @@
 """ collection of reading data plotting functions """
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import deque
 
-import MRPReading, MRPAnalysis
+
+from MRP import MRPReading, MRPAnalysis
 
 class MRPDataVisualizationException(Exception):
     def __init__(self, message="MRPDataVisualizationException thrown"):

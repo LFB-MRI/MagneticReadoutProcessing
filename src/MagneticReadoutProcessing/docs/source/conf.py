@@ -12,21 +12,22 @@ sys.path.insert(0, os.path.abspath('../../cli'))
 sys.path.insert(0, os.path.abspath('../../tests'))
 sys.path.insert(0, os.path.abspath('../../../MagneticReadoutProcessing'))
 #sys.path.insert(0, os.path.abspath('../../test'))
-#autodoc_mock_imports = ["numpy",
-#                        "configparser",
-#                        "google",
-#                        "matplotlib",
-#                        "math",
-#                        "vg",
-#                        "support",
-#                        "test_support",
-#                        "libregrtest",
-#                        "regrtest",
-#                        "ann_module3",
-#                        "ann_module2",
-#                        "ann_module",
-#                        "test",
-#                        "testsupport"]
+autodoc_mock_imports = ["numpy",
+                        "configparser",
+                        "google",
+                        "matplotlib",
+                        "math",
+                        "vg",
+                        "support",
+                        "test_support",
+                        "libregrtest",
+                        "regrtest",
+                        "ann_module3",
+                        "ann_module2",
+                        "ann_module",
+                        "test",
+                        "vector",
+                        "testsupport"]
 
 
 autodoc_default_options = {

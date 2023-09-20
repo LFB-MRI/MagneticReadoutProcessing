@@ -2,7 +2,7 @@
 
 import math
 
-import MRPMagnetTypes
+from MRP import MRPMagnetTypes
 
 class MRPReadingEntryException(Exception):
     def __init__(self, message="MRPReadingEntryException thrown"):

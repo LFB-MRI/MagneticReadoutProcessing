@@ -249,7 +249,7 @@ class MRPPHal:
         :param _cmd: command like help id read...
         :type _cmd: str
 
-        :returns: returns sensor response as line splitted by '\n'
+        :returns: returns sensor response as line separated by '\n'
         :rtype: [str]
         """
         if _cmd is None or len(_cmd) <= 0:

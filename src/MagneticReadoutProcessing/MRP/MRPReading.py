@@ -6,7 +6,7 @@ import numpy as np
 import json
 import sys
 
-import MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
+from MRP import MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
 
 
 

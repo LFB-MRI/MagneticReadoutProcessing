@@ -1,5 +1,5 @@
 """ base class to query (b-value and temp) values from a hardware sensor running the UnifiedSensorFirmware """
-import MRPHal
+from MRP import MRPHal
 
 
 class MMRPBaseSensorException(Exception):

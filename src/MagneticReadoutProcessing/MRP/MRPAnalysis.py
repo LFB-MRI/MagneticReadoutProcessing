@@ -1,14 +1,14 @@
 """ collection of reading processing functions such as fft, mean, center of gravity"""
 
 import math
-import random
+
 import numpy
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.fft import fft, fftfreq
 from scipy.signal import find_peaks
 
-import MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry
+from MRP import MRPReading
 
 
 class MRPAnalysisException(Exception):

@@ -1,16 +1,16 @@
 """ generates magnet structures out of given readings and export hallbach rings """
 
 import math
-
-import magpy
 import magpylib
 from magpylib import Collection, getB
 import vector
 import matplotlib.pyplot as plt
-from matplotlib.colors import to_rgba
+
 from scipy.spatial.transform import Rotation as R
 import numpy as np
-import MRPReading, MRPAnalysis, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
+
+
+from MRP import MRPReading, MRPAnalysis, MRPMagnetTypes, MRPHelpers, MRPOpenSCADGenerator
 
 
 

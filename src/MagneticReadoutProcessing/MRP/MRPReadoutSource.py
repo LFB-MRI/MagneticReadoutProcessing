@@ -4,12 +4,11 @@ from magpylib._src.fields.field_BH_sphere import magnet_sphere_field
 
 # https://github.com/magpylib/magpylib/blob/main/magpylib/_src/fields/field_BH_cuboid.py#L10
 
-
 from magpylib._src.obj_classes.class_BaseExcitations import BaseSource, BaseMagnet
 
 
 
-import MRPReading, MRPAnalysis
+from MRP import MRPReading, MRPAnalysis
 
 class MRPReadoutSource(BaseMagnet):
     """User-defined custom source.

@@ -1,12 +1,10 @@
 """  generates openscad structures """
 
 import math
-
 import magpylib
 import openpyscad as ops
 import os
 from pathlib import Path
-
 import scipy
 
 

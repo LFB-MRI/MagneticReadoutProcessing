@@ -4,11 +4,8 @@ import random
 import numpy as np
 import magpylib as magpy
 
+from MRP import MRPReading, MRPHelpers, MRPMagnetTypes
 
-import MRPReading, MRPHelpers, MRPMagnetTypes
-
-from scipy.spatial.transform import Rotation as R
-import vg
 
 
 class MRPSimulationException(Exception):

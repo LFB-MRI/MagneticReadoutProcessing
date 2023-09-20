@@ -1,14 +1,12 @@
 """  plotting function to render polar plots of a reading """
 
-
 import matplotlib.pyplot as plt
-from matplotlib import cm, colormaps
-from matplotlib.colors import BoundaryNorm
 from matplotlib import cm, colormaps
 import math
 import numpy as np
 # CUSTOM CLASSES
-import MRPReading, MRPHelpers, MRPMeasurementConfig
+
+from MRP import MRPReading, MRPHelpers
 
 
 class MRPPolarVisualization():

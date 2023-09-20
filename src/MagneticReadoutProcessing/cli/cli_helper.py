@@ -1,5 +1,5 @@
 import typer
-import MRPHal
+from MRP import MRPHal
 import cli_datastorage
 
 
