@@ -29,13 +29,15 @@ Installation
     $ ./venv/bin/python3.9 ./cli/cli.py --help
 
 
-
+.. note::
+    In order to allow direct running of the examples below, the ``venv`` is used.
+    So all cli commands are changed to: ``./venv/bin/python3.9 ./cli/cli.py`` instead of ``python3 ./cli/cli.py``.
 Usage
 *****
 
 .. code-block:: bash
 
-    $ python3 cli.py --help
+    $ ./venv/bin/python3.9 ./cli/cli.py --help
     Usage: cli.py [OPTIONS] COMMAND [ARGS]...
     Options:
     --install-completion  Install completion for the current shell.
@@ -64,7 +66,7 @@ Here all connected sensors are listed. If an other sensor hardware is used (with
 
 .. code-block:: bash
     
-    $ python3 cli.py config --help
+    $ ./venv/bin/python3.9 ./cli/cli.py config --help
     Usage: cli.py config [OPTIONS] COMMAND [ARGS]...
     Options:
     --help  Show this message and exit.
@@ -76,14 +78,14 @@ Here all connected sensors are listed. If an other sensor hardware is used (with
 
 
     # cli.py config setupsensor <configname>
-    $ python3 cli.py config setupsensor testcfg
+    $ p./venv/bin/python3.9 ./cli/cli.py config setupsensor testcfg
     0 > Unified Sensor 386731533439 - /dev/cu.usbmodem3867315334391
     Please select one of the found sensors [0]: 
     sensor connected: True 1243455
     SENSOR SETUP COMPLETE: cli/configs/testcfg_config.json
 
     # cli.py config setupsensor <configname> <device_path>
-    $ python3 cli.py config setupsensor testcfg /dev/tty
+    $ ./venv/bin/python3.9 ./cli/cli.py config setupsensor testcfg /dev/tty
     sensor connected: True 54224326
     SENSOR SETUP COMPLETE: cli/configs/testcfg_config.json
     
@@ -95,7 +97,7 @@ After the sensor setup is finished for this sensor. Its possible to query the se
 
 .. code-block:: bash
 
-    $ python3 cli.py sensor --help
+    $ ./venv/bin/python3.9 ./cli/cli.py sensor --help
     Options:
     --help  Show this message and exit.
     Commands:
@@ -104,7 +106,7 @@ After the sensor setup is finished for this sensor. Its possible to query the se
 
 
     # cli.py sensor info <configname>
-    $ python3 cli.py sensor info testcfg
+    $ ./venv/bin/python3.9 ./cli/cli.py sensor info testcfg
     SENSOR INFORMATION
     NAME:
     ID: 525771256544952
@@ -113,7 +115,7 @@ After the sensor setup is finished for this sensor. Its possible to query the se
 
 
     # cli.py sensor query <configname>
-    $ python3 cli.py sensor query testcfg
+    $ ./venv/bin/python3.9 ./cli/cli.py sensor query testcfg
     QUERY RESULT FOR SENSOR_ID:525771256544952 SENSOR_NUMBER:0
     > B:47.66
     QUERY RESULT FOR SENSOR_ID:525771256544952 SENSOR_NUMBER:1
@@ -131,7 +133,7 @@ To set these the ``config`` option offers a setup wizard.
 .. code-block:: bash
 
     # cli.py config setup <configname>
-    $ python3 cli.py config setup testcfg
+    $ ./venv/bin/python3.9 ./cli/cli.py config setup testcfg
     CONFIGURE testcfg
     READING-NAME: [testreading]: testreading
     OUTPUT-FOLDER [/cli/reading]: /tmp/reading_folder_path
@@ -145,7 +147,6 @@ To set these the ``config`` option offers a setup wizard.
     To edit a configuration, re-run the commands.
 
 .. note::
-
     To delete a configuration delete the ``<configname>_config.json`` file in the ``cli/config/`` directory.
 
 
@@ -157,7 +158,7 @@ First its possible to list all found configuration files inside od the ``cli/con
 
 .. code-block:: bash
 
-    $ python3 cli.py config list 
+    $ ./venv/bin/python3.9 ./cli/cli.py config list
     FOUND CONFIGURATIONS IN. cli/configs/
     0> testcfg
     1> calibration
@@ -170,7 +171,7 @@ The system performs a pre-check of the sensor and configuration to avoid any mis
 
 .. code-block:: bash
 
-    $ python3 cli.py measure --help
+    $ ./venv/bin/python3.9 ./cli/cli.py measure --help
     Usage: cli.py measure [OPTIONS] COMMAND [ARGS]...
     Options:
     --help  Show this message and exit.
@@ -178,11 +179,11 @@ The system performs a pre-check of the sensor and configuration to avoid any mis
     run
 
     # RUN ALL FOUND CONFIGURATIONS
-    $ python3 cli.py measure run 
+    $ ./venv/bin/python3.9 ./cli/cli.py measure run
     STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg', 'calibrationreading']
     # RUN SPECIFIED CONFIGURATION
     # ./cli.py measure run <configname>
-    $ python3 cli.py measure run testcfg 
+    $ ./venv/bin/python3.9 ./cli/cli.py measure run testcfg
     STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg']
 
 

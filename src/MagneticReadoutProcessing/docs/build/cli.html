@@ -101,16 +101,24 @@ To allow a level of automation and integration into CI pipelines, several differ
 <p>As the package has not been published on PyPi yet, it CANNOT be install using pip.
 So for the CLI, the same installation procedure is used as for the main <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code> package.</p>
 </div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing
-<span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./cli
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing
+$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+
+<span class="c1"># RUNNING THE CLI USING VENV (if library is not installed on system)</span>
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>--help
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to allow direct running of the examples below, the <code class="docutils literal notranslate"><span class="pre">venv</span></code> is used.
+So all cli commands are changed to: <code class="docutils literal notranslate"><span class="pre">./venv/bin/python3.9</span> <span class="pre">./cli/cli.py</span></code> instead of <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">./cli/cli.py</span></code>.</p>
 </div>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --install-completion<span class="w">  </span>Install<span class="w"> </span>completion<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>shell.
@@ -131,7 +139,7 @@ For this task a new configuration is needed.
 The <a href="#id1"><span class="problematic" id="id2">``</span></a>configname``parameter is equal to the filename of the generated configfile.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">setupsensor</span></code> parameter launches the sensor configuration wizard.
 Here all connected sensors are listed. If an other sensor hardware is used (with different vid/pid), its possible to specify the port manually</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>config<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
@@ -143,14 +151,14 @@ setupsensor
 
 
 <span class="c1"># cli.py config setupsensor &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg
+$<span class="w"> </span>p./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg
 <span class="m">0</span><span class="w"> </span>&gt;<span class="w"> </span>Unified<span class="w"> </span>Sensor<span class="w"> </span><span class="m">386731533439</span><span class="w"> </span>-<span class="w"> </span>/dev/cu.usbmodem3867315334391
 Please<span class="w"> </span><span class="k">select</span><span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>found<span class="w"> </span>sensors<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span>:
 sensor<span class="w"> </span>connected:<span class="w"> </span>True<span class="w"> </span><span class="m">1243455</span>
 SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>cli/configs/testcfg_config.json
 
 <span class="c1"># cli.py config setupsensor &lt;configname&gt; &lt;device_path&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg<span class="w"> </span>/dev/tty
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>config<span class="w"> </span>setupsensor<span class="w"> </span>testcfg<span class="w"> </span>/dev/tty
 sensor<span class="w"> </span>connected:<span class="w"> </span>True<span class="w"> </span><span class="m">54224326</span>
 SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class="w"> </span>cli/configs/testcfg_config.json
 </pre></div>
@@ -159,7 +167,7 @@ SENSOR<span class="w"> </span>SETUP<span class="w"> </span>COMPLETE:<span class=
 <section id="sensor-information-and-readout">
 <h3>Sensor information and readout<a class="headerlink" href="#sensor-information-and-readout" title="Link to this heading"></a></h3>
 <p>After the sensor setup is finished for this sensor. Its possible to query the sensor manually.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>sensor<span class="w"> </span>--help
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
 Commands:
@@ -168,7 +176,7 @@ query
 
 
 <span class="c1"># cli.py sensor info &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>info<span class="w"> </span>testcfg
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>sensor<span class="w"> </span>info<span class="w"> </span>testcfg
 SENSOR<span class="w"> </span>INFORMATION
 NAME:
 ID:<span class="w"> </span><span class="m">525771256544952</span>
@@ -177,7 +185,7 @@ CAPABILITIES:<span class="w"> </span><span class="o">[</span><span class="s1">&#
 
 
 <span class="c1"># cli.py sensor query &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>sensor<span class="w"> </span>query<span class="w"> </span>testcfg
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>sensor<span class="w"> </span>query<span class="w"> </span>testcfg
 QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> </span>SENSOR_ID:525771256544952<span class="w"> </span>SENSOR_NUMBER:0
 &gt;<span class="w"> </span>B:47.66
 QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> </span>SENSOR_ID:525771256544952<span class="w"> </span>SENSOR_NUMBER:1
@@ -191,7 +199,7 @@ QUERY<span class="w"> </span>RESULT<span class="w"> </span>FOR<span class="w"> <
 The config also contains information about type of reading, number datapoints and averaging.
 To set these the <code class="docutils literal notranslate"><span class="pre">config</span></code> option offers a setup wizard.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cli.py config setup &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>setup<span class="w"> </span>testcfg
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>config<span class="w"> </span>setup<span class="w"> </span>testcfg
 CONFIGURE<span class="w"> </span>testcfg
 READING-NAME:<span class="w"> </span><span class="o">[</span>testreading<span class="o">]</span>:<span class="w"> </span>testreading
 OUTPUT-FOLDER<span class="w"> </span><span class="o">[</span>/cli/reading<span class="o">]</span>:<span class="w"> </span>/tmp/reading_folder_path
@@ -214,7 +222,7 @@ To edit a configuration, re-run the commands.</p>
 <h3>Run automatic measurement<a class="headerlink" href="#run-automatic-measurement" title="Link to this heading"></a></h3>
 <p>After this step it is possible to execute a measurement using all saved configuration files.
 First its possible to list all found configuration files inside od the <code class="docutils literal notranslate"><span class="pre">cli/configs/</span></code> folder.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>list
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>config<span class="w"> </span>list
 FOUND<span class="w"> </span>CONFIGURATIONS<span class="w"> </span>IN.<span class="w"> </span>cli/configs/
 <span class="m">0</span>&gt;<span class="w"> </span>testcfg
 <span class="m">1</span>&gt;<span class="w"> </span>calibration
@@ -223,7 +231,7 @@ FOUND<span class="w"> </span>CONFIGURATIONS<span class="w"> </span>IN.<span clas
 <p>To start a measurement run the <code class="docutils literal notranslate"><span class="pre">measure</span> <span class="pre">run``option</span> <span class="pre">is</span> <span class="pre">used.</span>
 <span class="pre">Its</span> <span class="pre">possible</span> <span class="pre">to</span> <span class="pre">run</span> <span class="pre">all</span> <span class="pre">or</span> <span class="pre">a</span> <span class="pre">specified</span> <span class="pre">configuration</span> <span class="pre">by</span> <span class="pre">using</span> <span class="pre">the</span> <span class="pre">``&lt;configname&gt;</span></code> parameter.</p>
 <p>The system performs a pre-check of the sensor and configuration to avoid any misconfiguration errors before a long measurement run.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>--help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>measure<span class="w"> </span>--help
 Usage:<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
 Options:
 --help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
@@ -231,11 +239,11 @@ Commands:
 run
 
 <span class="c1"># RUN ALL FOUND CONFIGURATIONS</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>measure<span class="w"> </span>run
 STARTING<span class="w"> </span>MEASUREMENT<span class="w"> </span>RUN<span class="w"> </span>WITH<span class="w"> </span>FOLLOWING<span class="w"> </span>CONFIGS:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;testcfg&#39;</span>,<span class="w"> </span><span class="s1">&#39;calibrationreading&#39;</span><span class="o">]</span>
 <span class="c1"># RUN SPECIFIED CONFIGURATION</span>
 <span class="c1"># ./cli.py measure run &lt;configname&gt;</span>
-$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>measure<span class="w"> </span>run<span class="w"> </span>testcfg
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./cli/cli.py<span class="w"> </span>measure<span class="w"> </span>run<span class="w"> </span>testcfg
 STARTING<span class="w"> </span>MEASUREMENT<span class="w"> </span>RUN<span class="w"> </span>WITH<span class="w"> </span>FOLLOWING<span class="w"> </span>CONFIGS:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;testcfg&#39;</span><span class="o">]</span>
 
 
