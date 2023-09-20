@@ -38,8 +38,9 @@ def query(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
             print("QUERY RESULT FOR SENSOR_ID:{} SENSOR_NUMBER:{}".format(sensor_connection.get_sensor_id(), idx))
             print("> B:{}".format(sensor.get_b(_sensor_id=idx)))
 
-            if 'temp' in caps:
-                print("> TEMP:{}".format(sensor.get_temp(_sensor_id=idx)))
+
+            print("> TEMP:{}".format(sensor.get_temp(_sensor_id=idx)))
+            
             if 'axis_x' in caps:
                 print("> X:{}".format(sensor.get_reading(_axis='x', _sensor_id=idx)))
             if 'axis_y' in caps:

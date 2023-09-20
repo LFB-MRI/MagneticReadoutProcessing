@@ -86,9 +86,12 @@
              
   <section id="cli-command-line-interface">
 <h1>CLI - Command-Line Interface<a class="headerlink" href="#cli-command-line-interface" title="Link to this heading"></a></h1>
+<p>The cli offers a easy way to take sensor measurements and readings.
+Multible sensors can be connected to the host running the CLI.
+To allow a level of automation and integration into CI pipelines, several different configurations can be created to perform different measurements.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For the following cli examples a working sensor with <a href="#id1"><span class="problematic" id="id2">``</span></a>UnifiedMagBoardFirmware``is required.</p>
+<p>For the following cli examples, a working sensor with <code class="docutils literal notranslate"><span class="pre">UnifiedMagBoardFirmware</span></code> is required.</p>
 </div>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
@@ -121,13 +124,10 @@ sensor
 </div>
 <section id="configuration">
 <h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
-<p>The cli offers a easy way to take sensor measurements and readings.
-Multible sensors can be connected to the host running the CLI.
-To allow a level of automation and integration into CI pipelines, several different configurations can be created to perform different measurements.</p>
 <p>The following example shows how to create a configuration and start a measurement run.</p>
 <p>The first step is to test the connected sensors.
 For this task a new configuration is needed.
-The <a href="#id3"><span class="problematic" id="id4">``</span></a>configname``parameter is equal to the filename of the generated configfile.</p>
+The <a href="#id1"><span class="problematic" id="id2">``</span></a>configname``parameter is equal to the filename of the generated configfile.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">setupsensor</span></code> parameter launchs the sensor configuration wizard.
 Here all connected sensors are listed. If an other sensor hardware is used (with different vid/pid), its possible to specify the port manually</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python3<span class="w"> </span>cli.py<span class="w"> </span>config<span class="w"> </span>--help

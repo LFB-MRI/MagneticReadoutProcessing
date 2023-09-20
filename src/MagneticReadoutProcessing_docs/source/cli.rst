@@ -1,8 +1,13 @@
 CLI - Command-Line Interface
 ###########################
 
+The cli offers a easy way to take sensor measurements and readings.
+Multible sensors can be connected to the host running the CLI.
+To allow a level of automation and integration into CI pipelines, several different configurations can be created to perform different measurements.
+
+
 .. note::
-   For the following cli examples a working sensor with ``UnifiedMagBoardFirmware``is required.
+   For the following cli examples, a working sensor with ``UnifiedMagBoardFirmware`` is required.
 
 
 Installation
@@ -45,10 +50,6 @@ Usage
 
 Configuration
 =============
-
-The cli offers a easy way to take sensor measurements and readings.
-Multible sensors can be connected to the host running the CLI.
-To allow a level of automation and integration into CI pipelines, several different configurations can be created to perform different measurements.
 
 The following example shows how to create a configuration and start a measurement run.
 
