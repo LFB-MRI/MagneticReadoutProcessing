@@ -1,0 +1,4 @@
+---
+stage collect_readings:
+  from: tlv493d_temperature
+  

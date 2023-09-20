@@ -29,6 +29,7 @@ Contents
     installation
     examples
     cli
+    pipeline
     MagneticReadoutProcessing
 
 
