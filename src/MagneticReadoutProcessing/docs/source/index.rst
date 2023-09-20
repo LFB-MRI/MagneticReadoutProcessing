@@ -26,6 +26,7 @@ Contents
     :caption: Contents
 
     intro
+    installation
     examples
     cli
     MagneticReadoutProcessing
