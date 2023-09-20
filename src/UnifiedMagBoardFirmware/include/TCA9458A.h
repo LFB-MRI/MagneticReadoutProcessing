@@ -29,15 +29,17 @@ class TCA9548A
         
 
         TCA9548A(TwoWire& _wire_instance);
-        bool begin(const TCA9548A_Address_t _addr);
+        bool begin(const TCA9548A_Address_t _addr, bool _enabled);
         bool isReady(void);
         bool setChannel(const byte _channel, const bool _state);
         void resetChannels(void);
+        bool isEnabled(void);
         byte getChannel(void);
   						 
     private:
        TCA9548A_Address_t i2c_addr = TCA9548A_ADDRESS0;
         TwoWire* i2c_inst;
+        bool enabled;
         
        bool activated_channels[TCA9548A_Channels] = { false };
 };

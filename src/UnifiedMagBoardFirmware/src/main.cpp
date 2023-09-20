@@ -7,13 +7,24 @@
 // CUSTOM INCLUDES
 #include "main.h"
 
+ #ifdef ARDUINO_ARCH_MBED
+    REDIRECT_STDOUT_TO(DEBUG_SERIAL)  // MBED  printf(...) to console
+#endif
+
 // CLASSES
 TCA9548A tca9584a(SENSOR_WIRE);
 
 DBGCommandParser debug_command_parser;
 HostCommandParser host_command_parser;
 
+
+
+
+#if defined(HOST_SERIAL_RX) && defined(HOST_SERIAL_TX)
 HardwareSerial HOST_SERIAL(HOST_SERIAL_RX, HOST_SERIAL_TX); // RX TX  // FOR SERIAL ANC
+#else
+
+#endif
 sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 
 sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SENSORS PER TCA CHANNEL S0 16 SENSORS PER SLICE
@@ -23,6 +34,9 @@ System_State system_state = System_State_Error;
 long readout_index = 0;
 int sensor_number = 0;
 int anc_base_id = -1;
+
+
+
 
 bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const bool _log = true)
 {
@@ -200,16 +214,23 @@ void process_anc_information(DBGCommandParser::Argument *args, char *response)
 
 
 
-void scan_for_tlv493d_sensors()
+void scan_for_sensors()
 
 {
   // SCAN FOR TLV SENSORS
-  tca9584a.resetChannels();
-  for (int i = 0; i < TCA9548A_Channels; i++)
+  //if not tca found only one channel/sensor can be connected
+  int max_tca_channels = 1;
+  if(tca9584a.isEnabled()){
+    max_tca_channels = TCA9548A_Channels;
+    tca9584a.resetChannels();
+  }
+  
+
+  for (int i = 0; i < max_tca_channels; i++)
   {
     // SET TCA CHANNEL
     tca9584a.setChannel(i, true);
-    volatile byte res = tca9584a.getChannel();
+
 
     i2c_scan(SENSOR_WIRE);
     const int arr_index = sensor_number;
@@ -269,7 +290,7 @@ void setup()
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { DEBUG_SERIAL.printf("v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION); });
+                                       { DEBUG_SERIAL.println("v"+String(VERSION_MAJOR)+"."+String(VERSION_MINOR)+"."+String(VERSION_REVISION)); });
 
   debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response)
                                        { 
@@ -328,10 +349,13 @@ void setup()
   attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
 
   
-
+  
   // I2C SENSOR INTERFACE SETUP
+#if defined(SENSOR_WIRE_SCL_PIN) && defined(SENSOR_WIRE_SDA_PIN)
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
   SENSOR_WIRE.setSDA(SENSOR_WIRE_SDA_PIN);
+#endif
+  
   SENSOR_WIRE.begin();
 
   if (!digitalRead(SINGLE_MODE_PIN))
@@ -345,13 +369,15 @@ void setup()
 
   // i2c_scan(SENSOR_WIRE);
   //  CHECK IF TCA9584A IS PRESENT
-  if (!is_i2c_device_present(SENSOR_WIRE, TCA9548A_ADDRESS0))
+  if (is_i2c_device_present(SENSOR_WIRE, TCA9548A_ADDRESS0))
   {
-    error(true, System_Error_Code_TCA_SCAN_FAILED);
+     tca9584a.begin(TCA9548A_ADDRESS0, true);
+  }else{
+      tca9584a.begin(TCA9548A_ADDRESS0, false);
   }
-  tca9584a.begin(TCA9548A_ADDRESS0);
 
-  scan_for_tlv493d_sensors();
+
+  scan_for_sensors();
   if (sensor_number <= 0)
   {
     error(true, System_Error_Code_TLV_NO_SENSORS_FOUND);
@@ -402,7 +428,7 @@ void loop()
     const int next_slice_id = anc_base_id + sensor_number + 1;
 
     // FORWARD NEXT ID TO NEXT SENSOR SLICE
-    HOST_SERIAL.printf("anc %i", anc_base_id);
+    HOST_SERIAL.println("anc " + String(anc_base_id));
     // FINALLY SWITCH TO SENSOR READOUT
     system_state = System_State_READOUT_LOOP;
     // START READOUT TIMER
@@ -467,3 +493,4 @@ void loop()
     HOST_SERIAL.println(response);
   }
 }
+

@@ -6,15 +6,23 @@ TCA9548A::TCA9548A(TwoWire& _wire_instance)
     i2c_inst = &_wire_instance;
 }
 
-bool TCA9548A::begin(const TCA9548A_Address_t _addr)
+
+bool TCA9548A::begin(const TCA9548A_Address_t _addr, bool _enabled)
 {
     //... toggle reset pin ? 
+    enabled = _enabled;
     i2c_addr = _addr;
     return isReady();
 }
 
+bool TCA9548A::isEnabled(void){
+    return enabled;
+}
+
 bool TCA9548A::isReady()
 {
+    if(!enabled){return false;}
+
     i2c_inst->beginTransmission(i2c_addr);
     if (i2c_inst->endTransmission()== 0){ 
         return true;
@@ -27,11 +35,10 @@ bool TCA9548A::isReady()
 
 bool TCA9548A::setChannel(const byte _channel,const bool _state)
 {
+    if(!enabled){return true;}
 
     activated_channels[_channel] = _state;
    
-
-
     if (_channel < TCA9548A_Channels)
     {
     i2c_inst->beginTransmission(i2c_addr);
@@ -44,6 +51,8 @@ bool TCA9548A::setChannel(const byte _channel,const bool _state)
 
 void TCA9548A::resetChannels()
 {
+    if(!enabled){return;}
+
     for (int i = 0; i < TCA9548A_Channels; i++)
     {
        setChannel(i, false);
@@ -58,6 +67,7 @@ void TCA9548A::resetChannels()
 
 byte TCA9548A::getChannel()
 {
+    if(!enabled){return 0;}
     byte inByte;
     byte z = 0;
 
