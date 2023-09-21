@@ -16,6 +16,11 @@ def foo(a, b, x='blah'):
 class UDPPFunctionTranslator():
 
     @staticmethod
+    def extract_pipelines_steps(_pipeline: dict):
+        if _pipeline is None or len(_pipeline) <= 0:
+            raise Exception("extract_pipelines_steps: _pipeline parameter empty")
+
+    @staticmethod
     def load_pipelines(_folder: str) -> dict:
         if _folder is None or len(_folder) <= 0:
             raise Exception("load_pilelines: input_folder parameter empty")

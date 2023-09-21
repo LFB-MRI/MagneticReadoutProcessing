@@ -1,3 +1,5 @@
+"""This class only includes static methods which are able to used in a user defined pipeline"""
+
 import os
 import re
 from pathlib import Path
@@ -17,10 +19,28 @@ class UDPFFunctionCollectionException(Exception):
         super().__init__(self.message)
 
 
-class UDPFFunctionCollection():
+class UDPFFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
+
     @staticmethod
-    def import_readings(input_folder:str = "", file_regex: str = "(.)*.mag.json", recursive:bool = False) -> [MRPReading.MRPReading]:
+    def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+        pass
+    @staticmethod
+    def import_readings(input_folder:str = "", file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
+        """
+        Imports all readings found in the folder given from the input_folder.
+        It restores all meta-data and datapoints.
+
+        :param input_folder: Folder with .mag.json readings ABS or REL-Paths are allowed
+        :type input_folder: str
+
+        :param file_regex: to only allow certain filenames using a regex string
+        :type file_regex: str
+
+        :returns: Returns the imported readings as [MRPReading.MRPReading] instances
+        :rtype: [MRPReading.MRPReading]
+        """
+
         if input_folder is None or len(input_folder) <= 0:
             raise UDPFFunctionCollectionException("import_readings: input_folder parameter empty")
         # CHECK FOLDER EXISTS

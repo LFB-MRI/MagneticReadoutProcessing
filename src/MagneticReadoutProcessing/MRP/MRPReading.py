@@ -84,7 +84,7 @@ class MRPReading():
 
     def load_from_file(self, _filepath_name: str):
         """
-        Loads a given .mag.pkl file from a previous dump_to_file().
+        Loads a given .mag.json file from a previous dump_to_file().
         It restores all meta-data and datapoints.
 
         :param _filepath_name: ABS or REL Filepath-string filepath to .mag.pkl

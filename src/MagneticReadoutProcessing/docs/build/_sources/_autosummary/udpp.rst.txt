@@ -1,0 +1,37 @@
+﻿udpp
+====
+
+.. automodule:: udpp
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst                 <-- add this line
+   :recursive:
+
+   udpp.UDPPFFunctionCollection
+   udpp.UDPPFLogger
+   udpp.UDPPFunctionTranslator
+   udpp.import_MRP
+   udpp.udpp
+   udpp.udpp_pipeline
+
