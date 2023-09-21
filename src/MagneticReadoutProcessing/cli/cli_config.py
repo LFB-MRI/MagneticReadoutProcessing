@@ -182,5 +182,4 @@ def main(ctx: typer.Context):
 
 
 if __name__ == "__main__":
-    cli_helper.__fix_import__fix_import()
     app()
