@@ -1,5 +1,5 @@
-#ifndef __plattform_h__
-#define __plattform_h__
+#ifndef __usf_plattform_h__
+#define __usf_plattform_h__
 
     #define GENERAL_SERIAL_SPEED 115200
 
