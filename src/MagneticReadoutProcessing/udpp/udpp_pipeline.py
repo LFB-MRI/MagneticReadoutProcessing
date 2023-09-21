@@ -1,6 +1,7 @@
+import os
+from pathlib import Path
 from typing import Annotated
 import typer
-
 from UDPPFunctionTranslator import UDPPFunctionTranslator
 
 
@@ -14,7 +15,7 @@ def listfunctions(ctx: typer.Context):
 
 @app.command()
 def run(ctx: typer.Context):
-    pass
+    pipelines = UDPPFunctionTranslator.load_pipelines(str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines")))
 
 
 @app.callback(invoke_without_command=True)

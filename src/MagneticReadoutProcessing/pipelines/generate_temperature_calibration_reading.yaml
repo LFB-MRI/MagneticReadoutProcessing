@@ -5,10 +5,11 @@ settings:
 
 
 stage import_readings:
-  function: collect_readings
-  input_folder: tlv493d_N45_12x12x12
-  regex: (.)*.mag.json
-  recursive: false
+  function: import_readings
+  parameters:
+    input_folder: tlv493d_N45_12x12x12
+    regex: (.)*.mag.json
+    recursive: false
 
 #stage plot1:
 #  function: plot_error
