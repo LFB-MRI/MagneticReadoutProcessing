@@ -1,4 +1,54 @@
 ---
+
 stage collect_readings:
-  from: tlv493d_temperature
+  function: collect_readings
+  input_folder: tlv493d_N45_12x12x12
+  regex: (.)*.mag.json
+  recursive: false
+
+stage plot1:
+  function: plot_error
+  readings: collect_readings
+  title: error after collect
+  filename: error_after_collection
+
+stage apply_global_offset_inplace:
+  function: apply_global_offset_inplace
+  offset_reading: tlv493d_offset/tlv493d_offset_empty_desk.mag.json
+
+
+stage plot2:
+  function: plot_error
+  readings: apply_global_offset_inplace
+  title: error after offset
+  filename: error_after_offset
+
+
+stage apply_temperature_compensation_inplace:
+  function: apply_temperature_compensation_inplace
+  readings: apply_global_offset_inplace
+  low_temp_reading: tlv493d_temperature/temperature_30_degree.mag.json
+  high_temp_reading: tlv493d_temperature/temperature_55_degree.mag.json
+
+
+stage plot3:
+  function: plot_error
+  readings: apply_temperature_compensation_inplace
+  title: error after temperature
+  filename: error_after_temperature
+
+
+stage binning:
+  function: apply_binning
+  readings: apply_temperature_compensation_inplace
+  target_result_readings: 4
+
+
+
+stage export:
+  function: export_readings
+  readings: binning
+  target_folder: calibrated_readings
+  filename_prefix: PipelinedExport
+
   

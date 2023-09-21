@@ -325,12 +325,18 @@ class MRPAnalysis:
         # UPDATE THE DATA ENTRY DIRECTLY
 
     @staticmethod
-    def apply_global_offset_inplace(_reading: MRPReading.MRPReading, _bias_value: float = 0.0):
-        for idx, curr in enumerate(_reading.data):
-            _reading.data[idx].value = _reading.data[idx].value + _bias_value
+    def apply_global_offset_inplace(_readings: [MRPReading.MRPReading], _bias_value: float = 0.0):
+        for ridx, r in enumerate(_readings):
+            for idx, curr in enumerate(_readings[ridx].data):
+                _readings[ridx].data[idx].value = _readings[ridx].data[idx].value + _bias_value
 
-        # APPEND SOME METADATA
-        _reading.set_additional_data('global_offset_inplace', _bias_value)
+            # APPEND SOME METADATA
+            _readings[ridx].set_additional_data('apply_global_offset_inplace', _bias_value)
+
+
+    @staticmethod
+    def apply_temperature_compensation_inplace(_readings: list[MRPReading.MRPReading], _low_temp_reading: MRPReading.MRPReading, _high_temp_reading: MRPReading.MRPReading):
+        pass
 
     # TODO FIX
     def apply_binning(self, _calibrated_readings: list[MRPReading.MRPReading], _reference_reading: MRPReading.MRPReading,
