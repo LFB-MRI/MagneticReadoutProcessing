@@ -58,7 +58,7 @@ def perform_measurement(configname: str):
         reading.set_additional_data('sensor_capabilities', str(hal.get_sensor_capabilities()))
 
         # SET THE NAME
-        reading.set_name("{}_ID:{}_SID:{}_MAG:{}".format(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
+        reading.set_name("{}_ID{}_SID{}_MAG{}".format(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
 
         # ADD METADATA ABOUT THE SENSOR
         max_datapoints = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
@@ -79,7 +79,7 @@ def perform_measurement(configname: str):
             avg_bf = avg_bf / max_avg
 
             # APPEND READING
-            print("SID:{} DP:{} B:{} TEMP:{}".format(idxsen, dp_idx, avg_bf, avg_temp))
+            print("SID{} DP{} B{} TEMP{}".format(idxsen, dp_idx, avg_bf, avg_temp))
             rentry: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry(p_id=dp_idx, p_value=avg_bf, p_temperature=avg_temp, p_is_valid=True)
             reading.insert_reading_instance(rentry, _autoupdate_measurement_config=False)
 
