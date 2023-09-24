@@ -63,6 +63,7 @@ class UDPPFunctionTranslator():
         plt.close()
 
 
+
     @staticmethod
     def create_sub_calltrees(_pipelines: dict, calltree_graph:nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
         if _start_steps is None or len(_start_steps) <= 0:
@@ -75,24 +76,52 @@ class UDPPFunctionTranslator():
             visited[i] = False
         # CREATE A SUBGRAPHS UNTIL A NODE WITH TWO STAGE INPUTS IS RANGED FROM THE START STEP
         next_nodes_after_startnodes: [str] = []
+        # A QUEUE IS NEEDED TO FIRST PROCESS THE START STAGES AND THEN GOING FURTHER AND FURTHER THE OTHER STAGES ALONG
         nodes_to_process: queue.Queue = queue.Queue()
         for i in _start_steps:
             nodes_to_process.put(i)
 
         # ITERATE OVER ALL START NODES
         for ss in IterableQueue(nodes_to_process):
-            if ss == 'concat_readings':
-                pass
+            if ss == 'b':
+                i = 0
             subgraph: nx.DiGraph = nx.DiGraph()
+
+            # CREATE STARTNODE IN NEW SUBGRAPH
             last_node: str = ss
+            if last_node not in list(subgraph.nodes):
+                subgraph.add_node(last_node)
+
+
             dfs_res: [str] = list(nx.dfs_tree(calltree_graph, ss))
+            print("dfs_res: {}".format(dfs_res))
+            # REMOVE FIRST ELEMENT WHICH IS ALWAYS THE START DFS NODE
+            dfs_res.pop(0)
             # CHECK FOR EACH NODE ALONG THE DFS RESULT
             # UNIT WE FOUND ONE WITH MORE THAN ONE STEP INPUT PARAMTER
             for dfs_step in dfs_res:
                 # get function parameters which are connected with
+                # using a df search to follow the current node along its next connected stages
                 pdep = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, dfs_step, True)
 
-                if not last_node == dfs_step:
+
+
+
+                # == 1 = then its in === out > with > 1 (2,3) the function hast at least two dependencies
+                # => so this indicates the end of the sub-call-graph
+
+                if len(pdep) > 1:
+
+
+
+                    if dfs_step not in next_nodes_after_startnodes:
+                        print("added {} to next after startnodes".format(dfs_step))
+                        nodes_to_process.put(dfs_step)
+                        #next_nodes_after_startnodes.append(dfs_step)
+                        break
+
+                else:
+
                     # ADD NODES TO SUBGRAPH IF NOT PRESENT
                     if last_node not in list(subgraph.nodes):
                         subgraph.add_node(last_node)
@@ -103,28 +132,21 @@ class UDPPFunctionTranslator():
                     # ADD EDGE
                     subgraph.add_edge(last_node, dfs_step)
 
+                    last_node = dfs_step  # store last node
 
-                last_node = dfs_step # store last node
-
-                # == 1 = then its in === out > with > 1 (2,3) the function hast at least two dependencies
-                if len(pdep) > 1:
-                    next_nodes_after_startnodes.append(dfs_step)
-                    break
-                else:
                     visited[dfs_step] = True
 
             # ADD AS NEW SUBGRAPH
             subgraphs.append(subgraph)
-
-
-
+            print("subgraph {} with {}".format(len(subgraphs), list(nx.dfs_tree(subgraph, ss))))
             # EXPORT SUBGRAPH AS IMAGE
-            UDPPFunctionTranslator.plot_graph(subgraph,_export_graph_plots, "sub_calltree_{}".format(ss), "SubCallTree for {}".format(ss))
+            UDPPFunctionTranslator.plot_graph(subgraph,_export_graph_plots, "sub_calltree_startstage_{}".format(ss), "SubCallTree for Start-Stages {}".format(ss))
 
 
-        # AFTER THE START NODES
+        # AFTER ITERATING OVER THE START NODES
+        # PROCESS THE UNVISITED NODES USNG A DFS
         # TODO REWORK
-        #
+
 
 
 
@@ -171,7 +193,7 @@ class UDPPFunctionTranslator():
         # EXPORT GRAPH AS IMAGE
         UDPPFunctionTranslator.plot_graph(calltree, _export_graph_plots, "calltree_graph", "CallTree")
 
-       
+
 
         return calltree
 

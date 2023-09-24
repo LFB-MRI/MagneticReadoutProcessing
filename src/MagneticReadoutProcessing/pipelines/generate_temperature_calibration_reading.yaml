@@ -3,84 +3,42 @@ settings:
   name: "testpipeline"
   enabled: true
 
-stage import_readings_b:
+stage a:
   function: import_readings
   parameters:
     input_folder: tlv493d_N45_12x12x12
     regex: (.)*.mag.json
 
-stage import_readings_a:
+stage b:
   function: import_readings
   parameters:
     input_folder: tlv493d_N45_12x12x12
     regex: (.)*.mag.json
 
 
-stage readings_passthrough:
+stage c:
   function: readings_passthrough
   parameters:
-    reading: stage import_readings_a
+    reading: stage a
 
 
-stage concat_readings:
+stage d:
   function: concat_readings
   parameters:
-    set_a: stage readings_passthrough
-    set_b: stage import_readings_b
+    set_a: stage c
+    set_b: stage b
 #stage plot1:
 
 
-stage inspect_readings_a:
+stage e:
+  function: concat_readings
+  parameters:
+    set_a: stage d
+    set_b: stage a
+
+stage f:
   function: inspect_readings
   parameters:
-    readings: stage concat_readings
-
-stage inspect_readings_b:
-  function: inspect_readings
-  parameters:
-    readings: stage concat_readings
-#  function: plot_error
-#  readings: collect_readings
-#  title: error after collect
-#  filename: error_after_collection
-
-#stage apply_global_offset_inplace:
-#  function: apply_global_offset_inplace
-#  offset_reading: tlv493d_offset/tlv493d_offset_empty_desk.mag.json
+    readings: stage e
 
 
-#stage plot2:
-#  function: plot_error
-#  readings: apply_global_offset_inplace
-#  title: error after offset
-#  filename: error_after_offset
-
-
-#stage apply_temperature_compensation_inplace:
-#  function: apply_temperature_compensation_inplace
-#  readings: apply_global_offset_inplace
-#  low_temp_reading: tlv493d_temperature/temperature_30_degree.mag.json
-#  high_temp_reading: tlv493d_temperature/temperature_55_degree.mag.json
-
-
-#stage plot3:
-#  function: plot_error
-#  readings: apply_temperature_compensation_inplace
-#  title: error after temperature
-#  filename: error_after_temperature
-
-
-#stage binning:
-#  function: apply_binning
-#  readings: apply_temperature_compensation_inplace
-#  target_result_readings: 4
-
-
-
-#stage export:
-#  function: export_readings
-#  readings: binning
-#  target_folder: calibrated_readings
-#  filename_prefix: PipelinedExport
-
-  
