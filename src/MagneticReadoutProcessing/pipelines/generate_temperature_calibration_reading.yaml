@@ -2,6 +2,7 @@
 settings:
   name: "testpipeline"
   enabled: true
+  export_intermediate_results: True
 
 stage a:
   function: import_readings

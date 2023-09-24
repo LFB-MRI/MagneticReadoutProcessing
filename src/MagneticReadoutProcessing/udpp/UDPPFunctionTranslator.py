@@ -1,3 +1,4 @@
+"""This class is handling all the pipeline translations between the user level and the actual python function execution"""
 import os
 import queue
 from pathlib import Path
@@ -19,6 +20,7 @@ from UDPPFFunctionCollection import UDPFFunctionCollection
 
 
 class IterableQueue():
+    """simple queue pyrhon iterator, which allows iteration and insertion of new items during iteration"""
     def __init__(self,source_queue):
             self.source_queue = source_queue
     def __iter__(self):
@@ -33,9 +35,25 @@ class IterableQueue():
 # (a, b, x='blah')
 
 class UDPPFunctionTranslator():
+    """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
     @staticmethod
     def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies:bool = False) -> [str]:
+        """
+        renders an image of a given nx.Graph for debug purposes
+
+        :param _pipelines: graph to render
+        :type _pipelines: nx.DiGraph
+
+        :param _step: export folder of the rendered graph png file
+        :type _step: str
+
+        :param _only_step_dependencies: if true only stage input parameters a returned
+        :type _only_step_dependencies: str
+
+        :returns: returns the input parameters of a given pipeline stage
+        :rtype: [str]
+        """
         ret: list[str] = []
 
         step: dict = _pipelines[_step]
@@ -50,9 +68,23 @@ class UDPPFunctionTranslator():
 
         return ret
 
-
     @staticmethod
-    def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot" ,_title: str = "graph_plot"):
+    def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot", _title: str = "graph_plot"):
+        """
+        renders an image of a given nx.Graph for debug purposes
+
+        :param graph: graph to render
+        :type graph: nx.DiGraph
+
+        :param _export_graph_plots: export folder of the rendered graph png file
+        :type _export_graph_plots: str
+
+        :param _filename: filename
+        :type _filename: str
+
+        :param _title: headline of the render backed into the image
+        :type _title: str
+        """
         nx.draw_planar(graph, with_labels=True)
         plt.title("{}".format(_title))
         if _export_graph_plots is not None and len(_export_graph_plots) > 0:
@@ -62,17 +94,33 @@ class UDPPFunctionTranslator():
             plt.show()
         plt.close()
 
-
-
     @staticmethod
-    def create_sub_calltrees(_pipelines: dict, calltree_graph:nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
+    def create_sub_calltrees(_pipelines: dict, _calltree_graph: nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
+        """
+        parses the user defined stages into a directed grap in order to determ the order of computation for each function.
+
+        :param _pipelines: pipeline stages directly parsed from the yaml
+        :type _pipelines: dict
+
+        :param _calltree_graph: the complete calltree graph from create_calltree_graph()
+        :type _pipelines: nx.DiGraph
+
+        :param _start_steps: computed start stages from get_startsteps()
+        :type _start_steps: [str]
+
+        :param _export_graph_plots: if set to a folder path, the calculated graphs will be exported as image also
+        :type _export_graph_plots: [str]
+
+        :returns: a list of all generated sub call trees in the order of right execution stages
+        :rtype: [nx.DiGraph]
+        """
         if _start_steps is None or len(_start_steps) <= 0:
             raise Exception("create_sub_calltrees: _start_steps parameter empty or has no start steps")
 
         subgraphs: [nx.Graph] = []
         visited: dict = {}
 
-        for i in calltree_graph.nodes:
+        for i in _calltree_graph.nodes:
             visited[i] = False
         # CREATE A SUBGRAPHS UNTIL A NODE WITH TWO STAGE INPUTS IS RANGED FROM THE START STEP
         next_nodes_after_startnodes: [str] = []
@@ -93,7 +141,7 @@ class UDPPFunctionTranslator():
                 subgraph.add_node(last_node)
 
 
-            dfs_res: [str] = list(nx.dfs_tree(calltree_graph, ss))
+            dfs_res: [str] = list(nx.dfs_tree(_calltree_graph, ss))
             print("dfs_res: {}".format(dfs_res))
             # REMOVE FIRST ELEMENT WHICH IS ALWAYS THE START DFS NODE
             dfs_res.pop(0)
@@ -104,16 +152,10 @@ class UDPPFunctionTranslator():
                 # using a df search to follow the current node along its next connected stages
                 pdep = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, dfs_step, True)
 
-
-
-
                 # == 1 = then its in === out > with > 1 (2,3) the function hast at least two dependencies
                 # => so this indicates the end of the sub-call-graph
-
                 if len(pdep) > 1:
-
-
-
+                    # ADD NODE WITH AT LEAST TWO DEPENDENCIES AS A NEW START NODE
                     if dfs_step not in next_nodes_after_startnodes:
                         print("added {} to next after startnodes".format(dfs_step))
                         nodes_to_process.put(dfs_step)
@@ -121,7 +163,6 @@ class UDPPFunctionTranslator():
                         break
 
                 else:
-
                     # ADD NODES TO SUBGRAPH IF NOT PRESENT
                     if last_node not in list(subgraph.nodes):
                         subgraph.add_node(last_node)
@@ -131,7 +172,7 @@ class UDPPFunctionTranslator():
 
                     # ADD EDGE
                     subgraph.add_edge(last_node, dfs_step)
-
+                    # STORE A PREDECESSOR
                     last_node = dfs_step  # store last node
 
                     visited[dfs_step] = True
@@ -142,18 +183,28 @@ class UDPPFunctionTranslator():
             # EXPORT SUBGRAPH AS IMAGE
             UDPPFunctionTranslator.plot_graph(subgraph,_export_graph_plots, "sub_calltree_startstage_{}".format(ss), "SubCallTree for Start-Stages {}".format(ss))
 
-
-        # AFTER ITERATING OVER THE START NODES
-        # PROCESS THE UNVISITED NODES USNG A DFS
-        # TODO REWORK
-
-
+            # CHECK ALL VISITED
+            all_visited: bool = True
+            for k, v in visited.items():
+                if not v:
+                    all_visited = False
+            if all_visited:
+                break
 
 
         return subgraphs
 
     @staticmethod
     def create_calltree_graph(_pipelines: dict, _export_graph_plots: str = None) -> nx.DiGraph:
+        """
+        parses the user defined stages into a directed grap in order to determ the order of computation for each function.
+
+        :param _pipelines: pipeline stages directly parsed from the yaml
+        :type _pipelines: dict
+
+        :returns: returns a directed graph with edges
+        :rtype: nx.DiGraph
+        """
         if _pipelines is None or len(_pipelines) <= 0:
             raise Exception("create_calltree: _pipelines parameter empty")
 
@@ -199,6 +250,15 @@ class UDPPFunctionTranslator():
 
     @staticmethod
     def get_startsteps(_pipelines: dict) -> [str]:
+        """
+        returns all possible start stages with no input parameter dependencies from other stages, e.g. import_reading functions
+
+        :param _pipelines: pipeline stages (directly parsed from yaml)
+        :type _pipelines: dict
+
+        :returns: list of start stages names
+        :rtype: [str]
+        """
         if _pipelines is None or len(_pipelines) <= 0:
             raise Exception("get_startstep: _pipelines parameter empty")
         ret: [str] = []
@@ -214,9 +274,17 @@ class UDPPFunctionTranslator():
 
         return ret
 
-
     @staticmethod
-    def extract_pipelines_steps(_pipeline: dict):
+    def extract_pipelines_steps(_pipeline: dict) -> dict:
+        """
+        returns all stage <name> entries from the parsed yaml dict
+
+        :param _pipelines: pipeline stages (directly parsed from yaml)
+        :type _pipelines: dict
+
+        :returns: all stages a dict using stage name as key
+        :rtype: dict
+        """
         if _pipeline is None or len(_pipeline) <= 0:
             raise Exception("extract_pipelines_steps: _pipeline parameter empty")
 
@@ -243,13 +311,21 @@ class UDPPFunctionTranslator():
 
         return result_steps
 
-
-
-
     @staticmethod
     def load_pipelines(_folder: str) -> dict:
+        """
+        load all found yaml pipeline files into a dict
+        but only pipelines with the settings entry enabled set to true.
+        so it's possible to enable and disable pipelines during pipeline run command execution
+
+        :param _folder: folder with
+        :type _folder: str
+
+        :returns: all enabled pipelines as parsed yaml dict
+        :rtype: dict
+        """
         if _folder is None or len(_folder) <= 0:
-            raise Exception("load_pilelines: input_folder parameter empty")
+            raise Exception("load_pipelines: input_folder parameter empty")
         # CHECK FOLDER EXISTS
         if not str(_folder).startswith('/'):
             _folder = str(Path(_folder).resolve())
@@ -282,13 +358,30 @@ class UDPPFunctionTranslator():
                 enabled_pipelines[name] = pip
 
         return enabled_pipelines
+
     @staticmethod
     def strip_function_parameter_types(_typestr: str) -> str:
+        """
+        simplifies the python object typestring for function parameters e.g.:
+        [<class MRPReading>] => list(MRPReading)
+
+        :param _typestr: input from inspect.getfullargspec(function_obj) for a given function as string
+        :type _typestr: str
+
+        :returns: returns more human readable name of the type
+        :rtype: str
+        """
         # type(instance).__name__ doesnt works on [MRP.reading] returns list only
         return _typestr.replace("<class '", "").replace("'>", "").replace("[", "list(").replace("]", ")")
 
     @staticmethod
     def listfunctions() -> dict:
+        """
+        returns all functions implemented in the UDPPFFunctionCollection.py using the inspect function for live reflection
+
+        :returns: implemented functions as dict with function name as key
+        :rtype: dict
+        """
         method_list: [str] = [func for func in dir(UDPFFunctionCollection) if callable(getattr(UDPFFunctionCollection, func)) and not func.startswith("__")]
 
         resultdict: dict = {}
@@ -321,6 +414,18 @@ class UDPPFunctionTranslator():
         return resultdict
 
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

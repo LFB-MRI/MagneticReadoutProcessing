@@ -1,4 +1,4 @@
-﻿udpp.udpp\_pipeline
+udpp.udpp\_pipeline
 ===================
 
 .. currentmodule:: udpp

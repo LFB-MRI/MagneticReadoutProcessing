@@ -1,4 +1,4 @@
-﻿udpp.UDPPFunctionTranslator
+udpp.UDPPFunctionTranslator
 ===========================
 
 .. currentmodule:: udpp

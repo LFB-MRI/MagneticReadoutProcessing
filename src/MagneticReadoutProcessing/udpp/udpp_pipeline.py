@@ -1,3 +1,5 @@
+"""Typer base cli interface to allow the user to interact with the udppf system"""
+
 import os
 from pathlib import Path
 from typing import Annotated
@@ -45,29 +47,61 @@ def run(ctx: typer.Context):
         steps = UDPPFunctionTranslator.extract_pipelines_steps(pipeline_v)
         print("found following valid steps: {}".format(steps))
 
+
+        # CHECK IF THE CALLED FUNCTION FOR EACH STEP EXSITS
+        # TODO
+
+        # CREATE CALLTREE
         calltree_graph:nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps, pipeline_temp_folder_path)
         print("calltree generated: {}".format(calltree_graph))
 
+        # CHECK FOR EXISTSING FUNCTIONS
+        # TODO
+
+        # CHECK FOR MATCHING FUNCTION PARAMETERS
+        # TODO
+
+
         # get all possible start nodes
         # => with no input parameters from other steps
-        startsteps = UDPPFunctionTranslator.get_startsteps(steps)
-        print("found startstesp: {}".format(startsteps))
+        startsteps: [str] = UDPPFunctionTranslator.get_startsteps(steps)
+        if startsteps is None or len(startsteps):
+            raise Exception("get_startsteps: no start stages found so cant execute pipeline due missing start stage")
+        print("found startsteps: {}".format(startsteps))
 
-        # traverse
-        sct = UDPPFunctionTranslator.create_sub_calltrees(steps, calltree_graph, startsteps, pipeline_temp_folder_path)
+        # GENERATE SUBCALLTREES
+        # which includes the right computation order for each function
+        sub_call_trees: [nx.DiGraph] = UDPPFunctionTranslator.create_sub_calltrees(steps, calltree_graph, startsteps, pipeline_temp_folder_path)
         # traverse calltree to get queue of processing
 
-        #start_step: str = UDPPFunctionTranslator.get_startstep(_pipelines)
-        #if start_step is None:
-        #    raise Exception("create_calltree: no start stage found")
 
-        #traversed = nx.edge_bfs(calltree, start_step, 'original')
-        #for e in traversed:
-        #    print(e)
-        #return traversed
-        # CHECK INPUT OUTPUT PARAMETER TYPES
+        # PREPARE INTERMEDIATE RESULT DICT
+        # THIS STORES ALL INTERMEDIATE RESULTS DURING COMPUTATION OF THE SUB CALLTREES
+        intermediate_results: dict = {}
 
-        # EXECUTE ALL STAGES WITH no iNPUT FROM OTHER STAGES
+        for subcalltree in sub_call_trees:
+            for node in subcalltree.nodes:
+                intermediate_results[str(node)] = None
+
+        # OPTION TO EXPORT THE EXPORT A SNAPSHOT OF THE CURRENT COMPUTED READING AFTER EACH STEP
+        export_intermediate_results: bool = False
+        if 'export_intermediate_results' in settings and settings['export_intermediate_results']:
+            export_intermediate_results = True
+
+
+        # TODO
+        for subcalltree in sub_call_trees:
+            pass
+            # FOR EACH NODE DFS STARTING AT STARTNODE
+            
+            # READ INPUT PARAMETER FROM YAML IF STAT OR FROM INTERTMEDIATE DICT
+
+            # ECECUTE FUNCTION
+
+            # SAVE IN DICT
+
+            # EXPORT IF SET export_intermediate_results
+
         # SAVE RESULT IN DICT
 
 

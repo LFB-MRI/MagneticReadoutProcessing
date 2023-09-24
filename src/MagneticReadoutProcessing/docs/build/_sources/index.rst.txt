@@ -31,6 +31,7 @@ Contents
     cli
     pipeline
     MagneticReadoutProcessing
+    UserDefinedProcessingPipeline
 
 
 Indices and tables

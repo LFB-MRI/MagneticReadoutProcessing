@@ -47,6 +47,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cli.html">CLI - Command-Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">UDPP - User Defined Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserDefinedProcessingPipeline.html">Module - UserDefinedProcessingPipeline</a></li>
 </ul>
 
         </div>
@@ -78,6 +79,7 @@
 <div class="genindex-jumpbox">
  <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
@@ -98,11 +100,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.check_serial_number">check_serial_number() (MRPHal.MRPPHal static method)</a>
 </li>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollection.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollection.concat_readings">concat_readings() (udpp.UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+
+      <ul>
+        <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection.concat_readings">(UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.connect">connect() (MRPHal.MRPPHal method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.copy">copy() (MRPReadoutSource.MRPReadoutSource method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.create_calltree_graph">create_calltree_graph() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.create_sub_calltrees">create_sub_calltrees() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -117,6 +129,14 @@
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.disconnect">disconnect() (MRPHal.MRPPHal method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.dump_to_file">dump_to_file() (MRPReading.MRPReading method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.extract_pipelines_steps">extract_pipelines_steps() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -150,17 +170,21 @@
 </li>
       <li><a href="_autosummary/MRP.MRPMagnetTypes.html#MRPMagnetTypes.MagnetType.get_dimension">get_dimension() (MRPMagnetTypes.MagnetType method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPMagnetTypes.html#MRPMagnetTypes.MagnetType.get_height">get_height() (MRPMagnetTypes.MagnetType method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.get_name">get_name() (MRPReading.MRPReading method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.get_parameter_from_step">get_parameter_from_step() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.get_sensor_capabilities">get_sensor_capabilities() (MRPHal.MRPPHal method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.get_sensor_count">get_sensor_count() (MRPHal.MRPPHal method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.get_sensor_id">get_sensor_id() (MRPHal.MRPPHal method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.get_startsteps">get_startsteps() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPBaseSensor.html#MRPBaseSensor.MRPBaseSensor.get_temp">get_temp() (MRPBaseSensor.MRPBaseSensor method)</a>
 </li>
@@ -185,17 +209,29 @@
         <li><a href="_autosummary/udpp.import_MRP.html#module-import_MRP">module</a>
 </li>
       </ul></li>
-      <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection.import_readings">import_readings() (UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollection.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollection.import_readings">import_readings() (udpp.UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+
+      <ul>
+        <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection.import_readings">(UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+</li>
+      </ul></li>
+      <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.insert_reading">insert_reading() (MRPReading.MRPReading method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.insert_reading">insert_reading() (MRPReading.MRPReading method)</a>
-</li>
       <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.insert_reading_instance">insert_reading_instance() (MRPReading.MRPReading method)</a>
 </li>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollection.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollection.inspect_readings">inspect_readings() (udpp.UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+
+      <ul>
+        <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection.inspect_readings">(UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+</li>
+      </ul></li>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.is_connected">is_connected() (MRPHal.MRPPHal method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPHalSerialPortInformation.is_valid">is_valid() (MRPHal.MRPHalSerialPortInformation method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.IterableQueue">IterableQueue (class in UDPPFunctionTranslator)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -205,6 +241,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPHal.html#MRPHal.MRPPHal.list_serial_ports">list_serial_ports() (MRPHal.MRPPHal static method)</a>
 </li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.listfunctions">listfunctions() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
+</li>
       <li><a href="_autosummary/MRP.MRPConfig.html#MRPConfig.MRPConfig.load_defaults">load_defaults() (MRPConfig.MRPConfig method)</a>
 </li>
   </ul></td>
@@ -212,6 +250,8 @@
       <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.load_from_file">load_from_file() (MRPReading.MRPReading method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPConfig.html#MRPConfig.MRPConfig.load_from_ini">load_from_ini() (MRPConfig.MRPConfig static method)</a>
+</li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.load_pipelines">load_pipelines() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -453,6 +493,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_autosummary/MRP.MRPPolarVisualization.html#MRPPolarVisualization.MRPPolarVisualization.plot3d">plot3d() (MRPPolarVisualization.MRPPolarVisualization method)</a>
 </li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.plot_graph">plot_graph() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
+</li>
       <li><a href="_autosummary/MRP.MRPHallbachArrayGenerator.html#MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.plot_vectors">plot_vectors() (MRPHallbachArrayGenerator.MRPHallbachArrayGenerator static method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.position">position (MRPReadoutSource.MRPReadoutSource property)</a>
@@ -479,16 +521,22 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollection.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollection.readings_passthrough">readings_passthrough() (udpp.UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+
+      <ul>
+        <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection.readings_passthrough">(UDPPFFunctionCollection.UDPFFunctionCollection static method)</a>
+</li>
+      </ul></li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.reset_path">reset_path() (MRPReadoutSource.MRPReadoutSource method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate">rotate() (MRPReadoutSource.MRPReadoutSource method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate_from_angax">rotate_from_angax() (MRPReadoutSource.MRPReadoutSource method)</a>
 </li>
-      <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate_from_euler">rotate_from_euler() (MRPReadoutSource.MRPReadoutSource method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate_from_euler">rotate_from_euler() (MRPReadoutSource.MRPReadoutSource method)</a>
+</li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate_from_matrix">rotate_from_matrix() (MRPReadoutSource.MRPReadoutSource method)</a>
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.rotate_from_mrp">rotate_from_mrp() (MRPReadoutSource.MRPReadoutSource method)</a>
@@ -515,6 +563,8 @@
 </li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.show">show() (MRPReadoutSource.MRPReadoutSource method)</a>
 </li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator.strip_function_parameter_types">strip_function_parameter_types() (UDPPFunctionTranslator.UDPPFunctionTranslator static method)</a>
+</li>
       <li><a href="_autosummary/MRP.MRPReadoutSource.html#MRPReadoutSource.MRPReadoutSource.style">style (MRPReadoutSource.MRPReadoutSource property)</a>
 </li>
   </ul></td>
@@ -539,9 +589,13 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection">UDPFFunctionCollection (class in UDPPFFunctionCollection)</a>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollection.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollection">UDPFFunctionCollection (class in udpp.UDPPFFunctionCollection)</a>
+
+      <ul>
+        <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollection">(class in UDPPFFunctionCollection)</a>
 </li>
-      <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollectionException">UDPFFunctionCollectionException</a>
+      </ul></li>
+      <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException">UDPFFunctionCollectionException</a>, <a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollectionException">[1]</a>
 </li>
       <li>
     udpp
@@ -580,6 +634,8 @@
         <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#module-UDPPFunctionTranslator">module</a>
 </li>
       </ul></li>
+      <li><a href="_autosummary/udpp.UDPPFunctionTranslator.html#UDPPFunctionTranslator.UDPPFunctionTranslator">UDPPFunctionTranslator (class in UDPPFunctionTranslator)</a>
+</li>
       <li><a href="_autosummary/MRP.MRPReading.html#MRPReading.MRPReading.update_data_from_numpy_polar">update_data_from_numpy_polar() (MRPReading.MRPReading method)</a>
 </li>
   </ul></td>
@@ -612,6 +668,8 @@
         <li><a href="_autosummary/MRP.MRPReadingEntry.html#MRPReadingEntry.MRPReadingEntryException.with_traceback">(MRPReadingEntry.MRPReadingEntryException method)</a>
 </li>
         <li><a href="_autosummary/MRP.MRPSimulation.html#MRPSimulation.MRPSimulationException.with_traceback">(MRPSimulation.MRPSimulationException method)</a>
+</li>
+        <li><a href="_autosummary/%3C--%20add%20this%20line/udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException.html#udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException.with_traceback">(udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException method)</a>
 </li>
         <li><a href="_autosummary/udpp.UDPPFFunctionCollection.html#UDPPFFunctionCollection.UDPFFunctionCollectionException.with_traceback">(UDPPFFunctionCollection.UDPFFunctionCollectionException method)</a>
 </li>

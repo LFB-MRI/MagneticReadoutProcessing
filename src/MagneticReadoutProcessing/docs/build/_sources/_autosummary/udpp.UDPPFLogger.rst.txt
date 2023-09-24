@@ -1,4 +1,4 @@
-﻿udpp.UDPPFLogger
+udpp.UDPPFLogger
 ================
 
 .. currentmodule:: udpp

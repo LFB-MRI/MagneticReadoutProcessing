@@ -24,6 +24,16 @@ class UDPFFunctionCollection:
 
     @staticmethod
     def readings_passthrough(readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+        """
+        returns the input readings without any modification.
+        implemented and used during development
+
+        :param readings: input readings
+        :type readings: [MRPReading.MRPReading]
+
+        :returns: returns same readings as given in the readings input parameter
+        :rtype: [MRPReading.MRPReading]
+        """
         if readings is None or len(readings) <= 0:
             raise UDPFFunctionCollectionException("readings_passthrough: readings parameter empty")
 
@@ -55,7 +65,7 @@ class UDPFFunctionCollection:
         :param set_b: second array of readings
         :type set_b: [MRPReading.MRPReading]
 
-        :returns: bot readings arrays combined
+        :returns: both readings arrays combined
         :rtype: [MRPReading.MRPReading]
         """
 
@@ -68,8 +78,6 @@ class UDPFFunctionCollection:
             rd.append(b)
 
         return rd
-
-
 
     @staticmethod
     def import_readings(input_folder:str = "", file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
@@ -114,8 +122,3 @@ class UDPFFunctionCollection:
         return imported_results
 
 
-
-
-
-
-# TODO ADD FUNTIONS HERE AND PREPARE INPUT OUTPUT

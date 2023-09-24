@@ -1,4 +1,4 @@
-﻿udpp.udpp
+udpp.udpp
 =========
 
 .. currentmodule:: udpp

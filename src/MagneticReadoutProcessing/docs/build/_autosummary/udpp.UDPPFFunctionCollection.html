@@ -48,20 +48,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI - Command-Line Interface</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../pipeline.html">UDPP - User Defined Processing Pipeline</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../pipeline.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pipeline.html#pipeline-definition">Pipeline Definition</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../pipeline.html#function-collection">Function Collection</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../pipeline.html">UDPP - User Defined Processing Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../UserDefinedProcessingPipeline.html">Module - UserDefinedProcessingPipeline</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="udpp.html">udpp</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">udpp.UDPPFFunctionCollection</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#UDPPFFunctionCollection.UDPFFunctionCollection"><code class="docutils literal notranslate"><span class="pre">UDPFFunctionCollection</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#UDPPFFunctionCollection.UDPFFunctionCollectionException"><code class="docutils literal notranslate"><span class="pre">UDPFFunctionCollectionException</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="udpp.UDPPFLogger.html">udpp.UDPPFLogger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udpp.UDPPFunctionTranslator.html">udpp.UDPPFunctionTranslator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udpp.import_MRP.html">udpp.import_MRP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="udpp.udpp.html">udpp.udpp</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
 </ul>
 
         </div>
@@ -97,6 +100,27 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">UDPPFFunctionCollection.</span></span><span class="sig-name descname"><span class="pre">UDPFFunctionCollection</span></span><a class="headerlink" href="#UDPPFFunctionCollection.UDPFFunctionCollection" title="Link to this definition"></a></dt>
 <dd><p>This class only includes static methods which are able to used in a user defined pipeline</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="UDPPFFunctionCollection.UDPFFunctionCollection.concat_readings">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concat_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">set_a:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;],</span> <span class="pre">set_b:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></span></span><a class="headerlink" href="#UDPPFFunctionCollection.UDPFFunctionCollection.concat_readings" title="Link to this definition"></a></dt>
+<dd><p>Concat two readings array into one.
+Can be used for combining readings from two folders using the import_readings function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>set_a</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – first array of readings</p></li>
+<li><p><strong>set_b</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – second array of readings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>both readings arrays combined</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="UDPPFFunctionCollection.UDPFFunctionCollection.import_readings">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'(.)*.mag.json'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></span></span><a class="headerlink" href="#UDPPFFunctionCollection.UDPFFunctionCollection.import_readings" title="Link to this definition"></a></dt>
 <dd><p>Imports all readings found in the folder given from the input_folder.
@@ -110,6 +134,35 @@ It restores all meta-data and datapoints.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns the imported readings as [MRPReading.MRPReading] instances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UDPPFFunctionCollection.UDPFFunctionCollection.inspect_readings">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inspect_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#UDPPFFunctionCollection.UDPFFunctionCollection.inspect_readings" title="Link to this definition"></a></dt>
+<dd><p>prints some information about a set of readings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>readings</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – readings to inspect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UDPPFFunctionCollection.UDPFFunctionCollection.readings_passthrough">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">readings_passthrough</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></span></span><a class="headerlink" href="#UDPPFFunctionCollection.UDPFFunctionCollection.readings_passthrough" title="Link to this definition"></a></dt>
+<dd><p>returns the input readings without any modification.
+implemented and used during development</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>readings</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – input readings</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns same readings as given in the readings input parameter</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>[<a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading">MRPReading.MRPReading</a>]</p>

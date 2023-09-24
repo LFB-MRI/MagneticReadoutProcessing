@@ -1,0 +1,6 @@
+udpp.UDPPFFunctionCollection.UDPFFunctionCollectionException
+============================================================
+
+.. currentmodule:: udpp.UDPPFFunctionCollection
+
+.. autoexception:: UDPFFunctionCollectionException

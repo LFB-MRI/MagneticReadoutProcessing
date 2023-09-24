@@ -1,4 +1,4 @@
-﻿udpp.import\_MRP
+udpp.import\_MRP
 ================
 
 .. currentmodule:: udpp
