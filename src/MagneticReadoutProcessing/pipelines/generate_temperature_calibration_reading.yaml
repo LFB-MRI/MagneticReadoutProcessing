@@ -3,15 +3,30 @@ settings:
   name: "testpipeline"
   enabled: true
 
-
-stage import_readings:
+stage import_readings_b:
   function: import_readings
-  main: true
   parameters:
     input_folder: tlv493d_N45_12x12x12
     regex: (.)*.mag.json
 
+stage import_readings_a:
+  function: import_readings
+  parameters:
+    input_folder: tlv493d_N45_12x12x12
+    regex: (.)*.mag.json
+
+stage concat_readings:
+  function: concat_readings
+  parameters:
+    set_a: stage import_readings_a
+    set_b: stage import_readings_b
 #stage plot1:
+
+
+stage inspect_readings:
+  function: inspect_readings
+  parameters:
+    readings: stage concat_readings
 #  function: plot_error
 #  readings: collect_readings
 #  title: error after collect
