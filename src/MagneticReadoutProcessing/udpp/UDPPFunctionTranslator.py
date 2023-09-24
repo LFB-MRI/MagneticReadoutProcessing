@@ -66,14 +66,14 @@ class UDPPFunctionTranslator():
     def get_startsteps(_pipelines: dict) -> [str]:
         if _pipelines is None or len(_pipelines) <= 0:
             raise Exception("get_startstep: _pipelines parameter empty")
-        ret = []
+        ret: [str] = []
         for p_k, p_v in _pipelines.items():
-            has_stage_input_parameter = False
+            has_stage_input_parameter: bool = False
             for param_k, param_v in p_v['parameters'].items():
                 param_value: str = str(param_v)
                 if 'stage ' in param_value:
                     has_stage_input_parameter = True
-            # no stage input paramter dependencies
+            # no stage input parameter dependencies
             if not has_stage_input_parameter:
                 ret.append(p_k)
 
@@ -86,7 +86,7 @@ class UDPPFunctionTranslator():
             raise Exception("extract_pipelines_steps: _pipeline parameter empty")
 
         result_steps: dict = {}
-        step_counter:dict = {}
+        step_counter: dict = {}
 
         for p_k, p_v in _pipeline.items():
             k:str = str(p_k)
@@ -105,8 +105,6 @@ class UDPPFunctionTranslator():
                     step_counter[step_name] = 1
 
                 result_steps[step_name] = p_v
-
-
 
         return result_steps
 
@@ -129,7 +127,7 @@ class UDPPFunctionTranslator():
 
         # LOAD ALL ENABLES PIPELINES
         yamls_to_import: [str] = [f for f in os.listdir(_folder) if str(f).endswith('.yaml')]
-        enabled_pipelines:dict = {}
+        enabled_pipelines: dict = {}
         for pipeline_yaml_file in yamls_to_import:
             print("loading pipeline {}".format(pipeline_yaml_file))
             # LOAD YAML FILE
@@ -156,9 +154,9 @@ class UDPPFunctionTranslator():
 
     @staticmethod
     def listfunctions() -> dict:
-        method_list = [func for func in dir(UDPFFunctionCollection) if callable(getattr(UDPFFunctionCollection, func)) and not func.startswith("__")]
+        method_list: [str] = [func for func in dir(UDPFFunctionCollection) if callable(getattr(UDPFFunctionCollection, func)) and not func.startswith("__")]
 
-        resultdict = {}
+        resultdict: dict = {}
 
         for method in method_list:
             # get function object by name:string
@@ -167,7 +165,7 @@ class UDPPFunctionTranslator():
             inspect_result: inspect.FullArgSpec = inspect.getfullargspec(function_obj)
 
             # EXTRACT FUNCTION PARAMETER TYPES
-            return_type = None
+            return_type: str = None
             parameter_types = {}
             for k in inspect_result.annotations:
                 v= inspect_result.annotations[k]
@@ -186,7 +184,8 @@ class UDPPFunctionTranslator():
             }
 
         return resultdict
-    def __init__(self):
-        pass
+
+    
+
 
 

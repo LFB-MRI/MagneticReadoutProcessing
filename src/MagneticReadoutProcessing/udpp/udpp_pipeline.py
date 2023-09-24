@@ -32,10 +32,10 @@ def run(ctx: typer.Context):
         # EXTRACT STEPS
         # also checks duplicate pipeline steps
         steps = UDPPFunctionTranslator.extract_pipelines_steps(pipeline_v)
-        print("found following valid steps:".format(steps))
+        print("found following valid steps: {}".format(steps))
 
         calltree_graph:nx.Graph = UDPPFunctionTranslator.create_calltree_graph(steps)
-        print("calltree generated:".format(calltree_graph))
+        print("calltree generated: {}".format(calltree_graph))
 
          # get all possible start nodes
         startsteps = UDPPFunctionTranslator.get_startsteps(steps)
