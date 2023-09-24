@@ -1,7 +1,8 @@
 import os
+import queue
 from pathlib import Path
 import yaml
-
+from queue import Queue
 import networkx as nx
 from matplotlib import pyplot as plt
 
@@ -13,6 +14,19 @@ import inspect
 from optparse import OptionParser
 from UDPPFFunctionCollection import UDPFFunctionCollection
 
+
+
+
+
+class IterableQueue():
+    def __init__(self,source_queue):
+            self.source_queue = source_queue
+    def __iter__(self):
+        while True:
+            try:
+               yield self.source_queue.get_nowait()
+            except queue.Empty:
+               return
 
 
 
@@ -37,6 +51,17 @@ class UDPPFunctionTranslator():
         return ret
 
 
+    @staticmethod
+    def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot" ,_title: str = "graph_plot"):
+        nx.draw_planar(graph, with_labels=True)
+        plt.title("{}".format(_title))
+        if _export_graph_plots is not None and len(_export_graph_plots) > 0:
+            _export_graph_plots = _export_graph_plots.replace("//", "/")
+            plt.savefig(_export_graph_plots + "/{}".format(_filename), dpi=1200)
+        else:
+            plt.show()
+        plt.close()
+
 
     @staticmethod
     def create_sub_calltrees(_pipelines: dict, calltree_graph:nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
@@ -50,8 +75,14 @@ class UDPPFunctionTranslator():
             visited[i] = False
         # CREATE A SUBGRAPHS UNTIL A NODE WITH TWO STAGE INPUTS IS RANGED FROM THE START STEP
         next_nodes_after_startnodes: [str] = []
-        nodes_to_process: [str] = _start_steps
-        for ss in nodes_to_process:
+        nodes_to_process: queue.Queue = queue.Queue()
+        for i in _start_steps:
+            nodes_to_process.put(i)
+
+        # ITERATE OVER ALL START NODES
+        for ss in IterableQueue(nodes_to_process):
+            if ss == 'concat_readings':
+                pass
             subgraph: nx.DiGraph = nx.DiGraph()
             last_node: str = ss
             dfs_res: [str] = list(nx.dfs_tree(calltree_graph, ss))
@@ -88,23 +119,12 @@ class UDPPFunctionTranslator():
 
 
             # EXPORT SUBGRAPH AS IMAGE
-            nx.draw_planar(subgraph, with_labels=True)
-            plt.title("sub_calltree - start-step: {}".format(ss))
-            if _export_graph_plots is not None and len(_export_graph_plots) > 0:
-                _export_graph_plots = _export_graph_plots.replace("//", "/")
-                plt.savefig(_export_graph_plots + "/{}_{}".format("sub_calltree", ss), dpi=1200)
-            else:
-                plt.show()
-            plt.close()
+            UDPPFunctionTranslator.plot_graph(subgraph,_export_graph_plots, "sub_calltree_{}".format(ss), "SubCallTree for {}".format(ss))
 
 
-            # CHECK IF ALL STEPS ARE VISITED
-            # IF NOT ADD THEM TO THE QUEUE
-
-            if len(nodes_to_process) > 0 and ss == nodes_to_process[len(nodes_to_process)-1]:
-                for i in next_nodes_after_startnodes:
-                    if not visited[i]:
-                        nodes_to_process.append(i)
+        # AFTER THE START NODES
+        # TODO REWORK
+        #
 
 
 
@@ -149,14 +169,9 @@ class UDPPFunctionTranslator():
 
 
         # EXPORT GRAPH AS IMAGE
-        nx.draw_planar(calltree, with_labels=True)
-        plt.title("calltree_graph")
-        if _export_graph_plots is not None and len(_export_graph_plots) > 0:
-            _export_graph_plots = _export_graph_plots.replace("//", "/")
-            plt.savefig(_export_graph_plots + "/{}".format("calltree_graph"), dpi=1200)
-        else:
-            plt.show()
-        plt.close()
+        UDPPFunctionTranslator.plot_graph(calltree, _export_graph_plots, "calltree_graph", "CallTree")
+
+       
 
         return calltree
 
