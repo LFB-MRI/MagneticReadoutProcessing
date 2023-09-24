@@ -3,6 +3,7 @@ from pathlib import Path
 import yaml
 
 import networkx as nx
+from matplotlib import pyplot as plt
 
 from import_MRP import __fix_import__
 __fix_import__()
@@ -19,16 +20,104 @@ from UDPPFFunctionCollection import UDPFFunctionCollection
 
 class UDPPFunctionTranslator():
 
+    @staticmethod
+    def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies:bool = False) -> [str]:
+        ret: list[str] = []
+
+        step: dict = _pipelines[_step]
+        for param_k, param_v in step['parameters'].items():
+            param_value: str = str(param_v)
+
+            if not _only_step_dependencies:
+                ret.append(param_value)
+            elif 'stage ' in param_value:
+                param_value: str = param_value.replace('stage ', '')
+                ret.append(param_value)
+
+        return ret
+
 
 
     @staticmethod
-    def create_calltree_graph(_pipelines: dict) -> nx.Graph:
+    def create_sub_calltrees(_pipelines: dict, calltree_graph:nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
+        if _start_steps is None or len(_start_steps) <= 0:
+            raise Exception("create_sub_calltrees: _start_steps parameter empty or has no start steps")
+
+        subgraphs: [nx.Graph] = []
+        visited: dict = {}
+
+        for i in calltree_graph.nodes:
+            visited[i] = False
+        # CREATE A SUBGRAPHS UNTIL A NODE WITH TWO STAGE INPUTS IS RANGED FROM THE START STEP
+        next_nodes_after_startnodes: [str] = []
+        nodes_to_process: [str] = _start_steps
+        for ss in nodes_to_process:
+            subgraph: nx.DiGraph = nx.DiGraph()
+            last_node: str = ss
+            dfs_res: [str] = list(nx.dfs_tree(calltree_graph, ss))
+            # CHECK FOR EACH NODE ALONG THE DFS RESULT
+            # UNIT WE FOUND ONE WITH MORE THAN ONE STEP INPUT PARAMTER
+            for dfs_step in dfs_res:
+                # get function parameters which are connected with
+                pdep = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, dfs_step, True)
+
+                if not last_node == dfs_step:
+                    # ADD NODES TO SUBGRAPH IF NOT PRESENT
+                    if last_node not in list(subgraph.nodes):
+                        subgraph.add_node(last_node)
+
+                    if dfs_step not in list(subgraph.nodes):
+                        subgraph.add_node(dfs_step)
+
+                    # ADD EDGE
+                    subgraph.add_edge(last_node, dfs_step)
+
+
+                last_node = dfs_step # store last node
+
+                # == 1 = then its in === out > with > 1 (2,3) the function hast at least two dependencies
+                if len(pdep) > 1:
+                    next_nodes_after_startnodes.append(dfs_step)
+                    break
+                else:
+                    visited[dfs_step] = True
+
+            # ADD AS NEW SUBGRAPH
+            subgraphs.append(subgraph)
+
+
+
+            # EXPORT SUBGRAPH AS IMAGE
+            nx.draw_planar(subgraph, with_labels=True)
+            plt.title("sub_calltree - start-step: {}".format(ss))
+            if _export_graph_plots is not None and len(_export_graph_plots) > 0:
+                _export_graph_plots = _export_graph_plots.replace("//", "/")
+                plt.savefig(_export_graph_plots + "/{}_{}".format("sub_calltree", ss), dpi=1200)
+            else:
+                plt.show()
+            plt.close()
+
+
+            # CHECK IF ALL STEPS ARE VISITED
+            # IF NOT ADD THEM TO THE QUEUE
+
+            if len(nodes_to_process) > 0 and ss == nodes_to_process[len(nodes_to_process)-1]:
+                for i in next_nodes_after_startnodes:
+                    if not visited[i]:
+                        nodes_to_process.append(i)
+
+
+
+        return subgraphs
+
+    @staticmethod
+    def create_calltree_graph(_pipelines: dict, _export_graph_plots: str = None) -> nx.DiGraph:
         if _pipelines is None or len(_pipelines) <= 0:
             raise Exception("create_calltree: _pipelines parameter empty")
 
         # using graphs to create the calltree
         # later we use algorithms
-        calltree: nx.Graph = nx.Graph()
+        calltree: nx.DiGraph = nx.DiGraph()
 
         # ADD PIPELINE STEPS AS NODES
         for p_k, p_v in _pipelines.items():
@@ -47,8 +136,6 @@ class UDPPFunctionTranslator():
                     if param_value in _pipelines:
                         # add edges from function using this parameter to function
                         calltree.add_edge(param_value, p_k)
-        #calltree.show("gameofthrones.html")
-
 
         # find circles in the graph
         # to avoid processing endless loops
@@ -59,6 +146,17 @@ class UDPPFunctionTranslator():
         except nx.exception.NetworkXNoCycle as e:
             pass
             # all good no cycle :)
+
+
+        # EXPORT GRAPH AS IMAGE
+        nx.draw_planar(calltree, with_labels=True)
+        plt.title("calltree_graph")
+        if _export_graph_plots is not None and len(_export_graph_plots) > 0:
+            _export_graph_plots = _export_graph_plots.replace("//", "/")
+            plt.savefig(_export_graph_plots + "/{}".format("calltree_graph"), dpi=1200)
+        else:
+            plt.show()
+        plt.close()
 
         return calltree
 

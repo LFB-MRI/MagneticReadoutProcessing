@@ -21,6 +21,14 @@ class UDPFFunctionCollectionException(Exception):
 
 class UDPFFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
+
+    @staticmethod
+    def readings_passthrough(readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+        if readings is None or len(readings) <= 0:
+            raise UDPFFunctionCollectionException("readings_passthrough: readings parameter empty")
+
+        return readings
+
     @staticmethod
     def inspect_readings(readings: [MRPReading.MRPReading]):
         """
@@ -29,6 +37,8 @@ class UDPFFunctionCollection:
         :param readings: readings to inspect
         :type readings: [MRPReading.MRPReading]
         """
+        if readings is None or len(readings) <= 0:
+            raise UDPFFunctionCollectionException("inspect_readings: readings parameter empty")
 
         for r in readings:
             print(r.get_name())

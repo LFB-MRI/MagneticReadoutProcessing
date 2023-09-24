@@ -15,15 +15,27 @@ stage import_readings_a:
     input_folder: tlv493d_N45_12x12x12
     regex: (.)*.mag.json
 
+
+stage readings_passthrough:
+  function: readings_passthrough
+  parameters:
+    reading: stage import_readings_a
+
+
 stage concat_readings:
   function: concat_readings
   parameters:
-    set_a: stage import_readings_a
+    set_a: stage readings_passthrough
     set_b: stage import_readings_b
 #stage plot1:
 
 
-stage inspect_readings:
+stage inspect_readings_a:
+  function: inspect_readings
+  parameters:
+    readings: stage concat_readings
+
+stage inspect_readings_b:
   function: inspect_readings
   parameters:
     readings: stage concat_readings
