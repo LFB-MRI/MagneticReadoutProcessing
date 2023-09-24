@@ -21,10 +21,46 @@ class UDPFFunctionCollectionException(Exception):
 
 class UDPFFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
+    @staticmethod
+    def inspect_readings(readings: [MRPReading.MRPReading]):
+        """
+        prints some information about a set of readings
+
+        :param readings: readings to inspect
+        :type readings: [MRPReading.MRPReading]
+        """
+
+        for r in readings:
+            print(r.get_name())
 
     @staticmethod
     def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
-        pass
+        """
+        Concat two readings array into one.
+        Can be used for combining readings from two folders using the import_readings function
+
+        :param set_a: first array of readings
+        :type set_a: [MRPReading.MRPReading]
+
+        :param set_b: second array of readings
+        :type set_b: [MRPReading.MRPReading]
+
+        :returns: bot readings arrays combined
+        :rtype: [MRPReading.MRPReading]
+        """
+
+        rd: [MRPReading.MRPReading] = []
+
+        for a in set_a:
+            rd.append(a)
+
+        for b in set_b:
+            rd.append(b)
+
+        return rd
+
+
+
     @staticmethod
     def import_readings(input_folder:str = "", file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
         """

@@ -43,6 +43,8 @@ class TestMPRAnalysis(unittest.TestCase):
                 self.reading_B.insert_reading(random.uniform(0, 1)*10.0, j, i, ii, jj)
     # JUST USED FOR PREPARATION
 
+    def test_linear_temp_compensation(self):
+        self.assertTrue(False)
 
     def test_apply_global_offset_inplace(self):
         reading = MRPReading.MRPReading()

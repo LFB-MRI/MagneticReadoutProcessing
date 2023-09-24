@@ -19,9 +19,18 @@ class MRPAnalysisException(Exception):
 
 class MRPAnalysis:
 
+    @staticmethod
+    def apply_temperature_coefficient(_reading: MRPReading.MRPReading, _temp_lower: MRPReading.MRPReading, _temp_upper: MRPReading.MRPReading):
+
+        mean_lower: float = MRPAnalysis.calculate_mean(_temp_lower, _temperature_axis=True)
+        mean_upper: float = MRPAnalysis.calculate_mean(_temp_lower, _temperature_axis=True)
+
+        # min max function
+
+
 
     @staticmethod
-    def calculate_mean(_reading: MRPReading.MRPReading, _temperature_axis:bool=False) -> float:
+    def calculate_mean(_reading: MRPReading.MRPReading, _temperature_axis: bool = False) -> float:
         """
         Calculates the standard variance of MRPReading values
 
