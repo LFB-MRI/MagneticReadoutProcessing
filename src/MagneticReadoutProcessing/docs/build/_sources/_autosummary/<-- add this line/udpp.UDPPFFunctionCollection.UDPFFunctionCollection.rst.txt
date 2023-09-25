@@ -3,4 +3,4 @@ udpp.UDPPFFunctionCollection.UDPFFunctionCollection
 
 .. currentmodule:: udpp.UDPPFFunctionCollection
 
-.. autoclass:: UDPFFunctionCollection
+.. autoclass:: UDPPFunctionCollection

@@ -13,11 +13,14 @@ __fix_import__()
 
 import inspect
 from optparse import OptionParser
-from UDPPFFunctionCollection import UDPFFunctionCollection
+from UDPPFunctionCollection import UDPPFunctionCollection
 
 
 
-
+class UDPPFunctionTranslatorException(Exception):
+    def __init__(self, message="UDPPFunctionTranslatorException thrown"):
+        self.message = message
+        super().__init__(self.message)
 
 class IterableQueue():
     """simple queue pyrhon iterator, which allows iteration and insertion of new items during iteration"""
@@ -67,6 +70,60 @@ class UDPPFunctionTranslator():
                 ret.append(param_value)
 
         return ret
+
+    @staticmethod
+    def check_functions_exists(_pipelines: dict):
+        """
+        checks for every stage that the used function in function: <xY> exists in the UDPPFFuntionCollection file
+        Raises exception if not valid
+        :param _pipelines: graph to render
+        :type _pipelines: nx.DiGraph
+
+        :param _calltree_graph: graph  with the connected functions
+        :type _calltree_graph: nx.DiGraph
+
+        :returns: returns if all stage parameters are matched to each other if stages are connected
+        :rtype: bool
+        """
+
+        functions: [str] = UDPPFunctionTranslator.listfunctions().keys()
+
+        for stage_k, stage_v in _pipelines.items():
+            if 'function' in stage_v:
+                fkt: str = stage_v['function']
+                if not fkt in functions:
+                    raise UDPPFunctionTranslatorException("function value ({}) for stage: {} is invalid or not present in UDPPFunctionCollection".format(fkt, stage_k))
+            else:
+                raise UDPPFunctionTranslatorException("function is not defined in stage: {}".format(stage_k))
+
+        return True
+
+
+    @staticmethod
+    def cast_user_given_paramter(_step: str):
+        pass
+    @staticmethod
+    def check_parameter_types(_pipelines: dict, _calltree_graph: nx.DiGraph) -> bool:
+        """
+        checks for each connected pipeline stage the parameter types for input/return value
+
+        :param _pipelines: graph to render
+        :type _pipelines: nx.DiGraph
+
+        :param _calltree_graph: graph  with the connected functions
+        :type _calltree_graph: nx.DiGraph
+
+        :returns: returns if all stage parameters are matched to each other if stages are connected
+        :rtype: bool
+        """
+
+        functions: dict = UDPPFunctionTranslator.listfunctions()
+
+        for stage_k, stage_v in _pipelines:
+            stage_stage_input_functions: [str] = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, stage_k, True)
+
+
+        return False
 
     @staticmethod
     def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot", _title: str = "graph_plot"):
@@ -377,18 +434,18 @@ class UDPPFunctionTranslator():
     @staticmethod
     def listfunctions() -> dict:
         """
-        returns all functions implemented in the UDPPFFunctionCollection.py using the inspect function for live reflection
+        returns all functions implemented in the UDPPFunctionCollection.py using the inspect function for live reflection
 
         :returns: implemented functions as dict with function name as key
         :rtype: dict
         """
-        method_list: [str] = [func for func in dir(UDPFFunctionCollection) if callable(getattr(UDPFFunctionCollection, func)) and not func.startswith("__")]
+        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
 
         resultdict: dict = {}
 
         for method in method_list:
             # get function object by name:string
-            function_obj = getattr(UDPFFunctionCollection, method)
+            function_obj = getattr(UDPPFunctionCollection, method)
             # get
             inspect_result: inspect.FullArgSpec = inspect.getfullargspec(function_obj)
 

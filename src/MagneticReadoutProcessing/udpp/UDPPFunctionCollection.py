@@ -13,13 +13,13 @@ import  UDPPFLogger
 from UDPPFLogger import UDPFLogger as logger
 
 
-class UDPFFunctionCollectionException(Exception):
+class UDPPFunctionCollectionException(Exception):
     def __init__(self, message="UDPFFunctionCollectionException thrown"):
         self.message = message
         super().__init__(self.message)
 
 
-class UDPFFunctionCollection:
+class UDPPFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
 
     @staticmethod
@@ -35,7 +35,7 @@ class UDPFFunctionCollection:
         :rtype: [MRPReading.MRPReading]
         """
         if readings is None or len(readings) <= 0:
-            raise UDPFFunctionCollectionException("readings_passthrough: readings parameter empty")
+            raise UDPPFunctionCollectionException("readings_passthrough: readings parameter empty")
 
         return readings
 
@@ -48,7 +48,7 @@ class UDPFFunctionCollection:
         :type readings: [MRPReading.MRPReading]
         """
         if readings is None or len(readings) <= 0:
-            raise UDPFFunctionCollectionException("inspect_readings: readings parameter empty")
+            raise UDPPFunctionCollectionException("inspect_readings: readings parameter empty")
 
         for r in readings:
             print(r.get_name())
@@ -96,7 +96,7 @@ class UDPFFunctionCollection:
         """
 
         if input_folder is None or len(input_folder) <= 0:
-            raise UDPFFunctionCollectionException("import_readings: input_folder parameter empty")
+            raise UDPPFunctionCollectionException("import_readings: input_folder parameter empty")
         # CHECK FOLDER EXISTS
         if not str(input_folder).startswith('/'):
             input_folder = str(Path(input_folder).resolve())
@@ -106,7 +106,7 @@ class UDPFFunctionCollection:
 
         # CHECK FOLDER EXISTS
         if not os.path.exists(input_folder):
-            raise UDPFFunctionCollectionException("import_readings: input_folder parameter does not exist on the system".format(input_folder))
+            raise UDPPFunctionCollectionException("import_readings: input_folder parameter does not exist on the system".format(input_folder))
 
 
 

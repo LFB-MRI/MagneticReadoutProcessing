@@ -55,12 +55,15 @@ def run(ctx: typer.Context):
         calltree_graph:nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps, pipeline_temp_folder_path)
         print("calltree generated: {}".format(calltree_graph))
 
-        # CHECK FOR EXISTSING FUNCTIONS
-        # TODO
+        # CHECK FOR EXISTING FUNCTIONS
+        # RAISES AN EXCEPTION IF SOMETHING IS WRONG
+        UDPPFunctionTranslator.check_functions_exists(steps)
+
 
         # CHECK FOR MATCHING FUNCTION PARAMETERS
-        # TODO
-
+        fktres = UDPPFunctionTranslator.check_parameter_types(steps, calltree_graph)
+        if not fktres:
+            raise Exception("implement")
 
         # get all possible start nodes
         # => with no input parameters from other steps
