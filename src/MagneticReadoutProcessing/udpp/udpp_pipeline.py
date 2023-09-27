@@ -61,14 +61,14 @@ def run(ctx: typer.Context):
 
 
         # CHECK FOR MATCHING FUNCTION PARAMETERS
-        fktres = UDPPFunctionTranslator.check_parameter_types(steps, calltree_graph)
-        if not fktres:
-            raise Exception("implement")
+        # => raises exception is a parameter is wring
+        UDPPFunctionTranslator.check_parameter_types(steps, calltree_graph)
+
 
         # get all possible start nodes
         # => with no input parameters from other steps
         startsteps: [str] = UDPPFunctionTranslator.get_startsteps(steps)
-        if startsteps is None or len(startsteps):
+        if startsteps is None or len(startsteps) <= 0:
             raise Exception("get_startsteps: no start stages found so cant execute pipeline due missing start stage")
         print("found startsteps: {}".format(startsteps))
 
@@ -79,7 +79,7 @@ def run(ctx: typer.Context):
 
 
         # PREPARE INTERMEDIATE RESULT DICT
-        # THIS STORES ALL INTERMEDIATE RESULTS DURING COMPUTATION OF THE SUB CALLTREES
+        # THIS STORES ALL INTERMEDIATE RESULTS DURING COMPUTATION OF THE SUB CALL-TREES
         intermediate_results: dict = {}
 
         for subcalltree in sub_call_trees:
@@ -99,7 +99,10 @@ def run(ctx: typer.Context):
             
             # READ INPUT PARAMETER FROM YAML IF STAT OR FROM INTERTMEDIATE DICT
 
-            # ECECUTE FUNCTION
+            # if parameters required use **parameters dict
+            parameters = {}
+
+            # EXECUTE FUNCTION
 
             # SAVE IN DICT
 

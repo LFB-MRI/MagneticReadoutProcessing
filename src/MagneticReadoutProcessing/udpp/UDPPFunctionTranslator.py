@@ -100,8 +100,20 @@ class UDPPFunctionTranslator():
 
 
     @staticmethod
-    def cast_user_given_paramter(_step: str):
-        pass
+    def get_function_return_type(_function_name:str) -> str:
+        if _function_name is None or len(_function_name) <= 0:
+            raise UDPPFunctionTranslatorException("get_function_return_type: _function_name is empty")
+
+        functions: dict = UDPPFunctionTranslator.listfunctions()
+
+        if not _function_name in functions:
+            raise UDPPFunctionTranslatorException("get_function_return_type: function name with this name does not exists {}".format(_function_name))
+
+        function: dict = functions[_function_name]
+        # extract return type
+
+
+        return ""
     @staticmethod
     def check_parameter_types(_pipelines: dict, _calltree_graph: nx.DiGraph) -> bool:
         """
@@ -119,11 +131,29 @@ class UDPPFunctionTranslator():
 
         functions: dict = UDPPFunctionTranslator.listfunctions()
 
-        for stage_k, stage_v in _pipelines:
-            stage_stage_input_functions: [str] = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, stage_k, True)
+        for stage_k, stage_v in _pipelines.items():
+            caller_fkt: dict = stage_v['function']
+            caller_types: dict = functions[caller_fkt]['parameter_types']
+            # get the parameter to which
+            # the get_parameter_from_step function returns the input parameter
+            stage_stage_input_functions_name: [str] = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, stage_k, False)
+
+            for idx, stage_stage_input_function_name in enumerate(stage_stage_input_functions_name):
 
 
-        return False
+                if 'stage ' not in stage_stage_input_function_name:
+                    continue
+                stage_stage_input_function_name_stripped = str(stage_stage_input_function_name).replace('stage ', '')
+                callee_function_name: str = _pipelines[stage_stage_input_function_name_stripped]['function']
+                callee_function_types: dict = functions[callee_function_name]
+                callee_function_type_return: str = callee_function_types['return']
+
+                caller_function_type_input: str = list(caller_types.values())[idx]
+                if not caller_function_type_input == callee_function_type_return:
+                    raise UDPPFunctionTranslatorException("connected cuntion type didnt match return {} -> imput_parameter {}".format(callee_function_type_return, caller_function_type_input))
+
+
+        return True
 
     @staticmethod
     def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot", _title: str = "graph_plot"):

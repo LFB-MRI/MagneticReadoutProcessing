@@ -8,7 +8,7 @@ stage a:
   function: import_readings
   parameters:
     input_folder: tlv493d_N45_12x12x12
-    regex: (.)*.mag.json
+
 
 stage b:
   function: import_readings
