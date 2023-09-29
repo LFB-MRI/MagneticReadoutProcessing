@@ -1,14 +1,14 @@
 #!/bin/bash
-
-if [[ "$(docker images -q mrpthesis:latest 2> /dev/null)" == "" ]]; then
+IMAGE=mrpthesis:latest
+if [[ "$(docker images -q $IMAGE 2> /dev/null)" == "" ]]; then
   echo "mrpthesis:latest IMAGE BUILD STARTED"
-  docker build -t mrpthesis:latest .
+  docker build -t $IMAGE .
 else
- echo "markdownthesisbuilder:latest IMAGE EXISTS; NO BUILD REQUIRED"
+ echo "IMAGE EXISTS; NO BUILD REQUIRED"
 fi
 
 
-docker run -i --rm -v "$(pwd)":/var/thesis mrpthesis:latest
+docker run -i --rm -v "$(pwd)":/var/thesis $IMAGE
 
 
 

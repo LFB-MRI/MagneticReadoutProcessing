@@ -3,39 +3,62 @@
 # Fundamentals
 
 ## Permanent magnet MRI
-## Shimming
+
+### Typical B0 Magnet structures
+
+## Shimming procedure
+
+
+
 # State of the art
 
+## Opensource projects
 
-# Hardware requirements
+## Unified Sensor Interface
 
 ## Sensor selection
 ## Mechanical 
+
+## Electrical Interface
+
+
+
+
 
 # Software implementation
 
 
 ## Library
+
 ### Concepts
 
 ### User interaction points
 
-### Implementation details
+### Datastructures
+
+#### Datapoints
+
+#### Meta-Data management
+### Implementation
+
+
 
 ### Examples
 
-## Unified Sensor Interface
+
 ### Concepts
 
 
 
 
-# Usability Improvements
+# Usability improvements
 
 
+## Commandline interface
+## Programmable data processing pipeline
 
-## CLI Interface
-## Data processing pipeline
+### Web base pipeline configuration
+
 
 ## Third party software support
 
@@ -50,6 +73,7 @@
 ### Continuous Integration
 
 
+### End to end testing
 
 
 
@@ -63,15 +87,22 @@
 ### Sensor readout
 ### Processing pipeline
 
-## Usecases
+## Test scenarios
 
 ## Results
 
 
 
 
-# Conclusion
 
+
+
+# Conclusion and dicussion
+## Conclusion
+
+## Problems
+
+## Outlook
 
 
 
