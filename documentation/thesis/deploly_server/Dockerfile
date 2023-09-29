@@ -1,3 +1,8 @@
 FROM nginx:latest
 
-COPY .vitepress/dist /usr/share/nginx/html
+WORKDIR /tmp
+
+COPY . .
+
+
+RUN cp -R /tmp/.vitepress/dist /usr/share/nginx/html
