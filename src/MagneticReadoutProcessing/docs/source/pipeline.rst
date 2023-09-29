@@ -66,8 +66,8 @@ A list of callable function can be retrieved using ``udpp.py pipeline listfuncti
     ...
 
 
-These are implemented in ``UDPPFFunctionCollection.py`` and are fetch in realtime.
-By modifying the file its possible to make further functions available to the pipeline system.
+These are implemented in ``UDPPFFunctionCollection.py``.
+By modifying the file it is possible to make further functions available to the pipeline system.
 
 This example shows how to create a step which calls the ``import_readings`` function.
 
@@ -76,7 +76,7 @@ This example shows how to create a step which calls the ``import_readings`` func
     # STEP DEFINITION
     stage import_readings: #stage <stage_name>
         function: import_readings # function to call see udpp.py pipeline listfunctions or UDPPFFunctionCollection.py
-        main: true # RUN AT STARTUP
+        main: true # RUN AT STARTUP = ENTRYPOINT
         parameters:
             input_folder: tlv493d_N45_12x12x12
             regex: (.)*.mag.json
@@ -87,8 +87,32 @@ This example shows how to create a step which calls the ``import_readings`` func
    In one step this parameter must be set to ``true``.  
 
 
+Connect several stages
+======================
+
+To create a flow (connecting several stages together), the output of one stage can be the input of another stage.
+This can be done using the name of a stages ``stage <name>`` as parameter of the next stage. 
+.. note::
+   Its not possible to implement any sort of circles!
+   The system checks at startup for circles and any other misconfigurations.
 
 
+
+.. code-block:: yaml
+
+    # LETS ADD TWO READinG IMPORTER STAGES
+    stage import_readings_b:
+        function: import_readings
+        main: true
+        parameters:
+            input_folder: tlv493d_N45_12x12x12
+            regex: (.)*.mag.json
+
+        stage import_readings_a:
+        function: import_readings
+        main: true
+        parameters:
+            input_folder: tlv493d_N45_1
 
 
 
@@ -108,6 +132,10 @@ This example shows how to create a step which calls the ``import_readings`` func
 
 Function Collection
 *******************
+
+.. note::
+    Currently, usable functions doesnt support tuple or arrays as input and output parameters.
+    Please encapsulate these type into custom classes or dicts.
 
 .. autosummary::
     :toctree: _autosummary

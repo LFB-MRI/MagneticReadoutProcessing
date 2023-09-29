@@ -9,6 +9,7 @@ __fix_import__()
 
 
 from MRP import MRPReading
+from MRP import MRPSimulation
 import  UDPPFLogger
 from UDPPFLogger import UDPFLogger as logger
 
@@ -22,6 +23,17 @@ class UDPPFunctionCollectionException(Exception):
 class UDPPFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
 
+
+    @staticmethod
+    def simulate_magnet(_count: int = 1, _random_polarisation: bool = False, _random_magnetisation: bool = False) -> [MRPReading.MRPReading]:
+        ret: [MRPReading.MRPReading] = []
+
+        for idx in range(_count):
+            rnd = MRPSimulation.MRPSimulation.generate_reading(_randomize_magnetization=_random_magnetisation, _add_random_polarisation=_random_polarisation)
+            rnd.set_additional_data("simulate_magnet", idx)
+            ret.append(rnd)
+
+        return ret
     @staticmethod
     def readings_passthrough(readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
         """

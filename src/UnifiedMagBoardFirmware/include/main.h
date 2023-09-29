@@ -1,7 +1,7 @@
 #ifndef __main_h__
 #define __main_h__
 
-#include "plattform.h"
+#include "usf_plattform.h"
 #include "version.h"
 
 #ifdef USING_PLATFORMIO
@@ -9,16 +9,16 @@
 #endif
 
 // PRIVATE LIBS
-#include <Tlv493d.h>
 #include <CommandParser.h>
 #include "ArduinoUniqueID.h"
 
 
 
 // PRIVATE CLASSES
+#include "baseSensor.h"
 #include "TCA9458A.h"
 #include "sync_timer.h"
-
+#include "helper.h"
 
 
 #define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
@@ -60,32 +60,8 @@ const String System_State_STR[5] = {
 };
 
 
-struct sensor_info{
-    
-    Tlv493d_Address_t addr = Tlv493d_Address::TLV493D_ADDRESS1;
-    int index = -1;
-    int tca_channel = 0;
-    bool valid = false;
-    Tlv493d sensor_instance;
-
-    sensor_info(){
-        valid = false;
-    };
-} sensor_info_t;
 
 
-struct sensor_result{
-    float x;
-    float y;
-    float z;
-    float b;
-    float t;
-    long ts;
-
-    sensor_result(){
-
-    };
-}sensor_result_t;
 
 
 

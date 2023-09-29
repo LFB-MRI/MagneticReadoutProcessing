@@ -7,8 +7,8 @@
 // CUSTOM INCLUDES
 #include "main.h"
 
- #ifdef ARDUINO_ARCH_MBED
-    REDIRECT_STDOUT_TO(DEBUG_SERIAL)  // MBED  printf(...) to console
+#ifdef ARDUINO_ARCH_MBED
+REDIRECT_STDOUT_TO(DEBUG_SERIAL) // MBED  printf(...) to console
 #endif
 
 // CLASSES
@@ -17,16 +17,11 @@ TCA9548A tca9584a(SENSOR_WIRE);
 DBGCommandParser debug_command_parser;
 HostCommandParser host_command_parser;
 
-
-
-
 #if defined(HOST_SERIAL_RX) && defined(HOST_SERIAL_TX)
 HardwareSerial HOST_SERIAL(HOST_SERIAL_RX, HOST_SERIAL_TX); // RX TX  // FOR SERIAL ANC
-#else
-
 #endif
-sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 
+sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SENSORS PER TCA CHANNEL S0 16 SENSORS PER SLICE
 sensor_result sensor_results[MAX_TLV_SENSORS] = {sensor_result()};
 System_State system_state = System_State_Error;
@@ -34,73 +29,6 @@ System_State system_state = System_State_Error;
 long readout_index = 0;
 int sensor_number = 0;
 int anc_base_id = -1;
-
-
-
-
-bool i2c_scan(TwoWire &_wire_instance, const int _check_for_addr = -1, const bool _log = true)
-{
-  byte error, address;
-  int nDevices;
-
-  if (_log)
-  {
-    DEBUG_SERIAL.println("Scanning...");
-  }
-
-  bool addr_found = false;
-  nDevices = 0;
-  for (address = 1; address < 127; address++)
-  {
-    // The i2c_scanner uses the return value of
-    // the Write.endTransmisstion to see if
-    // a device did acknowledge to the address.
-    _wire_instance.beginTransmission(address);
-    error = _wire_instance.endTransmission();
-    if (_log)
-    {
-      if (error == 0)
-      {
-        DEBUG_SERIAL.print("I2C device found at address 0x");
-        if (address < 16)
-        {
-          DEBUG_SERIAL.print("0");
-        }
-        DEBUG_SERIAL.print(address, HEX);
-        DEBUG_SERIAL.println("  !");
-
-        nDevices++;
-      }
-      else if (error == 4)
-      {
-        DEBUG_SERIAL.print("Unknown error at address 0x");
-        if (address < 16)
-        {
-          DEBUG_SERIAL.print("0");
-        }
-        DEBUG_SERIAL.println(address, HEX);
-      }
-    }
-
-    if (_check_for_addr >= 0 && _check_for_addr == address && error == 0)
-    {
-      addr_found = true;
-    }
-  }
-  if (_log)
-  {
-    if (nDevices == 0)
-    {
-      DEBUG_SERIAL.println("No I2C devices found\n");
-    }
-    else
-    {
-      DEBUG_SERIAL.println("done\n");
-    }
-  }
-
-  return addr_found;
-}
 
 void error(const bool _critical, const int _code)
 {
@@ -120,14 +48,10 @@ void error(const bool _critical, const int _code)
   }
 }
 
-bool is_i2c_device_present(TwoWire &_i2c_interface, const byte _addr)
-{
-  return i2c_scan(_i2c_interface, _addr, false);
-}
-
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
-void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response){
-  //todo check which sensor Tpes are presnet
+void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response)
+{
+  // todo check which sensor Tpes are presnet
   DEBUG_SERIAL.println("static, axis_b, axis_x, axis_y, axis_z, axis_temp, axis_stimestamp");
 }
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
@@ -193,65 +117,50 @@ void readsensor_debug(DBGCommandParser::Argument *args, char *response)
   }
 }
 
-
-//WILL BE CALLED IF HOST REQUESTS A MEASUREMENT
-void sync_irq_function(){
-  //HERE WE MANUALLY EXIPRES THE TIMER FROM THE MAIN LOOP
+// WILL BE CALLED IF HOST REQUESTS A MEASUREMENT
+void sync_irq_function()
+{
+  // HERE WE MANUALLY EXIPRES THE TIMER FROM THE MAIN LOOP
   readout_timer.trigger_timer_expire();
 }
 
 void process_anc_information(DBGCommandParser::Argument *args, char *response)
 {
   const int base_id = (int32_t)args[0].asInt64;
-  if (system_state == System_State_WAIT_FOR_ANC && base_id >= 0){
+  if (system_state == System_State_WAIT_FOR_ANC && base_id >= 0)
+  {
     anc_base_id = base_id;
     system_state = System_State_ANC_GOT_SYNC_PACKET;
-
-  }else{
+  }
+  else
+  {
     strlcpy(response, "error not in right system state or invalid base_id", HostCommandParser::MAX_RESPONSE_SIZE);
   }
 }
-
-
 
 void scan_for_sensors()
 
 {
   // SCAN FOR TLV SENSORS
-  //if not tca found only one channel/sensor can be connected
+  // if not tca found only one channel/sensor can be connected
   int max_tca_channels = 1;
-  if(tca9584a.isEnabled()){
+  if (tca9584a.isEnabled())
+  {
     max_tca_channels = TCA9548A_Channels;
     tca9584a.resetChannels();
   }
-  
 
   for (int i = 0; i < max_tca_channels; i++)
   {
     // SET TCA CHANNEL
     tca9584a.setChannel(i, true);
-
-
-    i2c_scan(SENSOR_WIRE);
+    // SCAN FOR SENSORS
     const int arr_index = sensor_number;
-    // CHECK IF SENSOR IS PRESENT
-    if (is_i2c_device_present(SENSOR_WIRE, Tlv493d_Address::TLV493D_ADDRESS1))
-    {
-      sensors_found[arr_index].addr = Tlv493d_Address::TLV493D_ADDRESS1;
-      sensors_found[arr_index].index = sensor_number;
-      sensors_found[arr_index].tca_channel = i;
-      sensors_found[arr_index].valid = true;
-      sensor_number++;
-    }
-    else if (is_i2c_device_present(SENSOR_WIRE, Tlv493d_Address::TLV493D_ADDRESS2))
-    {
-      sensors_found[arr_index].addr = Tlv493d_Address::TLV493D_ADDRESS2;
-      sensors_found[arr_index].index = sensor_number;
-      sensors_found[arr_index].tca_channel = i;
-      sensors_found[arr_index].valid = true;
-      sensor_number++;
-    }
-
+    sensors_found[arr_index].index = sensor_number;
+    sensors_found[arr_index].tca_channel = i;
+    sensors_found[arr_index].valid = sensors_found[arr_index].sensor_instance.begin(SENSOR_WIRE);
+    sensor_number++;
+    // UNSET TCA CHANNEL
     tca9584a.setChannel(i, false);
   }
 }
@@ -276,7 +185,7 @@ void setup()
       DEBUG_SERIAL.println(F("> id                           sensor serial number for identification purposes"));
       DEBUG_SERIAL.println(F("> sysstate                     returns current system state machine state"));
       DEBUG_SERIAL.println(F("> opmode                       returns 1 if in single mode"));
-      DEBUG_SERIAL.println(F("> sensorscn                   scans i2c bus for sensors"));
+     // DEBUG_SERIAL.println(F("> sensorscn                   scans i2c bus for sensors"));
       DEBUG_SERIAL.println(F("> sensorcnt                   returns found sensorcount"));
       DEBUG_SERIAL.println(F("> readsensor x <0-senorcount>  returns the readout result for a given sensor index for X axis"));
       DEBUG_SERIAL.println(F("> readsensor y <0-senorcount>  returns the readout result for a given sensor index for Y axis"));
@@ -290,7 +199,7 @@ void setup()
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { DEBUG_SERIAL.println("v"+String(VERSION_MAJOR)+"."+String(VERSION_MINOR)+"."+String(VERSION_REVISION)); });
+                                       { DEBUG_SERIAL.println("v" + String(VERSION_MAJOR) + "." + String(VERSION_MINOR) + "." + String(VERSION_REVISION)); });
 
   debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response)
                                        { 
@@ -316,21 +225,15 @@ void setup()
 
   debug_command_parser.registerCommand("temp", "", &temp_debug);
 
-  debug_command_parser.registerCommand("sensorscn", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { scan_for_tlv493d_sensors();
-                                       DEBUG_SERIAL.println(sensor_number); });
-
   debug_command_parser.registerCommand("anc", "i", &process_anc_information);
 
   debug_command_parser.registerCommand("ancid", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(anc_base_id); });
 
-
   debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println("performing_reset"); RESET_SYSTEM_FUNCTION(); });
 
-
-  //REGISTER HOST COMMANDS
+  // REGISTER HOST COMMANDS
   host_command_parser.registerCommand("anc", "i", &process_anc_information);
 
   debug_command_parser.registerCommand("reset", "", [](DBGCommandParser::Argument *args, char *response)
@@ -348,14 +251,12 @@ void setup()
   pinMode(SYNC_PIN_IRQ_INPUT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
 
-  
-  
   // I2C SENSOR INTERFACE SETUP
 #if defined(SENSOR_WIRE_SCL_PIN) && defined(SENSOR_WIRE_SDA_PIN)
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
   SENSOR_WIRE.setSDA(SENSOR_WIRE_SDA_PIN);
 #endif
-  
+
   SENSOR_WIRE.begin();
 
   if (!digitalRead(SINGLE_MODE_PIN))
@@ -371,11 +272,12 @@ void setup()
   //  CHECK IF TCA9584A IS PRESENT
   if (is_i2c_device_present(SENSOR_WIRE, TCA9548A_ADDRESS0))
   {
-     tca9584a.begin(TCA9548A_ADDRESS0, true);
-  }else{
-      tca9584a.begin(TCA9548A_ADDRESS0, false);
+    tca9584a.begin(TCA9548A_ADDRESS0, true);
   }
-
+  else
+  {
+    tca9584a.begin(TCA9548A_ADDRESS0, false);
+  }
 
   scan_for_sensors();
   if (sensor_number <= 0)
@@ -389,9 +291,8 @@ void setup()
   {
     // SET TCA TO THE CORRECT CHANNEL
     tca9584a.setChannel(sensors_found[i].tca_channel, true);
-    // INIT SENSOR
-    sensors_found[i].sensor_instance.begin(SENSOR_WIRE, sensors_found[i].addr, false);
-    sensors_found[i].sensor_instance.updateData();
+    // QUERY SENSOR
+    sensors_found[i].sensor_instance.query_sensor();
     // RESET TCA CHANNEL
     tca9584a.setChannel(sensors_found[i].tca_channel, false);
   }
@@ -448,7 +349,7 @@ void loop()
       {
         sensor_info *sensor = &sensors_found[i];
         tca9584a.setChannel(sensor->tca_channel, true);
-        sensor->sensor_instance.updateData();
+        sensor->sensor_instance.query_sensor();
         tca9584a.setChannel(sensor->tca_channel, false);
       }
       readout_index++;
@@ -458,12 +359,8 @@ void loop()
       {
         sensor_info *sensor = &sensors_found[i];
         sensor_result *result = &sensor_results[i];
-
-        result->x = sensor->sensor_instance.getX();
-        result->y = sensor->sensor_instance.getY();
-        result->z = sensor->sensor_instance.getZ();
-        result->b = sensor->sensor_instance.getAmount();
-        result->t = sensor->sensor_instance.getTemp();
+        // UPDATE DATA
+        result->set(sensor->sensor_instance.get_result());
         result->ts = readout_index;
 
         digitalWrite(STATUS_LED_PIN, LOW);
@@ -493,4 +390,3 @@ void loop()
     HOST_SERIAL.println(response);
   }
 }
-
