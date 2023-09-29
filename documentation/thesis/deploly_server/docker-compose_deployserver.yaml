@@ -1,7 +1,7 @@
 services:
   mrptheis:
     image: docker.io/library/mrpthesisdeployserver:latest
-    container_name: mrpthesisdeployserver
+    container_name: docker.io/library/mrpthesisdeployserver:latest
     build: 
       context: .
       dockerfile: Dockerfile
