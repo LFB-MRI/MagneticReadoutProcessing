@@ -2,6 +2,8 @@
 
 # Fundamentals
 
+## Permanent magnet MRI
+## Shimming
 # State of the art
 
 
