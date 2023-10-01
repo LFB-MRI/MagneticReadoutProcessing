@@ -10,16 +10,17 @@ from flask import Flask, request, jsonify,make_response
 import time
 import multiprocessing
 
-app_typer = typer.Typer()
 
-app_flask = Flask(__name__)
-
-flask_server: multiprocessing.Process = None
-
-PIPELINES_FOLDER = str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines"))
-TMP_FOLDER = str(Path(PIPELINES_FOLDER).joinpath("generated/"))
-
+PIPELINES_FOLDER: str = str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines"))
+TMP_FOLDER: str = str(Path(PIPELINES_FOLDER).joinpath("generated/"))
+STATIC_FOLDER: str = str(Path(str(os.path.dirname(__file__))).joinpath("static"))
+TEMPLATE_FOLDER: str = str(Path(str(os.path.dirname(__file__))).joinpath("templates"))
 terminate_flask: bool = False
+
+
+
+app_typer = typer.Typer()
+app_flask = Flask(__name__, static_url_path='', static_folder=STATIC_FOLDER, template_folder=TEMPLATE_FOLDER)
 
 def signal_andler(signum, frame):
     global terminate_flask
@@ -50,12 +51,14 @@ def flask_server_task(_config: dict):
 @app_typer.command()
 def launch(ctx: typer.Context, port: int = 5555, host: str = "0.0.0.0", flask_debug: bool = True):
     global terminate_flask
-    #flask_server.start()
-    flask_config = {"port": port, "host": host, "debug":flask_debug}
-    flask_server:multiprocessing.Process = multiprocessing.Process(target=flask_server_task, args=(flask_config,))
+
+    flask_config = {"port": port, "host": host, "debug": flask_debug}
+    flask_server: multiprocessing.Process = multiprocessing.Process(target=flask_server_task, args=(flask_config,))
     flask_server.start()
 
+    time.sleep(3)
     while( not terminate_flask):
+        print("Editor started. Please open http://{}:{}/".format(host, port))
         if typer.prompt("Terminate  [Y/n]", 'y') == 'y':
             break
 
