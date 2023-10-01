@@ -25,3 +25,5 @@ python-dotenv>=1.0.0
 tinydb>=4.8.0
 pyyaml>=6.0.1
 pyvis>=0.3.2
+waitress>=2.1.2
+flask>=3.0.0

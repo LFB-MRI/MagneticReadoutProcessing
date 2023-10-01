@@ -9,7 +9,7 @@ from UDPPFunctionTranslator import UDPPFunctionTranslator
 from flask import Flask, request, jsonify,make_response
 import time
 import multiprocessing
-
+from waitress import serve
 
 PIPELINES_FOLDER: str = str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines"))
 TMP_FOLDER: str = str(Path(PIPELINES_FOLDER).joinpath("generated/"))
@@ -43,16 +43,19 @@ def flask_server_task(_config: dict):
 
     # TODO SET STATIC FOLDER
     #
-    app_flask.run(host=host, port=port, debug=debug)
+    if debug:
+        app_flask.run(host=host, port=port, debug=debug)
+    else:
+        serve(app_flask, host=host, port=port)
 
 
 
 
 @app_typer.command()
-def launch(ctx: typer.Context, port: int = 5555, host: str = "0.0.0.0", flask_debug: bool = True):
+def launch(ctx: typer.Context, port: int = 5555, host: str = "0.0.0.0", debug: bool = False):
     global terminate_flask
 
-    flask_config = {"port": port, "host": host, "debug": flask_debug}
+    flask_config = {"port": port, "host": host, "debug": debug}
     flask_server: multiprocessing.Process = multiprocessing.Process(target=flask_server_task, args=(flask_config,))
     flask_server.start()
 
