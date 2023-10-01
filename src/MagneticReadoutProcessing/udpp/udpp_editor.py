@@ -6,21 +6,18 @@ from pathlib import Path
 from typing import Annotated
 import typer
 from UDPPFunctionTranslator import UDPPFunctionTranslator
-from flask import Flask, request, jsonify,make_response
+from flask import Flask, request, jsonify, make_response, redirect
 import time
 import multiprocessing
 from waitress import serve
+import udpp_config
 
-PIPELINES_FOLDER: str = str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines"))
-TMP_FOLDER: str = str(Path(PIPELINES_FOLDER).joinpath("generated/"))
-STATIC_FOLDER: str = str(Path(str(os.path.dirname(__file__))).joinpath("static"))
-TEMPLATE_FOLDER: str = str(Path(str(os.path.dirname(__file__))).joinpath("templates"))
 terminate_flask: bool = False
 
 
 
 app_typer = typer.Typer()
-app_flask = Flask(__name__, static_url_path='', static_folder=STATIC_FOLDER, template_folder=TEMPLATE_FOLDER)
+app_flask = Flask(__name__, static_url_path='/static', static_folder=udpp_config.STATIC_FOLDER, template_folder=udpp_config.TEMPLATE_FOLDER)
 
 def signal_andler(signum, frame):
     global terminate_flask
@@ -30,19 +27,38 @@ def signal_andler(signum, frame):
 signal.signal(signal.SIGINT, signal_andler)
 
 
+@app_flask.route("/api/listpipelines")
+def listpipelines():
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    res: [str] = []
+
+    for k, v in pipelines.items():
+        res.append({
+        'files': k,
+        'names': v['settings']['name']
+        })
+
+    return jsonify(res)
+
+
+@app_flask.route("/api/getpipeline/<filename>")
+def getpipeline(filename):
+    assert filename == request.view_args['filename']
+
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+
 @app_flask.route("/")
 def index():
-    return "<p>Hello, World!</p>"
+    return redirect("/static/dist/index.html")
 
 
 
 def flask_server_task(_config: dict):
     host:str = _config.get("host", "0.0.0.0")
-    port: int = _config.get("port", 5000)
+    port: int = _config.get("port", 5555)
     debug: bool = _config.get("debug", False)
 
-    # TODO SET STATIC FOLDER
-    #
+
     if debug:
         app_flask.run(host=host, port=port, debug=debug)
     else:

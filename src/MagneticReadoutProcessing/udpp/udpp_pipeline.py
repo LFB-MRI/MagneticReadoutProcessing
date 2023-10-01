@@ -7,11 +7,10 @@ import typer
 from UDPPFunctionTranslator import UDPPFunctionTranslator
 import networkx as nx
 import matplotlib.pyplot as plt
-
+import udpp_config
 app = typer.Typer()
 
-PIPELINES_FOLDER = str(Path(str(os.path.dirname(__file__))).parent.joinpath("pipelines"))
-TMP_FOLDER = str(Path(PIPELINES_FOLDER).joinpath("generated/"))
+
 
 
 @app.command()
@@ -20,21 +19,21 @@ def listfunctions(ctx: typer.Context):
 
 @app.command()
 def listenabledpipelines(ctx: typer.Context):
-    pipelines = UDPPFunctionTranslator.load_pipelines(PIPELINES_FOLDER)
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
     for k in pipelines:
         print(k)
 
 
 @app.command()
 def run(ctx: typer.Context):
-    pipelines = UDPPFunctionTranslator.load_pipelines(PIPELINES_FOLDER)
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
 
 
     # ITERATE OVER EACH PIPELINE
     for pipeline_k, pipeline_v in pipelines.items():
         # CREATE TEMP FOLDER FOR PIPELINE to store some intermediate results
         pipeline_temp_folder_name: str = str(pipeline_k).replace('.', '_').replace('/', '')
-        pipeline_temp_folder_path: str = str(Path(TMP_FOLDER).joinpath("{}/".format(pipeline_temp_folder_name)))
+        pipeline_temp_folder_path: str = str(Path(udpp_config.TMP_FOLDER).joinpath("{}/".format(pipeline_temp_folder_name)))
 
         Path().mkdir(parents=True, exist_ok=True)
 
@@ -48,11 +47,9 @@ def run(ctx: typer.Context):
         print("found following valid steps: {}".format(steps))
 
 
-        # CHECK IF THE CALLED FUNCTION FOR EACH STEP EXSITS
-        # TODO
 
         # CREATE CALLTREE
-        calltree_graph:nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps, pipeline_temp_folder_path)
+        calltree_graph: nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps, pipeline_temp_folder_path)
         print("calltree generated: {}".format(calltree_graph))
 
         # CHECK FOR EXISTING FUNCTIONS
@@ -113,8 +110,8 @@ def run(ctx: typer.Context):
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
-    Path(PIPELINES_FOLDER).mkdir(parents=True, exist_ok=True)
-    Path(TMP_FOLDER).mkdir(parents=True, exist_ok=True)
+    Path(udpp_config.PIPELINES_FOLDER).mkdir(parents=True, exist_ok=True)
+    Path(udpp_config.TMP_FOLDER).mkdir(parents=True, exist_ok=True)
 
 
 
