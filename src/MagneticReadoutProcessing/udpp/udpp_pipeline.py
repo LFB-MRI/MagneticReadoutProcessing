@@ -13,11 +13,11 @@ app = typer.Typer()
 
 
 
-@app.command()
+@app.command(help="lists all available functions for pipeline programming ")
 def listfunctions(ctx: typer.Context):
     print(UDPPFunctionTranslator.listfunctions())
 
-@app.command()
+@app.command(help="list all found pipelines in pipelines folder")
 def listenabledpipelines(ctx: typer.Context):
     pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
     for k in pipelines:

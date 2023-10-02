@@ -1,5 +1,5 @@
 """Typer base cli interface to allow the user to interact with the udppf system"""
-
+import bleach
 import os
 import signal
 from pathlib import Path
@@ -42,10 +42,27 @@ def listpipelines():
 
 
 @app_flask.route("/api/getpipeline/<filename>")
-def getpipeline(filename):
-    assert filename == request.view_args['filename']
+def getpipeline(filename: str):
 
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    assert filename == request.view_args['filename']
+    filename = bleach.clean(filename)
+
+
+    pipelines:dict = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    # pipeline found
+    if filename in pipelines:
+        return jsonify(pipelines[filename])
+
+    # create new pipeline and return content
+    pipeline: dict = UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.PIPELINES_FOLDER)
+
+    # here we will perform a redirect to the new pipeline name
+    pipelinefilename:str = list(pipeline.keys())[0]
+
+    # redirect to new base url with replaced filename
+    r = request
+    return redirect("{}".format(r.base_url.replace(filename, pipelinefilename)))
+
 
 @app_flask.route("/")
 def index():

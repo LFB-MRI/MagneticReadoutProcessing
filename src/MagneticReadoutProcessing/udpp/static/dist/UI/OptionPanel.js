@@ -25,6 +25,7 @@ export class OptionPanel {
     }
     Show() {
         this.panel.style.display = 'block';
+        this.input;
     }
     Hide() {
         this.panel.style.display = 'none';

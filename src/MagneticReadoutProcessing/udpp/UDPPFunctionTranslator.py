@@ -37,6 +37,9 @@ class IterableQueue():
 
 # (a, b, x='blah')
 
+
+
+
 class UDPPFunctionTranslator():
     """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
@@ -100,7 +103,7 @@ class UDPPFunctionTranslator():
 
 
     @staticmethod
-    def get_function_return_type(_function_name:str) -> str:
+    def get_function_return_type(_function_name: str) -> str:
         if _function_name is None or len(_function_name) <= 0:
             raise UDPPFunctionTranslatorException("get_function_return_type: _function_name is empty")
 
@@ -397,6 +400,65 @@ class UDPPFunctionTranslator():
                 result_steps[step_name] = p_v
 
         return result_steps
+
+    @staticmethod
+    def create_empty_pipeline(_name: str, _folder: str) -> dict:
+        """
+        creates a empty pipeline file
+
+        :param _name: nane of the new pipeline this also will be the later filename with som variations
+        :type _name: str
+
+        :param _folder: storage location for pipeline files
+        :type _folder: str
+
+        :returns: returns content of pipeline
+        :rtype: dict
+        """
+        if _name is None or len(_name) <= 0:
+            _name = "pipeline"
+
+        if _folder is None or len(_folder) <= 0:
+            raise Exception("create_empty_pipeline: input_folder parameter empty")
+
+        filename: str = _name
+
+        filename.replace("./", "").replace(" ", "_").replace("/", "_")
+        if not filename.endswith(".yaml"):
+            filename.replace(".", "_")
+            filename = filename + ".yaml"
+
+        _name = _name.replace(".yaml", "")
+
+        pipeline_content: dict = {
+            'settings': {
+                'name': "{}".format(_name),
+                'enabled': True,
+                'export_intermediate_results': True
+            },
+            'stages':[]
+        }
+
+
+        # CHECK FOLDER EXISTS
+        if not str(_folder).startswith('/'):
+            _folder = str(Path(_folder).resolve())
+
+        print("create_empty_pipeline: storage location folder set to {}".format(_folder))
+
+        # CHECK FOLDER EXISTS
+        if not os.path.exists(_folder):
+            raise Exception("create_empty_pipeline: _folder parameter does not exist on the system".format(_folder))
+        exp_path: Path = Path.joinpath(Path(_folder), Path(filename))
+
+        with open(str(exp_path), 'w') as file:
+            yaml.dump(pipeline_content, file)
+
+
+        res: dict = {}
+        res[filename] = pipeline_content
+        return res
+
 
     @staticmethod
     def load_pipelines(_folder: str) -> dict:

@@ -8,4 +8,4 @@ import { cogIcon, nodePanel, optionPanel } from './UI/Shared.js';
 // Initialize the app
 let inspector: InspectorPanel = new InspectorPanel();
 let nodeGraph: NodePanel = new NodePanel(nodePanel, inspector);
-//let options: OptionPanel = new OptionPanel(cogIcon, optionPanel);
+let options: OptionPanel = new OptionPanel(cogIcon, optionPanel);

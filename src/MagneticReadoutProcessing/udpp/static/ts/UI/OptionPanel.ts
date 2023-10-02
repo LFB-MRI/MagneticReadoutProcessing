@@ -1,3 +1,4 @@
+
 export class OptionPanel {
     private panel: HTMLElement;
     private input: HTMLInputElement;
@@ -34,6 +35,8 @@ export class OptionPanel {
 
     Show() {
         this.panel.style.display = 'block';
+
+        this.input
     }
 
     Hide() {

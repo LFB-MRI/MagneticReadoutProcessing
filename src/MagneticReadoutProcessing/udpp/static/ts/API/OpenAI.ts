@@ -1,23 +1,15 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
 
-enum OpenAIEngine {
-    DAVINCI = 'davinci',
-    GPT3 = '',
-    GPT4 = '',
-}
+
 
 class OpenAI {
     private static API_URL: string = '';
     private static API_KEY: string = ''; // replace with your actual OpenAI key
 
-    constructor(engine: OpenAIEngine) {
-        // Check if API key is saved in session storage
-        let sessionKey = sessionStorage.getItem('openai-api-key');
-        if (sessionKey) {
-            OpenAI.API_KEY = sessionKey;
-        }
-        OpenAI.API_URL = `https://api.openai.com/v1/engines/${engine}/completions`;
+    constructor(_endpoint: string = "127.0.0.1:5555/api/") {
+
+
     }
 
     async generateResponse(prompt: string): Promise<string> {
