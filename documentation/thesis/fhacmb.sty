@@ -144,13 +144,13 @@
 	FH Aachen
 	}\par
 	{\hlAbold
-	Fachbereich \@fachbereich
+	Faculty \@fachbereich
 	}\par
 	{\hlAnormal
-	Studiengang \@studiengang
+	 \@studiengang
 	}\par
 	\ifthenelse{\equal{\@vertiefung}{}}{}{
-	Vertiefungsrichtung \@vertiefung
+	Field of specialisation \@vertiefung
 	}\par
 	\vspace{20mm}
 	\@arbeitstyp\par
@@ -161,23 +161,23 @@
 	\tabulinesep=3mm
 	\begin{tabu}{X[1]X[2]}
 
-	\textls{vorgelegt von} & {\hlAboldLongName \@autor}\\[2mm]
-	 & \textls{Matrikel-Nr.} \textbf{\@matrnr}\\[10mm]
+	\textls{Submitted by} & {\hlAboldLongName \@autor}\\[2mm]
+	 & \textls{Matriculation number:} \textbf{\@matrnr}\\[10mm]
 	% Zeile Referent nur, wenn Angabe vorhanden
 	
 	\ifthenelse{\equal{\@betreuer}{}}{}{
-	\textls{Referent:} & \@betreuer\\
+	\textls{Examiner:} & \@betreuer\\
 	}
 	% Zeile Korreferent nur, wenn Angabe vorhanden
 	\ifthenelse{\equal{\@cobetreuer}{}}{}{
-	\textls{Korreferent:} & \@cobetreuer\\
+	\textls{Examiner:} & \@cobetreuer\\
 	}
 	% Zeile Externer Betreuer nur, wenn Angabe vorhanden
 	\ifthenelse{\equal{\@extbetreuer}{}}{}{
-	\textls{Externer Betreuer:} & \@extbetreuer\\[8mm]
+	\textls{External examiner:} & \@extbetreuer\\[8mm]
 	}
 	\ifthenelse{\equal{\@datum}{}}{}{
-	\textls{Datum:} & \@datum\\
+	\textls{Date:} & \@datum\\
 	}
 	\end{tabu}
 	\vfill
