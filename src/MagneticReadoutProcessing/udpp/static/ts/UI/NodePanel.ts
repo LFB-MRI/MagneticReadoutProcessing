@@ -4,7 +4,7 @@ import { Socket } from './Socket.js';
 import { Edge } from './Edge.js';
 import { InspectorPanel } from './InspectorPanel.js';
 import { SocketType, ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, workspace, elementToBlock } from './Shared.js';
-import {NodeTypes, PipelineStages, UDPPApi} from "../API/UDPPApi.js";
+import {NodeTypes, PipelineStageParameter, PipelineStages, UDPPApi} from "../API/UDPPApi.js";
 import {OptionPanel} from "./OptionPanel.js";
 
 interface Offset {
@@ -94,9 +94,20 @@ export class NodePanel {
         const name: string = _description.name.replace("_", "<br>");
         block.AddOrSetTitle(name);
 
+        // add input sockets
+        for (let i = 0; i < _description.parameters.length; i++) {
+            const param: PipelineStageParameter = _description.parameters[i];
+            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.INPUT, i));
+        }
+
+        //add output sockets => in general just one
+        for (let i = 0; i < _description.returns.length; i++) {
+            const param: PipelineStageParameter = _description.returns[i];
+            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
+        }
+
 
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
-
         nodePanel.appendChild(blockElement);
 
 
@@ -113,7 +124,7 @@ export class NodePanel {
                 const listItem = document.createElement('li');
                 listItem.textContent = nodeType;
                 listItem.addEventListener('click', (e) => {
-                    this.CreateBlock(nodeType);
+                    this.CreateBlock(nodeType, e.clientX, e.clientY);
                     //let block = this.CreateBlock(nodeType);
                     //let blockElement = block.GetElement(e.clientX, e.clientY);
                     //nodePanel.appendChild(blockElement);
@@ -125,10 +136,15 @@ export class NodePanel {
         }
     }
 
-    private async CreateBlock(nodeType: string): Promise<Block> {
+    private async CreateBlock(nodeType: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
         //let block = new Block(this.inspector);
 
         let block_description: PipelineStages = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
+        //set block position to clicked position if given
+        if(_pos_x && _pos_y && _pos_x > 0 && _pos_y > 0){
+            block_description.position.x = _pos_x;
+            block_description.position.y = _pos_y;
+        }
 
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);

@@ -71,10 +71,14 @@ def getnodeinformation(functionname: str):
     # ...
     return jsonify({
         'function': functionname,
-        'name': functionname'
-        position: PipelineStagePosition;
-        parameters: PipelineStageParameter[];
-        inspector_parameters: PipelineStageParameter[];
+        'name': functionname,
+        'position': { # Can be ignored
+            'x':-1,
+            'y':-1
+        },
+        'parameters': UDPPFunctionTranslator.get_function_parameters(functionname),
+        'inspector_parameters': UDPPFunctionTranslator.get_inspector_parameters(functionname),
+        'returns': UDPPFunctionTranslator.get_function_return_types(functionname)
     })
 
 

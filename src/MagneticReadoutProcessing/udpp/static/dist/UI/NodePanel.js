@@ -2,7 +2,7 @@
 import { Block } from './Block.js';
 import { Socket } from './Socket.js';
 import { Edge } from './Edge.js';
-import { ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, workspace, elementToBlock } from './Shared.js';
+import { SocketType, ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, workspace, elementToBlock } from './Shared.js';
 import { UDPPApi } from "../API/UDPPApi.js";
 import { OptionPanel } from "./OptionPanel.js";
 export class NodePanel {
@@ -74,6 +74,16 @@ export class NodePanel {
         var block = new Block(this.inspector);
         const name = _description.name.replace("_", "<br>");
         block.AddOrSetTitle(name);
+        // add input sockets
+        for (let i = 0; i < _description.parameters.length; i++) {
+            const param = _description.parameters[i];
+            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.INPUT, i));
+        }
+        //add output sockets => in general just one
+        for (let i = 0; i < _description.returns.length; i++) {
+            const param = _description.returns[i];
+            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
+        }
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
         nodePanel.appendChild(blockElement);
         return block;
@@ -88,7 +98,7 @@ export class NodePanel {
                 const listItem = document.createElement('li');
                 listItem.textContent = nodeType;
                 listItem.addEventListener('click', (e) => {
-                    this.CreateBlock(nodeType);
+                    this.CreateBlock(nodeType, e.clientX, e.clientY);
                     //let block = this.CreateBlock(nodeType);
                     //let blockElement = block.GetElement(e.clientX, e.clientY);
                     //nodePanel.appendChild(blockElement);
@@ -98,9 +108,14 @@ export class NodePanel {
             }
         }
     }
-    async CreateBlock(nodeType) {
+    async CreateBlock(nodeType, _pos_x, _pos_y) {
         //let block = new Block(this.inspector);
         let block_description = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
+        //set block position to clicked position if given
+        if (_pos_x && _pos_y && _pos_x > 0 && _pos_y > 0) {
+            block_description.position.x = _pos_x;
+            block_description.position.y = _pos_y;
+        }
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
         return block;

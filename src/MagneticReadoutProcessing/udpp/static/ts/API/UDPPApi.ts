@@ -24,6 +24,7 @@ export interface PipelineStages {
     position: PipelineStagePosition;
     parameters: PipelineStageParameter[];
     inspector_parameters: PipelineStageParameter[];
+    returns: PipelineStageParameter[];
 };
 
 export interface PipelineStageParameter {
