@@ -5,7 +5,7 @@ With this lib it is possible to store and further process raw data from magnetom
 
 
 
-
+```
 @software{Ochsendorf_Marcel_MagneticReadoutProcessing_2023,
 author = {Ochsendorf, Marcel},
 license = {GPL-2.0},
@@ -15,3 +15,4 @@ url = {https://github.com/LFB-MRI/MagneticReadoutProcessing},
 version = {1.0.0},
 year = {2023}
 }
+```
