@@ -1,25 +1,108 @@
-# Motivation
+# Introduction
 
+# Fundamentals
 
-# Tables
+## Permanent magnet MRI
 
-: Das ist eine tolle Tabelle \label{Das_ist_eine_tolle_Tabelle.csv}
+### Typical B0 Magnet structures
 
-| year | make  | model                      | description                       | price   |
-| ---- | ----- | -------------------------- | --------------------------------- | ------- |
-| 1997 | Ford  | E350                       | ac, abs, moon                     | 3000.00 |
-| 1999 | Chevy | Venture «Extended Edition» |                                   | 4900.00 |
-| 1996 | Jeep  | Grand Cherokee             | MUST SELL! air, moon roof, loaded | 4799.00 |
+## Shimming procedure
 
 
 
-Tabelle ist toll: \ref{Das_ist_eine_tolle_Tabelle.csv}
+# State of the art
+
+## Opensource projects
+
+## Unified Sensor Interface
+
+## Sensor selection
+## Mechanical 
+
+## Electrical Interface
 
 
-## Images
 
 
-![Dies ist ein Testbild \label{Dies_ist_ein_Testbild.png}](./generated_images/border_Dies_ist_ein_Testbild.png)
+
+# Software implementation
 
 
-Das Bild ist toll: \ref{Dies_ist_ein_Testbild.png}
+## Library
+
+### Concepts
+
+### User interaction points
+
+### Datastructures
+
+#### Datapoints
+
+#### Meta-Data management
+### Implementation
+
+
+
+### Examples
+
+
+### Concepts
+
+
+
+
+# Usability improvements
+
+
+## Commandline interface
+## Programmable data processing pipeline
+
+### Web base pipeline configuration
+
+
+## Third party software support
+
+## Package management
+
+### Documentation
+
+### Distribution
+
+
+
+### Continuous Integration
+
+
+### End to end testing
+
+
+
+# Evaluation
+
+
+## Prequesites for evaluation
+
+## Evaluation confiugration
+
+### Sensor readout
+### Processing pipeline
+
+## Test scenarios
+
+## Results
+
+
+
+
+
+
+
+# Conclusion and dicussion
+## Conclusion
+
+## Problems
+
+## Outlook
+
+
+

@@ -52,10 +52,14 @@ def getpipeline(filename: str):
     filename = bleach.clean(filename)
 
 
+    # OPTIONAL READ WINDOW SIZE TO CALCULATE NODE POSITIONS IN BROWSER WINDOW
+    canvas_size_x: int = request.args.get("canvas_size_x", default=100, type=int)
+    canvas_size_y: int = request.args.get("canvas_size_y", default=100, type=int)
+
     pipelines:dict = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
     # pipeline found
     if filename in pipelines:
-        return jsonify(UDPPFunctionTranslator.get_stages_as_array(pipelines[filename]))
+        return jsonify(UDPPFunctionTranslator.EDITOR_get_stages_as_array(pipelines[filename], _canvas_view_size_x=canvas_size_x, _canvas_view_size_y=canvas_size_y))
 
     # create new pipeline and return content
     pipeline: dict = UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.PIPELINES_FOLDER)

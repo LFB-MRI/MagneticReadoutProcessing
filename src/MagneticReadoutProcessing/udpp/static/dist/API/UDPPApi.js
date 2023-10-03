@@ -12,7 +12,7 @@ export class UDPPApi {
         if (!_apiendpoint.startsWith("http://")) {
             _apiendpoint = "http://" + _apiendpoint;
         }
-        let url = _apiendpoint + "getpipeline/" + _pipelinename;
+        let url = _apiendpoint + "getpipeline/" + _pipelinename + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' + window.innerHeight;
         console.log(url);
         const response = await fetch(url, {
             method: 'GET',

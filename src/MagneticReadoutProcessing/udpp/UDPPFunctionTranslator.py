@@ -1,6 +1,7 @@
 """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 import os
 import queue
+import random
 from pathlib import Path
 import yaml
 from queue import Queue
@@ -8,13 +9,12 @@ import networkx as nx
 from matplotlib import pyplot as plt
 
 from import_MRP import __fix_import__
-__fix_import__()
 
+__fix_import__()
 
 import inspect
 from optparse import OptionParser
 from UDPPFunctionCollection import UDPPFunctionCollection
-
 
 
 class UDPPFunctionTranslatorException(Exception):
@@ -22,29 +22,29 @@ class UDPPFunctionTranslatorException(Exception):
         self.message = message
         super().__init__(self.message)
 
+
 class IterableQueue():
     """simple queue pyrhon iterator, which allows iteration and insertion of new items during iteration"""
-    def __init__(self,source_queue):
-            self.source_queue = source_queue
+
+    def __init__(self, source_queue):
+        self.source_queue = source_queue
+
     def __iter__(self):
         while True:
             try:
-               yield self.source_queue.get_nowait()
+                yield self.source_queue.get_nowait()
             except queue.Empty:
-               return
-
+                return
 
 
 # (a, b, x='blah')
-
-
 
 
 class UDPPFunctionTranslator():
     """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
     @staticmethod
-    def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies:bool = False) -> [str]:
+    def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies: bool = False) -> [str]:
         """
         renders an image of a given nx.Graph for debug purposes
 
@@ -95,28 +95,32 @@ class UDPPFunctionTranslator():
             if 'function' in stage_v:
                 fkt: str = stage_v['function']
                 if not fkt in functions:
-                    raise UDPPFunctionTranslatorException("function value ({}) for stage: {} is invalid or not present in UDPPFunctionCollection".format(fkt, stage_k))
+                    raise UDPPFunctionTranslatorException(
+                        "function value ({}) for stage: {} is invalid or not present in UDPPFunctionCollection".format(
+                            fkt, stage_k))
             else:
                 raise UDPPFunctionTranslatorException("function is not defined in stage: {}".format(stage_k))
 
         return True
 
-
     @staticmethod
-    def get_function_return_type(_function_name: str) -> str:
+    def get_function_return_types(_function_name: str) -> [str]:
         if _function_name is None or len(_function_name) <= 0:
             raise UDPPFunctionTranslatorException("get_function_return_type: _function_name is empty")
 
         functions: dict = UDPPFunctionTranslator.listfunctions()
 
         if not _function_name in functions:
-            raise UDPPFunctionTranslatorException("get_function_return_type: function name with this name does not exists {}".format(_function_name))
+            raise UDPPFunctionTranslatorException(
+                "get_function_return_type: function name with this name does not exists {}".format(_function_name))
 
         function: dict = functions[_function_name]
         # extract return type
+        # TODO ADD SUPPORT FOR TUPLES
+        if 'return' in function:
+            return [function['return']]
+        return []
 
-
-        return ""
     @staticmethod
     def check_parameter_types(_pipelines: dict, _calltree_graph: nx.DiGraph) -> bool:
         """
@@ -139,10 +143,10 @@ class UDPPFunctionTranslator():
             caller_types: dict = functions[caller_fkt]['parameter_types']
             # get the parameter to which
             # the get_parameter_from_step function returns the input parameter
-            stage_stage_input_functions_name: [str] = UDPPFunctionTranslator.get_parameter_from_step(_pipelines, stage_k, False)
+            stage_stage_input_functions_name: [str] = UDPPFunctionTranslator.get_parameter_from_step(_pipelines,
+                                                                                                     stage_k, False)
 
             for idx, stage_stage_input_function_name in enumerate(stage_stage_input_functions_name):
-
 
                 if 'stage ' not in stage_stage_input_function_name:
                     continue
@@ -153,13 +157,15 @@ class UDPPFunctionTranslator():
 
                 caller_function_type_input: str = list(caller_types.values())[idx]
                 if not caller_function_type_input == callee_function_type_return:
-                    raise UDPPFunctionTranslatorException("connected cuntion type didnt match return {} -> imput_parameter {}".format(callee_function_type_return, caller_function_type_input))
-
+                    raise UDPPFunctionTranslatorException(
+                        "connected cuntion type didnt match return {} -> imput_parameter {}".format(
+                            callee_function_type_return, caller_function_type_input))
 
         return True
 
     @staticmethod
-    def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot", _title: str = "graph_plot"):
+    def plot_graph(graph: nx.DiGraph, _export_graph_plots: str = None, _filename: str = "graphplot",
+                   _title: str = "graph_plot"):
         """
         renders an image of a given nx.Graph for debug purposes
 
@@ -185,7 +191,8 @@ class UDPPFunctionTranslator():
         plt.close()
 
     @staticmethod
-    def create_sub_calltrees(_pipelines: dict, _calltree_graph: nx.DiGraph, _start_steps: [str], _export_graph_plots: str = None) -> [nx.DiGraph]:
+    def create_sub_calltrees(_pipelines: dict, _calltree_graph: nx.DiGraph, _start_steps: [str],
+                             _export_graph_plots: str = None) -> [nx.DiGraph]:
         """
         parses the user defined stages into a directed grap in order to determ the order of computation for each function.
 
@@ -230,7 +237,6 @@ class UDPPFunctionTranslator():
             if last_node not in list(subgraph.nodes):
                 subgraph.add_node(last_node)
 
-
             dfs_res: [str] = list(nx.dfs_tree(_calltree_graph, ss))
             print("dfs_res: {}".format(dfs_res))
             # REMOVE FIRST ELEMENT WHICH IS ALWAYS THE START DFS NODE
@@ -249,7 +255,7 @@ class UDPPFunctionTranslator():
                     if dfs_step not in next_nodes_after_startnodes:
                         print("added {} to next after startnodes".format(dfs_step))
                         nodes_to_process.put(dfs_step)
-                        #next_nodes_after_startnodes.append(dfs_step)
+                        # next_nodes_after_startnodes.append(dfs_step)
                         break
 
                 else:
@@ -271,7 +277,8 @@ class UDPPFunctionTranslator():
             subgraphs.append(subgraph)
             print("subgraph {} with {}".format(len(subgraphs), list(nx.dfs_tree(subgraph, ss))))
             # EXPORT SUBGRAPH AS IMAGE
-            UDPPFunctionTranslator.plot_graph(subgraph,_export_graph_plots, "sub_calltree_startstage_{}".format(ss), "SubCallTree for Start-Stages {}".format(ss))
+            UDPPFunctionTranslator.plot_graph(subgraph, _export_graph_plots, "sub_calltree_startstage_{}".format(ss),
+                                              "SubCallTree for Start-Stages {}".format(ss))
 
             # CHECK ALL VISITED
             all_visited: bool = True
@@ -280,7 +287,6 @@ class UDPPFunctionTranslator():
                     all_visited = False
             if all_visited:
                 break
-
 
         return subgraphs
 
@@ -313,9 +319,9 @@ class UDPPFunctionTranslator():
             # check each paramter
             for param_k, param_v in p_v['parameters'].items():
                 param_name = str(param_k)
-                param_value:str = str(param_v)
+                param_value: str = str(param_v)
                 if 'stage ' in param_value:
-                    param_value:str = param_value.replace('stage ', '')
+                    param_value: str = param_value.replace('stage ', '')
                     if param_value in _pipelines:
                         # add edges from function using this parameter to function
                         calltree.add_edge(param_value, p_k)
@@ -323,18 +329,15 @@ class UDPPFunctionTranslator():
         # find circles in the graph
         # to avoid processing endless loops
         try:
-            circle_edges = nx.find_cycle(calltree, orientation="original") # original = follow edge -> !
+            circle_edges = nx.find_cycle(calltree, orientation="original")  # original = follow edge -> !
             if len(circle_edges) > 0:
                 raise Exception("create_calltree:stages contains circles in {}".format(circle_edges))
         except nx.exception.NetworkXNoCycle as e:
             pass
             # all good no cycle :)
 
-
         # EXPORT GRAPH AS IMAGE
         UDPPFunctionTranslator.plot_graph(calltree, _export_graph_plots, "calltree_graph", "CallTree")
-
-
 
         return calltree
 
@@ -365,23 +368,70 @@ class UDPPFunctionTranslator():
         return ret
 
     @staticmethod
-    def get_stages_as_array(_pipeline: dict) -> []:
+    def EDITOR_get_stages_as_array(_pipeline: dict, _canvas_view_size_x:int = 100, _canvas_view_size_y:int = 100) -> []:
+        """
+        returns all pipelines stage a array representation instead of dict.
+        this is used for the web editor
+
+        :param _pipeline: pipeline stages (directly parsed from yaml)
+        :type _pipeline: dict
+
+        :returns: returns a modified version for the stages used in EDITOR
+        :rtype: []
+       """
+        
+        # calculate position of the nodes
+        steps = UDPPFunctionTranslator.extract_pipelines_steps(_pipeline)
+        graph: nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps)
+
+        node_positions: [] = nx.drawing.planar_layout(graph,scale=1, center=[_canvas_view_size_x/2, _canvas_view_size_y/2])
+
 
         stages: [] = []
 
         for k, v in UDPPFunctionTranslator.extract_pipelines_steps(_pipeline).items():
-           params: [] = []
+            params: [] = []
+            inspector_params: [] = []
 
-           for kparam, vparam in dict(v['parameters']).items():
-               params.append({'name': kparam, 'value': vparam, 'type': 'string', 'direction': 'input'})
+            for kparam, vparam in dict(v['parameters']).items():
+                if 'IP_' not in kparam:
+                    params.append({'name': kparam, 'value': vparam, 'type': 'string', 'direction': 'input'})
+                else:
+                    inspector_params.append({'name': kparam, 'value': vparam, 'type': 'string'})
+
+            # RESOLVE function return value in order to set the output connector
+            returns: [] = []
+            rt: [str] = UDPPFunctionTranslator.get_function_return_types(v['function'])
+            for r in rt:
+                if len(r) <= 0:
+                    continue
+                returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
 
 
-           stages.append({
+            # fixed position present ? => USE
+            pos: dict = {}
+
+            if 'position' not in v and k in node_positions:
+                # if node position is calculated, use this
+                pos['x'] = int(node_positions[k][0])
+                pos['y'] = int(node_positions[k][1])
+            elif 'position' not in v:
+                # else just a random pos
+                xc: int = int(_canvas_view_size_x / 2)
+                yc: int = int(_canvas_view_size_y / 2)
+                pos['x'] = random.randint(int(xc - (xc/2)), int(xc + (xc/2)))
+                pos['y'] = random.randint(int(yc - (yc/2)), int(yc + (yc/2)))
+
+            #else position is set
+
+            stages.append({
                 'name': k,
                 'function': v['function'],
-               'parameters': params
-
-           })
+                'parameters': params,
+                'inspector': inspector_params,
+                'position': pos,
+                'returns': returns
+            })
 
         res: dict = {
             'settings': _pipeline['settings'],
@@ -389,6 +439,7 @@ class UDPPFunctionTranslator():
         }
 
         return res
+
     @staticmethod
     def extract_pipelines_steps(_pipeline: dict) -> dict:
         """
@@ -407,7 +458,7 @@ class UDPPFunctionTranslator():
         step_counter: dict = {}
 
         for p_k, p_v in _pipeline.items():
-            k:str = str(p_k)
+            k: str = str(p_k)
             # LEGACY SUPPORT
             k = k.replace('step ', 'stage ')
 
@@ -461,9 +512,7 @@ class UDPPFunctionTranslator():
                 'enabled': True,
                 'export_intermediate_results': True
             }
-
         }
-
 
         # CHECK FOLDER EXISTS
         if not str(_folder).startswith('/'):
@@ -479,11 +528,9 @@ class UDPPFunctionTranslator():
         with open(str(exp_path), 'w') as file:
             yaml.dump(pipeline_content, file)
 
-
         res: dict = {}
         res[filename] = pipeline_content
         return res
-
 
     @staticmethod
     def load_pipelines(_folder: str) -> dict:
@@ -521,7 +568,8 @@ class UDPPFunctionTranslator():
                 pip = yaml.safe_load(file)
 
             if pip is None:
-                raise Exception("load_pilelines: failed to load pipeline. file may empty or permissions denied".format(pip))
+                raise Exception(
+                    "load_pilelines: failed to load pipeline. file may empty or permissions denied".format(pip))
 
             # CHECK SETTINGS AND ADD TO LIST IF ENABLED
             if 'settings' in pip and 'enabled' in pip['settings'] and pip['settings']:
@@ -556,7 +604,8 @@ class UDPPFunctionTranslator():
         :returns: implemented functions as dict with function name as key
         :rtype: dict
         """
-        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
+        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if
+                              callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
 
         resultdict: dict = {}
 
@@ -570,7 +619,7 @@ class UDPPFunctionTranslator():
             return_type: str = None
             parameter_types = {}
             for k in inspect_result.annotations:
-                v= inspect_result.annotations[k]
+                v = inspect_result.annotations[k]
 
                 if k == 'return':
                     return_type = UDPPFunctionTranslator.strip_function_parameter_types(str(v))
@@ -586,20 +635,3 @@ class UDPPFunctionTranslator():
             }
 
         return resultdict
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

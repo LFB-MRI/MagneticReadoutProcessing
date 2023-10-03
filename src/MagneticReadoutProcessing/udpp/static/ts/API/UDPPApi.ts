@@ -3,7 +3,7 @@
 
 
 
- interface PipelineRoot {
+export interface PipelineRoot {
     settings: PipelineSettings;
     stages: PipelineStages[];
 };
@@ -14,10 +14,16 @@ interface PipelineSettings {
     name: string;
 };
 
+interface PipelineStagePosition{
+    x: number;
+    y: number;
+}
 export interface PipelineStages {
     function: string;
     name: string;
+    position: PipelineStagePosition;
     parameters: PipelineStageParameter[];
+    inspector_parameters: PipelineStageParameter[];
 };
 
 export interface PipelineStageParameter {
@@ -34,19 +40,19 @@ export class UDPPApi {
 
     static async getPipeline(_pipelinename: string, _apiendpoint: string = "http://127.0.0.1:5555/api"): Promise<PipelineRoot> {
 
-        if(!_apiendpoint.endsWith("/")){
+        if (!_apiendpoint.endsWith("/")) {
             _apiendpoint += "/";
         }
 
-        if(!_apiendpoint.startsWith("http://")){
+        if (!_apiendpoint.startsWith("http://")) {
             _apiendpoint = "http://" + _apiendpoint;
         }
 
 
-        let url: string = _apiendpoint + "getpipeline/" + _pipelinename;
+        let url: string = _apiendpoint + "getpipeline/" + _pipelinename + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' +  window.innerHeight;
 
         console.log(url);
-        const response: Response= await fetch(url, {
+        const response: Response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -57,18 +63,21 @@ export class UDPPApi {
             redirect: "follow"
         });
         console.log(response);
-        if (!response.ok) { throw new Error('No response generated. !ok'); }
-        if (response.body === null) {throw new Error('No response generated. bdy==null');}
+        if (!response.ok) {
+            throw new Error('No response generated. !ok');
+        }
+        if (response.body === null) {
+            throw new Error('No response generated. bdy==null');
+        }
 
 
-      // let json: object = await response.json();
-       //console.log(json)
+        // let json: object = await response.json();
+        //console.log(json)
 
 
+        let pipeline: PipelineRoot = await response.json();//= Object.create(PipelineRoot.prototype);
 
-       let pipeline: PipelineRoot = await response.json();//= Object.create(PipelineRoot.prototype);
-
-      //  Object.assign(pipeline, json);
+        //  Object.assign(pipeline, json);
 
         console.log(pipeline);
 

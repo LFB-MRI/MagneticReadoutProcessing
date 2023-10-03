@@ -25,15 +25,17 @@ class UDPPFunctionCollection:
 
 
     @staticmethod
-    def simulate_magnet(_count: int = 1, _random_polarisation: bool = False, _random_magnetisation: bool = False) -> [MRPReading.MRPReading]:
+    def simulate_magnet(IP_count: int = 1, IP_random_polarisation: bool = False, IP_random_magnetisation: bool = False) -> [MRPReading.MRPReading]:
         ret: [MRPReading.MRPReading] = []
 
-        for idx in range(_count):
-            rnd = MRPSimulation.MRPSimulation.generate_reading(_randomize_magnetization=_random_magnetisation, _add_random_polarisation=_random_polarisation)
+        for idx in range(IP_count):
+            rnd = MRPSimulation.MRPSimulation.generate_reading(_randomize_magnetization=IP_random_polarisation, _add_random_polarisation=IP_random_magnetisation)
             rnd.set_additional_data("simulate_magnet", idx)
             ret.append(rnd)
 
         return ret
+
+
     @staticmethod
     def readings_passthrough(readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
         """
@@ -92,38 +94,38 @@ class UDPPFunctionCollection:
         return rd
 
     @staticmethod
-    def import_readings(input_folder:str = "", file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
+    def import_readings(IP_input_folder:str = "", IP_file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
         """
         Imports all readings found in the folder given from the input_folder.
         It restores all meta-data and datapoints.
 
-        :param input_folder: Folder with .mag.json readings ABS or REL-Paths are allowed
-        :type input_folder: str
+        :param IP_input_folder: Folder with .mag.json readings ABS or REL-Paths are allowed
+        :type IP_input_folder: str
 
-        :param file_regex: to only allow certain filenames using a regex string
-        :type file_regex: str
+        :param IP_file_regex: to only allow certain filenames using a regex string
+        :type IP_file_regex: str
 
         :returns: Returns the imported readings as [MRPReading.MRPReading] instances
         :rtype: [MRPReading.MRPReading]
         """
 
-        if input_folder is None or len(input_folder) <= 0:
+        if IP_input_folder is None or len(IP_input_folder) <= 0:
             raise UDPPFunctionCollectionException("import_readings: input_folder parameter empty")
         # CHECK FOLDER EXISTS
-        if not str(input_folder).startswith('/'):
-            input_folder = str(Path(input_folder).resolve())
+        if not str(IP_input_folder).startswith('/'):
+            input_folder = str(Path(IP_input_folder).resolve())
         # GET LOGGER
         log: logger = UDPPFLogger.UDPFLogger()
-        log.run_log("import_readings: input_folder parameter set to {}".format(input_folder))
+        log.run_log("import_readings: input_folder parameter set to {}".format(IP_input_folder))
 
         # CHECK FOLDER EXISTS
-        if not os.path.exists(input_folder):
+        if not os.path.exists(IP_input_folder):
             raise UDPPFunctionCollectionException("import_readings: input_folder parameter does not exist on the system".format(input_folder))
 
 
 
         # IMPORT READINGS
-        readings_to_import: [str] = [f for f in os.listdir(input_folder) if re.match(r'{}'.format(file_regex), f)]
+        readings_to_import: [str] = [f for f in os.listdir(IP_input_folder) if re.match(r'{}'.format(IP_file_regex), f)]
         imported_results: [MRPReading.MRPReading] = []
         for rti in readings_to_import:
             log.run_log("import_readings: import reading {}".format(rti))

@@ -6,40 +6,14 @@ settings:
 stage a:
   function: import_readings
   parameters:
-    input_folder: tlv493d_N45_12x12x12
-
-
-stage b:
-  function: import_readings
-  parameters:
-    input_folder: tlv493d_N45_12x12x12
-    regex: (.)*.mag.json
-
-
-stage c:
-  function: readings_passthrough
-  parameters:
-    reading: stage a
-
-
-stage d:
-  function: concat_readings
-  parameters:
-    set_a: stage c
-    set_b: stage b
-#stage plot1:
+    IP_input_folder: tlv493d_N45_12x12x12
 
 
 stage e:
   function: concat_readings
   parameters:
-    set_a: stage d
+    set_a: stage a
     set_b: stage a
-
-stage f:
-  function: inspect_readings
-  parameters:
-    readings: stage e
 
 
 

@@ -1,4 +1,5 @@
 import {UDPPApi} from "../API/UDPPApi.js";
+import {Pipeline} from "./Pipeline.js";
 export class OptionPanel {
 
 
@@ -9,6 +10,9 @@ export class OptionPanel {
     private load_button: HTMLButtonElement;
     private icon: HTMLElement;
     private static API: UDPPApi;
+
+
+
 
     constructor(icon: HTMLElement, panel: HTMLElement) {
         this.icon = icon;
@@ -25,23 +29,23 @@ export class OptionPanel {
 
         console.log(urlParams)
         var reload: boolean = false;
-        if(urlParams.has('pipeline') && urlParams.get('pipeline') !== this.GetPipelineName()){
+        if(urlParams.has('pipeline') && urlParams.get('pipeline') !== OptionPanel.GetPipelineName()){
             this.pipelineinput.setAttribute('value', urlParams.get('pipeline') || "pipeline.yaml");
             reload = true;
-        }else if(this.GetPipelineName() === ""){
+        }else if(OptionPanel.GetPipelineName() === ""){
             this.pipelineinput.setAttribute('value', "pipeline.yaml");
         }else{
-            this.pipelineinput.setAttribute('value', this.GetPipelineName() || "pipeline.yaml");
+            this.pipelineinput.setAttribute('value', OptionPanel.GetPipelineName() || "pipeline.yaml");
         }
 
-        if(urlParams.has('apiendpoint') && urlParams.get('apiendpoint') !== this.GetApiEndpoint()){
+        if(urlParams.has('apiendpoint') && urlParams.get('apiendpoint') !== OptionPanel.GetApiEndpoint()){
             this.apiendpoint.setAttribute('value', urlParams.get('apiendpoint') || "http://127.0.0.1:5555/api");
             reload = true;
-        }else if(this.GetApiEndpoint() === ""){
+        }else if(OptionPanel.GetApiEndpoint() === ""){
             this.apiendpoint.setAttribute('value', "http://127.0.0.1:5555/api");
             reload = true;
         }else{
-            this.apiendpoint.setAttribute('value', this.GetApiEndpoint() || "http://127.0.0.1:5555/api");
+            this.apiendpoint.setAttribute('value', OptionPanel.GetApiEndpoint() || "http://127.0.0.1:5555/api");
         }
 
         console.log(this.pipelineinput.value);
@@ -62,7 +66,8 @@ export class OptionPanel {
     AddListeners() {
         // Add event listeners
         this.save_button.addEventListener('mousedown', () => this.SaveSettings());
-        this.load_button.addEventListener('mousedown', () =>UDPPApi.getPipeline(this.GetPipelineName(), this.GetApiEndpoint()));
+
+        this.load_button.addEventListener('mousedown', () => Pipeline.getInstance().load_set_pipeline());
 
 
         this.icon.addEventListener('mousedown', (e) => {
@@ -91,7 +96,7 @@ export class OptionPanel {
         this.Hide();
     }
 
-    GetPipelineName(): string {
+    static GetPipelineName(): string {
         var ret: string | null = sessionStorage.getItem('pipelineinput');
         if(ret == null){
             return "";
@@ -99,7 +104,7 @@ export class OptionPanel {
         return ret;
     }
 
-    GetApiEndpoint(): string {
+    static GetApiEndpoint(): string {
         var ret: string | null = sessionStorage.getItem('apiendpoint');
         if(ret == null){
             return "";
