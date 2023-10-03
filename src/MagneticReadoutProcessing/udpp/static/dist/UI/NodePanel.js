@@ -2,7 +2,9 @@
 import { Block } from './Block.js';
 import { Socket } from './Socket.js';
 import { Edge } from './Edge.js';
-import { SocketType, ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, nodeTypes, workspace, elementToBlock } from './Shared.js';
+import { ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, workspace, elementToBlock } from './Shared.js';
+import { UDPPApi } from "../API/UDPPApi.js";
+import { OptionPanel } from "./OptionPanel.js";
 export class NodePanel {
     constructor(document, inspector) {
         this.selectedSocket = null;
@@ -67,32 +69,51 @@ export class NodePanel {
         path.setAttribute('d', d);
         return path;
     }
-    PopulateContextMenu(searchText) {
+    CreatePipelineBlock(_description) {
+        console.log("CreatePipelineBlock");
+        var block = new Block(this.inspector);
+        const name = _description.name.replace("_", "<br>");
+        block.AddOrSetTitle(name);
+        let blockElement = block.GetElement(_description.position.x, _description.position.y);
+        nodePanel.appendChild(blockElement);
+        return block;
+    }
+    async PopulateContextMenu(searchText) {
         const list = contextMenu.querySelector('ul');
         list.innerHTML = '';
-        for (const nodeType of nodeTypes) {
+        // fetch node list from api
+        const nodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
+        for (const nodeType of nodeTypes.nodes) {
             if (nodeType.toLowerCase().includes(searchText.toLowerCase())) {
                 const listItem = document.createElement('li');
                 listItem.textContent = nodeType;
                 listItem.addEventListener('click', (e) => {
-                    let block = this.CreateBlock(nodeType);
-                    let blockElement = block.GetElement(e.clientX, e.clientY);
+                    this.CreateBlock(nodeType);
+                    //let block = this.CreateBlock(nodeType);
+                    //let blockElement = block.GetElement(e.clientX, e.clientY);
+                    //nodePanel.appendChild(blockElement);
                     contextMenu.style.display = 'none';
-                    nodePanel.appendChild(blockElement);
                 });
                 list.appendChild(listItem);
             }
         }
     }
-    CreateBlock(nodeType) {
-        let block = new Block(this.inspector);
-        block.AddInputSocket(new Socket(block, 'input1', 'default', SocketType.INPUT, 0));
-        block.AddInputSocket(new Socket(block, 'input2', 'number', SocketType.INPUT, 1));
-        block.AddInputSocket(new Socket(block, 'input3', 'string', SocketType.INPUT, 2));
-        block.AddOutputSocket(new Socket(block, 'output1', 'number', SocketType.OUTPUT, 0));
-        block.AddOutputSocket(new Socket(block, 'output2', 'boolean', SocketType.OUTPUT, 1));
+    async CreateBlock(nodeType) {
+        //let block = new Block(this.inspector);
+        let block_description = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
+        let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
         return block;
+        /*
+         block.AddOrSetTitle(nodeType);
+
+         block.AddInputSocket(new Socket(block, 'input1', 'default', SocketType.INPUT, 0));
+         block.AddInputSocket(new Socket(block, 'input2', 'number', SocketType.INPUT, 1));
+         block.AddInputSocket(new Socket(block, 'input3', 'string', SocketType.INPUT, 2));
+         block.AddOutputSocket(new Socket(block, 'output1', 'number', SocketType.OUTPUT, 0));
+         block.AddOutputSocket(new Socket(block, 'output2', 'boolean', SocketType.OUTPUT, 1));
+
+         */
     }
     OnLeftClickDown(evt) {
         // Hide context menu

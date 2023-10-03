@@ -4,7 +4,68 @@
 ;
 ;
 ;
+;
 export class UDPPApi {
+    static async getNodeInformation(_function_name, _apiendpoint = "http://127.0.0.1:5555/api") {
+        if (!_apiendpoint.endsWith("/")) {
+            _apiendpoint += "/";
+        }
+        if (!_apiendpoint.startsWith("http://")) {
+            _apiendpoint = "http://" + _apiendpoint;
+        }
+        let url = _apiendpoint + "getnodeinformation/" + _function_name;
+        console.log(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            //mode: 'no-cors',
+            cache: "no-cache",
+            redirect: "follow"
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error('No response generated. !ok');
+        }
+        if (response.body === null) {
+            throw new Error('No response generated. bdy==null');
+        }
+        let node = await response.json();
+        console.log(node);
+        return node;
+    }
+    static async getNodeTypes(_apiendpoint = "http://127.0.0.1:5555/api") {
+        if (!_apiendpoint.endsWith("/")) {
+            _apiendpoint += "/";
+        }
+        if (!_apiendpoint.startsWith("http://")) {
+            _apiendpoint = "http://" + _apiendpoint;
+        }
+        let url = _apiendpoint + "getnodetypes";
+        console.log(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            //mode: 'no-cors',
+            cache: "no-cache",
+            redirect: "follow"
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error('No response generated. !ok');
+        }
+        if (response.body === null) {
+            throw new Error('No response generated. bdy==null');
+        }
+        let nodelist = await response.json();
+        console.log(nodelist);
+        return nodelist;
+    }
     static async getPipeline(_pipelinename, _apiendpoint = "http://127.0.0.1:5555/api") {
         if (!_apiendpoint.endsWith("/")) {
             _apiendpoint += "/";
@@ -31,17 +92,8 @@ export class UDPPApi {
         if (response.body === null) {
             throw new Error('No response generated. bdy==null');
         }
-        // let json: object = await response.json();
-        //console.log(json)
-        let pipeline = await response.json(); //= Object.create(PipelineRoot.prototype);
-        //  Object.assign(pipeline, json);
+        let pipeline = await response.json();
         console.log(pipeline);
         return pipeline;
-        // Assuming the response data has a field called 'choices' which is an array containing the generated text.
-        //if (response.data.choices && response.data.choices.length > 0) {
-        //return response.data.choices[0].text;
-        //} else {
-        //    throw new Error('No response generated.');
-        //}
     }
 }

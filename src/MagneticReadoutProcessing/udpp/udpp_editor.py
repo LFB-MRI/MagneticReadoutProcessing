@@ -44,6 +44,41 @@ def listpipelines():
     return jsonify(res)
 
 
+
+@app_flask.route("/api/getnodetypes")
+@cross_origin()
+def getnodetypes():
+    fkts: dict = UDPPFunctionTranslator.listfunctions()
+
+    return jsonify({'nodes':list(fkts.keys())})
+
+
+@app_flask.route("/api/getnodeinformation/<functionname>")
+@cross_origin()
+def getnodeinformation(functionname: str):
+    assert functionname == request.view_args['functionname']
+    functionname = bleach.clean(functionname)
+
+    functions: dict = UDPPFunctionTranslator.listfunctions()
+
+    if functionname not in functions:
+        return jsonify({}), 404
+
+    # return same as in stage description
+    # parameters
+    # return
+    # name
+    # ...
+    return jsonify({
+        'function': functionname,
+        'name': functionname'
+        position: PipelineStagePosition;
+        parameters: PipelineStageParameter[];
+        inspector_parameters: PipelineStageParameter[];
+    })
+
+
+
 @app_flask.route("/api/getpipeline/<filename>")
 @cross_origin()
 def getpipeline(filename: str):

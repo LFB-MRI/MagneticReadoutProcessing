@@ -3,7 +3,7 @@ import {PipelineRoot, PipelineStages, UDPPApi} from "../API/UDPPApi.js";
 import {NodePanel} from "./NodePanel.js";
 import {Block} from "./Block.js";
 import {Socket} from "./Socket.js";
-import {SocketType} from "./Shared.js";
+import {nodePanel, SocketType} from "./Shared.js";
 import {InspectorPanel} from "./InspectorPanel.js";
 export class Pipeline {
     private static instance: Pipeline;
@@ -61,25 +61,9 @@ export class Pipeline {
 
        Promise.resolve(resolve_pipeline).then((pipeline: PipelineRoot) => {
 
-           const stage  = pipeline.stages[0]
+            const stage  = pipeline.stages[0]
             console.log(stage)
-
-           // @ts-ignore
-           let block = new Block(this.insepctorPanel);
-
-           block.AddOrSetTitle( `${stage.name} [${stage.function}]`)
-           let blockElement = block.GetElement(stage.position.x, stage.position.y);
-           //block.CreateBlockHTML()
-
-           // block.AddInputSocket(new Socket(block, 'input1', 'default', SocketType.INPUT, 0));
-           // block.AddInputSocket(new Socket(block, 'input2', 'number', SocketType.INPUT, 1));
-           // block.AddInputSocket(new Socket(block, 'input3', 'string', SocketType.INPUT, 2));
-           // block.AddOutputSocket(new Socket(block, 'output1', 'number', SocketType.OUTPUT, 0));
-           // block.AddOutputSocket(new Socket(block, 'output2', 'boolean', SocketType.OUTPUT, 1));
-
-
-           // @ts-ignore
-           this.nodeGraph.blocks.push();
+            this.nodeGraph?.CreatePipelineBlock(stage);
         });
 
 
