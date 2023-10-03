@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Node Editor</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="context-menu" style="display: none; position: fixed;">
+        <input type="text" placeholder="Search..." />
+        <ul>
+            <!-- Node types will be populated here -->
+        </ul>
+    </div>
+    <div id="inspector" class="inspector-closed">
+        <div class="inspector-content">
+            <h3>Node Inspector</h3>
+            <div id="inspector-properties"></div>
+        </div>
+    </div>
+    <div id="workspace">
+        <div id="graph-container">
+            <svg id="connections"></svg>
+            <div id="nodes"></div>
+        </div>
+    </div>
+    <div id="cog-icon">
+        SETTINGS
+    </div>
+
+    <div id="option-panel">
+        <label for="pipelinefile">Pipeline:</label>
+        <input type="text" id="pipelinefile">
+
+        <label for="apiendpoint">Pipeline:</label>
+        <input type="text" id="apiendpoint" value="{{ apiendpoint }}">
+
+
+        <button id="save-pipelinefile">Save</button>
+    </div>
+    <script type="module" src="Main.js"></script>
+</body>
+
+</html>

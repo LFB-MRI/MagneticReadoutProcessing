@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Annotated
 import typer
 from UDPPFunctionTranslator import UDPPFunctionTranslator
-from flask import Flask, request, jsonify, make_response, redirect
+from flask import Flask, request, jsonify, make_response, redirect, render_template
+from flask_cors import CORS, cross_origin
 import time
 import multiprocessing
 from waitress import serve
@@ -18,7 +19,8 @@ terminate_flask: bool = False
 
 app_typer = typer.Typer()
 app_flask = Flask(__name__, static_url_path='/static', static_folder=udpp_config.STATIC_FOLDER, template_folder=udpp_config.TEMPLATE_FOLDER)
-
+cors = CORS(app_flask)
+app_flask.config['CORS_HEADERS'] = 'Content-Type'
 def signal_andler(signum, frame):
     global terminate_flask
     terminate_flask = True
@@ -28,6 +30,7 @@ signal.signal(signal.SIGINT, signal_andler)
 
 
 @app_flask.route("/api/listpipelines")
+@cross_origin()
 def listpipelines():
     pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
     res: [str] = []
@@ -42,6 +45,7 @@ def listpipelines():
 
 
 @app_flask.route("/api/getpipeline/<filename>")
+@cross_origin()
 def getpipeline(filename: str):
 
     assert filename == request.view_args['filename']
@@ -51,7 +55,7 @@ def getpipeline(filename: str):
     pipelines:dict = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
     # pipeline found
     if filename in pipelines:
-        return jsonify(pipelines[filename])
+        return jsonify(UDPPFunctionTranslator.get_stages_as_array(pipelines[filename]))
 
     # create new pipeline and return content
     pipeline: dict = UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.PIPELINES_FOLDER)
@@ -66,7 +70,7 @@ def getpipeline(filename: str):
 
 @app_flask.route("/")
 def index():
-    return redirect("/static/dist/index.html")
+    return render_template("index.html", apiendpoint="127.0.0.1:5555")
 
 
 

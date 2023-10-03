@@ -28,3 +28,4 @@ pyvis>=0.3.2
 waitress>=2.1.2
 flask>=3.0.0
 bleach>=6.0.0
+flask_cors>=4.0.0

@@ -365,6 +365,31 @@ class UDPPFunctionTranslator():
         return ret
 
     @staticmethod
+    def get_stages_as_array(_pipeline: dict) -> []:
+
+        stages: [] = []
+
+        for k, v in UDPPFunctionTranslator.extract_pipelines_steps(_pipeline).items():
+           params: [] = []
+
+           for kparam, vparam in dict(v['parameters']).items():
+               params.append({'name': kparam, 'value': vparam, 'type': 'string', 'direction': 'input'})
+
+
+           stages.append({
+                'name': k,
+                'function': v['function'],
+               'parameters': params
+
+           })
+
+        res: dict = {
+            'settings': _pipeline['settings'],
+            'stages': stages
+        }
+
+        return res
+    @staticmethod
     def extract_pipelines_steps(_pipeline: dict) -> dict:
         """
         returns all stage <name> entries from the parsed yaml dict
@@ -406,13 +431,13 @@ class UDPPFunctionTranslator():
         """
         creates a empty pipeline file
 
-        :param _name: nane of the new pipeline this also will be the later filename with som variations
+        :param _name: nane of the new pipeline this also will be the later filename with some variations
         :type _name: str
 
         :param _folder: storage location for pipeline files
         :type _folder: str
 
-        :returns: returns content of pipeline
+        :returns: returns content of pipeline in same format as load_pipelines
         :rtype: dict
         """
         if _name is None or len(_name) <= 0:
@@ -435,8 +460,8 @@ class UDPPFunctionTranslator():
                 'name': "{}".format(_name),
                 'enabled': True,
                 'export_intermediate_results': True
-            },
-            'stages':[]
+            }
+
         }
 
 
