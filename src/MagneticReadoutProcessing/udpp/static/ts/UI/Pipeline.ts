@@ -57,7 +57,8 @@ export class Pipeline {
         console.log("pipeline", OptionPanel.GetPipelineName())
         console.log("api", OptionPanel.GetApiEndpoint())
 
-
+        // CLEAR EXISTING NODES
+        this.nodeGraph?.Reset();
         // load pipeline json object from api
         const resolve_pipeline = UDPPApi.getPipeline(OptionPanel.GetPipelineName(), OptionPanel.GetApiEndpoint());
 

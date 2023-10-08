@@ -69,6 +69,16 @@ export class NodePanel {
         path.setAttribute('d', d);
         return path;
     }
+    Reset() {
+        //REMOVE BLOCKS
+        while (nodePanel.childNodes.length > 0) {
+            //nodePanel.removeChild(this.blocks[i].GetElement(0,0));
+            nodePanel.childNodes.item(0).remove(); //p.remove()
+        }
+        while (this.blocks.length > 0) {
+            this.blocks.pop();
+        }
+    }
     CreatePipelineBlock(_description) {
         console.log("CreatePipelineBlock");
         var block = new Block(this.inspector);
@@ -119,16 +129,6 @@ export class NodePanel {
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
         return block;
-        /*
-         block.AddOrSetTitle(nodeType);
-
-         block.AddInputSocket(new Socket(block, 'input1', 'default', SocketType.INPUT, 0));
-         block.AddInputSocket(new Socket(block, 'input2', 'number', SocketType.INPUT, 1));
-         block.AddInputSocket(new Socket(block, 'input3', 'string', SocketType.INPUT, 2));
-         block.AddOutputSocket(new Socket(block, 'output1', 'number', SocketType.OUTPUT, 0));
-         block.AddOutputSocket(new Socket(block, 'output2', 'boolean', SocketType.OUTPUT, 1));
-
-         */
     }
     OnLeftClickDown(evt) {
         // Hide context menu
@@ -358,6 +358,7 @@ export class NodePanel {
         //     background - position: -19px - 19px;
         // }
         workspace.style.backgroundSize = (40 * this.scaleFactor) + 'px ' + (40 * this.scaleFactor) + 'px';
+        this.ApplyScale();
     }
     ApplyScale() {
         // Get all HTML node elements

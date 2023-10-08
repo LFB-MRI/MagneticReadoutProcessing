@@ -16,6 +16,7 @@ export class Pipeline {
         return Pipeline.instance;
     }
     load_set_pipeline() {
+        var _a;
         if (this.nodeGraph === undefined || this.nodeGraph === null) {
             throw Error("nodeGraph is undefined");
         }
@@ -28,6 +29,8 @@ export class Pipeline {
         console.log("load_set_pipeline using:");
         console.log("pipeline", OptionPanel.GetPipelineName());
         console.log("api", OptionPanel.GetApiEndpoint());
+        // CLEAR EXISTING NODES
+        (_a = this.nodeGraph) === null || _a === void 0 ? void 0 : _a.Reset();
         // load pipeline json object from api
         const resolve_pipeline = UDPPApi.getPipeline(OptionPanel.GetPipelineName(), OptionPanel.GetApiEndpoint());
         Promise.resolve(resolve_pipeline).then((pipeline) => {
