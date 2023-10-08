@@ -114,26 +114,28 @@ class UDPPFunctionTranslator():
         function: dict = functions[_function_name]
         return function
 
+
     @staticmethod
-    def get_function_parameters(_function_name: str) -> [str]:
+    def get_function_parameters(_function_name: str, _get_inspector_parameter: bool = False, _strip_prefix: bool = False) -> [str]:
+        # TODO REWORK
         fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
         res: [str] = []
         types: dict = fkt['parameter_types']
+        defaults: dict = fkt['default']
         for k, v in types.items():
-            if 'IP_' not in k:
-                res.append(k)
+            if _get_inspector_parameter and 'IP_' not in k:
+                continue
+            elif not _get_inspector_parameter and  'IP_' in k:
+                continue
+
+            d = ""
+            if k in defaults:
+                d = defaults[k]
+            res.append({'name': k, 'type': v, 'value': d})
         return res
     @staticmethod
     def get_inspector_parameters(_function_name: str, _strip_prefix: bool = False) -> []:
-        fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
-        res: [str] = []
-        types: dict = fkt['parameter_types']
-        for k, v in types.items():
-            if 'IP_' in k:
-                if _strip_prefix and str(k).startswith('IP_'):
-                    k = str(k).replace('IP_', '')
-                res.append(k)
-        return res
+        return UDPPFunctionTranslator.get_function_parameters(_function_name, _get_inspector_parameter=True, _strip_prefix=_strip_prefix)
     @staticmethod
     def get_function_return_parameters(_function_name:str) -> []:
         returns: [] = []
@@ -638,6 +640,7 @@ class UDPPFunctionTranslator():
         # type(instance).__name__ doesnt works on [MRP.reading] returns list only
         return _typestr.replace("<class '", "").replace("'>", "").replace("[", "list(").replace("]", ")")
 
+
     @staticmethod
     def listfunctions() -> dict:
         """
@@ -646,16 +649,17 @@ class UDPPFunctionTranslator():
         :returns: implemented functions as dict with function name as key
         :rtype: dict
         """
-        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if
-                              callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
+        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
 
         resultdict: dict = {}
 
         for method in method_list:
             # get function object by name:string
             function_obj = getattr(UDPPFunctionCollection, method)
-            # get
+
             inspect_result: inspect.FullArgSpec = inspect.getfullargspec(function_obj)
+            # get signature # todo merge with inspect.getfullargspec
+            signature = inspect.signature(function_obj)
 
             # EXTRACT FUNCTION PARAMETER TYPES
             return_type: str = None
@@ -668,11 +672,18 @@ class UDPPFunctionTranslator():
                 else:
                     parameter_types[k] = UDPPFunctionTranslator.strip_function_parameter_types(str(v))
 
+            # TODO FIX USING def
+            defaults: dict = {}
+
+            for k, v in signature.parameters.items():
+                if v.default is not inspect.Parameter.empty:
+                    defaults[k] = str(v.default)
+
             resultdict[method] = {
                 'name': method,
                 'parameter_names': inspect_result.args,
                 'parameter_types': parameter_types,
-                'default': inspect_result.defaults,
+                'default': defaults,
                 'return': return_type
             }
 

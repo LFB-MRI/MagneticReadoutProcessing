@@ -124,12 +124,12 @@ export class Block {
     AddOrSetTitle(title) {
         if (this.element.querySelector('.title')) {
             // set text
-            this.element.querySelector('.title').textContent = title;
+            this.element.querySelector('.title').innerHTML = title;
             return;
         }
         let titleElement = document.createElement('div');
         titleElement.className = 'title';
-        titleElement.textContent = title;
+        titleElement.innerHTML = title;
         this.element.appendChild(titleElement);
     }
     async Evaluate(outputPort = 0) {

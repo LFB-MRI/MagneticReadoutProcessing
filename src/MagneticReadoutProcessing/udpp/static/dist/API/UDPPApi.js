@@ -1,10 +1,3 @@
-//import axios from 'axios';
-//import { AxiosResponse } from 'axios';
-;
-;
-;
-;
-;
 export class UDPPApi {
     static async getNodeInformation(_function_name, _apiendpoint = "http://127.0.0.1:5555/api") {
         if (!_apiendpoint.endsWith("/")) {
