@@ -51,6 +51,8 @@ export class Pipeline {
         }
 
 
+
+
         console.log("load_set_pipeline using:")
         console.log("pipeline", OptionPanel.GetPipelineName())
         console.log("api", OptionPanel.GetApiEndpoint())
@@ -60,11 +62,14 @@ export class Pipeline {
         const resolve_pipeline = UDPPApi.getPipeline(OptionPanel.GetPipelineName(), OptionPanel.GetApiEndpoint());
 
        Promise.resolve(resolve_pipeline).then((pipeline: PipelineRoot) => {
-
             const stage  = pipeline.stages[0]
             console.log(stage)
-            this.nodeGraph?.CreatePipelineBlock(stage);
+            for (let i = 0; i < pipeline.stages.length; i++) {
+                this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);
+            }
         });
+
+
 
 
     }

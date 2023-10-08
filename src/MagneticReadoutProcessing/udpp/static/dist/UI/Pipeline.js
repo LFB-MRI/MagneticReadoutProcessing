@@ -34,7 +34,9 @@ export class Pipeline {
             var _a;
             const stage = pipeline.stages[0];
             console.log(stage);
-            (_a = this.nodeGraph) === null || _a === void 0 ? void 0 : _a.CreatePipelineBlock(stage);
+            for (let i = 0; i < pipeline.stages.length; i++) {
+                (_a = this.nodeGraph) === null || _a === void 0 ? void 0 : _a.CreatePipelineBlock(pipeline.stages[i]);
+            }
         });
     }
 }

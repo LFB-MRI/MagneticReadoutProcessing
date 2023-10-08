@@ -1,10 +1,19 @@
 
 
+export interface PipelineConnectionInformationPoints{
+    stage_name: string;
+    parameter_name: string;
+}
+export interface PipelineConnectionInformation{
+    from: PipelineConnectionInformationPoints;
+    to: PipelineConnectionInformationPoints;
+}
 
 
 export interface PipelineRoot {
     settings: PipelineSettings;
     stages: PipelineStages[];
+    connections: PipelineConnectionInformation[];
 }
 
 interface PipelineSettings {
@@ -36,6 +45,8 @@ export interface PipelineStageParameter {
 export interface NodeTypes {
     nodes: string[];
 }
+
+
 
 export class UDPPApi {
 

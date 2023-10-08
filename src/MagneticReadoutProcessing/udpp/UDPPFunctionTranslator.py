@@ -146,6 +146,12 @@ class UDPPFunctionTranslator():
             returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
         return returns
 
+    @staticmethod
+    def get_node_connection_list() -> []:
+        pass
+
+
+
 
     @staticmethod
     def get_function_return_types(_function_name: str) -> [str]:
@@ -161,7 +167,7 @@ class UDPPFunctionTranslator():
         function: dict = functions[_function_name]
         # extract return type
         # TODO ADD SUPPORT FOR TUPLES
-        if 'return' in function:
+        if 'return' in function and function['return'] is not None:
             return [function['return']]
         return []
 
@@ -368,7 +374,12 @@ class UDPPFunctionTranslator():
                     param_value: str = param_value.replace('stage ', '')
                     if param_value in _pipelines:
                         # add edges from function using this parameter to function
+                        edge_data = {
+                            'from_parameter_name': param_v,
+                            'to_parameter_name': param_k
+                        }
                         calltree.add_edge(param_value, p_k)
+                        calltree.edges[param_value, p_k].update(edge_data)
 
         # find circles in the graph
         # to avoid processing endless loops
@@ -428,7 +439,7 @@ class UDPPFunctionTranslator():
         steps = UDPPFunctionTranslator.extract_pipelines_steps(_pipeline)
         graph: nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps)
 
-        node_positions: [] = nx.drawing.planar_layout(graph,scale=1, center=[_canvas_view_size_x/2, _canvas_view_size_y/2])
+        node_positions: [] = nx.drawing.planar_layout(graph, scale=150, center=[_canvas_view_size_x/2, _canvas_view_size_y/2])
 
 
         stages: [] = []
@@ -454,7 +465,7 @@ class UDPPFunctionTranslator():
 
             # fixed position present ? => USE
             pos: dict = {}
-
+            # TODO FIX
             if 'position' not in v and k in node_positions:
                 # if node position is calculated, use this
                 pos['x'] = int(node_positions[k][0])
@@ -466,7 +477,26 @@ class UDPPFunctionTranslator():
                 pos['x'] = random.randint(int(xc - (xc/2)), int(xc + (xc/2)))
                 pos['y'] = random.randint(int(yc - (yc/2)), int(yc + (yc/2)))
 
-            #else position is set
+
+            # ASSEMBLE CONNECTIONS TOGETHER USING A CAllTREE
+            connections: [] = []
+            # graph => get all all egdes
+            # for
+            # todo store edgedata = parameter names in int
+            # todo then use get edge data to retreive and append in connection
+            for e in graph.edges:
+                ed = graph.get_edge_data(e[0], e[1])
+                if len(ed) > 0 and 'from_parameter_name' in ed  and 'to_parameter_name' in ed:
+                    connections.append({
+                        'from':{
+                            'stage_name': e[0],
+                            'parameter_name': str(ed['from_parameter_name']).replace('stage ', '')
+                        },
+                        'to': {
+                            'stage_name': e[1],
+                            'parameter_name':  ed['to_parameter_name']
+                        }
+                    })
 
             stages.append({
                 'name': k,
@@ -474,7 +504,8 @@ class UDPPFunctionTranslator():
                 'parameters': params,
                 'inspector': inspector_params,
                 'position': pos,
-                'returns': returns
+                'returns': returns,
+                'connections': connections
             })
 
         res: dict = {
