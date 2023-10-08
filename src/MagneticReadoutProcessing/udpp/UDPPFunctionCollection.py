@@ -68,7 +68,7 @@ class UDPPFunctionCollection:
             print(r.get_name())
 
     @staticmethod
-    def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+    def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading], IP_random_shuffle: bool = False) -> [MRPReading.MRPReading]:
         """
         Concat two readings array into one.
         Can be used for combining readings from two folders using the import_readings function

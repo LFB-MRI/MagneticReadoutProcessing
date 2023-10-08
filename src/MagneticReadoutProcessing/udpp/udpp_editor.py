@@ -65,10 +65,6 @@ def getnodeinformation(functionname: str):
         return jsonify({}), 404
 
     # return same as in stage description
-    # parameters
-    # return
-    # name
-    # ...
     return jsonify({
         'function': functionname,
         'name': functionname,
@@ -78,7 +74,7 @@ def getnodeinformation(functionname: str):
         },
         'parameters': UDPPFunctionTranslator.get_function_parameters(functionname),
         'inspector_parameters': UDPPFunctionTranslator.get_inspector_parameters(functionname),
-        'returns': UDPPFunctionTranslator.get_function_return_types(functionname)
+        'returns': UDPPFunctionTranslator.get_function_return_parameters(functionname)
     })
 
 

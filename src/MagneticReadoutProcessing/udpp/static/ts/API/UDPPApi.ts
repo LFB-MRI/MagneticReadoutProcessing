@@ -1,18 +1,17 @@
-//import axios from 'axios';
-//import { AxiosResponse } from 'axios';
+
 
 
 
 export interface PipelineRoot {
     settings: PipelineSettings;
     stages: PipelineStages[];
-};
+}
 
 interface PipelineSettings {
     enabled: boolean;
     export_intermediate_results: boolean;
     name: string;
-};
+}
 
 interface PipelineStagePosition{
     x: number;
@@ -25,18 +24,18 @@ export interface PipelineStages {
     parameters: PipelineStageParameter[];
     inspector_parameters: PipelineStageParameter[];
     returns: PipelineStageParameter[];
-};
+}
 
 export interface PipelineStageParameter {
     direction: string;
     name: string;
     type: string;
     value: string;
-};
+}
 
 export interface NodeTypes {
     nodes: string[];
-};
+}
 
 export class UDPPApi {
 

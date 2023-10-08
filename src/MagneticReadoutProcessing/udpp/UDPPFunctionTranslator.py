@@ -104,6 +104,48 @@ class UDPPFunctionTranslator():
         return True
 
     @staticmethod
+    def get_function(_function_name: str) -> dict:
+        functions: dict = UDPPFunctionTranslator.listfunctions()
+
+        if not _function_name in functions:
+            raise UDPPFunctionTranslatorException(
+                "get_function: function name with this name does not exists {}".format(_function_name))
+
+        function: dict = functions[_function_name]
+        return function
+
+    @staticmethod
+    def get_function_parameters(_function_name: str) -> [str]:
+        fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
+        res: [str] = []
+        types: dict = fkt['parameter_types']
+        for k, v in types.items():
+            if 'IP_' not in k:
+                res.append(k)
+        return res
+    @staticmethod
+    def get_inspector_parameters(_function_name: str, _strip_prefix: bool = False) -> []:
+        fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
+        res: [str] = []
+        types: dict = fkt['parameter_types']
+        for k, v in types.items():
+            if 'IP_' in k:
+                if _strip_prefix and str(k).startswith('IP_'):
+                    k = str(k).replace('IP_', '')
+                res.append(k)
+        return res
+    @staticmethod
+    def get_function_return_parameters(_function_name:str) -> []:
+        returns: [] = []
+        rt: [str] = UDPPFunctionTranslator.get_function_return_types(_function_name)
+        for r in rt:
+            if len(r) <= 0:
+                continue
+            returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
+        return returns
+
+
+    @staticmethod
     def get_function_return_types(_function_name: str) -> [str]:
         if _function_name is None or len(_function_name) <= 0:
             raise UDPPFunctionTranslatorException("get_function_return_type: _function_name is empty")
