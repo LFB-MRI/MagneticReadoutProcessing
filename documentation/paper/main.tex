@@ -70,17 +70,27 @@ marcelochsendorf@alumni.fh-aachen.de}
 %tabelle möglicherdigitaler sensoren
 
 \subsection{Communication Bus}
-% possible bus systems
+To ensure modularity and easy expandability of the sensor system, it is necessary to be able to integrate several sensors into the system.
+On the electrical level, a CAN bus was implemented to connect the individual microprocessors to which up to 16 magnetic field sensors can be digitally connected to an overall system.
+
+In addition to the bus system, the supply voltage and a separate synchronisation signal are necessary to enable automatic recognition of connected sensors. This is connected in a daisy chain between the modules.
+
 
 \subsection{Sensor-Selection}
 %tabelle möglicherdigitaler sensoren
 
 
+\subsection{Powermanagement}
+sensor on off
+
+
+\subsection{}
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 % Embedded System Software
 \section{Embedded System Software}
 
-\subsection{Automatic Sensor Numbering}
+\subsection{Automatic Sub-Sensor Detection}
+
 
 
 \subsection{Synchronisation}
