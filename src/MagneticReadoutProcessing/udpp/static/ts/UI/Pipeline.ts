@@ -59,15 +59,24 @@ export class Pipeline {
 
         // CLEAR EXISTING NODES
         this.nodeGraph?.Reset();
+
+
         // load pipeline json object from api
         const resolve_pipeline = UDPPApi.getPipeline(OptionPanel.GetPipelineName(), OptionPanel.GetApiEndpoint());
 
        Promise.resolve(resolve_pipeline).then((pipeline: PipelineRoot) => {
             const stage  = pipeline.stages[0]
-            console.log(stage)
+            console.log(stage);
+           // CREATE NODES
             for (let i = 0; i < pipeline.stages.length; i++) {
                 this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);
             }
+
+           // CREATE CONNECTIONS
+           for (let i = 0; i < pipeline.stages.length; i++) {
+
+               //this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);
+           }
         });
 
 
