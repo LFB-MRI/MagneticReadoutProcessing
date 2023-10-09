@@ -11,7 +11,7 @@
 \usepackage[acronym]{glossaries}
 %\usepackage{setspace}
 \makeglossaries
-\newacronym{sg}{SG}{Serious Games}
+\newacronym{mri}{MRI}{Serious Games}
 \newacronym{xr}{XR}{Extended Reality}
 \newacronym{vr}{VR}{Virtual Reality}
 \newacronym{ar}{AR}{Augmented Reality}
@@ -45,99 +45,90 @@ marcelochsendorf@alumni.fh-aachen.de}
 \end{abstract}
 
 \begin{IEEEkeywords}
-Serious Gaming (\gls{sg}), \gls{vr}, Extended Reality (\gls{xr}), Computer Grafik (\gls{cg})
+%Serious Gaming (\gls{sg}), \gls{vr}, Extended Reality (\gls{xr}), Computer Grafik (\gls{cg})
 \end{IEEEkeywords}
 
+
+
+% Introduction
+%-----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Introduction}
 
 
+\subsection{Use Cases}
+
+
+% Hardware
 %-----------------------------------------------------------------------------------------------------------------------------------------------
-%ERLÄUTERUNGEN
 
-\section{Serious Gaming und extended Reality Technologien}
 
-Um \gls{sg} in der Lehre der \gls{cg} evaluieren und einsetzen zu können, werden zuerst die Themenbereiche voneinander abgegrenzt und erläutert.
-
-\subsection{Game-Based Learning (\gls{gbl})}
-Mittels \gls{gbl} soll spielerisch Wissen vermittelt werden. Man unterscheidet in Board Game Simulations und Digital \gls{gbl}.
-Erstere sind rein haptische und nicht digitale Spiele, wie beispielsweise Schach, welches strategisches Denken lehrt und fördert.
-Letztere beinhalten die Wissensvermittlung mittels digitaler Möglichkeiten und ermöglichen genau wie Ersteres regelbasiert Aktionen und Interaktionen,
-durch den digitalen Anteil ist die Varianz deutlich erhöht und die Komplexität wird gesteigert.
-Zudem können zusätzliche Komponenten, wie Ton, Bild oder Reaktionen verwendet und die Aufmerksamkeit des Anwenders gesteuert werden.
-Der Lernprozess soll durch das Spielen nicht nur kognitiv, sondern durch eine Vielzahl an Sinnesorganen angesprochen werden, sodass die Erinnerungsleistung der
-synaptischen Repräsentation im Gehirn erhöht wird\cite{fabulagames}.
-Mittels digitaler Medien kann zudem das Spiel dezentral und / oder vernetzt umgesetzt werden\cite{a3}.
+\section{Hardware}
 
 
 
+\subsection{Sensor-Selection}
+%tabelle möglicherdigitaler sensoren
 
-\subsection{Serious Gaming (\gls{sg})}
-Mit dem Ziel der Vermittlung von Inhalten und Kompetenzen sind \gls{sg}s, Instrumente zur Wissensvermittlung (s. Abbildung \ref{sgdef_fig}).
-Wörtlich übersetzt bedeutet es ``Spiel mit ernsthaftem (Lern-)Ziel''.
-Unterhaltung ist nur ein untergeordnetes Ziel dieser Spiele, jedoch nicht unbedeutend, da der Anwender im Spiel motiviert werden soll.
-Einerseits kann erlerntes Wissen vertieft und wiederholt und andererseits neues Wissen erlernt werden.
-Es ist zu beachten, dass \gls{sg} auch 2D und / oder nicht \gls{xr}-basierende Spiele beinhaltet.
-Demnach können auch nicht digitale Spiele, wie Board Game Simulations, den \gls{sg} zugeordnet werden.
-Nachfolgend wird den \gls{sg}s nur in Bezug auf \gls{xr}-basierte Spiele betrachtet.
-Nicht digitale oder Spiele für 2D Ausgabegeräte werden hierbei nicht berücksichtigt.
+\subsection{Communication Bus}
+% possible bus systems
 
-
-
-\subsection{Extended Reality (\gls{xr})}
-\gls{xr} (oder auch Cross Reality) ist eine Sammelbezeichnung für alle Kombinationen aus realen und virtuellen Umgebungen,
-welche mittels Technologien erzeugt und über Mensch-Maschine-Interaktion gesteuert werden.
-Dies schließt auch alle zukünftigen Technologien ein.
-Mittels dieser Technologien und zugehörigen Computerprogrammen werden virtuelle, mehrdimensionale Umgebungen erzeugt (\gls{vr}) oder virtuelle Komponenten
-der realen Umgebung ergänzt (\gls{ar}) (s. Abbildung \ref{xrvrar_fig}).
-Die visuelle Wahrnehmung lässt Umgebungen real erfahren und spricht vermehrt sensorische Reize an.
-Werden \gls{xr} als Basis für \gls{sg} verwendet, können diese Reize angesprochen und somit langfristig Informationen und detaillierteres Wissen vermittelt und
-vom Gehirn gespeichert werden. Dies verbessert die Qualität des \gls{sg}, bedarf aber eines höheren Aufwands in Vorbereitung und Umsetzung als 2D oder nicht digitale Spiele.
-
-\subsection{Lehrveranstaltung Computergrafik (\gls{cg})}
-Im Allgemeinen beschreibt die Lehrveranstaltung \gls{cg} die Modellierung und Erzeugung virtueller Welten, sowie deren Abbildung bzw. Projektion auf 2D-Bilder. Es wird der Informatik zugeordnet.
-Die Modellierung und Kombination von komplexen Geometrien und Formen und auch die Berechnung dieser Komponenten sind Teil der \gls{cg}.
-Grafische Grundfunktionen, wie Farbdarstellungen oder simple Geometrien, sind Basis dieser Modellierungen.
-Beschrieben werden alle diese Modellierungen durch diverse mathematische und computergestützte Algorithmen.
-Zudem beinhaltet es die Darstellung von Objekten und Umgebungen in der Ebene, sowie die Abbildung von 3D Umgebungen auf 2D Medien.
-Die Computergrafik ist Basis aller \gls{xr} Technologien.
-Unabhängig davon, ob einzelne virtuelle Objekte dargestellt werden sollen oder vollständige Umgebungen erzeugt werden, müssen alle Bestandteile
-mittels \gls{cg} berechnet und modelliert werden.
-
-Nachfolgend wird ein Beispiel analysiert, welche die hochschuldidaktische Lehre der \gls{cg} mittels \gls{sg} und \gls{xr} unterstützen und fördern kann.
-
-%-----------------------------------------------------------------------------------------------------------------------------------------------
-%METHODIKEN
-
-\section{Auswahl an verfügbaren Methoden der \gls{sg}-gestützten Lehre}
-
-\subsection{2D \gls{sg} Lösung in der hochschuldidaktischen Lehre am Beispiel der Business Simulation \gls{sg}}
-
+\subsection{Sensor-Selection}
+%tabelle möglicherdigitaler sensoren
 
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
-%SHADER
-
+% Embedded System Software
 \section{Embedded System Software}
 
 \subsection{Automatic Sensor Numbering}
 
 
+\subsection{Synchronisation}
+
+In order to ensure synchronisation of all sensors in the array, in addition to the bus system used for data transmission, a clock line is shared between all sensors.
+After performing the autonumbering procedure, the clock line, which was previously used as an autonumbering return channel, is reconfigured as a digital input.
+This is done for all connected sensor modules except for the module connected to the readout host system.
+This module then specifies the read clock via this data line, which can be configured in the software.
+All other sensors use this signal to trigger a readout interrupt.
+
+This procedure also ensures that the rest of the system maintains a synchronised state even if sensor modules fail or are restarted.
+Modules that fall into an out-of-sync status can thus be resynchronised directly after a synchronisation pulse.
 
 
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+%Analysis Software Framework
 \section{Analysis Software Framework}
+
+The collection and subsequent processing of the data read from the sensor array is carried out on another computer system (host).
+For this purpose, the Python framework is used, which was specially developed for the automated processing of magnetic field sensor data.
+By adapting the sensor software on the basis of the documentation, a direct evaluation of the sensor is possible through the library.
+Through the implemented auto-numbering routine and the feedback of this to the host software, each individual sensor is assigned to an individual measurement in the host software.
 
 \subsection{Data analysis pipeline}
 
 
 
 
+
+\subsection{Calibration Run}
+
+cli einstellungen
++ ergebnis
+
+\subsection{Measurement Run}
+
+
+
+
+
 %-----------------------------------------------------------------------------------------------------------------------------------------------
-%VERGLEICHE
+%Evaluation
 
 \section{Evaluation}
 
+
 %-----------------------------------------------------------------------------------------------------------------------------------------------
-%FAZIT
+%Conclusion
 
 \section{Conclusion}
 
@@ -146,59 +137,11 @@ Nachfolgend wird ein Beispiel analysiert, welche die hochschuldidaktische Lehre 
 \begingroup
 
 %\setstretch{1.05}
-\begin{thebibliography}{00}
-\bibitem{eduxrvrar2020usa} Thomas Alsop: "Leading applications of immersive technologies in the education sector in the next two years according to XR/AR/VR/MR industry
-experts in the United States in 2020", in: Internetseite Statista, URL: https://www.statista.com/statistics/1185078/applications-immersive-technologies-xr-ar-vr-mr-education/, Abruf am 17.11.2021.
+\begin{modhhsf}{00}
+\bibitem{eduxrvrar2020usa} Marcel Ochsendorf: "Development of a hardware and software framework for the automated characterization of permanent magnets for low-field MRI systemsg" [Online]. Available: https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterization_framework_for_use_in_low-field_MRI_systems, visited on 17.11.2021.
 
 \vskip 0.05in
-\bibitem{evallearningmixedreality2020} Y. M. Tang; K. M. Au; H. C. W. Lau; G. T. S. Ho, C. H. Wu; "Evaluating the effectiveness of learning design with mixed reality (MR) in higher education", Springer-Verlag London Ltd, 28.02.2020
-
-\vskip 0.05in
-\bibitem{a7} Linda Stege, Giel van Lankveld, Pieter Spronck; "Serious Games in Education", International Journal of Computer Science in Sport, 2011
-
-\vskip 0.05in
-\bibitem{fabulagames} Fabula Games, "LERNEN KANN SOOO BUNT SEIN", in: Internetseite Fabula Games, URL: https://fabula-games.de/, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{a3} Axel Jacob, Frank Teuteberg; "Game-Based Learning, Serious Games, Business Games und Gamification –Lernförderliche Anwendungsszenarien, gewonnene Erkenntnisse und Handlungsempfehlungen", Springer Fachmedien Wiesbaden GmbH, 2017
-
-\vskip 0.05in
-\bibitem{grundlagencg2001} Thomas Strothotte, Stefan Schlechtweg; "Grundlagen der Computergraphik", 2001
-
-\vskip 0.05in
-\bibitem{shadertool} Stefan Kraus, Timo Armbruster; "ShaderTool", in: Internetseite Steam, URL: https://store.steampowered.com/app/314720/ShaderTool/, Abruf 02.12.2021
-
-\vskip 0.05in
-\bibitem{a9} IBM Institute for Business Value; "Extended Reality (XR) can boost workforce efficiency and resilience by reimagining how work is done.", in: Internetseite IBM Institute for Business Value, URL: https://www.ibm.com/thought-leadership/institute-business-value/report/ar-vr-workplace, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{a10} Joseph F. Frederick; "Defining Serious Games", in: Internetseite flowleadership, URL: https://flowleadership.org/serious-games/, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{blender} Blender Foundation; "Blender", in: Internetseite Blender, URL: https://wiki.blender.org/wiki/Reference/Release\_Notes/3.0, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{unity3d} Unity Technologies; "Unity VR", in: Internetseite Unity Technologies, URL: https://unity.com/de/case-study\#games-vr, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{a11} TOPSIM; "TOPSIM-General Management-Teilnehmerhandbuch", in: Internetseite TOPSIM, URL: https://www.css.msm.uni-due.de/fileadmin/Dateien/MSM/Topsim-Gr8/01\_General\_Management\_Teilnehmerhandbuch\_STD\_15\_3.pdf, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{a14} Zehnan Feng, Robert Amor, Vicente Gonzales, Ruggiero Lovreglio; "Immersive Virtual Reality Serious Games for Evacuation Training and Research: A Systematic Literature Review", ResearchGate, 05.2018
-
-\vskip 0.05in
-\bibitem{a15} Rüppel, Schatz; "Designing a BIM-based serious game for fire safety evacuation simulations"; Advanced Engineering Informatics; 2011
-
-\vskip 0.05in
-\bibitem{googlecardboard} Google LLC; "Google Cardboard", in: Internetseite google.com, URL: https://arvr.google.com/intl/de\_de/cardboard/apps/, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{shadertoy} Inigo Quilez, Pol Jeremias; "Shadertoy", in: Internetseite shadertoy.com, URL: https://www.shadertoy.com, Abruf am 22.11.2021.
-
-\vskip 0.05in
-\bibitem{scholl} Ingrid Scholl, "Computergrafik" in: Internetseite Vorlesung Computergrafik von Fr. Prof. Scholl, Ingrid; URL: https://www.fh-aachen.de/menschen/scholl/lehre/computergrafik, Abruf am 01.12.2021.
-
-
+\bibitem{MagneticReadoutProcessingLib} M.O.: "MagneticReadoutProcessing" [Online]. Available:https://github.com/LFB-MRI/MagneticReadoutProcessing, visited on 17.11.2021
 
 
 \end{thebibliography}
