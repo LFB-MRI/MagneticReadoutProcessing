@@ -9,23 +9,17 @@
 \usepackage{xcolor}
 \usepackage[ngerman]{babel}
 \usepackage[acronym]{glossaries}
+\usepackage{url}
 %\usepackage{setspace}
 \makeglossaries
 \newacronym{mri}{MRI}{Serious Games}
-\newacronym{xr}{XR}{Extended Reality}
-\newacronym{vr}{VR}{Virtual Reality}
-\newacronym{ar}{AR}{Augmented Reality}
-\newacronym{cg}{CG}{Computer Grafik}
-\newacronym{gbl}{GBL}{Game-Based Learning}
 
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Implementation of an Open-Source modular mangetic field camera for usage in Low-Field MRI Systems\\
-
-}
+\title{Implementation of an Open-Source modular mangetic field camera for usage in Low-Field MRI Systems}
 
 
 \author{\IEEEauthorblockN{1\textsuperscript{st} Marcel Werner Heinrich Friedrich Ochsendorf}
@@ -57,6 +51,11 @@ marcelochsendorf@alumni.fh-aachen.de}
 
 \subsection{Use Cases}
 
+% magnet measurements
+% field visualisation
+% static analysis
+% CI based tests
+
 
 % Hardware
 %-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -64,27 +63,43 @@ marcelochsendorf@alumni.fh-aachen.de}
 
 \section{Hardware}
 
+% modular
+% low cost
+%easy to reproduce
 
-
-\subsection{Sensor-Selection}
+\subsection{Sensor selection}
 %tabelle möglicherdigitaler sensoren
+% mixture of sensors
+% tablee with ranges
+% digital only at the moment
+\subsection{Sensor slice}
+% 
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=8cm]{magcam_sensor_module.png}}
+\caption{Sensor Slice with eight TLV493d sensors.\cite{magcam_sensor_module}}
+\label{magcam_sensor_module_fig}
+\end{figure}
 
-\subsection{Communication Bus}
-To ensure modularity and easy expandability of the sensor system, it is necessary to be able to integrate several sensors into the system.
+\subsection{Communication bus}
+To ensure modularity and easy expandability of the sensor system, it is necessary to be able to integrate several sensor slices into the system.
 On the electrical level, a CAN bus was implemented to connect the individual microprocessors to which up to 16 magnetic field sensors can be digitally connected to an overall system.
 
-In addition to the bus system, the supply voltage and a separate synchronisation signal are necessary to enable automatic recognition of connected sensors. This is connected in a daisy chain between the modules.
+In addition to the bus system, a supply voltage and a separate synchronisation signal are necessary to enable automatic recognition of connected sensors. This is connected in a daisy chain between the slices.
+This enables the microcontroller of a sensor slice to recognise whether it is integrated into a network and to register itself via the system bus.
 
-
-\subsection{Sensor-Selection}
-%tabelle möglicherdigitaler sensoren
 
 
 \subsection{Powermanagement}
 sensor on off
 
+\subsection{Sensor-Selection}
+%tabelle möglicherdigitaler sensoren
 
-\subsection{}
+
+\subsection{Mechanical integration}
+
+% 3d printed cases for magnet holders
+%
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 % Embedded System Software
 \section{Embedded System Software}
@@ -97,11 +112,11 @@ sensor on off
 
 In order to ensure synchronisation of all sensors in the array, in addition to the bus system used for data transmission, a clock line is shared between all sensors.
 After performing the autonumbering procedure, the clock line, which was previously used as an autonumbering return channel, is reconfigured as a digital input.
-This is done for all connected sensor modules except for the module connected to the readout host system.
+This is done for all connected sensor modules except for the slices connected to the readout host system.
 This module then specifies the read clock via this data line, which can be configured in the software.
 All other sensors use this signal to trigger a readout interrupt.
 
-This procedure also ensures that the rest of the system maintains a synchronised state even if sensor modules fail or are restarted.
+This procedure also ensures that the rest of the system maintains a synchronised state even if sensor slices fail or are restarted.
 Modules that fall into an out-of-sync status can thus be resynchronised directly after a synchronisation pulse.
 
 
@@ -136,6 +151,9 @@ cli einstellungen
 
 \section{Evaluation}
 
+\subsection{Comparison}
+% mit mechanischen aufbau
+% durch feste positionen nur zurückrechenbar
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 %Conclusion
@@ -145,13 +163,12 @@ cli einstellungen
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 \begingroup
-
+\begin{thebibliography}{00}
 %\setstretch{1.05}
-\begin{modhhsf}{00}
-\bibitem{eduxrvrar2020usa} Marcel Ochsendorf: "Development of a hardware and software framework for the automated characterization of permanent magnets for low-field MRI systemsg" [Online]. Available: https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterization_framework_for_use_in_low-field_MRI_systems, visited on 17.11.2021.
+\bibitem{modhhsf} Marcel Ochsendorf: Development of a hardware and software framework for the automated characterization of permanent magnets for low-field MRI systems. Available: \url{https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterization_framework_for_use_in_low-field_MRI_systems}, 17.11.2021.
 
 \vskip 0.05in
-\bibitem{MagneticReadoutProcessingLib} M.O.: "MagneticReadoutProcessing" [Online]. Available:https://github.com/LFB-MRI/MagneticReadoutProcessing, visited on 17.11.2021
+\bibitem{MagneticReadoutProcessingLib} Marcel Ochsendorf: MagneticReadoutProcessing-Framework. \url{https://github.com/LFB-MRI/MagneticReadoutProcessing}, 17.11.2021
 
 
 \end{thebibliography}

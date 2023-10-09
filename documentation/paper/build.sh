@@ -43,7 +43,7 @@ pdflatex ./main.tex ./main.pdf
 pdflatex ./main.tex ./main.pdf
 
 
-cp ./main.pdf ./paperwssarbeiten.pdf
+mv ./main.pdf ./paper.pdf
 echo "------------- PDF EXPORT FINISHED -----------"
 
 
