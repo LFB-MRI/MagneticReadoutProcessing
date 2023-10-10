@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1599"
+   height="1239"
+   id="svg378"
+   sodipodi:docname="anp.svg"
+   inkscape:export-filename="anp.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview380"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.19047619"
+     inkscape:cx="800.625"
+     inkscape:cy="627.375"
+     inkscape:window-width="1452"
+     inkscape:window-height="761"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg378" />
+  <desc
+     id="desc132">title%20Slice%20Auto%20Numbering%20Sequence%0A%0Aparticipant%20Host%0Aparticipant%20Slice%20n%0Aparticipant%20Slice%20n%2B1%0A%0A%0Anote%20over%20Host%3Aset%20pin%3A%20SNC%20to%20INPUT%0Anote%20over%20Host%3A%20register%20IRQ%20on%20SNC%0A%0A%0A%0A%0A%0AHost-%3ESlice%20n%3A%20Sends%20ID%3D0%20(ANI-Message)%20over%20the%20ANO%20port%20to%20the%20next%20connected%20Slice%0A%0A%0Anote%20over%20Slice%20n%3A%20recieves%20ANI-Message%2C%20with%20current%20%60ID%60%20as%20payload%0Anote%20over%20Slice%20n%3A%20set%20its%20own%20Slice-ID%20to%20%60ID%60%0Anote%20over%20Slice%20n%3A%20set%20BUS%20address%20to%20%60ID%60%0ASlice%20n%20-%3E%20Host%3A%20set%20%60SNC%60%20for%2010ms%20to%20HIGH%0Anote%20over%20Slice%20n%2B1%3A%20set%20%60SNC%60%20to%20INPUT%0A%0A%0ASlice%20n-%3ESlice%20n%2B1%3A%20Sends%20its%20own%20%20%60Slice-ID%20%2B%201%60%20(ANI-Message)%20over%20the%20ANO%20port%20to%20the%20next%20connected%20Slice%0A%0A%0Anote%20over%20Slice%20n%2B1%3A%20recieves%20ANI-Message%2C%20with%20current%20%60ID%60%20as%20payload%0Anote%20over%20Slice%20n%2B1%3A%20set%20its%20own%20Slice-ID%20to%20%60ID%60%0Anote%20over%20Slice%20n%2B1%3A%20set%20BUS%20address%20to%20%60ID%60%0ASlice%20n%2B1%20-%3E%20Host%3A%20set%20%60SNC%60%20for%2010ms%20to%20HIGH%0Anote%20over%20Slice%20n%2B1%3A%20set%20%60SNC%60%20to%20INPUT%0Anote%20over%20Slice%20n%2B1%3A%20register%20Sync-IRQ%20for%20%60SNC%60%0A%0A%0A%0A%0A%0A%0A%0A%0Anote%20over%20Host%3A%20wait%20as%20long%20as%20the%20input%20has%20remained%20low%20for%20at%20least%20100ms%0Anote%20over%20Host%3A%20%20scan%20for%20Slices%20are%20present%20and%20reachable</desc>
+  <defs
+     id="defs134" />
+  <g
+     id="g376">
+    <g
+       id="g136" />
+    <g
+       id="g138" />
+    <g
+       id="g140" />
+    <g
+       id="g142" />
+    <g
+       id="g144" />
+    <g
+       id="g146" />
+    <g
+       id="g148" />
+    <g
+       id="g150" />
+    <g
+       id="g152" />
+    <g
+       id="g154" />
+    <g
+       id="g156" />
+    <g
+       id="g158" />
+    <g
+       id="g160" />
+    <g
+       id="g162" />
+    <g
+       id="g164" />
+    <g
+       id="g166" />
+    <g
+       id="g168" />
+    <g
+       id="g172">
+      <rect
+         fill="white"
+         stroke="none"
+         x="0"
+         y="0"
+         width="1599"
+         height="1239"
+         id="rect170" />
+    </g>
+    <g
+       id="g176">
+      <text
+         fill="black"
+         stroke="none"
+         font-family="sans-serif"
+         font-size="16.5pt"
+         font-style="normal"
+         font-weight="normal"
+         text-decoration="normal"
+         x="640.7590395998111"
+         y="26.3876361"
+         text-anchor="start"
+         dominant-baseline="alphabetic"
+         xml:space="preserve"
+         id="text174">Slice Auto Numbering Sequence</text>
+    </g>
+    <g
+       id="g178" />
+    <g
+       id="g186">
+      <path
+         fill="none"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 231.9399182836328 103.26361593799999 L 231.9399182836328 1239.6911439779997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray="13.532121076923076,5.863919133333333"
+         id="path180" />
+      <path
+         fill="none"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 761.05357237569 103.26361593799999 L 761.05357237569 1239.6911439779997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray="13.532121076923076,5.863919133333333"
+         id="path182" />
+      <path
+         fill="none"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1398.5559898954816 103.26361593799999 L 1398.5559898954816 1239.6911439779997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray="13.532121076923076,5.863919133333333"
+         id="path184" />
+    </g>
+    <g
+       id="g224">
+      <path
+         fill="none"
+         stroke="none"
+         id="path188" />
+      <g
+         id="g192">
+        <path
+           fill="white"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 197.7744103480166 55.765870957999994 L 266.105426219249 55.765870957999994 L 266.105426219249 103.26361593799999 L 197.7744103480166 103.26361593799999 L 197.7744103480166 55.765870957999994 Z"
+           stroke-miterlimit="10"
+           stroke-width="2.814681184"
+           stroke-dasharray=""
+           id="path190" />
+      </g>
+      <g
+         id="g198">
+        <g
+           id="g194" />
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="216.8614671270166"
+           y="85.67185853800001"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text196">Host</text>
+      </g>
+      <path
+         fill="none"
+         stroke="none"
+         id="path200" />
+      <g
+         id="g204">
+        <path
+           fill="white"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 719.9557715018414 55.765870957999994 L 802.1513732495387 55.765870957999994 L 802.1513732495387 103.26361593799999 L 719.9557715018414 103.26361593799999 L 719.9557715018414 55.765870957999994 Z"
+           stroke-miterlimit="10"
+           stroke-width="2.814681184"
+           stroke-dasharray=""
+           id="path202" />
+      </g>
+      <g
+         id="g210">
+        <g
+           id="g206" />
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="739.0428282808414"
+           y="85.67185853800001"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text208">Slice n</text>
+      </g>
+      <path
+         fill="none"
+         stroke="none"
+         id="path212" />
+      <g
+         id="g216">
+        <path
+           fill="white"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 1349.0971851459005 55.765870957999994 L 1448.0147946450627 55.765870957999994 L 1448.0147946450627 103.26361593799999 L 1349.0971851459005 103.26361593799999 L 1349.0971851459005 55.765870957999994 Z"
+           stroke-miterlimit="10"
+           stroke-width="2.814681184"
+           stroke-dasharray=""
+           id="path214" />
+      </g>
+      <g
+         id="g222">
+        <g
+           id="g218" />
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1368.1842419249006"
+           y="85.67185853800001"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text220">Slice n+1</text>
+      </g>
+    </g>
+    <g
+       id="g368">
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 133.95664530156247 138.447130738 L 314.0906096057031 138.447130738 L 329.9231912657031 154.279712398 L 329.9231912657031 178.90817275799998 L 133.95664530156247 178.90817275799998 L 133.95664530156247 138.447130738 M 314.0906096057031 138.447130738 L 314.0906096057031 154.279712398 L 329.9231912657031 154.279712398"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path226" />
+      <g
+         id="g230">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="158.5851056615625"
+           y="163.07559109800002"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text228">set pin: SNC to INPUT</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 140.0689499890625 205.295808858 L 307.97830491820315 205.295808858 L 323.81088657820317 221.12839051799997 L 323.81088657820317 245.75685087799997 L 140.0689499890625 245.75685087799997 L 140.0689499890625 205.295808858 M 307.97830491820315 205.295808858 L 307.97830491820315 221.12839051799997 L 323.81088657820317 221.12839051799997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path232" />
+      <g
+         id="g236">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="164.6974103490625"
+           y="229.924269218"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text234">register IRQ on SNC</text>
+      </g>
+      <g
+         id="g244">
+        <g
+           id="g240">
+          <rect
+             fill="white"
+             stroke="none"
+             x="252.75683120696607"
+             y="272.144486978"
+             width="487.47982824539065"
+             height="22.86928462"
+             id="rect238" />
+        </g>
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="255.39559481696608"
+           y="287.977068638"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text242">Sends ID=0 (ANI-Message) over the ANO port to the next connected Slice</text>
+      </g>
+      <g
+         id="g252">
+        <path
+           fill="none"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 231.9399182836328 295.01377159799995 L 746.5696921163567 295.01377159799995"
+           stroke-miterlimit="10"
+           stroke-width="1.4659797833333332"
+           stroke-dasharray=""
+           id="path246" />
+        <g
+           transform="translate(761.05357237569,295.01377159799995) translate(-761.05357237569,-295.01377159799995)"
+           id="g250">
+          <path
+             fill="black"
+             stroke="none"
+             paint-order="stroke fill markers"
+             d=" M 746.3937745423567 287.6838726813333 L 761.05357237569 295.01377159799995 L 746.3937745423567 302.3436705146666 Z"
+             id="path248" />
+        </g>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 568.9186117715494 321.40140769799996 L 937.3559513198306 321.40140769799996 L 953.1885329798306 337.233989358 L 953.1885329798306 361.86244971799994 L 568.9186117715494 361.86244971799994 L 568.9186117715494 321.40140769799996 M 937.3559513198306 321.40140769799996 L 937.3559513198306 337.233989358 L 953.1885329798306 337.233989358"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path254" />
+      <g
+         id="g258">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="593.5470721315494"
+           y="346.0298680579999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text256">recieves ANI-Message, with current `ID` as payload</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 651.6656668252604 388.25008581799995 L 854.6088962661198 388.25008581799995 L 870.4414779261198 404.08266747799996 L 870.4414779261198 428.7111278379999 L 651.6656668252604 428.7111278379999 L 651.6656668252604 388.25008581799995 M 854.6088962661198 388.25008581799995 L 854.6088962661198 404.08266747799996 L 870.4414779261198 404.08266747799996"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path260" />
+      <g
+         id="g264">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="676.2941271852603"
+           y="412.8785461779999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text262">set its own Slice-ID to `ID`</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 658.9918463296549 455.09876393799993 L 847.2827167617253 455.09876393799993 L 863.1152984217252 470.93134559799995 L 863.1152984217252 495.5598059579999 L 658.9918463296549 495.5598059579999 L 658.9918463296549 455.09876393799993 M 847.2827167617253 455.09876393799993 L 847.2827167617253 470.93134559799995 L 863.1152984217252 470.93134559799995"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path266" />
+      <g
+         id="g270">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="683.6203066896549"
+           y="479.7272242979999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text268">set BUS address to `ID`</text>
+      </g>
+      <g
+         id="g278">
+        <g
+           id="g274">
+          <rect
+             fill="white"
+             stroke="none"
+             x="402.58160690276685"
+             y="521.9474420579999"
+             width="187.83027685378906"
+             height="22.86928462"
+             id="rect272" />
+        </g>
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="405.22037051276686"
+           y="537.7800237179998"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text276">set `SNC` for 10ms to HIGH</text>
+      </g>
+      <g
+         id="g286">
+        <path
+           fill="none"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 761.05357237569 544.8167266779999 L 246.42379854296615 544.8167266779999"
+           stroke-miterlimit="10"
+           stroke-width="1.4659797833333332"
+           stroke-dasharray=""
+           id="path280" />
+        <g
+           transform="translate(231.9399182836328,544.8167266779999) translate(-231.9399182836328,-544.8167266779999)"
+           id="g284">
+          <path
+             fill="black"
+             stroke="none"
+             paint-order="stroke fill markers"
+             d=" M 246.59971611696614 537.4868277613332 L 231.9399182836328 544.8167266779999 L 246.59971611696614 552.1466255946666 Z"
+             id="path282" />
+        </g>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1309.5495998479817 571.2043627779998 L 1471.7297982829816 571.2043627779998 L 1487.5623799429816 587.0369444379998 L 1487.5623799429816 611.6654047979998 L 1309.5495998479817 611.6654047979998 L 1309.5495998479817 571.2043627779998 M 1471.7297982829816 571.2043627779998 L 1471.7297982829816 587.0369444379998 L 1487.5623799429816 587.0369444379998"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path288" />
+      <g
+         id="g292">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1334.1780602079816"
+           y="595.8328231379999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text290">set `SNC` to INPUT</text>
+      </g>
+      <g
+         id="g300">
+        <g
+           id="g296">
+          <rect
+             fill="white"
+             stroke="none"
+             x="781.8704852990235"
+             y="638.0530408979998"
+             width="595.868591673125"
+             height="22.86928462"
+             id="rect294" />
+        </g>
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="784.5092489090234"
+           y="653.8856225579998"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text298">Sends its own  `Slice-ID + 1` (ANI-Message) over the ANO port to the next connected Slice</text>
+      </g>
+      <g
+         id="g308">
+        <path
+           fill="none"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 761.05357237569 660.9223255179999 L 1384.0721096361483 660.9223255179999"
+           stroke-miterlimit="10"
+           stroke-width="1.4659797833333332"
+           stroke-dasharray=""
+           id="path302" />
+        <g
+           transform="translate(1398.5559898954816,660.9223255179999) translate(-1398.5559898954816,-660.9223255179999)"
+           id="g306">
+          <path
+             fill="black"
+             stroke="none"
+             paint-order="stroke fill markers"
+             d=" M 1383.8961920621482 653.5924266013332 L 1398.5559898954816 660.9223255179999 L 1383.8961920621482 668.2522244346666 Z"
+             id="path304" />
+        </g>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1206.421029291341 687.3099616179999 L 1574.8583688396222 687.3099616179999 L 1590.6909504996222 703.1425432779998 L 1590.6909504996222 727.7710036379999 L 1206.421029291341 727.7710036379999 L 1206.421029291341 687.3099616179999 M 1574.8583688396222 687.3099616179999 L 1574.8583688396222 703.1425432779998 L 1590.6909504996222 703.1425432779998"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path310" />
+      <g
+         id="g314">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1231.049489651341"
+           y="711.938421978"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text312">recieves ANI-Message, with current `ID` as payload</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1289.168084345052 754.1586397379998 L 1492.1113137859113 754.1586397379998 L 1507.9438954459113 769.9912213979998 L 1507.9438954459113 794.6196817579998 L 1289.168084345052 794.6196817579998 L 1289.168084345052 754.1586397379998 M 1492.1113137859113 754.1586397379998 L 1492.1113137859113 769.9912213979998 L 1507.9438954459113 769.9912213979998"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path316" />
+      <g
+         id="g320">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1313.796544705052"
+           y="778.7871000979999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text318">set its own Slice-ID to `ID`</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1296.4942638494465 821.0073178579997 L 1484.7851342815168 821.0073178579997 L 1500.6177159415167 836.8398995179997 L 1500.6177159415167 861.4683598779998 L 1296.4942638494465 861.4683598779998 L 1296.4942638494465 821.0073178579997 M 1484.7851342815168 821.0073178579997 L 1484.7851342815168 836.8398995179997 L 1500.6177159415167 836.8398995179997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path322" />
+      <g
+         id="g326">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1321.1227242094465"
+           y="845.6357782179998"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text324">set BUS address to `ID`</text>
+      </g>
+      <g
+         id="g334">
+        <g
+           id="g330">
+          <rect
+             fill="white"
+             stroke="none"
+             x="721.3328156626627"
+             y="887.8559959779998"
+             width="187.83027685378906"
+             height="22.86928462"
+             id="rect328" />
+        </g>
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="723.9715792726627"
+           y="903.6885776379997"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text332">set `SNC` for 10ms to HIGH</text>
+      </g>
+      <g
+         id="g342">
+        <path
+           fill="none"
+           stroke="black"
+           paint-order="fill stroke markers"
+           d=" M 1398.5559898954816 910.7252805979998 L 246.42379854296615 910.7252805979998"
+           stroke-miterlimit="10"
+           stroke-width="1.4659797833333332"
+           stroke-dasharray=""
+           id="path336" />
+        <g
+           transform="translate(231.9399182836328,910.7252805979998) translate(-231.9399182836328,-910.7252805979998)"
+           id="g340">
+          <path
+             fill="black"
+             stroke="none"
+             paint-order="stroke fill markers"
+             d=" M 246.59971611696614 903.3953816813331 L 231.9399182836328 910.7252805979998 L 246.59971611696614 918.0551795146665 Z"
+             id="path338" />
+        </g>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1309.5495998479817 937.1129166979998 L 1471.7297982829816 937.1129166979998 L 1487.5623799429816 952.9454983579998 L 1487.5623799429816 977.5739587179999 L 1309.5495998479817 977.5739587179999 L 1309.5495998479817 937.1129166979998 M 1471.7297982829816 937.1129166979998 L 1471.7297982829816 952.9454983579998 L 1487.5623799429816 952.9454983579998"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path344" />
+      <g
+         id="g348">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1334.1780602079816"
+           y="961.7413770579999"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text346">set `SNC` to INPUT</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 1282.6547481634113 1003.9615948179998 L 1498.624649967552 1003.9615948179998 L 1514.457231627552 1019.7941764779997 L 1514.457231627552 1044.4226368379998 L 1282.6547481634113 1044.4226368379998 L 1282.6547481634113 1003.9615948179998 M 1498.624649967552 1003.9615948179998 L 1498.624649967552 1019.7941764779997 L 1514.457231627552 1019.7941764779997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path350" />
+      <g
+         id="g354">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="1307.2832085234113"
+           y="1028.5900551779996"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text352">register Sync-IRQ for `SNC`</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 8.7958787 1070.8102729379998 L 439.2513762072656 1070.8102729379998 L 455.0839578672656 1086.6428545979998 L 455.0839578672656 1111.2713149579997 L 8.7958787 1111.2713149579997 L 8.7958787 1070.8102729379998 M 439.2513762072656 1070.8102729379998 L 439.2513762072656 1086.6428545979998 L 455.0839578672656 1086.6428545979998"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path356" />
+      <g
+         id="g360">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="33.424339059999994"
+           y="1095.4387332979995"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text358">wait as long as the input has remained low for at least 100ms</text>
+      </g>
+      <path
+         fill="white"
+         stroke="black"
+         paint-order="fill stroke markers"
+         d=" M 69.93676309941407 1137.6589510579997 L 378.11049180785153 1137.6589510579997 L 393.94307346785155 1153.4915327179997 L 393.94307346785155 1178.1199930779997 L 69.93676309941407 1178.1199930779997 L 69.93676309941407 1137.6589510579997 M 378.11049180785153 1137.6589510579997 L 378.11049180785153 1153.4915327179997 L 393.94307346785155 1153.4915327179997"
+         stroke-miterlimit="10"
+         stroke-width="1.4659797833333332"
+         stroke-dasharray=""
+         id="path362" />
+      <g
+         id="g366">
+        <text
+           fill="black"
+           stroke="none"
+           font-family="sans-serif"
+           font-size="11pt"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="normal"
+           x="94.56522345941406"
+           y="1162.2874114179995"
+           text-anchor="start"
+           dominant-baseline="alphabetic"
+           xml:space="preserve"
+           id="text364"> scan for Slices are present and reachable</text>
+      </g>
+    </g>
+    <g
+       id="g370" />
+    <g
+       id="g372" />
+    <g
+       id="g374" />
+  </g>
+</svg>

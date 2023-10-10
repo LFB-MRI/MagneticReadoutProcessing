@@ -1,0 +1,43 @@
+title Slice Auto Numbering Sequence
+
+participant Host
+participant Slice n
+participant Slice n+1
+
+
+note over Host:set pin: SNC to INPUT
+note over Host: register IRQ on SNC
+
+
+
+
+
+Host->Slice n: Sends ID=0 (ANI-Message) over the ANO port to the next connected Slice
+
+
+note over Slice n: recieves ANI-Message, with current `ID` as payload
+note over Slice n: set its own Slice-ID to `ID`
+note over Slice n: set BUS address to `ID`
+Slice n -> Host: set `SNC` for 10ms to HIGH
+note over Slice n+1: set `SNC` to INPUT
+
+
+Slice n->Slice n+1: Sends its own  `Slice-ID + 1` (ANI-Message) over the ANO port to the next connected Slice
+
+
+note over Slice n+1: recieves ANI-Message, with current `ID` as payload
+note over Slice n+1: set its own Slice-ID to `ID`
+note over Slice n+1: set BUS address to `ID`
+Slice n+1 -> Host: set `SNC` for 10ms to HIGH
+note over Slice n+1: set `SNC` to INPUT
+note over Slice n+1: register Sync-IRQ for `SNC`
+
+
+
+
+
+
+
+
+note over Host: wait as long as the input has remained low for at least 100ms
+note over Host:  scan for Slices are present and reachable

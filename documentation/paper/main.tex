@@ -73,14 +73,22 @@ marcelochsendorf@alumni.fh-aachen.de}
 % tablee with ranges
 % digital only at the moment
 \subsection{Sensor slice}
-% 
+
+Each sensor slice has its own microprocessor as a communication element. this takes over the task of reading the connected sensors and transmitting the results via the system bus.
+The interfaces for different sensor types are also implemented in its firmware. this makes it possible to mix different sensor types on one slice. the slice presents itself to the rest of the system as a uniform sensor with a uniform measurement result.
+For this purpose, calibration and unit conversions are automatically applied in the firmware of the slice, depending on which sensor has been detected.
+
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=8cm]{magcam_sensor_module.png}}
-\caption{Sensor Slice with eight TLV493d sensors.\cite{magcam_sensor_module}}
+\caption{Sensor Slice with eight TLV493d sensors}
 \label{magcam_sensor_module_fig}
 \end{figure}
 
+
+
 \subsection{Communication bus}
+
 To ensure modularity and easy expandability of the sensor system, it is necessary to be able to integrate several sensor slices into the system.
 On the electrical level, a CAN bus was implemented to connect the individual microprocessors to which up to 16 magnetic field sensors can be digitally connected to an overall system.
 
@@ -106,6 +114,22 @@ sensor on off
 
 \subsection{Automatic Sub-Sensor Detection}
 
+Due to the modular hardware design, it is necessary for the software to be able to recognise the individual slices automatically.
+without the user having to enter the number of connected slices in the software.
+
+Due to the can-bus used, however, it is not possible to directly recognise the sequence of the modules and therefore the individual sensors cannot be directly addressed.
+Through an additional auto-numbering sequence after the system start, all connected modules address themselves automatically.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=8cm]{anp.png}}
+\caption{Auto numbering protocol for multible connected slices}
+\label{anp_fig}
+\end{figure}
+
+For this purpose, an additional clock line is used to carry out the protocol described (Figure \ref{anp_fig}). Later, this is used for synchronisation in order to have to use as few data lines as possible between the slices.
+% each slice gets its own id and transmits +1 to the next
+
+    
 
 
 \subsection{Synchronisation}
