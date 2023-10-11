@@ -97,10 +97,10 @@ export class NodePanel {
             const param = _description.returns[i];
             block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
         }
-        // add inspector parameter inputs
-        //  let p: BlockProperty;
-        //p.setValue("");
-        //block.SetProperties("", p);
+        for (let i = 0; i < _description.inspector_parameters.length; i++) {
+            const ip = _description.inspector_parameters[i];
+            block.InsertProperty(ip.name, ip.type, ip.value, ip.id);
+        }
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
         nodePanel.appendChild(blockElement);
         return block;

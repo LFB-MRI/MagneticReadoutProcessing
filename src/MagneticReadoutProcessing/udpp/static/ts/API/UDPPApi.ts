@@ -40,6 +40,7 @@ export interface PipelineStageParameter {
     name: string;
     type: string;
     value: string;
+    id: string;
 }
 
 export interface NodeTypes {

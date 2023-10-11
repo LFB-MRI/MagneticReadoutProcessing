@@ -29,6 +29,19 @@ def signal_andler(signum, frame):
 signal.signal(signal.SIGINT, signal_andler)
 
 
+
+@app_flask.route("/api/updateinspectorparameter/<pipeline>/<stagename>/<value>")
+@cross_origin()
+def updateinspectorparameter(pipeline:str, stagename:str, value: str):
+    assert pipeline == request.view_args['pipeline']
+    pipeline = bleach.clean(pipeline)
+
+    assert stagename == request.view_args['stagename']
+    stagename = bleach.clean(stagename)
+
+    assert value == request.view_args['value']
+    value = bleach.clean(value)
+
 @app_flask.route("/api/listpipelines")
 @cross_origin()
 def listpipelines():

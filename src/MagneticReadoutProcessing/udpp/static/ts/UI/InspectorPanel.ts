@@ -41,7 +41,6 @@ export class InspectorPanel {
                             }
                         };
                         propDiv.appendChild(slider);
-                        break;
 
                     case 'input':
                         const input = document.createElement('input');

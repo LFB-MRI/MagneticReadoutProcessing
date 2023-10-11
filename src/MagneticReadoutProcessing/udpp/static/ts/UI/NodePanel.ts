@@ -120,30 +120,32 @@ export class NodePanel {
     public CreatePipelineBlock(_description: PipelineStages): Block{
         console.log("CreatePipelineBlock");
 
-        var block = new Block(this.inspector);
+        var block: Block = new Block(this.inspector);
 
         const name: string = _description.name.replace("_", "<br>");
         block.AddOrSetTitle(name);
 
         block.SetDataName(_description.name)
         // add input sockets
-        for (let i = 0; i < _description.parameters.length; i++) {
+        for (let i: number = 0; i < _description.parameters.length; i++) {
             const param: PipelineStageParameter = _description.parameters[i];
             block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.INPUT, i));
         }
 
         //add output sockets => in general just one
-        for (let i = 0; i < _description.returns.length; i++) {
+        for (let i: number = 0; i < _description.returns.length; i++) {
             const param: PipelineStageParameter = _description.returns[i];
             block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
         }
 
 
+        for (let i: number = 0; i < _description.inspector_parameters.length; i++) {
+            const ip:PipelineStageParameter = _description.inspector_parameters[i];
+            block.InsertProperty(ip.name, ip.type, ip.value, ip.id);
+        }
 
-        // add inspector parameter inputs
-        //  let p: BlockProperty;
-        //p.setValue("");
-        //block.SetProperties("", p);
+
+
 
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
         nodePanel.appendChild(blockElement);
@@ -318,7 +320,7 @@ export class NodePanel {
 
         evt.preventDefault();
         if (evt.target instanceof HTMLElement && evt.target.className === 'node') {
-            let node = ToBlock(evt.target);
+            let node: Block | undefined = ToBlock(evt.target);
             if (node) {
                 node.Evaluate();
                 return;

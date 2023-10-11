@@ -6,6 +6,7 @@ interface BlockProperty {
     type: "input" | "textarea" | "button" | "slider";
     value: any;
     setValue?: (val: any) => void;
+    id?: string;
 }
 
 export class Block {
@@ -31,7 +32,6 @@ export class Block {
     };
 
     private properties: { [key: string]: BlockProperty; } = {
-
     };
 
 
@@ -43,6 +43,21 @@ export class Block {
     public GetDataName(): string{
         return this.data["name"];
     }
+
+
+
+    public InsertProperty(_name: string, _type: string, _value: string, _id: string): void {
+        console.log(_name, _type, _value);
+        console.log(this.properties);
+
+        this.properties[_name] = {type: "input", id:_id, value:_value};
+
+        this.SetProperties(this.properties);
+
+        console.log(this.properties);
+        //this.SetProperties({'name': p});
+    }
+
     public SetProperties(properties: { [key: string]: BlockProperty; }) {
         this.properties = properties;
 
@@ -68,7 +83,8 @@ export class Block {
             const propValue = this.properties[prop];
             const propCopy: BlockProperty = {
                 type: propValue.type,
-                value: JSON.parse(JSON.stringify(propValue.value))
+                value: JSON.parse(JSON.stringify(propValue.value)),
+                id: propValue.id
             };
             copy[prop] = propCopy;
         }

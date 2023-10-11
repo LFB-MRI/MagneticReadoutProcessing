@@ -6,6 +6,14 @@ export class Block {
     GetDataName() {
         return this.data["name"];
     }
+    InsertProperty(_name, _type, _value, _id) {
+        console.log(_name, _type, _value);
+        console.log(this.properties);
+        this.properties[_name] = { type: "input", id: _id, value: _value };
+        this.SetProperties(this.properties);
+        console.log(this.properties);
+        //this.SetProperties({'name': p});
+    }
     SetProperties(properties) {
         this.properties = properties;
         for (const prop in this.properties) {
@@ -29,7 +37,8 @@ export class Block {
             const propValue = this.properties[prop];
             const propCopy = {
                 type: propValue.type,
-                value: JSON.parse(JSON.stringify(propValue.value))
+                value: JSON.parse(JSON.stringify(propValue.value)),
+                id: propValue.id
             };
             copy[prop] = propCopy;
         }

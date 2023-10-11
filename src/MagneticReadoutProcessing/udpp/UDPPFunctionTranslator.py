@@ -144,7 +144,7 @@ class UDPPFunctionTranslator():
             d = ""
             if k in defaults:
                 d = defaults[k]
-            res.append({'name': k, 'type': v, 'value': d})
+            res.append({'id': '{}'.format(k), 'name': str(k).replace('IP_',''), 'type': v, 'value': d})
         return res
     @staticmethod
     def get_inspector_parameters(_function_name: str, _strip_prefix: bool = False) -> []:
@@ -168,7 +168,7 @@ class UDPPFunctionTranslator():
         for r in rt:
             if len(r) <= 0:
                 continue
-            returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
+            returns.append({'id': '{}'.format(r), 'name': '{}'.format(r), 'type': '{}'.format(r)})
         return returns
 
 
