@@ -7,6 +7,7 @@ import { UDPPApi } from "../API/UDPPApi.js";
 import { OptionPanel } from "./OptionPanel.js";
 export class NodePanel {
     constructor(document, inspector) {
+        this.nodesearchinput = null;
         this.selectedSocket = null;
         this.selectedBlock = null;
         this.lastMousePosition = null;
@@ -20,6 +21,7 @@ export class NodePanel {
         this.blocks = [];
         this.panel = document;
         this.inspector = inspector;
+        // register callbacks
         this.AddListeners();
     }
     AddListeners() {
@@ -96,7 +98,7 @@ export class NodePanel {
             block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
         }
         // add inspector parameter inputs
-        //let p: BlockProperty;
+        //  let p: BlockProperty;
         //p.setValue("");
         //block.SetProperties("", p);
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
@@ -109,13 +111,14 @@ export class NodePanel {
         // fetch node list from api
         var nodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
         const pipelines = await UDPPApi.getListPipelines(OptionPanel.GetApiEndpoint());
+        // add seperator
         const seperator = "---- PIPELINES ---";
         nodeTypes.nodes.push(seperator);
+        // add pipeline entries
         for (let i = 0; i < pipelines.pipelines.length; i++) {
             const entry = pipelines.pipelines[i];
             nodeTypes.nodes.push(entry.file);
         }
-        console.log(pipelines);
         for (const nodeType of nodeTypes.nodes) {
             if (nodeType.toLowerCase().includes(searchText.toLowerCase())) {
                 const listItem = document.createElement('li');
@@ -124,14 +127,18 @@ export class NodePanel {
                 }
                 else if (nodeType.includes(".yaml")) {
                     listItem.addEventListener('click', (e) => {
+                        var _a;
                         this.load_set_pipeline(nodeType.toString(), e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
+                        (_a = this.nodesearchinput) === null || _a === void 0 ? void 0 : _a.setAttribute('value', '');
                     });
                 }
                 else {
                     listItem.addEventListener('click', (e) => {
+                        var _a;
                         this.CreateBlock(nodeType, e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
+                        (_a = this.nodesearchinput) === null || _a === void 0 ? void 0 : _a.setAttribute('value', '');
                     });
                 }
                 list.appendChild(listItem);
@@ -150,7 +157,6 @@ export class NodePanel {
         return block;
     }
     GetBlockByName(_name) {
-        console.log("GetBlockByName", _name, this.blocks);
         for (let i = 0; i < this.blocks.length; i++) {
             const b = this.blocks[i];
             console.log("b.GetDataName()", b.GetDataName());
@@ -159,6 +165,14 @@ export class NodePanel {
             }
         }
         return null;
+    }
+    OnSearchEnter(evt) {
+        var _a, _b, _c;
+        //contextMenu.style.display = 'none';
+        console.log((_a = this.nodesearchinput) === null || _a === void 0 ? void 0 : _a.value);
+        if ((_b = this.nodesearchinput) === null || _b === void 0 ? void 0 : _b.value) {
+            this.PopulateContextMenu((_c = this.nodesearchinput) === null || _c === void 0 ? void 0 : _c.value);
+        }
     }
     OnLeftClickDown(evt) {
         // Hide context menu
@@ -237,6 +251,7 @@ export class NodePanel {
         }
     }
     OnRightClick(evt) {
+        var _a;
         // Return if not a right click
         if (evt.button !== 2)
             return;
@@ -255,6 +270,9 @@ export class NodePanel {
             contextMenu.style.left = `${evt.clientX}px`;
             contextMenu.style.top = `${evt.clientY}px`;
         }
+        this.nodesearchinput = document.querySelector('#nodesearch');
+        console.log(this.nodesearchinput);
+        (_a = this.nodesearchinput) === null || _a === void 0 ? void 0 : _a.addEventListener('change', (evt) => this.OnSearchEnter(evt));
         this.PopulateContextMenu('');
     }
     OnKeyDown(evt) {

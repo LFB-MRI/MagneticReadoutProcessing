@@ -22,6 +22,7 @@ interface Offset {
 
 export class NodePanel {
     panel: HTMLElement;
+    nodesearchinput: HTMLInputElement | null = null;
     selectedSocket: Socket | null = null;
     selectedBlock: Block | null = null;
     lastMousePosition: { x: number; y: number } | null = null;
@@ -38,7 +39,13 @@ export class NodePanel {
     constructor(document: HTMLElement, inspector: InspectorPanel) {
         this.panel = document;
         this.inspector = inspector;
+
+
+
+        // register callbacks
         this.AddListeners();
+
+
     }
 
     private AddListeners() {
@@ -50,6 +57,9 @@ export class NodePanel {
 
         // This needs to listen from document, not panel
         document.addEventListener('keydown', (evt) => this.OnKeyDown(evt));
+
+
+
     }
 
     private GetElementOffset(el: HTMLElement): Offset {
@@ -131,7 +141,7 @@ export class NodePanel {
 
 
         // add inspector parameter inputs
-        //let p: BlockProperty;
+        //  let p: BlockProperty;
         //p.setValue("");
         //block.SetProperties("", p);
 
@@ -148,16 +158,15 @@ export class NodePanel {
         // fetch node list from api
         var nodeTypes: NodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
         const pipelines: PipelineList = await UDPPApi.getListPipelines(OptionPanel.GetApiEndpoint());
-
-
+        // add seperator
         const seperator =  "---- PIPELINES ---";
         nodeTypes.nodes.push(seperator);
-
+        // add pipeline entries
         for (let i = 0; i < pipelines.pipelines.length; i++) {
             const entry: PipelineListEntry = pipelines.pipelines[i];
             nodeTypes.nodes.push(entry.file)
         }
-        console.log(pipelines);
+
 
 
         for (const nodeType of nodeTypes.nodes) {
@@ -170,20 +179,19 @@ export class NodePanel {
                     listItem.addEventListener('click', (e) => {
                         this.load_set_pipeline(nodeType.toString(), e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
+                        this.nodesearchinput?.setAttribute('value', '');
                     });
                 }else{
                     listItem.addEventListener('click', (e) => {
                         this.CreateBlock(nodeType, e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
+                        this.nodesearchinput?.setAttribute('value', '');
                     });
                 }
-
-
-
-
                 list.appendChild(listItem);
             }
         }
+
     }
 
     private async CreateBlock(nodeType: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
@@ -202,7 +210,6 @@ export class NodePanel {
 
 
     public GetBlockByName(_name: string): (Block| null){
-        console.log("GetBlockByName", _name, this.blocks);
         for (let i = 0; i < this.blocks.length; i++) {
             const b: Block = this.blocks[i];
             console.log("b.GetDataName()", b.GetDataName());
@@ -213,6 +220,14 @@ export class NodePanel {
         return null;
     }
 
+    private OnSearchEnter(evt: Event){
+        //contextMenu.style.display = 'none';
+        console.log(this.nodesearchinput?.value);
+        if(this.nodesearchinput?.value){
+            this.PopulateContextMenu(this.nodesearchinput?.value);
+        }
+
+    }
     private OnLeftClickDown(evt: MouseEvent) {
         // Hide context menu
         contextMenu.style.display = 'none';
@@ -316,7 +331,15 @@ export class NodePanel {
             contextMenu.style.display = 'block';
             contextMenu.style.left = `${evt.clientX}px`;
             contextMenu.style.top = `${evt.clientY}px`;
-        } this.PopulateContextMenu('');
+        }
+
+
+        this.nodesearchinput =  document.querySelector('#nodesearch') as HTMLInputElement;
+        console.log( this.nodesearchinput);
+        this.nodesearchinput?.addEventListener('change', (evt) => this.OnSearchEnter(evt));
+
+
+        this.PopulateContextMenu('');
     }
 
     private OnKeyDown(evt: KeyboardEvent) {
@@ -507,10 +530,7 @@ export class NodePanel {
         }
 
 
-
-
-
-// CREATE CONNECTIONS
+        // CREATE CONNECTIONS
         for (let i = 0; i < pipeline.connections.length; i++) {
             const connection: PipelineConnectionInformation = pipeline.connections[i];
 
