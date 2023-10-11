@@ -32,6 +32,7 @@ export class NodePanel {
     graphOffset = { x: 0, y: 0 };
     scaleFactor = 1;
     inspector: InspectorPanel | null = null;
+    loaded_pipeline_name: string = "default";
 
     edges: Edge[] = [];
     blocks: Block[] = [];
@@ -192,7 +193,7 @@ export class NodePanel {
                     });
                 }else{
                     listItem.addEventListener('click', (e) => {
-                        this.CreateBlock(nodeType, nodeType ,e.clientX, e.clientY);
+                        this.CreateBlock(nodeType, nodeType ,this.loaded_pipeline_name, e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
                         this.nodesearchinput?.setAttribute('value', '');
                     });
@@ -203,7 +204,7 @@ export class NodePanel {
 
     }
 
-    private async CreateBlock(nodeType: string, _id: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
+    private async CreateBlock(nodeType: string, _id: string, _group: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
 
         let block_description: PipelineStages = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
         //set block position to clicked position if given
@@ -214,10 +215,16 @@ export class NodePanel {
         block_description.name = _id;
 
         let block = this.CreatePipelineBlock(block_description);
+
+        if(!_group || _group.length <= 0){
+            block.SetGroup(this.loaded_pipeline_name);
+        }else{
+        block.SetGroup(_group);
+        }
+
         this.blocks.push(block);
         return block;
     }
-
 
     public GetBlockByName(_name: string): (Block| null){
         for (let i = 0; i < this.blocks.length; i++) {
@@ -534,9 +541,11 @@ export class NodePanel {
         // FETCH PIPELINE DATA =Y BASICALLY THE YAML FILE
         const pipeline = await UDPPApi.getPipeline(_str, OptionPanel.GetApiEndpoint());
         // CREATE NODES
+        this.loaded_pipeline_name = _str;
+
         for (let i = 0; i < pipeline.stages.length; i++) {
             const stage: PipelineStages = pipeline.stages[i];
-            const b: Block = await  this.CreateBlock(stage.function, stage.name, stage.position.x, stage.position.y);
+            const b: Block = await  this.CreateBlock(stage.function, stage.name, _str,stage.position.x, stage.position.y);
         }
 
 

@@ -30,17 +30,47 @@ signal.signal(signal.SIGINT, signal_andler)
 
 
 
-@app_flask.route("/api/updateinspectorparameter/<pipeline>/<stagename>/<value>")
+@app_flask.route("/api/updateinspectorparameter/<pipeline>/<stagename>/<parameter>/<value>")
 @cross_origin()
-def updateinspectorparameter(pipeline:str, stagename:str, value: str):
+def updateinspectorparameter(pipeline:str, stagename:str, parameter:str, value: str):
     assert pipeline == request.view_args['pipeline']
     pipeline = bleach.clean(pipeline)
 
     assert stagename == request.view_args['stagename']
     stagename = bleach.clean(stagename)
 
+    assert parameter == request.view_args['parameter']
+    parameter = bleach.clean(parameter)
+
     assert value == request.view_args['value']
     value = bleach.clean(value)
+
+
+    # TODO CHECK PIPELINE EXISTS
+    # TODO CHECK STAGE EXISTS
+    # TODO CHECK FUNCTION EXSTS
+    # TODO PARSE TO FUNCTION TYPE
+    # ASSIGN
+    # WRITE TO FILE BACK
+
+    return jsonify({'ok': True})
+
+
+@app_flask.route("/api/updateblock/<pipeline>/<stagename>/<action>/<functionname>")
+@cross_origin()
+def updateblock(pipeline:str, stagename:str, action:str, functionname:str):
+    assert pipeline == request.view_args['pipeline']
+    pipeline = bleach.clean(pipeline)
+
+    assert stagename == request.view_args['stagename']
+    stagename = bleach.clean(stagename)
+
+    assert action == request.view_args['action']
+    action = bleach.clean(action)
+
+    assert functionname == request.view_args['functionname']
+    functionname = bleach.clean(functionname)
+
 
 @app_flask.route("/api/listpipelines")
 @cross_origin()

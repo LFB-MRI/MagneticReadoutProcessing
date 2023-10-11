@@ -1,13 +1,14 @@
 import { InspectorPanel } from "./InspectorPanel.js";
 import { elementToBlock, uuidv4 } from "./Shared.js";
 import { Socket } from "./Socket.js";
+import {UDPPApi} from "../API/UDPPApi.js";
 
 interface BlockProperty {
     block_name?: string;
     type: "str" | "int" | "float" | "bool" | any;
     value: any;
     setValue?: (val: any) => void;
-    id?: string;
+    id: string;
 }
 
 export class Block {
@@ -29,7 +30,8 @@ export class Block {
     private isDirty: boolean = true;
 
     private data: { [key: string]: string; } = {
-        "name": ""
+        "name": "",
+        "group":"default"
     };
 
     private properties: { [key: string]: BlockProperty; } = {
@@ -45,6 +47,15 @@ export class Block {
         return this.data["name"];
     }
 
+
+    public SetGroup(_name: string){
+        this.data["group"] = _name;
+    }
+
+
+    public GetGroup(): string{
+        return this.data["group"];
+    }
 
 
     public InsertProperty(_name: string, _type: string, _value: string, _id: string): void {
@@ -148,11 +159,13 @@ export class Block {
     }
 
     OnPropertyChanged(propertyName: string) {
+        const key: string = propertyName;
+        const value: string =this.properties[propertyName].value;
+        const id: string = this.properties[propertyName].id;
         console.log(`Property ${propertyName} changed! New value: ${this.properties[propertyName].value}`);
         // If the 'Name' property changes, update the title of the block
-        if (propertyName === 'Name') {
-            this.AddOrSetTitle(this.properties[propertyName].value);
-        }
+
+        UDPPApi.updateInspectorParameter(this.GetGroup(), this.uuid,id, value)
 
         this.SetDirty();
     }
@@ -210,6 +223,17 @@ export class Block {
         this.element.appendChild(titleElement);
     }
 
+    public GetTitle(): string{
+        let title: string = this.element.querySelector('.title')!.innerHTML;
+
+        if(!title || title.length <= 0){
+
+            title = this.GetDataName();
+            this.AddOrSetTitle(title);
+        }
+
+        return title;
+    }
     async Evaluate(outputPort: number = 0): Promise<any[]> {
         // Evaluate upstream nodes first
         let promises: Promise<any[]>[] = [];

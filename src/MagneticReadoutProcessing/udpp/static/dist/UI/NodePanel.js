@@ -17,6 +17,7 @@ export class NodePanel {
         this.graphOffset = { x: 0, y: 0 };
         this.scaleFactor = 1;
         this.inspector = null;
+        this.loaded_pipeline_name = "default";
         this.edges = [];
         this.blocks = [];
         this.panel = document;
@@ -141,7 +142,7 @@ export class NodePanel {
                 else {
                     listItem.addEventListener('click', (e) => {
                         var _a;
-                        this.CreateBlock(nodeType, nodeType, e.clientX, e.clientY);
+                        this.CreateBlock(nodeType, nodeType, this.loaded_pipeline_name, e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
                         (_a = this.nodesearchinput) === null || _a === void 0 ? void 0 : _a.setAttribute('value', '');
                     });
@@ -150,7 +151,7 @@ export class NodePanel {
             }
         }
     }
-    async CreateBlock(nodeType, _id, _pos_x, _pos_y) {
+    async CreateBlock(nodeType, _id, _group, _pos_x, _pos_y) {
         let block_description = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
         //set block position to clicked position if given
         if (_pos_x && _pos_y && _pos_x > 0 && _pos_y > 0) {
@@ -159,6 +160,12 @@ export class NodePanel {
         }
         block_description.name = _id;
         let block = this.CreatePipelineBlock(block_description);
+        if (!_group || _group.length <= 0) {
+            block.SetGroup(this.loaded_pipeline_name);
+        }
+        else {
+            block.SetGroup(_group);
+        }
         this.blocks.push(block);
         return block;
     }
@@ -433,9 +440,10 @@ export class NodePanel {
         // FETCH PIPELINE DATA =Y BASICALLY THE YAML FILE
         const pipeline = await UDPPApi.getPipeline(_str, OptionPanel.GetApiEndpoint());
         // CREATE NODES
+        this.loaded_pipeline_name = _str;
         for (let i = 0; i < pipeline.stages.length; i++) {
             const stage = pipeline.stages[i];
-            const b = await this.CreateBlock(stage.function, stage.name, stage.position.x, stage.position.y);
+            const b = await this.CreateBlock(stage.function, stage.name, _str, stage.position.x, stage.position.y);
         }
         // CREATE CONNECTIONS
         for (let i = 0; i < pipeline.connections.length; i++) {

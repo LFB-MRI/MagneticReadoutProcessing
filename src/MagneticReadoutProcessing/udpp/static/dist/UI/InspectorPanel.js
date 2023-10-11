@@ -19,7 +19,7 @@ export class InspectorPanel {
         this.propertyContainer.innerHTML = '';
         if (this.selectedNode) {
             let headline = document.createElement("p");
-            headline.innerHTML = "<h3>" + this.selectedNode.GetDataName() + "</h3><br />";
+            headline.innerHTML = "<h3>" + this.selectedNode.GetTitle() + "</h3><br />";
             this.propertyContainer.appendChild(headline);
             for (const [key, prop] of Object.entries(this.selectedNode.GetProperties())) {
                 const propDiv = document.createElement('div');

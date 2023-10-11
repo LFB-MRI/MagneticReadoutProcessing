@@ -1,10 +1,17 @@
 import { elementToBlock, uuidv4 } from "./Shared.js";
+import { UDPPApi } from "../API/UDPPApi.js";
 export class Block {
     SetDataName(_name) {
         this.data["name"] = _name;
     }
     GetDataName() {
         return this.data["name"];
+    }
+    SetGroup(_name) {
+        this.data["group"] = _name;
+    }
+    GetGroup() {
+        return this.data["group"];
     }
     InsertProperty(_name, _type, _value, _id) {
         console.log(_name, _type, _value);
@@ -58,7 +65,8 @@ export class Block {
         this.cachedValue = [];
         this.isDirty = true;
         this.data = {
-            "name": ""
+            "name": "",
+            "group": "default"
         };
         this.properties = {};
         if (inspector === null)
@@ -106,11 +114,12 @@ export class Block {
         }
     }
     OnPropertyChanged(propertyName) {
+        const key = propertyName;
+        const value = this.properties[propertyName].value;
+        const id = this.properties[propertyName].id;
         console.log(`Property ${propertyName} changed! New value: ${this.properties[propertyName].value}`);
         // If the 'Name' property changes, update the title of the block
-        if (propertyName === 'Name') {
-            this.AddOrSetTitle(this.properties[propertyName].value);
-        }
+        UDPPApi.updateInspectorParameter(this.GetGroup(), this.uuid, id, value);
         this.SetDirty();
     }
     OnSelected() {
@@ -153,6 +162,14 @@ export class Block {
         titleElement.className = 'title';
         titleElement.innerHTML = title;
         this.element.appendChild(titleElement);
+    }
+    GetTitle() {
+        let title = this.element.querySelector('.title').innerHTML;
+        if (!title || title.length <= 0) {
+            title = this.GetDataName();
+            this.AddOrSetTitle(title);
+        }
+        return title;
     }
     async Evaluate(outputPort = 0) {
         // Evaluate upstream nodes first

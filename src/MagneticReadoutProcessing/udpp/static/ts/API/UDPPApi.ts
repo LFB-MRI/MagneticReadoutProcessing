@@ -210,4 +210,44 @@ export class UDPPApi {
 
         return pipelines;
     }
+
+
+    static async updateInspectorParameter(_pipeline:string, _stagename: string, _parameter: string, _value:string,_apiendpoint: string = "http://127.0.0.1:5555/api") : Promise<PipelineStages>{
+        if (!_apiendpoint.endsWith("/")) {
+            _apiendpoint += "/";
+        }
+
+        if (!_apiendpoint.startsWith("http://")) {
+            _apiendpoint = "http://" + _apiendpoint;
+        }
+
+
+        let url: string = _apiendpoint + "updateinspectorparameter/" + _pipeline + "/" + _stagename + "/" + _parameter+ "/" + _value;
+
+        console.log(url);
+        const response: Response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            //mode: 'no-cors',
+            cache: "no-cache",
+            redirect: "follow"
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error('No response generated. !ok');
+        }
+        if (response.body === null) {
+            throw new Error('No response generated. bdy==null');
+        }
+
+        let node: PipelineStages = await response.json();
+        console.log(node);
+        return node;
+    }
+
+
+
 }
