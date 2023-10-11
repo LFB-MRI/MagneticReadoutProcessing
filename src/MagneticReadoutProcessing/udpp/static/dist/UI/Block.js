@@ -119,7 +119,7 @@ export class Block {
         const id = this.properties[propertyName].id;
         console.log(`Property ${propertyName} changed! New value: ${this.properties[propertyName].value}`);
         // If the 'Name' property changes, update the title of the block
-        UDPPApi.updateInspectorParameter(this.GetGroup(), this.uuid, id, value);
+        let resp = UDPPApi.updateInspectorParameter(this.GetGroup(), this.uuid, id, value);
         this.SetDirty();
     }
     OnSelected() {

@@ -229,7 +229,7 @@ export class NodePanel {
     public GetBlockByName(_name: string): (Block| null){
         for (let i = 0; i < this.blocks.length; i++) {
             const b: Block = this.blocks[i];
-            console.log("b.GetDataName()", b.GetDataName());
+         //   console.log("b.GetDataName()", b.GetDataName());
             if(b.GetDataName() === _name){
                 return b;
             }
@@ -556,11 +556,10 @@ export class NodePanel {
             console.log("connection:", connection.from.stage_name, " : ", connection.from.parameter_name, "=>", connection.to.stage_name, " : ", connection.to.parameter_name);
             // GET HTML ELEMENT OF SOURCE BLOCK
             let source_block = this.GetBlockByName(connection.from.stage_name);
-            //console.log("source_block", source_block);
-
+            console.log("source_block", source_block);
 
             let target_block = this.GetBlockByName(connection.to.stage_name);
-            //console.log("target_block", target_block);
+            console.log("target_block", target_block);
 
 
             if (source_block === null || target_block === null) {
@@ -568,6 +567,7 @@ export class NodePanel {
             }
 
             var source_socket: Socket | undefined;
+            console.log(source_block?.outputs);
             // @ts-ignore
             if (connection.from.parameter_name == "return" && source_block?.outputs.length > 0) {
                 source_socket = source_block?.outputs[0];

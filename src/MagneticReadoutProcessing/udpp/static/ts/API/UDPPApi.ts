@@ -70,7 +70,7 @@ export class UDPPApi {
         }
 
 
-        let url: string = _apiendpoint + "getnodeinformation/" + _function_name;
+        let url: string = _apiendpoint + "getnodeinformation/" + encodeURIComponent(_function_name);
 
         console.log(url);
         const response: Response = await fetch(url, {
@@ -145,7 +145,7 @@ export class UDPPApi {
         }
 
 
-        let url: string = _apiendpoint + "getpipeline/" + _pipelinename + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' +  window.innerHeight;
+        let url: string = _apiendpoint + "getpipeline/" + encodeURIComponent(_pipelinename) + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' +  window.innerHeight;
 
         console.log(url);
         const response: Response = await fetch(url, {
@@ -222,7 +222,9 @@ export class UDPPApi {
         }
 
 
-        let url: string = _apiendpoint + "updateinspectorparameter/" + _pipeline + "/" + _stagename + "/" + _parameter+ "/" + _value;
+
+
+        let url: string = _apiendpoint + "updateinspectorparameter/" + encodeURIComponent(_pipeline) + "/" + encodeURIComponent(_stagename) + "/" + encodeURIComponent(_parameter) + "/" + encodeURIComponent(_value);
 
         console.log(url);
         const response: Response = await fetch(url, {

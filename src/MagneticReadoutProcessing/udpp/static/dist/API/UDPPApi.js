@@ -6,7 +6,7 @@ export class UDPPApi {
         if (!_apiendpoint.startsWith("http://")) {
             _apiendpoint = "http://" + _apiendpoint;
         }
-        let url = _apiendpoint + "getnodeinformation/" + _function_name;
+        let url = _apiendpoint + "getnodeinformation/" + encodeURIComponent(_function_name);
         console.log(url);
         const response = await fetch(url, {
             method: 'GET',
@@ -66,7 +66,7 @@ export class UDPPApi {
         if (!_apiendpoint.startsWith("http://")) {
             _apiendpoint = "http://" + _apiendpoint;
         }
-        let url = _apiendpoint + "getpipeline/" + _pipelinename + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' + window.innerHeight;
+        let url = _apiendpoint + "getpipeline/" + encodeURIComponent(_pipelinename) + '?canvas_size_x=' + window.innerWidth + '&canvas_size_y=' + window.innerHeight;
         console.log(url);
         const response = await fetch(url, {
             method: 'GET',
@@ -126,7 +126,7 @@ export class UDPPApi {
         if (!_apiendpoint.startsWith("http://")) {
             _apiendpoint = "http://" + _apiendpoint;
         }
-        let url = _apiendpoint + "updateinspectorparameter/" + _pipeline + "/" + _stagename + "/" + _parameter + "/" + _value;
+        let url = _apiendpoint + "updateinspectorparameter/" + encodeURIComponent(_pipeline) + "/" + encodeURIComponent(_stagename) + "/" + encodeURIComponent(_parameter) + "/" + encodeURIComponent(_value);
         console.log(url);
         const response = await fetch(url, {
             method: 'GET',
