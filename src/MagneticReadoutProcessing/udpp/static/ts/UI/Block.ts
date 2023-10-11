@@ -3,7 +3,8 @@ import { elementToBlock, uuidv4 } from "./Shared.js";
 import { Socket } from "./Socket.js";
 
 interface BlockProperty {
-    type: "input" | "textarea" | "button" | "slider";
+    block_name?: string;
+    type: "str" | "int" | "float" | "bool" | any;
     value: any;
     setValue?: (val: any) => void;
     id?: string;
@@ -50,7 +51,14 @@ export class Block {
         console.log(_name, _type, _value);
         console.log(this.properties);
 
-        this.properties[_name] = {type: "input", id:_id, value:_value};
+
+        // @ts-ignore
+        this.properties[_name] = {
+            type: _type,
+            id: _id,
+            value: _value,
+            block_name: this.uuid
+        };
 
         this.SetProperties(this.properties);
 
@@ -91,11 +99,16 @@ export class Block {
         return copy;
     }
 
-    constructor(inspector: InspectorPanel | null) {
+    constructor(inspector: InspectorPanel | null, _id?: string) {
         if (inspector === null) throw new Error("Inspector cannot be null!");
 
         this.inspector = inspector;
-        this.uuid = uuidv4();
+        if(_id === undefined || _id == null || _id.length <= 0){
+            this.uuid = uuidv4();
+        }else{
+            this.uuid = _id;
+        }
+
         // Execute the code on the input
         this.promise = (input): Promise<any[]> => {
             // Execute the Copy property

@@ -234,7 +234,7 @@ body {
     margin-bottom: 5px;
 }
 
-#inspector-properties input[type="range"],
+#inspector-properties input[type="number"],
 #inspector-properties input[type="text"],
 #inspector-properties textarea,
 #inspector-properties button {

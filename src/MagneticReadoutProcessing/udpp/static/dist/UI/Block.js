@@ -9,7 +9,13 @@ export class Block {
     InsertProperty(_name, _type, _value, _id) {
         console.log(_name, _type, _value);
         console.log(this.properties);
-        this.properties[_name] = { type: "input", id: _id, value: _value };
+        // @ts-ignore
+        this.properties[_name] = {
+            type: _type,
+            id: _id,
+            value: _value,
+            block_name: this.uuid
+        };
         this.SetProperties(this.properties);
         console.log(this.properties);
         //this.SetProperties({'name': p});
@@ -44,7 +50,7 @@ export class Block {
         }
         return copy;
     }
-    constructor(inspector) {
+    constructor(inspector, _id) {
         // The position of the block in the workspace
         this.position = [0, 0];
         // The scale of the block
@@ -58,7 +64,12 @@ export class Block {
         if (inspector === null)
             throw new Error("Inspector cannot be null!");
         this.inspector = inspector;
-        this.uuid = uuidv4();
+        if (_id === undefined || _id == null || _id.length <= 0) {
+            this.uuid = uuidv4();
+        }
+        else {
+            this.uuid = _id;
+        }
         // Execute the code on the input
         this.promise = (input) => {
             // Execute the Copy property

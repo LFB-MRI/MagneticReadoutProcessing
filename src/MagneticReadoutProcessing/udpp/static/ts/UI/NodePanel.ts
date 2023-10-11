@@ -118,11 +118,18 @@ export class NodePanel {
     }
 
     public CreatePipelineBlock(_description: PipelineStages): Block{
-        console.log("CreatePipelineBlock");
+        console.log("CreatePipelineBlock", _description);
 
-        var block: Block = new Block(this.inspector);
+        //if block with same name already exists => use uuid generator to generate a name
+        let id: string = _description.name;
+        if(this.GetBlockByName(_description.name)){
+            id = "";
+        }
 
-        const name: string = _description.name.replace("_", "<br>");
+
+        var block: Block = new Block(this.inspector, id);
+
+        const name: string = _description.function.replace("_", "<br>");
         block.AddOrSetTitle(name);
 
         block.SetDataName(_description.name)
@@ -185,7 +192,7 @@ export class NodePanel {
                     });
                 }else{
                     listItem.addEventListener('click', (e) => {
-                        this.CreateBlock(nodeType, e.clientX, e.clientY);
+                        this.CreateBlock(nodeType, nodeType ,e.clientX, e.clientY);
                         contextMenu.style.display = 'none';
                         this.nodesearchinput?.setAttribute('value', '');
                     });
@@ -196,7 +203,7 @@ export class NodePanel {
 
     }
 
-    private async CreateBlock(nodeType: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
+    private async CreateBlock(nodeType: string, _id: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
 
         let block_description: PipelineStages = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
         //set block position to clicked position if given
@@ -204,6 +211,7 @@ export class NodePanel {
             block_description.position.x = _pos_x;
             block_description.position.y = _pos_y;
         }
+        block_description.name = _id;
 
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
@@ -528,7 +536,7 @@ export class NodePanel {
         // CREATE NODES
         for (let i = 0; i < pipeline.stages.length; i++) {
             const stage: PipelineStages = pipeline.stages[i];
-            const b: Block = await  this.CreateBlock(stage.function, stage.position.x, stage.position.y);
+            const b: Block = await  this.CreateBlock(stage.function, stage.name, stage.position.x, stage.position.y);
         }
 
 
@@ -539,11 +547,11 @@ export class NodePanel {
             console.log("connection:", connection.from.stage_name, " : ", connection.from.parameter_name, "=>", connection.to.stage_name, " : ", connection.to.parameter_name);
             // GET HTML ELEMENT OF SOURCE BLOCK
             let source_block = this.GetBlockByName(connection.from.stage_name);
-            console.log("source_block", source_block);
+            //console.log("source_block", source_block);
 
 
             let target_block = this.GetBlockByName(connection.to.stage_name);
-            console.log("target_block", target_block);
+            //console.log("target_block", target_block);
 
 
             if (source_block === null || target_block === null) {

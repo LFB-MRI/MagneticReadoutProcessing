@@ -26,51 +26,88 @@ export class InspectorPanel {
     refreshProperties() {
         this.propertyContainer.innerHTML = '';
         if (this.selectedNode) {
+
+            let headline: HTMLParagraphElement = document.createElement("p");
+            headline.innerHTML = "<h3>" + this.selectedNode.GetDataName() + "</h3><br />";
+
+            this.propertyContainer.appendChild(headline)
             for (const [key, prop] of Object.entries(this.selectedNode.GetProperties())) {
                 const propDiv = document.createElement('div');
-                propDiv.textContent = key;
+                //propDiv.textContent = key + " [" + prop.type +"]";
+                //propDiv.
+                let label_for: HTMLLabelElement = document.createElement('label');
+                let element_id: string = prop.block_name + ":" + prop.id + ":" + prop.type;
+                console.log(element_id);
+                label_for.htmlFor = element_id;
+                label_for.textContent = key + " [" + prop.type +"]";
+                propDiv.appendChild(label_for);
 
                 switch (prop.type) {
-                    case 'slider':
-                        const slider = document.createElement('input');
-                        slider.type = 'range';
-                        slider.value = prop.value;
-                        slider.oninput = (e) => {
+
+
+                    case 'int':
+                        const number = document.createElement('input');
+                        number.id = element_id;
+                        number.type = 'number';
+                        number.step = '1';
+                        number.value = prop.value;
+                        number.oninput = (e) => {
                             if (prop.setValue !== undefined) {
                                 prop.setValue((e.target as HTMLInputElement).value);
                             }
                         };
-                        propDiv.appendChild(slider);
+                        propDiv.appendChild(number);
+                        break;
 
-                    case 'input':
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.value = prop.value;
-                        input.oninput = (e) => {
+                    case 'float':
+                        const float = document.createElement('input');
+                        float.type = 'number';
+                        float.id = element_id;
+                        float.step = '0.01';
+                        float.value = prop.value.toString();
+                        float.oninput = (e) => {
                             if (prop.setValue !== undefined) {
                                 prop.setValue((e.target as HTMLInputElement).value);
                             }
                         };
-                        propDiv.appendChild(input);
-                        break;
+                        propDiv.appendChild(float);
+                        break
 
-                    case 'textarea':
-                        const textarea = document.createElement('textarea');
-                        textarea.textContent = prop.value;
-                        textarea.oninput = (e) => {
+                    case 'bool':
+                        const bool = document.createElement('input');
+                        bool.type = 'number';
+                        bool.id = element_id;
+                        bool.step = '1';
+                        bool.min = '0';
+                        bool.max = '1';
+
+                        if(prop.value === "1" || prop.value.toString().toLowerCase().includes('t')){
+                            bool.value = '1';
+                        }else{
+                            bool.value = '0';
+                        }
+
+                        bool.oninput = (e) => {
                             if (prop.setValue !== undefined) {
                                 prop.setValue((e.target as HTMLInputElement).value);
                             }
                         };
-                        propDiv.appendChild(textarea);
-                        break;
+                        propDiv.appendChild(bool);
+                        break
 
-                    case 'button':
-                        const button = document.createElement('button');
-                        button.textContent = prop.value;
-                        button.onclick = (e) => { console.log(`Button '${key}' clicked`); };
-                        propDiv.appendChild(button);
-                        break;
+
+
+                    default:
+                        const str = document.createElement('input');
+                        str.type = 'text';
+                        str.id = element_id;
+                        str.value = prop.value;
+                        str.oninput = (e) => {
+                            if (prop.setValue !== undefined) {
+                                prop.setValue((e.target as HTMLInputElement).value);
+                            }
+                        };
+                        propDiv.appendChild(str);
                 }
 
                 this.propertyContainer.appendChild(propDiv);
