@@ -1,11 +1,9 @@
-import { Pipeline } from "./Pipeline.js";
 export class OptionPanel {
     constructor(icon, panel) {
         this.icon = icon;
         this.panel = panel;
         this.pipelineinput = this.panel.querySelector('input#pipelinefile');
         this.save_button = this.panel.querySelector('#save-pipelinefile');
-        this.load_button = this.panel.querySelector('#load-pipelinefile');
         this.apiendpoint = this.panel.querySelector('input#apiendpoint');
         // Load PIPELINE
         const queryString = window.location.search;
@@ -47,7 +45,6 @@ export class OptionPanel {
     AddListeners() {
         // Add event listeners
         this.save_button.addEventListener('mousedown', () => this.SaveSettings());
-        this.load_button.addEventListener('mousedown', () => Pipeline.getInstance().load_set_pipeline());
         this.icon.addEventListener('mousedown', (e) => {
             console.log('show');
             if (this.panel.style.display === 'none') {

@@ -33,7 +33,6 @@ export const workspace = document.getElementById('workspace') as HTMLElement;
 export const contextMenu = document.getElementById('context-menu') as HTMLElement;
 export const optionPanel = document.getElementById('option-panel') as HTMLElement;
 export const cogIcon = document.getElementById('cog-icon') as HTMLElement;
-export const nodeTypes: string[] = ['NodeType1', 'NodeType2', 'NodeType3'];
 
 
 export function ToBlock(element: HTMLElement): Block | undefined {

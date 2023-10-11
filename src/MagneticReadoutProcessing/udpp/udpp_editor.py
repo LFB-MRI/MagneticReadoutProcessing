@@ -37,11 +37,11 @@ def listpipelines():
 
     for k, v in pipelines.items():
         res.append({
-        'files': k,
-        'names': v['settings']['name']
+        'file': k,
+        'name': v['settings']['name']
         })
 
-    return jsonify(res)
+    return jsonify({'pipelines':res})
 
 
 
@@ -69,8 +69,8 @@ def getnodeinformation(functionname: str):
         'function': functionname,
         'name': functionname,
         'position': { # Can be ignored
-            'x':-1,
-            'y':-1
+            'x': -1,
+            'y': -1
         },
         'parameters': UDPPFunctionTranslator.get_function_parameters(functionname),
         'inspector_parameters': UDPPFunctionTranslator.get_inspector_parameters(functionname),

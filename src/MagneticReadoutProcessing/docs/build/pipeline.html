@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="udpp.UDPPFFunctionCollection" href="_autosummary/udpp.UDPPFFunctionCollection.html" />
+    <link rel="next" title="Module - MagneticReadoutProcessing" href="MagneticReadoutProcessing.html" />
     <link rel="prev" title="CLI - Command-Line Interface" href="cli.html" /> 
 </head>
 
@@ -53,12 +53,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#pipeline-definition">Pipeline Definition</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-definition">Step definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connect-several-stages">Connect several stages</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#function-collection">Function Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="_autosummary/udpp.UDPPFFunctionCollection.html">udpp.UDPPFFunctionCollection</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#function-collection">Function Collection</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
@@ -141,13 +139,13 @@ $<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./udpp/udpp
 ...
 </pre></div>
 </div>
-<p>These are implemented in <code class="docutils literal notranslate"><span class="pre">UDPPFFunctionCollection.py</span></code> and are fetch in realtime.
-By modifying the file its possible to make further functions available to the pipeline system.</p>
+<p>These are implemented in <code class="docutils literal notranslate"><span class="pre">UDPPFFunctionCollection.py</span></code>.
+By modifying the file it is possible to make further functions available to the pipeline system.</p>
 <p>This example shows how to create a step which calls the <code class="docutils literal notranslate"><span class="pre">import_readings</span></code> function.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># STEP DEFINITION</span>
 <span class="nt">stage import_readings</span><span class="p">:</span><span class="w"> </span><span class="c1">#stage &lt;stage_name&gt;</span>
 <span class="w">    </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">import_readings</span><span class="w"> </span><span class="c1"># function to call see udpp.py pipeline listfunctions or UDPPFFunctionCollection.py</span>
-<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># RUN AT STARTUP</span>
+<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># RUN AT STARTUP = ENTRYPOINT</span>
 <span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">input_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tlv493d_N45_12x12x12</span>
 <span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(.)*.mag.json</span>
@@ -159,14 +157,41 @@ By modifying the file its possible to make further functions available to the pi
 In one step this parameter must be set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 </div>
 </section>
+<section id="connect-several-stages">
+<h3>Connect several stages<a class="headerlink" href="#connect-several-stages" title="Link to this heading"></a></h3>
+<p>To create a flow (connecting several stages together), the output of one stage can be the input of another stage.
+This can be done using the name of a stages <code class="docutils literal notranslate"><span class="pre">stage</span> <span class="pre">&lt;name&gt;</span></code> as parameter of the next stage.
+.. note:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Its not possible to implement any sort of circles!
+The system checks at startup for circles and any other misconfigurations.
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># LETS ADD TWO READinG IMPORTER STAGES</span>
+<span class="nt">stage import_readings_b</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">import_readings</span>
+<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">input_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tlv493d_N45_12x12x12</span>
+<span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(.)*.mag.json</span>
+
+<span class="w">    </span><span class="nt">stage import_readings_a</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">import_readings</span>
+<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">input_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tlv493d_N45_1</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="function-collection">
 <h2>Function Collection<a class="headerlink" href="#function-collection" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, usable functions doesnt support tuple or arrays as input and output parameters.
+Please encapsulate these type into custom classes or dicts.</p>
+</div>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">udpp.UDPPFFunctionCollection</span></code></p></td>
-<td><p>This class only includes static methods which are able to used in a user defined pipeline</p></td>
-</tr>
 </tbody>
 </table>
 </section>
@@ -177,7 +202,7 @@ In one step this parameter must be set to <code class="docutils literal notransl
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="cli.html" class="btn btn-neutral float-left" title="CLI - Command-Line Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="_autosummary/udpp.UDPPFFunctionCollection.html" class="btn btn-neutral float-right" title="udpp.UDPPFFunctionCollection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="MagneticReadoutProcessing.html" class="btn btn-neutral float-right" title="Module - MagneticReadoutProcessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

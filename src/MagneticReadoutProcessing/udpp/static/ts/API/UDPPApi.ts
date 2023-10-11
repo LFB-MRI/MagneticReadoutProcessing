@@ -48,6 +48,15 @@ export interface NodeTypes {
 
 
 
+export interface PipelineListEntry{
+    file: string;
+    name: string;
+
+}
+export interface PipelineList{
+    pipelines: PipelineListEntry[];
+}
+
 export class UDPPApi {
 
     static async getNodeInformation(_function_name:string, _apiendpoint: string = "http://127.0.0.1:5555/api") : Promise<PipelineStages>{
@@ -163,5 +172,41 @@ export class UDPPApi {
         return pipeline;
     }
 
+    static async getListPipelines(_apiendpoint: string = "http://127.0.0.1:5555/api"): Promise<PipelineList>{
+        if (!_apiendpoint.endsWith("/")) {
+            _apiendpoint += "/";
+        }
 
+        if (!_apiendpoint.startsWith("http://")) {
+            _apiendpoint = "http://" + _apiendpoint;
+        }
+
+
+        let url: string = _apiendpoint + "listpipelines";
+
+        console.log(url);
+        const response: Response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            //mode: 'no-cors',
+            cache: "no-cache",
+            redirect: "follow"
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error('No response generated. !ok');
+        }
+        if (response.body === null) {
+            throw new Error('No response generated. bdy==null');
+        }
+
+        let pipelines: PipelineList = await response.json();
+
+        console.log(pipelines);
+
+        return pipelines;
+    }
 }

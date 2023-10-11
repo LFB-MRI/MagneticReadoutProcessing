@@ -1,5 +1,11 @@
 import { elementToBlock, uuidv4 } from "./Shared.js";
 export class Block {
+    SetDataName(_name) {
+        this.data["name"] = _name;
+    }
+    GetDataName() {
+        return this.data["name"];
+    }
     SetProperties(properties) {
         this.properties = properties;
         for (const prop in this.properties) {
@@ -36,14 +42,10 @@ export class Block {
         this.scale = 1;
         this.cachedValue = [];
         this.isDirty = true;
-        this.properties = {
-            "Name": { type: "input", value: "default" },
-            "Prompt": { type: "textarea", value: "Some prompt" },
-            "Generate": { type: "button", value: "Click me" },
-            "Creativity": { type: "slider", value: 50 },
-            "Code": { type: "textarea", value: "return 5;" },
-            // add as many properties as you like...
+        this.data = {
+            "name": ""
         };
+        this.properties = {};
         if (inspector === null)
             throw new Error("Inspector cannot be null!");
         this.inspector = inspector;

@@ -7,7 +7,7 @@ export class OptionPanel {
     private pipelineinput: HTMLInputElement;
     private apiendpoint: HTMLInputElement;
     private save_button: HTMLButtonElement;
-    private load_button: HTMLButtonElement;
+
     private icon: HTMLElement;
     private static API: UDPPApi;
 
@@ -19,7 +19,6 @@ export class OptionPanel {
         this.panel = panel;
         this.pipelineinput = this.panel.querySelector('input#pipelinefile') as HTMLInputElement;
         this.save_button = this.panel.querySelector('#save-pipelinefile') as HTMLButtonElement;
-        this.load_button = this.panel.querySelector('#load-pipelinefile') as HTMLButtonElement;
         this.apiendpoint = this.panel.querySelector('input#apiendpoint') as HTMLInputElement;
 
 
@@ -67,7 +66,6 @@ export class OptionPanel {
         // Add event listeners
         this.save_button.addEventListener('mousedown', () => this.SaveSettings());
 
-        this.load_button.addEventListener('mousedown', () => Pipeline.getInstance().load_set_pipeline());
 
 
         this.icon.addEventListener('mousedown', (e) => {

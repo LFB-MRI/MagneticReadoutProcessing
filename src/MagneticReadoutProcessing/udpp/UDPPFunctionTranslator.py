@@ -114,10 +114,23 @@ class UDPPFunctionTranslator():
         function: dict = functions[_function_name]
         return function
 
-
     @staticmethod
     def get_function_parameters(_function_name: str, _get_inspector_parameter: bool = False, _strip_prefix: bool = False) -> [str]:
-        # TODO REWORK
+        """
+        returns the readable version of a function parameters, including name, type and default value
+
+        :param _function_name: function name to get return types from
+        :type _function_name: str
+
+        :param _get_inspector_parameter: get all parameters with IP_ prefix for the user inspector view
+        :type _get_inspector_parameter: bool
+
+        :param _strip_prefix: strip IP_ prefix if _get_inspector_parameter is set
+        :type _strip_prefix: bool
+
+        :returns: returns all function parameters in a list of dicts with name, value and type properties
+        :rtype: [str]
+        """
         fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
         res: [str] = []
         types: dict = fkt['parameter_types']
@@ -135,6 +148,18 @@ class UDPPFunctionTranslator():
         return res
     @staticmethod
     def get_inspector_parameters(_function_name: str, _strip_prefix: bool = False) -> []:
+        """
+        returns the readable version of a function inspector parameters selected by IP_ prefix, including name, type and default value
+
+        :param _function_name: function name to get return types from
+        :type _function_name: str
+
+        :param _strip_prefix: strip IP_ prefix
+        :type _strip_prefix: bool
+
+        :returns: returns all inspector function parameters in a list of dicts with name, value and type properties
+        :rtype: [str]
+        """
         return UDPPFunctionTranslator.get_function_parameters(_function_name, _get_inspector_parameter=True, _strip_prefix=_strip_prefix)
     @staticmethod
     def get_function_return_parameters(_function_name:str) -> []:
@@ -146,15 +171,55 @@ class UDPPFunctionTranslator():
             returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
         return returns
 
+
+
+
     @staticmethod
-    def get_node_connection_list() -> []:
-        pass
+    def get_node_connection_list( _calltree_graph: nx.DiGraph) -> []:
+        """
+        Returns all node /edge connections to use for visualization to get the connections between all nodes.
+        Speical here is the usage of edge data to store the parameter name in it.
+        This function returns the edges as from function parameter to function parameter
+
+        :param _calltree_graph: list of edges with annotated functions/parameter names as dict
+        :type _calltree_graph: []
+
+
+        :returns: returns all inspector function parameters in a list of dicts with name, value and type properties
+        :rtype: [str]
+        """
+        ret: [] = []
+        for e in _calltree_graph.edges:
+            ed = _calltree_graph.get_edge_data(e[0], e[1])
+            if len(ed) > 0 and 'from_parameter_name' in ed and 'to_parameter_name' in ed:
+                ret.append({
+                    'from': {
+                        'stage_name': e[0],
+                        'parameter_name': 'return' #str(ed['from_parameter_name']).replace('stage ', '')
+                    },
+                    'to': {
+                        'stage_name': e[1],
+                        'parameter_name': ed['to_parameter_name']
+                    }
+                })
+
+        return ret
+
 
 
 
 
     @staticmethod
     def get_function_return_types(_function_name: str) -> [str]:
+        """
+        returns the readable return type of a given function
+
+        :param _function_name: function name to get return types from
+        :type _function_name: str
+
+        :returns: returns if all stage parameters are matched to each other if stages are connected
+        :rtype: [str]
+        """
         if _function_name is None or len(_function_name) <= 0:
             raise UDPPFunctionTranslatorException("get_function_return_type: _function_name is empty")
 
@@ -478,25 +543,8 @@ class UDPPFunctionTranslator():
                 pos['y'] = random.randint(int(yc - (yc/2)), int(yc + (yc/2)))
 
 
-            # ASSEMBLE CONNECTIONS TOGETHER USING A CAllTREE
-            connections: [] = []
-            # graph => get all all egdes
-            # for
-            # todo store edgedata = parameter names in int
-            # todo then use get edge data to retreive and append in connection
-            for e in graph.edges:
-                ed = graph.get_edge_data(e[0], e[1])
-                if len(ed) > 0 and 'from_parameter_name' in ed  and 'to_parameter_name' in ed:
-                    connections.append({
-                        'from':{
-                            'stage_name': e[0],
-                            'parameter_name': str(ed['from_parameter_name']).replace('stage ', '')
-                        },
-                        'to': {
-                            'stage_name': e[1],
-                            'parameter_name':  ed['to_parameter_name']
-                        }
-                    })
+
+
 
             stages.append({
                 'name': k,
@@ -505,12 +553,16 @@ class UDPPFunctionTranslator():
                 'inspector': inspector_params,
                 'position': pos,
                 'returns': returns,
-                'connections': connections
+
             })
+
+        # ASSEMBLE CONNECTIONS TOGETHER USING A CAllTREE
+        connections: [] = UDPPFunctionTranslator.get_node_connection_list(_calltree_graph=graph)
 
         res: dict = {
             'settings': _pipeline['settings'],
-            'stages': stages
+            'stages': stages,
+            'connections': connections
         }
 
         return res

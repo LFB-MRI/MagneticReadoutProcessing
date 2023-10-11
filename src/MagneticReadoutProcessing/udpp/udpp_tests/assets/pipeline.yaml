@@ -1,0 +1,19 @@
+settings:
+  enabled: true
+  export_intermediate_results: true
+  name: pipeline
+
+stage a:
+  function: import_readings
+  parameters:
+    IP_input_folder: tlv493d_N45_12x12x12
+
+
+stage e:
+  function: concat_readings
+  parameters:
+    set_a: stage a
+    set_b: stage a
+
+
+

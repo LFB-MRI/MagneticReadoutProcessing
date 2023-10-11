@@ -84,6 +84,7 @@ export class NodePanel {
         var block = new Block(this.inspector);
         const name = _description.name.replace("_", "<br>");
         block.AddOrSetTitle(name);
+        block.SetDataName(_description.name);
         // add input sockets
         for (let i = 0; i < _description.parameters.length; i++) {
             const param = _description.parameters[i];
@@ -94,6 +95,10 @@ export class NodePanel {
             const param = _description.returns[i];
             block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
         }
+        // add inspector parameter inputs
+        //let p: BlockProperty;
+        //p.setValue("");
+        //block.SetProperties("", p);
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
         nodePanel.appendChild(blockElement);
         return block;
@@ -102,24 +107,38 @@ export class NodePanel {
         const list = contextMenu.querySelector('ul');
         list.innerHTML = '';
         // fetch node list from api
-        const nodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
+        var nodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
+        const pipelines = await UDPPApi.getListPipelines(OptionPanel.GetApiEndpoint());
+        const seperator = "---- PIPELINES ---";
+        nodeTypes.nodes.push(seperator);
+        for (let i = 0; i < pipelines.pipelines.length; i++) {
+            const entry = pipelines.pipelines[i];
+            nodeTypes.nodes.push(entry.file);
+        }
+        console.log(pipelines);
         for (const nodeType of nodeTypes.nodes) {
             if (nodeType.toLowerCase().includes(searchText.toLowerCase())) {
                 const listItem = document.createElement('li');
                 listItem.textContent = nodeType;
-                listItem.addEventListener('click', (e) => {
-                    this.CreateBlock(nodeType, e.clientX, e.clientY);
-                    //let block = this.CreateBlock(nodeType);
-                    //let blockElement = block.GetElement(e.clientX, e.clientY);
-                    //nodePanel.appendChild(blockElement);
-                    contextMenu.style.display = 'none';
-                });
+                if (nodeType === seperator) {
+                }
+                else if (nodeType.includes(".yaml")) {
+                    listItem.addEventListener('click', (e) => {
+                        this.load_set_pipeline(nodeType.toString(), e.clientX, e.clientY);
+                        contextMenu.style.display = 'none';
+                    });
+                }
+                else {
+                    listItem.addEventListener('click', (e) => {
+                        this.CreateBlock(nodeType, e.clientX, e.clientY);
+                        contextMenu.style.display = 'none';
+                    });
+                }
                 list.appendChild(listItem);
             }
         }
     }
     async CreateBlock(nodeType, _pos_x, _pos_y) {
-        //let block = new Block(this.inspector);
         let block_description = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
         //set block position to clicked position if given
         if (_pos_x && _pos_y && _pos_x > 0 && _pos_y > 0) {
@@ -129,6 +148,17 @@ export class NodePanel {
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
         return block;
+    }
+    GetBlockByName(_name) {
+        console.log("GetBlockByName", _name, this.blocks);
+        for (let i = 0; i < this.blocks.length; i++) {
+            const b = this.blocks[i];
+            console.log("b.GetDataName()", b.GetDataName());
+            if (b.GetDataName() === _name) {
+                return b;
+            }
+        }
+        return null;
     }
     OnLeftClickDown(evt) {
         // Hide context menu
@@ -140,8 +170,10 @@ export class NodePanel {
         if (Socket.IsOutput(evt)) {
             let socket = ToSocket(evt.target);
             if (socket) {
+                console.log("socket", socket);
                 this.selectedSocket = socket;
                 this.connectorPath = this.CreateConnection(this.selectedSocket);
+                console.log(this.connectorPath);
             }
         }
         else {
@@ -367,6 +399,51 @@ export class NodePanel {
         for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
             node.style.transform = `scale(${this.blocks[i].scale})`;
+        }
+    }
+    async load_set_pipeline(_str = "", base_x, base_y) {
+        //IF  NOT
+        if (_str === "") {
+            return;
+        }
+        // FETCH PIPELINE DATA =Y BASICALLY THE YAML FILE
+        const pipeline = await UDPPApi.getPipeline(_str, OptionPanel.GetApiEndpoint());
+        // CREATE NODES
+        for (let i = 0; i < pipeline.stages.length; i++) {
+            const stage = pipeline.stages[i];
+            const b = await this.CreateBlock(stage.function, stage.position.x, stage.position.y);
+        }
+        // CREATE CONNECTIONS
+        for (let i = 0; i < pipeline.connections.length; i++) {
+            const connection = pipeline.connections[i];
+            console.log("connection:", connection.from.stage_name, " : ", connection.from.parameter_name, "=>", connection.to.stage_name, " : ", connection.to.parameter_name);
+            // GET HTML ELEMENT OF SOURCE BLOCK
+            let source_block = this.GetBlockByName(connection.from.stage_name);
+            console.log("source_block", source_block);
+            let target_block = this.GetBlockByName(connection.to.stage_name);
+            console.log("target_block", target_block);
+            if (source_block === null || target_block === null) {
+                return;
+            }
+            var source_socket;
+            // @ts-ignore
+            if (connection.from.parameter_name == "return" && (source_block === null || source_block === void 0 ? void 0 : source_block.outputs.length) > 0) {
+                source_socket = source_block === null || source_block === void 0 ? void 0 : source_block.outputs[0];
+            }
+            else {
+                //source_socket
+            }
+            console.log("source_socket", source_socket);
+            //let endSocket = ToSocket(evt.target as HTMLElement);
+            //if (endSocket && this.connectorPath) {
+            //    this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
+            //    let edge = new Edge(this.connectorPath, this.selectedSocket, endSocket);
+            // Add the edges
+            //    this.selectedSocket.Connect(edge);
+            //    endSocket.Connect(edge);
+            // Add the edge to the list
+            //    this.edges.push(edge);
+            //this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);
         }
     }
 }

@@ -1,0 +1,6 @@
+udpp.udpp\_editor
+=================
+
+.. currentmodule:: udpp
+
+.. automodule:: udpp_editor

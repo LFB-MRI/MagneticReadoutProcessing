@@ -27,7 +27,6 @@ export const workspace = document.getElementById('workspace');
 export const contextMenu = document.getElementById('context-menu');
 export const optionPanel = document.getElementById('option-panel');
 export const cogIcon = document.getElementById('cog-icon');
-export const nodeTypes = ['NodeType1', 'NodeType2', 'NodeType3'];
 export function ToBlock(element) {
     return elementToBlock.get(element);
 }

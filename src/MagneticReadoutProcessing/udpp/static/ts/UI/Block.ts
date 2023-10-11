@@ -20,21 +20,29 @@ export class Block {
     private promise: (inputValues: any[][]) => Promise<any[]>;
     private uuid: string;
     private size: number[];
+
     private inspector: InspectorPanel;
 
     private cachedValue: any[] = [];
     private isDirty: boolean = true;
 
-    private properties: { [key: string]: BlockProperty; } = {
-        "Name": { type: "input", value: "default" },
-        "Prompt": { type: "textarea", value: "Some prompt" },
-        "Generate": { type: "button", value: "Click me" },
-        "Creativity": { type: "slider", value: 50 },
-        "Code": { type: "textarea", value: "return 5;" },
-
-        // add as many properties as you like...
+    private data: { [key: string]: string; } = {
+        "name": ""
     };
 
+    private properties: { [key: string]: BlockProperty; } = {
+
+    };
+
+
+    public SetDataName(_name: string){
+        this.data["name"] = _name;
+    }
+
+
+    public GetDataName(): string{
+        return this.data["name"];
+    }
     public SetProperties(properties: { [key: string]: BlockProperty; }) {
         this.properties = properties;
 

@@ -4,8 +4,16 @@ import { Socket } from './Socket.js';
 import { Edge } from './Edge.js';
 import { InspectorPanel } from './InspectorPanel.js';
 import { SocketType, ToBlock, ToSocket, nodeConnections, contextMenu, nodePanel, workspace, elementToBlock } from './Shared.js';
-import {NodeTypes, PipelineStageParameter, PipelineStages, UDPPApi} from "../API/UDPPApi.js";
+import {
+    NodeTypes, PipelineConnectionInformation,
+    PipelineList,
+    PipelineListEntry, PipelineRoot,
+    PipelineStageParameter,
+    PipelineStages,
+    UDPPApi
+} from "../API/UDPPApi.js";
 import {OptionPanel} from "./OptionPanel.js";
+import {Pipeline} from "./Pipeline.js";
 
 interface Offset {
     top: number;
@@ -98,6 +106,7 @@ export class NodePanel {
 
 
     }
+
     public CreatePipelineBlock(_description: PipelineStages): Block{
         console.log("CreatePipelineBlock");
 
@@ -106,6 +115,7 @@ export class NodePanel {
         const name: string = _description.name.replace("_", "<br>");
         block.AddOrSetTitle(name);
 
+        block.SetDataName(_description.name)
         // add input sockets
         for (let i = 0; i < _description.parameters.length; i++) {
             const param: PipelineStageParameter = _description.parameters[i];
@@ -119,37 +129,64 @@ export class NodePanel {
         }
 
 
+
+        // add inspector parameter inputs
+        //let p: BlockProperty;
+        //p.setValue("");
+        //block.SetProperties("", p);
+
         let blockElement = block.GetElement(_description.position.x, _description.position.y);
         nodePanel.appendChild(blockElement);
 
 
         return block;
     }
+
     private async PopulateContextMenu(searchText: string) {
         const list = contextMenu.querySelector('ul')!;
         list.innerHTML = '';
         // fetch node list from api
-        const nodeTypes: NodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
+        var nodeTypes: NodeTypes = await UDPPApi.getNodeTypes(OptionPanel.GetApiEndpoint());
+        const pipelines: PipelineList = await UDPPApi.getListPipelines(OptionPanel.GetApiEndpoint());
+
+
+        const seperator =  "---- PIPELINES ---";
+        nodeTypes.nodes.push(seperator);
+
+        for (let i = 0; i < pipelines.pipelines.length; i++) {
+            const entry: PipelineListEntry = pipelines.pipelines[i];
+            nodeTypes.nodes.push(entry.file)
+        }
+        console.log(pipelines);
+
 
         for (const nodeType of nodeTypes.nodes) {
             if (nodeType.toLowerCase().includes(searchText.toLowerCase())) {
                 const listItem = document.createElement('li');
                 listItem.textContent = nodeType;
-                listItem.addEventListener('click', (e) => {
-                    this.CreateBlock(nodeType, e.clientX, e.clientY);
-                    //let block = this.CreateBlock(nodeType);
-                    //let blockElement = block.GetElement(e.clientX, e.clientY);
-                    //nodePanel.appendChild(blockElement);
 
-                    contextMenu.style.display = 'none';
-                });
+                if(nodeType === seperator) {
+                }else if(nodeType.includes(".yaml")){
+                    listItem.addEventListener('click', (e) => {
+                        this.load_set_pipeline(nodeType.toString(), e.clientX, e.clientY);
+                        contextMenu.style.display = 'none';
+                    });
+                }else{
+                    listItem.addEventListener('click', (e) => {
+                        this.CreateBlock(nodeType, e.clientX, e.clientY);
+                        contextMenu.style.display = 'none';
+                    });
+                }
+
+
+
+
                 list.appendChild(listItem);
             }
         }
     }
 
     private async CreateBlock(nodeType: string, _pos_x:number | undefined, _pos_y: number | undefined): Promise<Block> {
-        //let block = new Block(this.inspector);
 
         let block_description: PipelineStages = await UDPPApi.getNodeInformation(nodeType, OptionPanel.GetApiEndpoint());
         //set block position to clicked position if given
@@ -160,8 +197,20 @@ export class NodePanel {
 
         let block = this.CreatePipelineBlock(block_description);
         this.blocks.push(block);
-
         return block;
+    }
+
+
+    public GetBlockByName(_name: string): (Block| null){
+        console.log("GetBlockByName", _name, this.blocks);
+        for (let i = 0; i < this.blocks.length; i++) {
+            const b: Block = this.blocks[i];
+            console.log("b.GetDataName()", b.GetDataName());
+            if(b.GetDataName() === _name){
+                return b;
+            }
+        }
+        return null;
     }
 
     private OnLeftClickDown(evt: MouseEvent) {
@@ -173,9 +222,12 @@ export class NodePanel {
         // SOCKET CLICK START
         if (Socket.IsOutput(evt)) {
             let socket = ToSocket(evt.target as HTMLElement);
+
             if (socket) {
+                console.log("socket", socket);
                 this.selectedSocket = socket;
                 this.connectorPath = this.CreateConnection(this.selectedSocket);
+                console.log(this.connectorPath);
             }
         } else {
             // Select any node
@@ -436,5 +488,69 @@ export class NodePanel {
             let node = nodes[i];
             node.style.transform = `scale(${this.blocks[i].scale})`;
         }
+    }
+
+
+
+    private async load_set_pipeline(_str: string = "", base_x: number, base_y: number) {
+        //IF  NOT
+        if(_str === ""){
+            return;
+        }
+
+        // FETCH PIPELINE DATA =Y BASICALLY THE YAML FILE
+        const pipeline = await UDPPApi.getPipeline(_str, OptionPanel.GetApiEndpoint());
+        // CREATE NODES
+        for (let i = 0; i < pipeline.stages.length; i++) {
+            const stage: PipelineStages = pipeline.stages[i];
+            const b: Block = await  this.CreateBlock(stage.function, stage.position.x, stage.position.y);
+        }
+
+
+
+
+
+// CREATE CONNECTIONS
+        for (let i = 0; i < pipeline.connections.length; i++) {
+            const connection: PipelineConnectionInformation = pipeline.connections[i];
+
+            console.log("connection:", connection.from.stage_name, " : ", connection.from.parameter_name, "=>", connection.to.stage_name, " : ", connection.to.parameter_name);
+            // GET HTML ELEMENT OF SOURCE BLOCK
+            let source_block = this.GetBlockByName(connection.from.stage_name);
+            console.log("source_block", source_block);
+
+
+            let target_block = this.GetBlockByName(connection.to.stage_name);
+            console.log("target_block", target_block);
+
+
+            if (source_block === null || target_block === null) {
+                return;
+            }
+
+            var source_socket: Socket | undefined;
+            // @ts-ignore
+            if (connection.from.parameter_name == "return" && source_block?.outputs.length > 0) {
+                source_socket = source_block?.outputs[0];
+            } else {
+                //source_socket
+            }
+            console.log("source_socket", source_socket)
+            //let endSocket = ToSocket(evt.target as HTMLElement);
+            //if (endSocket && this.connectorPath) {
+            //    this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
+            //    let edge = new Edge(this.connectorPath, this.selectedSocket, endSocket);
+
+
+            // Add the edges
+            //    this.selectedSocket.Connect(edge);
+            //    endSocket.Connect(edge);
+
+            // Add the edge to the list
+            //    this.edges.push(edge);
+            //this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);
+        }
+
+
     }
 }
