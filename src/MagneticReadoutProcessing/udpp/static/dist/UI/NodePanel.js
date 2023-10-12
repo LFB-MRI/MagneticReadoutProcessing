@@ -488,11 +488,11 @@ export class NodePanel {
             console.log("target_socket", target_socket);
             //let endSocket = ToSocket(evt.target as HTMLElement);
             //if (endSocket && this.connectorPath) {
-            //    this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
-            //    let edge = new Edge(this.connectorPath, this.selectedSocket, endSocket);
+            // this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
+            //     let edge = new Edge(this.connectorPath, source_socket, target_socket);
             // Add the edges
-            //    this.selectedSocket.Connect(edge);
-            //    endSocket.Connect(edge);
+            // this.selectedSocket.Connect(edge);
+            // endSocket.Connect(edge);
             // Add the edge to the list
             //    this.edges.push(edge);
             //this.nodeGraph?.CreatePipelineBlock(pipeline.stages[i]);

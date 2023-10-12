@@ -46,7 +46,18 @@ def updateinspectorparameter(pipeline:str, stagename:str, parameter:str, value: 
     value = bleach.clean(value)
 
 
-    # TODO CHECK PIPELINE EXISTS
+    # CHECK PIPELINE EXIST
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    if pipeline not in pipelines:
+        return jsonify({'error': 'pipeline does not exist'}), 500
+
+    pipeline_data:dict = pipelines[pipeline]
+
+    # CHECK STAGE EXIST
+    stage = UDPPFunctionTranslator.extract_pipelines_steps(_pipeline=pipeline_data)
+    if stagename not in stage:
+        return jsonify({'error': 'stage does not exist'}), 500
+
     # TODO CHECK STAGE EXISTS
     # TODO CHECK FUNCTION EXSTS
     # TODO PARSE TO FUNCTION TYPE

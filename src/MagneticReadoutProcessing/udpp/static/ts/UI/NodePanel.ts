@@ -603,8 +603,8 @@ export class NodePanel {
 
             //let endSocket = ToSocket(evt.target as HTMLElement);
             //if (endSocket && this.connectorPath) {
-            this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
-            let edge = new Edge(this.connectorPath, source_socket, target_socket);
+           // this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
+       //     let edge = new Edge(this.connectorPath, source_socket, target_socket);
 
 
             // Add the edges
