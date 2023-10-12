@@ -513,11 +513,7 @@ class UDPPFunctionTranslator():
             params: [] = []
             inspector_params: [] = []
 
-            for kparam, vparam in dict(v['parameters']).items():
-                if 'IP_' not in kparam:
-                    params.append({'name': kparam, 'value': vparam, 'type': 'string', 'direction': 'input'})
-                else:
-                    inspector_params.append({'name': kparam, 'value': vparam, 'type': 'string'})
+
 
             # RESOLVE function return value in order to set the output connector
             returns: [] = []
@@ -525,7 +521,7 @@ class UDPPFunctionTranslator():
             for r in rt:
                 if len(r) <= 0:
                     continue
-                returns.append({'name': '{}'.format(r), 'type': '{}'.format(r)})
+                returns.append({'name': '{}'.format(r), 'type': '{}'.format(r), 'direction': 'output'})
 
 
             # fixed position present ? => USE
@@ -549,8 +545,8 @@ class UDPPFunctionTranslator():
             stages.append({
                 'name': k,
                 'function': v['function'],
-                'parameters': params,
-                'inspector': inspector_params,
+                'parameters': UDPPFunctionTranslator.get_function_parameters(v['function']),
+                'inspector': UDPPFunctionTranslator.get_inspector_parameters(v['function']),
                 'position': pos,
                 'returns': returns,
 

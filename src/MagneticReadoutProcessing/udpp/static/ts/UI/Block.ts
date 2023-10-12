@@ -180,7 +180,8 @@ export class Block {
         this.element.classList.remove('selected');
     }
 
-    AddInputSocket(socket: Socket) {
+    AddInputSocket(socket: Socket, _id:string) {
+        socket.SetId(_id);
         this.inputs.push(socket);
         let socketElement = socket.GetElement();
 
@@ -195,7 +196,8 @@ export class Block {
         this.element.appendChild(socketElement);
     }
 
-    AddOutputSocket(socket: Socket) {
+    AddOutputSocket(socket: Socket, _id:string) {
+        socket.SetId(_id);
         this.outputs.push(socket);
         let socketElement = socket.GetElement();
 

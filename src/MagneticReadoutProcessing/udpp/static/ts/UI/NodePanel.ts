@@ -58,9 +58,6 @@ export class NodePanel {
 
         // This needs to listen from document, not panel
         document.addEventListener('keydown', (evt) => this.OnKeyDown(evt));
-
-
-
     }
 
     private GetElementOffset(el: HTMLElement): Offset {
@@ -134,16 +131,31 @@ export class NodePanel {
         block.AddOrSetTitle(name);
 
         block.SetDataName(_description.name)
+
+        console.log("_description.parameters", _description.parameters);
         // add input sockets
         for (let i: number = 0; i < _description.parameters.length; i++) {
             const param: PipelineStageParameter = _description.parameters[i];
-            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.INPUT, i));
+            //console.log("input", param.name, param);
+
+            let socket: Socket = new Socket(block, param.name, param.type, SocketType.INPUT, i);
+            console.log("socket", socket);
+            block.AddInputSocket(socket, param.name);
         }
 
         //add output sockets => in general just one
         for (let i: number = 0; i < _description.returns.length; i++) {
             const param: PipelineStageParameter = _description.returns[i];
-            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
+            //console.log("output", param.name, param);
+            let id: string = param.name; // param.name
+
+            if(param.name === param.type || param.name === ""){
+                id = "return";
+            }
+
+            let socket: Socket = new Socket(block, id, param.type, SocketType.OUTPUT, i);
+            console.log("socket", socket);
+            block.AddOutputSocket(socket, id);
         }
 
 
@@ -391,15 +403,13 @@ export class NodePanel {
         // Add the inputs
         for (let i in block.inputs) {
             let input = block.inputs[i];
-            let index = parseInt(i) + 1;
-            newBlock.AddInputSocket(new Socket(newBlock, "Input" + index, input.dataType, input.socketType, input.socketNumber));
+            newBlock.AddInputSocket(new Socket(newBlock, input.name, input.dataType, input.socketType, input.socketNumber), input.id);
         }
 
         // Add the outputs
         for (let i in block.outputs) {
             let output = block.outputs[i];
-            let index = parseInt(i) + 1;
-            newBlock.AddOutputSocket(new Socket(newBlock, "Output" + index, output.dataType, output.socketType, output.socketNumber));
+            newBlock.AddOutputSocket(new Socket(newBlock, output.name, output.dataType, output.socketType, output.socketNumber), output.id);
         }
 
         // place the block next to the original block
@@ -567,23 +577,39 @@ export class NodePanel {
             }
 
             var source_socket: Socket | undefined;
-            console.log(source_block?.outputs);
             // @ts-ignore
             if (connection.from.parameter_name == "return" && source_block?.outputs.length > 0) {
                 source_socket = source_block?.outputs[0];
             } else {
                 //source_socket
             }
-            console.log("source_socket", source_socket)
+            console.log("source_socket", source_socket);
+
+
+            var target_socket: Socket | undefined;
+            console.log(target_block?.inputs);
+
+            for (let j = 0; j < target_block?.inputs.length; j++) {
+                const s: Socket = target_block?.inputs[j];
+                debugger;
+                if (connection.to.parameter_name === s.GetId()) {
+                    target_socket = s;
+                    break;
+                }
+            }
+
+            console.log("target_socket", target_socket);
+
+
             //let endSocket = ToSocket(evt.target as HTMLElement);
             //if (endSocket && this.connectorPath) {
-            //    this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
-            //    let edge = new Edge(this.connectorPath, this.selectedSocket, endSocket);
+            this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
+            let edge = new Edge(this.connectorPath, source_socket, target_socket);
 
 
             // Add the edges
-            //    this.selectedSocket.Connect(edge);
-            //    endSocket.Connect(edge);
+               // this.selectedSocket.Connect(edge);
+               // endSocket.Connect(edge);
 
             // Add the edge to the list
             //    this.edges.push(edge);

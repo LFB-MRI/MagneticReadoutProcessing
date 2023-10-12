@@ -2,8 +2,10 @@ import { SocketType, elementToSocket, socketColorTable } from "./Shared.js";
 export class Socket {
     constructor(owner, name, dataType, socketType, socketNumber) {
         this.socketNumber = 0;
+        this.id = "";
         this.owner = owner;
         this.name = name;
+        this.id = name;
         this.dataType = dataType;
         this.socketType = socketType;
         this.edges = [];
@@ -13,6 +15,12 @@ export class Socket {
         this.socketNumber = socketNumber;
         this.element = this.CreateElement();
         elementToSocket.set(this.element, this);
+    }
+    SetId(_name) {
+        this.id = _name;
+    }
+    GetId() {
+        return this.id;
     }
     Connect(edge) {
         var _a;

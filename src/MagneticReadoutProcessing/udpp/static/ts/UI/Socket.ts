@@ -13,10 +13,11 @@ export class Socket {
     color: string;
     element: HTMLElement;
     socketNumber: number = 0;
-
+    id: string = "";
     constructor(owner: Block, name: string, dataType: string, socketType: SocketType, socketNumber: number) {
         this.owner = owner;
         this.name = name;
+        this.id = name;
         this.dataType = dataType;
         this.socketType = socketType;
         this.edges = [];
@@ -26,6 +27,13 @@ export class Socket {
         this.socketNumber = socketNumber;
         this.element = this.CreateElement();
         elementToSocket.set(this.element, this);
+    }
+    public SetId(_name: string){
+        this.id = _name;
+    }
+
+    public GetId(): string{
+        return this.id;
     }
 
     Connect(edge: Edge) {

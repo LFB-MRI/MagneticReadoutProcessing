@@ -130,7 +130,8 @@ export class Block {
         this.inspector.deselectNode();
         this.element.classList.remove('selected');
     }
-    AddInputSocket(socket) {
+    AddInputSocket(socket, _id) {
+        socket.SetId(_id);
         this.inputs.push(socket);
         let socketElement = socket.GetElement();
         let nodeHeight = this.size[1];
@@ -141,7 +142,8 @@ export class Block {
         }
         this.element.appendChild(socketElement);
     }
-    AddOutputSocket(socket) {
+    AddOutputSocket(socket, _id) {
+        socket.SetId(_id);
         this.outputs.push(socket);
         let socketElement = socket.GetElement();
         let nodeHeight = this.size[1];

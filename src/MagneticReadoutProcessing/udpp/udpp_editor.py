@@ -141,10 +141,8 @@ def getpipeline(filename: str):
 
     # create new pipeline and return content
     pipeline: dict = UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.PIPELINES_FOLDER)
-
     # here we will perform a redirect to the new pipeline name
     pipelinefilename:str = list(pipeline.keys())[0]
-
     # redirect to new base url with replaced filename
     r = request
     return redirect("{}".format(r.base_url.replace(filename, pipelinefilename)))

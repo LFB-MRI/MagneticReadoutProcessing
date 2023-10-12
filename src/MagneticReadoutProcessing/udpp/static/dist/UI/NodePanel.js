@@ -93,15 +93,26 @@ export class NodePanel {
         const name = _description.function.replace("_", "<br>");
         block.AddOrSetTitle(name);
         block.SetDataName(_description.name);
+        console.log("_description.parameters", _description.parameters);
         // add input sockets
         for (let i = 0; i < _description.parameters.length; i++) {
             const param = _description.parameters[i];
-            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.INPUT, i));
+            //console.log("input", param.name, param);
+            let socket = new Socket(block, param.name, param.type, SocketType.INPUT, i);
+            console.log("socket", socket);
+            block.AddInputSocket(socket, param.name);
         }
         //add output sockets => in general just one
         for (let i = 0; i < _description.returns.length; i++) {
             const param = _description.returns[i];
-            block.AddInputSocket(new Socket(block, param.name, param.type, SocketType.OUTPUT, i));
+            //console.log("output", param.name, param);
+            let id = param.name; // param.name
+            if (param.name === param.type || param.name === "") {
+                id = "return";
+            }
+            let socket = new Socket(block, id, param.type, SocketType.OUTPUT, i);
+            console.log("socket", socket);
+            block.AddOutputSocket(socket, id);
         }
         for (let i = 0; i < _description.inspector_parameters.length; i++) {
             const ip = _description.inspector_parameters[i];
@@ -317,14 +328,12 @@ export class NodePanel {
         // Add the inputs
         for (let i in block.inputs) {
             let input = block.inputs[i];
-            let index = parseInt(i) + 1;
-            newBlock.AddInputSocket(new Socket(newBlock, "Input" + index, input.dataType, input.socketType, input.socketNumber));
+            newBlock.AddInputSocket(new Socket(newBlock, input.name, input.dataType, input.socketType, input.socketNumber), input.id);
         }
         // Add the outputs
         for (let i in block.outputs) {
             let output = block.outputs[i];
-            let index = parseInt(i) + 1;
-            newBlock.AddOutputSocket(new Socket(newBlock, "Output" + index, output.dataType, output.socketType, output.socketNumber));
+            newBlock.AddOutputSocket(new Socket(newBlock, output.name, output.dataType, output.socketType, output.socketNumber), output.id);
         }
         // place the block next to the original block
         newBlock.element.style.left = (parseInt(block.element.style.left) + 20) + 'px';
@@ -458,7 +467,6 @@ export class NodePanel {
                 return;
             }
             var source_socket;
-            console.log(source_block === null || source_block === void 0 ? void 0 : source_block.outputs);
             // @ts-ignore
             if (connection.from.parameter_name == "return" && (source_block === null || source_block === void 0 ? void 0 : source_block.outputs.length) > 0) {
                 source_socket = source_block === null || source_block === void 0 ? void 0 : source_block.outputs[0];
@@ -467,6 +475,17 @@ export class NodePanel {
                 //source_socket
             }
             console.log("source_socket", source_socket);
+            var target_socket;
+            console.log(target_block === null || target_block === void 0 ? void 0 : target_block.inputs);
+            for (let j = 0; j < (target_block === null || target_block === void 0 ? void 0 : target_block.inputs.length); j++) {
+                const s = target_block === null || target_block === void 0 ? void 0 : target_block.inputs[j];
+                debugger;
+                if (connection.to.parameter_name === s.GetId()) {
+                    target_socket = s;
+                    break;
+                }
+            }
+            console.log("target_socket", target_socket);
             //let endSocket = ToSocket(evt.target as HTMLElement);
             //if (endSocket && this.connectorPath) {
             //    this.connectorPath = this.UpdateConnection(this.connectorPath, this.selectedSocket, endSocket, evt);
