@@ -32,7 +32,7 @@ signal.signal(signal.SIGINT, signal_andler)
 
 @app_flask.route("/api/updateinspectorparameter/<pipeline>/<stagename>/<parameter>/<value>")
 @cross_origin()
-def updateinspectorparameter(pipeline:str, stagename:str, parameter:str, value: str):
+def updateinspectorparameter(pipeline:str, stagename:str, parameter:str, value: str = ""):
     assert pipeline == request.view_args['pipeline']
     pipeline = bleach.clean(pipeline)
 
