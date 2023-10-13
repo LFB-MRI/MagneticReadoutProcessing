@@ -186,7 +186,10 @@ By adapting the sensor software on the basis of the documentation, a direct eval
 Through the implemented auto-numbering routine and the feedback of this to the host software, each individual sensor is assigned to an individual measurement in the host software.
 
 
-\subsection{Calibration strategy}
+
+
+\subsection{Calibration strategy \label{ref_calib}}
+
 
 
 \subsection{Measurement Run}
@@ -194,12 +197,9 @@ Through the implemented auto-numbering routine and the feedback of this to the h
 
 \subsection{Data analysis pipeline}
 
-
-
-
-
-cli einstellungen
-+ ergebnis
+For this purpose, the framework was extended by a CLI-based batch processing, which allows measurements of all sensors with the appropriate calibration measurements (offset, temperature) to be processed automatically.
+The parameterisation is done by means of a customised configuration file in which the folders for raw and calibration measurements are specified.
+The assignment is then done by a regex rule.
 
 
 
@@ -211,6 +211,25 @@ cli einstellungen
 %Evaluation
 
 \section{Evaluation}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=8cm]{magnets_with_holder.jpg}}
+\caption{12x12x12mm N45 neodymium test magnets }
+\label{mag_with_holder_fig}
+\end{figure}
+
+The test setup used consists of an 8x8 sensor array, which consists of 8 sensor slices with 8 TLV493d sensors each.
+The test objects to be characterised were 12x12x12mm N45 neodymium magnets \ref{mag_with_holder_fig}.
+These were mounted in a 3D-printed backlash-free holder with a distance of 10mm to the top of the sensor board \ref{mag_pcb_side_cut_fig}.
+
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=8cm]{magnet_pcb_drawing.png}}
+\caption{Sectional side cut: circle marks the center point of manget with sensor pcb on the bottom}
+\label{mag_pcb_side_cut_fig}
+\end{figure}
+
+
 
 \subsection{Comparison}
 % mit mechanischen aufbau
