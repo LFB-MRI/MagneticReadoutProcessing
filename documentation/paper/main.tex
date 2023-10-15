@@ -183,9 +183,11 @@ Modules that fall into an out-of-sync status can thus be resynchronised directly
 The collection and subsequent processing of the data read from the sensor array is carried out on another computer system (host).
 For this purpose, the Python framework is used, which was specially developed for the automated processing of magnetic field sensor data.
 By adapting the sensor software on the basis of the documentation, a direct evaluation of the sensor is possible through the library.
-Through the implemented auto-numbering routine and the feedback of this to the host software, each individual sensor is assigned to an individual measurement in the host software.
+Through the implemented auto-numbering routine and the feedback of this to the host software, each individual sensor is assigned to an individual measurement file in the host software.
 
-
+For this purpose, the framework was extended by a CLI-based batch processing, which allows measurements of all sensors with the appropriate calibration measurements (offset, temperature) to be processed automatically.
+The parameterisation is done by means of a customised configuration file in which the folders for raw and calibration measurements are specified.
+The assignment is then done by a regex rule.
 
 
 \subsection{Calibration strategy \label{ref_calib}}
@@ -197,9 +199,9 @@ Through the implemented auto-numbering routine and the feedback of this to the h
 
 \subsection{Data analysis pipeline}
 
-For this purpose, the framework was extended by a CLI-based batch processing, which allows measurements of all sensors with the appropriate calibration measurements (offset, temperature) to be processed automatically.
-The parameterisation is done by means of a customised configuration file in which the folders for raw and calibration measurements are specified.
-The assignment is then done by a regex rule.
+
+
+
 
 
 
