@@ -82,6 +82,7 @@ magnetic resonance imaging (\gls{mri})
     \hline
     \end{tabular}
     \caption{Implemented 3D Magnetometer ICs}
+    \label{implemented_sensors_fig}
 \end{table}
 
 
@@ -125,10 +126,18 @@ Each sensor slice also implements its own power management of the sensors, both 
 
 Depending on the type of sensor used, the current flowing through the individual layers can influence its measurement result.
 Therefore, the control logic and voltage converter components were placed separately from the sensors in the board layout.
-In addition, individual sensors can be specifically supplied with voltage. This was implemented using a switchable power supply (PCF847). 
+In addition, individual sensors can be specifically supplied with voltage. This was implemented using a remote GPIO expander IC PCF847.
+
+This was designed as a switchable voltage source, as each of the 8 outputs can supply up to 50 mA.
+All currently implemented sensors from \ref{implemented_sensors_fig} require less than 10 mA in measurement mode, so the PCF847 is a cost-effective solution.
+To operate sensors with a higher power consumption, the PCF847 can be bypassed or an additional power distribution circuit breaker IC such as the TPS22 can be used.
+
+
+
 The software is later (when activated) able to activate only the sensor that is to be read out at the current time.
 A disadvantage of this implementation, however, is that each sensor must be reconfigured after activating the power supply.
 Depending on the selected sensor, this can take up to an additional 10ms per sensor measurement.
+
 
 
 
@@ -137,7 +146,7 @@ Depending on the selected sensor, this can take up to an additional 10ms per sen
 
 % 3d printed cases for magnet holders
 %
-
+\subsection{Limitierungen}
 
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -200,7 +209,11 @@ The assignment is then done by a regex rule.
 \subsection{Data analysis pipeline}
 
 
-
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=8cm]{dataprocessing_pipeline.png}}
+\caption{Implemented Data analysis pipeline}
+\label{dataprocessing_pipeline_fig}
+\end{figure}
 
 
 
