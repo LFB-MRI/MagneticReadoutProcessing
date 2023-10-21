@@ -1,11 +1,12 @@
 """ class for interfacing (hardware, protocol) sensors running the UnifiedSensorFirmware """
+import time
 
 import serial
 import serial.tools.list_ports
 import re
 import os
 import io
-
+from socket import *
 
 
 class MRPHalException(Exception):
@@ -90,6 +91,7 @@ class MRPPHal:
 
         SERIAL_LUT = [
             '386731533439'  # FIRST EVER BUILD SENSOR :)
+            '00000000d0ad2036' # FIRST ROTATIONAL SENSOR
             #'0483:5740'     # USB VID:PID IS WORKING TOO
         ]
 
@@ -99,6 +101,49 @@ class MRPPHal:
         if _serial_number in SERIAL_LUT:
             return True
         return False
+
+
+    @staticmethod
+    def list_remote_serial_ports() -> [MRPHalSerialPortInformation]:
+        sock = socket(AF_INET, SOCK_DGRAM)
+        sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+        sock.settimeout(5)
+
+        server_address = ('255.255.255.255', 9434)
+        message = 'pfg_ip_broadcast_cl'
+
+        # RESULT LIST
+        valid_ports: [MRPHalSerialPortInformation] = []
+        entry_list: [str] = []
+        for i in range(10):
+            # Send data
+            sent = sock.sendto(message.encode(), server_address)
+
+            data, server = sock.recvfrom(4096)
+            data_str = data.decode('UTF-8')
+
+            if 'pfgipresponseserv' in data_str:
+
+                if '_' in data_str:
+                    sp: [str] = data_str.split('_')
+                    host: str = server[0]
+                    port: int = int(sp[1])
+                    senid: str = "{}:{}".format(host, port)
+                    if len(sp) >= 2:
+                        senid = sp[2]
+
+                    entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("socket://{}:{}".format(host, port))
+                    entry.name = "Unified Sensor {}".format(senid)
+
+
+                    if senid not in entry_list:
+                        valid_ports.append(entry)
+                        entry_list.append(senid)
+
+            time.sleep(0.1)
+
+        return valid_ports
 
     @staticmethod
     def list_serial_ports(_filter_devicepath: str = ".+", _blacklist_devicepath: [str] = ['/dev/cu.Bluetooth-Incoming-Port', '/dev/cu.HKAuraBT']) -> [MRPHalSerialPortInformation]:
@@ -162,6 +207,8 @@ class MRPPHal:
                     valid_ports.append(MRPHalSerialPortInformation(port.device, port.device))
 
         return valid_ports
+
+
 
 
     current_port: MRPHalSerialPortInformation = None

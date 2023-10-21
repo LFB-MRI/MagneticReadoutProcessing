@@ -112,12 +112,19 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
 
 
 @app.command()
-def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", path: Optional[str] = None):
+def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", path: Optional[str] = None, exclude_network_sensors: bool = False):
 
     device_path: MRPHal.MRPHalSerialPortInformation = None
+
+
     # If the user gives no default path, prompt with a list of ports
     if path is None or len(path) <= 0:
         ports = MRPHal.MRPPHal.list_serial_ports()
+
+        if not exclude_network_sensors:
+            network_ports = MRPHal.MRPPHal.list_remote_serial_ports()
+            ports = [*ports, *network_ports]
+
         if len(ports) <= 0:
             print("no connected sensors found")
             raise typer.Abort("no connected sensors found")
