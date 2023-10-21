@@ -89,26 +89,30 @@ magnetic resonance imaging (\gls{mri})
 % mixture of sensors
 % tablee with ranges
 % digital only at the moment
+
 \subsection{Sensor slice}
 
 Each sensor slice has its own microprocessor as a communication element. this takes over the task of reading the connected sensors and transmitting the results via the system bus.
 The interfaces for different sensor types are also implemented in its firmware. this makes it possible to mix different sensor types on one slice. the slice presents itself to the rest of the system as a uniform sensor with a uniform measurement result.
 For this purpose, calibration and unit conversions are automatically applied in the firmware of the slice, depending on which sensor has been detected.
 
+Since all of the digital sensors listed in \ref{implemented_sensors_fig} are connected via an I2C bus, they can be addressed via an individual address.
+When using several identical sensors on one sensor slice, however, address collisions occur on the I2C bus. Some I2C devices offer the option of changing the address in hardware via the wiring of address inputs, but this requires a change in the hardware. 
+In order to prevent this, an I2C multiplexer switch IC .was used here. Thus, in the current hardware version, up to eight identical sensors with the same address can be used per slice.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=8cm]{magcam_sensor_module.png}}
-\caption{Sensor Slice with eight TLV493d sensors}
+\caption{Sensor Slice with eight TLV493d sensors and readout electronics (STM32G031, PCF8574 and TCA9548)on the lieft side.}
 \label{magcam_sensor_module_fig}
 \end{figure}
 
-The sensor slice shown in Figure \ref{anpmagcam_sensor_module_fig_fig} consists of 8 TLV493d sensors spaced 8mm apart on an 8mm x 64mm PCB.
-To build a larger sensor array, the golf finger pads of the board can be soldered to other similar boards in a daisy chain configuration.
+The sensor slice shown in Figure \ref{anpmagcam_sensor_module_fig} consists of eight TLV493d sensors spaced 8mm apart on an 8mm x 64mm PCB.
+To build a larger sensor array, the gold finger pads of the board can be soldered to other similar boards in a daisy chain configuration.
 
 The daisy chain design simplifies connectivity as multiple slices can be connected in a linear fashion, reducing complex wiring.
 This approach simplifies expansion and troubleshooting, as new slices can be easily added or removed without disrupting the entire system.
 
-In this way, an 8x8 sensor array can be built quickly, and the mechanical stability and alignment is ensured by the interconnection of the golf finger pads.
+In this way, an n*8x8 sensor array can be built quickly. The mechanical stability and alignment is ensured by the interconnection of the golf finger pads.
 
 \subsection{Communication bus}
 
@@ -153,7 +157,7 @@ Depending on the selected sensor, this can take up to an additional 10ms per sen
 % Embedded System Software
 \section{Embedded System Software}
 
-\subsection{Automatic Sub-Sensor Detection}
+\subsection{Automatic Sensor-Slice Detection}
 
 Due to the modular hardware design, it is necessary for the software to be able to recognise the individual slices automatically.
 without the user having to enter the number of connected slices in the software.
@@ -167,7 +171,8 @@ Through an additional auto-numbering sequence after the system start, all connec
 \label{anp_fig}
 \end{figure}
 
-For this purpose, an additional clock line is used to carry out the protocol described (Figure \ref{anp_fig}). Later, this is used for synchronisation in order to have to use as few data lines as possible between the slices.
+For this purpose, an additional clock line is used to carry out the protocol described (Figure \ref{anp_fig}).
+Later, this is used for synchronisation in order to have to use as few data lines as possible between the slices.
 % each slice gets its own id and transmits +1 to the next
 
     
@@ -184,6 +189,10 @@ All other sensors use this signal to trigger a readout interrupt.
 This procedure also ensures that the rest of the system maintains a synchronised state even if sensor slices fail or are restarted.
 Modules that fall into an out-of-sync status can thus be resynchronised directly after a synchronisation pulse.
 
+
+* currently limited by software to 50hz
+* canbus speed limitations
+* enable average algorithms between bus send to allow a higher readout rate.
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 %Analysis Software Framework
