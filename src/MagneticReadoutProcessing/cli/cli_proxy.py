@@ -32,14 +32,15 @@ def getMachine_addr():
     if "linux" in os_type:
         command = "hal-get-property --udi /org/freedesktop/Hal/devices/computer --key system.hardware.uuid"
     elif "darwin" in os_type:
-        command = "ioreg -l | grep IOPlatformSerialNumber"
+        #command = "ioreg -l | grep IOPlatformSerialNumber"
+        command = "cat /proc/cpuinfo | grep Serial"
     elif "windows" in os_type:
         command = "wmic bios get serialnumber"
 
     if len(command) > 0:
-        return os.popen(command).read().replace("\n", "").replace("	", "").replace(" ", "").replace('\"', '').replace('=','').replace("IOPlatformSerialNumber", "").replace("|", "")
+        return os.popen(command).read().replace("\n", "").replace("	", "").replace(" ", "").replace('\"', '').replace('=','').replace("IOPlatformSerialNumber", "").replace("|", "").replace(" ", "").replace(":", "").replace("Serial", "")
 
-    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
 
 @app.command()
 def start(ctx: typer.Context, advertised_port: Annotated[int, typer.Argument()] = 10001,
