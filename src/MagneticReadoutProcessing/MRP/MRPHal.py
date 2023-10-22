@@ -42,6 +42,14 @@ class MRPHalSerialPortInformation:
         if _baudrate > 0:
             self.baudrate = _baudrate
 
+
+    def is_remote_port(self) -> bool:
+        if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
+            return True
+        elif 'loop://' in self.device_path:
+            return True
+
+        return False
     def is_valid(self) -> bool:
         """
         check if the _path exist in the filesystem
@@ -257,7 +265,7 @@ class MRPPHal:
             try:
                 # call opens directly
                 # if baudrate is 0 => tcp is used
-                if self.current_port.baudrate <= 0:
+                if self.current_port.is_remote_port():
                     self.serial_port_instance = serial.serial_for_url(self.current_port.device_path, timeout=1)
                 else:
                     self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate)
