@@ -21,9 +21,9 @@ class MRPHalSerialPortInformation:
     """
     name: str = "Unknown"
     device_path: str = ""
-    baudrate = 115200
+    baudrate = 0
 
-    def __init__(self, _path: str, _name: str = "Unified Sensor", _baudrate: int = 115200):
+    def __init__(self, _path: str, _name: str = "Unified Sensor", _baudrate: int = 0):
         """
         contructor to save some information about the serial port
 
@@ -50,8 +50,7 @@ class MRPHalSerialPortInformation:
         :rtype: bool
         """
 
-        if self.baudrate is None or self.baudrate not in serial.SerialBase.BAUDRATES:
-            return False
+
 
         if self.device_path is None or len(self.device_path) <= 0:
             return False
@@ -61,6 +60,10 @@ class MRPHalSerialPortInformation:
         elif 'loop://' in self.device_path:
             return True
         elif os.path.exists(self.device_path): # os.path.exists is needed for fs access pathlib is not working for /dev on mac
+
+            if self.baudrate is None or self.baudrate not in serial.SerialBase.BAUDRATES:
+                return False
+
             return True
         return False
 
@@ -161,6 +164,7 @@ class MRPPHal:
         :rtype: [MRPHalSerialPortInformation]
         """
 
+        DEFAULT_BAUDRATE: int = 115200
         # DEFAULT ALLOW ANY PORT
         if _filter_devicepath is None:
             _filter = ".+"
@@ -188,23 +192,23 @@ class MRPPHal:
             if port.serial_number is not None and len(port.serial_number) > 0:
                 if MRPPHal.check_serial_number(port.serial_number):
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(port.serial_number)))
+                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(port.serial_number), _baudrate=DEFAULT_BAUDRATE))
                 else:
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number)))
+                        MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number), _baudrate=DEFAULT_BAUDRATE))
             elif port.pid is not None and port.vid is not None:
                 combined = "{}:{}".format(port.pid, port.vid)
                 if MRPPHal.check_serial_number(port.serial_number):
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(combined)))
+                        MRPHalSerialPortInformation(port.device, "Unified Sensor {}".format(combined), _baudrate=DEFAULT_BAUDRATE))
                 else:
                     valid_ports.append(
-                        MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number)))
+                        MRPHalSerialPortInformation(port.device, "Unknown Sensor {}".format(port.serial_number), _baudrate=DEFAULT_BAUDRATE))
             else:
                 if port.name is not None and len(port.name) > 0:
-                    valid_ports.append(MRPHalSerialPortInformation(port.device, port.name))
+                    valid_ports.append(MRPHalSerialPortInformation(port.device, port.name, _baudrate=DEFAULT_BAUDRATE))
                 else:
-                    valid_ports.append(MRPHalSerialPortInformation(port.device, port.device))
+                    valid_ports.append(MRPHalSerialPortInformation(port.device, port.device, _baudrate=DEFAULT_BAUDRATE))
 
         return valid_ports
 
@@ -252,7 +256,16 @@ class MRPPHal:
         if self.serial_port_instance is None:
             try:
                 # call opens directly
-                self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate, rtscts=True, dsrdtr=True, timeout=self.READLINE_TIMEOUT)
+                # if baudrate is 0 => tcp is used
+                if self.current_port.baudrate <= 0:
+                    self.serial_port_instance = serial.serial_for_url(self.current_port.device_path, timeout=1)
+                else:
+                    self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate)
+                # FURTHER CONFIGURATION
+                self.serial_port_instance.rtscts = True
+                self.serial_port_instance.dsrdtr = True
+                self.serial_port_instance.timeout = self.READLINE_TIMEOUT
+
                 # CREATE A BUFFERED READ/WRITE INSTANCE TO HANDlE send/rec over the port
                 self.sio = io.TextIOWrapper(io.BufferedRWPair(self.serial_port_instance, self.serial_port_instance))
             except Exception as e: # remap exception ugly i know:)
