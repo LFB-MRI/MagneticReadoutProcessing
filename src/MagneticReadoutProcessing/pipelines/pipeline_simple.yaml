@@ -6,7 +6,7 @@ settings:
 stage import:
   function: import_readings
   parameters:
-    IP_input_folder: tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+    IP_input_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
 
 
 stage inspect:

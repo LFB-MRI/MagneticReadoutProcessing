@@ -94,7 +94,7 @@ class UDPPFunctionCollection:
         return rd
 
     @staticmethod
-    def import_readings(IP_input_folder:str = "", IP_file_regex: str = "(.)*.mag.json", IP_parse_idx_in_filename: bool = True) -> [MRPReading.MRPReading]:
+    def import_readings(IP_input_folder:str = "./", IP_file_regex: str = "(.)*.mag.json", IP_parse_idx_in_filename: bool = True) -> [MRPReading.MRPReading]:
         """
         Imports all readings found in the folder given from the input_folder.
         It restores all meta-data and datapoints.
@@ -105,7 +105,7 @@ class UDPPFunctionCollection:
         :param IP_file_regex: to only allow certain filenames using a regex string
         :type IP_file_regex: str
 
-        :param IP_parse_idx_in_filename: parses string cIDX<YXZ> in filename and set <XYZ> as magnet id
+        :param IP_parse_idx_in_filename: parses string cIDX<YXZ> in filename and set <XYZ> as measurement id, this is used if manual set id from filename should be used
         :type IP_parse_idx_in_filename: bool
 
         :returns: Returns the imported readings as [MRPReading.MRPReading] instances
@@ -115,31 +115,44 @@ class UDPPFunctionCollection:
         if IP_input_folder is None or len(IP_input_folder) <= 0:
             raise UDPPFunctionCollectionException("import_readings: input_folder parameter empty")
         # CHECK FOLDER EXISTS
+        input_folder: str = IP_input_folder
+
         if not str(IP_input_folder).startswith('/'):
             input_folder = str(Path(IP_input_folder).resolve())
         # GET LOGGER
         log: logger = UDPPFLogger.UDPFLogger()
-        log.run_log("import_readings: input_folder parameter set to {}".format(IP_input_folder))
+        log.run_log("import_readings: input_folder parameter set to {}".format(input_folder))
 
         # CHECK FOLDER EXISTS
-        if not os.path.exists(IP_input_folder):
+        if not os.path.exists(input_folder):
             raise UDPPFunctionCollectionException("import_readings: input_folder parameter does not exist on the system".format(input_folder))
 
 
 
         # IMPORT READINGS
-        readings_to_import: [str] = [f for f in os.listdir(IP_input_folder) if re.match(r'{}'.format(IP_file_regex), f)]
+        readings_to_import: [str] = [f for f in os.listdir(input_folder) if re.match(r'{}'.format(IP_file_regex), f)]
         imported_results: [MRPReading.MRPReading] = []
         for rti in readings_to_import:
             log.run_log("import_readings: import reading {}".format(rti))
             reading: MRPReading.MRPReading = MRPReading.MRPReading()
-            reading.load_from_file(rti)
+
+            reading_abs_filepath: str = str(Path(input_folder).joinpath(Path(rti)))
+            reading.load_from_file(reading_abs_filepath)
 
 
             if IP_parse_idx_in_filename:
                 f: [str] = rti.split("cIDX")
+                cIDX: str = ""
                 if len(f) > 0:
-                    raise  Exception("implement")
+                    for c in f[1]:
+                        if c.isdigit():
+                            cIDX = cIDX + str(c)
+
+                if len(cIDX) > 0:
+                    reading.measurement_config.id = cIDX
+                    reading.set_additional_data("cIDX", cIDX)
+                    reading.set_additional_data("IP_parse_idx_in_filename", "1")
+
 
             imported_results.append(reading)
 

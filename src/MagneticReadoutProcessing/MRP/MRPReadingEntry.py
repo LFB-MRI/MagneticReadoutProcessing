@@ -100,29 +100,52 @@ class MRPReadingEntry:
             errors = errors + 1
 
         if 'phi' in _dict:
-            self._phi = float(_dict['phi'])
+            v = _dict.get('phi')
+            if v is None:
+                v = 0.0
+            self._phi = float(v)
             errors = errors + 1
 
         if 'theta' in _dict:
-            self._theta = float(_dict['theta'])
+            v = _dict.get('theta')
+            if v is None:
+                v = 0.0
+            self._theta = float(v)
             errors = errors + 1
+
         if 'reading_index_phi' in _dict:
-            self._reading_index_phi = int(_dict['reading_index_phi'])
+            v = _dict.get('reading_index_phi')
+            if v is None:
+                v = 0.0
+            self._reading_index_phi = int(v)
             errors = errors + 1
 
         if 'reading_index_theta' in _dict:
-            self._reading_index_theta = int(_dict['reading_index_theta'])
+            v = _dict.get('reading_index_theta')
+            if v is None:
+                v = 0.0
+            self._reading_index_theta = int(v)
             errors = errors + 1
 
         if 'is_valid' in _dict:
-            self._is_valid = bool(_dict['is_valid'])
+            v = _dict.get('is_valid')
+            if v is None:
+                v = True
+            self._is_valid = bool(v)
             errors = errors + 1
+
         if 'id' in _dict:
-            self._id = int(_dict['id'])
+            v = _dict.get('id')
+            if v is None:
+                v = 0
+            self._id = int(v)
             errors = errors + 1
 
         if 'temperature' in _dict:
-            self._temperature = int(_dict['temperature'])
+            v = _dict.get('temperature')
+            if v is None:
+                v = 0.0
+            self._temperature = int(v)
             errors = errors + 1
 
         if errors < len(self.__dict__()):

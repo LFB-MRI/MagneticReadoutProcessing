@@ -2,6 +2,7 @@
 import os
 import queue
 import random
+import typing
 from pathlib import Path
 import yaml
 from queue import Queue
@@ -43,6 +44,18 @@ class IterableQueue():
 class UDPPFunctionTranslator():
     """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
+    @staticmethod
+    def execute_function_by_name(_function_name: str, _parameters: dict) -> typing.Any:
+        if not _function_name or len(_function_name) <= 0:
+            raise Exception("execute_function_by_name: _function_name")
+
+        function_object = getattr(UDPPFunctionCollection, _function_name)
+        #try:
+        ret: typing.Any = function_object(**_parameters)
+        return ret
+        #except Exception as e:
+
+        #return None
     @staticmethod
     def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies: bool = False) -> [str]:
         """
@@ -171,9 +184,6 @@ class UDPPFunctionTranslator():
             returns.append({'id': '{}'.format(r), 'name': '{}'.format(r), 'type': '{}'.format(r)})
         return returns
 
-
-
-
     @staticmethod
     def get_node_connection_list( _calltree_graph: nx.DiGraph) -> []:
         """
@@ -204,10 +214,6 @@ class UDPPFunctionTranslator():
                 })
 
         return ret
-
-
-
-
 
     @staticmethod
     def get_function_return_types(_function_name: str) -> [str]:

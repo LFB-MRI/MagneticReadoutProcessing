@@ -83,6 +83,7 @@ def run(ctx: typer.Context):
             for node in subcalltree.nodes:
                 intermediate_results[str(node)] = None
 
+
         # OPTION TO EXPORT THE EXPORT A SNAPSHOT OF THE CURRENT COMPUTED READING AFTER EACH STEP
         export_intermediate_results: bool = False
         if 'export_intermediate_results' in settings and settings['export_intermediate_results']:
@@ -90,8 +91,63 @@ def run(ctx: typer.Context):
 
 
         # TODO
+        #subcalltree: nx.DiGraph.
         for subcalltree in sub_call_trees:
-            pass
+            # ITERATE OVER ALL CONNECTED STAGES PRESENT IN THE SUCCESSOR FIELD
+            # ALTERNATIVE IS TO USE:
+            # ALLE NODES WITH INGRAD 0 AND OUTGRAD > 0
+            # ALL REMAINING NODES WITH INGRAD > 0
+            for successor in subcalltree.succ:
+                stage_name: str = successor
+                print("processing:{}".format(stage_name))
+                if stage_name not in steps:
+                    raise Exception("{} no present in current steps".format(stage_name))
+                stage_information: dict = steps[stage_name]
+                stage_function_name: str = stage_information['function']
+
+                UDPPFunctionTranslator.get_function(stage_function_name)
+                function_parameters_from_stages = UDPPFunctionTranslator.get_function_parameters(stage_function_name)
+                function_parameters_from_inspector:[dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
+                # POPULATE PARAMETER DICT
+                parameters: dict = {}
+
+
+                ## PROCESS PARAMETERS FROM FROM OTHER STAGES
+                for otpentry in function_parameters_from_stages:
+                    pass
+                ## PROCESS INSPECTOR PARAMETER
+                for ip_entry in function_parameters_from_inspector:
+                    name: str = ip_entry['id']
+                    type: str = ip_entry['type']
+
+                    # TODO COMPLEX TYPES as json objects ?
+
+                    value = None
+                    # ASSIGN DEFAULT VALUE
+                    if 'value' in ip_entry:
+                        _value = ip_entry['value']
+                        if len(_value) > 0:
+                            value = _value
+
+
+                    # OVERRIDE USER GIVEN PARAMETER VALUE
+                    if 'parameters' in stage_information:
+                        if name in stage_information['parameters']:
+                            _value = stage_information['parameters'][name]
+                            if _value:
+                                value = _value
+                            else:
+                                value = None
+
+                    parameters[name] = value
+
+                # EXECUTE FUNCTION STORE RETURN RESULT
+                intermediate_results[str(stage_name)] = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
+
+                i = 0
+
+
+
             # FOR EACH NODE DFS STARTING AT STARTNODE
             
             # READ INPUT PARAMETER FROM YAML IF STAT OR FROM INTERTMEDIATE DICT
