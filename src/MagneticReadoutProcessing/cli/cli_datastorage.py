@@ -13,6 +13,7 @@ class CLIDatastorageEntries(Enum):
     READING_DATAPOINT_COUNT = 5
     READING_AVERAGE_COUNT = 6
     READING_MAGNET_TYPE = 7
+    SENSOR_SERIAL_BAUDRATE = 8
 
 class CLIDatastorage:
 
@@ -80,6 +81,9 @@ class CLIDatastorage:
         self.set_value(CLIDatastorageEntries.READING_DATAPOINT_COUNT, "1")
         self.set_value(CLIDatastorageEntries.READING_AVERAGE_COUNT, "1")
         self.set_value(CLIDatastorageEntries.READING_MAGNET_TYPE, "0")
+        self.set_value(CLIDatastorageEntries.SENSOR_SERIAL_BAUDRATE, "115200")
+
+
 
 
     def init(self):

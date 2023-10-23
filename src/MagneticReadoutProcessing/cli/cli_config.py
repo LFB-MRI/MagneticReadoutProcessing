@@ -164,6 +164,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
 
     # TEST CONNECTION
     sensor_connection = MRPHal.MRPPHal(device_path)
+
     sensor_connection.connect()
     print("sensor connected: {} ID:{}".format(sensor_connection.is_connected(), sensor_connection.get_sensor_id()))
     sensor_connection.disconnect()
@@ -172,7 +173,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
     cfg = cli_datastorage.CLIDatastorage(configname)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH, device_path.device_path)
     cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME, device_path.name)
-
+    cfg.set_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_BAUDRATE, str(sensor_connection.current_port.baudrate))
     print("SENSOR SETUP COMPLETE: {}".format(cfg.config_filepath()))
 
 

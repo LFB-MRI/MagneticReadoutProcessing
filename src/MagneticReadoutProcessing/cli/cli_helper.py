@@ -14,15 +14,21 @@ def __fix_import__fix_import():
 
 
 def connect_sensor_using_config(_configname: str) -> MRPHal.MRPPHal:
-    cfg = cli_datastorage.CLIDatastorage(_configname)
+    cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(_configname)
 
-    path = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH)
-    name = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME)
+    path: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH)
+    name: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME)
+    baudrate: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_BAUDRATE)
+
     if len(path) < 0:
         print("please connect sensor first using connect")
         raise typer.Abort("please connect sensor first using connect")
 
-    device_path = MRPHal.MRPHalSerialPortInformation(_path=path, _name=name)
+    bi = 0
+    if len(baudrate) > 0:
+        bi = int(baudrate)
+
+    device_path = MRPHal.MRPHalSerialPortInformation(_path=path, _name=name, _baudrate=bi)
 
     if not device_path.is_valid():
         print("invalid sensor config, please re-run connect command")

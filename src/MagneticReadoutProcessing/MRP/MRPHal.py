@@ -67,8 +67,11 @@ class MRPHalSerialPortInformation:
             return True
         elif 'loop://' in self.device_path:
             return True
-        elif os.path.exists(self.device_path): # os.path.exists is needed for fs access pathlib is not working for /dev on mac
 
+        elif os.path.islink(self.device_path) or os.path.exists(self.device_path): # os.path.exists is needed for fs access pathlib is not working for /dev on mac
+            if os.path.islink(self.device_path):
+                # resolve symvlink
+                self.device_path =  os.path.realpath(self.device_path)
             if self.baudrate is None or self.baudrate not in serial.SerialBase.BAUDRATES:
                 return False
 
