@@ -1,0 +1,19 @@
+settings:
+  enabled: true
+  export_intermediate_results: true
+  name: pipeline
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+
+
+stage inspect:
+  function: inspect_readings
+  parameters:
+    readings: stage import
+
+
+
+
