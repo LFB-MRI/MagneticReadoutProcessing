@@ -94,7 +94,7 @@ class UDPPFunctionCollection:
         return rd
 
     @staticmethod
-    def import_readings(IP_input_folder:str = "", IP_file_regex: str = "(.)*.mag.json") -> [MRPReading.MRPReading]:
+    def import_readings(IP_input_folder:str = "", IP_file_regex: str = "(.)*.mag.json", IP_parse_idx_in_filename: bool = True) -> [MRPReading.MRPReading]:
         """
         Imports all readings found in the folder given from the input_folder.
         It restores all meta-data and datapoints.
@@ -104,6 +104,9 @@ class UDPPFunctionCollection:
 
         :param IP_file_regex: to only allow certain filenames using a regex string
         :type IP_file_regex: str
+
+        :param IP_parse_idx_in_filename: parses string cIDX<YXZ> in filename and set <XYZ> as magnet id
+        :type IP_parse_idx_in_filename: bool
 
         :returns: Returns the imported readings as [MRPReading.MRPReading] instances
         :rtype: [MRPReading.MRPReading]
@@ -131,6 +134,13 @@ class UDPPFunctionCollection:
             log.run_log("import_readings: import reading {}".format(rti))
             reading: MRPReading.MRPReading = MRPReading.MRPReading()
             reading.load_from_file(rti)
+
+
+            if IP_parse_idx_in_filename:
+                f: [str] = rti.split("cIDX")
+                if len(f) > 0:
+                    raise  Exception("implement")
+
             imported_results.append(reading)
 
         return imported_results

@@ -300,6 +300,9 @@ class UDPPFunctionTranslator():
         plt.title("{}".format(_title))
         if _export_graph_plots is not None and len(_export_graph_plots) > 0:
             _export_graph_plots = _export_graph_plots.replace("//", "/")
+            # CREATE FOLDER IF NOT EXIST
+            if not os.path.exists(_export_graph_plots):
+                os.makedirs(_export_graph_plots)
             plt.savefig(_export_graph_plots + "/{}".format(_filename), dpi=1200)
         else:
             plt.show()
