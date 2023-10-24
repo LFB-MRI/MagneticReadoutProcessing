@@ -10,6 +10,8 @@ __fix_import__()
 
 from MRP import MRPReading
 from MRP import MRPSimulation
+from MRP import MRPAnalysis
+from MRP import MRPDataVisualization
 import  UDPPFLogger
 from UDPPFLogger import UDPFLogger as logger
 
@@ -35,7 +37,6 @@ class UDPPFunctionCollection:
 
         return ret
 
-
     @staticmethod
     def readings_passthrough(readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
         """
@@ -54,18 +55,101 @@ class UDPPFunctionCollection:
         return readings
 
     @staticmethod
-    def inspect_readings(readings: [MRPReading.MRPReading]):
+    def inspect_readings(readings_to_inspect: [MRPReading.MRPReading], IP_export_folder: str = "", IP_log_to_std: bool = True):
         """
         prints some information about a set of readings
 
         :param readings: readings to inspect
         :type readings: [MRPReading.MRPReading]
+
+        :param IP_export_folder: if populated export report to folder
+        :type IP_export_folder: str
         """
-        if readings is None or len(readings) <= 0:
+        if readings_to_inspect is None or len(readings_to_inspect) <= 0:
             raise UDPPFunctionCollectionException("inspect_readings: readings parameter empty")
 
-        for r in readings:
-            print(r.get_name())
+        log: logger = UDPPFLogger.UDPFLogger()
+
+        if len(IP_export_folder) > 0:
+            if not str(IP_export_folder).startswith('/'):
+                IP_export_folder = str(Path(IP_export_folder).resolve())
+                # GET LOGGER
+
+            log.run_log("inspect_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
+
+        for r in readings_to_inspect:
+            # REPORT TEMPLATE
+            report_text: str = """########## READING REPORT ##########
+            NAME: %%NAME%%
+            No Datapoints: %%NODP%%
+            B [mT]: %%BV%%
+            Temperature [°C]: %%TEMP%%
+            CenterOfGravity [x y z] normalized: %%COG%%
+            ######## END READING REPORT ########"""
+            # REPLACE TEMPLATE WITH REPORT DATA
+            report_text = report_text.replace("%%NAME%%", "{}".format(r.get_name()))
+            report_text = report_text.replace("%%NODP%%", "{}".format(len(r.data)))
+
+
+
+            report_text = report_text.replace("%%BV%%", "{}".format(MRPAnalysis.MRPAnalysis.calculate_mean(r, _temperature_axis=False)))
+            report_text = report_text.replace("%%TEMP%%", "{}".format(MRPAnalysis.MRPAnalysis.calculate_mean(r, _temperature_axis=True)))
+
+
+            cog = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(r)
+            report_text = report_text.replace("%%COG%%", "[{} {} {}]".format(cog[0], cog[1], cog[2]))
+
+            if IP_log_to_std:
+                print(report_text)
+
+
+
+
+            # EXPORT TO FILE
+            if len(IP_export_folder) > 0:
+                reading_name: str = r.get_name()
+                reading_name = reading_name.replace("/", "").replace(".", "") + ".report.txt"
+                reading_abs_filepath: str = str(Path(IP_export_folder).joinpath(Path(reading_name)))
+                log.run_log("inspect_readings: report exported to {}".format(reading_abs_filepath))
+                # CREATE FOLDER
+                if not os.path.exists(IP_export_folder):
+                    os.makedirs(IP_export_folder)
+                # WRITE REPORT TEXT TO FILE
+                with open(reading_abs_filepath, 'w') as f:
+                    f.write(report_text)
+
+    @staticmethod
+    def plot_readings(readings_to_plot: [MRPReading.MRPReading], IP_plot_headline_prefix: str = "Plot", IP_export_folder: str = ""):
+        """
+        plots some information about a set of readings including mean, std_deviation and more
+
+        :param readings_to_plot: readings to plot
+        :type readings_to_plot: [MRPReading.MRPReading]
+
+        :param IP_export_folder: if populated export report to folder
+        :type IP_export_folder: str
+        """
+        if readings_to_plot is None or len(readings_to_plot) <= 0:
+            raise UDPPFunctionCollectionException("readings_to_plot: readings parameter empty")
+
+        log: logger = UDPPFLogger.UDPFLogger()
+
+        exp_path = None
+        if len(IP_export_folder) > 0:
+            if not str(IP_export_folder).startswith('/'):
+                IP_export_folder = str(Path(IP_export_folder).resolve())
+
+
+                exp_path = IP_export_folder
+
+                if not os.path.exists(exp_path):
+                    os.makedirs(exp_path)
+                # GET LOGGER
+            log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
+
+        MRPDataVisualization.MRPDataVisualization.plot_error(readings_to_plot, IP_plot_headline_prefix , str(Path(exp_path).joinpath("error_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ", "").replace("/", "").replace(".", "")))))
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("scatter_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ", "").replace("/", "").replace(".", "")))))
+        MRPDataVisualization.MRPDataVisualization.plot_temperature(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("temperature_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ","").replace("/","").replace(".", "")))))
 
     @staticmethod
     def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading], IP_random_shuffle: bool = False) -> [MRPReading.MRPReading]:
@@ -143,7 +227,7 @@ class UDPPFunctionCollection:
             if IP_parse_idx_in_filename:
                 f: [str] = rti.split("cIDX")
                 cIDX: str = ""
-                if len(f) > 0:
+                if len(f) > 1:
                     for c in f[1]:
                         if c.isdigit():
                             cIDX = cIDX + str(c)
@@ -152,10 +236,42 @@ class UDPPFunctionCollection:
                     reading.measurement_config.id = cIDX
                     reading.set_additional_data("cIDX", cIDX)
                     reading.set_additional_data("IP_parse_idx_in_filename", "1")
-
+                    reading.set_name("{}_cIDX{}".format(reading.get_name(), cIDX))
 
             imported_results.append(reading)
 
         return imported_results
+
+    @staticmethod
+    def apply_sensor_bias_offset(bias_readings: [MRPReading.MRPReading], readings_to_calibrate: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+        if bias_readings is None or len(bias_readings) <= 0:
+            raise UDPPFunctionCollectionException("apply_sensor_bias_offset: bias_readings parameter empty")
+
+        if readings_to_calibrate is None or len(readings_to_calibrate) <= 0:
+            raise UDPPFunctionCollectionException("apply_sensor_bias_offset: readings_to_calibrate parameter empty")
+
+        # CALCULATE AVERAGE OF GIVEN BIAS READINGS
+        mean_value: float = 0.0
+        for br in bias_readings:
+            v =MRPAnalysis.MRPAnalysis.calculate_mean(br)
+            mean_value = mean_value + v
+        mean_value = mean_value / len(bias_readings)
+        print("apply_sensor_bias_offset calculated sensor bias".format(mean_value))
+
+        # DEEP COPY READINGS
+        new_readings: [MRPReading.MRPReading] = []
+
+        for r in readings_to_calibrate:
+            obj: dict = r.dump_to_dict()
+            r: MRPReading.MRPReading = MRPReading.MRPReading()
+            r.load_from_dict(obj)
+            new_readings.append(r)
+
+        # APPLY BIAS OFFSET
+        MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(new_readings, mean_value)
+
+
+
+        return new_readings
 
 

@@ -27,8 +27,6 @@ class MRPAnalysis:
 
         # min max function
 
-
-
     @staticmethod
     def calculate_mean(_reading: MRPReading.MRPReading, _temperature_axis: bool = False) -> float:
         """
@@ -93,8 +91,6 @@ class MRPAnalysis:
         """
         variance = MRPAnalysis.calculate_variance(_reading, _temperature_axis=_temperature_axis)
         return np.sqrt(variance)
-
-
 
     @staticmethod
     def calculate_fft(_reading: MRPReading.MRPReading, _normalize: bool = False, _plot: bool = False):

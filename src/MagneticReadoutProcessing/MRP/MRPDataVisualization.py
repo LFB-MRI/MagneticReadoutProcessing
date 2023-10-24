@@ -40,7 +40,7 @@ class MRPDataVisualization:
 
         # TABLE
         clust_data = []#np.random.random((len(_readings), 5))
-        collabel = ("Reading [id:sensor_id]", "Mean", "STD Deviation", "Variance", "Data-Points")
+        collabel = ("Reading [id:sensor_id]", "Mean [mT]", "STD Deviation [mT]", "Variance [mT]", "Data-Points")
         labels = []
 
         for idx, reading in enumerate(_readings):
@@ -127,7 +127,7 @@ class MRPDataVisualization:
 
         plt.scatter(x, y, color=coloring)
         plt.title('{} - Scatter'.format(_title))
-        plt.xlabel("values")
+        plt.xlabel("value [mT]")
         plt.ylabel("reading [id:sensor_id]")
         plt.yticks(range(0, len(_readings)),  labels)
 

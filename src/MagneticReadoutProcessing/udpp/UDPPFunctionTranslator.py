@@ -54,7 +54,6 @@ class UDPPFunctionTranslator():
         ret: typing.Any = function_object(**_parameters)
         return ret
         #except Exception as e:
-
         #return None
     @staticmethod
     def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies: bool = False) -> [str]:
@@ -127,6 +126,20 @@ class UDPPFunctionTranslator():
         function: dict = functions[_function_name]
         return function
 
+    @ staticmethod
+    def get_stage_parameters(step_information: dict) -> [dict]:
+        ret: [dict] = []
+        if 'parameters' in step_information:
+            for k,v in step_information.get('parameters').items():
+                if 'IP_' not in k and 'stage ' in v:
+                    stage_name: str = str(v).replace('stage ', '')
+                    parameter_name: str = k
+                    ret.append({
+                        'stage_name': stage_name,
+                        'parameter_name': parameter_name
+                    })
+
+        return ret
     @staticmethod
     def get_function_parameters(_function_name: str, _get_inspector_parameter: bool = False, _strip_prefix: bool = False) -> [str]:
         """
@@ -350,6 +363,12 @@ class UDPPFunctionTranslator():
         for i in _start_steps:
             nodes_to_process.put(i)
 
+
+        for i in _calltree_graph.nodes:
+            if i not in nodes_to_process.queue:
+                nodes_to_process.put(i)
+
+
         # ITERATE OVER ALL START NODES
         for ss in IterableQueue(nodes_to_process):
             if ss == 'b':
@@ -361,7 +380,7 @@ class UDPPFunctionTranslator():
             if last_node not in list(subgraph.nodes):
                 subgraph.add_node(last_node)
 
-            dfs_res: [str] = list(nx.dfs_tree(_calltree_graph, ss))
+            dfs_res: [str] = list(nx.bfs_tree(_calltree_graph, ss))
             print("dfs_res: {}".format(dfs_res))
             # REMOVE FIRST ELEMENT WHICH IS ALWAYS THE START DFS NODE
             dfs_res.pop(0)

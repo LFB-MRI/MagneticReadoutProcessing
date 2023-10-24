@@ -8,6 +8,9 @@ from UDPPFunctionTranslator import UDPPFunctionTranslator
 import networkx as nx
 import matplotlib.pyplot as plt
 import udpp_config
+from pprint import pprint
+import pickle
+
 app = typer.Typer()
 
 
@@ -41,6 +44,11 @@ def run(ctx: typer.Context):
 
         # EXTRACT SETTINGS
         settings: dict = pipeline_v['settings']
+
+        # CHECK IF PIPELINE ENABLED
+        if 'enabled' in settings and not settings['enabled']:
+            print("skipping pipeline {} => enabled is set to False or key is missing".format(settings['name']))
+            continue
         # EXTRACT STEPS
         # also checks duplicate pipeline steps
         steps = UDPPFunctionTranslator.extract_pipelines_steps(pipeline_v)
@@ -81,7 +89,8 @@ def run(ctx: typer.Context):
 
         for subcalltree in sub_call_trees:
             for node in subcalltree.nodes:
-                intermediate_results[str(node)] = None
+                pass
+                #intermediate_results[str(node)] = None
 
 
         # OPTION TO EXPORT THE EXPORT A SNAPSHOT OF THE CURRENT COMPUTED READING AFTER EACH STEP
@@ -90,44 +99,62 @@ def run(ctx: typer.Context):
             export_intermediate_results = True
 
 
-        # TODO
-        #subcalltree: nx.DiGraph.
         for subcalltree in sub_call_trees:
             # ITERATE OVER ALL CONNECTED STAGES PRESENT IN THE SUCCESSOR FIELD
             # ALTERNATIVE IS TO USE:
             # ALLE NODES WITH INGRAD 0 AND OUTGRAD > 0
             # ALL REMAINING NODES WITH INGRAD > 0
+            last_successor = None
+
+            n = None
             for successor in subcalltree.succ:
-                stage_name: str = successor
-                print("processing:{}".format(stage_name))
+                n = successor
+                break
+            dfs_res: [str] = list(nx.dfs_tree(subcalltree, n))
+
+
+            for stage_name in dfs_res:
+
+
                 if stage_name not in steps:
                     raise Exception("{} no present in current steps".format(stage_name))
+
+                if stage_name in intermediate_results:
+                    continue
+
                 stage_information: dict = steps[stage_name]
                 stage_function_name: str = stage_information['function']
+                print("=====> {} {} ".format(stage_name,  stage_function_name))
 
-                UDPPFunctionTranslator.get_function(stage_function_name)
-                function_parameters_from_stages = UDPPFunctionTranslator.get_function_parameters(stage_function_name)
-                function_parameters_from_inspector:[dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
+                function_parameters_from_stages: [dict] = UDPPFunctionTranslator.get_stage_parameters(stage_information)
+                function_parameters_from_inspector: [dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
                 # POPULATE PARAMETER DICT
                 parameters: dict = {}
 
 
                 ## PROCESS PARAMETERS FROM FROM OTHER STAGES
-                for otpentry in function_parameters_from_stages:
-                    pass
+                if len(function_parameters_from_stages) > 0:
+                    for otp_entry in function_parameters_from_stages:
+                        p_stage_name: str = otp_entry['stage_name']
+                        p_parameter_name: str = otp_entry['parameter_name']
+
+                        if p_stage_name not in intermediate_results:
+                            raise Exception("cant find {} in intermediate_results".format(p_parameter_name))
+
+                        parameters[p_parameter_name] = intermediate_results[p_stage_name]
+
                 ## PROCESS INSPECTOR PARAMETER
                 for ip_entry in function_parameters_from_inspector:
                     name: str = ip_entry['id']
-                    type: str = ip_entry['type']
+
 
                     # TODO COMPLEX TYPES as json objects ?
 
                     value = None
                     # ASSIGN DEFAULT VALUE
                     if 'value' in ip_entry:
-                        _value = ip_entry['value']
-                        if len(_value) > 0:
-                            value = _value
+                        value = ip_entry['value']
+
 
 
                     # OVERRIDE USER GIVEN PARAMETER VALUE
@@ -142,26 +169,22 @@ def run(ctx: typer.Context):
                     parameters[name] = value
 
                 # EXECUTE FUNCTION STORE RETURN RESULT
-                intermediate_results[str(stage_name)] = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
+                print("processing:{}".format(stage_name))
+                fkt_call_result = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
 
-                i = 0
+                if fkt_call_result:
+                    intermediate_results[str(stage_name)] = fkt_call_result
+                print("end processing:{}".format(stage_name))
+
+                if export_intermediate_results:
+                    with open(str(Path(pipeline_temp_folder_path).joinpath(Path("intermediate_results_{}".format(str(stage_name))))), 'wb') as outp:  # Overwrites any existing file.
+                        pickle.dump(intermediate_results, outp, pickle.HIGHEST_PROTOCOL)
+                    #pipeline_temp_folder_path intermediate_results[str(stage_name)]
 
 
 
-            # FOR EACH NODE DFS STARTING AT STARTNODE
-            
-            # READ INPUT PARAMETER FROM YAML IF STAT OR FROM INTERTMEDIATE DICT
 
-            # if parameters required use **parameters dict
-            parameters = {}
 
-            # EXECUTE FUNCTION
-
-            # SAVE IN DICT
-
-            # EXPORT IF SET export_intermediate_results
-
-        # SAVE RESULT IN DICT
 
 
 @app.callback(invoke_without_command=True)

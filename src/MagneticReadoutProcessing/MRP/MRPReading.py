@@ -375,8 +375,8 @@ class MRPReading():
 
         self.insert_reading_instance(entry, _autoupdate_measurement_config)
 
-    def dump(self) -> str:
 
+    def dump_to_dict(self) -> dict:
         final_dataset = dict({
             'dump_time': datetime.now().strftime(self.EXPORT_TIME_FORMAT),
             'time_start': self.time_start.strftime(self.EXPORT_TIME_FORMAT),
@@ -395,8 +395,11 @@ class MRPReading():
         if self.additional_data is not None:
             for item in self.additional_data.items():
                 final_dataset[str(item[0])] = item[1]
+        return  final_dataset
+
+    def dump(self) -> str:
         # DUMP TO BYTES
-        return json.dumps(final_dataset)
+        return json.dumps(self.dump_to_dict())
 
     def dump_to_file(self, _filepath_name: str) -> str:
         """
