@@ -8,7 +8,7 @@ from import_MRP import __fix_import__
 __fix_import__()
 
 
-from MRP import MRPReading
+from MRP import MRPReading, MRPHallbachArrayGenerator
 from MRP import MRPSimulation
 from MRP import MRPAnalysis
 from MRP import MRPDataVisualization
@@ -241,6 +241,56 @@ class UDPPFunctionCollection:
             imported_results.append(reading)
 
         return imported_results
+
+
+    @staticmethod
+    def get_best(binning_readings: [MRPReading.MRPReading], IP_bins: int = 0) -> [MRPReading.MRPReading]:
+        if binning_readings is None or len(binning_readings) <= 0:
+            raise UDPPFunctionCollectionException("apply_binning: binning_readings parameter empty")
+
+
+        if IP_bins is None or IP_bins <= 0:
+            IP_bins = len(binning_readings) / 2
+            print("IP_bins is none or 0 so set it to len(binning_readings) / 2  = {}".format(IP_bins))
+
+        # TODO REQWORK
+        res: [MRPReading.MRPReading] = []
+        v: [float] = []
+        lut: dict = {}
+        for idx, r in enumerate(binning_readings):
+            m: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            v.append(m)
+            lut[m] = idx
+
+        v.sort()
+
+        for idx in range(IP_bins):
+            res.append(binning_readings[lut[v[idx]]])
+        return res
+
+
+    @staticmethod
+    def generate_hallbach_slice(readings_for_slice: [MRPReading.MRPReading], IP_2D_projection: bool = True, IP_output_folder:str = "./", IP_output_filename: str = "array.scad"):
+        log: logger = UDPPFLogger.UDPFLogger()
+
+
+        if readings_for_slice is None or len(readings_for_slice) <= 0:
+            raise UDPPFunctionCollectionException("generate_hallbach_slice: readings_for_slice parameter empty")
+
+        exp_path = "./"
+        if len(IP_output_folder) > 0:
+            if not str(IP_output_folder).startswith('/'):
+                IP_export_folder = str(Path(IP_output_folder).resolve())
+
+                exp_path = IP_export_folder
+
+                if not os.path.exists(exp_path):
+                    os.makedirs(exp_path)
+                # GET LOGGER
+            log.run_log("generate_hallbach_slice: IP_export_folder parameter set to {}".format(exp_path))
+
+        res83d = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings_for_slice)
+        MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res83d], str(Path(exp_path).joinpath(Path(IP_output_filename))), _2d_object_code=IP_2D_projection, _add_annotations=True)
 
     @staticmethod
     def apply_sensor_bias_offset(bias_readings: [MRPReading.MRPReading], readings_to_calibrate: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:

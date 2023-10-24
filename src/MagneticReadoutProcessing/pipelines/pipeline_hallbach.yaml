@@ -1,0 +1,36 @@
+settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_hallbach
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+
+stage import_bias_reading:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/tlv493d_offset/
+    IP_file_regex: (.)*SID0.mag.json # use the same sensor id as for the normal readings. so the regex parameter is used
+
+
+
+stage apply_bias_offset:
+  function: apply_sensor_bias_offset
+  parameters:
+    bias_readings: stage import_bias_reading
+    readings_to_calibrate: stage import
+
+stage apply_binning:
+  function: get_best
+  parameters:
+    binning_readings: stage apply_bias_offset
+    IP_bins: 4 # get best 3
+
+
+stage generate_hallbach_slice:
+  function: generate_hallbach_slice
+  parameters:
+    readings_for_slice: stage apply_binning
+    IP_output_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/hallbach/
