@@ -130,31 +130,32 @@ class MRPPHal:
         # RESULT LIST
         valid_ports: [MRPHalSerialPortInformation] = []
         entry_list: [str] = []
-        for i in range(10):
+        for i in range(1):
             # Send data
             sent = sock.sendto(message.encode(), server_address)
+            try:
+                data, server = sock.recvfrom(4096)
+                data_str = data.decode('UTF-8')
 
-            data, server = sock.recvfrom(4096)
-            data_str = data.decode('UTF-8')
+                if 'pfgipresponseserv' in data_str:
 
-            if 'pfgipresponseserv' in data_str:
+                    if '_' in data_str:
+                        sp: [str] = data_str.split('_')
+                        host: str = server[0]
+                        port: int = int(sp[1])
+                        senid: str = "{}:{}".format(host, port)
+                        if len(sp) >= 2:
+                            senid = sp[2]
 
-                if '_' in data_str:
-                    sp: [str] = data_str.split('_')
-                    host: str = server[0]
-                    port: int = int(sp[1])
-                    senid: str = "{}:{}".format(host, port)
-                    if len(sp) >= 2:
-                        senid = sp[2]
-
-                    entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("socket://{}:{}".format(host, port))
-                    entry.name = "Unified Sensor {}".format(senid)
+                        entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("socket://{}:{}".format(host, port))
+                        entry.name = "Unified Sensor {}".format(senid)
 
 
-                    if senid not in entry_list:
-                        valid_ports.append(entry)
-                        entry_list.append(senid)
-
+                        if senid not in entry_list:
+                            valid_ports.append(entry)
+                            entry_list.append(senid)
+            except Exception as e:
+                pass
             time.sleep(0.1)
 
         return valid_ports

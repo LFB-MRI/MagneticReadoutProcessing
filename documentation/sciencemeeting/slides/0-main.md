@@ -141,10 +141,8 @@ Improving homogeneity through shimming:
 
 * Python3 based with type annotiations
 * Interchangeable dataformats (JSON, Matlab, Numpy)
-
 * Fully tested using pytest
 * Online documentation
-
 * No programming skills required
 
 ---
@@ -155,9 +153,21 @@ Improving homogeneity through shimming:
 ![magnet_example](../images/MRP_COMPLETE_FLOW.png)
 
 
+---
+
+## CLI and programmable processing pipeline
+
+* Userfriendly CLI to conigure measurements
+* Drag&Drop processing pipeline
+
+![magnet_example](../images/dataprocessing_pipeline.png)
+
+
+---
 
 # DEMO TIME
 
+---
 
 # Outlook
 
