@@ -124,7 +124,7 @@ Can be used for combining readings from two folders using the import_readings fu
 
 <dl class="py method">
 <dt class="sig sig-object py" id="UDPPFunctionCollection.UDPPFunctionCollection.import_readings">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">IP_input_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IP_file_regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'(.)*.mag.json'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></span></span><a class="headerlink" href="#UDPPFunctionCollection.UDPPFunctionCollection.import_readings" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">IP_input_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IP_file_regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'(.)*.mag.json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">IP_parse_idx_in_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></span></span><a class="headerlink" href="#UDPPFunctionCollection.UDPPFunctionCollection.import_readings" title="Link to this definition"></a></dt>
 <dd><p>Imports all readings found in the folder given from the input_folder.
 It restores all meta-data and datapoints.</p>
 <dl class="field-list simple">
@@ -132,6 +132,7 @@ It restores all meta-data and datapoints.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>IP_input_folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Folder with .mag.json readings ABS or REL-Paths are allowed</p></li>
 <li><p><strong>IP_file_regex</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – to only allow certain filenames using a regex string</p></li>
+<li><p><strong>IP_parse_idx_in_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – parses string cIDX&lt;YXZ&gt; in filename and set &lt;XYZ&gt; as measurement id, this is used if manual set id from filename should be used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -145,11 +146,28 @@ It restores all meta-data and datapoints.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="UDPPFunctionCollection.UDPPFunctionCollection.inspect_readings">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inspect_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">readings:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#UDPPFunctionCollection.UDPPFunctionCollection.inspect_readings" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inspect_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">readings_to_inspect:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;],</span> <span class="pre">IP_export_folder:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">IP_log_to_std:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#UDPPFunctionCollection.UDPPFunctionCollection.inspect_readings" title="Link to this definition"></a></dt>
 <dd><p>prints some information about a set of readings</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>readings</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – readings to inspect</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>readings</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – readings to inspect</p></li>
+<li><p><strong>IP_export_folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – if populated export report to folder</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UDPPFunctionCollection.UDPPFunctionCollection.plot_readings">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_readings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">readings_to_plot:</span> <span class="pre">[&lt;class</span> <span class="pre">'MRP.MRPReading.MRPReading'&gt;],</span> <span class="pre">IP_plot_headline_prefix:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Plot',</span> <span class="pre">IP_export_folder:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#UDPPFunctionCollection.UDPPFunctionCollection.plot_readings" title="Link to this definition"></a></dt>
+<dd><p>plots some information about a set of readings including mean, std_deviation and more</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>readings_to_plot</strong> (<em>[</em><a class="reference internal" href="MRP.MRPReading.html#MRPReading.MRPReading" title="MRPReading.MRPReading"><em>MRPReading.MRPReading</em></a><em>]</em>) – readings to plot</p></li>
+<li><p><strong>IP_export_folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – if populated export report to folder</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

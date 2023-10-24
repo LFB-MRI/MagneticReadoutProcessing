@@ -301,6 +301,25 @@ Raises exception if not valid
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="UDPPFunctionTranslator.UDPPFunctionTranslator.get_node_connection_list">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_node_connection_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_calltree_graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DiGraph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#UDPPFunctionTranslator.UDPPFunctionTranslator.get_node_connection_list" title="Link to this definition"></a></dt>
+<dd><p>Returns all node /edge connections to use for visualization to get the connections between all nodes.
+Speical here is the usage of edge data to store the parameter name in it.
+This function returns the edges as from function parameter to function parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_calltree_graph</strong> (<em>[</em><em>]</em>) – list of edges with annotated functions/parameter names as dict</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns all inspector function parameters in a list of dicts with name, value and type properties</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="UDPPFunctionTranslator.UDPPFunctionTranslator.get_parameter_from_step">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_parameter_from_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_pipelines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_only_step_dependencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">[&lt;class</span> <span class="pre">'str'&gt;]</span></span></span><a class="headerlink" href="#UDPPFunctionTranslator.UDPPFunctionTranslator.get_parameter_from_step" title="Link to this definition"></a></dt>
 <dd><p>renders an image of a given nx.Graph for debug purposes</p>

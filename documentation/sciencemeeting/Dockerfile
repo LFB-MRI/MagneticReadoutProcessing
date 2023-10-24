@@ -1,6 +1,6 @@
 FROM node:lts-buster
 #chromium for pdf export
-RUN apt-get update  && apt-get install -y libglu1 chromium
+#RUN apt-get update  && apt-get install -y libglu1 chromium
 COPY . ./base
 #RUN mkdir /base
 WORKDIR /base
