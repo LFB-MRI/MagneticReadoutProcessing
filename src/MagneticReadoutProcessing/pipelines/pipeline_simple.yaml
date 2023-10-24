@@ -1,6 +1,6 @@
 settings:
   enabled: false
-  export_intermediate_results: true
+  export_intermediate_results: false
   name: pipeline_simple
 
 stage import:
