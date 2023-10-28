@@ -150,7 +150,6 @@ class MRPPHal:
                         entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("socket://{}:{}".format(host, port))
                         entry.name = "Unified Sensor {}".format(senid)
 
-
                         if senid not in entry_list:
                             valid_ports.append(entry)
                             entry_list.append(senid)

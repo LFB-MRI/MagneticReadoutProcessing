@@ -55,6 +55,10 @@ class UDPPFunctionCollection:
         return readings
 
     @staticmethod
+    def export_readings(readings_to_inspect: [MRPReading.MRPReading], IP_export_folder: str = ""):
+        pass
+
+    @staticmethod
     def inspect_readings(readings_to_inspect: [MRPReading.MRPReading], IP_export_folder: str = "", IP_log_to_std: bool = True):
         """
         prints some information about a set of readings

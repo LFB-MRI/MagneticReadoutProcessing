@@ -1,15 +1,11 @@
 # A short introduction into the MagneticReadoutProcessing ecosystem
 
----
-
-
-# About the author
 
 ---
 ## Hi, I´m Marcel
 
-* Computer Science B.Sc.
-* Information Systems Engineering M.Eng
+* Technical Computer Science B.Sc.
+* [Information Systems Engineering M.Eng]
 
 
 ---
@@ -17,13 +13,9 @@
 
 ![loco](../images/loco.png)
 
-
-
-
-
 ---
 
-## and Clocks
+## and clocks
 
 ![clock_1](../images/clocks.png)
 
@@ -67,7 +59,7 @@ Due to the complex manufacturing process, permanent magnets are not identical in
 
 ---
 
-## Shimming
+# Shimming
 
 Improving homogeneity through shimming:
 
@@ -75,14 +67,14 @@ Improving homogeneity through shimming:
 
 ---
 
-## Idea: Chracterise the magnets beforehand
+# Idea: Chracterise the magnets beforehand
 
 * Measure key parameters (field strength, magnetisation direction, temperature behavior)
 * Sort and generate a improved magnet design out of the collected data. 
 
 ---
 
-# Exising research examples
+# Existing research examples
 
 ---
 
@@ -112,12 +104,9 @@ Improving homogeneity through shimming:
 ---
 
 
-# Solution
+# Solution: The MagneticReadoutProcessing framework
 
-
-## MagneticReadoutProcessing framework
-
-* OpenSource software and hadware
+* OpenSource software and hadware design
 * Provides complete data processing pipeline form DAQ to CAD
 * Easy modifcation of processings steps without rewriting everything
 
@@ -127,9 +116,10 @@ Improving homogeneity through shimming:
 ## Hardware framework
 
 * 1D - 3D mapping
-* Inexpensive sensors
+* Range from 0.005 to 100 mT
+* Inexpensive sensors: TLV493d, MMC5603, BMM150
 * Interchangeable 3D printed mounts for different permanent magnet types
-
+* Unified-Firmware: One firmware for all most common sensors
 ![magnet_example](../images/sensors_1.png)
 
 ---
@@ -139,7 +129,7 @@ Improving homogeneity through shimming:
 ---
 ## Software framework
 
-* Python3 based with type annotiations
+* Python3 based with type annotations
 * Interchangeable dataformats (JSON, Matlab, Numpy)
 * Fully tested using pytest
 * Online documentation
@@ -157,7 +147,7 @@ Improving homogeneity through shimming:
 
 ## CLI and programmable processing pipeline
 
-* Userfriendly CLI to conigure measurements
+* Userfriendly CLI to configure measurements
 * Drag&Drop processing pipeline
 
 ![magnet_example](../images/dataprocessing_pipeline.png)
