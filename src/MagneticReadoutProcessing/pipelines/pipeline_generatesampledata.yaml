@@ -24,7 +24,14 @@ stage plot:
   parameters:
     readings_to_plot: stage generate
     IP_export_folder: ./readings/generated/plots
-    IP_plot_headline_prefix:  pipeline_generatesampledata.yaml
+    IP_plot_headline_prefix:  pipeline_generatesampledata
+
+stage plotfullsphere:
+  function: plot_fullsphere
+  parameters:
+    readings_to_plot: stage generate
+    IP_export_folder: ./readings/generated/fullsphere_plots
+    IP_plot_headline_prefix:  pipeline_generatesampledata
 
 stage export:
   function: export_readings

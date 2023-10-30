@@ -1,7 +1,7 @@
 ########## READING REPORT ##########
             NAME: simulated_magnet_9
             No Datapoints: 648
-            B [mT]: 0.00032951510542018805
+            B [mT]: 0.0002837541854518297
             Temperature [°C]: -254.0
             CenterOfGravity [x y z] normalized: [0.016653886816761675 1.4369529665112585e-17 -4.968590696624929e-17]
             ######## END READING REPORT ########

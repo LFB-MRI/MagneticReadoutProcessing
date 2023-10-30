@@ -8,7 +8,7 @@ from import_MRP import __fix_import__
 __fix_import__()
 
 
-from MRP import MRPReading, MRPHallbachArrayGenerator
+from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization
 from MRP import MRPSimulation
 from MRP import MRPAnalysis
 from MRP import MRPDataVisualization
@@ -58,6 +58,15 @@ class UDPPFunctionCollection:
 
     @staticmethod
     def export_readings(readings_to_export: [MRPReading.MRPReading], IP_export_folder: str = ""):
+        """
+        exports a (modified) reading back to a .ag.json file
+
+        :param readings_to_export: readings to plot
+        :type readings_to_export: [MRPReading.MRPReading]
+
+        :param IP_export_folder: if populated export report to folder
+        :type IP_export_folder: str
+        """
         if readings_to_export is None or len(readings_to_export) <= 0:
             raise UDPPFunctionCollectionException("readings_to_export: readings parameter empty")
 
@@ -145,6 +154,41 @@ class UDPPFunctionCollection:
                 # WRITE REPORT TEXT TO FILE
                 with open(reading_abs_filepath, 'w') as f:
                     f.write(report_text)
+
+
+    @staticmethod
+    def plot_fullsphere(readings_to_plot: [MRPReading.MRPReading], IP_plot_headline_prefix: str = "Plot", IP_export_folder: str = ""):
+        """
+        plots a full-sphere in 3d plot of a given reading if possible
+
+        :param readings_to_plot: readings to plot
+        :type readings_to_plot: [MRPReading.MRPReading]
+
+        :param IP_export_folder: if populated export report to folder
+        :type IP_export_folder: str
+        """
+        if readings_to_plot is None or len(readings_to_plot) <= 0:
+            raise UDPPFunctionCollectionException("readings_to_plot: readings parameter empty")
+
+        log: logger = UDPPFLogger.UDPFLogger()
+        exp_path = None
+        if len(IP_export_folder) > 0:
+            if not str(IP_export_folder).startswith('/'):
+                IP_export_folder = str(Path(IP_export_folder).resolve())
+
+                exp_path = IP_export_folder
+
+                if not os.path.exists(exp_path):
+                    os.makedirs(exp_path)
+                # GET LOGGER
+            log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
+
+
+            r: MRPReading.MRPReading
+            for r in readings_to_plot:
+                filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).replace(" ", "").replace("/", "").replace(".", ""))))
+                visu: MRPPolarVisualization.MRPPolarVisualization = MRPPolarVisualization.MRPPolarVisualization(r)
+                visu.plot3d(filename)
 
     @staticmethod
     def plot_readings(readings_to_plot: [MRPReading.MRPReading], IP_plot_headline_prefix: str = "Plot", IP_export_folder: str = ""):
