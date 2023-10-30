@@ -27,12 +27,14 @@ class UDPPFunctionCollection:
 
 
     @staticmethod
-    def simulate_magnet(IP_count: int = 1, IP_random_polarisation: bool = False, IP_random_magnetisation: bool = False) -> [MRPReading.MRPReading]:
+    def simulate_magnet(IP_count: int = 1, IP_random_polarisation: bool = False, IP_random_magnetisation: bool = False, IP_name_prefix: str= "simulated_magnet") -> [MRPReading.MRPReading]:
         ret: [MRPReading.MRPReading] = []
 
         for idx in range(IP_count):
             rnd = MRPSimulation.MRPSimulation.generate_reading(_randomize_magnetization=IP_random_polarisation, _add_random_polarisation=IP_random_magnetisation)
             rnd.set_additional_data("simulate_magnet", idx)
+
+            rnd.set_name("{}_{}".format(IP_name_prefix, idx))
             ret.append(rnd)
 
         return ret
@@ -55,8 +57,31 @@ class UDPPFunctionCollection:
         return readings
 
     @staticmethod
-    def export_readings(readings_to_inspect: [MRPReading.MRPReading], IP_export_folder: str = ""):
-        pass
+    def export_readings(readings_to_export: [MRPReading.MRPReading], IP_export_folder: str = ""):
+        if readings_to_export is None or len(readings_to_export) <= 0:
+            raise UDPPFunctionCollectionException("readings_to_export: readings parameter empty")
+
+        log: logger = UDPPFLogger.UDPFLogger()
+
+        if len(IP_export_folder) > 0:
+            if not str(IP_export_folder).startswith('/'):
+                IP_export_folder = str(Path(IP_export_folder).resolve())
+            log.run_log("export_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
+        else:
+            raise UDPPFunctionCollectionException("export_readings: IP_export_folder parameter empty")
+        r: MRPReading.MRPReading
+        for r in readings_to_export:
+
+            reading_name: str = r.get_name()
+            reading_name = reading_name.replace("/", "").replace(".", "")
+            reading_name = "{}_{}".format(reading_name, r.measurement_config.id)
+            reading_abs_filepath: str = str(Path(IP_export_folder).joinpath(Path(reading_name)))
+            log.run_log("inspect_readings: report exported to {}".format(reading_abs_filepath))
+            # CREATE FOLDER
+            if not os.path.exists(IP_export_folder):
+                os.makedirs(IP_export_folder)
+            # EXPORT
+            r.dump_to_file(reading_abs_filepath)
 
     @staticmethod
     def inspect_readings(readings_to_inspect: [MRPReading.MRPReading], IP_export_folder: str = "", IP_log_to_std: bool = True):
@@ -77,7 +102,6 @@ class UDPPFunctionCollection:
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
                 IP_export_folder = str(Path(IP_export_folder).resolve())
-                # GET LOGGER
 
             log.run_log("inspect_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
 

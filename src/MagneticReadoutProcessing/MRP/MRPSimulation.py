@@ -106,9 +106,7 @@ class MRPSimulation():
                 # print(value)
                 reading.insert_reading(value, p, t, index_phi, index_theta)
 
-            # FOR DEBUGGING
-        # magpy.show(simulation_collection)
-        i = 0
+
 
         return reading
 
