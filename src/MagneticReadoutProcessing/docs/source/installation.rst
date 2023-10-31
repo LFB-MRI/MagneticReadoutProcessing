@@ -13,8 +13,10 @@ Installation
 Release
 =======
 
+Just use ``pip`` to install the latest release version of this lib:
+
 .. code-block:: console
-    pip3 install MagneticReadoutProcessing
+    $ pip3 install MagneticReadoutProcessing
 
 
 
