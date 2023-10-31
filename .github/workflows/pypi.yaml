@@ -41,5 +41,5 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         verbose: true
-        packages-dir: ./src/MagneticReadoutProcessing
+        packages-dir: ./src/MagneticReadoutProcessing/dist/
         password: ${{ secrets.PYPI_API_TOKEN }}
