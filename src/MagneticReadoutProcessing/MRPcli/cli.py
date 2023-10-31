@@ -1,10 +1,10 @@
 import typer
 
-import cli_sensor
-import cli_config
-import cli_helper
-import cli_measure
-import cli_proxy
+from MRPcli import cli_sensor
+from MRPcli import cli_config
+from MRPcli import cli_helper
+from MRPcli import cli_measure
+from MRPcli import cli_proxy
 from import_MRP import __fix_import__
 __fix_import__()
 
@@ -22,9 +22,9 @@ def main(ctx: typer.Context):
 
 
 
-def run_cli():
+def run():
     cli_helper.__fix_import__fix_import()
     app()
 
 if __name__ == "__main__":
-    run_cli()
+    run()

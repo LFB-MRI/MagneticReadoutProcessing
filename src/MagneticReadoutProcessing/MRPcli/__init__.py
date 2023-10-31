@@ -3,4 +3,4 @@ from MRPcli import cli
 
 
 def main():
-    cli.run_cli()
+    cli.run()

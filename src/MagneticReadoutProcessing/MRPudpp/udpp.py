@@ -24,7 +24,7 @@ def main(ctx: typer.Context):
     pass
 
 
-def run_udpp():
+def run():
     __fix_import__()
     app()
 
@@ -32,4 +32,4 @@ def run_udpp():
 
 
 if __name__ == "__main__":
-    run_udpp()
+    run()
