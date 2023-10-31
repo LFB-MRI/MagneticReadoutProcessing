@@ -13,6 +13,11 @@ classifiers = [
     "Operating System :: OS Independent"
 ]
 
+[project.scripts]
+MRPCli = "MRPcli:main"
+MRPUDPP = "MRPudpp:main"
+
+
 [project.urls]
 "Homepage" = "https://github.com/LFB-MRI/MagneticReadoutProcessing"
 "Bug Tracker" = "https://github.com/LFB-MRI/MagneticReadoutProcessing/issues"
