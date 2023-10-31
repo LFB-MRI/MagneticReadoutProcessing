@@ -38,7 +38,8 @@ jobs:
         python setup.py sdist bdist_wheel
         
     - name: Publish distribution to PyPI
-      working-directory: ./src/MagneticReadoutProcessing
       uses: pypa/gh-action-pypi-publish@master
       with:
+        verbose: true
+        packages-dir: ./src/MagneticReadoutProcessing/dist
         password: ${{ secrets.PYPI_API_TOKEN }}
