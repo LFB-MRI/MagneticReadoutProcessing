@@ -1,6 +1,3 @@
-
-
-
 class UDPFLogger(object):
     _instance = None
 

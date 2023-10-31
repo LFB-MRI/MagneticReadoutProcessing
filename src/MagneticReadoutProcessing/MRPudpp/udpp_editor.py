@@ -5,13 +5,13 @@ import signal
 from pathlib import Path
 from typing import Annotated
 import typer
-from UDPPFunctionTranslator import UDPPFunctionTranslator
+from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator
 from flask import Flask, request, jsonify, make_response, redirect, render_template
 from flask_cors import CORS, cross_origin
 import time
 import multiprocessing
 from waitress import serve
-import udpp_config
+from MRPudpp import udpp_config
 
 terminate_flask: bool = False
 

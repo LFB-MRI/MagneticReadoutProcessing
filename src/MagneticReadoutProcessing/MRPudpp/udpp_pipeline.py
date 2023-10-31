@@ -2,13 +2,10 @@
 
 import os
 from pathlib import Path
-from typing import Annotated
 import typer
-from UDPPFunctionTranslator import UDPPFunctionTranslator
+from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator
 import networkx as nx
-import matplotlib.pyplot as plt
-import udpp_config
-from pprint import pprint
+from MRPudpp import udpp_config
 import pickle
 
 app = typer.Typer()

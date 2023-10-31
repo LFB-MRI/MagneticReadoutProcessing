@@ -5,7 +5,6 @@ import random
 import typing
 from pathlib import Path
 import yaml
-from queue import Queue
 import networkx as nx
 from matplotlib import pyplot as plt
 
@@ -15,7 +14,7 @@ __fix_import__()
 
 import inspect
 from optparse import OptionParser
-from UDPPFunctionCollection import UDPPFunctionCollection
+from MRPudpp.UDPPFunctionCollection import UDPPFunctionCollection
 
 
 class UDPPFunctionTranslatorException(Exception):

@@ -2,8 +2,8 @@ from pathlib import Path
 import os
 from import_MRP import __fix_import__
 
-import udpp_pipeline
-import udpp_editor
+from MRPudpp import udpp_pipeline
+from MRPudpp import udpp_editor
 import typer
 
 
