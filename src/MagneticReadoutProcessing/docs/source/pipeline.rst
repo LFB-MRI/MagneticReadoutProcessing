@@ -1,6 +1,9 @@
 UDPP - User Defined Processing Pipeline
 #######################################
 
+.. image:: _static/dataprocessing_pipeline.png
+   :width: 600
+
 After usage of the CLI and taking some measurements of the magnets, its time ro process them.
 One solution is to use a Jupyter Notebook to call the ``MRP`` functions directly or using ``UDPP`` interface.
 Here its possible to define a data analysis pipeline (as such in CI pipelines) and run them like CLI commands.
@@ -8,17 +11,6 @@ Here its possible to define a data analysis pipeline (as such in CI pipelines) a
 
 Installation
 ************
-
-.. code-block:: bash
-
-    $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
-    $ cd ./MagneticReadoutProcessing
-    $ pip3 install -r requirements.txt
-
-
-    # RUNNING THE CLI USING VENV (if library is not installed on system)
-    $ ./venv/bin/python3.9 ./udpp/udpp.py --help
-
 
 .. note::
     In order to allow direct running of the examples below, the ``venv`` is used.
@@ -47,8 +39,9 @@ The ``enable`` parameter allows to skip the execution of the pipeline using the 
     # PIPELINE DEFINITION
     ---
     settings:
-    name: "<pipeline name>"
-    enabled: true
+        name: "<pipeline name>"
+        enabled: true
+        export_intermediate_results: true
 
 
 Step definition
@@ -120,6 +113,35 @@ This can be done using the name of a stages ``stage <name>`` as parameter of the
 
 
 
+
+Pipeline Examples
+*****************
+
+.. note::
+    All and further examples are located in the ``pielines`` folder.
+
+pipeline_simple.yaml
+====================
+
+.. code-block:: yaml
+    settings:
+      enabled: false
+      export_intermediate_results: false
+      name: pipeline_simple
+
+    stage import:
+      function: import_readings
+      parameters:
+        IP_input_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+    #    IP_file_regex: (.)*.mag.json
+    #    IP_parse_idx_in_filename: True
+
+    stage inspect:
+      function: inspect_readings
+      parameters:
+        readings_to_inspect: stage import
+        IP_export_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/reports
+        IP_log_to_std: False
 
 
 
