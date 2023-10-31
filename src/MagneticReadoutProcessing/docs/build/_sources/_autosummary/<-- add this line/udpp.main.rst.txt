@@ -1,0 +1,6 @@
+udpp.main
+=========
+
+.. currentmodule:: udpp
+
+.. autofunction:: main

@@ -9,6 +9,13 @@
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:                                          <-- add this line
+   
+      main
+   
    
 
    
@@ -20,20 +27,4 @@
    
 
 
-
-.. rubric:: Modules
-
-.. autosummary::
-   :toctree:
-   :template: custom-module-template.rst                 <-- add this line
-   :recursive:
-
-   udpp.UDPPFLogger
-   udpp.UDPPFunctionCollection
-   udpp.UDPPFunctionTranslator
-   udpp.import_MRP
-   udpp.udpp
-   udpp.udpp_config
-   udpp.udpp_editor
-   udpp.udpp_pipeline
 

@@ -11,11 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -120,11 +120,11 @@
            <div itemprop="articleBody">
              
   <section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
 <section id="mrpreading-examples">
-<h2>MRPReading Examples<a class="headerlink" href="#mrpreading-examples" title="Link to this heading"></a></h2>
+<h2>MRPReading Examples<a class="headerlink" href="#mrpreading-examples" title="Permalink to this heading"></a></h2>
 <section id="create-a-minimal-measurement">
-<h3>Create a minimal measurement<a class="headerlink" href="#create-a-minimal-measurement" title="Link to this heading"></a></h3>
+<h3>Create a minimal measurement<a class="headerlink" href="#create-a-minimal-measurement" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">MRPConfig</span>
 <span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">MRPReading</span>
 <span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -192,7 +192,7 @@
 </div>
 </section>
 <section id="export-a-reading">
-<h3>Export a reading<a class="headerlink" href="#export-a-reading" title="Link to this heading"></a></h3>
+<h3>Export a reading<a class="headerlink" href="#export-a-reading" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="c1"># EXPORT TO A DIFFERENT FOLDER</span>
@@ -208,7 +208,7 @@
 </div>
 </section>
 <section id="import-a-reading">
-<h3>Import a reading<a class="headerlink" href="#import-a-reading" title="Link to this heading"></a></h3>
+<h3>Import a reading<a class="headerlink" href="#import-a-reading" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Export a reading` EXAMPLE</span>
 <span class="n">RESULT_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;out/test.mag.json&quot;</span><span class="p">)</span>
 <span class="n">reading_imported</span> <span class="o">=</span> <span class="n">MRPReading</span><span class="o">.</span><span class="n">MRPReading</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -218,9 +218,9 @@
 </section>
 </section>
 <section id="mrpvisualization-examples">
-<h2>MRPVisualization Examples<a class="headerlink" href="#mrpvisualization-examples" title="Link to this heading"></a></h2>
+<h2>MRPVisualization Examples<a class="headerlink" href="#mrpvisualization-examples" title="Permalink to this heading"></a></h2>
 <section id="visualization-of-a-polar-measurement">
-<h3>Visualization of a polar measurement<a class="headerlink" href="#visualization-of-a-polar-measurement" title="Link to this heading"></a></h3>
+<h3>Visualization of a polar measurement<a class="headerlink" href="#visualization-of-a-polar-measurement" title="Permalink to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/example_visualization.png"><img alt="_static/example_visualization.png" src="_static/example_visualization.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>
 <span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">MRPPolarVisualization</span>
@@ -237,9 +237,9 @@
 </section>
 </section>
 <section id="mrpanalysis-examples">
-<h2>MRPAnalysis Examples<a class="headerlink" href="#mrpanalysis-examples" title="Link to this heading"></a></h2>
+<h2>MRPAnalysis Examples<a class="headerlink" href="#mrpanalysis-examples" title="Permalink to this heading"></a></h2>
 <section id="sensor-bias-compensation">
-<h3>Sensor bias compensation<a class="headerlink" href="#sensor-bias-compensation" title="Link to this heading"></a></h3>
+<h3>Sensor bias compensation<a class="headerlink" href="#sensor-bias-compensation" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Please see testcases in <cite>test_SensorAnalysis.py</cite> for further examples</p>
@@ -281,7 +281,7 @@ The orange dor marks the mean value of the reading and the other ones are repres
 <a class="reference internal image-reference" href="_static/test_scatter_visualisation.png"><img alt="_static/test_scatter_visualisation.png" src="_static/test_scatter_visualisation.png" style="width: 600px;" /></a>
 </section>
 <section id="apply-a-calibration-reference-reading">
-<h3>Apply a calibration/reference reading<a class="headerlink" href="#apply-a-calibration-reference-reading" title="Link to this heading"></a></h3>
+<h3>Apply a calibration/reference reading<a class="headerlink" href="#apply-a-calibration-reference-reading" title="Permalink to this heading"></a></h3>
 <p>The idea behind the calibration routine is to perform a measurement without a magnetic source being placed in the sample holder.
 The <code class="docutils literal notranslate"><span class="pre">reading_calibration</span></code> is performed with the same settings for all subsequent measurements.
 Afterwards the Function <code class="docutils literal notranslate"><span class="pre">apply_calibration_data_inplace</span></code> is called for each new reading.</p>
@@ -304,7 +304,7 @@ Afterwards the Function <code class="docutils literal notranslate"><span class="
 </div>
 </section>
 <section id="merge-two-half-sphere-readings">
-<h3>Merge two half sphere readings<a class="headerlink" href="#merge-two-half-sphere-readings" title="Link to this heading"></a></h3>
+<h3>Merge two half sphere readings<a class="headerlink" href="#merge-two-half-sphere-readings" title="Permalink to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/merged_readings_example.png"><img alt="_static/merged_readings_example.png" src="_static/merged_readings_example.png" style="width: 600px;" /></a>
 <p>The current mechanical scanner can only scan one magnet side in one pass, so two scann passes are required to scan a full sphere.
 The <code class="docutils literal notranslate"><span class="pre">merge_two_half_sphere_measurements_to_full_sphere</span></code> function combine two readings (top, bottom) into one.</p>
@@ -330,7 +330,7 @@ The <code class="docutils literal notranslate"><span class="pre">merge_two_half_
 </section>
 </section>
 <section id="mrphal-examples">
-<h2>MRPHal Examples<a class="headerlink" href="#mrphal-examples" title="Link to this heading"></a></h2>
+<h2>MRPHal Examples<a class="headerlink" href="#mrphal-examples" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">MRPHal</span></code> class provides functions to access several different Hall Magnetic Sensors using a unified Arduino based firmware for low costs hardware.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -347,7 +347,7 @@ Always use the bundled (same release version / commit) firmware and library vers
 <cite>$ sudo usermod -a -G dialout $USER</cite></p>
 </div>
 <section id="connect-a-physical-sensor">
-<h3>Connect a physical sensor<a class="headerlink" href="#connect-a-physical-sensor" title="Link to this heading"></a></h3>
+<h3>Connect a physical sensor<a class="headerlink" href="#connect-a-physical-sensor" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">MRPHal</span>
 <span class="c1"># first we want to find all serial ports on the system</span>
 <span class="n">system_ports</span> <span class="o">=</span> <span class="n">MRPHal</span><span class="o">.</span><span class="n">list_serial_ports</span><span class="p">()</span>
@@ -364,7 +364,7 @@ Always use the bundled (same release version / commit) firmware and library vers
 </div>
 </section>
 <section id="raw-sensor-interaction">
-<h3>Raw sensor interaction<a class="headerlink" href="#raw-sensor-interaction" title="Link to this heading"></a></h3>
+<h3>Raw sensor interaction<a class="headerlink" href="#raw-sensor-interaction" title="Permalink to this heading"></a></h3>
 <p>Its possible to interface the sensor using raw commands like <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>, <code class="docutils literal notranslate"><span class="pre">readout</span> <span class="pre">x</span> <span class="pre">0</span></code>.
 These commands are implemented into the sensors firmware and allows debugging of the sensor.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Connect a physical sensor` EXAMPLE</span>
@@ -375,7 +375,7 @@ These commands are implemented into the sensors firmware and allows debugging of
 </div>
 </section>
 <section id="query-sensor-capabilities">
-<h3>Query Sensor capabilities<a class="headerlink" href="#query-sensor-capabilities" title="Link to this heading"></a></h3>
+<h3>Query Sensor capabilities<a class="headerlink" href="#query-sensor-capabilities" title="Permalink to this heading"></a></h3>
 <p>After a sensor connection is made, its possible to interact with the sensor.
 The next step is to get some information about the connected sensor.
 Due the hardware and firmware is capable to interface different sensors, we need to get basic information about the connected sensor.</p>
@@ -387,7 +387,7 @@ Due the hardware and firmware is capable to interface different sensors, we need
 </div>
 </section>
 <section id="readout-value-readout">
-<h3>Readout Value Readout<a class="headerlink" href="#readout-value-readout" title="Link to this heading"></a></h3>
+<h3>Readout Value Readout<a class="headerlink" href="#readout-value-readout" title="Permalink to this heading"></a></h3>
 <p>This readout example queries the sensor for a measurement.
 In this example we are using a <code class="docutils literal notranslate"><span class="pre">static</span></code> sensor, so just  one sensor.
 Here the goal is get the value <code class="docutils literal notranslate"><span class="pre">b</span></code> in <code class="docutils literal notranslate"><span class="pre">mT</span></code>.</p>
@@ -405,11 +405,11 @@ Here the goal is get the value <code class="docutils literal notranslate"><span 
 </section>
 </section>
 <section id="mrpsimulation-examples">
-<h2>MRPSimulation Examples<a class="headerlink" href="#mrpsimulation-examples" title="Link to this heading"></a></h2>
+<h2>MRPSimulation Examples<a class="headerlink" href="#mrpsimulation-examples" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">MRPSimulation</span></code> class contains functions to generate sample data.
 Here random <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class instances can be generated.</p>
 <section id="full-sphere-with-polarization">
-<h3>Full sphere with polarization<a class="headerlink" href="#full-sphere-with-polarization" title="Link to this heading"></a></h3>
+<h3>Full sphere with polarization<a class="headerlink" href="#full-sphere-with-polarization" title="Permalink to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/simulation_random_1.png"><img alt="_static/simulation_random_1.png" src="_static/simulation_random_1.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">visu</span> <span class="o">=</span> <span class="n">MRPPolarVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
@@ -418,7 +418,7 @@ Here random <code class="docutils literal notranslate"><span class="pre">MRPRead
 </div>
 </section>
 <section id="fully-random-sphere">
-<h3>Fully random sphere<a class="headerlink" href="#fully-random-sphere" title="Link to this heading"></a></h3>
+<h3>Fully random sphere<a class="headerlink" href="#fully-random-sphere" title="Permalink to this heading"></a></h3>
 <a class="reference internal image-reference" href="_static/simulation_random_2.png"><img alt="_static/simulation_random_2.png" src="_static/simulation_random_2.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reading</span> <span class="o">=</span> <span class="n">MRPSimulation</span><span class="o">.</span><span class="n">MRPSimulation</span><span class="o">.</span><span class="n">generate_random_full_sphere_reading</span><span class="p">(</span><span class="n">_full_random</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">visu</span> <span class="o">=</span> <span class="n">MRPPolarVisualization</span><span class="o">.</span><span class="n">MRPVisualization</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
@@ -427,7 +427,7 @@ Here random <code class="docutils literal notranslate"><span class="pre">MRPRead
 </div>
 </section>
 <section id="magpylib-based-sphere">
-<h3>Magpylib based sphere<a class="headerlink" href="#magpylib-based-sphere" title="Link to this heading"></a></h3>
+<h3>Magpylib based sphere<a class="headerlink" href="#magpylib-based-sphere" title="Permalink to this heading"></a></h3>
 <p>His example shows, how to generate readings using the <code class="docutils literal notranslate"><span class="pre">magpylib</span></code>.
 Here <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class instances with datasets from a simulated cubic magnets can be generated.
 The <code class="docutils literal notranslate"><span class="pre">generate_cubic_reading</span></code> functions uses <code class="docutils literal notranslate"><span class="pre">magpy.magnet.Cuboid</span></code> instance to generate a dataset.
@@ -450,7 +450,7 @@ The two additional parameters for the random factor make it possible to add a ce
 </section>
 </section>
 <section id="mrpreadoutsource-examples">
-<h2>MRPReadoutSource Examples<a class="headerlink" href="#mrpreadoutsource-examples" title="Link to this heading"></a></h2>
+<h2>MRPReadoutSource Examples<a class="headerlink" href="#mrpreadoutsource-examples" title="Permalink to this heading"></a></h2>
 <p>In this example category the main goal of this library is shown.
 To use a reading and convert it to a magnet, which can be used as <code class="docutils literal notranslate"><span class="pre">MagPyLib</span></code> source.</p>
 <div class="admonition note">
@@ -477,9 +477,9 @@ To use a reading and convert it to a magnet, which can be used as <code class="d
 </div>
 </section>
 <section id="hallbach-array-examples">
-<h2>Hallbach-Array Examples<a class="headerlink" href="#hallbach-array-examples" title="Link to this heading"></a></h2>
+<h2>Hallbach-Array Examples<a class="headerlink" href="#hallbach-array-examples" title="Permalink to this heading"></a></h2>
 <section id="generate-openscad-out-of-magpylib-magnet-objects">
-<h3>Generate OpenSCAD out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-openscad-out-of-magpylib-magnet-objects" title="Link to this heading"></a></h3>
+<h3>Generate OpenSCAD out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-openscad-out-of-magpylib-magnet-objects" title="Permalink to this heading"></a></h3>
 <p>This example shows how to generate a Hallbach-OpenSCAD model out of a given set of <code class="docutils literal notranslate"><span class="pre">magpylib.magnet</span></code> instances.
 The <code class="docutils literal notranslate"><span class="pre">generate_1k_hallbach_using_polarisation_direction</span></code> function generates a hallbach array by modifying the <code class="docutils literal notranslate"><span class="pre">.position</span></code>, <code class="docutils literal notranslate"><span class="pre">.rotation</span></code> attributes of the <code class="docutils literal notranslate"><span class="pre">magpylib.magnet</span></code> instance.
 It also calculates the the inner and outer cylinder dimensions.</p>
@@ -508,7 +508,7 @@ It also calculates the the inner and outer cylinder dimensions.</p>
 </div>
 </section>
 <section id="generate-hallbach-streamplot-out-of-magpylib-magnet-objects">
-<h3>Generate Hallbach-Streamplot out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-hallbach-streamplot-out-of-magpylib-magnet-objects" title="Link to this heading"></a></h3>
+<h3>Generate Hallbach-Streamplot out of magpylib.magnet OBJECTS<a class="headerlink" href="#generate-hallbach-streamplot-out-of-magpylib-magnet-objects" title="Permalink to this heading"></a></h3>
 <p>For verification of the generated hallbach array, it is possible to generate a streamplot of the generated magnets.</p>
 <a class="reference internal image-reference" href="_static/1k_2_hallbach_streamplot.png"><img alt="_static/1k_2_hallbach_streamplot.png" src="_static/1k_2_hallbach_streamplot.png" style="width: 600px;" /></a>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">MRP</span> <span class="kn">import</span> <span class="n">MRPHallbachArrayGenerator</span><span class="p">,</span> <span class="n">MRPMagnetTypes</span>
@@ -530,9 +530,9 @@ It also calculates the the inner and outer cylinder dimensions.</p>
 </section>
 </section>
 <section id="misc-examples">
-<h2>MISC Examples<a class="headerlink" href="#misc-examples" title="Link to this heading"></a></h2>
+<h2>MISC Examples<a class="headerlink" href="#misc-examples" title="Permalink to this heading"></a></h2>
 <section id="get-meta-data">
-<h3>Get meta-data<a class="headerlink" href="#get-meta-data" title="Link to this heading"></a></h3>
+<h3>Get meta-data<a class="headerlink" href="#get-meta-data" title="Permalink to this heading"></a></h3>
 <p>Each reading contains some meta-data about the reading.
 To access these, there is a <code class="docutils literal notranslate"><span class="pre">measurement_config</span></code> dict present in the <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Import a reading` EXAMPLE</span>
@@ -550,7 +550,7 @@ To access these, there is a <code class="docutils literal notranslate"><span cla
 <p>In addition there is another dict called <code class="docutils literal notranslate"><span class="pre">additional_data</span></code> with user defined data.</p>
 </section>
 <section id="export-reading-to-numpy">
-<h3>Export reading to numpy<a class="headerlink" href="#export-reading-to-numpy" title="Link to this heading"></a></h3>
+<h3>Export reading to numpy<a class="headerlink" href="#export-reading-to-numpy" title="Permalink to this heading"></a></h3>
 <p>For further and more advanced analysis the <code class="docutils literal notranslate"><span class="pre">MRPReading</span></code> class offers two functions in order to export the <code class="docutils literal notranslate"><span class="pre">data</span></code> member into a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.
 The current implementation returns</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXTENDS THE `Create a minimal measurement` EXAMPLE</span>

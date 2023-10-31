@@ -11,11 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -46,6 +46,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release">Release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#development">Development</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#distribute-package">Distribute package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
@@ -54,7 +55,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">CLI - Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">UDPP - User Defined Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MagneticReadoutProcessing.html">Module - MagneticReadoutProcessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserDefinedProcessingPipeline.html">Module - UserDefinedProcessingPipeline</a></li>
 </ul>
 
         </div>
@@ -82,7 +85,7 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There are further detailed examples in the <code class="docutils literal notranslate"><span class="pre">test</span></code> folder.
@@ -92,16 +95,21 @@ In general there is a separate test file for each submodule.</p>
 <p class="admonition-title">Note</p>
 <p>This is a Python3 library!</p>
 </div>
-<p>As the package has not been published on PyPi yet, it CANNOT be install using pip.</p>
+<section id="release">
+<h2>Release<a class="headerlink" href="#release" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>MagneticReadoutProcessing
+</pre></div>
+</div>
+</section>
 <section id="development">
-<h2>Development<a class="headerlink" href="#development" title="Link to this heading"></a></h2>
-<p>For now, the suggested method is to copy the <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code> folder into your Python project folder.
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h2>
+<p>For now, the suggested development method is to copy the <code class="docutils literal notranslate"><span class="pre">MagneticReadoutProcessing</span></code> folder into your Python project folder.
 There are some other packages required which are listed in the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>.
 To install them use <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> command.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing/src/MagneticReadoutProcessing
 <span class="gp">$ </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>,/requirements.txt
-<span class="gp"># </span>COPY<span class="w"> </span>LIB<span class="w"> </span>TO<span class="w"> </span>YOUR<span class="w"> </span>PROJECT
+<span class="gp"># </span>COPY<span class="w"> </span>LIB-ONLY<span class="w"> </span>TO<span class="w"> </span>YOUR<span class="w"> </span>PROJECT
 <span class="gp">$ </span>cp<span class="w"> </span>-R<span class="w"> </span>./MRP<span class="w"> </span>~/yourPythonProject/
 </pre></div>
 </div>
@@ -112,7 +120,7 @@ Just open the <code class="docutils literal notranslate"><span class="pre">Magne
 </div>
 </section>
 <section id="distribute-package">
-<h2>Distribute package<a class="headerlink" href="#distribute-package" title="Link to this heading"></a></h2>
+<h2>Distribute package<a class="headerlink" href="#distribute-package" title="Permalink to this heading"></a></h2>
 <p>To build the library as a packe, the python module build command can be used.
 The result can be found in the <code class="docutils literal notranslate"><span class="pre">dist</span></code> folder.
 In the default configuration (see <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>), this library, the CLI and test scripts are included too.</p>
@@ -123,7 +131,7 @@ In the default configuration (see <code class="docutils literal notranslate"><sp
 </div>
 </section>
 <section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h2>
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading"></a></h2>
 <p>Tests are implemented for all library related functions.
 These are grouped by and are locates in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder.
 <code class="docutils literal notranslate"><span class="pre">unittest</span></code> and <code class="docutils literal notranslate"><span class="pre">pytest</span></code> is used to tun these tests.</p>
@@ -143,7 +151,7 @@ To disable hardware dependent testing, edit the <code class="docutils literal no
 </div>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>This documentation is build using the <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> framework and all source files are located in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing/src/MagneticReadoutProcessing/

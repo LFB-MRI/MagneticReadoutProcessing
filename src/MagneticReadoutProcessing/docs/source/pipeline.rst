@@ -165,9 +165,5 @@ Function Collection
     Currently, usable functions doesnt support tuple or arrays as input and output parameters.
     Please encapsulate these type into custom classes or dicts.
 
-.. autosummary::
-    :toctree: _autosummary
-    :template: custom-module-template.rst
-    :recursive:
+    All currently implemented usable functions are located in ``MRPudpp.UDPPFFunctionCollection``
 
-    udpp.UDPPFFunctionCollection

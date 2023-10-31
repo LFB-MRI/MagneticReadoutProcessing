@@ -11,11 +11,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -56,6 +56,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#connect-several-stages">Connect several stages</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#pipeline-examples">Pipeline Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pipeline-simple-yaml">pipeline_simple.yaml</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#function-collection">Function Collection</a></li>
 </ul>
 </li>
@@ -88,53 +92,46 @@
            <div itemprop="articleBody">
              
   <section id="udpp-user-defined-processing-pipeline">
-<h1>UDPP - User Defined Processing Pipeline<a class="headerlink" href="#udpp-user-defined-processing-pipeline" title="Link to this heading"></a></h1>
+<h1>UDPP - User Defined Processing Pipeline<a class="headerlink" href="#udpp-user-defined-processing-pipeline" title="Permalink to this heading"></a></h1>
+<a class="reference internal image-reference" href="_static/dataprocessing_pipeline.png"><img alt="_static/dataprocessing_pipeline.png" src="_static/dataprocessing_pipeline.png" style="width: 600px;" /></a>
 <p>After usage of the CLI and taking some measurements of the magnets, its time ro process them.
 One solution is to use a Jupyter Notebook to call the <code class="docutils literal notranslate"><span class="pre">MRP</span></code> functions directly or using <code class="docutils literal notranslate"><span class="pre">UDPP</span></code> interface.
 Here its possible to define a data analysis pipeline (as such in CI pipelines) and run them like CLI commands.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LFB-MRI/MagneticReadoutProcessing<span class="w"> </span>./MagneticReadoutProcessing
-$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>./MagneticReadoutProcessing
-$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-
-
-<span class="c1"># RUNNING THE CLI USING VENV (if library is not installed on system)</span>
-$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./udpp/udpp.py<span class="w"> </span>--help
-</pre></div>
-</div>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In order to allow direct running of the examples below, the <code class="docutils literal notranslate"><span class="pre">venv</span></code> is used.
-So all cli commands are changed to: <code class="docutils literal notranslate"><span class="pre">./venv/bin/python3.9</span> <span class="pre">./udpp/udpp.py</span></code> instead of <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">./udpp/udpp.py</span></code>.</p>
+So all cli commands are changed to: <code class="docutils literal notranslate"><span class="pre">./venv/bin/python3.9</span> <span class="pre">./MRPudpp/udpp.py</span></code> instead of <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">./MRPudpp/udpp.py</span></code>.</p>
 </div>
 <p>To list all enabled pipelines the  command can be used.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List enabled pipelines</span>
-$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./udpp/udpp.py<span class="w"> </span>pipeline<span class="w"> </span>listenabledpipelines
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./MRPudpp/udpp.py<span class="w"> </span>pipeline<span class="w"> </span>listenabledpipelines
 generate_temperature_calibration_reading.yaml
 </pre></div>
 </div>
 </section>
 <section id="pipeline-definition">
-<h2>Pipeline Definition<a class="headerlink" href="#pipeline-definition" title="Link to this heading"></a></h2>
+<h2>Pipeline Definition<a class="headerlink" href="#pipeline-definition" title="Permalink to this heading"></a></h2>
 <section id="settings">
-<h3>Settings<a class="headerlink" href="#settings" title="Link to this heading"></a></h3>
+<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this heading"></a></h3>
 <p>Each pipeline starts with a <code class="docutils literal notranslate"><span class="pre">settings</span></code> section which contains some information about the pipeline.
 The <code class="docutils literal notranslate"><span class="pre">enable</span></code> parameter allows to skip the execution of the pipeline using the <code class="docutils literal notranslate"><span class="pre">udpp.py</span> <span class="pre">pipeline</span> <span class="pre">run</span></code> command.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># PIPELINE DEFINITION</span>
 <span class="nn">---</span>
 <span class="nt">settings</span><span class="p">:</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;pipeline</span><span class="nv"> </span><span class="s">name&gt;&quot;</span>
-<span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;pipeline</span><span class="nv"> </span><span class="s">name&gt;&quot;</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">export_intermediate_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </section>
 <section id="step-definition">
-<h3>Step definition<a class="headerlink" href="#step-definition" title="Link to this heading"></a></h3>
+<h3>Step definition<a class="headerlink" href="#step-definition" title="Permalink to this heading"></a></h3>
 <p>The step definition contains a function that will be called and their needed input parameters.
 A list of callable function can be retrieved using <code class="docutils literal notranslate"><span class="pre">udpp.py</span> <span class="pre">pipeline</span> <span class="pre">listfunctions</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List enabled pipelines</span>
-$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./udpp/udpp.py<span class="w"> </span>pipeline<span class="w"> </span>listfunctions
+$<span class="w"> </span>./venv/bin/python3.9<span class="w"> </span>./MRPudpp/udpp.py<span class="w"> </span>pipeline<span class="w"> </span>listfunctions
 <span class="o">{</span><span class="s1">&#39;import_readings&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;name&#39;</span>:<span class="w"> </span><span class="s1">&#39;import_readings&#39;</span>,<span class="w"> </span><span class="s1">&#39;parameter_names&#39;</span>:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;input_folder&#39;</span>,<span class="w"> </span><span class="s1">&#39;file_regex&#39;</span>,<span class="w"> </span><span class="s1">&#39;recursive&#39;</span><span class="o">]</span>,<span class="w"> </span><span class="s1">&#39;parameter_types&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;input_folder&#39;</span>:<span class="w"> </span><span class="s1">&#39;str&#39;</span>,<span class="w"> </span><span class="s1">&#39;file_regex&#39;</span>:<span class="w"> </span><span class="s1">&#39;str&#39;</span>,<span class="w"> </span><span class="s1">&#39;recursive&#39;</span>:<span class="w"> </span><span class="s1">&#39;bool&#39;</span><span class="o">}</span>,<span class="w"> </span><span class="s1">&#39;default&#39;</span>:<span class="w"> </span><span class="o">(</span><span class="s1">&#39;&#39;</span>,<span class="w"> </span><span class="s1">&#39;(.)*.mag.json&#39;</span>,<span class="w"> </span>False<span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;return&#39;</span>:<span class="w"> </span><span class="s1">&#39;list(MRP.MRPReading.MRPReading)&#39;</span><span class="o">}}</span>
 ...
 </pre></div>
@@ -158,13 +155,13 @@ In one step this parameter must be set to <code class="docutils literal notransl
 </div>
 </section>
 <section id="connect-several-stages">
-<h3>Connect several stages<a class="headerlink" href="#connect-several-stages" title="Link to this heading"></a></h3>
+<h3>Connect several stages<a class="headerlink" href="#connect-several-stages" title="Permalink to this heading"></a></h3>
 <p>To create a flow (connecting several stages together), the output of one stage can be the input of another stage.
-This can be done using the name of a stages <code class="docutils literal notranslate"><span class="pre">stage</span> <span class="pre">&lt;name&gt;</span></code> as parameter of the next stage.
-.. note:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Its not possible to implement any sort of circles!
-The system checks at startup for circles and any other misconfigurations.
-</pre></div>
+This can be done using the name of a stages <code class="docutils literal notranslate"><span class="pre">stage</span> <span class="pre">&lt;name&gt;</span></code> as parameter of the next stage.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Its not possible to implement any sort of circles!
+The system checks at startup for circles and any other misconfigurations.</p>
 </div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># LETS ADD TWO READinG IMPORTER STAGES</span>
 <span class="nt">stage import_readings_b</span><span class="p">:</span>
@@ -183,17 +180,44 @@ The system checks at startup for circles and any other misconfigurations.
 </div>
 </section>
 </section>
+<section id="pipeline-examples">
+<h2>Pipeline Examples<a class="headerlink" href="#pipeline-examples" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All and further examples are located in the <code class="docutils literal notranslate"><span class="pre">pielines</span></code> folder.</p>
+</div>
+<section id="pipeline-simple-yaml">
+<h3>pipeline_simple.yaml<a class="headerlink" href="#pipeline-simple-yaml" title="Permalink to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">settings</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">export_intermediate_results</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pipeline_simple</span>
+
+<span class="nt">stage import</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">import_readings</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">IP_input_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/</span>
+<span class="c1">#    IP_file_regex: (.)*.mag.json</span>
+<span class="c1">#    IP_parse_idx_in_filename: True</span>
+
+<span class="nt">stage inspect</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inspect_readings</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">readings_to_inspect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stage import</span>
+<span class="w">    </span><span class="nt">IP_export_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/reports</span>
+<span class="w">    </span><span class="nt">IP_log_to_std</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="function-collection">
-<h2>Function Collection<a class="headerlink" href="#function-collection" title="Link to this heading"></a></h2>
+<h2>Function Collection<a class="headerlink" href="#function-collection" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Currently, usable functions doesnt support tuple or arrays as input and output parameters.
 Please encapsulate these type into custom classes or dicts.</p>
+<p>All currently implemented usable functions are located in <code class="docutils literal notranslate"><span class="pre">MRPudpp.UDPPFFunctionCollection</span></code></p>
 </div>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-</tbody>
-</table>
 </section>
 </section>
 
