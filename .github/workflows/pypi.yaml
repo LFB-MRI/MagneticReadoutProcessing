@@ -46,6 +46,8 @@ jobs:
     - name: Publish distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        working-directory: ./src/MagneticReadoutProcessing/
+        print-hash: true
         verbose: true
         packages-dir: ./src/MagneticReadoutProcessing/dist/
         password: ${{ secrets.PYPI_API_TOKEN }}
