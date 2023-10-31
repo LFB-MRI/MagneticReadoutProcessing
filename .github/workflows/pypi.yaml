@@ -48,6 +48,7 @@ jobs:
       with:
         working-directory: ./src/MagneticReadoutProcessing/
         print-hash: true
+        skip-existing: true
         verbose: true
         packages-dir: ./src/MagneticReadoutProcessing/dist/
         password: ${{ secrets.PYPI_API_TOKEN }}
