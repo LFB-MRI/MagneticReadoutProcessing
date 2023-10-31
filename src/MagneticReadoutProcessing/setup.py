@@ -6,12 +6,12 @@ import pkg_resources
 import setuptools
 import os
 
-req_path =  'requirements.txt' #os.path.join(os.path.dirname(__file__), 'requirements.txt')
+req_path = 'requirements.txt' # os.path.join(os.path.dirname(__file__), 'requirements.txt')
 with pathlib.Path(req_path).open() as requirements_txt:
     install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
-setup(name='MagneticReadoutProcessing1',
-      version='1.0.1',
+setup(name='MagneticReadoutProcessing',
+      version='1.2.0',
       description='Process raw data from magnetometers',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
