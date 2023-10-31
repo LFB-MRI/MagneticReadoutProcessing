@@ -1,9 +1,15 @@
 # MagneticReadoutProcessing
 With this lib it is possible to store and further process raw data from magnetometers
 
+## PyPi
 
+[pypi-MagneticReadoutProcessing](https://pypi.org/project/MagneticReadoutProcessing/)
 
+## ReadTheDocs
 
+[magneticreadoutprocessing.readthedocs.io](https://magneticreadoutprocessing.readthedocs.io/en/latest/)
+
+## CITE
 
 ```
 @software{Ochsendorf_Marcel_MagneticReadoutProcessing_2023,
