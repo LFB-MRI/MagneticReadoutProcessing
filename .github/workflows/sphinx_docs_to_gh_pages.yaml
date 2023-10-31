@@ -32,7 +32,7 @@ jobs:
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.1.0
         with:
           branch: main
-          dir_docs: src/MagneticReadoutProcessing_docs/source
+          dir_docs: src/MagneticReadoutProcessing/docs/source
           sphinxapiopts: '--separate -o . ../'
           sphinxapiexclude: '../*setup* ../*.ipynb'
           sphinxopts: ''
