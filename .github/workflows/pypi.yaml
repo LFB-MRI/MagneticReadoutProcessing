@@ -12,6 +12,12 @@ jobs:
   build-n-publish:
     name: Build and publish Python distributions to PyPI
     runs-on: ubuntu-22.04
+    environment:
+      name: pypi
+      url: https://pypi.org/project/MagneticReadoutProcessing/
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      
     steps:
     - uses: actions/checkout@master
     - name: Set up Python 3.10
@@ -38,7 +44,11 @@ jobs:
         python setup.py sdist bdist_wheel
         
     - name: Publish distribution to PyPI
-      working-directory: ./src/MagneticReadoutProcessing
-      uses: pypa/gh-action-pypi-publish@master
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        working-directory: ./src/MagneticReadoutProcessing/
+        print-hash: true
+        skip-existing: true
+        verbose: true
+        packages-dir: ./src/MagneticReadoutProcessing/dist/
         password: ${{ secrets.PYPI_API_TOKEN }}

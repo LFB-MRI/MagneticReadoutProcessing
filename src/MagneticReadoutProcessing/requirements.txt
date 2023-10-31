@@ -1,7 +1,7 @@
 pyserial>3.4.0
 matplotlib>=3.5.3
 numpy>=1.24.3
-scipy~=1.10.1
+scipy>=1.11.0
 protobuf~=4.21.6
 nanopb>=0.4.7
 lz4>=4.3.2
