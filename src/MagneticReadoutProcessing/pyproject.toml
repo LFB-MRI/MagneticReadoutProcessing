@@ -15,7 +15,7 @@ classifiers = [
 
 [project.scripts]
 MRPCli = "MRPcli.cli:run"
-MRPUDPP = "MRPudpp.udpp:run"
+MRPUdpp = "MRPudpp.udpp:run"
 
 
 [project.urls]
