@@ -1,4 +1,4 @@
-from . import udpp
+import udpp
 
 def main():
-    udpp.main()
+    udpp.run_udpp()

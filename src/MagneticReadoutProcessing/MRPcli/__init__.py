@@ -1,4 +1,4 @@
-from . import cli
+import cli
 
 def main():
-    cli.main()
+    cli.run_cli()

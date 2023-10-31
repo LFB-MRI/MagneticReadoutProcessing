@@ -1,4 +1,4 @@
-from . import udpp
+import udpp
 
 if __name__ == '__main__':
-    udpp.main()
+    udpp.run_udpp()

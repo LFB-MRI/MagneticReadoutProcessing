@@ -1,4 +1,5 @@
 import typer
+
 import cli_sensor
 import cli_config
 import cli_helper
@@ -21,8 +22,9 @@ def main(ctx: typer.Context):
 
 
 
-
-
-if __name__ == "__main__":
+def run_cli():
     cli_helper.__fix_import__fix_import()
     app()
+
+if __name__ == "__main__":
+    run_cli()
