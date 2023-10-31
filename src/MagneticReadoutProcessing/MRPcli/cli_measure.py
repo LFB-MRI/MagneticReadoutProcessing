@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from typing import Annotated
 import typer
-import cli_helper
-import cli_datastorage
+from MRPcli import cli_helper
+from MRPcli import cli_datastorage
 
 from import_MRP import __fix_import__
 __fix_import__()

@@ -1,7 +1,7 @@
 from typing import Annotated, Optional
 import typer
 import cli_helper
-import cli_datastorage
+from MRPcli import cli_datastorage
 import os
 from pathlib import Path
 

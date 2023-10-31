@@ -3,7 +3,7 @@ from typing_extensions import Annotated
 from dataclasses import dataclass
 # from dotenv import load_dotenv
 import typer
-import cli_helper
+from MRPcli import cli_helper
 
 from import_MRP import __fix_import__
 __fix_import__()
