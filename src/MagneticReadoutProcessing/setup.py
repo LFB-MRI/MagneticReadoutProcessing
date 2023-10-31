@@ -11,7 +11,7 @@ with pathlib.Path(req_path).open() as requirements_txt:
     install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(name='MagneticReadoutProcessing',
-      version='0.1.1',
+      version='0.1.2',
       description='Process raw data from magnetometers',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
@@ -20,8 +20,8 @@ setup(name='MagneticReadoutProcessing',
       install_requires=install_requires,
       entry_points={
           'console_scripts': [
-            'MRPCli = MRPcli:main',
-            'MRPUdpp = MRPudpp:main'
+            'MRPCli = MRPcli.cli',
+            'MRPUdpp = MRPudpp.uddp'
           ]
       }
      )
