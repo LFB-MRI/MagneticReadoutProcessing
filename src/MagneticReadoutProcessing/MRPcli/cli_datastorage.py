@@ -1,6 +1,5 @@
 from dotenv import load_dotenv, dotenv_values
 import os
-from dataclasses import dataclass
 from enum import Enum
 from tinydb import TinyDB, Query
 from pathlib import Path

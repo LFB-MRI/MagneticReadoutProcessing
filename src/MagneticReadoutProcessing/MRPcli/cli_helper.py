@@ -1,8 +1,6 @@
 import typer
 from MRPcli import cli_datastorage
 
-from import_MRP import __fix_import__
-__fix_import__()
 from MRP import MRPHal
 
 

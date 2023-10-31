@@ -1,12 +1,10 @@
 from typing import Annotated, Optional
 import typer
-import cli_helper
+
 from MRPcli import cli_datastorage
 import os
 from pathlib import Path
 
-from import_MRP import __fix_import__
-__fix_import__()
 from MRP import MRPMagnetTypes, MRPHal
 
 

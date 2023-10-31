@@ -1,12 +1,7 @@
-from typing import Optional
 from typing_extensions import Annotated
-from dataclasses import dataclass
-# from dotenv import load_dotenv
 import typer
 from MRPcli import cli_helper
 
-from import_MRP import __fix_import__
-__fix_import__()
 from MRP import MRPHal, MRPBaseSensor
 
 app = typer.Typer()

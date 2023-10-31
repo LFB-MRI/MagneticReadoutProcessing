@@ -7,9 +7,7 @@ import typer
 import socket
 import sys
 import os
-from import_MRP import __fix_import__
 
-__fix_import__()
 
 app = typer.Typer()
 

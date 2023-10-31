@@ -5,9 +5,8 @@ import typer
 from MRPcli import cli_helper
 from MRPcli import cli_datastorage
 
-from import_MRP import __fix_import__
-__fix_import__()
-from MRP import  MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
+
+from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
 
 app = typer.Typer()
 
