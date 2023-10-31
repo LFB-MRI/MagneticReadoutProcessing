@@ -28,4 +28,4 @@ python:
    install:
    - requirements: src/MagneticReadoutProcessing/docs/source/requirements.txt
    - method: pip
-     path: .
+     path: src/MagneticReadoutProcessing/
