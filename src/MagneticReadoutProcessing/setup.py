@@ -11,7 +11,7 @@ with pathlib.Path(req_path).open() as requirements_txt:
     install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(name='MagneticReadoutProcessing',
-      version='0.0.2',
+      version='0.0.3',
       description='Process raw data from magnetometers',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
