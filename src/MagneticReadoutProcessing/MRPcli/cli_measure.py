@@ -54,7 +54,7 @@ def perform_measurement(configname: str):
 
         # ADD MORE METADATA
         reading.set_additional_data('configname', configname)
-        reading.set_additional_data('runner', 'cli')
+        reading.set_additional_data('runner', 'MRPcli')
         reading.set_additional_data('sensor_capabilities', str(hal.get_sensor_capabilities()))
 
         # SET THE NAME

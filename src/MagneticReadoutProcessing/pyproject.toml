@@ -16,4 +16,5 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/LFB-MRI/MagneticReadoutProcessing"
 "Bug Tracker" = "https://github.com/LFB-MRI/MagneticReadoutProcessing/issues"
+"Documentation" = "https://magneticreadoutprocessing.readthedocs.io/en/latest/"
 

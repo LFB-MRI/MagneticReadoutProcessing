@@ -75,7 +75,7 @@ This example shows how to create a step which calls the ``import_readings`` func
 
     # STEP DEFINITION
     stage import_readings: #stage <stage_name>
-        function: import_readings # function to call see udpp.py pipeline listfunctions or UDPPFFunctionCollection.py
+        function: import_readings # function to call see MRPudpp.py pipeline listfunctions or UDPPFFunctionCollection.py
         main: true # RUN AT STARTUP = ENTRYPOINT
         parameters:
             input_folder: tlv493d_N45_12x12x12

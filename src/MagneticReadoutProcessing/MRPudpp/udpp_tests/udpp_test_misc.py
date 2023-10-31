@@ -5,7 +5,7 @@ import unittest
 from import_pkgs import __fix_import_udpp__
 __fix_import_udpp__()
 
-from udpp.UDPPFunctionTranslator import UDPPFunctionTranslator
+from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator
 class TestMRPReading(unittest.TestCase):
 
     calltree_graph: nx.DiGraph

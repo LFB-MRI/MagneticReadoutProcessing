@@ -1,6 +1,6 @@
 def __fix_import_udpp__():
     try:
-        import udpp
+        import MRPudpp
     except Exception as e:
         import sys
         sys.path.insert(0, '..')

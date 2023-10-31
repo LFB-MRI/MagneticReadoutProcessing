@@ -12,7 +12,7 @@ COPY . .
 # RUN TESTS BEFORE
 RUN python ./tests/all_tests.py
 
-RUN python ./cli.py --install-completion bash
+RUN python ./MRPcli.py --install-completion bash
 #
 ENTRYPOINT [ "python", "./cli.py"]
-#CMD [ "python", "./cli.py" , "--help"]
+#CMD [ "python", "./MRPcli.py" , "--help"]

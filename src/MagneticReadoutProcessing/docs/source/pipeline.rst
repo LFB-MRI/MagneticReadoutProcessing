@@ -13,8 +13,9 @@ Installation
 ************
 
 .. note::
+
     In order to allow direct running of the examples below, the ``venv`` is used.
-    So all cli commands are changed to: ``./venv/bin/python3.9 ./udpp/udpp.py`` instead of ``python3 ./udpp/udpp.py``.
+    So all cli commands are changed to: ``./venv/bin/python3.9 ./MRPudpp/udpp.py`` instead of ``python3 ./MRPudpp/udpp.py``.
 
 
 To list all enabled pipelines the  command can be used.
@@ -22,7 +23,7 @@ To list all enabled pipelines the  command can be used.
 .. code-block:: bash
 
     # List enabled pipelines
-    $ ./venv/bin/python3.9 ./udpp/udpp.py pipeline listenabledpipelines
+    $ ./venv/bin/python3.9 ./MRPudpp/udpp.py pipeline listenabledpipelines
     generate_temperature_calibration_reading.yaml
 
 Pipeline Definition
@@ -54,7 +55,7 @@ A list of callable function can be retrieved using ``udpp.py pipeline listfuncti
 .. code-block:: bash
 
     # List enabled pipelines
-    $ ./venv/bin/python3.9 ./udpp/udpp.py pipeline listfunctions
+    $ ./venv/bin/python3.9 ./MRPudpp/udpp.py pipeline listfunctions
     {'import_readings': {'name': 'import_readings', 'parameter_names': ['input_folder', 'file_regex', 'recursive'], 'parameter_types': {'input_folder': 'str', 'file_regex': 'str', 'recursive': 'bool'}, 'default': ('', '(.)*.mag.json', False), 'return': 'list(MRP.MRPReading.MRPReading)'}}
     ...
 
@@ -76,6 +77,7 @@ This example shows how to create a step which calls the ``import_readings`` func
 
 
 .. note::
+
    The ``main`` parameter if set to true, is the entrypoint for the pipeline.
    In one step this parameter must be set to ``true``.  
 
@@ -85,7 +87,9 @@ Connect several stages
 
 To create a flow (connecting several stages together), the output of one stage can be the input of another stage.
 This can be done using the name of a stages ``stage <name>`` as parameter of the next stage. 
+
 .. note::
+
    Its not possible to implement any sort of circles!
    The system checks at startup for circles and any other misconfigurations.
 
@@ -124,6 +128,7 @@ pipeline_simple.yaml
 ====================
 
 .. code-block:: yaml
+
     settings:
       enabled: false
       export_intermediate_results: false
@@ -156,6 +161,7 @@ Function Collection
 *******************
 
 .. note::
+
     Currently, usable functions doesnt support tuple or arrays as input and output parameters.
     Please encapsulate these type into custom classes or dicts.
 

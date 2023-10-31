@@ -8,9 +8,9 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('../../MRP'))
-sys.path.insert(0, os.path.abspath('../../cli'))
+sys.path.insert(0, os.path.abspath('../../MRPcli'))
 sys.path.insert(0, os.path.abspath('../../tests'))
-sys.path.insert(0, os.path.abspath('../../udpp'))
+sys.path.insert(0, os.path.abspath('../../MRPudpp'))
 sys.path.insert(0, os.path.abspath('../../../MagneticReadoutProcessing'))
 #sys.path.insert(0, os.path.abspath('../../test'))
 autodoc_mock_imports = ["numpy",

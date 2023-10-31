@@ -77,14 +77,14 @@ Here all connected sensors are listed. If an other sensor hardware is used (with
     setupsensor
 
 
-    # cli.py config setupsensor <configname>
+    # MRPcli.py config setupsensor <configname>
     $ p./venv/bin/python3.9 ./cli/cli.py config setupsensor testcfg
     0 > Unified Sensor 386731533439 - /dev/cu.usbmodem3867315334391
     Please select one of the found sensors [0]: 
     sensor connected: True 1243455
     SENSOR SETUP COMPLETE: cli/configs/testcfg_config.json
 
-    # cli.py config setupsensor <configname> <device_path>
+    # MRPcli.py config setupsensor <configname> <device_path>
     $ ./venv/bin/python3.9 ./cli/cli.py config setupsensor testcfg /dev/tty
     sensor connected: True 54224326
     SENSOR SETUP COMPLETE: cli/configs/testcfg_config.json
@@ -105,7 +105,7 @@ After the sensor setup is finished for this sensor. Its possible to query the se
     query
 
 
-    # cli.py sensor info <configname>
+    # MRPcli.py sensor info <configname>
     $ ./venv/bin/python3.9 ./cli/cli.py sensor info testcfg
     SENSOR INFORMATION
     NAME:
@@ -114,7 +114,7 @@ After the sensor setup is finished for this sensor. Its possible to query the se
     CAPABILITIES: ['static', 'axis_b']
 
 
-    # cli.py sensor query <configname>
+    # MRPcli.py sensor query <configname>
     $ ./venv/bin/python3.9 ./cli/cli.py sensor query testcfg
     QUERY RESULT FOR SENSOR_ID:525771256544952 SENSOR_NUMBER:0
     > B:47.66
@@ -132,7 +132,7 @@ To set these the ``config`` option offers a setup wizard.
 
 .. code-block:: bash
 
-    # cli.py config setup <configname>
+    # MRPcli.py config setup <configname>
     $ ./venv/bin/python3.9 ./cli/cli.py config setup testcfg
     CONFIGURE testcfg
     READING-NAME: [testreading]: testreading
@@ -182,7 +182,7 @@ The system performs a pre-check of the sensor and configuration to avoid any mis
     $ ./venv/bin/python3.9 ./cli/cli.py measure run
     STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg', 'calibrationreading']
     # RUN SPECIFIED CONFIGURATION
-    # ./cli.py measure run <configname>
+    # ./MRPcli.py measure run <configname>
     $ ./venv/bin/python3.9 ./cli/cli.py measure run testcfg
     STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg']
 

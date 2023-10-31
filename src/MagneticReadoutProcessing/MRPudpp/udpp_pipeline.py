@@ -1,4 +1,4 @@
-"""Typer base cli interface to allow the user to interact with the udppf system"""
+"""Typer base MRPcli interface to allow the user to interact with the udppf system"""
 
 import os
 from pathlib import Path

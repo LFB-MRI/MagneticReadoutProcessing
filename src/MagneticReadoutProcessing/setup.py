@@ -16,9 +16,9 @@ setup(name='MagneticReadoutProcessing',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
       url='https://github.com/LFB-MRI/MagnetCharacterization/',
-      packages= ['MRP', 'cli', 'udpp', 'tests'],#setuptools.find_packages('src', exclude=['test'], include=['cli']),
+      packages= ['MRP', 'MRPcli', 'MRPudpp', 'tests'],#setuptools.find_packages('src', exclude=['test'], include=['MRPcli']),
       install_requires=install_requires,
       #entry_points = {
-      #  'console_scripts': ['mrp-cli=MagneticReadoutProcessing.cli.cli:main'],
+      #  'console_scripts': ['mrp-MRPcli=MagneticReadoutProcessing.MRPcli.MRPcli:main'],
       #}
      )
