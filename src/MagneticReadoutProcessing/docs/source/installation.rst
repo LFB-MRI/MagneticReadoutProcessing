@@ -10,12 +10,18 @@ Installation
    This is a Python3 library!
 
 
-As the package has not been published on PyPi yet, it CANNOT be install using pip.
+Release
+=======
+
+.. code-block:: console
+    pip3 install MagneticReadoutProcessing
+
+
 
 Development
 ===========
 
-For now, the suggested method is to copy the ``MagneticReadoutProcessing`` folder into your Python project folder.
+For now, the suggested development method is to copy the ``MagneticReadoutProcessing`` folder into your Python project folder.
 There are some other packages required which are listed in the ``requirements.txt``.
 To install them use ``$ pip3 install -r requirements.txt`` command.
 
