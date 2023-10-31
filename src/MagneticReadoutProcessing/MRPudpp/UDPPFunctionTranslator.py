@@ -8,9 +8,6 @@ import yaml
 import networkx as nx
 from matplotlib import pyplot as plt
 
-from import_MRP import __fix_import__
-
-__fix_import__()
 
 import inspect
 from optparse import OptionParser

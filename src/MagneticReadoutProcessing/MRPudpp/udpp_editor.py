@@ -1,9 +1,6 @@
 """Typer base MRPcli interface to allow the user to interact with the udppf system"""
 import bleach
-import os
 import signal
-from pathlib import Path
-from typing import Annotated
 import typer
 from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator
 from flask import Flask, request, jsonify, make_response, redirect, render_template
@@ -203,8 +200,6 @@ def launch(ctx: typer.Context, port: int = 5555, host: str = "0.0.0.0", debug: b
 @app_typer.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
     pass
-    #Path(PIPELINES_FOLDER).mkdir(parents=True, exist_ok=True)
-    #Path(TMP_FOLDER).mkdir(parents=True, exist_ok=True)
 
 
 

@@ -1,7 +1,3 @@
-from pathlib import Path
-import os
-from import_MRP import __fix_import__
-
 from MRPudpp import udpp_pipeline
 from MRPudpp import udpp_editor
 import typer
@@ -25,7 +21,6 @@ def main(ctx: typer.Context):
 
 
 def run():
-    __fix_import__()
     app()
 
 

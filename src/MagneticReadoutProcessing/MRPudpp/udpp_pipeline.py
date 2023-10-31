@@ -1,6 +1,5 @@
 """Typer base MRPcli interface to allow the user to interact with the udppf system"""
 
-import os
 from pathlib import Path
 import typer
 from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator

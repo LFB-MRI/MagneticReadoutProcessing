@@ -4,9 +4,6 @@ import os
 import re
 from pathlib import Path
 
-from import_MRP import __fix_import__
-__fix_import__()
-
 
 from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization
 from MRP import MRPSimulation
