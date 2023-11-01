@@ -10,7 +10,7 @@ with pathlib.Path(req_path).open() as requirements_txt:
     install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(name='MagneticReadoutProcessing',
-      version='1.3.2',
+      version='1.3.4',
       description='This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors. The focus is on visualization, followed by the provision of simple interfaces to work with this data. In general its possible to use this lib on all kinds of sensor data.',
       author='Marcel Ochsendorf',
       author_email='info@marcelochsendorf.com',
@@ -18,7 +18,7 @@ setup(name='MagneticReadoutProcessing',
       packages= ['MRP', 'MRPcli', 'MRPudpp'],
       install_requires=install_requires,
       include_package_data=True,
-      package_data={"": ["*.mag.json", "*.yaml", "*.html", "*.js", "*.css", "*.md", "*.json", "*.ts", "*.xml"]},
+      package_data={"": ["**/*.mag.json", "**/*.yaml", "**/*.html", "**/*.js", "**/*.css", "**/*.md", "**/*.json", "**/*.ts", "**/*.xml"]},
       entry_points={
           'console_scripts': [
             'MRPCli = MRPcli.cli:run', # FOR python -m MRPcli.cli --help

@@ -24,7 +24,7 @@ MRPUdpp = "MRPudpp.udpp:run"
 include-package-data = true
 
 [tool.setuptools.package-data]
-"*" = ["*.mag.json", "*.yaml", "*.html", "*.js", "*.css", "*.md", "*.json", "*.ts", "*.xml"]
+"*" = ["**/*.mag.json", "**/*.yaml", "**/*.html", "**/*.js", "**/*.css", "**/*.md", "**/*.json", "**/*.ts", "**/*.xml"]
 
 [project.urls]
 "Homepage" = "https://github.com/LFB-MRI/MagneticReadoutProcessing"
