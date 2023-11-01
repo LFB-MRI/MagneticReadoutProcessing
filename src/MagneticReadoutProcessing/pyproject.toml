@@ -17,8 +17,8 @@ classifiers = [
 MRPCli = "MRPcli.cli:run"
 MRPUdpp = "MRPudpp.udpp:run"
 
-[tool.setuptools.packages.find]
-where = ["pipelines", "readings", "static", "templates"]
+#[tool.setuptools.packages.find]
+#where = ["pipelines", "readings", "static", "templates"]
 
 [tool.setuptools]
 include-package-data = true
