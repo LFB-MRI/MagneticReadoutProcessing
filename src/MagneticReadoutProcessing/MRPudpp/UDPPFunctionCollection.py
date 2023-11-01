@@ -9,8 +9,8 @@ from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization
 from MRP import MRPSimulation
 from MRP import MRPAnalysis
 from MRP import MRPDataVisualization
-import  UDPPFLogger
-from UDPPFLogger import UDPFLogger as logger
+
+from MRPudpp import UDPPLogger
 
 
 class UDPPFunctionCollectionException(Exception):
@@ -67,7 +67,7 @@ class UDPPFunctionCollection:
         if readings_to_export is None or len(readings_to_export) <= 0:
             raise UDPPFunctionCollectionException("readings_to_export: readings parameter empty")
 
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
 
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
@@ -103,7 +103,7 @@ class UDPPFunctionCollection:
         if readings_to_inspect is None or len(readings_to_inspect) <= 0:
             raise UDPPFunctionCollectionException("inspect_readings: readings parameter empty")
 
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
 
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
@@ -167,7 +167,8 @@ class UDPPFunctionCollection:
         if readings_to_plot is None or len(readings_to_plot) <= 0:
             raise UDPPFunctionCollectionException("readings_to_plot: readings parameter empty")
 
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
+
         exp_path = None
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
@@ -201,7 +202,7 @@ class UDPPFunctionCollection:
         if readings_to_plot is None or len(readings_to_plot) <= 0:
             raise UDPPFunctionCollectionException("readings_to_plot: readings parameter empty")
 
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
 
         exp_path = None
         if len(IP_export_folder) > 0:
@@ -273,7 +274,7 @@ class UDPPFunctionCollection:
         if not str(IP_input_folder).startswith('/'):
             input_folder = str(Path(IP_input_folder).resolve())
         # GET LOGGER
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
         log.run_log("import_readings: input_folder parameter set to {}".format(input_folder))
 
         # CHECK FOLDER EXISTS
@@ -340,7 +341,7 @@ class UDPPFunctionCollection:
 
     @staticmethod
     def generate_hallbach_slice(readings_for_slice: [MRPReading.MRPReading], IP_2D_projection: bool = True, IP_output_folder:str = "./", IP_output_filename: str = "array.scad"):
-        log: logger = UDPPFLogger.UDPFLogger()
+        log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
 
 
         if readings_for_slice is None or len(readings_for_slice) <= 0:
@@ -388,8 +389,6 @@ class UDPPFunctionCollection:
 
         # APPLY BIAS OFFSET
         MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(new_readings, mean_value)
-
-
 
         return new_readings
 
