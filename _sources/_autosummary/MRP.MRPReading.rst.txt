@@ -1,0 +1,6 @@
+MRP.MRPReading
+==============
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPReading
