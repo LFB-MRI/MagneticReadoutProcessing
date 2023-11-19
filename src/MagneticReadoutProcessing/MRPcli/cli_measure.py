@@ -10,7 +10,8 @@ from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPRea
 
 app = typer.Typer()
 
-
+def perform_measurement_rotationalsensor(configname: str):
+    pass
 
 def perform_measurement(configname: str):
     print("perform_measurement for {}".format(configname))
@@ -144,10 +145,12 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
             print("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
             raise typer.Abort("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
         print("> sensor-connection-test: OK".format(conn.get_sensor_id()))
-        conn.disconnect()
+
 
 
         cfg_to_run.append(c)
+
+        conn.disconnect()
 
 
 

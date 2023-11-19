@@ -1,6 +1,8 @@
 """ class for interfacing (hardware, protocol) sensors running the UnifiedSensorFirmware """
 import time
+from enum import Enum
 
+import requests
 import serial
 import serial.tools.list_ports
 import re
@@ -9,10 +11,19 @@ import io
 from socket import *
 
 
+
+
 class MRPHalException(Exception):
     def __init__(self, message="MRPHalException thrown"):
         self.message = message
         super().__init__(self.message)
+
+
+class MRPRemoteSensorType(Enum):
+    Unknown = 0
+    BaseSensor = 1
+    ApiSensor = 2
+    RotationSensor = 3
 
 
 class MRPHalSerialPortInformation:
@@ -42,14 +53,30 @@ class MRPHalSerialPortInformation:
         if _baudrate > 0:
             self.baudrate = _baudrate
 
+    def getSensorsNeededImplementation(self) -> MRPRemoteSensorType:
+        if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
+            return MRPRemoteSensorType.BaseSensor
+        elif 'loop://' in self.device_path:
+            return MRPRemoteSensorType.BaseSensor
+        elif 'rotationsensor://' in self.device_path:
+            return MRPRemoteSensorType.RotationSensor
+        elif 'apisensor://' in self.device_path:
+            return MRPRemoteSensorType.ApiSensor
+
+        return MRPRemoteSensorType.Unknown
 
     def is_remote_port(self) -> bool:
         if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
             return True
         elif 'loop://' in self.device_path:
             return True
-
+        elif 'apisensor://' in self.device_path:
+            return True
+        elif 'rotationsensor://' in self.device_path:
+            return True
         return False
+
+
     def is_valid(self) -> bool:
         """
         check if the _path exist in the filesystem
@@ -66,6 +93,10 @@ class MRPHalSerialPortInformation:
         if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
             return True
         elif 'loop://' in self.device_path:
+            return True
+        elif 'apisensor://' in self.device_path:
+            return True
+        elif 'rotationsensor://' in self.device_path:
             return True
 
         elif os.path.islink(self.device_path) or os.path.exists(self.device_path): # os.path.exists is needed for fs access pathlib is not working for /dev on mac
@@ -138,7 +169,6 @@ class MRPPHal:
                 data_str = data.decode('UTF-8')
 
                 if 'pfgipresponseserv' in data_str:
-
                     if '_' in data_str:
                         sp: [str] = data_str.split('_')
                         host: str = server[0]
@@ -147,9 +177,27 @@ class MRPPHal:
                         if len(sp) >= 2:
                             senid = sp[2]
 
-                        entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("socket://{}:{}".format(host, port))
-                        entry.name = "Unified Sensor {}".format(senid)
 
+                        btype = "socket"
+                        # DETECT USED SENSOR FOR AN API SENSORS WE TRY TO PING THE API
+                        # IF an HTTP SERVER IS ON THE GOT PORT ITS AN REST API SENSOR
+                        url = "http://{}:{}/status".format(host, port)
+                        print("detecting remote sensor type using API endpoint: {}".format(url))
+                        r = requests.get(url=url)
+                        if r.status_code >= 200 and r.status_code < 400:
+                            # TRY TO GET SENSOR IMPLEMENTATION
+                            if 'application/json' in r.headers['content-type']:
+
+                                try:
+                                    doc = r.json()
+                                    if 'sensortype' in doc:
+                                        btype = str(doc['sensortype'])
+                                except Exception as e:
+                                    print("unknown remote sensor type: {}", r.json())
+                                    btype = "unknown"
+
+                        entry: MRPHalSerialPortInformation = MRPHalSerialPortInformation("{}://{}:{}".format(btype, host, port))
+                        entry.name = "Unified Sensor {} [{}]".format(senid, btype)
                         if senid not in entry_list:
                             valid_ports.append(entry)
                             entry_list.append(senid)
@@ -263,6 +311,11 @@ class MRPPHal:
         if self.current_port is None or not self.current_port.is_valid():
             raise MRPHalException("set serial port information are invalid")
 
+
+
+        # HANDLE SPECIAL SENSORS
+
+
         # CREATE AND OEPN serial INSTANCE
         if self.serial_port_instance is None:
             try:
@@ -356,7 +409,6 @@ class MRPPHal:
             return result.split(self.TERMINATION_CHARACTER).remove('')
 
         return result
-
 
     def query_command_str(self,_cmd: str) -> str:
         """
