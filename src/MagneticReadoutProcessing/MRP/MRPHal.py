@@ -147,7 +147,6 @@ class MRPPHal:
             return True
         return False
 
-
     @staticmethod
     def list_remote_serial_ports() -> [MRPHalSerialPortInformation]:
         sock = socket(AF_INET, SOCK_DGRAM)
@@ -279,7 +278,8 @@ class MRPPHal:
     sio: io.TextIOWrapper = None
 
     def __init__(self, _selected_port: MRPHalSerialPortInformation):
-        self.current_port = _selected_port
+        if _selected_port:
+            self.current_port = _selected_port
 
     def __del__(self):
         self.disconnect()
@@ -322,7 +322,14 @@ class MRPPHal:
                 # call opens directly
                 # if baudrate is 0 => tcp is used
                 if self.current_port.is_remote_port():
-                    self.serial_port_instance = serial.serial_for_url(self.current_port.device_path, timeout=1)
+                    dpath: str = self.current_port.device_path
+                    if dpath.startswith("tcp://"):
+                        dpath = dpath.replace('tcp://', 'socket://')
+                    elif dpath.startswith("udp://"):
+                        dpath = dpath.replace('udp://', 'socket://')
+
+
+                    self.serial_port_instance = serial.serial_for_url(dpath, timeout=1)
                 else:
                     self.serial_port_instance = serial.Serial(port=self.current_port.device_path, baudrate=self.current_port.baudrate)
                 # FURTHER CONFIGURATION

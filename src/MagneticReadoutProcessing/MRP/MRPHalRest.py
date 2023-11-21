@@ -135,7 +135,12 @@ class MRPPHalRest(MRP.MRPHal):
         :returns: id as string default unknown
         :rtype: str
         """
-        return self.request_status().id
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState =  self.request_status()
+
+        if r.success:
+            return r.id
+        else:
+            return ""
 
     def get_sensor_count(self) -> int:
         """
@@ -144,7 +149,12 @@ class MRPPHalRest(MRP.MRPHal):
        :returns: sensor count
        :rtype: str
        """
-        return self.request_status().sensorcount
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
+        if r.success:
+            return r.sensorcount
+        else:
+            return 0
+
 
     def get_sensor_capabilities(self) -> [str]:
         """

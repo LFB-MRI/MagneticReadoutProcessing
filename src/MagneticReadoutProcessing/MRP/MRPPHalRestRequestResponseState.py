@@ -1,11 +1,12 @@
 
 class MRPPHalRestRequestResponseState(object):
-    success: bool
-    sensortype: str
-    version: str
-    id: str
-    sensorcount: int
-    initialized: bool
+    success: bool = False
+    sensortype: str = ""
+    version: str = "0.0.0"
+    id: str = ""
+    sensorcount: int = 0
+    initialized: bool = False
+    capabilities: [str] = []
 
     def __init__(self):
         pass

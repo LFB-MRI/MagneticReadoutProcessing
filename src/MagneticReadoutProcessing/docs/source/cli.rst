@@ -10,6 +10,16 @@ To allow a level of automation and integration into CI pipelines, several differ
    For the following cli examples, a working sensor with ``UnifiedMagBoardFirmware`` is required.
 
 
+
+.. note::
+
+    Basic sensors (e.g. with one or two hall-sesors) can used directly with the cli.
+    A rotational sensor (full-sphere mapping sensors) required more advance control logic in order to operate.
+    Here the ``RotqtionalSensorProxy`` should be used.
+    So first a running and configured  ``RotqtionalSensorProxy`` needs to be started, then the ``cli`` can be used as described.
+    
+
+
 Installation
 ************
 

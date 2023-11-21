@@ -32,6 +32,7 @@ Contents
     pipeline
     MagneticReadoutProcessing
     UserDefinedProcessingPipeline
+    RotationalSensorProxy
 
 
 Indices and tables
