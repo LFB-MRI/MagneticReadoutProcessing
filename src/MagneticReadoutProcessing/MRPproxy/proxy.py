@@ -14,53 +14,76 @@ from waitress import serve
 from threading import Lock
 import MRP
 import machineid
-from moonraker import MoonrakerPrinter
-from MRP import MRPPHalRestRequestResponseState, MRPHal
+
+from MRP import MRPPHalRestRequestResponseState, MRPHalSerialPortInformation, MRPHal, MRPHalHelper
 
 
-class RSPProxyGlobals:
-    sensor_port: MRPHal.MRPHalSerialPortInformation
-    sensor: MRPHal.MRPPHal
-    mechanic: MoonrakerPrinter
+
+class MRPProxyException(Exception):
+    def __init__(self, message="MRPProxyException thrown"):
+        self.message = message
+        super().__init__(self.message)
+
+class ProxyGlobals:
+    sensor: MRPHal.MRPHal
+   # mechanic: MoonrakerPrinter
     lock: Lock = Lock()
     initialized: bool = False
 
 
     def __init__(self):
-        self.sensor_port = MRPHal.MRPHalSerialPortInformation(_path="")
-        self.sensor = MRP.MRPHal.MRPPHal = MRP.MRPHal.MRPPHal(self.sensor_port)
-        self.mechanic = MoonrakerPrinter("", no_init=True)
+        self.sensor_hal = MRPHal.MRPHal = None
+        self.manipulator_hal = MRPHal.MRPHal = None
         self.initialized = False
 
-    def init(self, klipperendpoint:str, sensordevice:str, sensorbaud:int = 0, disbaleprecheck:bool = False):
+    def init(self, _sensor_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation, _manipulator_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None, _disbaleprecheck: bool = False):
 
+        if _sensor_information is None:
+            raise Exception("_sensorinformation is None but needs to be supplied")
 
-        self.mechanic.set_address("{}".format(klipperendpoint))
-        self.mechanic.init()
-
-        self.sensor_port.device_path = sensordevice
-        self.sensor.set_serial_port_information(self.sensor_port)
-
-        # CHECK PARAMETERS
-        rfw_succ, _ = self.mechanic.request_firmware() # REQUEST VERSION
-
-        if rfw_succ:
-            print("PRECHECK: MECHANIC: {}".format(True))
-        elif not disbaleprecheck:
-            raise Exception("cant connect to klipper/moonrakerusing: {}".format(klipperendpoint))
-        # CHECK SENSOR CONNECTION
+        if _sensor_information.getSensorsNeededImplementation() == MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor:
+            raise MRPProxyException("remote sensor please use instance of MRPHalRest")
 
         try:
-            if sensorbaud > 0:
-                self.sensor_port.baudrate = sensorbaud
-
-            self.sensor.connect()
-            print("PRECHECK: SENSOR: {}".format(self.sensor.get_sensor_id()))
+            self.sensor_hal = MRPHalHelper.MRPHalHelper.createHalInstance(_sensor_information)
+            self.sensor_hal.set_serial_port_information(_sensor_information)
+            self.sensor_hal.connect()
+            print("PRECHECK: SENSOR_HAL: {}".format(self.sensor_hal.get_sensor_id()))
             #self.sensor.disconnect()
         except Exception as e:
-            if not disbaleprecheck:
-                raise Exception("cant connect to sensor using {}: {}".format(sensordevice, str(e)))
+            if not _disbaleprecheck:
+                raise Exception("cant connect to sensor using {}: {}".format(_sensor_information.device_path, str(e)))
 
+        if _manipulator_information is not None:
+            try:
+                self.manipulator_hal = MRPHalHelper.MRPHalHelper.createHalInstance(_manipulator_information)
+                self.manipulator_hal.set_serial_port_information(_manipulator_information)
+                self.manipulator_hal.connect()
+                print("PRECHECK: MANIPULATOR_HAL: {}".format(self.manipulator_hal.get_sensor_id()))
+                # self.sensor.disconnect()
+            except Exception as e:
+                if not _disbaleprecheck:
+                    raise Exception(
+                        "cant connect to manipulator using {}: {}".format(_manipulator_information.device_path, str(e)))
+
+
+
+
+
+        # self.mechanic.set_address("{}".format(klipperendpoint))
+        # self.mechanic.init()
+
+        # self.sensor_port.device_path = sensordevice
+        # self.sensor.set_serial_port_information(self.sensor_port)
+
+        # CHECK PARAMETERS
+        # rfw_succ, _ = self.mechanic.request_firmware() # REQUEST VERSION
+
+        # if rfw_succ:
+        #    print("PRECHECK: MECHANIC: {}".format(True))
+        # elif not disbaleprecheck:
+        #    raise Exception("cant connect to klipper/moonrakerusing: {}".format(klipperendpoint))
+        # CHECK SENSOR CONNECTION
         self.initialized = True
 
 
@@ -70,7 +93,7 @@ cors = CORS(app_flask)
 app_flask.config['CORS_HEADERS'] = 'Content-Type'
 
 terminate_flask: bool = False
-hardware_instances: RSPProxyGlobals = RSPProxyGlobals()
+hardware_instances: ProxyGlobals = ProxyGlobals()
 
 
 
@@ -84,10 +107,10 @@ signal.signal(signal.SIGINT, signal_andler)
 
 @app_flask.errorhandler(404)
 def page_not_found(e):
-    return redirect("/rsp/status")
+    return redirect("/proxy/status")
 
 
-@app_flask.route("/rsp/initialize")
+@app_flask.route("/proxy/initialize")
 @cross_origin()
 def initialize():
     global hardware_instances
@@ -97,13 +120,16 @@ def initialize():
     # IF NOT INITILALIZED INIT HARDWARE_INSTANCED_ WITH PROVIDED HARDWARE PARAMETERS
     if not app_flask.config.get('initialized', False):
         with hardware_instances.lock:
-            klipperendpoint: str = app_flask.config["syscfg"]["klipperendpoint"]
+            manipulatordevice: str = app_flask.config["syscfg"]["manipulatordevice"]
             sensordevice: str = app_flask.config["syscfg"]["sensordevice"]
-            sensorbaud: int = app_flask.config["syscfg"]["sensorbaud"]
             disbaleprecheck: int = app_flask.config["syscfg"]["disbaleprecheck"]
 
+
+
+            sensport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(sensordevice)
+            mechport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(manipulatordevice)
             # TRY TO CONNECT TO THE HARDWARE
-            hardware_instances.init(klipperendpoint, sensordevice, sensorbaud, disbaleprecheck)
+            hardware_instances.init(sensport, mechport, disbaleprecheck)
             # MARK AS SYSTEM INITIALIZED
             app_flask.config['initialized'] = True
 
@@ -112,11 +138,11 @@ def initialize():
 
     return jsonify(app_flask.config)
 
-@app_flask.route("/rsp/perform_mea")
-@cross_origin()
-def
+# is_connected
+# get_sensor_count
+# get_sensor_capabilities -> []
 
-@app_flask.route("/rsp/disconnect")
+@app_flask.route("/proxy/disconnect")
 @cross_origin()
 def disconnect():
     global hardware_lock
@@ -124,17 +150,17 @@ def disconnect():
     # if hardware is not initialized redirect to init route first
     # after init the request is coming back here
     if not app_flask.config.get('initialized', False):
-        return redirect('/rsp/initialize?origin={}'.format(request.base_url))
+        return redirect('/proxy/initialize?origin={}'.format(request.base_url))
 
     # try to disconnect the hardware
     with hardware_instances.lock:
         hardware_instances.sensor.disconnect() # disconnect sensors
-        hardware_instances.mechanic.disable_motors() # disbale motors
+        #hardware_instances.mechanic.disable_motors() # disbale motors
 
     return jsonify({"error": False})
 
 
-@app_flask.route("/rsp/status")
+@app_flask.route("/proxy/status")
 @cross_origin()
 def status():
     global hardware_instances
@@ -142,7 +168,7 @@ def status():
     # if hardware is not initialized redirect to init route first
     # after init the request is coming back here
     if not app_flask.config.get('initialized', False):
-        return redirect('/rsp/initialize?origin={}'.format(request.base_url))
+        return redirect('/proxy/initialize?origin={}'.format(request.base_url))
 
     ret: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
     ret.sensortype = "rotationsensor"
@@ -187,16 +213,15 @@ def flask_server_task(_config: dict):
 
 
 @app_typer.command()
-def rotational(typer_ctx: typer.Context, port: int = 5556, host: str = "0.0.0.0", debug: bool = False, klipperendpoint: str = "http://127.0.0.1", sensordevice: str = "/dev/ttyACM0", sensorbaud: int = 0, disbaleprecheck: int = 0):
+def launch(typer_ctx: typer.Context, port: int = 5556, host: str = "0.0.0.0", debug: bool = False, manipulatordevice: str = "http://127.0.0.1", sensordevice: str = "/dev/ttyACM0", disbaleprecheck: int = 0):
     global terminate_flask
     #global hardware_instances
 
 
 
     sys_cfg = {
-        'klipperendpoint': klipperendpoint,
+        'manipulatordevice': manipulatordevice,
         'sensordevice': sensordevice,
-        'sensorbaud': sensorbaud,
         'disbaleprecheck': disbaleprecheck,
         'initialized': False
     }

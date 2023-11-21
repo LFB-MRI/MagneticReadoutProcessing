@@ -6,11 +6,11 @@ import random
 import unittest
 import numpy as np
 
-from MRP import MRPHal, MRPBaseSensor, MRPDataVisualization, MRPReading, MRPReadingEntry
+from MRP import MRPHalLocal, MRPBaseSensor, MRPDataVisualization, MRPReading, MRPReadingEntry
 
 
 class TestMPRHal(unittest.TestCase):
-    hal_instance: MRPHal.MRPPHal = None
+    hal_instance: MRPHal.MRPPHalLocal = None
     # PREPARE A INITIAL CONFIGURATION FILE
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
@@ -24,14 +24,14 @@ class TestMPRHal(unittest.TestCase):
         # for testing this need to be set to a valid system port
         self.DEVICE_SERIAl_PORT = "/dev/tty.usbmodem3867315334391"
         # GET A UNIFIED SENSOR
-        ports: [MRPHal.MRPHalSerialPortInformation] = MRPHal.MRPPHal.list_serial_ports()
+        ports: [MRPHal.MRPHalSerialPortInformation] = MRPHal.MRPPHalLocal.list_serial_ports()
         selected_port: MRPHal.MRPHalSerialPortInformation = None
         for port in ports:
             if 'Unified Sensor' in port.name:
                 selected_port = port
                 print(port)
         # CONNECT
-        self.hal_instance: MRPHal.MRPPHal = MRPHal.MRPPHal(selected_port)
+        self.hal_instance: MRPHal.MRPPHalLocal = MRPHal.MRPPHalLocal(selected_port)
         self.hal_instance.connect()
 
     def tearDown(self) -> None:

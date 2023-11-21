@@ -1,7 +1,7 @@
 from requests import get, post
 
 
-class MoonrakerPrinter(object):
+class MRPMoonrakerInterface(object):
     '''Moonraker API interface.
     Args
     ----

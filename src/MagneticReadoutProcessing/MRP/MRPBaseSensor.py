@@ -11,13 +11,13 @@ class MMRPBaseSensorException(Exception):
 class MRPBaseSensor:
     """ Baseclass for the simplest sensor with static and axis_b capabilities """
 
-    sensor_connection: MRPHal.MRPPHal = None
+    sensor_connection: MRPHal.MRPHal = None
     readout_result: dict = {}
     capabilities: list[str] = []
     sensor_axis: list = []
     sensor_count: int = 0
 
-    def __init__(self, _sensor_connection: MRPHal.MRPPHal):
+    def __init__(self, _sensor_connection: MRPHal.MRPHal):
         if not _sensor_connection.is_connected():
             raise MMRPBaseSensorException("sensor is not connected please use _sensor_connection.connect() first")
 

@@ -5,8 +5,7 @@ from MRPcli import cli_datastorage
 import os
 from pathlib import Path
 
-from MRP import MRPMagnetTypes, MRPHal
-
+from MRP import MRPMagnetTypes, MRPHal, MRPHalSerialPortInformation, MRPHalHelper
 
 app = typer.Typer()
 
@@ -112,15 +111,15 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
 @app.command()
 def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", path: Optional[str] = None, exclude_network_sensors: bool = False):
 
-    device_path: MRPHal.MRPHalSerialPortInformation = None
+    device_path: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None
 
 
     # If the user gives no default path, prompt with a list of ports
     if path is None or len(path) <= 0:
-        ports = MRPHal.MRPPHal.list_serial_ports()
+        ports = MRPHalSerialPortInformation.MRPHalSerialPortInformation.list_serial_ports()
 
         if not exclude_network_sensors:
-            network_ports = MRPHal.MRPPHal.list_remote_serial_ports()
+            network_ports = MRPHalSerialPortInformation.MRPHalSerialPortInformation.list_remote_serial_ports()
             ports = [*ports, *network_ports]
 
         if len(ports) <= 0:
@@ -152,7 +151,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
         print("selected sensor: {} - {}".format(device_path.name, device_path.device_path))
 
     else:
-        device_path = MRPHal.MRPHalSerialPortInformation(_path=path)
+        device_path = MRPHalSerialPortInformation.MRPHalSerialPortInformation(_path=path)
 
     # check for valid device path if user specified
     if not device_path.is_valid():
@@ -161,7 +160,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
 
 
     # TEST CONNECTION
-    sensor_connection = MRPHal.MRPPHal(device_path)
+    sensor_connection = MRPHalHelper.MRPHalHelper.createHalInstance(device_path)
 
     sensor_connection.connect()
     print("sensor connected: {} ID:{}".format(sensor_connection.is_connected(), sensor_connection.get_sensor_id()))

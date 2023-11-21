@@ -1,7 +1,6 @@
 import typer
 from MRPcli import cli_datastorage
-
-from MRP import MRPHal
+from MRP import MRPHal, MRPHalSerialPortInformation, MRPHalHelper
 
 
 
@@ -11,28 +10,28 @@ def __fix_import__fix_import():
 
 
 
-def connect_sensor_using_config(_configname: str) -> MRPHal.MRPPHal:
+def connect_sensor_using_config(_configname: str) -> MRPHal.MRPHal:
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(_configname)
 
     path: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH)
     name: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_NAME)
-    baudrate: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_BAUDRATE)
+
+    baudrate: int = 0
+    try:
+        baudrate = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_BAUDRATE))
+    except Exception as e:
+        print(str(e))
 
     if len(path) < 0:
         print("please connect sensor first using connect")
         raise typer.Abort("please connect sensor first using connect")
 
-    bi = 0
-    if len(baudrate) > 0:
-        bi = int(baudrate)
 
-    device_path = MRPHal.MRPHalSerialPortInformation(_path=path, _name=name, _baudrate=bi)
 
-    if not device_path.is_valid():
-        print("invalid sensor config, please re-run connect command")
-        raise typer.Abort("invalid sensor config, please re-run connect command")
 
-    sensor_connection = MRPHal.MRPPHal(device_path)
+    device_path: MRPHalSerialPortInformation.MRPHalSerialPortInformation = MRPHalSerialPortInformation.MRPHalSerialPortInformation(_path=path, _name=name, _baudrate=baudrate)
+    sensor_connection: MRPHal.MRPHal = MRPHalHelper.MRPHalHelper.createHalInstance(device_path)
+
     sensor_connection.connect()
 
     if not sensor_connection.is_connected():

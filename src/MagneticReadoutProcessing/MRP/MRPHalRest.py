@@ -6,12 +6,11 @@ import re
 import os
 import io
 from socket import *
-
 import requests
 
-import MRP
-from MRP import MRPPHalRestRequestResponseState
-from MRP.MRPHal import MRPHalSerialPortInformation
+from MRP import MRPPHalRestRequestResponseState, MRPHal
+from MRP import MRPHalSerialPortInformation
+
 
 
 class MRPHalRestException(Exception):
@@ -21,23 +20,18 @@ class MRPHalRestException(Exception):
 
 
 
-
-
-
-class MRPPHalRest(MRP.MRPHal):
+class MRPHalRest(MRPHal.MRPHal):
     """
     Baseclass for hardware sensor interaction using a serial interface.
     It contains functions to send rec commands from/to the sensor but no interpretation
     """
 
-    TERMINATION_CHARACTER = '\n'
-    READLINE_TIMEOUT = 0.1
-    READLINE_RETRY_ATTEMPT = 5
+    PROXY_URL_PATH_PREFIX = "proxy/" # SEE MRPProxy flask paths 127.0.0.1/proxy/<cmd>
 
     current_port: MRPHalSerialPortInformation = None
 
     def __init__(self, _selected_port: MRPHalSerialPortInformation):
-        self.current_port = _selected_port
+        self.set_serial_port_information(_selected_port)
 
     def __del__(self):
         self.disconnect()
@@ -49,10 +43,23 @@ class MRPPHalRest(MRP.MRPHal):
        :param _port: serial port information
        :type _port: MRPHalSerialPortInformation
        """
-        if self.current_port is None or not self.current_port.is_valid():
+        if _port is None or not _port.is_valid():
             raise MRPHalRestException("set serial port information are invalid")
-        self.current_port = _port
 
+        if self.current_port.getSensorsNeededImplementation() != MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor:
+            raise MRPHalRestException("set serial port is not valid for this hal implementation")
+
+        if not _port.device_path.startswith('http://') or not _port.device_path.startswith('https://'):
+            raise MRPHalRestException("set serial port information device path didnt start with http:// or https:/")
+
+        if not _port.device_path.endswith('/'):
+            _port.device_path = _port.device_path + '/'
+
+        if not _port.device_path.endswith(self.PROXY_URL_PATH_PREFIX):
+            _port.device_path = _port.device_path + self.PROXY_URL_PATH_PREFIX
+
+        print("set_serial_port_information: modified device path {}".format(_port.device_path))
+        self.current_port = _port
     def request_json(self, _command: str):
         if _command is None or not _command:
             raise MRPHalRestException("request_json _command parameter is empty")
@@ -83,7 +90,6 @@ class MRPPHalRest(MRP.MRPHal):
                 raise MRPHalRestException("application/json required: {}".format(r.headers))
         else:
             raise MRPHalRestException("request_json r.status_code >= 200 and r.status_code < 400")
-
     def request_status(self) -> MRPPHalRestRequestResponseState:
         r: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
         try:
@@ -110,9 +116,6 @@ class MRPPHalRest(MRP.MRPHal):
 
         return self.request_status().success
 
-    def initialize(self):
-        ret: dict = self.request_json('initialize')
-
     def is_connected(self) -> bool:
         """
         returns true if the serial port is open
@@ -127,6 +130,71 @@ class MRPPHalRest(MRP.MRPHal):
         disconnects a opened sensor connection
         """
         return True
+
+    def read_value(self):
+        if not self.is_connected():
+            raise MRPHalRestException("sensor isn't connected. use connect() first")
+    def send_command(self, _cmd: str) -> [str]:
+        """
+                sends a command to the sensor
+
+                :param _cmd: command like help id read...
+                :type _cmd: str
+
+                :returns: returns sensor response as line separated by '\n'
+                :rtype: [str]
+                """
+        if _cmd is None or len(_cmd) <= 0:
+            raise MRPHalRestException("_cmd is empty")
+
+        if not self.is_connected():
+            raise MRPHalRestException("sensor isn't connected. use connect() first")
+    def query_command_str(self,_cmd: str) -> str:
+        """
+        queries a sensor command and returns the response as string
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the response as concat string
+        :rtype: str
+        """
+        res = self.send_command(_cmd)
+        if 'parse error' in res:
+            raise MRPHalRestException("sensor returned invalid command or command not implemented for {}".format(_cmd))
+
+        return "".join(str(e) for e in res)
+    def query_command_float(self, _cmd: str) -> float:
+        """
+        queries a sensor command and returns the response as float
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the as float parsed result
+        :rtype: float
+        """
+        res = self.query_command_str(_cmd)
+        if len(res) > 0:
+            return float(res)
+        raise MRPHalRestException("cant parse result {} for query {} into int".format(res, _cmd))
+
+    def query_command_int(self, _cmd: str) -> int:
+        """
+        queries a sensor command and returns the response as int
+
+        :param _cmd: command like help id read...
+        :type _cmd: str
+
+        :returns: returns the as int parsed result
+        :rtype: int
+        """
+        res = self.query_command_str(_cmd)
+        if len(res) > 0:
+            if '0x' in res:
+                return int(res, base=16)
+            return int(res)
+        raise MRPHalRestException("cant parse result {} for query {} into int".format(res, _cmd))
 
     def get_sensor_id(self) -> str:
         """
@@ -154,7 +222,6 @@ class MRPPHalRest(MRP.MRPHal):
             return r.sensorcount
         else:
             return 0
-
 
     def get_sensor_capabilities(self) -> [str]:
         """

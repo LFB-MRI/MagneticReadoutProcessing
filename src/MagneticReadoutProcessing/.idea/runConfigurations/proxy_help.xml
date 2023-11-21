@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="rsp_proxy_rotational_remote" type="PythonConfigurationType" factoryName="Python" folderName="RSP">
+  <configuration default="false" name="proxy_help" type="PythonConfigurationType" factoryName="Python" folderName="PROXY">
     <module name="MagneticReadoutProcessing" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -12,8 +12,8 @@
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-    <option name="SCRIPT_NAME" value="MRPRotationalSensorProxy/rsp.py" />
-    <option name="PARAMETERS" value="proxy rotational --klipperendpoint http://192.168.178.123 --sensordevice=tcp://192.168.178.123:10001 --disbaleprecheck=0" />
+    <option name="SCRIPT_NAME" value="MRPProxy/mrpproxy.py" />
+    <option name="PARAMETERS" value="proxy --help" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

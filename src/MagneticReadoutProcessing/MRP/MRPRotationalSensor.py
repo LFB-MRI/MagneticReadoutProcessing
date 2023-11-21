@@ -1,6 +1,6 @@
 """ base class to query (b-value and temp) values from a hardware sensor running the UnifiedSensorFirmware """
 import MRP
-from MRP import MRPHal, MRPHalRest
+from MRP import MRPHalLocal, MRPHalRest
 
 
 class MMRPBaseSensorException(Exception):

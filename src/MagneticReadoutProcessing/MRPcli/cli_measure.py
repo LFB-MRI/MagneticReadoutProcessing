@@ -6,7 +6,7 @@ from MRPcli import cli_helper
 from MRPcli import cli_datastorage
 
 
-from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
+from MRP import MRPHalLocal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
 
 app = typer.Typer()
 
@@ -16,7 +16,7 @@ def perform_measurement_rotationalsensor(configname: str):
 def perform_measurement(configname: str):
     print("perform_measurement for {}".format(configname))
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(configname)
-    hal: MRPHal.MRPPHal = cli_helper.connect_sensor_using_config(_configname=configname)
+    hal: MRPHal.MRPPHalLocal = cli_helper.connect_sensor_using_config(_configname=configname)
     sensor_count = hal.get_sensor_count()
 
 

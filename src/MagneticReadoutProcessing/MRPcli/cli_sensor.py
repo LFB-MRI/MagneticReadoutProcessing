@@ -2,14 +2,15 @@ from typing_extensions import Annotated
 import typer
 from MRPcli import cli_helper
 
-from MRP import MRPHal, MRPBaseSensor
+from MRP import MRPHalLocal, MRPBaseSensor, MRPHal
 
 app = typer.Typer()
 
 
 @app.command()
 def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
-    sensor_connection: MRPHal.MRPPHal = cli_helper.connect_sensor_using_config(_configname=configname)
+
+    sensor_connection: MRPHal.MRPHal = cli_helper.connect_sensor_using_config(_configname=configname)
 
     print("SENSOR INFORMATION")
     print("NAME:".format(sensor_connection.current_port.name))
@@ -22,7 +23,7 @@ def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
 @app.command()
 def query(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
-    sensor_connection: MRPHal.MRPPHal = cli_helper.connect_sensor_using_config(_configname=configname)
+    sensor_connection: MRPHal.MRPHal = cli_helper.connect_sensor_using_config(_configname=configname)
     sensor_connection.connect()
     caps = sensor_connection.get_sensor_capabilities()
     if 'static' in caps:
