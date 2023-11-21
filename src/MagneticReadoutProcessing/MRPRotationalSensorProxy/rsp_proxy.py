@@ -3,12 +3,8 @@
 __version__ = '0.0.1'
 
 
-
-import json
 import bleach
 import signal
-from werkzeug.local import Local, LocalManager
-import flask
 import typer
 from flask import Flask, request, jsonify, make_response, redirect, render_template, g
 from flask_cors import CORS, cross_origin
@@ -33,10 +29,7 @@ class RSPProxyGlobals:
     def __init__(self):
         self.sensor_port = MRPHal.MRPHalSerialPortInformation(_path="")
         self.sensor = MRP.MRPHal.MRPPHal = MRP.MRPHal.MRPPHal(self.sensor_port)
-        self.mechanic = None
-        self.mechanic = MoonrakerPrinter("http://127.0.0.1", no_init=True)
-
-
+        self.mechanic = MoonrakerPrinter("", no_init=True)
         self.initialized = False
 
     def init(self, klipperendpoint:str, sensordevice:str, sensorbaud:int = 0, disbaleprecheck:bool = False):
@@ -49,14 +42,9 @@ class RSPProxyGlobals:
         self.sensor.set_serial_port_information(self.sensor_port)
 
         # CHECK PARAMETERS
-        self.mechanic.request_firmware() # REQUEST VERSION
-        got_response = False
-        for msg in self.mechanic.get_gcode(count=20):
-            if 'FIRMWARE_NAME' in msg or 'FIRMWARE_VERSION' in msg:
-                got_response = True
-                print(msg)
-                break
-        if got_response:
+        rfw_succ, _ = self.mechanic.request_firmware() # REQUEST VERSION
+
+        if rfw_succ:
             print("PRECHECK: MECHANIC: {}".format(True))
         elif not disbaleprecheck:
             raise Exception("cant connect to klipper/moonrakerusing: {}".format(klipperendpoint))
@@ -68,7 +56,7 @@ class RSPProxyGlobals:
 
             self.sensor.connect()
             print("PRECHECK: SENSOR: {}".format(self.sensor.get_sensor_id()))
-            self.sensor.disconnect()
+            #self.sensor.disconnect()
         except Exception as e:
             if not disbaleprecheck:
                 raise Exception("cant connect to sensor using {}: {}".format(sensordevice, str(e)))
@@ -84,8 +72,6 @@ app_flask.config['CORS_HEADERS'] = 'Content-Type'
 terminate_flask: bool = False
 hardware_instances: RSPProxyGlobals = RSPProxyGlobals()
 
-#local = Local()
-#local_manager = LocalManager([local])
 
 
 def signal_andler(signum, frame):
@@ -126,6 +112,8 @@ def initialize():
 
     return jsonify(app_flask.config)
 
+
+
 @app_flask.route("/rsp/disconnect")
 @cross_origin()
 def disconnect():
@@ -139,8 +127,7 @@ def disconnect():
     # try to disconnect the hardware
     with hardware_instances.lock:
         hardware_instances.sensor.disconnect() # disconnect sensors
-        hardware_instances.mechanic.disable_motors()
-
+        hardware_instances.mechanic.disable_motors() # disbale motors
 
     return jsonify({"error": False})
 
@@ -148,6 +135,13 @@ def disconnect():
 @app_flask.route("/rsp/status")
 @cross_origin()
 def status():
+    global hardware_instances
+
+    # if hardware is not initialized redirect to init route first
+    # after init the request is coming back here
+    if not app_flask.config.get('initialized', False):
+        return redirect('/rsp/initialize?origin={}'.format(request.base_url))
+
     ret: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
     ret.sensortype = "rotationsensor"
     ret.id = machineid.id()
@@ -156,11 +150,17 @@ def status():
     resdict: dict = ret.__dict__
     resdict.update(app_flask.config.get('syscfg', {}))
 
+    resdict['hardware'] = {}
     # if system is not initialized redirect to init route first
-    if not app_flask.config.get('initialized', False):
-        resdict['initialized'] = False
+    if app_flask.config.get('initialized', False):
+        resdict['sys_initialized'] = True
+        with hardware_instances.lock:
+            resdict['hardware']["sensorid"] = hardware_instances.sensor.get_sensor_id()
+
+            _, mechred = hardware_instances.mechanic.request_firmware()  # REQUEST VERSION
+            resdict['hardware'].update(mechred)
     else:
-        resdict['initialized'] = True
+        resdict['initialized'] = False
 
     return jsonify(resdict)
 

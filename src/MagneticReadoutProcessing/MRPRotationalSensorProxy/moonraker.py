@@ -38,8 +38,34 @@ class MoonrakerPrinter(object):
     def disable_motors(self):
         return self.send_gcode("M115")
 
-    def request_firmware(self):
-        return self.send_gcode('M115')
+    def request_firmware(self) -> (bool, dict):
+        self.send_gcode('M115')
+
+        got_response: bool = False
+        search: dict = {
+            'FIRMWARE_NAME': '',
+            'FIRMWARE_VERSION': ''
+        }
+
+        for msg in self.get_gcode(count=20):
+            print(msg)
+            msg = str(msg).strip('/\n')
+            msgs = msg.split(' ')
+            for so in search.keys():
+                for e in msgs:
+                    if so in e:
+                        got_response = True
+                        try:
+                            sp = e.split(':')
+                            sp.reverse()
+                            search[so] = sp[0]
+                        except Exception as e:
+                            pass
+
+
+        print(search)
+        return (got_response, search)
+
     def send_gcode(self, cmd: str):
         resp = self.post('/printer/gcode/script?script=%s' % cmd)
         if 'result' in resp:
