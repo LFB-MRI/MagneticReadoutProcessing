@@ -36,7 +36,7 @@ def getMachine_addr():
         command = "wmic bios get serialnumber"
 
     if len(command) > 0:
-        return os.popen(command).read().replace("\n", "").replace("	", "").replace(" ", "").replace('\"', '').replace('=','').replace("IOPlatformSerialNumber", "").replace("|", "").replace(" ", "").replace(":", "").replace("Serial", "")
+        return os.popen(command).read().strip("\n \"=|:").replace("IOPlatformSerialNumber", "").replace("Serial", "")
 
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
 

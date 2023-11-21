@@ -79,7 +79,7 @@ class UDPPFunctionCollection:
         for r in readings_to_export:
 
             reading_name: str = r.get_name()
-            reading_name = reading_name.replace("/", "").replace(".", "")
+            reading_name = reading_name.strip("/.")
             reading_name = "{}_{}".format(reading_name, r.measurement_config.id)
             reading_abs_filepath: str = str(Path(IP_export_folder).joinpath(Path(reading_name)))
             log.run_log("inspect_readings: report exported to {}".format(reading_abs_filepath))
@@ -142,7 +142,7 @@ class UDPPFunctionCollection:
             # EXPORT TO FILE
             if len(IP_export_folder) > 0:
                 reading_name: str = r.get_name()
-                reading_name = reading_name.replace("/", "").replace(".", "") + ".report.txt"
+                reading_name = reading_name.strip("/.") + ".report.txt"
                 reading_abs_filepath: str = str(Path(IP_export_folder).joinpath(Path(reading_name)))
                 log.run_log("inspect_readings: report exported to {}".format(reading_abs_filepath))
                 # CREATE FOLDER
@@ -184,7 +184,7 @@ class UDPPFunctionCollection:
 
             r: MRPReading.MRPReading
             for r in readings_to_plot:
-                filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).replace(" ", "").replace("/", "").replace(".", ""))))
+                filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).strip(" /."))))
                 visu: MRPPolarVisualization.MRPPolarVisualization = MRPPolarVisualization.MRPPolarVisualization(r)
                 visu.plot3d(filename)
 
@@ -217,9 +217,9 @@ class UDPPFunctionCollection:
                 # GET LOGGER
             log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
 
-        MRPDataVisualization.MRPDataVisualization.plot_error(readings_to_plot, IP_plot_headline_prefix , str(Path(exp_path).joinpath("error_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ", "").replace("/", "").replace(".", "")))))
-        MRPDataVisualization.MRPDataVisualization.plot_scatter(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("scatter_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ", "").replace("/", "").replace(".", "")))))
-        MRPDataVisualization.MRPDataVisualization.plot_temperature(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("temperature_plot_{}.png".format(str(IP_plot_headline_prefix).replace(" ","").replace("/","").replace(".", "")))))
+        MRPDataVisualization.MRPDataVisualization.plot_error(readings_to_plot, IP_plot_headline_prefix , str(Path(exp_path).joinpath("error_plot_{}.png".format(str(IP_plot_headline_prefix).strip(" /.")))))
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("scatter_plot_{}.png".format(str(IP_plot_headline_prefix).strip(" /.")))))
+        MRPDataVisualization.MRPDataVisualization.plot_temperature(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("temperature_plot_{}.png".format(str(IP_plot_headline_prefix).strip(" /.")))))
 
     @staticmethod
     def concat_readings(set_a: [MRPReading.MRPReading], set_b: [MRPReading.MRPReading], IP_random_shuffle: bool = False) -> [MRPReading.MRPReading]:

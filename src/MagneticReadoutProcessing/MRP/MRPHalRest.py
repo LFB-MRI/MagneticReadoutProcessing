@@ -167,7 +167,7 @@ class MRPPHalRest(MRP.MRPHal):
             res: str = self.query_command_str('info')
 
             if ' ' in res:
-                res = res.replace(' ', '')
+                res = res.strip(' ')
 
             if ',' in res:
                 return res.split(',')

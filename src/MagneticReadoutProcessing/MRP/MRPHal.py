@@ -406,7 +406,7 @@ class MRPPHal:
                 break
 
         # REPLACE WINDOW NEWLINE CHARS
-        result = result.replace('\r', '')
+        result = result.strip('\r')
 
         # remove last termination character
         result = ''.join(result.rsplit('\n', 1))
@@ -503,7 +503,7 @@ class MRPPHal:
             res: str = self.query_command_str('info')
 
             if ' ' in res:
-                res = res.replace(' ', '')
+                res = res.strip(' ')
 
             if ',' in res:
                 return res.split(',')

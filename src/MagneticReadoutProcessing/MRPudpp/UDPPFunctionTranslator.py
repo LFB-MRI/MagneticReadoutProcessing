@@ -646,7 +646,7 @@ class UDPPFunctionTranslator():
 
         filename: str = _name
 
-        filename.replace("./", "").replace(" ", "_").replace("/", "_")
+        filename.replace("./", "").strip(" /")
         if not filename.endswith(".yaml"):
             filename.replace(".", "_")
             filename = filename + ".yaml"

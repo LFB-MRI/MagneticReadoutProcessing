@@ -39,7 +39,7 @@ class CLIDatastorage:
         r = []
         for f in files:
             if f.endswith('_config.json'):
-                r.append(os.path.splitext(f)[0].replace('_config', ''))
+                r.append(os.path.splitext(f)[0].strip('_config'))
         return r
 
 

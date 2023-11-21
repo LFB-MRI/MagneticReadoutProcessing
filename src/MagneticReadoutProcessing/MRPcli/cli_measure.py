@@ -84,7 +84,7 @@ def perform_measurement(configname: str):
             reading.insert_reading_instance(rentry, _autoupdate_measurement_config=False)
 
             # EXPORT TO FILESYSTEM
-            filename = (reading.get_name() + "_cIDX{}".format(dp_idx)).replace('/', '').replace('.', '')
+            filename = (reading.get_name() + "_cIDX{}".format(dp_idx)).strip('/').strip('.')
             target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
             # RESOLVE REL TO ABS PATH
             if not str(target_folder).startswith('/'):

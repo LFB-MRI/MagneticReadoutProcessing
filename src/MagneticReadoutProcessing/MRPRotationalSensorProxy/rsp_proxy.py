@@ -112,7 +112,9 @@ def initialize():
 
     return jsonify(app_flask.config)
 
-
+@app_flask.route("/rsp/perform_mea")
+@cross_origin()
+def
 
 @app_flask.route("/rsp/disconnect")
 @cross_origin()
@@ -122,7 +124,7 @@ def disconnect():
     # if hardware is not initialized redirect to init route first
     # after init the request is coming back here
     if not app_flask.config.get('initialized', False):
-        return redirect('/rsp/initialize?origin=/rsp/disconnect')
+        return redirect('/rsp/initialize?origin={}'.format(request.base_url))
 
     # try to disconnect the hardware
     with hardware_instances.lock:
