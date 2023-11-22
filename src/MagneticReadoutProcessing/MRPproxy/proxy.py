@@ -6,6 +6,7 @@ __version__ = '0.0.1'
 import bleach
 import signal
 import typer
+from typing import List
 from flask import Flask, request, jsonify, make_response, redirect, render_template, g
 from flask_cors import CORS, cross_origin
 import time
@@ -25,50 +26,79 @@ class MRPProxyException(Exception):
         super().__init__(self.message)
 
 class ProxyGlobals:
-    sensor_hal: MRPHal.MRPHal
-    manipulator_hal: MRPHal.MRPHal
+    devices: [MRPHal.MRPHal] = []
+    ports: [MRPHalSerialPortInformation.MRPHalSerialPortInformation] = []
+    commandrouter: dict = {}
+    combined_capabilities: [str] = [] # contains all caps from all connected devices
+
 
     lock: Lock = Lock()
     initialized: bool = False
 
 
     def __init__(self):
-        self.sensor_hal: MRPHal.MRPHal = None
-        self.manipulator_hal: MRPHal.MRPHal = None
         self.initialized: bool = False
 
 
 
-    def init(self, _sensor_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation, _manipulator_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None, _disbaleprecheck: bool = False):
+    def get_hal_instance_by_command(self, _cmd: str) -> MRPHal.MRPHal:
 
-        if _sensor_information is None:
-            raise Exception("_sensorinformation is None but needs to be supplied")
 
-        if _sensor_information.getSensorsNeededImplementation() == MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor:
-            raise MRPProxyException("remote sensor please use instance of MRPHalRest")
+        return None
 
-        try:
-            self.sensor_hal = MRPHalHelper.MRPHalHelper.createHalInstance(_sensor_information)
-            self.sensor_hal.set_serial_port_information(_sensor_information)
-            self.sensor_hal.connect()
-            print("PRECHECK: SENSOR_HAL: {}".format(self.sensor_hal.get_sensor_id()))
-            #self.sensor.disconnect()
-        except Exception as e:
-            if not _disbaleprecheck:
-                raise Exception("cant connect to sensor using {}: {}".format(_sensor_information.device_path, str(e)))
+    def init(self, _devices: [str], _disbaleprecheck: bool = False):
 
-        if _manipulator_information is not None:
+        if _devices is None or len(_devices) <= 0:
+            raise Exception("_devices is None but needs to be supplied with at least one entry")
+
+        self.combined_capabilities = []
+        self.commandrouter = {}
+        self.devices = []
+        self.ports = []
+
+
+        for idx, device in enumerate(_devices):
+
+            port: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(device)
+
             try:
-                self.manipulator_hal = MRPHalHelper.MRPHalHelper.createHalInstance(_manipulator_information)
-                self.manipulator_hal.set_serial_port_information(_manipulator_information)
-                self.manipulator_hal.connect()
-                print("PRECHECK: MANIPULATOR_HAL: {}".format(self.manipulator_hal.get_sensor_id()))
-                # self.sensor.disconnect()
+                hal: MRPHal.MRPHal = MRPHalHelper.MRPHalHelper.createHalInstance(port)
+                hal.set_serial_port_information(port)
+                hal.connect()
+                print("PRECHECK: SENSOR_HAL: {}".format(hal.get_sensor_id()))
+                #self.sensor.disconnect()
+
+                # EVERY CHECK PASSED ADD DEVICE TO LIST
+                self.devices.append(hal)
+                self.ports.append(port)
+
+                # GET CAPABILITIES
+                self.combined_capabilities.extend(hal.get_sensor_capabilities())
+
+                # NOW CHECK WICH COMMANDS CAN BE EXECUTED BY THIS DEVICE
+                self.commandrouter[hal.get_sensor_id()] = {}
+
+                cmdlist: [str] = hal.get_sensor_commandlist()
+                dev_index =  len(self.devices)-1
+                if len(cmdlist) > 0:
+                    for cmd in hal.get_sensor_commandlist():
+                        self.commandrouter[cmd] = dev_index #hal.get_sensor_id()
+                else:
+                    # TODO REMOVE
+                    caps: [str] = hal.get_sensor_capabilities()
+                    if 'axis_b' in caps:
+                        # if there is an axis_ cap then there should be a readout command for that
+                        self.commandrouter['readsensor'] = dev_index
+                        self.commandrouter['sensorcnt'] = dev_index
+                    if 'axis_temp' in caps:
+                        self.commandrouter['temp'] = dev_index
+
+                    # the get_sensor_commandlist command is only implemented in later version of the sensor firmware, so try to assume
+                    # so used capabilities instead
+
             except Exception as e:
                 if not _disbaleprecheck:
-                    raise Exception(
-                        "cant connect to manipulator using {}: {}".format(_manipulator_information.device_path, str(e)))
-
+                    raise Exception("cant connect to sensor using {}: {}".format(port.device_path, str(e)))
 
         self.initialized = True
 
@@ -121,21 +151,10 @@ def command():
         result_dict = {}
         with hardware_instances.lock:
 
+            hal: MRPHal.MRPHal = hardware_instances.get_hal_instance_by_command(cmd)
+            if hal is not None:
+                result_dict['output'] = hal.send_command(cmd)
 
-            ts: int = -1
-            tm: int = -1
-
-            if hardware_instances.sensor_hal:
-                ts = int(hardware_instances.sensor_hal.get_serial_port_information().getSensorsNeededImplementation().value)
-
-            if hardware_instances.manipulator_hal:
-                tm = int(hardware_instances.manipulator_hal.get_serial_port_information().getSensorsNeededImplementation().value)
-
-            if int(devicetype) == ts:
-                result_dict['output'] = hardware_instances.sensor_hal.send_command(cmd)
-
-            elif int(devicetype) == tm:
-                result_dict['output'] = hardware_instances.sensor_hal.send_command(cmd)
 
             else:
                 result_dict['output'] = []
@@ -153,14 +172,11 @@ def command():
 def initilize_task():
     if not app_flask.config.get('initialized', False):
         with hardware_instances.lock:
-            manipulatordevice: str = app_flask.config["syscfg"]["manipulatordevice"]
-            sensordevice: str = app_flask.config["syscfg"]["sensordevice"]
+            devices: str = app_flask.config["syscfg"]["devices"]
             disbaleprecheck: int = app_flask.config["syscfg"]["disbaleprecheck"]
 
-            sensport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(sensordevice)
-            mechport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(manipulatordevice)
             # TRY TO CONNECT TO THE HARDWARE
-            hardware_instances.init(sensport, mechport, disbaleprecheck)
+            hardware_instances.init(devices, disbaleprecheck)
             # MARK AS SYSTEM INITIALIZED
             app_flask.config['initialized'] = True
 
@@ -262,15 +278,14 @@ def flask_server_task(_config: dict):
 
 
 @app_typer.command()
-def launch(typer_ctx: typer.Context, port: int = 5556, host: str = "0.0.0.0", debug: bool = False, manipulatordevice: str = "http://127.0.0.1", sensordevice: str = "/dev/ttyACM0", disbaleprecheck: int = 0):
+def launch(typer_ctx: typer.Context, devices: List[str], port: int = 5556, host: str = "0.0.0.0", debug: bool = False, disbaleprecheck: int = 0):
     global terminate_flask
     #global hardware_instances
 
 
 
     sys_cfg = {
-        'manipulatordevice': manipulatordevice,
-        'sensordevice': sensordevice,
+        'devices': devices,
         'disbaleprecheck': disbaleprecheck,
         'initialized': False
     }

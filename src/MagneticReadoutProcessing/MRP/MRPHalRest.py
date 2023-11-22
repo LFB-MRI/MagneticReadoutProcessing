@@ -150,7 +150,6 @@ class MRPHalRest(MRPHal.MRPHal):
         if not self.is_connected():
             raise MRPHalRestException("sensor isn't connected. use connect() first")
 
-
     def send_command(self, _cmd: str) -> [str]:
         """
         sends a command to the sensor
@@ -176,7 +175,6 @@ class MRPHalRest(MRPHal.MRPHal):
 
         return []
         # TODO get output lines from dicts
-
 
     def query_command_str(self,_cmd: str) -> str:
         """
@@ -271,3 +269,6 @@ class MRPHalRest(MRPHal.MRPHal):
             return res
         except MRPHalRestException as e:
             return []
+
+    def get_sensor_commandlist(self) -> [str]:
+        return []

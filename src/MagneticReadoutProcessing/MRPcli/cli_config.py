@@ -68,16 +68,15 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
     selected_magnet: int = 0
     while (not selected_magnet) or selected_magnet < 0:
         # DISPLAY USER MESSAGE
-        resp = typer.prompt("Please select one of the listed magnet types [0-{}]".format(len(MRPMagnetTypes.MagnetType) - 1), curr)
+        resp: int = -1
+        try:
+            resp = int(typer.prompt("Please select one of the listed magnet types [0-{}]".format(len(MRPMagnetTypes.MagnetType) - 1), curr))
+        except Exception as e:
+            continue
         # EVALUATE USER INPUT
-        if resp and len(resp) > 0:
-            try:
-                selected_magnet = int(resp)
-                if selected_magnet < len(MRPMagnetTypes.MagnetType) and selected_magnet >= 0:
-                    break
-            except Exception as e:
-                selected_magnet = 0
-    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE, str(selected_magnet))
+        if resp >= 0 and resp <= (len(MRPMagnetTypes.MagnetType) - 1):
+            break
+    cfg.set_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE, str(resp))
 
 
 

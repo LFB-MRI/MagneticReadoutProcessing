@@ -1,6 +1,7 @@
 #ifndef __baseSensor_h__
 #define __baseSensor_h__
 
+
 #ifdef USING_PLATFORMIO
     #include "Arduino.h"
 #endif
@@ -14,44 +15,16 @@
 
 
 //CUSTOM CLASSES
-#include "helper.h"
+//
 #include "usf_plattform.h"
+#include "sensor_result.h"
+#include "implemented_sensors.h"
 
-typedef enum ImplementedSensors{
-    SIMULATED = 0,
-    TLV493D = Tlv493d_Address::TLV493D_ADDRESS1,
-    TLV493D_ALT = Tlv493d_Address::TLV493D_ADDRESS2,
-    MMC56X3 = MMC56X3_DEFAULT_ADDRESS
-}ImplementedSensors_t;
-
-
-
-struct sensor_result{
-    float x;
-    float y;
-    float z;
-    float b;
-    float t;
-    long ts;
-
-    sensor_result(){
-
-    };
-
-    void set(sensor_result _other){
-        this->x = _other.x;
-        this->y = _other.y;
-        this->z = _other.z;
-        this->b = _other.b;
-        this->t = _other.t;
-        this->ts = _other.ts;
-    };
-}sensor_result_t;
 
 
 class baseSensor
 {
-    public:
+public:
         
 
     baseSensor();
@@ -69,9 +42,6 @@ class baseSensor
 
     private:
         TwoWire* i2c_inst;
-
-
-        
         ImplementedSensors found_sensor = ImplementedSensors::SIMULATED;
         sensor_result last_query_result;
         //POSSIBLE FOUND SENSOR INSTANCES HERE
@@ -82,18 +52,5 @@ class baseSensor
         
 };
 
-
-struct sensor_info{
-
-    
-    int index = -1;
-    int tca_channel = 0;
-    bool valid = false;
-    baseSensor sensor_instance = baseSensor();
-
-    sensor_info(){
-        valid = false;
-    };
-} sensor_info_t;
 
 #endif

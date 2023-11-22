@@ -1,9 +1,3 @@
-#ifdef USING_PLATFORMIO
-#include <Arduino.h>
-#endif
-
-#include <Wire.h>
-
 // CUSTOM INCLUDES
 #include "main.h"
 
@@ -54,6 +48,14 @@ void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response)
   // todo check which sensor Tpes are presnet
   DEBUG_SERIAL.println("static, axis_b, axis_x, axis_y, axis_z, axis_temp, axis_stimestamp");
 }
+
+// RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
+void list_sensor_commands(DBGCommandParser::Argument *args, char *response)
+{
+  // todo check which sensor Tpes are presnet
+  DEBUG_SERIAL.println("sensorcnt, readsensor, temp, ");
+}
+
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void temp_debug(DBGCommandParser::Argument *args, char *response)
 {
@@ -148,20 +150,27 @@ void scan_for_sensors()
   {
     max_tca_channels = TCA9548A_Channels;
     tca9584a.resetChannels();
-  }
 
-  for (int i = 0; i < max_tca_channels; i++)
-  {
-    // SET TCA CHANNEL
-    tca9584a.setChannel(i, true);
-    // SCAN FOR SENSORS
-    const int arr_index = sensor_number;
-    sensors_found[arr_index].index = sensor_number;
-    sensors_found[arr_index].tca_channel = i;
-    sensors_found[arr_index].valid = sensors_found[arr_index].sensor_instance.begin(SENSOR_WIRE);
-    sensor_number++;
-    // UNSET TCA CHANNEL
-    tca9584a.setChannel(i, false);
+    for (int i = 0; i < max_tca_channels; i++)
+    {
+      // SET TCA CHANNEL
+      tca9584a.setChannel(i, true);
+      // SCAN FOR SENSORS
+      const int arr_index = sensor_number;
+      sensors_found[arr_index].index = sensor_number;
+      sensors_found[arr_index].tca_channel = i;
+      sensors_found[arr_index].valid = sensors_found[arr_index].sensor_instance.begin(SENSOR_WIRE);
+      sensor_number++;
+      // UNSET TCA CHANNEL
+      tca9584a.setChannel(i, false);
+    }
+  }else{
+    // TCA IS NOT PRESENT JUST TRY TO ADD ONE SENSOR
+   
+    sensors_found[0].index = 0;
+    sensors_found[0].tca_channel = 0;
+    sensors_found[0].valid = sensors_found[0].sensor_instance.begin(SENSOR_WIRE);
+    sensor_number = 1;
   }
 }
 
@@ -196,6 +205,7 @@ void setup()
       DEBUG_SERIAL.println(F("> ancid                        returns the current set autonumbering base id (-1 in singlemode)"));
       DEBUG_SERIAL.println(F("> reset                        performs reset of the system"));
       DEBUG_SERIAL.println(F("> info                         logs sensor capabilities"));
+      DEBUG_SERIAL.println(F("> commands                     lists sensor implemented commamnds which can be used by hal"));
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
@@ -240,6 +250,8 @@ void setup()
                                        { HOST_SERIAL.println("reset"); RESET_SYSTEM_FUNCTION(); });
 
   debug_command_parser.registerCommand("info", "", &list_sensor_capabilities);
+  debug_command_parser.registerCommand("commands", "", &list_sensor_commands);
+
   // GPIO SETUP
   pinMode(SINGLE_MODE_PIN, INPUT_PULLUP);
   pinMode(STATUS_LED_PIN, OUTPUT);
@@ -248,8 +260,7 @@ void setup()
   pinMode(SYNC_PIN_STATUS_LED, OUTPUT);
   digitalWrite(SYNC_PIN_STATUS_LED, LOW);
 
-  pinMode(SYNC_PIN_IRQ_INPUT, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
+  
 
   // I2C SENSOR INTERFACE SETUP
 #if defined(SENSOR_WIRE_SCL_PIN) && defined(SENSOR_WIRE_SDA_PIN)
@@ -266,6 +277,8 @@ void setup()
   else
   {
     DEBUG_SERIAL.println("log_singlemodedisabled");
+    pinMode(SYNC_PIN_IRQ_INPUT, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
   }
 
   // i2c_scan(SENSOR_WIRE);
@@ -285,8 +298,10 @@ void setup()
     error(true, System_Error_Code_TLV_NO_SENSORS_FOUND);
   }
 
-  // INIT SENSORS
+  
+  // INIT SENSORS  
   tca9584a.resetChannels();
+
   for (int i = 0; i < sensor_number; i++)
   {
     // SET TCA TO THE CORRECT CHANNEL

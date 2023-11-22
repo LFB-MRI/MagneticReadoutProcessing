@@ -15,11 +15,12 @@
 
 
 // PRIVATE CLASSES
-#include "baseSensor.h"
-#include "TCA9458A.h"
+//#include "baseSensor.h"
+#include "sensor_info.h"
+//#include "sensor_result.h"
 #include "sync_timer.h"
 #include "helper.h"
-
+#include "TCA9458A.h"
 
 #define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
 #define READOUT_SPEED_IN_SINGLEMODE_DELAY (1000/READOUT_SPEED_IN_SINGLEMODE_HZ)

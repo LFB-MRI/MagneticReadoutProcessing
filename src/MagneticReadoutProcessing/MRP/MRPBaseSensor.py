@@ -21,6 +21,11 @@ class MRPBaseSensor:
         if not _sensor_connection.is_connected():
             raise MMRPBaseSensorException("sensor is not connected please use _sensor_connection.connect() first")
 
+        self.sensor_connection = _sensor_connection
+
+       
+
+
         # CHECK CONNECTED SENSORS
         self.sensor_count = _sensor_connection.get_sensor_count()
         if self.sensor_count <= 0:
@@ -47,7 +52,7 @@ class MRPBaseSensor:
                 self.readout_result[sc][axis] = 0.0
 
 
-        self.sensor_connection = _sensor_connection
+
 
     def query_readout(self):
         """

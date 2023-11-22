@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="proxy_launch_remote_disbale_precheck" type="PythonConfigurationType" factoryName="Python" folderName="PROXY">
+  <configuration default="false" name="cli_measure_run_proxy" type="PythonConfigurationType" factoryName="Python" folderName="CLI">
     <module name="MagneticReadoutProcessing" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -12,8 +12,8 @@
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-    <option name="SCRIPT_NAME" value="MRPProxy/mrpproxy.py" />
-    <option name="PARAMETERS" value="proxy launch tcp://192.168.178.123:10001 klipper://192.168.178.123 --disbaleprecheck=1" />
+    <option name="SCRIPT_NAME" value="MRPcli/cli.py" />
+    <option name="PARAMETERS" value="measure run remotecfg" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

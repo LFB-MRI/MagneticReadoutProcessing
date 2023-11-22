@@ -52,6 +52,23 @@ class MRPHalKlipper(MRPHal.MRPHal):
     # FOR ALL HAL COMMANDS
     #
 
+    def get_sensor_commandlist(self) -> [str]:
+        return ["home", "move", "limits"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

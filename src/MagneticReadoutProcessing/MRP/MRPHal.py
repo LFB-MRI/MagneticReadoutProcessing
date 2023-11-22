@@ -68,3 +68,7 @@ class MRPHal(ABC):
     @abstractmethod
     def get_sensor_capabilities(self) -> [str]:
         pass
+
+    @abstractmethod
+    def get_sensor_commandlist(self) -> [str]:
+        pass

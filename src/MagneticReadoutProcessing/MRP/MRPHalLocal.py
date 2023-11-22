@@ -183,7 +183,6 @@ class MRPHalLocal:
             return result.split(self.TERMINATION_CHARACTER).remove('')
 
         return result
-
     def query_command_str(self, _cmd: str) -> str:
         """
         queries a sensor command and returns the response as string
@@ -199,7 +198,6 @@ class MRPHalLocal:
             raise MRPHalLocalException("sensor returned invalid command or command not implemented for {}".format(_cmd))
 
         return "".join(str(e) for e in res)
-
     def query_command_int(self, _cmd: str) -> int:
         """
         queries a sensor command and returns the response as int
@@ -217,7 +215,6 @@ class MRPHalLocal:
             return int(res)
         raise MRPHalLocalException("cant parse result {} for query {} into int".format(res, _cmd))
 
-
     def query_command_float(self, _cmd: str) -> float:
         """
         queries a sensor command and returns the response as float
@@ -233,7 +230,6 @@ class MRPHalLocal:
             return float(res)
         raise MRPHalLocalException("cant parse result {} for query {} into int".format(res, _cmd))
 
-
     def get_sensor_id(self) -> str:
         """
         returns the sensors id
@@ -245,7 +241,6 @@ class MRPHalLocal:
         if len(res) > 0:
             return res
         return "unknown"
-
 
     def get_sensor_count(self) -> int:
         """
@@ -277,6 +272,14 @@ class MRPHalLocal:
             return res
         except MRPHalLocalException as e:
             return []
+
+    def get_sensor_commandlist(self) -> [str]:
+        rt: str = self.send_command("commands")
+
+        ret: [str] = rt.strip(" ").split(",")
+
+
+        return ret
 
 
 
