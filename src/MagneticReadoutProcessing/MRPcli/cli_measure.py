@@ -16,11 +16,14 @@ def perform_measurement_rotationalsensor(configname: str):
 def perform_measurement(configname: str):
     print("perform_measurement for {}".format(configname))
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(configname)
-    hal: MRPHal.MRPPHalLocal = cli_helper.connect_sensor_using_config(_configname=configname)
+    hal: MRPHal.MRPPHalLocal = cli_helper.create_hal_instance_using_config(_configname=configname)
+
+    capabilities: [str] = hal.get_sensor_capabilities()
     sensor_count = hal.get_sensor_count()
 
 
     # SENSOR SETUP
+
     sensor: MRPBaseSensor.MRPBaseSensor = MRPBaseSensor.MRPBaseSensor(hal)
 
 
@@ -140,7 +143,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
 
 
         # check sensor connection
-        conn: MRPHal.MRPHal = cli_helper.connect_sensor_using_config(_configname=cfgname)
+        conn: MRPHal.MRPHal = cli_helper.create_hal_instance_using_config(_configname=cfgname)
         if not ignoreinvalid and not conn.is_connected():
             print("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
             raise typer.Abort("precheckfail: sensor connection failed - please run config setupsensor again or check connection")

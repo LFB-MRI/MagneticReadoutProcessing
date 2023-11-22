@@ -53,7 +53,7 @@ class MRPBaseSensor:
         """
         queries a complete readout of all connected sensors and their axis
         """
-        for sensor_id in range(0,self.sensor_count):
+        for sensor_id in range(0, self.sensor_count):
             for axis in self.sensor_axis:
                 self.readout_result[sensor_id][axis] = self.sensor_connection.query_command_float("readsensor {} {}".format(axis, sensor_id))
 

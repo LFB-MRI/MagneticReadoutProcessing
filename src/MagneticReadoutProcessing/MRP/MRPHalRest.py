@@ -28,7 +28,7 @@ class MRPHalRest(MRPHal.MRPHal):
 
     PROXY_URL_PATH_PREFIX = "proxy/" # SEE MRPProxy flask paths 127.0.0.1/proxy/<cmd>
 
-    current_port: MRPHalSerialPortInformation = None
+    current_port: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None
 
 
     def __init__(self, _selected_port: MRPHalSerialPortInformation, _type: MRPHalSerialPortInformation.MRPRemoteSensorType = MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor):
@@ -48,10 +48,10 @@ class MRPHalRest(MRPHal.MRPHal):
         if _port is None or not _port.is_valid():
             raise MRPHalRestException("set serial port information are invalid")
 
-        if self.current_port.getSensorsNeededImplementation() != MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor:
+        if _port.getSensorsNeededImplementation() != MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor:
             raise MRPHalRestException("set serial port is not valid for this hal implementation")
 
-        if not _port.device_path.startswith('http://') or not _port.device_path.startswith('https://'):
+        if not _port.device_path.startswith('http://') and not _port.device_path.startswith('https://'):
             raise MRPHalRestException("set serial port information device path didnt start with http:// or https:/")
 
         if not _port.device_path.endswith('/'):
@@ -69,20 +69,24 @@ class MRPHalRest(MRPHal.MRPHal):
         if _command is None or not _command:
             raise MRPHalRestException("request_json _command parameter is empty")
 
-        spres = self.current_port.device_path.split(":")
-        if len(spres) <= 0:
-            raise MRPHalRestException("request_json replacement failed: {}".format(spres))
+        if not self.current_port.is_valid() or not self.current_port.is_remote_port():
+            raise MRPHalRestException("port is invalid or no remote port: {}".format(self.current_port.device_path))
+
+        #spres = self.current_port.device_path.split(":")
+        #if len(spres) <= 0:
+        #    raise MRPHalRestException("request_json replacement failed: {}".format(spres))
 
         # replace apisensor://192.168.178.1:5055 or rotationsensor://192.168.178.1:5055  with http://192.168.178.1:5055
-        spres[0] = "http"
-        url = "".join(spres)
-        url = "{}/command?cmd={}&devicetype={}".format(url, _command, int(self.type))
+        #spres[0] = "http"
+        #url = "".join(spres)
+        dtype = self.current_port.getSensorsNeededImplementation().value
+        url = "{}command?cmd={}&devicetype={}".format(self.current_port.device_path, _command, int(dtype))
 
         print("request_json: {}".format(url))
 
         r = requests.get(url=url, allow_redirects=True)
 
-        if r.status_code >= 200 and r.status_code < 200:
+        if r.status_code >= 200 and r.status_code < 300:
             # TRY TO GET SENSOR IMPLEMENTATION
             if 'application/json' in r.headers['content-type']:
 
@@ -103,12 +107,16 @@ class MRPHalRest(MRPHal.MRPHal):
             r.sensortype = ret['sensortype']
             r.version = ret['version']
             r.id = ret['id']
-            r.sensorcount = ret['sensorcount']
+            #r.sensorcount = ret['sensorcount']
+            r.capabilities = ret['capabilities']
+            r.initialized = ret['initialized']
+            r.success = True
             return r
 
         except Exception as e:
+            print(str(e))
             r.success = False
-
+        return r
     def connect(self) -> bool:
         """
         connect to the selected api
@@ -116,7 +124,11 @@ class MRPHalRest(MRPHal.MRPHal):
         :returns: returns true if an api connection was tested
         :rtype: bool
         """
-        return self.request_status().success
+        c = self.request_status()
+
+        if c is None:
+            return False
+        return c.success
 
     def is_connected(self) -> bool:
         """
@@ -125,7 +137,8 @@ class MRPHalRest(MRPHal.MRPHal):
         :returns: returns true if a serial connection is open
         :rtype: bool
         """
-        return self.request_status().success
+        rt: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
+        return (rt.success and rt.initialized)
 
     def disconnect(self):
         """

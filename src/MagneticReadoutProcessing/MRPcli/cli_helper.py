@@ -10,7 +10,8 @@ def __fix_import__fix_import():
 
 
 
-def connect_sensor_using_config(_configname: str) -> MRPHal.MRPHal:
+
+def create_hal_instance_using_config(_configname: str) -> MRPHal.MRPHal:
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(_configname)
 
     path: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.SENSOR_SERIAL_DEVICE_PATH)
@@ -39,3 +40,4 @@ def connect_sensor_using_config(_configname: str) -> MRPHal.MRPHal:
         raise typer.Abort("sensor connection failed, please check dialout permissions")
 
     return sensor_connection
+

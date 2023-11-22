@@ -1,7 +1,7 @@
 
 class MRPPHalRestRequestResponseState(object):
     success: bool = False
-    sensortype: str = ""
+    sensortypes: [int] = []
     version: str = "0.0.0"
     id: str = ""
     sensorcount: int = 0

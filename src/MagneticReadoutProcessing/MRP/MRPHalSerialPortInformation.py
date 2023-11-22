@@ -36,7 +36,8 @@ class MRPHalSerialPortInformation:
     """
     name: str = "Unknown"
     device_path: str = ""
-    baudrate = 0
+    baudrate: int = 0
+    target_sensor_implementation: MRPRemoteSensorType = MRPRemoteSensorType.Unknown
 
     @staticmethod
     def check_serial_number(_serial_number: str) -> bool:
@@ -217,7 +218,12 @@ class MRPHalSerialPortInformation:
         if _baudrate > 0:
             self.baudrate = _baudrate
 
-    def getSensorsNeededImplementation(self) -> MRPRemoteSensorType:
+    def getSensorsNeededImplementation(self, _get_target_implementation: bool = False) -> MRPRemoteSensorType:
+
+        if _get_target_implementation:
+            return self.target_sensor_implementation
+
+
         if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
             return MRPRemoteSensorType.BaseSensor
         elif 'loop://' in self.device_path:
@@ -230,6 +236,9 @@ class MRPHalSerialPortInformation:
 
         return MRPRemoteSensorType.Unknown
 
+
+    def setTargetSensorImplementation(self, _sti: MRPRemoteSensorType):
+        self.target_sensor_implementation = _sti
     def getSensorsNeededHalImplementation(self) -> MRPHalType:
 
         if not self.is_valid():

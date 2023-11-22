@@ -48,6 +48,13 @@ class MRPHalKlipper(MRPHal.MRPHal):
             self.temp_sensors = self.list_temp_sensors()
 
 
+    # TODO IMPLEMENT COMMAND SENDING
+    # FOR ALL HAL COMMANDS
+    #
+
+
+
+
 
     def disable_motors(self):
         return self.send_gcode("M115")

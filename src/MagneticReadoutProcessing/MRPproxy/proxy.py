@@ -215,6 +215,7 @@ def status():
     ret: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
     ret.sensortype = "rotationsensor"
     ret.id = machineid.id()
+    ret.capabilities = []
     ret.version = __version__
     # also add startconfig
     resdict: dict = ret.__dict__
@@ -225,12 +226,15 @@ def status():
     if app_flask.config.get('initialized', False):
         resdict['sys_initialized'] = True
         with hardware_instances.lock:
+            resdict['initialized'] = True
             if hardware_instances.sensor_hal:
                 resdict['hardware']["sensor_hal"] = hardware_instances.sensor_hal.get_sensor_id()
-
+                ret.capabilities.extend(hardware_instances.sensor_hal.get_sensor_capabilities())
             if hardware_instances.manipulator_hal:
                 resdict['hardware']["manipulator_hal"] = hardware_instances.manipulator_hal.get_sensor_id()
+                ret.capabilities.extend(hardware_instances.manipulator_hal.get_sensor_capabilities())
 
+        resdict['capabilities'] = ret.capabilities
 
     else:
         resdict['initialized'] = False
