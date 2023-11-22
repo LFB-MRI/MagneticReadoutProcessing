@@ -37,7 +37,8 @@ class MRPHalLocal:
     serial_port_instance: serial = None
     sio: io.TextIOWrapper = None
 
-    def __init__(self, _selected_port: MRPHalSerialPortInformation):
+
+    def __init__(self, _selected_port: MRPHalSerialPortInformation, _type: MRPHalSerialPortInformation.MRPRemoteSensorType = MRPHalSerialPortInformation.MRPRemoteSensorType.BaseSensor):
         if _selected_port:
             self.current_port = _selected_port
 
@@ -54,6 +55,9 @@ class MRPHalLocal:
         if self.current_port is None or not self.current_port.is_valid():
             raise MRPHalLocalException("set serial port information are invalid")
         self.current_port = _port
+
+    def get_serial_port_information(self) ->MRPHalSerialPortInformation:
+        return self.current_port
 
     def connect(self) -> bool:
         """
@@ -180,7 +184,7 @@ class MRPHalLocal:
 
         return result
 
-    def query_command_str(self,_cmd: str) -> str:
+    def query_command_str(self, _cmd: str) -> str:
         """
         queries a sensor command and returns the response as string
 

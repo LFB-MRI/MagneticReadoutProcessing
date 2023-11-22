@@ -6,7 +6,7 @@ from MRPcli import cli_helper
 from MRPcli import cli_datastorage
 
 
-from MRP import MRPHalLocal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
+from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
 
 app = typer.Typer()
 
@@ -140,7 +140,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
 
 
         # check sensor connection
-        conn: MRPHal = cli_helper.connect_sensor_using_config(_configname=cfgname)#cli_helper.connect_sensor_using_config(_configname=c)
+        conn: MRPHal.MRPHal = cli_helper.connect_sensor_using_config(_configname=cfgname)
         if not ignoreinvalid and not conn.is_connected():
             print("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
             raise typer.Abort("precheckfail: sensor connection failed - please run config setupsensor again or check connection")

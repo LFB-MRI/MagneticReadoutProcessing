@@ -8,10 +8,11 @@ class MRPHalException(Exception):
         self.message = message
         super().__init__(self.message)
 
+
 class MRPHal(ABC):
 
     @abstractmethod
-    def __init__(self, _selected_port: MRPHalSerialPortInformation):
+    def __init__(self, _selected_port: MRPHalSerialPortInformation, _type: MRPHalSerialPortInformation.MRPRemoteSensorType = MRPHalSerialPortInformation.MRPRemoteSensorType.Unknown):
         pass
     @abstractmethod
     def __del__(self):
@@ -19,6 +20,9 @@ class MRPHal(ABC):
 
     @abstractmethod
     def set_serial_port_information(self, _port: MRPHalSerialPortInformation):
+        pass
+
+    def get_serial_port_information(self) ->MRPHalSerialPortInformation:
         pass
 
     @abstractmethod

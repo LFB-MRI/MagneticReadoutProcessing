@@ -30,11 +30,13 @@ class MRPHalRest(MRPHal.MRPHal):
 
     current_port: MRPHalSerialPortInformation = None
 
-    def __init__(self, _selected_port: MRPHalSerialPortInformation):
+
+    def __init__(self, _selected_port: MRPHalSerialPortInformation, _type: MRPHalSerialPortInformation.MRPRemoteSensorType = MRPHalSerialPortInformation.MRPRemoteSensorType.ApiSensor):
         self.set_serial_port_information(_selected_port)
 
     def __del__(self):
         self.disconnect()
+
 
     def set_serial_port_information(self, _port: MRPHalSerialPortInformation):
         """
@@ -60,6 +62,9 @@ class MRPHalRest(MRPHal.MRPHal):
 
         print("set_serial_port_information: modified device path {}".format(_port.device_path))
         self.current_port = _port
+
+    def get_serial_port_information(self) ->MRPHalSerialPortInformation:
+        return self.current_port
     def request_json(self, _command: str):
         if _command is None or not _command:
             raise MRPHalRestException("request_json _command parameter is empty")
@@ -71,7 +76,7 @@ class MRPHalRest(MRPHal.MRPHal):
         # replace apisensor://192.168.178.1:5055 or rotationsensor://192.168.178.1:5055  with http://192.168.178.1:5055
         spres[0] = "http"
         url = "".join(spres)
-        url = "{}/{}".format(url, _command)
+        url = "{}/command?cmd={}&devicetype={}".format(url, _command, int(self.type))
 
         print("request_json: {}".format(url))
 
@@ -90,6 +95,7 @@ class MRPHalRest(MRPHal.MRPHal):
                 raise MRPHalRestException("application/json required: {}".format(r.headers))
         else:
             raise MRPHalRestException("request_json r.status_code >= 200 and r.status_code < 400")
+
     def request_status(self) -> MRPPHalRestRequestResponseState:
         r: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
         try:
@@ -110,10 +116,6 @@ class MRPHalRest(MRPHal.MRPHal):
         :returns: returns true if an api connection was tested
         :rtype: bool
         """
-
-        if not self.request_status().initialized:
-            self.initialize()
-
         return self.request_status().success
 
     def is_connected(self) -> bool:
@@ -134,21 +136,35 @@ class MRPHalRest(MRPHal.MRPHal):
     def read_value(self):
         if not self.is_connected():
             raise MRPHalRestException("sensor isn't connected. use connect() first")
+
+
     def send_command(self, _cmd: str) -> [str]:
         """
-                sends a command to the sensor
+        sends a command to the sensor
 
-                :param _cmd: command like help id read...
-                :type _cmd: str
+        :param _cmd: command like help id read...
+        :type _cmd: str
 
-                :returns: returns sensor response as line separated by '\n'
-                :rtype: [str]
-                """
+        :returns: returns sensor response as line separated by '\n'
+        :rtype: [str]
+        """
         if _cmd is None or len(_cmd) <= 0:
             raise MRPHalRestException("_cmd is empty")
 
         if not self.is_connected():
             raise MRPHalRestException("sensor isn't connected. use connect() first")
+
+
+
+        out: dict = self.request_json(_cmd)
+
+        if 'output' in out and len(out['output']):
+            return out['output']
+
+        return []
+        # TODO get output lines from dicts
+
+
     def query_command_str(self,_cmd: str) -> str:
         """
         queries a sensor command and returns the response as string
@@ -164,6 +180,7 @@ class MRPHalRest(MRPHal.MRPHal):
             raise MRPHalRestException("sensor returned invalid command or command not implemented for {}".format(_cmd))
 
         return "".join(str(e) for e in res)
+
     def query_command_float(self, _cmd: str) -> float:
         """
         queries a sensor command and returns the response as float

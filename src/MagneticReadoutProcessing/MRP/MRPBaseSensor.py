@@ -57,7 +57,6 @@ class MRPBaseSensor:
             for axis in self.sensor_axis:
                 self.readout_result[sensor_id][axis] = self.sensor_connection.query_command_float("readsensor {} {}".format(axis, sensor_id))
 
-
     def get_reading(self, _axis:str = 'b', _sensor_id: int = 0) -> float:
         if _sensor_id > self.sensor_count:
             raise MMRPBaseSensorException("given _sensor_id is out of range (max:{})".format(self.sensor_count))

@@ -1,4 +1,4 @@
-from MRP import MRPHalSerialPortInformation, MRPHal, MRPHalLocal, MRPHalRest
+from MRP import MRPHalSerialPortInformation, MRPHal, MRPHalLocal, MRPHalRest, MRPHalKlipper
 
 
 class MRPHalHelperException(Exception):
@@ -18,5 +18,7 @@ class MRPHalHelper:
             sensor_connection = MRPHalLocal.MRPHalLocal(_port)
         elif _port.getSensorsNeededHalImplementation() == MRPHalSerialPortInformation.MRPHalType.MRPHalRest:
             sensor_connection = MRPHalRest.MRPHalRest(_port)
+        elif _port.getSensorsNeededHalImplementation() == MRPHalSerialPortInformation.MRPHalType.MRPHalKlipper:
+            sensor_connection = MRPHalKlipper.MRPHalKlipper(_port)
 
         return sensor_connection

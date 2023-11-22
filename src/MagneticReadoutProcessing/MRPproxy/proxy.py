@@ -25,16 +25,19 @@ class MRPProxyException(Exception):
         super().__init__(self.message)
 
 class ProxyGlobals:
-    sensor: MRPHal.MRPHal
-   # mechanic: MoonrakerPrinter
+    sensor_hal: MRPHal.MRPHal
+    manipulator_hal: MRPHal.MRPHal
+
     lock: Lock = Lock()
     initialized: bool = False
 
 
     def __init__(self):
-        self.sensor_hal = MRPHal.MRPHal = None
-        self.manipulator_hal = MRPHal.MRPHal = None
-        self.initialized = False
+        self.sensor_hal: MRPHal.MRPHal = None
+        self.manipulator_hal: MRPHal.MRPHal = None
+        self.initialized: bool = False
+
+
 
     def init(self, _sensor_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation, _manipulator_information: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None, _disbaleprecheck: bool = False):
 
@@ -67,23 +70,6 @@ class ProxyGlobals:
                         "cant connect to manipulator using {}: {}".format(_manipulator_information.device_path, str(e)))
 
 
-
-
-
-        # self.mechanic.set_address("{}".format(klipperendpoint))
-        # self.mechanic.init()
-
-        # self.sensor_port.device_path = sensordevice
-        # self.sensor.set_serial_port_information(self.sensor_port)
-
-        # CHECK PARAMETERS
-        # rfw_succ, _ = self.mechanic.request_firmware() # REQUEST VERSION
-
-        # if rfw_succ:
-        #    print("PRECHECK: MECHANIC: {}".format(True))
-        # elif not disbaleprecheck:
-        #    raise Exception("cant connect to klipper/moonrakerusing: {}".format(klipperendpoint))
-        # CHECK SENSOR CONNECTION
         self.initialized = True
 
 
@@ -110,6 +96,75 @@ def page_not_found(e):
     return redirect("/proxy/status")
 
 
+
+@app_flask.route("/proxy/command")
+@cross_origin()
+def command():
+    global hardware_instances
+
+    cmd = bleach.clean(request.args.get('cmd', ''))
+    devicetype = bleach.clean(request.args.get('devicetype', '0'))
+    # if hardware is not initialized redirect to init route first
+    # after init the request is coming back here
+    if not app_flask.config.get('initialized', False):
+        initilize_task()
+
+
+    # PROCESS COMMANDS
+    redirect_commands = ['status', 'initialize', 'disconnect']
+    if cmd in redirect_commands:
+        rd: str = '{}'.format(request.base_url).replace('/command','/{}'.format(cmd))
+        return redirect(rd)
+
+
+    else:
+        result_dict = {}
+        with hardware_instances.lock:
+
+
+            ts: int = -1
+            tm: int = -1
+
+            if hardware_instances.sensor_hal:
+                ts = int(hardware_instances.sensor_hal.get_serial_port_information().getSensorsNeededImplementation().value)
+
+            if hardware_instances.manipulator_hal:
+                tm = int(hardware_instances.manipulator_hal.get_serial_port_information().getSensorsNeededImplementation().value)
+
+            if int(devicetype) == ts:
+                result_dict['output'] = hardware_instances.sensor_hal.send_command(cmd)
+
+            elif int(devicetype) == tm:
+                result_dict['output'] = hardware_instances.sensor_hal.send_command(cmd)
+
+            else:
+                result_dict['output'] = []
+                result_dict['error'] = True
+
+
+            # SOME COMMANDS RESPORTS THE ERROR IN THE OUTPUT
+            if 'error' in result_dict['output']:
+                result_dict['error'] = True
+
+        return jsonify(result_dict)
+
+
+
+def initilize_task():
+    if not app_flask.config.get('initialized', False):
+        with hardware_instances.lock:
+            manipulatordevice: str = app_flask.config["syscfg"]["manipulatordevice"]
+            sensordevice: str = app_flask.config["syscfg"]["sensordevice"]
+            disbaleprecheck: int = app_flask.config["syscfg"]["disbaleprecheck"]
+
+            sensport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(sensordevice)
+            mechport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(manipulatordevice)
+            # TRY TO CONNECT TO THE HARDWARE
+            hardware_instances.init(sensport, mechport, disbaleprecheck)
+            # MARK AS SYSTEM INITIALIZED
+            app_flask.config['initialized'] = True
+
+
 @app_flask.route("/proxy/initialize")
 @cross_origin()
 def initialize():
@@ -118,20 +173,7 @@ def initialize():
     #user = request.args.get('user')
     origin = bleach.clean(request.args.get('origin', ''))
     # IF NOT INITILALIZED INIT HARDWARE_INSTANCED_ WITH PROVIDED HARDWARE PARAMETERS
-    if not app_flask.config.get('initialized', False):
-        with hardware_instances.lock:
-            manipulatordevice: str = app_flask.config["syscfg"]["manipulatordevice"]
-            sensordevice: str = app_flask.config["syscfg"]["sensordevice"]
-            disbaleprecheck: int = app_flask.config["syscfg"]["disbaleprecheck"]
-
-
-
-            sensport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(sensordevice)
-            mechport: MRP.MRPHalSerialPortInformation = MRP.MRPHalSerialPortInformation.MRPHalSerialPortInformation(manipulatordevice)
-            # TRY TO CONNECT TO THE HARDWARE
-            hardware_instances.init(sensport, mechport, disbaleprecheck)
-            # MARK AS SYSTEM INITIALIZED
-            app_flask.config['initialized'] = True
+    initilize_task()
 
     if len(origin) > 0:
         return redirect(origin)
@@ -154,8 +196,8 @@ def disconnect():
 
     # try to disconnect the hardware
     with hardware_instances.lock:
-        hardware_instances.sensor.disconnect() # disconnect sensors
-        #hardware_instances.mechanic.disable_motors() # disbale motors
+        hardware_instances.manipulator_hal.disconnect() # disconnect sensors
+        hardware_instances.manipulator_hal.disconnect() # disconnect manipulator
 
     return jsonify({"error": False})
 
@@ -183,10 +225,13 @@ def status():
     if app_flask.config.get('initialized', False):
         resdict['sys_initialized'] = True
         with hardware_instances.lock:
-            resdict['hardware']["sensorid"] = hardware_instances.sensor.get_sensor_id()
+            if hardware_instances.sensor_hal:
+                resdict['hardware']["sensor_hal"] = hardware_instances.sensor_hal.get_sensor_id()
 
-            _, mechred = hardware_instances.mechanic.request_firmware()  # REQUEST VERSION
-            resdict['hardware'].update(mechred)
+            if hardware_instances.manipulator_hal:
+                resdict['hardware']["manipulator_hal"] = hardware_instances.manipulator_hal.get_sensor_id()
+
+
     else:
         resdict['initialized'] = False
 

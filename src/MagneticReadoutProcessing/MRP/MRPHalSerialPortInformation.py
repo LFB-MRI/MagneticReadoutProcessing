@@ -20,12 +20,14 @@ class MRPRemoteSensorType(Enum):
     Unknown = 0
     BaseSensor = 1
     ApiSensor = 2
+    KlipperManipulator = 3 # FOR KLIPPER BASED MANIPULATORS
 
 class MRPHalType(Enum):
     Unknown = 0
     MRPPHal = 1
     MRPHalLocal = 2
     MRPHalRest = 3
+    MRPHalKlipper = 4
 
 
 class MRPHalSerialPortInformation:
@@ -223,6 +225,9 @@ class MRPHalSerialPortInformation:
         elif 'http://' in self.device_path or 'https://' in self.device_path:
             return MRPRemoteSensorType.ApiSensor
 
+        elif 'klipper://' in self.device_path:
+            return MRPRemoteSensorType.KlipperManipulator
+
         return MRPRemoteSensorType.Unknown
 
     def getSensorsNeededHalImplementation(self) -> MRPHalType:
@@ -233,6 +238,8 @@ class MRPHalSerialPortInformation:
         # HANDLE SPECIAL SENSORS
         if self.getSensorsNeededImplementation() == MRPRemoteSensorType.ApiSensor:
             return MRPHalType.MRPHalRest
+        elif self.getSensorsNeededImplementation() == MRPRemoteSensorType.KlipperManipulator:
+            return MRPHalType.MRPHalKlipper
         else:
             return MRPHalType.MRPHalLocal
 
@@ -245,6 +252,8 @@ class MRPHalSerialPortInformation:
         elif 'loop://' in self.device_path:
             return True
         elif 'http://' in self.device_path:
+            return True
+        elif 'klipper://' in self.device_path:
             return True
         return False
 
@@ -265,6 +274,8 @@ class MRPHalSerialPortInformation:
         if 'socket://' in self.device_path or 'tcp://' in self.device_path or 'udp://' in self.device_path:
             return True
         elif 'loop://' in self.device_path:
+            return True
+        elif 'klipper://' in self.device_path:
             return True
         elif 'http://' in self.device_path or 'https://' in self.device_path:
             return True
