@@ -175,7 +175,6 @@ class MRPHalRest(MRPHal.MRPHal):
 
         return []
         # TODO get output lines from dicts
-
     def query_command_str(self,_cmd: str) -> str:
         """
         queries a sensor command and returns the response as string
@@ -206,7 +205,6 @@ class MRPHalRest(MRPHal.MRPHal):
         if len(res) > 0:
             return float(res)
         raise MRPHalRestException("cant parse result {} for query {} into int".format(res, _cmd))
-
     def query_command_int(self, _cmd: str) -> int:
         """
         queries a sensor command and returns the response as int
@@ -231,7 +229,7 @@ class MRPHalRest(MRPHal.MRPHal):
         :returns: id as string default unknown
         :rtype: str
         """
-        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState =  self.request_status()
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
 
         if r.success:
             return r.id
@@ -245,10 +243,9 @@ class MRPHalRest(MRPHal.MRPHal):
        :returns: sensor count
        :rtype: str
        """
-        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
-        if r.success:
-            return r.sensorcount
-        else:
+        try:
+            return self.query_command_int('sensorcnt')
+        except Exception as e:
             return 0
 
     def get_sensor_capabilities(self) -> [str]:
@@ -258,17 +255,15 @@ class MRPHalRest(MRPHal.MRPHal):
         :returns: capabilities e.g. static, axis_x,..
         :rtype: [str]
         """
-        try:
-            res: str = self.query_command_str('info')
-
-            if ' ' in res:
-                res = res.strip(' ')
-
-            if ',' in res:
-                return res.split(',')
-            return res
-        except MRPHalRestException as e:
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
+        if r.success:
+            return r.capabilities
+        else:
             return []
 
     def get_sensor_commandlist(self) -> [str]:
-        return []
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
+        if r.success:
+            return r.commands
+        else:
+            return []

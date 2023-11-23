@@ -7,6 +7,7 @@ class MRPPHalRestRequestResponseState(object):
     sensorcount: int = 0
     initialized: bool = False
     capabilities: [str] = []
+    commands: [str] = []
 
     def __init__(self):
         pass

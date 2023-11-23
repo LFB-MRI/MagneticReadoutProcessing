@@ -30,6 +30,7 @@ class ProxyGlobals:
     ports: [MRPHalSerialPortInformation.MRPHalSerialPortInformation] = []
     commandrouter: dict = {}
     combined_capabilities: [str] = [] # contains all caps from all connected devices
+    combined_commands: [] = []
 
 
     lock: Lock = Lock()
@@ -44,8 +45,23 @@ class ProxyGlobals:
     def get_hal_instance_by_command(self, _cmd: str) -> MRPHal.MRPHal:
 
 
+        if _cmd in self.commandrouter:
+            try:
+                index: int = self.commandrouter[_cmd]
+                if index <= len(self.devices):
+                    return self.devices[index]
+                else:
+                    raise MRPProxyException("get_hal_instance_by_command LUT out of range")
+            except Exception as e:
+                raise MRPProxyException(str(e))
         return None
 
+
+    def get_combined_commands(self) -> [str]:
+        return self.combined_commands
+
+    def get_combined_capabilities(self) -> [str]:
+        return self.combined_capabilities
     def init(self, _devices: [str], _disbaleprecheck: bool = False):
 
         if _devices is None or len(_devices) <= 0:
@@ -76,13 +92,14 @@ class ProxyGlobals:
                 self.combined_capabilities.extend(hal.get_sensor_capabilities())
 
                 # NOW CHECK WICH COMMANDS CAN BE EXECUTED BY THIS DEVICE
-                self.commandrouter[hal.get_sensor_id()] = {}
-
                 cmdlist: [str] = hal.get_sensor_commandlist()
-                dev_index =  len(self.devices)-1
+                self.combined_commands.extend(cmdlist)
+
+                dev_index = len(self.devices)-1
                 if len(cmdlist) > 0:
                     for cmd in hal.get_sensor_commandlist():
                         self.commandrouter[cmd] = dev_index #hal.get_sensor_id()
+
                 else:
                     # TODO REMOVE
                     caps: [str] = hal.get_sensor_capabilities()
@@ -92,6 +109,8 @@ class ProxyGlobals:
                         self.commandrouter['sensorcnt'] = dev_index
                     if 'axis_temp' in caps:
                         self.commandrouter['temp'] = dev_index
+                    if 'static' in caps:
+                        self.commandrouter['info'] = dev_index
 
                     # the get_sensor_commandlist command is only implemented in later version of the sensor firmware, so try to assume
                     # so used capabilities instead
@@ -151,8 +170,15 @@ def command():
         result_dict = {}
         with hardware_instances.lock:
 
-            hal: MRPHal.MRPHal = hardware_instances.get_hal_instance_by_command(cmd)
+            # REMOVE CMD PARAMETERS
+            cmd_wo_parameters: str = cmd
+            if ' ' in cmd:
+                cmd_wo_parameters = cmd.split(' ')[0]
+
+            # GET DEVICE HAL
+            hal: MRPHal.MRPHal = hardware_instances.get_hal_instance_by_command(cmd_wo_parameters)
             if hal is not None:
+                # EXECUTE COMMAND
                 result_dict['output'] = hal.send_command(cmd)
 
 
@@ -232,6 +258,8 @@ def status():
     ret.sensortype = "rotationsensor"
     ret.id = machineid.id()
     ret.capabilities = []
+    ret.commands = ['status', 'initialize', 'disconnect']
+
     ret.version = __version__
     # also add startconfig
     resdict: dict = ret.__dict__
@@ -240,16 +268,14 @@ def status():
     resdict['hardware'] = {}
     # if system is not initialized redirect to init route first
     if app_flask.config.get('initialized', False):
-        resdict['sys_initialized'] = True
+
         with hardware_instances.lock:
             resdict['initialized'] = True
-            if hardware_instances.sensor_hal:
-                resdict['hardware']["sensor_hal"] = hardware_instances.sensor_hal.get_sensor_id()
-                ret.capabilities.extend(hardware_instances.sensor_hal.get_sensor_capabilities())
-            if hardware_instances.manipulator_hal:
-                resdict['hardware']["manipulator_hal"] = hardware_instances.manipulator_hal.get_sensor_id()
-                ret.capabilities.extend(hardware_instances.manipulator_hal.get_sensor_capabilities())
+            # GET CAPS AND AVAILABLE CMDS FOR THE LOCALLY CONNECTED DEVICES
+            ret.capabilities.extend(hardware_instances.get_combined_capabilities())
+            ret.commands.extend(hardware_instances.get_combined_commands())
 
+        resdict['commands'] = ret.commands
         resdict['capabilities'] = ret.capabilities
 
     else:

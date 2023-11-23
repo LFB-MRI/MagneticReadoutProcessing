@@ -31,8 +31,6 @@ class MRPHalLocal:
     READLINE_TIMEOUT = 0.1
     READLINE_RETRY_ATTEMPT = 5
 
-
-
     current_port: MRPHalSerialPortInformation = None
     serial_port_instance: serial = None
     sio: io.TextIOWrapper = None
@@ -179,10 +177,15 @@ class MRPHalLocal:
         result = ''.join(result.rsplit('\n', 1))
 
 
+        if 'parse error' in result:
+                return []
+
         if self.TERMINATION_CHARACTER in result:
             return result.split(self.TERMINATION_CHARACTER).remove('')
 
-        return result
+
+
+        return [result]
     def query_command_str(self, _cmd: str) -> str:
         """
         queries a sensor command and returns the response as string
@@ -193,8 +196,12 @@ class MRPHalLocal:
         :returns: returns the response as concat string
         :rtype: str
         """
-        res = self.send_command(_cmd)
-        if 'parse error' in res:
+        res: [str] = self.send_command(_cmd)
+
+        if len(res) <= 0:
+            return ""
+
+        if 'parse error' in res[0]:
             raise MRPHalLocalException("sensor returned invalid command or command not implemented for {}".format(_cmd))
 
         return "".join(str(e) for e in res)
@@ -263,9 +270,7 @@ class MRPHalLocal:
         """
         try:
             res: str = self.query_command_str('info')
-
-            if ' ' in res:
-                res = res.strip(' ')
+            res = res.replace(" ", "")
 
             if ',' in res:
                 return res.split(',')
@@ -274,9 +279,20 @@ class MRPHalLocal:
             return []
 
     def get_sensor_commandlist(self) -> [str]:
-        rt: str = self.send_command("commands")
+        try:
+            res: str = self.query_command_str('commands')
+            res = res.replace(" ", "")
 
-        ret: [str] = rt.strip(" ").split(",")
+            if len(res) <= 0:
+                return []
+
+
+            if ',' in res:
+                return res.split(',')
+            return [res]
+        except MRPHalLocalException as e:
+            print(str(e))
+            return []
 
 
         return ret
