@@ -42,12 +42,28 @@ class ProxyGlobals:
 
 
 
-    def get_hal_instance_by_command(self, _cmd: str) -> MRPHal.MRPHal:
+    def get_hal_instance_by_command(self, _cmd: str, _id: str) -> MRPHal.MRPHal:
 
 
         if _cmd in self.commandrouter:
             try:
-                index: int = self.commandrouter[_cmd]
+
+                dlist: [dict] = self.commandrouter[_cmd]
+
+                if len(dlist) <= 0:
+                    return None
+
+                index: int = -1
+                if len(dlist) == 1:
+                    index: int = dlist[0]['index']
+                else:
+
+                    for e in dlist:
+                        if e['id'] == _id:
+                            index = e['index']
+                            break
+
+
                 if index <= len(self.devices):
                     return self.devices[index]
                 else:
@@ -62,6 +78,20 @@ class ProxyGlobals:
 
     def get_combined_capabilities(self) -> [str]:
         return self.combined_capabilities
+
+
+    def add_command_to_router(self, _cmd: str, _index: int, _id: str):
+        #self.commandrouter['readsensor'] = dev_index
+
+        if _cmd not in self.commandrouter:
+            self.commandrouter[_cmd] = []
+
+        if len(self.commandrouter[_cmd]) <= 0:
+            self.commandrouter[_cmd] = [{'index': _index, 'id': _id}]
+        else:
+            self.commandrouter[_cmd].append({'index': _index, 'id': _id})
+
+
     def init(self, _devices: [str], _disbaleprecheck: bool = False):
 
         if _devices is None or len(_devices) <= 0:
@@ -81,7 +111,8 @@ class ProxyGlobals:
                 hal: MRPHal.MRPHal = MRPHalHelper.MRPHalHelper.createHalInstance(port)
                 hal.set_serial_port_information(port)
                 hal.connect()
-                print("PRECHECK: SENSOR_HAL: {}".format(hal.get_sensor_id()))
+                id: str = hal.get_sensor_id()
+                print("PRECHECK: SENSOR_HAL: {}".format(id))
                 #self.sensor.disconnect()
 
                 # EVERY CHECK PASSED ADD DEVICE TO LIST
@@ -98,19 +129,20 @@ class ProxyGlobals:
                 dev_index = len(self.devices)-1
                 if len(cmdlist) > 0:
                     for cmd in hal.get_sensor_commandlist():
-                        self.commandrouter[cmd] = dev_index #hal.get_sensor_id()
+                        self.add_command_to_router(cmd, dev_index, id)
 
                 else:
                     # TODO REMOVE
                     caps: [str] = hal.get_sensor_capabilities()
                     if 'axis_b' in caps:
                         # if there is an axis_ cap then there should be a readout command for that
-                        self.commandrouter['readsensor'] = dev_index
-                        self.commandrouter['sensorcnt'] = dev_index
+                        self.add_command_to_router('readsensor', dev_index, id)
+                        self.add_command_to_router('sensorcnt', dev_index, id)
+
                     if 'axis_temp' in caps:
-                        self.commandrouter['temp'] = dev_index
+                        self.add_command_to_router('temp', dev_index, id)
                     if 'static' in caps:
-                        self.commandrouter['info'] = dev_index
+                        self.add_command_to_router('info', dev_index, id)
 
                     # the get_sensor_commandlist command is only implemented in later version of the sensor firmware, so try to assume
                     # so used capabilities instead
@@ -176,7 +208,7 @@ def command():
                 cmd_wo_parameters = cmd.split(' ')[0]
 
             # GET DEVICE HAL
-            hal: MRPHal.MRPHal = hardware_instances.get_hal_instance_by_command(cmd_wo_parameters)
+            hal: MRPHal.MRPHal = hardware_instances.get_hal_instance_by_command(cmd_wo_parameters, devicetype)
             if hal is not None:
                 # EXECUTE COMMAND
                 result_dict['output'] = hal.send_command(cmd)
