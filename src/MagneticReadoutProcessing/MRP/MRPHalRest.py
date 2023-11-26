@@ -82,14 +82,13 @@ class MRPHalRest(MRPHal.MRPHal):
         dtype = self.current_port.getSensorsNeededImplementation().value
         url = "{}command?cmd={}&devicetype={}".format(self.current_port.device_path, _command, int(dtype))
 
-        #print("request_json: {}".format(url))
+        #
 
         r = requests.get(url=url, allow_redirects=True)
 
         if r.status_code >= 200 and r.status_code < 300:
             # TRY TO GET SENSOR IMPLEMENTATION
             if 'application/json' in r.headers['content-type']:
-
                 try:
                     doc = r.json()
                     return doc
@@ -103,6 +102,7 @@ class MRPHalRest(MRPHal.MRPHal):
     def request_status(self) -> MRPPHalRestRequestResponseState:
         r: MRPPHalRestRequestResponseState = MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState()
         try:
+            # TODO IMPLEMENT CUSTOM JSON PARSER
             ret: dict = self.request_json('status')
             r.sensortype = ret['sensortype']
             r.version = ret['version']
@@ -110,6 +110,7 @@ class MRPHalRest(MRPHal.MRPHal):
             #r.sensorcount = ret['sensorcount']
             r.capabilities = ret['capabilities']
             r.initialized = ret['initialized']
+            r.commands = ret['commands']
             r.success = True
             return r
 
@@ -117,6 +118,7 @@ class MRPHalRest(MRPHal.MRPHal):
             print(str(e))
             r.success = False
         return r
+
     def connect(self) -> bool:
         """
         connect to the selected api

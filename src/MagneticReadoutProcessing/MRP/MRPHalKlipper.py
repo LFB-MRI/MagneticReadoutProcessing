@@ -29,11 +29,10 @@ class MRPHalKlipper(MRPHal.MRPHal):
 
     def set_serial_port_information(self, _port: MRPHalSerialPortInformation):
         self.current_port = _port
-
+        self.addr = self.current_port.device_path.replace("klipper://", "http://").replace("klippers://", "https://")
 
     def get_serial_port_information(self) -> MRPHalSerialPortInformation:
         return self.current_port
-
 
     def connect(self) -> bool:
 
@@ -44,20 +43,47 @@ class MRPHalKlipper(MRPHal.MRPHal):
         r, _ = self.request_firmware()
         return r
 
-
     def is_connected(self) -> bool:
         r, _ = self.request_firmware()
         return r
 
     def disconnect(self):
-        self.disable_motors()
+        self.send_gcode("M84")
         self.connected = False
 
     def read_value(self):
         pass
 
     def send_command(self, _cmd: str) -> [str]:
-        pass
+        if not _cmd:
+            raise MMRPHalKlipperException(
+                "command is empty {}".format(_cmd))
+
+        # TO AVOID ERRORS APPEND gcode COMMANd IDENTIFIER AT THE BEGINNING
+        if not _cmd.startswith("gcode "):
+            _cmd = "gcode " + _cmd
+
+        # REPLACE MAY OCCUrING DOUBLE BLANK SPACES
+        _cmd = _cmd.replace("  ", " ")
+        # REMOVE CMD PARAMETERS
+        cmd_wo_parameters: str = _cmd
+        if ' ' in _cmd:
+            _cmd_sp = _cmd.split(' ')
+            cmd_wo_parameters = _cmd_sp[0]
+        else:
+            _cmd_sp = [_cmd]
+
+        if cmd_wo_parameters not in self.get_sensor_commandlist():
+            raise MMRPHalKlipperException("command not supported by this hal instance {}".format(_cmd))
+
+
+        # CONSTRUCT FINAL GCODE BACK
+        gcode_to_send: str = " ".join(_cmd_sp[1:])
+        # SEND GCODE TO KLIPPER
+        if self.send_gcode(gcode_to_send):
+            return self.get_gcode(count=1, simplify=True)
+        else:
+            raise MMRPHalKlipperException("command sending failed  {}".format(_cmd))
 
     def query_command_str(self, _cmd: str) -> str:
         res: [str] = self.send_command(_cmd)
@@ -65,10 +91,12 @@ class MRPHalKlipper(MRPHal.MRPHal):
         if len(res) <= 0:
             return ""
 
-        if 'parse error' in res[0]:
+        # CATCH SOME MOST COMMON KLIPPER ERRORS
+        complete_response: str = "".join(str(e) for e in res)
+        if 'Unknown command' in complete_response or 'triggered after retract' in complete_response or 'Must home axis first' in complete_response or 'Move out of range' in complete_response:
             raise MMRPHalKlipperException("sensor returned invalid command or command not implemented for {}".format(_cmd))
 
-        return "".join(str(e) for e in res)
+        return complete_response
 
     def query_command_int(self, _cmd: str) -> int:
         return int(self.query_command_str(_cmd))
@@ -86,32 +114,8 @@ class MRPHalKlipper(MRPHal.MRPHal):
 
     def get_sensor_capabilities(self) -> [str]:
         return ["dynamic", "fullsphere"]
-
     def get_sensor_commandlist(self) -> [str]:
-        return ["gocde"]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def disable_motors(self):
-        return self.send_gcode("M115")
-
+        return ["gcode"]
     def request_firmware(self) -> (bool, dict):
         self.send_gcode('M115')
 
@@ -139,13 +143,11 @@ class MRPHalKlipper(MRPHal.MRPHal):
 
         print(search)
         return (got_response, search)
-
     def send_gcode(self, cmd: str):
         resp = self.post('/printer/gcode/script?script=%s' % cmd)
         if 'result' in resp:
             return True
         return False
-
     def get_gcode(self, count: int = 1, simplify: bool = True, msg_type: str = 'response'):
         '''
         Query the gcode store.
@@ -192,61 +194,10 @@ class MRPHalKlipper(MRPHal.MRPHal):
         query = '/printer/objects/query?%s' % object
         return self.get(query)['result']['status'][object]
 
-    def set_bed_temp(self, target: float = 0.):
-        cmd = 'SET_HEATER_TEMPERATURE HEATER=heater_bed TARGET=%.1f' % target
-        if self.send_gcode(cmd):
-            return True
-        return False
 
-    def set_extruder_temp(self, target: float = 0.):
-        cmd = 'SET_HEATER_TEMPERATURE HEATER=extruder TARGET=%.1f' % target
-        if self.send_gcode(cmd):
-            return True
-        return False
 
-    def qgl(self):
-        if 'quad_gantry_level' in self.config:
-            return self.send_gcode(self.cmd_qgl)
-        err_msg = 'Cannot QGL: "quad_gantry_level" not configured in Klipper'
-        raise RuntimeError(err_msg)
 
-    def bed_mesh_cal(self):
-        if 'bed_mesh' in self.config:
-            return self.send_gcode(self.cmd_bed_mesh)
-        err_msg = 'Cannot bed mesh: "bed_mesh" not configured in Klipper'
-        raise RuntimeError(err_msg)
 
-    def bed_mesh_query(self):
-        if 'bed_mesh' in self.config:
-            url = '/printer/objects/query?bed_mesh'
-            resp = self.get(url)['result']['status']['bed_mesh']
-            return resp
-        err_msg = 'Cannot query bed mesh: "bed_mesh" not configured in Klipper'
-        raise RuntimeError(err_msg)
-
-    def bed_mesh_clear(self):
-        if 'bed_mesh' in self.config:
-            return self.send_gcode('BED_MESH_CLEAR')
-        err_msg = 'Cannot clear mesh: "bed_mesh" not configured in Klipper'
-        raise RuntimeError(err_msg)
-
-    def query_temperatures(self):
-        url = '/printer/objects/query?' + '&'.join(self.temp_sensors)
-        resp = self.get(url)['result']['status']
-        keys = [key.replace('temperature_sensor ', '') for key in list(resp.keys())]
-        items = list(resp.values())
-        renamed = dict(zip(keys, items))
-        return renamed
-
-    def list_temp_sensors(self):
-        sensor_sections = ('temperature_sensor',
-                           'extruder',
-                           'heater_bed')
-        sensors = []
-        for heading in self.config:
-            if heading.startswith(sensor_sections):
-                sensors.append(heading)
-        return sensors
 
     def get(self, url: str):
         '''`response.get` wrapper. `url` concatenated to printer base address

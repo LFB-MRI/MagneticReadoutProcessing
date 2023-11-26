@@ -1,5 +1,6 @@
 
-from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPReadingEntry, MRPMeasurementConfig
+from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPReadingEntry, MRPMeasurementConfig, \
+    MRPReadingSourceStatic
 
 
 class MRPReadingSourceFullsphereException(Exception):
@@ -12,13 +13,23 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
 
     hal_instance: MRPHal.MRPHal = None
 
-    # ALL GCODE COMMANDS WHICH ARE NEEDED BEFORE STARTING A MEASUREMENT
-    MEASUREMENT_START_GCODE: [str] = [
+    # GOCDES TO RUN TO INIT THE SYSTEM
+    MEASUREMENT_INIT_GCODE: [str] = [
+        # LOG FIRMWARE VERSION
+        "M115",
         # SET SPEED LIMITS
         "SET_VELOCITY_LIMIT VELOCITY=10",
         "SET_VELOCITY_LIMIT ACCEL=5",
         "SET_VELOCITY_LIMIT ACCEL_TO_DECEL=5",
-        "SET_VELOCITY_LIMIT SQUARE_CORNER_VELOCITY=1"
+        "SET_VELOCITY_LIMIT SQUARE_CORNER_VELOCITY=1",
+        # HOME
+        "G28 Y",
+        # DISABLE MOTORS AGAIN
+        "M84",
+
+    ]
+    # ALL GCODE COMMANDS WHICH ARE NEEDED BEFORE STARTING A MEASUREMENT
+    MEASUREMENT_START_GCODE: [str] = [
         # HOME MECHANIC
         "G28 Y"
     ]
@@ -47,9 +58,13 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         if not 'static' in _hal.get_sensor_capabilities() or not 'fullsphere' in _hal.get_sensor_capabilities():
             raise MRPReadingSourceFullsphereException("invalid get_sensor_capabilities for this reading source static and fullsphere is required")
 
-        if not 'gcode' in _hal.get_sensor_commandlist():
-            raise MRPReadingSourceFullsphereException("invalid commands: gcode command is not supported by this hal. is MRPHalKlipper present ? ")
+        cmdlist: [str] = _hal.get_sensor_commandlist()
+        if not 'gcode' in cmdlist:
+            raise MRPReadingSourceFullsphereException("invalid commands: gcode command is not supported by this hal. is MRPHalKlipper present ? got: {} ".format(cmdlist))
 
+        # TEST CONNECTION
+        for cmd in self.MEASUREMENT_INIT_GCODE:
+            _hal.query_command_str("gcode {}".format(cmd))
         self.hal_instance = _hal
 
     def __del__(self):
@@ -69,8 +84,7 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
             self.hal_instance.query_command_str("gcode {}".format(cmd))
 
 
-
-        for s_idx in range(sensor.sensor_count):
+        for s_idx in range(_measurement_points):
             # CREATE MEASUREMENT CONFIG
             mmc: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
             mmc.configure_fullsphere()
@@ -80,33 +94,22 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
             reading: MRPReading.MRPReading = MRPReading.MRPReading(mmc)
             # SET READING NAME
             reading.set_name("ID{}_SID{}_MAG{}".format(  mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
-
-
-
-            # PERFORM READING FOR EACH USER SET DATAPOINT
-            # LOOP OVER ALL DATAPOINTS
-            print("sampling {} datapoints with {} average readings".format(_measurement_points, _average_readings_per_datapoint))
-            for dp_idx in range(_measurement_points):
-                avg_temp: float = 0.0
-                avg_bf: float = 0.0
-                # CALCULATE AVERAGE
-                for avg_idx in range(_average_readings_per_datapoint):
-                    # READOUT SENSOR
-                    sensor.query_readout()
-                    avg_temp = avg_temp + sensor.get_temp(_sensor_id=s_idx)
-                    avg_bf = avg_bf + sensor.get_b(_sensor_id=s_idx)
-
-                avg_temp = avg_temp / _average_readings_per_datapoint
-                avg_bf = avg_bf / _average_readings_per_datapoint
-
-                # APPEND READING
-                print("SID{} DP{} B{} TEMP{}".format(s_idx, dp_idx, avg_bf, avg_temp))
-                rentry: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry(p_id=dp_idx, p_value=avg_bf, p_temperature=avg_temp, p_is_valid=True)
-                reading.insert_reading_instance(rentry, _autoupdate_measurement_config=False)
-
-
             result_readings.append(reading)
 
+
+
+
+        for m_idx in range(_measurement_points):
+            # PERFORM READING FOR EACH USER SET DATAPOINT
+            # LOOP OVER ALL DATAPOINTS
+            rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[m_idx], _average_readings_per_datapoint)
+
+            for idx, _ in enumerate(result_readings):
+                result_readings[idx].insert_reading_instance(rentry[idx], _autoupdate_measurement_config=False)
+
+        # RESET MECHANIC AFTER MEASUREMENT
+        for cmd in self.MEASUREMENTS_END_GCODE:
+            self.hal_instance.query_command_str("gcode {}".format(cmd))
 
         return result_readings
 

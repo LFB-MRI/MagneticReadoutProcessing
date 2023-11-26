@@ -138,14 +138,14 @@ class ProxyGlobals:
                         # if there is an axis_ cap then there should be a readout command for that
                         self.add_command_to_router('readsensor', dev_index, id)
                         self.add_command_to_router('sensorcnt', dev_index, id)
+                        self.combined_commands.extend(['readsensor', 'sensorcnt'])
 
                     if 'axis_temp' in caps:
                         self.add_command_to_router('temp', dev_index, id)
+                        self.combined_commands.extend(['temp'])
                     if 'static' in caps:
                         self.add_command_to_router('info', dev_index, id)
-
-                    # the get_sensor_commandlist command is only implemented in later version of the sensor firmware, so try to assume
-                    # so used capabilities instead
+                        self.combined_commands.extend(['info'])
 
             except Exception as e:
                 if not _disbaleprecheck:
@@ -220,7 +220,7 @@ def command():
 
 
             # SOME COMMANDS RESPORTS THE ERROR IN THE OUTPUT
-            if 'error' in result_dict['output']:
+            if 'error' in result_dict['output'] and result_dict['output'] is not None:
                 result_dict['error'] = True
 
         return jsonify(result_dict)
@@ -270,8 +270,9 @@ def disconnect():
 
     # try to disconnect the hardware
     with hardware_instances.lock:
-        hardware_instances.manipulator_hal.disconnect() # disconnect sensors
-        hardware_instances.manipulator_hal.disconnect() # disconnect manipulator
+        for hw in hardware_instances.devices:
+            hw.disconnect()
+
 
     return jsonify({"error": False})
 

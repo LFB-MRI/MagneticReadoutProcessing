@@ -231,7 +231,7 @@ class MRPHalSerialPortInformation:
         elif 'http://' in self.device_path or 'https://' in self.device_path:
             return MRPRemoteSensorType.ApiSensor
 
-        elif 'klipper://' in self.device_path:
+        elif 'klipper://' in self.device_path or 'klippers://' in self.device_path:
             return MRPRemoteSensorType.KlipperManipulator
 
         return MRPRemoteSensorType.Unknown
@@ -260,9 +260,9 @@ class MRPHalSerialPortInformation:
             return True
         elif 'loop://' in self.device_path:
             return True
-        elif 'http://' in self.device_path:
+        elif 'http://' in self.device_path or 'https://' in self.device_path:
             return True
-        elif 'klipper://' in self.device_path:
+        elif 'klipper://' in self.device_path or 'klippers://' in self.device_path:
             return True
         return False
 
@@ -284,7 +284,7 @@ class MRPHalSerialPortInformation:
             return True
         elif 'loop://' in self.device_path:
             return True
-        elif 'klipper://' in self.device_path:
+        elif 'klipper://' in self.device_path or 'klippers://' in self.device_path:
             return True
         elif 'http://' in self.device_path or 'https://' in self.device_path:
             return True
