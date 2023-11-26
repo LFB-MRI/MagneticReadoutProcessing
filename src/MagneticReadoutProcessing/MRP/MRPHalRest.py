@@ -82,7 +82,7 @@ class MRPHalRest(MRPHal.MRPHal):
         dtype = self.current_port.getSensorsNeededImplementation().value
         url = "{}command?cmd={}&devicetype={}".format(self.current_port.device_path, _command, int(dtype))
 
-        print("request_json: {}".format(url))
+        #print("request_json: {}".format(url))
 
         r = requests.get(url=url, allow_redirects=True)
 

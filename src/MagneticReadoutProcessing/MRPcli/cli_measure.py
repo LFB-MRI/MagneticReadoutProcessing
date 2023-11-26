@@ -6,7 +6,7 @@ from MRPcli import cli_helper
 from MRPcli import cli_datastorage
 
 
-from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor
+from MRP import MRPHal, MRPReading, MRPMeasurementConfig, MRPMagnetTypes, MRPReadingEntry, MRPReadingEntry, MRPBaseSensor, MRPReadingSourceHelper, MRPReadingSource
 
 app = typer.Typer()
 
@@ -16,86 +16,61 @@ def perform_measurement_rotationalsensor(configname: str):
 def perform_measurement(configname: str):
     print("perform_measurement for {}".format(configname))
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(configname)
-    hal: MRPHal.MRPPHalLocal = cli_helper.create_hal_instance_using_config(_configname=configname)
 
-    capabilities: [str] = hal.get_sensor_capabilities()
-    sensor_count = hal.get_sensor_count()
+    # CREATE HAL INSTANCE
+    hal: MRPHal.MRPPHal = cli_helper.create_hal_instance_using_config(_configname=configname)
 
+    # CREATE READING SOURCE INSTANCE USING HAL
+    # IT MANAGES THE AUTOMATIC SENSOR DETECTION
+    reading_source: MRPReadingSource.MRPReadingSource = MRPReadingSourceHelper.MRPReadingSourceHelper.createReadingSourceInstance(hal)
 
-    # SENSOR SETUP
-
-    sensor: MRPBaseSensor.MRPBaseSensor = MRPBaseSensor.MRPBaseSensor(hal)
-
-
-
-    for idxsen in range(sensor_count):
-        # CREATE A MEASUREMENT CONFIG
-        mmc: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
-
-        # TODO REMOVE
-        mmc.configure_fullsphere()
-
-        mmc.id = hal.get_sensor_id()
-        mmc.sensor_id = idxsen
-        # CREATE A READING WITH CONDIG
-        reading: MRPReading.MRPReading = MRPReading.MRPReading(mmc)
+    READING_AVERAGE_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT))
+    READING_DATAPOINT_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
+    READING_OUTPUT_FOLDER: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
 
 
+    result_readings: [MRPReading.MRPReading] = reading_source.perform_measurement(READING_DATAPOINT_COUNT, READING_AVERAGE_COUNT)
 
-        mag = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE)
-        # SET MAGNET TYPE
-        if len(mag) > 0 and MRPMagnetTypes.MagnetType.from_int(int(mag)) is not MRPMagnetTypes.MagnetType.NOT_SPECIFIED:
-            reading.set_magnet_type(MRPMagnetTypes.MagnetType.from_int(int(mag)))
-        else:
-            reading.set_magnet_type(MRPMagnetTypes.MagnetType.NOT_SPECIFIED)
 
-        # ADD THE MEASUREMENT CONFIGURATION
+    for idx, r in enumerate(result_readings):
+
+        # ADD METADATA
         for kv in cli_datastorage.CLIDatastorageEntries:
             k = kv.name
             v = cfg.get_value(kv)
-            reading.set_additional_data(str(k), str(v))
+            r.set_additional_data(str(k), str(v))
+        r.set_additional_data('configname', configname)
+        r.set_additional_data('runner', 'MRPcli')
 
-        # ADD MORE METADATA
-        reading.set_additional_data('configname', configname)
-        reading.set_additional_data('runner', 'MRPcli')
-        reading.set_additional_data('sensor_capabilities', str(hal.get_sensor_capabilities()))
+        # SET MAGNET TYPE
+        mag = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_MAGNET_TYPE)
+        # SET MAGNET TYPE
+        if len(mag) > 0 and MRPMagnetTypes.MagnetType.from_int(int(mag)) is not MRPMagnetTypes.MagnetType.NOT_SPECIFIED:
+            r.set_magnet_type(MRPMagnetTypes.MagnetType.from_int(int(mag)))
+        else:
+            r.set_magnet_type(MRPMagnetTypes.MagnetType.NOT_SPECIFIED)
 
-        # SET THE NAME
-        reading.set_name("{}_ID{}_SID{}_MAG{}".format(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
 
-        # ADD METADATA ABOUT THE SENSOR
-        max_datapoints = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
-        max_avg = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT))
-        # LOOP OVER ALL DATAPOINTS
-        print("sampling {} datapoints with {} average readings".format(max_datapoints, max_avg))
-        for dp_idx in range(max_datapoints):
-            avg_temp: float = 0.0
-            avg_bf: float = 0.0
-            # CALCULATE AVERAGE
-            for avg_idx in range(max_avg):
-                # READOUT SENSOR
-                sensor.query_readout()
-                avg_temp = avg_temp + sensor.get_temp(_sensor_id=idxsen)
-                avg_bf = avg_bf + sensor.get_b(_sensor_id=idxsen)
+        # MODIFY NAME
+        name: str = r.get_name()
+        name = "{}_{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), name)
+        r.set_name(name)
 
-            avg_temp = avg_temp / max_avg
-            avg_bf = avg_bf / max_avg
+        # EXPORT READING TO FILESYSTEM
+        filename = (r.get_name() + "_cIDX{}".format(idx)).strip('/').strip('.')
+        target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
+        # RESOLVE REL TO ABS PATH
+        if not str(target_folder).startswith('/'):
+            target_folder = str(Path(target_folder).resolve())
+        # CREATE COMPLETE PATH WITH FILENAME
+        complete_path = os.sep.join([target_folder, filename])
+        # EXPORT
+        print("exported reading: ".format(r.dump_to_file(complete_path)))
 
-            # APPEND READING
-            print("SID{} DP{} B{} TEMP{}".format(idxsen, dp_idx, avg_bf, avg_temp))
-            rentry: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry(p_id=dp_idx, p_value=avg_bf, p_temperature=avg_temp, p_is_valid=True)
-            reading.insert_reading_instance(rentry, _autoupdate_measurement_config=False)
 
-            # EXPORT TO FILESYSTEM
-            filename = (reading.get_name() + "_cIDX{}".format(dp_idx)).strip('/').strip('.')
-            target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
-            # RESOLVE REL TO ABS PATH
-            if not str(target_folder).startswith('/'):
-                target_folder = str(Path(target_folder).resolve())
-            # CREATE COMPLETE PATH WITH FILENAME
-            complete_path = os.sep.join([target_folder, filename])
-            # EXPORT
-            print("exported reading: ".format(reading.dump_to_file(complete_path)))
+
+
+
 
 
 
@@ -149,12 +124,8 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
             raise typer.Abort("precheckfail: sensor connection failed - please run config setupsensor again or check connection")
         print("> sensor-connection-test: OK".format(conn.get_sensor_id()))
 
-
-
         cfg_to_run.append(c)
-
         conn.disconnect()
-
 
 
     print("START MEASUREMENT CYCLE".format())
