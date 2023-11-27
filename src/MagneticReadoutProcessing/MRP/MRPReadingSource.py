@@ -22,3 +22,7 @@ class MRPReadingSource(ABC):
     def perform_measurement(self, _measurement_points: int, _average_readings_per_datapoint: int) -> [MRPReading.MRPReading]:
         pass
 
+    @abstractmethod
+    def export_visualisation(self, _readings: [MRPReading.MRPReading], _export_file: str):
+        pass
+

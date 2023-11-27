@@ -9,7 +9,7 @@ from MRP import MRPMagnetTypes, MRPHal, MRPHalSerialPortInformation, MRPHalHelpe
 
 app = typer.Typer()
 
-BASEPATH = '../readings'
+BASEPATH: str = '../readings'
 
 @app.command()
 def list(ctx: typer.Context):

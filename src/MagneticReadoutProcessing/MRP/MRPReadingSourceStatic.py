@@ -1,4 +1,5 @@
-from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPMeasurementConfig, MRPReadingEntry
+from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPMeasurementConfig, MRPReadingEntry, \
+    MRPDataVisualization
 
 
 class MRPReadingSourceStaticException(Exception):
@@ -81,11 +82,18 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
         for m_idx in range(_measurement_points):
             # PERFORM READING FOR EACH USER SET DATAPOINT
             # LOOP OVER ALL DATAPOINTS
-            rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[m_idx], _average_readings_per_datapoint)
+            rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[0], _average_readings_per_datapoint)
 
-            for idx, _ in enumerate(result_readings):
-                result_readings[idx].insert_reading_instance(rentry[idx], _autoupdate_measurement_config=False)
+            for idx, r in enumerate(rentry):
+                result_readings[idx].insert_reading_instance(r, _autoupdate_measurement_config=False)
 
 
         return result_readings
+
+    def export_visualisation(self, _readings: [MRPReading.MRPReading], _export_file: str):
+        # OPTIONAL: plot deviation
+        MRPDataVisualization.MRPDataVisualization.plot_error(_readings, _filename="{}_error".format(_export_file))
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(_readings, _filename="{}_scatter".format(_export_file))
+        MRPDataVisualization.MRPDataVisualization.plot_temperature(_readings, _filename="{}_temperature".format(_export_file))
+
 

@@ -69,7 +69,7 @@ class MRPDataVisualization:
         # Add a table at the bottom of the axes
         ax0.axis('tight')
         ax0.axis('off')
-        ax0.set_title('{} - Error'.format(_title))
+        ax0.set_title('{} Error'.format(_title))
         tbl = ax0.table(cellText=clust_data, colLabels=collabel, loc='center')
 
 
@@ -126,7 +126,7 @@ class MRPDataVisualization:
 
 
         plt.scatter(x, y, color=coloring)
-        plt.title('{} - Scatter'.format(_title))
+        plt.title('{} Scatter'.format(_title))
         plt.xlabel("value [mT]")
         plt.ylabel("reading [id:sensor_id]")
         plt.yticks(range(0, len(_readings)),  labels)
@@ -209,7 +209,7 @@ class MRPDataVisualization:
         ax0.set_yticklabels(ylabels)
         ax0.set_xlabel('Temperature')
         ax0.set_ylabel('reading [id:sensor_id]')
-        ax0.set_title('{} - Temperature'.format(_title))
+        ax0.set_title('{} Temperature'.format(_title))
         # ADD COLOR BAR
         cbar = fig.colorbar(mappable=im, orientation='horizontal')
         cbar.set_label('Temperature, $^\circ\mathrm{C}$')

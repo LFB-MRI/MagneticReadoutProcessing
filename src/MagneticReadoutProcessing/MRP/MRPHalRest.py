@@ -246,7 +246,7 @@ class MRPHalRest(MRPHal.MRPHal):
        :rtype: str
        """
         try:
-            return self.query_command_int('sensorcnt')
+            return self.query_command_int('combinedsensorcnt')
         except Exception as e:
             return 0
 

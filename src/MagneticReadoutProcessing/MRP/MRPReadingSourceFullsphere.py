@@ -1,10 +1,11 @@
 import math
+import os
 import time
 
 import numpy as np
 
 from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPReadingEntry, MRPMeasurementConfig, \
-    MRPReadingSourceStatic
+    MRPReadingSourceStatic, MRPDataVisualization, MRPPolarVisualization
 
 
 class MRPReadingSourceFullsphereException(Exception):
@@ -175,3 +176,17 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
 
         return result_readings
 
+    def export_visualisation(self, _readings: [MRPReading.MRPReading], _export_file: str):
+
+        MRPDataVisualization.MRPDataVisualization.plot_error(_readings, _filename=_export_file)
+        MRPDataVisualization.MRPDataVisualization.plot_scatter(_readings, _filename=_export_file)
+        MRPDataVisualization.MRPDataVisualization.plot_temperature(_readings, _filename=_export_file)
+
+        for idx, reading in enumerate(_readings):
+            # ADDITIONAL PLOT 3D
+            visu = MRPPolarVisualization.MRPPolarVisualization(reading)
+
+            # 3D PLOT TO FILE
+            visu.plot3d("RID{}_{}{}".format(idx, _export_file, "_plot3d"))
+            visu.plot2d_top("RID{}_{}{}".format(idx, _export_file, "_plot2dtop"))
+            visu.plot2d_side("RID{}_{}{}".format(idx, _export_file, "_plot2dside"))

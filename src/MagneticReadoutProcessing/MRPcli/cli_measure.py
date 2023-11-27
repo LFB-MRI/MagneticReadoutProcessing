@@ -67,6 +67,16 @@ def perform_measurement(configname: str):
         print("exported reading: ".format(r.dump_to_file(complete_path)))
 
 
+    # GENERATE VISUALISATION GRAPHICS
+    visu_name = "{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX))
+    visu_target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
+    if not str(visu_target_folder).startswith('/'):
+        visu_target_folder = str(Path(visu_target_folder).resolve())
+    visu_exp_path: str = os.sep.join([visu_target_folder, visu_name])
+    reading_source.export_visualisation(result_readings, visu_exp_path)
+
+
+
 
 
 

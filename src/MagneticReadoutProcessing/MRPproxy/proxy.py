@@ -31,6 +31,7 @@ class ProxyGlobals:
     commandrouter: dict = {}
     combined_capabilities: [str] = [] # contains all caps from all connected devices
     combined_commands: [] = []
+    ids: [str] = []
 
 
     lock: Lock = Lock()
@@ -40,6 +41,8 @@ class ProxyGlobals:
     def __init__(self):
         self.initialized: bool = False
 
+    def get_combined_id(self) -> str:
+        return "-".join(self.ids)
 
 
     def get_hal_instance_by_command(self, _cmd: str, _id: str) -> MRPHal.MRPHal:
@@ -101,6 +104,7 @@ class ProxyGlobals:
         self.commandrouter = {}
         self.devices = []
         self.ports = []
+        self.ids = []
 
 
         for idx, device in enumerate(_devices):
@@ -113,6 +117,7 @@ class ProxyGlobals:
                 hal.connect()
                 id: str = hal.get_sensor_id()
                 print("PRECHECK: SENSOR_HAL: {}".format(id))
+                self.ids.append(id)
                 #self.sensor.disconnect()
 
                 # EVERY CHECK PASSED ADD DEVICE TO LIST
@@ -192,7 +197,7 @@ def command():
 
 
     # PROCESS COMMANDS
-    redirect_commands = ['status', 'initialize', 'disconnect']
+    redirect_commands = ['status', 'initialize', 'disconnect', 'combinedsensorcnt']
     if cmd in redirect_commands:
         rd: str = '{}'.format(request.base_url).replace('/command','/{}'.format(cmd))
         return redirect(rd)
@@ -276,6 +281,32 @@ def disconnect():
 
     return jsonify({"error": False})
 
+@app_flask.route("/proxy/combinedsensorcnt")
+@cross_origin()
+def combinedsensorcnt():
+    global hardware_lock
+
+    # if hardware is not initialized redirect to init route first
+    # after init the request is coming back here
+    if not app_flask.config.get('initialized', False):
+        return redirect('/proxy/initialize?origin={}'.format(request.base_url))
+
+    result_dict: dict = {
+        'output': False,
+        'output': ['0']
+    }
+
+
+    # try to disconnect the hardware
+    count: int = 0
+    with hardware_instances.lock:
+        for hw in hardware_instances.devices:
+            count = count + hw.get_sensor_count()
+
+    result_dict['output'] = [str(count)]
+
+    return jsonify(result_dict)
+
 
 @app_flask.route("/proxy/status")
 @cross_origin()
@@ -291,7 +322,7 @@ def status():
     ret.sensortype = "rotationsensor"
     ret.id = machineid.id()
     ret.capabilities = []
-    ret.commands = ['status', 'initialize', 'disconnect']
+    ret.commands = ['status', 'initialize', 'disconnect', 'combinedsensorcnt']
 
     ret.version = __version__
     # also add startconfig
@@ -308,8 +339,10 @@ def status():
             ret.capabilities.extend(hardware_instances.get_combined_capabilities())
             ret.commands.extend(hardware_instances.get_combined_commands())
 
+            resdict['id'] = "{}".format(hardware_instances.get_combined_id())
         resdict['commands'] = ret.commands
         resdict['capabilities'] = ret.capabilities
+
 
     else:
         resdict['initialized'] = False

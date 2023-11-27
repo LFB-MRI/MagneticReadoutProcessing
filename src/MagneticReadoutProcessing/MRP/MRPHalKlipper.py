@@ -108,8 +108,6 @@ class MRPHalKlipper(MRPHal.MRPHal):
         return self.current_port.device_path.replace(".", "").replace(":", "").replace("/", "")
 
     def get_sensor_count(self) -> int:
-        if self.is_connected():
-            return 1
         return 0
 
     def get_sensor_capabilities(self) -> [str]:
