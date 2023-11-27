@@ -38,18 +38,3 @@ stage plot_normal_bias_offset:
     readings_to_plot: stage apply_bias_offset
     IP_export_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/plots/calibrated/
     IP_plot_headline_prefix:  N45 12x12x12 measurement run overview with bias_offset applied
-#stage plot_normal:
-#  function: plot_readings
-#  parameters:
-#    readings_to_plot: stage import
-#    IP_export_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/plots
-
-#stage apply_bias:
-#  function:
-
-#stage inspect:
-#  function: inspect_readings
-#  parameters:
-#    readings_to_inspect: stage import
-#    IP_export_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
-

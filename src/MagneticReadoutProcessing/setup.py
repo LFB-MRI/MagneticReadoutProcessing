@@ -22,7 +22,7 @@ setup(name='MagneticReadoutProcessing',
       entry_points={
           'console_scripts': [
             'MRPCli = MRPcli.cli:run', # FOR python -m MRPcli.cli --help
-            'MRPUdpp = MRPudpp.uddp:run'
+            'MRPUdpp = MRPudpp.uddp:run',
             'MRPproxy = MRPproxy.mrpproxy:run'
           ]
       }

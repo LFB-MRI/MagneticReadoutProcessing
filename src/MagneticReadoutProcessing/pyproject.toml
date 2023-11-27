@@ -16,6 +16,7 @@ classifiers = [
 [project.scripts]
 MRPCli = "MRPcli.cli:run"
 MRPUdpp = "MRPudpp.udpp:run"
+MRPProxy = "MRPproxy.mrpproxy:run"
 
 #[tool.setuptools.packages.find]
 #where = ["pipelines", "readings", "static", "templates"]
