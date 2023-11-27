@@ -1,3 +1,7 @@
+import math
+import time
+
+import numpy as np
 
 from MRP import MRPHal, MRPReading, MRPReadingSource, MRPBaseSensor, MRPReadingEntry, MRPMeasurementConfig, \
     MRPReadingSourceStatic
@@ -21,30 +25,37 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         "SET_VELOCITY_LIMIT VELOCITY=10",
         "SET_VELOCITY_LIMIT ACCEL=5",
         "SET_VELOCITY_LIMIT ACCEL_TO_DECEL=5",
-        "SET_VELOCITY_LIMIT SQUARE_CORNER_VELOCITY=1",
-        # HOME
-        "G28 Y",
-        # DISABLE MOTORS AGAIN
-        "M84",
-
+        "SET_VELOCITY_LIMIT SQUARE_CORNER_VELOCITY=3",
+        "M220 S100"
     ]
     # ALL GCODE COMMANDS WHICH ARE NEEDED BEFORE STARTING A MEASUREMENT
     MEASUREMENT_START_GCODE: [str] = [
         # HOME MECHANIC
-        "G28 Y"
+        "G28 Y",
+        "SET_IDLE_TIMEOUT TIMEOUT=36000",
+        "M220 S8000"
     ]
 
     MEASUREMENTS_END_GCODE: [str] = [
         # HOME AGAIN
         "G28 Y",
         # DISABLE MOTORS
-        "M84"
+        "M84",
+        "SET_IDLE_TIMEOUT TIMEOUT=10",
+        "M220 S100"
     ]
 
     MEASUREMENT_CONFIG: dict = {
-        "MAX_THETA_MECHANIC": 78.0,
-        "MAX_PHI_MECHANIC": 10,
-        "MOVE_MECHANIC_GCODE": "G1 Y{theta:.2f} F10"
+        # AXIS LIMITS
+        # 0-180 DEGREE
+        "MAX_THETA_MECHANIC": 10.0,
+        "MIN_THETA_MECHANIC": 0.0,
+        # 0- 360 DEGREE
+        "MIN_PHI_MECHANIC": 0.0,
+        "MAX_PHI_MECHANIC": 78.0,
+
+        "MOVE_MECHANIC_GCODE": "G1 Y{phi:.2f} F10", # "G1 Y{phi:.2f} X{theta:.2f} F10"
+        "MOVE_DELAY": -1.0 #1.0 # SET TO -1.0 TO DISABLE
     }
 
 
@@ -71,6 +82,9 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         if self.hal_instance:
             self.hal_instance.disconnect()
 
+    def mapf(self, _x: float, _in_min: float, _in_max:float, _out_min:float, _out_max:float) -> float:
+        return (_x - _in_min) * (_out_max - _out_min) / (_in_max - _in_min) + _out_min
+
     def perform_measurement(self, _measurement_points: int, _average_readings_per_datapoint: int) -> [MRPReading.MRPReading]:
         if not self.hal_instance.is_connected():
             self.hal_instance.connect()
@@ -79,33 +93,81 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         result_readings: [MRPReading.MRPReading] = []
 
 
+
+        # CALCULATE ROATION NEEDED
+
         # PREPRRE MECHANIC FOR MEASUREMENT
         for cmd in self.MEASUREMENT_START_GCODE:
             self.hal_instance.query_command_str("gcode {}".format(cmd))
 
 
-        for s_idx in range(_measurement_points):
+        for s_idx in range(sensor.sensor_count):
             # CREATE MEASUREMENT CONFIG
             mmc: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
-            mmc.configure_fullsphere()
+            mmc.configure_fullsphere_custom(_measurement_points=_measurement_points)
             mmc.id = self.hal_instance.get_sensor_id()
             mmc.sensor_id = s_idx
             # CREATE A READING WITH CREATED CONFIG
             reading: MRPReading.MRPReading = MRPReading.MRPReading(mmc)
             # SET READING NAME
-            reading.set_name("ID{}_SID{}_MAG{}".format(  mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
+            reading.set_name("ID{}_SID{}_MAG{}".format(mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
             result_readings.append(reading)
 
+        # CALCULATE POSITIONS
+        n_theta: int = result_readings[0].measurement_config.n_theta
+        n_phi: int = result_readings[0].measurement_config.n_phi
+
+        theta_radians: float = result_readings[0].measurement_config.theta_radians
+        phi_radians: float = result_readings[0].measurement_config.phi_radians
+        # CALCULATE GRID
+        theta, phi = np.mgrid[0.0:theta_radians:n_theta * 1j, 0.0:phi_radians:n_phi * 1j]
+
+        # MOVE MECHANIC TO EACH POLAR POSITION
+        reading_index_theta: int = 0
+        reading_index_phi: int = 0
+        for p in phi[0, :]:
+            reading_index_phi = reading_index_phi + 1
+            reading_index_theta = 0
+            for t in theta[:, 0]:
+                reading_index_theta = reading_index_theta + 1
+
+                phi_abs_pos = self.mapf(p, 0.0, phi_radians, self.MEASUREMENT_CONFIG['MIN_PHI_MECHANIC'], self.MEASUREMENT_CONFIG['MAX_PHI_MECHANIC'])
+                theta_abs_pos = self.mapf(t, 0.0, theta_radians, self.MEASUREMENT_CONFIG['MIN_THETA_MECHANIC'], self.MEASUREMENT_CONFIG['MAX_THETA_MECHANIC'])
 
 
 
-        for m_idx in range(_measurement_points):
-            # PERFORM READING FOR EACH USER SET DATAPOINT
-            # LOOP OVER ALL DATAPOINTS
-            rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[m_idx], _average_readings_per_datapoint)
+                # MOVE TO CALCULATED POSTION
+                move_gcode: str = self.MEASUREMENT_CONFIG['MOVE_MECHANIC_GCODE'].format(theta=theta_abs_pos, phi=phi_abs_pos)
+                self.hal_instance.query_command_str("gcode {}".format(move_gcode))
+                self.hal_instance.query_command_str("gcode {}".format("M400"))
 
-            for idx, _ in enumerate(result_readings):
-                result_readings[idx].insert_reading_instance(rentry[idx], _autoupdate_measurement_config=False)
+                # ADD ADDITIONAL DELAY IF NEEDED
+                if 'MOVE_DELAY' in self.MEASUREMENT_CONFIG:
+                    ad_delay: float = self.MEASUREMENT_CONFIG['MOVE_DELAY']
+                    if ad_delay > 0.0:
+                        time.sleep(ad_delay)
+
+                print(move_gcode)
+                # PERFORM MEASUREMENT WITH CALCULATED POSTION VALUES
+
+                for m_idx in range(sensor.sensor_count):
+                    # PERFORM READING FOR EACH USER SET DATAPOINT
+                    # LOOP OVER ALL DATAPOINTS
+                    rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[m_idx], _average_readings_per_datapoint)
+
+                    for idx, _ in enumerate(result_readings):
+                        # MODIFY ENTRY AND SET POSITION DATA
+                        entry: MRPReadingEntry.MRPReadingEntry = rentry[idx]
+                        # SET READING INDEX
+                        entry.reading_index_phi = reading_index_phi
+                        entry.reading_index_theta = reading_index_theta
+                        # SET READING POSITION
+                        entry.phi = p
+                        entry.theta = t
+                        # ADD READING ENTRY TO MEASUREMENT
+                        result_readings[idx].insert_reading_instance(entry, _autoupdate_measurement_config=True)
+
+
 
         # RESET MECHANIC AFTER MEASUREMENT
         for cmd in self.MEASUREMENTS_END_GCODE:

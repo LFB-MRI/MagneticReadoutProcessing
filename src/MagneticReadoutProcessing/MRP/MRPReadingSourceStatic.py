@@ -62,10 +62,11 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
         sensor: MRPBaseSensor.MRPBaseSensor = MRPBaseSensor.MRPBaseSensor(self.hal_instance)
         result_readings: [MRPReading.MRPReading] = []
 
-        for s_idx in range(_measurement_points):
+        for s_idx in range(sensor.sensor_count):
             # CREATE MEASUREMENT CONFIG
             mmc: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
-            mmc.configure_fullsphere()
+            #mmc.configure_fullsphere()
+            mmc.configure_fullsphere_custom(_measurement_points=_measurement_points)
             mmc.id = self.hal_instance.get_sensor_id()
             mmc.sensor_id = s_idx
             # CREATE A READING WITH CREATED CONFIG

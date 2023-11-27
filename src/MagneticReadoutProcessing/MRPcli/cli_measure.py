@@ -26,7 +26,6 @@ def perform_measurement(configname: str):
 
     READING_AVERAGE_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT))
     READING_DATAPOINT_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
-    READING_OUTPUT_FOLDER: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
 
 
     result_readings: [MRPReading.MRPReading] = reading_source.perform_measurement(READING_DATAPOINT_COUNT, READING_AVERAGE_COUNT)
