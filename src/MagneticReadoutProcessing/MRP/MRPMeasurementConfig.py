@@ -108,20 +108,39 @@ class MRPMeasurementConfig:
         self._n_theta = 18
         self._n_phi = 36
         self._theta_radians = math.radians(180)
-        self.phi_radians = math.radians(360)
+        self._phi_radians = math.radians(360)
+
+    def configure_fullsphere_custom(self, _measurement_points: int = 1, _theta_phi_equal: bool = False):
+        self.configure_fullsphere()
+
+        if _measurement_points <= 0:
+            _measurement_points = 1
+
+        #if not (_measurement_points % 2) == 0:
+        #    _measurement_points = _measurement_points + 1
+
+        self._n_theta = _measurement_points
+
+        if not _theta_phi_equal:
+            self._n_phi = _measurement_points * 2
+        else:
+            self._n_phi = self._n_theta
+
 
     def configure_halfsphere(self):
         self._n_theta = 9
         self._n_phi = 36
         self._theta_radians = math.radians(90)
         self.phi_radians = math.radians(360)
+
+
     def __dict__(self) -> dict:
         return {
             'id': self._id,
             'n_phi': self._n_phi,
             'n_theta': self._n_theta,
-            'theta_radians': self._phi_radians,
-            'phi_radians': self._theta_radians,
+            'theta_radians': self._theta_radians,
+            'phi_radians': self._phi_radians,
             'sensor_distance_radius': self._sensor_distance_radius,
             'sensor_id': self._sensor_id,
             'magnet_type': self._magnet_type.value
