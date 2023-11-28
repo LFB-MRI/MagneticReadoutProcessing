@@ -1,12 +1,15 @@
 # Introduction
 
-# Fundamentals
+## Background and Motivation
 
-## Permanent magnet MRI
+### Low-Field MRI
 
-### Typical B0 Magnet structures
+### Shimming procedure
 
-## Shimming procedure
+## Aim of this Thesis
+
+
+## Structure
 
 
 
@@ -14,13 +17,20 @@
 
 ## Opensource projects
 
+## Conceptual design
+
+* etnwicklung eines hardware uns software framework zur einfachen aquirierung von Meagnetfelddaten
+* analysetools und funktionen
+
+
 
 
 
 
 # Unified Sensor
 
-ziel ist es einen low cost hallsensor  zu entwickeln welcher möglichst
+
+* ziel ist es einen low cost hallsensor-interface  zu entwickeln welcher möglichst
 * universell
 * verschienee sensoren abbilden kann
 * mit verschienden magneten typen und formen nutzbar
@@ -32,18 +42,21 @@ ziel ist es einen low cost hallsensor  zu entwickeln welcher möglichst
 
 * list of typical low cost hall sensors
 * => alle i2c in der regel
-
+*
 ## Mechanical Structure
 
 * 3d druck toleranztest
-* magnet halterung
-*
+* magnet halterung mit kraftloser arretierung
+* motoren und andere unter umstaänden magnetische teile in der nähe des sensors
+* nylon schrauben, 3d druck, 3d gedruckte klemmverbindungen
+* später rausrechnen durch kalibierung
 
 ## Electrical Interface
 
 * usb, ethernet
 * pps input output
-* multiplexer for 
+* multiplexer for i2c sensors alredy implemented
+
 
 ## Firmware
 
@@ -51,25 +64,44 @@ ziel ist es einen low cost hallsensor  zu entwickeln welcher möglichst
 * serial cli support for manual mode
 * sync impulse => 1 mastersensor als taktqelle
 * interene mittelung und speichern der werte im buffer
+* was durch den user implementiert werden muss klasse
 
 ### CLI Interface
 
 * einfache bedienung durch nutzer auch ohne weitere software
 * configuration
+* debugging
+
 
 ## Example Sensors
 
+*anbei werden drei erschienee sensoren für unterschiedliche anwedungfälle
+* tablle statisch dynamisch
 
-### 1D 
+
+
+### 1D: Single Sensor
 
 * einfachster aufbau rp pico + sensor
 
-### 3D
+
+### 2D: Dual Sensor
+
+* gleicher abstand zwei gleicher sensoren
+* schnelle erkennung der plarisationsebene ggf offset vom mittelpunkt dieser
+
+### Full-Sphere
 
 * komplexester aufbau sensor + mechanik
+* polar mechanisches system
 * full sphere sensor
 
+### Integration of an Professional Teslameter
 
+* einfach anbindung professioneller teslameter
+* Voltkraft
+
+### Single channel NMR magnetometer
 
 
 
@@ -80,6 +112,9 @@ ziel ist es einen low cost hallsensor  zu entwickeln welcher möglichst
 
 
 ### Concepts
+
+* beispiele für projekte welche nur einzelne schnritte implementieren
+* so kann man sich auf die implementierung 
 
 ### User interaction points
 

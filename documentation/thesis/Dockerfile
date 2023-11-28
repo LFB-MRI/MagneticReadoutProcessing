@@ -7,7 +7,12 @@ LABEL org.opencontainers.image.source=https://github.com/RBEGamer/MarkdownThesis
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
-RUN apt install -y texlive-full texmaker pandoc sed nano
+RUN apt install -y texlive-full 
+RUN apt install -y pandoc
+RUN apt install -y sed
+RUN apt install -y nano
+
+#texmaker
 
 RUN apt install -y imagemagick
 
