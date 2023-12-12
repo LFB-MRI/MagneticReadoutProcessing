@@ -34,7 +34,7 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         # HOME MECHANIC
         "G28 Y",
         "G28 X",
-        "SET_IDLE_TIMEOUT TIMEOUT=36000",
+        "SET_IDLE_TIMEOUT TIMEOUT=60",
         "M220 S8000"
     ]
 
@@ -51,7 +51,7 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
     MEASUREMENT_CONFIG: dict = {
         # AXIS LIMITS
         # 0-180 DEGREE
-        "MAX_THETA_MECHANIC": 21.0,
+        "MAX_THETA_MECHANIC": 20.0,
         "MIN_THETA_MECHANIC": 0.0,
         # 0- 360 DEGREE
         "MIN_PHI_MECHANIC": 0.0,
