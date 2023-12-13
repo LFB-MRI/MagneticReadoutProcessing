@@ -43,6 +43,7 @@
 * list of typical low cost hall sensors
 * => alle i2c in der regel
 *
+
 ## Mechanical Structure
 
 * 3d druck toleranztest
@@ -66,12 +67,21 @@
 * interene mittelung und speichern der werte im buffer
 * was durch den user implementiert werden muss klasse
 
+
 ### CLI Interface
+
+![Sensors CL-Interface \label{Sensors_CL-Interface.png}](./generated_images/border_Sensors_CL-Interface.png)
+
+
+![Query sensors b value using CLI \label{Query_sensors_b_value_using_CLI.png}](./generated_images/border_Query_sensors_b_value_using_CLI.png)
+
+
 
 * einfache bedienung durch nutzer auch ohne weitere software
 * configuration
 * debugging
 
+## Sensor Syncronsisation \label{CHAPTER_Sensor_Syncronsisation}
 
 ## Example Sensors
 
@@ -82,7 +92,7 @@
 
 ### 1D: Single Sensor
 
-![fullsphere sensor \label{fullsphere_sensor.png}](./generated_images/border_fullsphere_sensor.png)
+![1D sensor contrsuction with universal magnet mount \label{1D_sensor_contrsuction_with_universal_magnet_mount.png}](./generated_images/border_1D_sensor_contrsuction_with_universal_magnet_mount.png)
 
 
 * einfachster aufbau rp pico + sensor
@@ -97,6 +107,9 @@
 
 
 ### Full-Sphere
+
+![Full-Sphere sensor implementation using two Nema17 stepper motors in a polar coordinate system \label{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}](./generated_images/border_Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png)
+
 
 * komplexester aufbau sensor + mechanik
 * polar mechanisches system
@@ -151,6 +164,9 @@
 #### Meta-Data
 
 
+
+
+
 ### Multi-Sensor setup
 
 At the moment, it is only possible to detect and use sensors that are directly connected to the PC with the library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small remote PC available on the network, the 'Proxy' module has been developed. This can be a single board computer (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a REST interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
@@ -168,8 +184,6 @@ The graphic \ref{mrp_proxy_multi.png} shows the modified multi-proxy - multi-sen
 
 
 #### Network-Proxy
-
-
 
 The graphic \ref{MRPlib_Proxy_Module.png} shows the separation of the various HAL instances, which communicate with the physically connected sensors on the remote PC and the control PC side, which communicates with the remote side via the network. 
 For the user, nothing changes in the procedure for setting up a measurement. The proxy application must always be started on the remote PC side. 
@@ -208,6 +222,7 @@ After the proxy instance has been successfully started, it is optionally possibl
       "readsensor",
       "temp"
    ]
+
    # RUN A SENSOR COMMAND AND GET THE TOTAL SENSOR COUNT
    $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
    {
@@ -222,19 +237,28 @@ The query result shows that the sensors are connected correctly and that their c
 
 
 ```bash
-    # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
+    # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
     $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B
-    Proxy started. http://0.0.0.0:5556/
-    PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
-    PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-    Terminate  [Y/n] [y]: 
+    
 ```
 
 
 #### Sensor Syncronisation
 
+
+
+
+Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
+Individual sensor setups do not require any additional synchronisation information, as this is communicated via the USB interface.
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock (see chapter \ref{CHAPTER_Sensor_Syncronsisation}).
+However, this no longer works for long distances and a diversion must be made via the network connection. 
+
+If time-critical synchronisation is required, PTP and PPS functionality can be used on many single-board computers (such as the RaspberryPi Compute Module).
+
+
+* was ptp, bild pps output
 * alle clients über ptp verbunden
-* zentraler reset zwischen zwei pps pulsen um den readout counter auf 0 zu setzten
+* dso bild von jeff gerling über rpi4 ptp
 
 
 #### Command-Router

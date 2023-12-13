@@ -65,7 +65,7 @@ class MRPHalRest(MRPHal.MRPHal):
 
     def get_serial_port_information(self) ->MRPHalSerialPortInformation:
         return self.current_port
-    def request_json(self, _command: str):
+    def request_json(self, _command: str, _request_timeout=300):
         if _command is None or not _command:
             raise MRPHalRestException("request_json _command parameter is empty")
 
@@ -84,7 +84,7 @@ class MRPHalRest(MRPHal.MRPHal):
 
         #
 
-        r = requests.get(url=url, allow_redirects=True)
+        r = requests.get(url=url, allow_redirects=True, timeout=_request_timeout)
 
         if r.status_code >= 200 and r.status_code < 300:
             # TRY TO GET SENSOR IMPLEMENTATION

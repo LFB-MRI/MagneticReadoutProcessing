@@ -60,13 +60,19 @@
 \section{Sensor selection}\label{sensor-selection}}
 
 \begin{itemize}
+\tightlist
 \item
   list of typical low cost hall sensors
 \item
   =\textgreater{} alle i2c in der regel
-\item ~
-  \hypertarget{mechanical-structure}{%
-  \section{Mechanical Structure}\label{mechanical-structure}}
+\item
+\end{itemize}
+
+\hypertarget{mechanical-structure}{%
+\section{Mechanical Structure}\label{mechanical-structure}}
+
+\begin{itemize}
+\tightlist
 \item
   3d druck toleranztest
 \item
@@ -113,6 +119,19 @@
 \hypertarget{cli-interface}{%
 \subsection{CLI Interface}\label{cli-interface}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensors_CL-Interface.png}
+\caption{Sensors CL-Interface \label{Sensors_CL-Interface.png}}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Query_sensors_b_value_using_CLI.png}
+\caption{Query sensors b value using CLI
+\label{Query_sensors_b_value_using_CLI.png}}
+\end{figure}
+
 \begin{itemize}
 \tightlist
 \item
@@ -122,6 +141,10 @@
 \item
   debugging
 \end{itemize}
+
+\hypertarget{sensor-syncronsisation}{%
+\section{\texorpdfstring{Sensor Syncronsisation
+\label{CHAPTER_Sensor_Syncronsisation}}{Sensor Syncronsisation }}\label{sensor-syncronsisation}}
 
 \hypertarget{example-sensors}{%
 \section{Example Sensors}\label{example-sensors}}
@@ -134,8 +157,9 @@ anwedungfälle } tablle statisch dynamisch
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_fullsphere_sensor.png}
-\caption{fullsphere sensor \label{fullsphere_sensor.png}}
+\includegraphics{./generated_images/border_1D_sensor_contrsuction_with_universal_magnet_mount.png}
+\caption{1D sensor contrsuction with universal magnet mount
+\label{1D_sensor_contrsuction_with_universal_magnet_mount.png}}
 \end{figure}
 
 \begin{itemize}
@@ -158,6 +182,14 @@ anwedungfälle } tablle statisch dynamisch
 
 \hypertarget{full-sphere}{%
 \subsection{Full-Sphere}\label{full-sphere}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}
+\caption{Full-Sphere sensor implementation using two Nema17 stepper
+motors in a polar coordinate system
+\label{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}}
+\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -329,6 +361,7 @@ possible to check the status via the REST interface:
       "readsensor",
       "temp"
    ]
+
    # RUN A SENSOR COMMAND AND GET THE TOTAL SENSOR COUNT
    $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
    {
@@ -345,24 +378,36 @@ configure a measurement on the other, only the IP address or host name
 of the remote PC is required:
 
 \begin{lstlisting}[language=bash]
-    # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
+    # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
     $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B
-    Proxy started. http://0.0.0.0:5556/
-    PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
-    PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-    Terminate  [Y/n] [y]: 
+    
 \end{lstlisting}
 
 \hypertarget{sensor-syncronisation}{%
 \subsubsection{Sensor Syncronisation}\label{sensor-syncronisation}}
 
+Another important aspect when using several sensors via the proxy system
+is the synchronisation of the measurement intervals between the sensors.
+Individual sensor setups do not require any additional synchronisation
+information, as this is communicated via the USB interface. If several
+sensors are connected locally, they can be connected to each other via
+their sync input using short cables. One sensor acts as the central
+clock (see chapter \ref{CHAPTER_Sensor_Syncronsisation}). However, this
+no longer works for long distances and a diversion must be made via the
+network connection.
+
+If time-critical synchronisation is required, PTP and PPS functionality
+can be used on many single-board computers (such as the RaspberryPi
+Compute Module).
+
 \begin{itemize}
 \tightlist
 \item
+  was ptp, bild pps output
+\item
   alle clients über ptp verbunden
 \item
-  zentraler reset zwischen zwei pps pulsen um den readout counter auf 0
-  zu setzten
+  dso bild von jeff gerling über rpi4 ptp
 \end{itemize}
 
 \hypertarget{command-router}{%

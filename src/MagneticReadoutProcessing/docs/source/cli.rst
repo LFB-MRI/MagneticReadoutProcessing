@@ -30,6 +30,9 @@ Installation
 
 .. code-block:: bash
 
+    # on some systems libopenblas is needed
+    $ sudo apt install libopenblas-dev
+
     $ pip3 install MagneticReadoutProcessing
 
     # OR

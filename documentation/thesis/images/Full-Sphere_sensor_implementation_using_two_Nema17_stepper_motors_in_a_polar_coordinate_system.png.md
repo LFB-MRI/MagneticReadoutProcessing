@@ -1,0 +1,2 @@
+![Full-Sphere sensor implementation using two Nema17 stepper motors in a polar coordinate system \label{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}](./generated_images/border_Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png)
+
