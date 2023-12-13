@@ -1,18 +1,20 @@
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
-\hypertarget{fundamentals}{%
-\chapter{Fundamentals}\label{fundamentals}}
+\hypertarget{background-and-motivation}{%
+\section{Background and Motivation}\label{background-and-motivation}}
 
-\hypertarget{permanent-magnet-mri}{%
-\section{Permanent magnet MRI}\label{permanent-magnet-mri}}
-
-\hypertarget{typical-b0-magnet-structures}{%
-\subsection{Typical B0 Magnet
-structures}\label{typical-b0-magnet-structures}}
+\hypertarget{low-field-mri}{%
+\subsection{Low-Field MRI}\label{low-field-mri}}
 
 \hypertarget{shimming-procedure}{%
-\section{Shimming procedure}\label{shimming-procedure}}
+\subsection{Shimming procedure}\label{shimming-procedure}}
+
+\hypertarget{aim-of-this-thesis}{%
+\section{Aim of this Thesis}\label{aim-of-this-thesis}}
+
+\hypertarget{structure}{%
+\section{Structure}\label{structure}}
 
 \hypertarget{state-of-the-art}{%
 \chapter{State of the art}\label{state-of-the-art}}
@@ -20,47 +22,362 @@ structures}\label{typical-b0-magnet-structures}}
 \hypertarget{opensource-projects}{%
 \section{Opensource projects}\label{opensource-projects}}
 
-\hypertarget{unified-sensor-interface}{%
-\section{Unified Sensor Interface}\label{unified-sensor-interface}}
+\hypertarget{conceptual-design}{%
+\section{Conceptual design}\label{conceptual-design}}
+
+\begin{itemize}
+\tightlist
+\item
+  etnwicklung eines hardware uns software framework zur einfachen
+  aquirierung von Meagnetfelddaten
+\item
+  analysetools und funktionen
+\end{itemize}
+
+\hypertarget{unified-sensor}{%
+\chapter{Unified Sensor}\label{unified-sensor}}
+
+\begin{itemize}
+\tightlist
+\item
+  ziel ist es einen low cost hallsensor-interface zu entwickeln welcher
+  möglichst
+\item
+  universell
+\item
+  verschienee sensoren abbilden kann
+\item
+  mit verschienden magneten typen und formen nutzbar
+\item
+  reproduzierbar
+\item
+  1d, 2d, 3d
+\item
+  integration
+\end{itemize}
 
 \hypertarget{sensor-selection}{%
 \section{Sensor selection}\label{sensor-selection}}
 
-\hypertarget{mechanical}{%
-\section{Mechanical}\label{mechanical}}
+\begin{itemize}
+\item
+  list of typical low cost hall sensors
+\item
+  =\textgreater{} alle i2c in der regel
+\item ~
+  \hypertarget{mechanical-structure}{%
+  \section{Mechanical Structure}\label{mechanical-structure}}
+\item
+  3d druck toleranztest
+\item
+  magnet halterung mit kraftloser arretierung
+\item
+  motoren und andere unter umstaänden magnetische teile in der nähe des
+  sensors
+\item
+  nylon schrauben, 3d druck, 3d gedruckte klemmverbindungen
+\item
+  später rausrechnen durch kalibierung
+\end{itemize}
 
 \hypertarget{electrical-interface}{%
 \section{Electrical Interface}\label{electrical-interface}}
 
-\hypertarget{software-implementation}{%
-\chapter{Software implementation}\label{software-implementation}}
+\begin{itemize}
+\tightlist
+\item
+  usb, ethernet
+\item
+  pps input output
+\item
+  multiplexer for i2c sensors alredy implemented
+\end{itemize}
 
-\hypertarget{library}{%
-\section{Library}\label{library}}
+\hypertarget{firmware}{%
+\section{Firmware}\label{firmware}}
+
+\begin{itemize}
+\tightlist
+\item
+  automatic sensor detation
+\item
+  serial cli support for manual mode
+\item
+  sync impulse =\textgreater{} 1 mastersensor als taktqelle
+\item
+  interene mittelung und speichern der werte im buffer
+\item
+  was durch den user implementiert werden muss klasse
+\end{itemize}
+
+\hypertarget{cli-interface}{%
+\subsection{CLI Interface}\label{cli-interface}}
+
+\begin{itemize}
+\tightlist
+\item
+  einfache bedienung durch nutzer auch ohne weitere software
+\item
+  configuration
+\item
+  debugging
+\end{itemize}
+
+\hypertarget{example-sensors}{%
+\section{Example Sensors}\label{example-sensors}}
+
+\emph{anbei werden drei erschienee sensoren für unterschiedliche
+anwedungfälle } tablle statisch dynamisch
+
+\hypertarget{d-single-sensor}{%
+\subsection{1D: Single Sensor}\label{d-single-sensor}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_fullsphere_sensor.png}
+\caption{fullsphere sensor \label{fullsphere_sensor.png}}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  einfachster aufbau rp pico + sensor
+\end{itemize}
+
+\hypertarget{d-dual-sensor}{%
+\subsection{1D: Dual Sensor}\label{d-dual-sensor}}
+
+\begin{itemize}
+\tightlist
+\item
+  gleicher abstand zwei gleicher sensoren
+\item
+  schnelle erkennung der plarisationsebene ggf offset vom mittelpunkt
+  dieser
+\end{itemize}
+
+\hypertarget{full-sphere}{%
+\subsection{Full-Sphere}\label{full-sphere}}
+
+\begin{itemize}
+\tightlist
+\item
+  komplexester aufbau sensor + mechanik
+\item
+  polar mechanisches system
+\item
+  full sphere sensor
+\end{itemize}
+
+\hypertarget{integration-of-an-professional-teslameter}{%
+\subsection{Integration of an Professional
+Teslameter}\label{integration-of-an-professional-teslameter}}
+
+\begin{itemize}
+\tightlist
+\item
+  einfach anbindung professioneller teslameter
+\item
+  Voltkraft
+\end{itemize}
+
+\hypertarget{software-readout-framework}{%
+\chapter{Software readout framework}\label{software-readout-framework}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MRPlib_COMPLETE_FLOW.png}
+\caption{MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}}
+\end{figure}
+
+\hypertarget{library-requirements}{%
+\section{Library requirements}\label{library-requirements}}
 
 \hypertarget{concepts}{%
 \subsection{Concepts}\label{concepts}}
 
+\begin{itemize}
+\tightlist
+\item
+  beispiele für projekte welche nur einzelne schnritte implementieren
+\item
+  so kann man sich auf die implementierung
+\end{itemize}
+
 \hypertarget{user-interaction-points}{%
 \subsection{User interaction points}\label{user-interaction-points}}
 
-\hypertarget{datastructures}{%
-\subsection{Datastructures}\label{datastructures}}
+\begin{itemize}
+\tightlist
+\item
+  grafik zeigen
+\item
+  einzelne module erleutern
+\end{itemize}
 
-\hypertarget{datapoints}{%
-\subsubsection{Datapoints}\label{datapoints}}
+\hypertarget{hal}{%
+\subsubsection{HAL}\label{hal}}
 
-\hypertarget{meta-data-management}{%
-\subsubsection{Meta-Data management}\label{meta-data-management}}
+\begin{itemize}
+\tightlist
+\item
+  aufbau hal im grunde wird nur ein die commandos an das sensor cli
+  weitergegeben
+\item
+  alle sensoren implementieren mehr oder weniger die gleichen befehle
+\item
+  hal gibt nur weiter und ist ``dumm''
+\end{itemize}
 
-\hypertarget{implementation}{%
-\subsection{Implementation}\label{implementation}}
+\hypertarget{visualisation}{%
+\subsubsection{Visualisation}\label{visualisation}}
+
+\hypertarget{export}{%
+\subsection{Export}\label{export}}
+
+\begin{itemize}
+\tightlist
+\item
+  format import export
+\item
+  matlab
+\end{itemize}
+
+\hypertarget{meta-data}{%
+\subsubsection{Meta-Data}\label{meta-data}}
+
+\hypertarget{multi-sensor-setup}{%
+\subsection{Multi-Sensor setup}\label{multi-sensor-setup}}
+
+At the moment, it is only possible to detect and use sensors that are
+directly connected to the PC with the library. This has the disadvantage
+that there must always be a physical connection. This can make it
+difficult to install multiple sensors in measurement setups where space
+or cable routing options are limited. To make sensors connected to a
+small remote PC available on the network, the `Proxy' module has been
+developed. This can be a single board computer (e.g.~a Raspberry Pi).
+The small footprint and low power consumption make it a good choice. It
+can also be used in a temperature chamber. The approach of implementing
+this via a REST interface also offers the advantage that several
+measurements or experiments can be recorded at the same time with the
+sensors.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MRPlib_Proxy_Module.png}
+\caption{MRPlib Proxy Module \label{MRPlib_Proxy_Module.png}}
+\end{figure}
+
+Another application example is when sensors are physically separated or
+there are long distances between them. By connecting several sensors via
+the proxy module, it is possible to link several instances and all
+sensors available in the network are available to the control PC.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_mrp_proxy_multi.png}
+\caption{mrp proxy multi \label{mrp_proxy_multi.png}}
+\end{figure}
+
+The graphic \ref{mrp_proxy_multi.png} shows the modified multi-proxy -
+multi-sensor topology. Here, both proxy instances do not communicate
+directly with the control PC, but remote PC \#2 is connected to remote
+PC \#1. This is then visible as a sensor opposite the Control PC, even
+if there are several proxy instances behind it.
+
+\hypertarget{network-proxy}{%
+\subsubsection{Network-Proxy}\label{network-proxy}}
+
+The graphic \ref{MRPlib_Proxy_Module.png} shows the separation of the
+various HAL instances, which communicate with the physically connected
+sensors on the remote PC and the control PC side, which communicates
+with the remote side via the network. For the user, nothing changes in
+the procedure for setting up a measurement. The proxy application must
+always be started on the remote PC side.
+
+\begin{lstlisting}[language=bash]
+    # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
+    $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
+    Proxy started. http://0.0.0.0:5556/
+    PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
+    PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
+    Terminate  [Y/n] [y]: 
+\end{lstlisting}
+
+After the proxy instance has been successfully started, it is optionally
+possible to check the status via the REST interface:
+
+\begin{lstlisting}[language=bash]
+    # GET PROXY STATUS
+    $ wget http://proxyinstance.local:5556/proxy/status
+    {
+    "capabilities":[
+      "static",
+      "axis_b",
+      "axis_x",
+      "axis_y",
+      "axis_z",
+      "axis_temp",
+      "axis_stimestamp"
+   ],
+   "commands":[
+      "status",
+      "initialize",
+      "disconnect",
+      "combinedsensorcnt",
+      "sensorcnt",
+      "readsensor",
+      "temp"
+   ]
+   # RUN A SENSOR COMMAND AND GET THE TOTAL SENSOR COUNT
+   $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
+   {
+   "output":[
+      "2"
+   ]
+}
+}
+\end{lstlisting}
+
+The query result shows that the sensors are connected correctly and that
+their capabilites have also been recognised correctly. To be able to
+configure a measurement on the other, only the IP address or host name
+of the remote PC is required:
+
+\begin{lstlisting}[language=bash]
+    # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
+    $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B
+    Proxy started. http://0.0.0.0:5556/
+    PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
+    PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
+    Terminate  [Y/n] [y]: 
+\end{lstlisting}
+
+\hypertarget{sensor-syncronisation}{%
+\subsubsection{Sensor Syncronisation}\label{sensor-syncronisation}}
+
+\begin{itemize}
+\tightlist
+\item
+  alle clients über ptp verbunden
+\item
+  zentraler reset zwischen zwei pps pulsen um den readout counter auf 0
+  zu setzten
+\end{itemize}
+
+\hypertarget{command-router}{%
+\subsubsection{Command-Router}\label{command-router}}
+
+\begin{itemize}
+\tightlist
+\item
+  nummerieierung zuerst lokale sensoren dann weitere proxy sensoren
+\item
+  commando templating
+\end{itemize}
 
 \hypertarget{examples}{%
 \subsection{Examples}\label{examples}}
-
-\hypertarget{concepts-1}{%
-\subsection{Concepts}\label{concepts-1}}
 
 \hypertarget{usability-improvements}{%
 \chapter{Usability improvements}\label{usability-improvements}}
@@ -68,38 +385,70 @@ structures}\label{typical-b0-magnet-structures}}
 \hypertarget{commandline-interface}{%
 \section{Commandline interface}\label{commandline-interface}}
 
+\begin{itemize}
+\tightlist
+\item
+  automatische sensor dedettion
+\item
+  planung verschiedener messungen mit untersch. hardware
+\item
+  zentrale abarbeitung
+\end{itemize}
+
 \hypertarget{programmable-data-processing-pipeline}{%
 \section{Programmable data processing
 pipeline}\label{programmable-data-processing-pipeline}}
+
+\begin{itemize}
+\tightlist
+\item
+  datenanalyse für nicht programmieruer
+\item
+  automatisierter aufbau der call-tree
+\item
+  mit typcheck
+\item
+  alle funktionen mit bestimmer signtur werden automatisch aus globals
+  geladen und stehen nutzer zur verfühung
+\end{itemize}
 
 \hypertarget{web-base-pipeline-configuration}{%
 \subsection{Web base pipeline
 configuration}\label{web-base-pipeline-configuration}}
 
-\hypertarget{third-party-software-support}{%
-\section{Third party software
-support}\label{third-party-software-support}}
+\begin{itemize}
+\tightlist
+\item
+  drag\& drop system
+\item
+  automatische convertierung zum yaml system
+\end{itemize}
 
 \hypertarget{package-management}{%
 \section{Package management}\label{package-management}}
 
+\begin{itemize}
+\tightlist
+\item
+  verteilung durch paketmanager
+\item
+  docker cli beispiel
+\end{itemize}
+
 \hypertarget{documentation}{%
 \subsection{Documentation}\label{documentation}}
-
-\hypertarget{distribution}{%
-\subsection{Distribution}\label{distribution}}
-
-\hypertarget{continuous-integration}{%
-\subsection{Continuous Integration}\label{continuous-integration}}
-
-\hypertarget{end-to-end-testing}{%
-\subsection{End to end testing}\label{end-to-end-testing}}
 
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
 \hypertarget{prequesites-for-evaluation}{%
 \section{Prequesites for evaluation}\label{prequesites-for-evaluation}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_testmagnets_in_holder.png}
+\caption{testmagnets in holder \label{testmagnets_in_holder.png}}
+\end{figure}
 
 \hypertarget{evaluation-confiugration}{%
 \section{Evaluation confiugration}\label{evaluation-confiugration}}
@@ -127,4 +476,10 @@ support}\label{third-party-software-support}}
 
 \hypertarget{outlook}{%
 \section{Outlook}\label{outlook}}
+
+\begin{itemize}
+\tightlist
+\item
+  magfield camera
+\end{itemize}
 

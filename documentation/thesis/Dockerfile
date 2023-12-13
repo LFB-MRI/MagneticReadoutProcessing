@@ -7,6 +7,7 @@ LABEL org.opencontainers.image.source=https://github.com/RBEGamer/MarkdownThesis
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
+RUN apt update --fix-missing
 RUN apt install -y texlive-full 
 RUN apt install -y pandoc
 RUN apt install -y sed
