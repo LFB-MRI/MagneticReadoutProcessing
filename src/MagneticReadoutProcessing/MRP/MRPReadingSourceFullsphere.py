@@ -34,7 +34,7 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
         # HOME MECHANIC
         "G28 Y",
         "G28 X",
-        "SET_IDLE_TIMEOUT TIMEOUT=60",
+        "SET_IDLE_TIMEOUT TIMEOUT=3600",
         "M220 S8000"
     ]
 
