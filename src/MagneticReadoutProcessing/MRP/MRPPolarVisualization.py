@@ -21,6 +21,7 @@ class MRPPolarVisualization():
     sensor_id = int()
     theta_radians = 0.5 * math.pi # 90 degree half phere
     phi_radians = 2 * math.pi # 360 degree
+    title = ""
     def __init__(self, _reading: MRPReading.MRPReading):
         """
         Creates a MRPVisualization instance to plot a given reading in 2D/3D
@@ -46,6 +47,13 @@ class MRPPolarVisualization():
         self.y = self.sensor_distance_radius * np.sin(self.theta) * np.sin(self.phi)
         self.z = self.sensor_distance_radius * np.cos(self.theta)
 
+        # set default title
+        self.set_title("")
+
+    def set_title(self, _title: str):
+        if not _title or len(_title) <= 0:
+            _title = "PolarVisualisation of {}".format(self.measurement.get_name())
+        self.title = _title
     def create_plot(self):
         inp = []
         # NORMALIZE DATA
@@ -92,7 +100,9 @@ class MRPPolarVisualization():
         reshaped_reading_results = inp[:, 2].reshape((self.n_phi, self.n_theta)).T
         # Set colours and render
         fig = plt.figure(figsize=(10, 8)) # *100pixel
+
         ax = fig.add_subplot(111, projection='3d')
+        ax.set_title('{} - Temperature-Error'.format(self.title))
         # COLORMAP
         ## coolwarm -> blue = negative red = positive values
         cmap = cm.coolwarm(reshaped_reading_results)

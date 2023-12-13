@@ -285,6 +285,47 @@ If time-critical synchronisation is required, PTP and PPS functionality can be u
 * mit typcheck
 * alle funktionen mit bestimmer signtur werden automatisch aus globals geladen und stehen nutzer zur verfühung
 
+ ```yaml
+ settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_analyse_fullsphere
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: 360_(.)*.mag.json
+
+stage import_bias_reading:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: BIAS_(.)*.mag.json
+
+stage apply_bias_offset:
+  function: apply_sensor_bias_offset
+  parameters:
+    bias_readings: stage import_bias_reading
+    readings_to_calibrate: stage import
+
+stage plot_normal_bias_offset:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage apply_bias_offset
+    IP_export_folder: ./readings/fullsphere/plots/normal/calibrated/
+    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated
+
+stage plot_fullsphere:
+  function: plot_fullsphere
+  parameters:
+    readings_to_plot: stage apply_bias_offset
+    IP_export_folder: ./readings/fullsphere/plots/normal/calibrated/
+    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated
+ ```
+
+
+
 ### Web base pipeline configuration
 
 * drag& drop system

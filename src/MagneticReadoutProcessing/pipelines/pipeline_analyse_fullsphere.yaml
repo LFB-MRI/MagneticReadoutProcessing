@@ -15,7 +15,7 @@ stage import_bias_reading:
   function: import_readings
   parameters:
     IP_input_folder: ./readings/fullsphere/
-    IP_file_regex: BIAS_360_dregree_empty_-1.mag.json
+    IP_file_regex: BIAS_(.)*.mag.json
 
 
 
@@ -31,4 +31,11 @@ stage plot_normal_bias_offset:
   parameters:
     readings_to_plot: stage apply_bias_offset
     IP_export_folder: ./readings/fullsphere/plots/normal/calibrated/
-    IP_plot_headline_prefix:  N45 12x12x12 measurement run overview with bias_offset applied
+    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated
+
+stage plot_fullsphere:
+  function: plot_fullsphere
+  parameters:
+    readings_to_plot: stage apply_bias_offset
+    IP_export_folder: ./readings/fullsphere/plots/normal/calibrated/
+    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated

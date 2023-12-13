@@ -186,6 +186,7 @@ class UDPPFunctionCollection:
             for r in readings_to_plot:
                 filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).strip(" /."))))
                 visu: MRPPolarVisualization.MRPPolarVisualization = MRPPolarVisualization.MRPPolarVisualization(r)
+                visu.set_title("")
                 visu.plot3d(filename)
 
     @staticmethod

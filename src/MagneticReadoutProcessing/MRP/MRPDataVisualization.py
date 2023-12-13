@@ -14,7 +14,7 @@ class MRPDataVisualizationException(Exception):
 class MRPDataVisualization:
 
     @staticmethod
-    def plot_error(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None):
+    def plot_error(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "uT"):
         """
         Plots the deviation and mean values from several readings using two plots
 
@@ -40,7 +40,7 @@ class MRPDataVisualization:
 
         # TABLE
         clust_data = []#np.random.random((len(_readings), 5))
-        collabel = ("Reading [id:sensor_id]", "Mean [mT]", "STD Deviation [mT]", "Variance [mT]", "Data-Points")
+        collabel = ("Reading [id:sensor_id]", "Mean [{}}]", "STD Deviation [{}}]", "Variance [{}}]", "Count Data-Points".format(_unit, _unit, _unit))
         labels = []
 
         for idx, reading in enumerate(_readings):
@@ -76,7 +76,7 @@ class MRPDataVisualization:
         ax1.errorbar(x, y, yerr=error, fmt='o')
         ax1.set_xticks(range(0, len(_readings)), labels)
         ax1.set_xlabel("Reading [id:sensor_id]")
-        ax1.set_ylabel("Error (Variance)")
+        ax1.set_ylabel("Error (Variance) [{}]".format(_unit))
 
 
         # SAVE FIGURE IF NEEDED
@@ -88,7 +88,7 @@ class MRPDataVisualization:
         plt.close()
 
     @staticmethod
-    def plot_scatter(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None):
+    def plot_scatter(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "uT"):
         """
         Plots a1 1d scatter plot of the reading data
 
@@ -127,7 +127,7 @@ class MRPDataVisualization:
 
         plt.scatter(x, y, color=coloring)
         plt.title('{} Scatter'.format(_title))
-        plt.xlabel("value [mT]")
+        plt.xlabel("value [{}]".format(_unit))
         plt.ylabel("reading [id:sensor_id]")
         plt.yticks(range(0, len(_readings)),  labels)
 
@@ -141,7 +141,7 @@ class MRPDataVisualization:
 
 
     @staticmethod
-    def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None):
+    def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "°C"):
         """
         Plots a temperature plot of the reading data
 
@@ -161,7 +161,7 @@ class MRPDataVisualization:
 
         # TABLE
         clust_data = []  # np.random.random((len(_readings), 5))
-        collabel = ("Reading [id:sensor_id]", "Mean", "STD Deviation", "Variance", "Data-Points")
+        collabel = ("Reading [id:sensor_id]", "Mean [{}]".format(_unit), "STD Deviation [{}]".format(_unit), "Variance [{}]".format(_unit), "Count Data-Points")
         labels = []
 
         for idx, reading in enumerate(_readings):
@@ -198,16 +198,16 @@ class MRPDataVisualization:
 
         ax1.axis('tight')
         ax1.axis('off')
-        ax1.set_title('{} - Temperature-Error'.format(_title))
+        ax1.set_title('{} - PolarPlot'.format(_title))
         tbl = ax1.table(cellText=clust_data, colLabels=collabel, loc='center')
 
 
         # ADD HEATMAP COLORPLOT
         ratio = (num_readings*max_len_datapoints) / max_len_datapoints
-        im = ax0.imshow(heatmap, interpolation='nearest', origin = 'upper', extent=[0,max_len_datapoints,0,num_readings], aspect=ratio)
+        im = ax0.imshow(heatmap, interpolation='nearest', origin = 'upper', extent=[0, max_len_datapoints, 0, num_readings], aspect=ratio)
         ax0.set_yticks(range(num_readings))
         ax0.set_yticklabels(ylabels)
-        ax0.set_xlabel('Temperature')
+        ax0.set_xlabel('Data-Point Index')
         ax0.set_ylabel('reading [id:sensor_id]')
         ax0.set_title('{} Temperature'.format(_title))
         # ADD COLOR BAR
