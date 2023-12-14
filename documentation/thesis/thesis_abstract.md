@@ -5,5 +5,5 @@ To adjust the field afterwards, a passive shimming process is typically performe
 To avoid this process, magnets can be systematically measured in advance. In this methodology, the recording, data storage and subsequent evaluation of the data play an important role.
 Various existing open-source solutions implement individual parts, but do not provide a complete data processing pipeline from aqusation to analysis and the data storage formats of these are not compatible to each other.
 For this use case, the MagneticReadoutProcessing library was created, which implements all major aspects of acquisition, storage, analysis, and each intermediate step can be customized by the user without having to create everything from scratch, favoring an exchange between different user groups.
-Complete documentation, tutorials and tests enable users to use and adapt the FRamework as quickly as possible. 
-The framework for the characterisation of different N45 neodymium magnets, which requires the integration of magnetic field sensors, was used for the evaluation.
+Complete documentation, tutorials and tests enable users to use and adapt the Framework as quickly as possible. 
+The framework for the characterisation of different magnets, which requires the integration of magnetic field sensors, was used for the evaluation.

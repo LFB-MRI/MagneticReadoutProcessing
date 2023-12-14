@@ -1,0 +1,2 @@
+![MagneticReadoutProcessing documentation hosted on ReadTheDocs \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}](./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png)
+
