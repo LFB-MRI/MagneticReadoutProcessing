@@ -34,6 +34,9 @@
   analysetools und funktionen
 \end{itemize}
 
+\hypertarget{usecases}{%
+\chapter{Usecases}\label{usecases}}
+
 \hypertarget{unified-sensor}{%
 \chapter{Unified Sensor}\label{unified-sensor}}
 
@@ -347,7 +350,7 @@ sensors available in the network are available to the control \gls{pc}.
 \caption{mrp proxy multi \label{mrp_proxy_multi.png}}
 \end{figure}
 
-The graphic \ref{mrp_proxy_multi.png} shows the modified
+The figure \ref{mrp_proxy_multi.png} shows the modified
 \passthrough{\lstinline!multi-proxy - multi-sensor!} topology. Here,
 both proxy instances do not communicate directly with the control
 \gls{pc}, but \passthrough{\lstinline!remote (+pc) \#2!} is connected to
@@ -358,7 +361,7 @@ instances behind it.
 \hypertarget{network-proxy}{%
 \subsubsection{Network-Proxy}\label{network-proxy}}
 
-The graphic \ref{MRPlib_Proxy_Module.png} shows the separation of the
+The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the
 various \gls{hal} instances, which communicate with the physically
 connected sensors on the \passthrough{\lstinline!remote!}-\gls{pc} and
 the \passthrough{\lstinline!control!}-\gls{pc} side, which communicates
@@ -372,7 +375,7 @@ always be started on the \passthrough{\lstinline!remote!} \gls{pc} side.
     Proxy started. http://0.0.0.0:5556/
     PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
     PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-    Terminate  [Y/n] [y]: 
+    Terminate  Proxy instance [y/N] [n]: 
 \end{lstlisting}
 
 After the proxy instance has been successfully started, it is optionally
@@ -430,9 +433,9 @@ Individual sensor setups do not require any additional synchronisation
 information, as this is communicated via the \gls{usb} interface. If
 several sensors are connected locally, they can be connected to each
 other via their sync input using short cables. One sensor acts as the
-central clock (see chapter \ref{sensor-syncronsisation}). However, this
-no longer works for long distances and the syncronisation must be made
-via the network connection.
+central clock (see chapter \ref{sensor-syncronsisation}). this no longer
+works for long distances and the syncronisation must be made via the
+network connection.
 
 If time-critical synchronisation is required, \gls{ptp} and \gls{pps}
 output functionality can be used on many single-board computers, such as
@@ -488,6 +491,8 @@ pipeline}\label{programmable-data-processing-pipeline}}
 \caption{example measurement analysis pipeline
 \label{example_measurement_analysis_pipeline.png}}
 \end{figure}
+
+\ref{example_measurement_analysis_pipeline.png}
 
 \begin{itemize}
 \tightlist
@@ -546,15 +551,91 @@ stage export_readings:
    IP_export_folder: ./readings/fullsphere/plots/
 \end{lstlisting}
 
-\hypertarget{package-distribution}{%
-\section{Package distribution}\label{package-distribution}}
+\hypertarget{tests}{%
+\section{Tests}\label{tests}}
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png}
-\caption{MagneticReadoutProcessing library hosted on PyPi
-\label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
+\includegraphics{./generated_images/border_MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}
+\caption{MRP library test results for different submodules executed in
+PyCharm \gls{ide}
+\label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}}
 \end{figure}
+
+Software tests in libraries offer numerous advantages for improving
+quality and efficiency. Firstly, they enable the identification of
+errors and vulnerabilities before software is published as a new
+version. This significantly improves the reliability of library
+applications. Tests also ensures consistent and reliable performance,
+which is particularly important when libraries are used by different
+users and for different usecases.
+
+During the development of the library, test cases were also created for
+all important functionalities and use cases. The test framework
+\passthrough{\lstinline!PyTest!}\cite{PyTest} was used for this
+purpose, as it offers direct integration in most \gls{ide}s (see
+\ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png})
+and also because it provides detailed and easy-to-understand test
+reports as output in order to quickly identify and correct errors. Since
+all intended use cases were mapped using the test cases created, the
+code of the test cases could later be used in slightly simplified
+variants as examples for the documentation.
+
+\begin{lstlisting}[language=Python]
+# $ cat test_mrpreading.py
+class TestMPRReading(unittest.TestCase):
+    # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
+    def setUp(self) -> None:
+        self.import_export_test_folderpath: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+        self.import_export_test_filepath:str = os.path.join(self.import_export_test_folderpath, "tmp")
+
+    def test_matrix(self):
+        reading: MRPReading = MRPSimulation.MRPSimulation.generate_reading()
+        matrix: np.ndarray = reading.to_numpy_matrix()
+        n_phi: float = reading.measurement_config.n_phi
+        n_theta: float = reading.measurement_config.n_theta
+        # CHECK MATRIX SHAPE
+        self.assertTrue(matrix.shape != (n_theta, ) and len(matrix.shape) <= n_phi)
+
+    def test_export_reading(self) -> None:
+        reading: MRPReading = self.test_reading_init()
+        self.assertIsNotNone(reading)
+        # EXPORT READING TO A FILE
+        reading.dump_to_file(self.import_export_test_filepath)
+
+    def test_import_reading(self):
+        # CREATE EMPTY READING
+        reading_imported:MRPReading = MRPReading.MRPReading(None)
+        # LOAD READING FROM FILE
+        reading_imported.load_from_file(self.import_export_test_filepath)
+        # CHECK IF ENTRIES ARE POPULATED
+        self.assertIsNotNone(reading_imported.additional_data)
+        self.assertIsNotNone(reading_imported.data)
+
+if __name__ == '__main__':
+    unittest.main()
+\end{lstlisting}
+
+One problem, however, is the parts of the library that require direct
+access to external hardware. These are, for example, the
+\passthrough{\lstinline!MRPHal!} and
+\passthrough{\lstinline!MRPHalRest!} modules, which are required to read
+out sensors connected via the network. Two different approaches were
+used here. In the case of local development, the test runs were carried
+out on a \gls{pc} that can reach the network hardware and thus the test
+run could be carried out with real data.
+
+In the other scenario, the tests are to be carried out before a new
+release in the repository on the basis of
+\passthrough{\lstinline!Github Actions!}\cite{GithubActions}. Here
+there is the possibility to host local runner software, which then has
+access to the hardware, but then a \gls{pc} must be permanently
+available for this task. Instead, the hardware sensors were simulated by
+software and executed via virtualisation on the systems provided by
+\passthrough{\lstinline!Github Actions!}\cite{GithubActions}.
+
+\hypertarget{package-distribution}{%
+\section{Package distribution}\label{package-distribution}}
 
 One important point that improves usability for users is the simple
 installation of the library. As it was created in the Python programming
@@ -563,6 +644,13 @@ provide their software modules. Here,
 \passthrough{\lstinline!PyPi!}\cite{PyPI}\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}\cite{MagneticReadoutProcessingPyPI}
 is the most commonly used package directory and offers direct support
 for the package installation programm \gls{pip}.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png}
+\caption{MagneticReadoutProcessing library hosted on PyPi
+\label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
+\end{figure}
 
 In doing so, \gls{pip} not only manages possible package dependencies,
 but also manages the installation of different versions of a package. In
@@ -642,27 +730,20 @@ the terminal shell being located in the library folder.
 \hypertarget{documentation}{%
 \subsection{Documentation}\label{documentation}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
-\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs
-\label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
-\end{figure}
-
-In order to provide comprehensive documentation for the user, the source
-code was documented using
-Python-\passthrough{\lstinline!docstrings!}\cite{PythonDocstringReference}.
-This includes, among other things:
+In order to provide comprehensive documentation for the enduser, the
+source code was documented using
+Python-\passthrough{\lstinline!docstrings!}\cite{PythonDocstringReference}
+and the Python3.5 type annotations:
 
 \begin{itemize}
 \tightlist
 \item
   Function description
 \item
-  Input parameters - \passthrough{\lstinline!param!} and
+  Input parameters - using \passthrough{\lstinline!param!} and
   \passthrough{\lstinline!type!}
 \item
-  Return value - \passthrough{\lstinline!returns!},
+  Return value - using \passthrough{\lstinline!returns!},
   \passthrough{\lstinline!rtype!}
 \end{itemize}
 
@@ -681,7 +762,7 @@ This includes, among other things:
         :param _filename: export graphic to an given absolute filepath with .png
         :type _filename: str
 
-        :returns: returns the filepath of the generated .png image file
+        :returns: returns the abs filepath of the generated .png image file
         :rtype: str
         """
 
@@ -690,6 +771,10 @@ This includes, among other things:
         num_readings = len(_readings)
         # ...
 \end{lstlisting}
+
+The use of type annotations also simplifies further development, as
+modern \gls{ide}s can more reliably display possible methods to the user
+as an assistance.
 
 Since `docstrings' only document the source code, but do not provide
 simple how-to-use instructions, the documentation framework
@@ -707,14 +792,30 @@ In order to make the documentation created by
 with the package management by \passthrough{\lstinline!PyPi!} services,
 which provide Python library documentation online.
 
-\cite{ReadTheDocs}
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
+\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs
+\label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
+\end{figure}
 
-\cite{MagneticReadoutProcessingReadTheDocs}
+Once the finished documentation has been generated from static
+\gls{html} files, it is stored in the project repository. Another
+publication option is to host the documentation via online services such
+as \passthrough{\lstinline!ReadTheDocs!}\cite{ReadTheDocs}, where
+users can make documentation for typical software projects available to
+others.
 
-\ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
+The documentation has also been uploaded for
+\passthrough{\lstinline!ReadTheDocs!}\cite{MagneticReadoutProcessingReadTheDocs}
+and linked in the repository and on the overview
+page\ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
+on \passthrough{\lstinline!PyPi!}.
 
-\hypertarget{tests}{%
-\subsection{Tests}\label{tests}}
+The process of creating and publishing the documentation has been
+automated using
+\passthrough{\lstinline!GitHub Actions!}\cite{GithubActions}, so
+that it is always automatically kept up to date with new features.
 
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}

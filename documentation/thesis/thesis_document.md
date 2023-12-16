@@ -24,6 +24,8 @@
 
 
 
+# Usecases
+
 
 
 
@@ -182,12 +184,12 @@ By connecting several sensors via the proxy module, it is possible to link sever
 
 %%mrp_proxy_multi.png%%
 
-The graphic \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sensor` topology. Here, both proxy instances do not communicate directly with the control (+pc), but `remote (+pc) #2` is connected to `remote (+pc) #1`. This is then visible as a sensor opposite the Control (+pc), even if there are several proxy instances behind it.
+The figure \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sensor` topology. Here, both proxy instances do not communicate directly with the control (+pc), but `remote (+pc) #2` is connected to `remote (+pc) #1`. This is then visible as a sensor opposite the Control (+pc), even if there are several proxy instances behind it.
 
 
 #### Network-Proxy
 
-The graphic \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote`-(+pc) and the `control`-(+pc) side, which communicates with the remote side via the network. 
+The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote`-(+pc) and the `control`-(+pc) side, which communicates with the remote side via the network. 
 For the user, nothing changes in the procedure for setting up a measurement. The proxy application must always be started on the `remote` (+pc) side. 
 
 
@@ -197,7 +199,7 @@ For the user, nothing changes in the procedure for setting up a measurement. The
     Proxy started. http://0.0.0.0:5556/
     PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
     PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-    Terminate  [Y/n] [y]: 
+    Terminate  Proxy instance [y/N] [n]: 
 ```
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface:
@@ -252,7 +254,7 @@ The query result shows that the sensors are connected correctly and that their c
 Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock (see chapter \ref{sensor-syncronsisation}).
-However, this no longer works for long distances and the syncronisation must be made via the network connection. 
+this no longer works for long distances and the syncronisation must be made via the network connection. 
 
 If time-critical synchronisation is required, (+ptp) and (+pps) output functionality can be used on many single-board computers, such as the RaspberryPi Compute Module.
 
@@ -273,10 +275,6 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 
 
 
-
-
-
-
 # Usability improvements
 
 
@@ -290,6 +288,7 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 
 %%example_measurement_analysis_pipeline.png%%
 
+\ref{example_measurement_analysis_pipeline.png}
 
 * datenanalyse für nicht programmieruer
 * automatisierter aufbau der call-tree
@@ -343,12 +342,66 @@ stage export_readings:
 
 
 
-## Package distribution
 
-%%MagneticReadoutProcessing_library_hosted_on_PyPi.png%%
+## Tests
+
+%%MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png%%
+
+Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version. This significantly improves the reliability of library applications. Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
+
+During the development of the library, test cases were also created for all important functionalities and use cases. The test framework `PyTest`[@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
+Since all intended use cases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants as examples for the documentation. 
+
+
+```python
+# $ cat test_mrpreading.py
+class TestMPRReading(unittest.TestCase):
+    # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
+    def setUp(self) -> None:
+        self.import_export_test_folderpath: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+        self.import_export_test_filepath:str = os.path.join(self.import_export_test_folderpath, "tmp")
+
+    def test_matrix(self):
+        reading: MRPReading = MRPSimulation.MRPSimulation.generate_reading()
+        matrix: np.ndarray = reading.to_numpy_matrix()
+        n_phi: float = reading.measurement_config.n_phi
+        n_theta: float = reading.measurement_config.n_theta
+        # CHECK MATRIX SHAPE
+        self.assertTrue(matrix.shape != (n_theta, ) and len(matrix.shape) <= n_phi)
+
+    def test_export_reading(self) -> None:
+        reading: MRPReading = self.test_reading_init()
+        self.assertIsNotNone(reading)
+        # EXPORT READING TO A FILE
+        reading.dump_to_file(self.import_export_test_filepath)
+
+    def test_import_reading(self):
+        # CREATE EMPTY READING
+        reading_imported:MRPReading = MRPReading.MRPReading(None)
+        # LOAD READING FROM FILE
+        reading_imported.load_from_file(self.import_export_test_filepath)
+        # CHECK IF ENTRIES ARE POPULATED
+        self.assertIsNotNone(reading_imported.additional_data)
+        self.assertIsNotNone(reading_imported.data)
+
+if __name__ == '__main__':
+    unittest.main()
+
+```
+
+
+One problem, however, is the parts of the library that require direct access to external hardware. These are, for example, the `MRPHal` and `MRPHalRest` modules, which are required to read out sensors connected via the network.
+Two different approaches were used here. In the case of local development, the test runs were carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
+
+In the other scenario, the tests are to be carried out before a new release in the repository on the basis of `Github Actions`[@GithubActions]. Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task. Instead, the hardware sensors were simulated by software and executed via virtualisation on the systems provided by `Github Actions`[@GithubActions].
+
+
+## Package distribution
 
 One important point that improves usability for users is the simple installation of the library.
 As it was created in the Python programming language, there are several public package directories where users can provide their software modules. Here, `PyPi`[@PyPI]\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}[@MagneticReadoutProcessingPyPI] is the most commonly used package directory and offers direct support for the package installation programm (+pip).
+
+%%MagneticReadoutProcessing_library_hosted_on_PyPi.png%%
 
 In doing so, (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package. In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
 
@@ -401,14 +454,12 @@ In addition, these commands are available globally in the system without the ter
 
 ### Documentation
 
-%%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
-
-In order to provide comprehensive documentation for the user, the source code was documented using Python-`docstrings`[@PythonDocstringReference]. This includes, among other things:
+In order to provide comprehensive documentation for the enduser, the source code was documented using Python-`docstrings`[@PythonDocstringReference] and the Python3.5 type annotations:
 
 * Function description
-* Input parameters - `param` and `type`
-* Return value - `returns`, `rtype`
+* Input parameters - using `param` and `type`
+* Return value - using `returns`, `rtype`
 
 ```python
     # MRPDataVisualisation.py - example docstring
@@ -425,7 +476,7 @@ In order to provide comprehensive documentation for the user, the source code wa
         :param _filename: export graphic to an given absolute filepath with .png
         :type _filename: str
 
-        :returns: returns the filepath of the generated .png image file
+        :returns: returns the abs filepath of the generated .png image file
         :rtype: str
         """
 
@@ -434,21 +485,23 @@ In order to provide comprehensive documentation for the user, the source code wa
         num_readings = len(_readings)
         # ...
 ```
+The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance.
 
 Since 'docstrings' only document the source code, but do not provide simple how-to-use instructions, the documentation framework `Sphinx`[@SphinxDocumentation] was used for this purpose. This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used `docstrings`.
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
 
 In order to make the documentation created by `Sphinx` accessible to the user, there are, as with the package management by `PyPi` services, which provide Python library documentation online.
 
+%%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
-[@ReadTheDocs]
+Once the finished documentation has been generated from static (+html) files, it is stored in the project repository. Another publication option is to host the documentation via online services such as `ReadTheDocs`[@ReadTheDocs], where users can make documentation for typical software projects available to others.
 
-[@MagneticReadoutProcessingReadTheDocs]
+The documentation has also been uploaded for `ReadTheDocs`[@MagneticReadoutProcessingReadTheDocs] and linked in the repository and on the overview page\ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} on `PyPi`.
 
-\ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
+The process of creating and publishing the documentation has been automated using `GitHub Actions`[@GithubActions], so that it is always automatically kept up to date with new features.
 
 
-### Tests
+
 
 
 # Evaluation
@@ -467,6 +520,8 @@ In order to make the documentation created by `Sphinx` accessible to the user, t
 ## Test scenarios
 
 ## Results
+
+
 
 
 

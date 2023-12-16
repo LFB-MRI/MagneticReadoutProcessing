@@ -30,7 +30,6 @@ public:
     baseSensor();
     bool begin(TwoWire &_wire_instance);
     bool is_valid();
-    
     String capabilities();
     String get_sensor_name();
 
