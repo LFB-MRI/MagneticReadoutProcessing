@@ -26,6 +26,7 @@ rm -Rf generated_images
 mkdir -p generated_images
 
 rm -f ./thesis_document_tmp.md
+rm -f ./thesis_document_tmp.md.*
 # REMOVE GENERATED TEX
 rm -f ./thesis_declaration.tex
 rm -f ./thesis_document.tex
@@ -70,7 +71,7 @@ do
     sed -e "/$str/ {" -e "r $f.md" -e 'd' -e '}' -i ./thesis_document_tmp.md 
 done
 
-# ADD IMAGE BORDERS
+
 
 
 
@@ -87,6 +88,7 @@ do
     DIR="$(dirname "${f}")" 
     filenameimageboarder="./generated_images/border_$FN"
     cp "$f" "$filenameimageboarder"
+    # ADD IMAGE BORDERS
     convert -bordercolor transparent -border 10 "$f" "$filenameimageboarder"
 
 
@@ -114,12 +116,11 @@ do
 done
 
 
+# CONVERT LISTINGS
+python3 convert_listings_head.py ./thesis_document_tmp.md 
 
 
-
-
-
-pandoc ./thesis_document_tmp.md -o ./thesis_document.tex --from markdown --biblatex --template ./pandoc_template.tex --listings --top-level-division=chapter --lua-filter ./pandoc_filters/pandoc-gls.lua
+pandoc ./thesis_document_tmp.md.listings -o ./thesis_document.tex --from markdown --biblatex --template ./pandoc_template.tex --listings --top-level-division=chapter --lua-filter ./pandoc_filters/pandoc-gls.lua #x -M codeBlockCaptions=true
 # NOW THE HACKY PART WE WANT TO USE THE STANDART cite command instead the from pandoc used cite to we use sed to hard replace the stuff
 sed -i 's/\\autocite{/\\cite{/g' ./thesis_document.tex
 # python3 ./fix-table-color-bleed.py ./thesis_document.tex > ./thesis_document.tex

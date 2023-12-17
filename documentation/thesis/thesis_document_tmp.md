@@ -87,9 +87,9 @@
 * was durch den user implementiert werden muss klasse
 
 
-### (+cli)) Interface
+### User-Interface
 
-![Sensors CL-Interface \label{Sensors_CL-Interface.png}](./generated_images/border_Sensors_CL-Interface.png)
+![Sensors (+cli) \label{Sensors_(+cli).png}](./generated_images/border_Sensors_(+cli).png)
 
 
 ![Query sensors b value using (+cli) \label{Query_sensors_b_value_using_(+cli).png}](./generated_images/border_Query_sensors_b_value_using_(+cli).png)
@@ -205,21 +205,21 @@ The figure \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sen
 #### Network-Proxy
 
 The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote`-(+pc) and the `control`-(+pc) side, which communicates with the remote side via the network. 
-For the user, nothing changes in the procedure for setting up a measurement. The proxy application must always be started on the `remote` (+pc) side. 
+For the user, nothing changes in the procedure for setting up a measurement. The proxy application must always be started\ref{lst:mrpcli_proxy_start} on the `remote` (+pc) side.
 
 
-```bash
-    # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
-    $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
-    Proxy started. http://0.0.0.0:5556/
-    PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
-    PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-    Terminate  Proxy instance [y/N] [n]: 
+```bash {#lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor usage over network"}
+# START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
+$ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
+Proxy started. http://remotepc.local:5556/
+PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
+PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
+Terminate  Proxy instance [y/N] [n]: 
 ```
 
-After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface:
+After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface:\ref{lst:mrpcli_config_rest}
 
-```bash
+```bash {#lst:mrpcli_config_rest caption="MRPproxy REST enpoiint query examples"}
     # GET PROXY STATUS
     $ wget http://proxyinstance.local:5556/proxy/status
     {
@@ -252,12 +252,14 @@ After the proxy instance has been successfully started, it is optionally possibl
 }
 ```
 
-The query result shows that the sensors are connected correctly and that their capabilites have also been recognised correctly. To be able to configure a measurement on the other, only the (+ip) address or host name of the remote (+pc) is required:
+The query result shows that the sensors are connected correctly and that their capabilites have also been recognised correctly. To be able to configure a measurement on the other, only the (+ip) address or host name of the remote (+pc) is required\ref{lst:mrpcli_config_using_rpc}. 
 
 
-```bash
-  # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
-  $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B
+```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a network sensor"}
+# CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
+$ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
+> remote sensor connected: True using proxy connection:
+> http://proxyinstance.local:5556 with 1 local sensor connected
 ```
 
 
@@ -293,11 +295,46 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 # Usability improvements
 
 
-## Commandline interface
+## Command Line Interface
 
-* automatische sensor dedettion
-* planung verschiedener messungen mit untersch. hardware
-* zentrale abarbeitung
+![MRP (+cli) output to configure a new measurement \label{MRP_(+cli)_output_to_configure_a_new_measurement.png}](./generated_images/border_MRP_(+cli)_output_to_configure_a_new_measurement.png)
+
+
+In the first version of this library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code. Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them. To simplify these tasks, a (+cli)\ref{example_measurement_analysis_pipeline.png} was implemented around this library, which is then also supplied as a fixed component. This (+cli) implements the following functionalities:
+
+* Detection of connected sensors
+* Configuration of measurement series
+* Recording of measured values from stored measurement series
+* Simple commands for checking recorded measurement series and their data.
+
+Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is then an exported file with the measured values.
+These can then be read in again with the library and processed further. The following\ref{lst:mrpcli_config_run} bash code shows this procedure in detail:
+
+```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
+# CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
+## CONFIGURE THE SENSOR TO USE
+$ MRPcli config setupsensor testcfg
+> 0 - Unified Sensor 386731533439 - /dev/cu.usbmodem3867315334391
+> Please select one of the found sensors [0]:
+> sensor connected: True 1243455
+## CONFIGURE THE MEASUREMENT
+$ MRPcli config setup testcfg
+> CONFIGURE testcfg
+> READING-NAME: [testreading]: testreading
+> OUTPUT-FOLDER [/cli/reading]: /tmp/reading_folder_path
+> NUMBER DATAPOINTS: [1]: 10
+> NUMBER AVERAGE READINGS PER DATAPOINT: [1]: 100
+# RUN THE CONFIGURED MEASUREMENT
+$ MRPcli measure run
+> STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg']
+> config-test: OK
+> sensor-connection-test: OK
+> START MEASUREMENT CYCLE
+> sampling 10 datapoints with 100 average readings
+> SID:0 DP:0 B:47.359mT TEMP:23.56
+> ....
+> dump_to_file testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12.mag.json
+```
 
 ## Programmable data processing pipeline
 
@@ -312,13 +349,7 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 * alle funktionen mit bestimmer signtur werden automatisch aus globals geladen und stehen nutzer zur verfühung
 
 
- ```yaml
- # pipeline_example_measurement_processing.yaml
- settings:
-  enabled: true
-  export_intermediate_results: false
-  name: pipeline_example_measurement_processing
-
+```yaml {caption="Example User Defined Processing Pipeline"}
 stage import_readings:
   function: import_readings
   parameters:
@@ -354,56 +385,53 @@ stage export_readings:
   parameters:
     readings_to_plot: stage apply_temp_compensation
     IP_export_folder: ./readings/fullsphere/plots/
- ```
+```
 
 
 
 
 ## Tests
 
+Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version. This significantly improves the reliability of library applications. Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
+
 ![MRP library test results for different submodules executed in PyCharm (+ide) \label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}](./generated_images/border_MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png)
 
 
-Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version. This significantly improves the reliability of library applications. Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
-
-During the development of the library, test cases were also created for all important functionalities and use cases. The test framework `PyTest`[@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
-Since all intended use cases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants as examples for the documentation. 
+During the development of the library, test cases were also created for all important functionalities and use cases. The test framework `PyTest`[@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors. It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
+Since all intended use cases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants\ref{lst:pytest_example_code} as examples for the documentation. 
 
 
-```python
+```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
 # $ cat test_mrpreading.py
 class TestMPRReading(unittest.TestCase):
-    # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
-    def setUp(self) -> None:
-        self.import_export_test_folderpath: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
-        self.import_export_test_filepath:str = os.path.join(self.import_export_test_folderpath, "tmp")
+  # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
+  def setUp(self) -> None:
+      self.test_folder: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+      self.test_file:str = os.path.join(self.import_export_test_folderpath, "tmp")
 
-    def test_matrix(self):
-        reading: MRPReading = MRPSimulation.MRPSimulation.generate_reading()
-        matrix: np.ndarray = reading.to_numpy_matrix()
-        n_phi: float = reading.measurement_config.n_phi
-        n_theta: float = reading.measurement_config.n_theta
-        # CHECK MATRIX SHAPE
-        self.assertTrue(matrix.shape != (n_theta, ) and len(matrix.shape) <= n_phi)
+  def test_matrix(self):
+      reading: MRPReading = MRPSimulation.generate_reading()
+      matrix: np.ndarray = reading.to_numpy_matrix()
+      n_phi: float = reading.measurement_config.n_phi
+      n_theta: float = reading.measurement_config.n_theta
+      # CHECK MATRIX SHAPE
+      self.assertTrue(matrix.shape != (n_theta,))
+      self.assertTrue(len(matrix.shape) <= n_phi))
 
-    def test_export_reading(self) -> None:
-        reading: MRPReading = self.test_reading_init()
-        self.assertIsNotNone(reading)
-        # EXPORT READING TO A FILE
-        reading.dump_to_file(self.import_export_test_filepath)
+  def test_export_reading(self) -> None:
+      reading: MRPReading = self.test_reading_init()
+      self.assertIsNotNone(reading)
+      # EXPORT READING TO A FILE
+      reading.dump_to_file(self.test_file)
 
-    def test_import_reading(self):
-        # CREATE EMPTY READING
-        reading_imported:MRPReading = MRPReading.MRPReading(None)
-        # LOAD READING FROM FILE
-        reading_imported.load_from_file(self.import_export_test_filepath)
-        # CHECK IF ENTRIES ARE POPULATED
-        self.assertIsNotNone(reading_imported.additional_data)
-        self.assertIsNotNone(reading_imported.data)
-
-if __name__ == '__main__':
-    unittest.main()
-
+  def test_import_reading(self):
+      # CREATE EMPTY READING
+      reading_imported:MRPReading = MRPReading.MRPReading(None)
+      # LOAD READING FROM FILE
+      reading_imported.load_from_file(self.test_file)
+      # CHECK IF ENTRIES ARE POPULATED
+      self.assertIsNotNone(reading_imported.additional_data)
+      self.assertIsNotNone(reading_imported.data)
 ```
 
 
@@ -416,48 +444,44 @@ In the other scenario, the tests are to be carried out before a new release in t
 ## Package distribution
 
 One important point that improves usability for users is the simple installation of the library.
-As it was created in the Python programming language, there are several public package directories where users can provide their software modules. Here, `PyPi`[@PyPI]\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}[@MagneticReadoutProcessingPyPI] is the most commonly used package directory and offers direct support for the package installation programm (+pip).
+As it was created in the Python programming language, there are several public package directories where users can provide their software modules. Here, `PyPi`[@PyPI]\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}[@MagneticReadoutProcessingPyPI] is the most commonly used package directory and offers direct support for the package installation programm (+pip)\ref{lst:setup_lib_with_pip}.
 
 ![MagneticReadoutProcessing library hosted on PyPi \label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}](./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png)
 
 
 In doing so, (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package. In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
 
-```bash
-  # https://pypi.org/project/MagneticReadoutProcessing/
-  # install the latest version
-  $ pip3 install MagneticReadoutProcessing
-  # install the specific version 1.4.0
-  $ pip3 install MagneticReadoutProcessing==1.4.0
+```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing library using pip"}
+# https://pypi.org/project/MagneticReadoutProcessing/
+# install the latest version
+$ pip3 install MagneticReadoutProcessing
+# install the specific version 1.4.0
+$ pip3 install MagneticReadoutProcessing==1.4.0
 ```
 
 To make the library compatible with the package directory, Python provides separate installation routines that build a package in an isolated environment and then provide an installation `wheel` archive. This can then be uploaded to the package directory.
 
-Since the library requires additional dependencies (e.g. `numpy`, `matplotlib`), which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration `setup.py` for this purpose.
+Since the library requires additional dependencies (e.g. `numpy`, `matplotlib`), which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration `setup.py`\ref{lst:setup_py_req} for this purpose.
 
-```python
-  # $ cat ./setup.py
+```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing used given requirements.txt"}
+# dynamic requirement loading using 'requirements.txt'
+req_path = './requirements.txt'
+with pathlib.Path(req_path).open() as requirements_txt:
+    install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
-  # dynamic requirement loading using 'requirements.txt'
-  req_path = 'requirements.txt'
-  with pathlib.Path(req_path).open() as requirements_txt:
-      install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
-
-  setup(name='MagneticReadoutProcessing',
-        version='1.4.3',
-        url='https://github.com/LFB-MRI/MagnetCharacterization/',
-        packages= ['MRP', 'MRPcli', 'MRPudpp', 'MRPproxy'],
-        install_requires=install_requires,
-        include_package_data=True,
-        package_data={"": ["**/*.mag.json", "**/*.yaml", "**/*.html", "**/*.js", "**/*.css", "**/*.md", "**/*.json", "**/*.ts", "**/*.xml"]},
-        entry_points={
-            'console_scripts': [
-              'MRPCli = MRPcli.cli:run',
-              'MRPUdpp = MRPudpp.uddp:run',
-              'MRPproxy = MRPproxy.mrpproxy:run'
-            ]
-        }
-      )
+setup(name='MagneticReadoutProcessing',
+      version='1.4.3',
+      url='https://github.com/LFB-MRI/MagnetCharacterization/',
+      packages= ['MRP', 'MRPcli', 'MRPudpp', 'MRPproxy'],
+      install_requires=install_requires,
+      entry_points={
+          'console_scripts': [
+            'MRPCli = MRPcli.cli:run',
+            'MRPUdpp = MRPudpp.uddp:run',
+            'MRPproxy = MRPproxy.mrpproxy:run'
+          ]
+      }
+    )
 ```
 
 To make the (+cli) scripts written in Python easier for the user to execute without having to use the `python3` prefix. This has been configured in the installation configuration using the `entry_points` option, and the following commands are available to the user:
@@ -479,31 +503,28 @@ In order to provide comprehensive documentation for the enduser, the source code
 * Input parameters - using `param` and `type`
 * Return value - using `returns`, `rtype`
 
-```python
+The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance.\ref{pydocstring}
+
+```python {#lst:pydocstring caption="Python docstring example"}
     # MRPDataVisualisation.py - example docstring
     def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "degree C") -> str:
         """
-        Plots a temperature plot of the reading data as bar-graph figure
-
+        Plots a temperature plot of the reading data as figure
         :param _readings: readings to plot
         :type _readings: list(MRPReading.MRPReading)
-
         :param _title: Title text of the figure, embedded into the head
         :type _title: str
-
         :param _filename: export graphic to an given absolute filepath with .png
         :type _filename: str
-
-        :returns: returns the abs filepath of the generated .png image file
+        :returns: returns the abs filepath of the generated file
         :rtype: str
         """
-
         if _readings is None or len(_readings) <= 0:
             raise MRPDataVisualizationException("no readings in _reading given")
         num_readings = len(_readings)
         # ...
 ```
-The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance.
+
 
 Since 'docstrings' only document the source code, but do not provide simple how-to-use instructions, the documentation framework `Sphinx`[@SphinxDocumentation] was used for this purpose. This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used `docstrings`.
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
