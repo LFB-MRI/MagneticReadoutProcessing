@@ -319,11 +319,11 @@ Teslameter}\label{integration-of-an-professional-teslameter}}
 
 At the current state of implementation, it is only possible to detect
 and use sensors that are directly connected to the \gls{pc} with the
-library. This has the disadvantage that there must always be a physical
-connection. This can make it difficult to install multiple sensors in
-measurement setups where space or cable routing options are limited. To
-make sensors connected to a small \passthrough{\lstinline!remote!}
-\gls{pc} available on the network, the
+\gls{mrp}-library. This has the disadvantage that there must always be a
+physical connection. This can make it difficult to install multiple
+sensors in measurement setups where space or cable routing options are
+limited. To make sensors connected to a small
+\passthrough{\lstinline!remote!} \gls{pc} available on the network, the
 \passthrough{\lstinline!Proxy!}\ref{MRPlib_Proxy_Module.png} module has
 been developed. This can be a single board computer (e.g.~a Raspberry
 Pi). The small footprint and low power consumption make it a good
@@ -472,6 +472,22 @@ the RaspberryPi Compute Module.
 \hypertarget{usability-improvements}{%
 \chapter{Usability improvements}\label{usability-improvements}}
 
+Usability improvements in software libraries are crucial for efficient
+and user-friendly development. Intuitive API documentation, clearly
+structured code examples and improved error messages promote a smooth
+developer experience. Standardised naming conventions and well
+thought-out default values simplify the application. A \gls{gui} or
+\gls{cli} application for complex libraries can make it easier to use,
+especially for developers with less experience. Continuous feedback
+through automated tests and comprehensive error logs enable faster bug
+fixing. The integration of community feedback and regular updates
+promotes the adaptability of the \gls{mrp}-library to changing needs.
+Effective usability improvements help to speed up development processes
+and increase the satisfaction of the developer community. In the
+following, some of these have been added in and around the
+\gls{mrp}-library, but they are only optional components for the
+intended use.
+
 \hypertarget{command-line-interface}{%
 \section{Command Line Interface}\label{command-line-interface}}
 
@@ -482,16 +498,16 @@ the RaspberryPi Compute Module.
 \label{MRP_(+cli)_output_to_configure_a_new_measurement.png}}
 \end{figure}
 
-In the first version of this library, the user had to write his own
-Python scripts even for short measurement and visualisation tasks.
-However, this was already time-consuming for reading out a sensor and
-configuring the measurement parameters and metadata and quickly required
-more than 100 lines of new Python code. Although such examples are
-provided in the documentation, it must be possible for programming
+In the first version of this \gls{mrp}-library, the user had to write
+his own Python scripts even for short measurement and visualisation
+tasks. However, this was already time-consuming for reading out a sensor
+and configuring the measurement parameters and metadata and quickly
+required more than 100 lines of new Python code. Although such examples
+are provided in the documentation, it must be possible for programming
 beginners in particular to use them. To simplify these tasks, a
 \gls{cli}\ref{example_measurement_analysis_pipeline.png} was implemented
-around this library, which is then also supplied as a fixed component.
-This \gls{cli} implements the following functionalities:
+around this \gls{mrp}-library, which is then also supplied as a fixed
+component. This \gls{cli} implements the following functionalities:
 
 \begin{itemize}
 \tightlist
@@ -509,9 +525,9 @@ This \gls{cli} implements the following functionalities:
 Thanks to this functionality of the \gls{cli}, it is now possible to
 connect a sensor to the \gls{pc}, configure a measurement series with it
 and run it at the end. The result is then an exported file with the
-measured values. These can then be read in again with the library and
-processed further. The following\ref{lst:mrpcli_config_run} bash code
-shows this procedure in detail:
+measured values. These can then be read in again with the
+\gls{mrp}-library and processed further. The bash
+code\ref{lst:mrpcli_config_run} shows this procedure in detail.
 
 \begin{lstlisting}[language=bash, caption={CLI example for configuring a measurement run}, label=lst:mrpcli_config_run]
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
@@ -550,22 +566,54 @@ pipeline}\label{programmable-data-processing-pipeline}}
 \label{example_measurement_analysis_pipeline.png}}
 \end{figure}
 
-\ref{example_measurement_analysis_pipeline.png}
+After it is very easy for users to carry out measurements using the
+\gls{cli}, the next logical step is to analyse the recorded data. This
+can involve one or several hundred data records. Again, the procedure
+for the user is to write their own evaluation scripts using the
+\gls{mrp}-library. This is particularly useful for complex analyses or
+custom algorithms, but not necessarily for simple standard tasks such as
+bias compensation or graphical plot outputs. For this purpose, a further
+\gls{cli} application was created, which enables the user to create and
+execute complex evaluation pipelines for measurement data without
+programming. The example\ref{example_measurement_analysis_pipeline.png}
+shows a typical measurement data analysis pipeline, which consists of
+the following steps:
 
 \begin{itemize}
 \tightlist
 \item
-  datenanalyse für nicht programmieruer
+  Import the measurements
 \item
-  automatisierter aufbau der call-tree
+  Determine sensor bias value from imported measurements using a
+  reference measurement
 \item
-  mit typcheck
+  Apply linear temperature compensation
 \item
-  alle funktionen mit bestimmer signtur werden automatisch aus globals
-  geladen und stehen nutzer zur verfühung
+  Export the modified measurements
+\item
+  Create a graphical plot of all measurements with standard deviation
 \end{itemize}
 
-\begin{lstlisting}[caption={Example User Defined Processing Pipeline}]
+In order to implement such a pipeline, the
+\passthrough{\lstinline!yaml!} file format was chosen for the definition
+of the pipeline, as this is easy to understand and can also be easily
+edited with a text editor. Detailed examples can be found in the
+documentation\cite{MagneticReadoutProcessingReadTheDocs}. The
+pipeline definition consists of sections which execute the appropriate
+Python commands in the background. The signatures in the
+\passthrough{\lstinline!yaml!} file are called using
+\passthrough{\lstinline!reflection!} and a real-time search of the
+loaded
+\passthrough{\lstinline!global() symbol table!}\cite{PythonGlobalSymbolTable}.
+This system makes almost all Python functions available to the user. To
+simplify use, a pre-defined list of tested \gls{mrp} library functions
+for use in pipelines is listed in the
+documentation\cite{MagneticReadoutProcessingReadTheDocs}. The
+following pipeline definition\ref{lst:mrpuddp_example_yaml} shows the
+previously defined steps\ref{example_measurement_analysis_pipeline.png}
+as \passthrough{\lstinline!yaml!} syntax.
+
+\begin{lstlisting}[caption={Example User Defined Processing Pipeline}, label=lst:mrpuddp_example_yaml]
 stage import_readings:
   function: import_readings
   parameters:
@@ -603,16 +651,24 @@ stage export_readings:
     IP_export_folder: ./readings/fullsphere/plots/
 \end{lstlisting}
 
+\begin{itemize}
+\tightlist
+\item
+  blöcke erleutern insbesondere stage
+\item
+  wie calltree gebildet
+\end{itemize}
+
 \hypertarget{tests}{%
 \section{Tests}\label{tests}}
 
 Software tests in libraries offer numerous advantages for improving
 quality and efficiency. Firstly, they enable the identification of
 errors and vulnerabilities before software is published as a new
-version. This significantly improves the reliability of library
-applications. Tests also ensures consistent and reliable performance,
-which is particularly important when libraries are used by different
-users and for different usecases.
+version. This significantly improves the reliability of
+\gls{mrp}-library applications. Tests also ensures consistent and
+reliable performance, which is particularly important when libraries are
+used by different users and for different usecases.
 
 \begin{figure}
 \centering
@@ -622,10 +678,10 @@ PyCharm \gls{ide}
 \label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}}
 \end{figure}
 
-During the development of the library, test cases were also created for
-all important functionalities and use cases. The test framework
-\passthrough{\lstinline!PyTest!}\cite{PyTest} was used for this
-purpose, as it offers direct integration in most \gls{ide}s (see
+During the development of the \gls{mrp}-library, test cases were also
+created for all important functionalities and use cases. The test
+framework \passthrough{\lstinline!PyTest!}\cite{PyTest} was used for
+this purpose, as it offers direct integration in most \gls{ide}s (see
 \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png})
 and also because it provides detailed and easy-to-understand test
 reports as output in order to quickly identify and correct errors. It
@@ -668,8 +724,8 @@ class TestMPRReading(unittest.TestCase):
       self.assertIsNotNone(reading_imported.data)
 \end{lstlisting}
 
-One problem, however, is the parts of the library that require direct
-access to external hardware. These are, for example, the
+One problem, however, is the parts of the \gls{mrp}-library that require
+direct access to external hardware. These are, for example, the
 \passthrough{\lstinline!MRPHal!} and
 \passthrough{\lstinline!MRPHalRest!} modules, which are required to read
 out sensors connected via the network. Two different approaches were
@@ -690,9 +746,9 @@ software and executed via virtualisation on the systems provided by
 \section{Package distribution}\label{package-distribution}}
 
 One important point that improves usability for users is the simple
-installation of the library. As it was created in the Python programming
-language, there are several public package directories where users can
-provide their software modules. Here,
+installation of the \gls{mrp}-library. As it was created in the Python
+programming language, there are several public package directories where
+users can provide their software modules. Here,
 \passthrough{\lstinline!PyPi!}\cite{PyPI}\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}\cite{MagneticReadoutProcessingPyPI}
 is the most commonly used package directory and offers direct support
 for the package installation programm
@@ -711,7 +767,7 @@ addition, the version compatibility is also checked during the
 installation of a new package, which can be resolved manually by the
 user in the event of conflicts.
 
-\begin{lstlisting}[language=bash, caption={Bash commands to install the MagneticReadoutProcessing library using pip}, label=lst:setup_lib_with_pip]
+\begin{lstlisting}[language=bash, caption={Bash commands to install the MagneticReadoutProcessing (+mrp)-library using pip}, label=lst:setup_lib_with_pip]
 # https://pypi.org/project/MagneticReadoutProcessing/
 # install the latest version
 $ pip3 install MagneticReadoutProcessing
@@ -719,17 +775,17 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 \end{lstlisting}
 
-To make the library compatible with the package directory, Python
-provides separate installation routines that build a package in an
-isolated environment and then provide an installation
+To make the \gls{mrp}-library compatible with the package directory,
+Python provides separate installation routines that build a package in
+an isolated environment and then provide an installation
 \passthrough{\lstinline!wheel!} archive. This can then be uploaded to
 the package directory.
 
-Since the library requires additional dependencies
+Since the \gls{mrp}-library requires additional dependencies
 (e.g.~\passthrough{\lstinline!numpy!},
 \passthrough{\lstinline!matplotlib!}), which cannot be assumed to be
 already installed on the target system, these must be installed prior to
-the actual installation. These can be specified in the library
+the actual installation. These can be specified in the \gls{mrp}-library
 installation configuration
 \passthrough{\lstinline!setup.py!}\ref{lst:setup_py_req} for this
 purpose.
@@ -775,7 +831,7 @@ commands are available to the user:
 \end{itemize}
 
 In addition, these commands are available globally in the system without
-the terminal shell being located in the library folder.
+the terminal shell being located in the \gls{mrp}-library folder.
 
 \hypertarget{documentation}{%
 \subsection{Documentation}\label{documentation}}
@@ -835,7 +891,7 @@ instructions.
 In order to make the documentation created by
 \passthrough{\lstinline!Sphinx!} accessible to the user, there are, as
 with the package management by \passthrough{\lstinline!PyPi!} services,
-which provide Python library documentation online.
+which provide Python \gls{mrp}-library documentation online.
 
 \begin{figure}
 \centering

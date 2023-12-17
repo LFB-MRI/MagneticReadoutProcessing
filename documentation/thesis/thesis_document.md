@@ -175,7 +175,7 @@
 
 ### Multi-Sensor setup
 
-At the current state of implementation, it is only possible to detect and use sensors that are directly connected to the (+pc) with the library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small `remote` (+pc) available on the network, the `Proxy`\ref{MRPlib_Proxy_Module.png} module has been developed. This can be a single board computer (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
+At the current state of implementation, it is only possible to detect and use sensors that are directly connected to the (+pc) with the (+mrp)-library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small `remote` (+pc) available on the network, the `Proxy`\ref{MRPlib_Proxy_Module.png} module has been developed. This can be a single board computer (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
 
 %%MRPlib_Proxy_Module.png%%
 
@@ -250,9 +250,6 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 #### Sensor Syncronisation
 
-
-
-
 Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock (see chapter \ref{sensor-syncronsisation}).
@@ -279,12 +276,14 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 
 # Usability improvements
 
+Usability improvements in software libraries are crucial for efficient and user-friendly development. Intuitive API documentation, clearly structured code examples and improved error messages promote a smooth developer experience. Standardised naming conventions and well thought-out default values simplify the application. A (+gui) or (+cli) application for complex libraries can make it easier to use, especially for developers with less experience. Continuous feedback through automated tests and comprehensive error logs enable faster bug fixing. The integration of community feedback and regular updates promotes the adaptability of the (+mrp)-library to changing needs. Effective usability improvements help to speed up development processes and increase the satisfaction of the developer community.
+In the following, some of these have been added in and around the (+mrp)-library, but they are only optional components for the intended use.
 
 ## Command Line Interface
 
 %%MRP_(+cli)_output_to_configure_a_new_measurement.png%%
 
-In the first version of this library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code. Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them. To simplify these tasks, a (+cli)\ref{example_measurement_analysis_pipeline.png} was implemented around this library, which is then also supplied as a fixed component. This (+cli) implements the following functionalities:
+In the first version of this (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code. Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them. To simplify these tasks, a (+cli)\ref{example_measurement_analysis_pipeline.png} was implemented around this (+mrp)-library, which is then also supplied as a fixed component. This (+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -292,7 +291,7 @@ In the first version of this library, the user had to write his own Python scrip
 * Simple commands for checking recorded measurement series and their data.
 
 Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is then an exported file with the measured values.
-These can then be read in again with the library and processed further. The following\ref{lst:mrpcli_config_run} bash code shows this procedure in detail:
+These can then be read in again with the (+mrp)-library and processed further. The bash code\ref{lst:mrpcli_config_run} shows this procedure in detail.
 
 ```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
@@ -324,15 +323,24 @@ $ MRPcli measure run
 
 %%example_measurement_analysis_pipeline.png%%
 
-\ref{example_measurement_analysis_pipeline.png}
+After it is very easy for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data. This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library. This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
+For this purpose, a further (+cli) application was created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
+The example\ref{example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
-* datenanalyse für nicht programmieruer
-* automatisierter aufbau der call-tree
-* mit typcheck
-* alle funktionen mit bestimmer signtur werden automatisch aus globals geladen und stehen nutzer zur verfühung
+* Import the measurements
+* Determine sensor bias value from imported measurements using a reference measurement
+* Apply linear temperature compensation
+* Export the modified measurements
+* Create a graphical plot of all measurements with standard deviation
 
 
-```yaml {caption="Example User Defined Processing Pipeline"}
+In order to implement such a pipeline, the `yaml` file format was chosen for the definition of the pipeline, as this is easy to understand and can also be easily edited with a text editor.
+Detailed examples can be found in the documentation[@MagneticReadoutProcessingReadTheDocs].
+The pipeline definition consists of sections which execute the appropriate Python commands in the background. The signatures in the `yaml` file are called using `reflection` and a real-time search of the loaded `global() symbol table`[@PythonGlobalSymbolTable].
+This system makes almost all Python functions available to the user. To simplify use, a pre-defined list of tested (+mrp) library functions for use in pipelines is listed in the documentation[@MagneticReadoutProcessingReadTheDocs].
+ The following pipeline definition\ref{lst:mrpuddp_example_yaml} shows the previously defined steps\ref{example_measurement_analysis_pipeline.png} as `yaml` syntax.
+
+```yaml {#lst:mrpuddp_example_yaml caption="Example User Defined Processing Pipeline"}
 stage import_readings:
   function: import_readings
   parameters:
@@ -370,16 +378,17 @@ stage export_readings:
     IP_export_folder: ./readings/fullsphere/plots/
 ```
 
-
+* blöcke erleutern insbesondere stage
+* wie calltree gebildet
 
 
 ## Tests
 
-Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version. This significantly improves the reliability of library applications. Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
+Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version. This significantly improves the reliability of (+mrp)-library applications. Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
 
 %%MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png%%
 
-During the development of the library, test cases were also created for all important functionalities and use cases. The test framework `PyTest`[@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors. It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
+During the development of the (+mrp)-library, test cases were also created for all important functionalities and use cases. The test framework `PyTest`[@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors. It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
 Since all intended use cases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants\ref{lst:pytest_example_code} as examples for the documentation. 
 
 
@@ -417,7 +426,7 @@ class TestMPRReading(unittest.TestCase):
 ```
 
 
-One problem, however, is the parts of the library that require direct access to external hardware. These are, for example, the `MRPHal` and `MRPHalRest` modules, which are required to read out sensors connected via the network.
+One problem, however, is the parts of the (+mrp)-library that require direct access to external hardware. These are, for example, the `MRPHal` and `MRPHalRest` modules, which are required to read out sensors connected via the network.
 Two different approaches were used here. In the case of local development, the test runs were carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
 
 In the other scenario, the tests are to be carried out before a new release in the repository on the basis of `Github Actions`[@GithubActions]. Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task. Instead, the hardware sensors were simulated by software and executed via virtualisation on the systems provided by `Github Actions`[@GithubActions].
@@ -425,14 +434,14 @@ In the other scenario, the tests are to be carried out before a new release in t
 
 ## Package distribution
 
-One important point that improves usability for users is the simple installation of the library.
+One important point that improves usability for users is the simple installation of the (+mrp)-library.
 As it was created in the Python programming language, there are several public package directories where users can provide their software modules. Here, `PyPi`[@PyPI]\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}[@MagneticReadoutProcessingPyPI] is the most commonly used package directory and offers direct support for the package installation programm (+pip)\ref{lst:setup_lib_with_pip}.
 
 %%MagneticReadoutProcessing_library_hosted_on_PyPi.png%%
 
 In doing so, (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package. In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
 
-```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing library using pip"}
+```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing (+mrp)-library using pip"}
 # https://pypi.org/project/MagneticReadoutProcessing/
 # install the latest version
 $ pip3 install MagneticReadoutProcessing
@@ -440,9 +449,9 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 ```
 
-To make the library compatible with the package directory, Python provides separate installation routines that build a package in an isolated environment and then provide an installation `wheel` archive. This can then be uploaded to the package directory.
+To make the (+mrp)-library compatible with the package directory, Python provides separate installation routines that build a package in an isolated environment and then provide an installation `wheel` archive. This can then be uploaded to the package directory.
 
-Since the library requires additional dependencies (e.g. `numpy`, `matplotlib`), which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration `setup.py`\ref{lst:setup_py_req} for this purpose.
+Since the (+mrp)-library requires additional dependencies (e.g. `numpy`, `matplotlib`), which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the (+mrp)-library installation configuration `setup.py`\ref{lst:setup_py_req} for this purpose.
 
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing used given requirements.txt"}
 # dynamic requirement loading using 'requirements.txt'
@@ -471,7 +480,7 @@ To make the (+cli) scripts written in Python easier for the user to execute with
 * `MRPudpp --help` instead of `python3 udpp.py --help`
 * `MRPproxy --help` instead of `python3 proxy.py --help`
 
-In addition, these commands are available globally in the system without the terminal shell being located in the library folder.
+In addition, these commands are available globally in the system without the terminal shell being located in the (+mrp)-library folder.
 
 
 
@@ -510,7 +519,7 @@ The use of type annotations also simplifies further development, as modern (+ide
 Since 'docstrings' only document the source code, but do not provide simple how-to-use instructions, the documentation framework `Sphinx`[@SphinxDocumentation] was used for this purpose. This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used `docstrings`.
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
 
-In order to make the documentation created by `Sphinx` accessible to the user, there are, as with the package management by `PyPi` services, which provide Python library documentation online.
+In order to make the documentation created by `Sphinx` accessible to the user, there are, as with the package management by `PyPi` services, which provide Python (+mrp)-library documentation online.
 
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
