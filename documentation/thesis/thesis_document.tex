@@ -153,6 +153,29 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
   was durch den user implementiert werden muss klasse
 \end{itemize}
 
+\begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support}, label=lst:CustomSensorClass]
+#ifndef __CustomSensor_h__
+#define __CustomSensor_h__
+// register your custom sensor in implemented_sensors.h also
+class CustomSensor: public baseSensor {}
+{
+public:
+    CustomSensor();
+    ~CustomSensor();
+    // implement depending sensor communication interface
+    bool begin(TwoWire& _wire_instance); // I2C
+    bool begin(HardwareSerial& _serial_instance); // UART
+    bool begin(Pin& _pin_instance); // ANALOG like analog input / DIGITAL PIN like onewire
+    // FUNCTIONS USED BY READOUT LOGIC
+    bool is_valid() override;
+    String capabilities() override;
+    String get_sensor_name() override;
+    bool query_sensor() override;
+    sensor_result get_result() override;        
+};
+#endif
+\end{lstlisting}
+
 \hypertarget{communication-interface}{%
 \subsection{Communication interface}\label{communication-interface}}
 
@@ -204,8 +227,50 @@ same commands are available as for \gls{cli}-based communication.
 \hypertarget{example-sensors}{%
 \section{Example Sensors}\label{example-sensors}}
 
-\emph{anbei werden drei erschienee sensoren für unterschiedliche
-anwedungfälle } tablle statisch dynamisch
+Two functional sensor
+platforms\ref{Build_sensors_with_different_capabilities.csv} were built
+in order to create a solid test platform for later tests and for the
+development of the \gls{mrp} library with the previously developed
+sensor concepts.
+
+\begin{longtable}[]{@{}llll@{}}
+\caption{Build sensors with different capabilities
+\label{Build_sensors_with_different_capabilities.csv}}\tabularnewline
+\toprule
+& 1D (Chapter \ref{d-single-sensor}) & 1D: dual sensor & 3D: fullsphere
+(Chapter \ref{d-fullsphere})\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+& 1D (Chapter \ref{d-single-sensor}) & 1D: dual sensor & 3D: fullsphere
+(Chapter \ref{d-fullsphere})\tabularnewline
+\midrule
+\endhead
+Maximal magnet size & Cubic 30x30x30 & Cubic 30x30x30 & Cubic
+20x20x20\tabularnewline
+Sensor type & MMC5603NJ & TLV493D & TLV493D\tabularnewline
+Sensor count & 1 & 2 & 1\tabularnewline
+Scanmode & static (1 point) & static (2 points) & dynamic
+(fullsphere)\tabularnewline
+\bottomrule
+\end{longtable}
+
+These cover all the required functions described in the
+Usecases\ref{usecases}. The biggest distinguishing feature, apart from
+the sensor used, is the \passthrough{\lstinline!scan mode!}. In this
+context, this describes whether the sensor can measure a
+\passthrough{\lstinline!static!} fixed point on the magnet or if the
+sensor can move \passthrough{\lstinline!dynamically!} around the magnet
+using a controllable manipulator.
+
+In the following, the hardware structure of a
+\passthrough{\lstinline!static!} and \passthrough{\lstinline!dynamic!}
+sensor is described. For the \passthrough{\lstinline!static!} sensor,
+only the \passthrough{\lstinline!1D!} variant is shown, as this does not
+differ significantly from the structure of the
+\passthrough{\lstinline!1D: dual sensor!}, except it uses two
+\passthrough{\lstinline!TLV493D!} sensors, mounted above and on top of
+the magnet.
 
 \hypertarget{d-single-sensor}{%
 \subsection{1D: Single Sensor}\label{d-single-sensor}}
@@ -217,26 +282,29 @@ anwedungfälle } tablle statisch dynamisch
 \label{1D_sensor_contrsuction_with_universal_magnet_mount.png}}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  einfachster aufbau rp pico + sensor
-\end{itemize}
+The \passthrough{\lstinline!1D!}
+sensor\ref{1D_sensor_contrsuction_with_universal_magnet_mount.png} is
+the simplest possible sensor that is compatible with the
+\passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} platform
+and also with the \gls{mrp}-library\ref{software-readout-framework}.
 
-\hypertarget{d-dual-sensor}{%
-\subsection{1D: Dual Sensor}\label{d-dual-sensor}}
+The electrical level here is based on a
+\passthrough{\lstinline!Raspberry-Pi Pico!} together with the
+\passthrough{\lstinline!MMC5603NJ!} magnetic sensor. The mechanical
+setup consists of four 3D-printed components, which are fixed together
+with nylon screws to minimise possible influences on the measurement.
 
-\begin{itemize}
-\tightlist
-\item
-  gleicher abstand zwei gleicher sensoren
-\item
-  schnelle erkennung der plarisationsebene ggf offset vom mittelpunkt
-  dieser
-\end{itemize}
+Since the \passthrough{\lstinline!MMC5603NJ!} only has very limited
+measuring range, even small neodymium magnets already saturate this
+range, it is possible to use 3D-printed spacers above the sensor.
 
-\hypertarget{full-sphere}{%
-\subsection{Full-Sphere}\label{full-sphere}}
+The standard magnet holder can be adapted for different magnet shapes
+and can be placed on the spacer without play in order to be able to
+perform a repeatable measurement without introducing measurement
+irregularities by mechanically changing the magnet.
+
+\hypertarget{d-fullsphere}{%
+\subsection{3D: Fullsphere}\label{d-fullsphere}}
 
 \begin{figure}
 \centering
@@ -246,27 +314,74 @@ motors in a polar coordinate system
 \label{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  komplexester aufbau sensor + mechanik
-\item
-  polar mechanisches system
-\item
-  full sphere sensor
-\end{itemize}
+The
+\passthrough{\lstinline!3D Fullsphere!}\ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}
+sensor offers the possibility to create a 3D
+map\ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png}
+of the magnets. The magnet sensor is mounted on a movable arm, which can
+move 180 degrees around the magnet on one axis. In order to be able to
+map the full sphere, the magnet is mounted on a turntable. This permits
+the manipulator to move a polar coordinate system.
 
-\hypertarget{integration-of-an-professional-teslameter}{%
-\subsection{Integration of an Professional
-Teslameter}\label{integration-of-an-professional-teslameter}}
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png}
+\caption{3D plot of an N45 12x12x12 magnet using the 3D fullsphere
+sensor
+\label{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png}}
+\end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  einfach anbindung professioneller teslameter
-\item
-  Voltkraft
-\end{itemize}
+As the magnets in the motors, as with the screws used in the 1D sensor,
+can influence the measurements of the magnetic field sensor, the
+distance between these components and the sensor or magnets was
+increased. The turntable and its drive motor are connected to each other
+via a belt.
+
+On the electrical side, it also consists of a
+\passthrough{\lstinline!SKR Pico!} stepper motor controller, together
+with the \passthrough{\lstinline!TLV493D!} magnetic field sensor. This
+was chosen because of its larger measuring range and can therefore be
+used more universally without having to change the sensor of the arm.
+
+\hypertarget{integration-of-an-industry-teslameter}{%
+\subsection{Integration of an industry
+Teslameter}\label{integration-of-an-industry-teslameter}}
+
+As the sensors shown so far relate exclusively to self-built, low-cost
+hardware, the following section shows how existing hardware can be
+integrated into the system. This is shown here using a
+temperature-compensated \passthrough{\lstinline!Voltcraft GM-70!}
+telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png},
+which has a measuring range of \passthrough{\lstinline!0-3T!} with a
+resolution of 0.1mT. This offers an \passthrough{\lstinline!RS232!}
+interface with a documented protocol for connection to a \gls{pc}. This
+connectivity makes it possible to make the device compatible with the
+\gls{mrp} library using interface software \cite{VoltcraftGM70Rest}
+executable on the host \gls{pc}. However, it does not offer the range of
+functions that the
+\passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} offers.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}
+\caption{Voltcraft GM70 teslameter with custom \gls{pc} interface board
+\label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}}
+\end{figure}
+
+Another option is a custom interface board between the meter and the PC.
+This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
+offer an \passthrough{\lstinline!RS232!} interface. As with the other
+sensors, this interface consists of your
+\passthrough{\lstinline!RaspberryPi Pico!} with an additional level
+shifter. The Teslameter is connected to the microcontroller using two
+free \gls{gpio}s in \gls{uart} mode. The
+\passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} was
+adapted using a separate build configuration and the protocol of the
+measuring device was implemented.
+
+This software or hardware integration can be carried out on any other
+measuring device with a suitable communication interface and a known
+protocol thanks to the modular design.
 
 \hypertarget{software-readout-framework}{%
 \chapter{Software readout framework}\label{software-readout-framework}}
@@ -344,12 +459,12 @@ sensors in measurement setups where space or cable routing options are
 limited. To make sensors connected to a small
 \passthrough{\lstinline!remote!} \gls{pc} available on the network, the
 \passthrough{\lstinline!Proxy!}\ref{MRPlib_Proxy_Module.png} module has
-been developed. This can be a single board computer (e.g.~a Raspberry
-Pi). The small footprint and low power consumption make it a good
-choice. It can also be used in a temperature chamber. The approach of
-implementing this via a \gls{rest} interface also offers the advantage
-that several measurements or experiments can be recorded at the same
-time with the sensors.
+been developed. This can be a \gls{sbc} (e.g.~a Raspberry Pi). The small
+footprint and low power consumption make it a good choice. It can also
+be used in a temperature chamber. The approach of implementing this via
+a \gls{rest} interface also offers the advantage that several
+measurements or experiments can be recorded at the same time with the
+sensors.
 
 \begin{figure}
 \centering
@@ -461,8 +576,8 @@ works for long distances and the syncronisation must be made via the
 network connection.
 
 If time-critical synchronisation is required, \gls{ptp} and \gls{pps}
-output functionality can be used on many single-board computers, such as
-the RaspberryPi Compute Module.
+output functionality can be used on many \gls{sbc}, such as the
+\passthrough{\lstinline!Raspberry-Pi Compute Module 4!}.
 
 \begin{itemize}
 \tightlist

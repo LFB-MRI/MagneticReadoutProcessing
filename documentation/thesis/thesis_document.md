@@ -77,6 +77,29 @@
 * was durch den user implementiert werden muss klasse
 
 
+```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
+#ifndef __CustomSensor_h__
+#define __CustomSensor_h__
+// register your custom sensor in implemented_sensors.h also
+class CustomSensor: public baseSensor {}
+{
+public:
+    CustomSensor();
+    ~CustomSensor();
+    // implement depending sensor communication interface
+    bool begin(TwoWire& _wire_instance); // I2C
+    bool begin(HardwareSerial& _serial_instance); // UART
+    bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
+    // FUNCTIONS USED BY READOUT LOGIC
+    bool is_valid() override;
+    String capabilities() override;
+    String get_sensor_name() override;
+    bool query_sensor() override;
+    sensor_result get_result() override;        
+};
+#endif
+```
+
 ### Communication interface
 
 %%Sensors_(+cli).png%%
@@ -98,39 +121,52 @@ The other option is to use the (+mrp)-library. The serial interface is also used
 
 ## Example Sensors
 
-*anbei werden drei erschienee sensoren für unterschiedliche anwedungfälle
-* tablle statisch dynamisch
+Two functional sensor platforms\ref{Build_sensors_with_different_capabilities.csv} were built in order to create a solid test platform for later tests and for the development of the (+mrp) library with the previously developed sensor concepts.
 
+%%Build_sensors_with_different_capabilities.csv%%
+
+These cover all the required functions described in the Usecases\ref{usecases}. The biggest distinguishing feature, apart from the sensor used, is the `scan mode`. In this context, this describes whether the sensor can measure a `static` fixed point on the magnet or if the sensor can move  `dynamically` around the magnet using a controllable manipulator.
+
+In the following, the hardware structure of a `static` and `dynamic` sensor is described. For the `static` sensor, only the `1D` variant is shown, as this does not differ significantly from the structure of the `1D: dual sensor`, except it uses two `TLV493D` sensors, mounted above and on top of the magnet.
 
 
 ### 1D: Single Sensor
 
 %%1D_sensor_contrsuction_with_universal_magnet_mount.png%%
 
-* einfachster aufbau rp pico + sensor
+The `1D` sensor\ref{1D_sensor_contrsuction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the `Unified Sensor Firmware`\ref{firmware} platform and also with the (+mrp)-library\ref{software-readout-framework}.
+
+The electrical level here is based on a `Raspberry-Pi Pico` together with the `MMC5603NJ` magnetic sensor.
+The mechanical setup consists of four 3D-printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
+
+Since the `MMC5603NJ` only has very limited measuring range, even small neodymium magnets already saturate this range, it is possible to use 3D-printed spacers above the sensor.
+
+The standard magnet holder can be adapted for different magnet shapes and can be placed on the spacer without play in order to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
 
-### 1D: Dual Sensor
-
-* gleicher abstand zwei gleicher sensoren
-* schnelle erkennung der plarisationsebene ggf offset vom mittelpunkt dieser
-
-
-
-
-### Full-Sphere
+### 3D: Fullsphere
 
 %%Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
 
-* komplexester aufbau sensor + mechanik
-* polar mechanisches system
-* full sphere sensor
+The `3D Fullsphere`\ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} sensor offers the possibility to create a 3D map\ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png} of the magnets.
+The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis. In order to be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
-### Integration of an Professional Teslameter
+%%3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png%%
 
-* einfach anbindung professioneller teslameter
-* Voltkraft
+As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these components and the sensor or magnets was increased. The turntable and its drive motor are connected to each other via a belt.
 
+On the electrical side, it also consists of a `SKR Pico` stepper motor controller, together with the `TLV493D` magnetic field sensor. This was chosen because of its larger measuring range and can therefore be used more universally without having to change the sensor of the arm.
+
+### Integration of an industry Teslameter
+
+As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system. This is shown here using a temperature-compensated `Voltcraft GM-70` telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}, which has a measuring range of `0-3T` with a resolution of 0.1mT. This offers an `RS232` interface with a documented protocol for connection to a (+pc). 
+This connectivity makes it possible to make the device compatible with the (+mrp) library using interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the `Unified Sensor Firmware`\ref{firmware} offers.
+
+%%Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png%%
+
+Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an `RS232` interface. As with the other sensors, this interface consists of your `RaspberryPi Pico` with an additional level shifter. The Teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode. The `Unified Sensor Firmware`\ref{firmware} was adapted using a separate build configuration and the protocol of the measuring device was implemented.
+
+This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
 
 
@@ -179,7 +215,7 @@ The other option is to use the (+mrp)-library. The serial interface is also used
 
 ### Multi-Sensor setup
 
-At the current state of implementation, it is only possible to detect and use sensors that are directly connected to the (+pc) with the (+mrp)-library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small `remote` (+pc) available on the network, the `Proxy`\ref{MRPlib_Proxy_Module.png} module has been developed. This can be a single board computer (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
+At the current state of implementation, it is only possible to detect and use sensors that are directly connected to the (+pc) with the (+mrp)-library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small `remote` (+pc) available on the network, the `Proxy`\ref{MRPlib_Proxy_Module.png} module has been developed. This can be a (+sbc) (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
 
 %%MRPlib_Proxy_Module.png%%
 
@@ -259,7 +295,7 @@ Individual sensor setups do not require any additional synchronisation informati
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock (see chapter \ref{sensor-syncronsisation}).
 this no longer works for long distances and the syncronisation must be made via the network connection. 
 
-If time-critical synchronisation is required, (+ptp) and (+pps) output functionality can be used on many single-board computers, such as the RaspberryPi Compute Module.
+If time-critical synchronisation is required, (+ptp) and (+pps) output functionality can be used on many (+sbc), such as the `Raspberry-Pi Compute Module 4`.
 
 
 * was ptp, bild pps output

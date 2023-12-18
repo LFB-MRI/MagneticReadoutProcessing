@@ -1,6 +1,7 @@
 
 
 \documentclass [
+  english
 % 	draft		% falls ohne Bilder gedruckt werden soll (Entwurf)
 	]{scrbook}	% KOMA Klasse für Bücher
 
@@ -47,21 +48,6 @@
 
 
 
-
-
-%%
-%% added
-%%
-
-%
-% language specification
-%
-% If no language is specified, use English as the default main document language.
-%
-%%MOD%%
-
-
-
 %
 % for the background color of the title page
 %
@@ -76,17 +62,10 @@
 % to ensure that quoted texts are typeset according to the rules of your main language.
 %
 \usepackage{csquotes}
-
-
 %
 % variables for title, author and date
 %
 \usepackage{titling}
-
-
-
-
-
 %
 % ADD SYNTAX HIGHLIGHTING
 %
@@ -242,7 +221,7 @@
 % Einige Anpassungen müssen nach \begin{document} stehen !!
 \renewcaptionname{ngerman}{\figurename}{\textbf Figure} 	% Bild ... statt Abbildung ...
 \renewcaptionname{ngerman}{\contentsname}{Contents}% Inhalt statt Inhaltsverzeichnis
-\renewcaptionname{ngerman}{\refname}{Bibliography}
+\renewcaptionname{ngerman}{\bibname}{Bibliography}
 
 \renewcaptionname{ngerman}{\listfigurename}{List of Figures}
 \renewcaptionname{ngerman}{\listtablename}{List of Tables}
