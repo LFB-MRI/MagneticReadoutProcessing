@@ -1,0 +1,2 @@
+![pipeline output files after running example pipeline on a set of readings \label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png)
+

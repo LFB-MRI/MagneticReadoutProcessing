@@ -153,14 +153,36 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
   was durch den user implementiert werden muss klasse
 \end{itemize}
 
-\hypertarget{user-interface}{%
-\subsection{User-Interface}\label{user-interface}}
+\hypertarget{communication-interface}{%
+\subsection{Communication interface}\label{communication-interface}}
 
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensors_(+cli).png}
 \caption{Sensors \gls{cli} \label{Sensors_(+cli).png}}
 \end{figure}
+
+Each sensor that has been loaded with the firmware, registeres on to the
+host \gls{pc} as a serial interface. There are several ways for the user
+to interact with this:
+
+\begin{itemize}
+\tightlist
+\item
+  Use with \gls{mrp}-library (see \ref{software-readout-framework})
+\item
+  Stand-alone mode via sending commands using built-in \gls{cli}
+\end{itemize}
+
+The \gls{cli} mode is a simple text-based interface with which it is
+possible to read out current measured values, obtain debug information
+and set operating parameters. This allows you to quickly determine
+whether the hardware is working properly after installation. The
+\gls{cli} behaves like terminal programmes, displaying a detailed
+command reference\ref{Sensors_(+cli).png} to the user after connecting.
+The current measured value can be output using the
+\passthrough{\lstinline!readout!}
+command\ref{Query_sensors_b_value_using_(+cli).png}.
 
 \begin{figure}
 \centering
@@ -169,15 +191,12 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
 \label{Query_sensors_b_value_using_(+cli).png}}
 \end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  einfache bedienung durch nutzer auch ohne weitere software
-\item
-  configuration
-\item
-  debugging
-\end{itemize}
+The other option is to use the \gls{mrp}-library. The serial interface
+is also used here. However, after a connection attempt by the
+\passthrough{\lstinline!MRPHal!} module\ref{hal} of the
+\gls{mrp}-library, the system switches to binary mode, which is
+initiated using the \passthrough{\lstinline!sbm!} command. However, the
+same commands are available as for \gls{cli}-based communication.
 
 \hypertarget{sensor-syncronsisation}{%
 \section{Sensor Syncronsisation}\label{sensor-syncronsisation}}
@@ -660,13 +679,13 @@ The various steps are then linked by using the
 next function to be executed (see comments in
 \ref{lst:mrpuddp_example_yaml}). It is therefore also possible to use
 the results of one function in several others without them directly
-following each other. The disadvantages of this system are as the
+following each other. The disadvantages of this system are the
 following:
 
 \begin{itemize}
 \tightlist
 \item
-  No loops can be created
+  No circular parameter dependencies
 \item
   Complex determination of the execution sequence of the steps
 \end{itemize}
@@ -676,11 +695,6 @@ converts them into one problem of the graph theories. Each step
 represents a node in the graph and the steps referred to by the input
 parameter form the edges.
 
-After several simplification steps, determination of possible start
-steps and repeated traversal, the final execution sequence can be
-determined in the form of a call
-tree\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
-
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}
@@ -689,14 +703,22 @@ pipeline example
 \label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}}
 \end{figure}
 
-The individual steps are then executed along the graph. The intermediate
-results and the final result are saved for later use.
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
+\caption{pipeline output files after running example pipeline on a set
+of readings
+\label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}}
+\end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  vorteile erleutern kurz
-\end{itemize}
+After several simplification steps, determination of possible start
+steps and repeated traversal, the final execution sequence can be
+determined in the form of a call
+tree\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
+The individual steps are then executed along the graph. The intermediate
+results and the final
+results\ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
+are saved for optional later use.
 
 \hypertarget{tests}{%
 \section{Tests}\label{tests}}
@@ -731,7 +753,6 @@ code of the test cases could later be used in slightly simplified
 variants\ref{lst:pytest_example_code} as examples for the documentation.
 
 \begin{lstlisting}[language=Python, caption={Example pytest class for testing MRPReading module functions}, label=lst:pytest_example_code]
-# $ cat test_mrpreading.py
 class TestMPRReading(unittest.TestCase):
   # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
@@ -745,22 +766,20 @@ class TestMPRReading(unittest.TestCase):
       n_theta: float = reading.measurement_config.n_theta
       # CHECK MATRIX SHAPE
       self.assertTrue(matrix.shape != (n_theta,))
-      self.assertTrue(len(matrix.shape) <= n_phi))
+      self.assertTrue(len(matrix.shape) <= n_phi)
 
   def test_export_reading(self) -> None:
-      reading: MRPReading = self.test_reading_init()
+      reading: MRPReading = MRPSimulation.generate_reading()
       self.assertIsNotNone(reading)
       # EXPORT READING TO A FILE
       reading.dump_to_file(self.test_file)
 
   def test_import_reading(self):
-      # CREATE EMPTY READING
+      # CREATE EMPTY READING AND LOAD FROM FILE
       reading_imported:MRPReading = MRPReading.MRPReading(None)
-      # LOAD READING FROM FILE
       reading_imported.load_from_file(self.test_file)
-      # CHECK IF ENTRIES ARE POPULATED
-      self.assertIsNotNone(reading_imported.additional_data)
-      self.assertIsNotNone(reading_imported.data)
+      # COMPARE
+      self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
 \end{lstlisting}
 
 One problem, however, is the parts of the \gls{mrp}-library that require

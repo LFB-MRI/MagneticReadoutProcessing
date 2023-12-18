@@ -11,8 +11,8 @@
 \contentsline {lstlisting}{\numberline {6.2}Example User Defined Processing Pipeline}{17}{lstlisting.6.2}%
 \contentsline {lstlisting}{\numberline {6.3}Example pytest class for testing MRPReading module functions}{20}{lstlisting.6.3}%
 \contentsline {lstlisting}{\numberline {6.4}Bash commands to install the MagneticReadoutProcessing (+mrp)-library using pip}{22}{lstlisting.6.4}%
-\contentsline {lstlisting}{\numberline {6.5}setup.py with dynamic requirement parsing used given requirements.txt}{22}{lstlisting.6.5}%
-\contentsline {lstlisting}{\numberline {6.6}Python docstring example}{23}{lstlisting.6.6}%
+\contentsline {lstlisting}{\numberline {6.5}setup.py with dynamic requirement parsing used given requirements.txt}{23}{lstlisting.6.5}%
+\contentsline {lstlisting}{\numberline {6.6}Python docstring example}{24}{lstlisting.6.6}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

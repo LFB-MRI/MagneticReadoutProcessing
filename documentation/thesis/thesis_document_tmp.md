@@ -42,8 +42,6 @@
 
 ## Sensor selection
 
-
-
 : Implemented digital halleffect sensors \label{Implemented_digital_halleffect_sensors.csv}
 
 |                    | TLV493D-A1B6 | HMC5883L | MMC5603NJ | AS5510 |
@@ -87,18 +85,24 @@
 * was durch den user implementiert werden muss klasse
 
 
-### User-Interface
+### Communication interface
 
 ![Sensors (+cli) \label{Sensors_(+cli).png}](./generated_images/border_Sensors_(+cli).png)
 
 
+Each sensor that has been loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with this:
+
+* Use with (+mrp)-library (see \ref{software-readout-framework})
+* Stand-alone mode via sending commands using built-in (+cli)
+
+The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters. This allows you to quickly determine whether the hardware is working properly after installation.
+The (+cli) behaves like terminal programmes, displaying a detailed command reference\ref{Sensors_(+cli).png} to the user after connecting. The current measured value can be output using the `readout` command\ref{Query_sensors_b_value_using_(+cli).png}. 
+
 ![Query sensors b value using (+cli) \label{Query_sensors_b_value_using_(+cli).png}](./generated_images/border_Query_sensors_b_value_using_(+cli).png)
 
 
+The other option is to use the (+mrp)-library. The serial interface is also used here. However, after a connection attempt by the `MRPHal` module\ref{hal} of the (+mrp)-library, the system switches to binary mode, which is initiated using the `sbm` command. However, the same commands are available as for (+cli)-based communication.
 
-* einfache bedienung durch nutzer auch ohne weitere software
-* configuration
-* debugging
 
 ## Sensor Syncronsisation
 
@@ -398,22 +402,21 @@ stage export_readings:
 
 Each pipeline step is divided into `stages`, which contain a name, the function to be executed and its parameters. The various steps are then linked by using the `stage <name>` as the input parameter of the next function to be executed (see comments in \ref{lst:mrpuddp_example_yaml}).
 It is therefore also possible to use the results of one function in several others without them directly following each other.
-The disadvantages of this system are as the following:
+The disadvantages of this system are the following:
 
-* No loops can be created
+* No circular parameter dependencies
 * Complex determination of the execution sequence of the steps
 
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
 
-After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
-
 ![Result step execution tree from user defined processing pipeline example \label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}](./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png)
 
 
-The individual steps are then executed along the graph. The intermediate results and the final result are saved for later use.
+![pipeline output files after running example pipeline on a set of readings \label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png)
 
 
-* vorteile erleutern kurz
+After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
+The individual steps are then executed along the graph. The intermediate results and the final results\ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
 
 ## Tests
@@ -428,7 +431,6 @@ Since all intended use cases were mapped using the test cases created, the code 
 
 
 ```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
-# $ cat test_mrpreading.py
 class TestMPRReading(unittest.TestCase):
   # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
@@ -442,22 +444,20 @@ class TestMPRReading(unittest.TestCase):
       n_theta: float = reading.measurement_config.n_theta
       # CHECK MATRIX SHAPE
       self.assertTrue(matrix.shape != (n_theta,))
-      self.assertTrue(len(matrix.shape) <= n_phi))
+      self.assertTrue(len(matrix.shape) <= n_phi)
 
   def test_export_reading(self) -> None:
-      reading: MRPReading = self.test_reading_init()
+      reading: MRPReading = MRPSimulation.generate_reading()
       self.assertIsNotNone(reading)
       # EXPORT READING TO A FILE
       reading.dump_to_file(self.test_file)
 
   def test_import_reading(self):
-      # CREATE EMPTY READING
+      # CREATE EMPTY READING AND LOAD FROM FILE
       reading_imported:MRPReading = MRPReading.MRPReading(None)
-      # LOAD READING FROM FILE
       reading_imported.load_from_file(self.test_file)
-      # CHECK IF ENTRIES ARE POPULATED
-      self.assertIsNotNone(reading_imported.additional_data)
-      self.assertIsNotNone(reading_imported.data)
+      # COMPARE
+      self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
 ```
 
 

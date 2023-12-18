@@ -40,7 +40,7 @@ class MRPDataVisualization:
 
         # TABLE
         clust_data = []#np.random.random((len(_readings), 5))
-        collabel = ("Reading [id:sensor_id]", "Mean [{}}]", "STD Deviation [{}}]", "Variance [{}}]", "Count Data-Points".format(_unit, _unit, _unit))
+        collabel = ("Reading [id:sensor_id]", "Mean [{}]".format(_unit), "STD Deviation [{}]".format(_unit), "Variance [{}]".format(_unit), "Count Data-Points")
         labels = []
 
         for idx, reading in enumerate(_readings):
