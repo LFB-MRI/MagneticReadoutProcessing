@@ -337,10 +337,11 @@ $ MRPcli measure run
 
 ## Programmable data processing pipeline
 
+After it is very easy for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data. This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library. This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
+
 ![example measurement analysis pipeline \label{example_measurement_analysis_pipeline.png}](./generated_images/border_example_measurement_analysis_pipeline.png)
 
 
-After it is very easy for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data. This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library. This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 For this purpose, a further (+cli) application was created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
 The example\ref{example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
@@ -373,13 +374,13 @@ stage import_bias_reading:
 stage apply_bias_offset:
   function: apply_sensor_bias_offset
   parameters:
-    bias_readings: stage import_bias_reading
+    bias_readings: stage import_bias_reading # USE RESULT FROM FUNCTION import_bias_reading
     readings_to_calibrate: stage import_readings
 
 stage apply_temp_compensation:
   function: apply_temperature_compensation
   parameters:
-    readings_to_calibrate: stage import_readings
+    readings_to_calibrate: stage import_readings # USE RESULT FROM FUNCTION import_readings
 
 stage plot_normal_bias_offset:
   function: plot_readings
@@ -395,8 +396,24 @@ stage export_readings:
     IP_export_folder: ./readings/fullsphere/plots/
 ~~~
 
-* blöcke erleutern insbesondere stage
-* wie calltree gebildet
+Each pipeline step is divided into `stages`, which contain a name, the function to be executed and its parameters. The various steps are then linked by using the `stage <name>` as the input parameter of the next function to be executed (see comments in \ref{lst:mrpuddp_example_yaml}).
+It is therefore also possible to use the results of one function in several others without them directly following each other.
+The disadvantages of this system are as the following:
+
+* No loops can be created
+* Complex determination of the execution sequence of the steps
+
+To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
+
+After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
+
+![Result step execution tree from user defined processing pipeline example \label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}](./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png)
+
+
+The individual steps are then executed along the graph. The intermediate results and the final result are saved for later use.
+
+
+* vorteile erleutern kurz
 
 
 ## Tests

@@ -1,0 +1,2 @@
+![Result step execution tree from user defined processing pipeline example \label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}](./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png)
+
