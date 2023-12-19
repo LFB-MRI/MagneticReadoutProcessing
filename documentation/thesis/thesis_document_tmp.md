@@ -73,10 +73,16 @@
 * usb, ethernet
 * pps input output
 * multiplexer for i2c sensors alredy implemented
+* imput / output for sync
 
 
 ## Firmware
 
+
+![Unified sensor firmware simplified program strucutre \label{Unified_sensor_firmware_simplified_program_strucutre.png}](./generated_images/border_Unified_sensor_firmware_simplified_program_strucutre.png)
+
+
+* mbed
 * automatic sensor detation ablaufdiagramm erst nach i2c geräte scannen dann analog versuchen
 * serial cli support for manual mode
 * sync impulse => 1 mastersensor als taktqelle
@@ -84,6 +90,9 @@
 * 2. core übernimmt mittelung und auswetung
 * was durch den user implementiert werden muss klasse
 
+\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
+
+\ref{lst:CustomSensorClass}
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
@@ -97,7 +106,7 @@ public:
     // implement depending sensor communication interface
     bool begin(TwoWire& _wire_instance); // I2C
     bool begin(HardwareSerial& _serial_instance); // UART
-    bool begin(Pin& _pin_instance); // ANALOG like analog input / DIGITAL PIN like onewire
+    bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
     // FUNCTIONS USED BY READOUT LOGIC
     bool is_valid() override;
     String capabilities() override;
@@ -108,6 +117,11 @@ public:
 #endif
 ```
 
+## Sensor syncronsisation interface
+
+
+
+
 ### Communication interface
 
 ![Sensors (+cli) \label{Sensors_(+cli).png}](./generated_images/border_Sensors_(+cli).png)
@@ -115,7 +129,7 @@ public:
 
 Each sensor that has been loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with this:
 
-* Use with (+mrp)-library (see \ref{software-readout-framework})
+* Use with (+mrp)-library\ref{software-readout-framework}
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters. This allows you to quickly determine whether the hardware is working properly after installation.
@@ -127,20 +141,18 @@ The (+cli) behaves like terminal programmes, displaying a detailed command refer
 The other option is to use the (+mrp)-library. The serial interface is also used here. However, after a connection attempt by the `MRPHal` module\ref{hal} of the (+mrp)-library, the system switches to binary mode, which is initiated using the `sbm` command. However, the same commands are available as for (+cli)-based communication.
 
 
-## Sensor Syncronsisation
-
 ## Example Sensors
 
 Two functional sensor platforms\ref{Build_sensors_with_different_capabilities.csv} were built in order to create a solid test platform for later tests and for the development of the (+mrp) library with the previously developed sensor concepts.
 
 : Build sensors with different capabilities \label{Build_sensors_with_different_capabilities.csv}
 
-|                     | 1D (Chapter \ref{d-single-sensor}) | 1D: dual sensor   | 3D: fullsphere (Chapter \ref{d-fullsphere}) |
-| ------------------- | ---------------------------------- | ----------------- | ------------------------------------------- |
-| Maximal magnet size | Cubic 30x30x30                     | Cubic 30x30x30    | Cubic 20x20x20                              |
-| Sensor type         | MMC5603NJ                          | TLV493D           | TLV493D                                     |
-| Sensor count        | 1                                  | 2                 | 1                                           |
-| Scanmode            | static (1 point)                   | static (2 points) | dynamic (fullsphere)                        |
+|                     | 1D\ref{d-single-sensor} | 1D: dual sensor   | 3D: Fullsphere\ref{d-fullsphere} |
+| ------------------- | ----------------------- | ----------------- | -------------------------------- |
+| Maximal magnet size | Cubic 30x30x30          | Cubic 30x30x30    | Cubic 20x20x20                   |
+| Sensor type         | MMC5603NJ               | TLV493D           | TLV493D                          |
+| Sensor count        | 1                       | 2                 | 1                                |
+| Scanmode            | static (1 point)        | static (2 points) | dynamic (fullsphere)             |
 
 These cover all the required functions described in the Usecases\ref{usecases}. The biggest distinguishing feature, apart from the sensor used, is the `scan mode`. In this context, this describes whether the sensor can measure a `static` fixed point on the magnet or if the sensor can move  `dynamically` around the magnet using a controllable manipulator.
 
@@ -179,13 +191,26 @@ On the electrical side, it also consists of a `SKR Pico` stepper motor controlle
 
 ### Integration of an industry Teslameter
 
-As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system. This is shown here using a temperature-compensated `Voltcraft GM-70` telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}, which has a measuring range of `0-3T` with a resolution of 0.1mT. This offers an `RS232` interface with a documented protocol for connection to a (+pc). 
+As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system. This is shown here using a temperature-compensated `Voltcraft GM-70` telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}, which has a measuring range of `0-3T` with a resolution of 0.1mT. This offers an `RS232` interface with a documented protocol\ref{Voltcraft_GM70_serial_protocol.csv} for connection to a (+pc). 
 This connectivity makes it possible to make the device compatible with the (+mrp) library using interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the `Unified Sensor Firmware`\ref{firmware} offers.
 
 ![Voltcraft GM70 teslameter with custom (+pc) interface board \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}](./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png)
 
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an `RS232` interface. As with the other sensors, this interface consists of your `RaspberryPi Pico` with an additional level shifter. The Teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode. The `Unified Sensor Firmware`\ref{firmware} was adapted using a separate build configuration and the protocol of the measuring device was implemented.
+
+: Voltcraft GM70 serial protocol \label{Voltcraft_GM70_serial_protocol.csv}
+
+| BYTE-INDEX | REPRESENTATION |  VALUE                   |
+| ---------- | -------------- | ------------------------ |
+| 0          | PREAMBLE       | 0x2                      |
+| 1          |                | 0x1                      |
+| 2          |                | 0x4                      |
+| 3          | UNIT           | 'B' => Gauss 'E' => mT   |
+| 5          | POLARITY       | '1' => *0.1 '2' => *0.01 |
+| 6          | value MSB      | 0x-0xFF                  |
+| 13         | value LSB      | 0x-0xFF                  |
+| 14         | STOP           | 0x3                      |
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 

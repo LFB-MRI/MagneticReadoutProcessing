@@ -125,12 +125,23 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
   pps input output
 \item
   multiplexer for i2c sensors alredy implemented
+\item
+  imput / output for sync
 \end{itemize}
 
 \hypertarget{firmware}{%
 \section{Firmware}\label{firmware}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Unified_sensor_firmware_simplified_program_strucutre.png}
+\caption{Unified sensor firmware simplified program strucutre
+\label{Unified_sensor_firmware_simplified_program_strucutre.png}}
+\end{figure}
+
 \begin{itemize}
+\item
+  mbed
 \item
   automatic sensor detation ablaufdiagramm erst nach i2c geräte scannen
   dann analog versuchen
@@ -153,6 +164,10 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
   was durch den user implementiert werden muss klasse
 \end{itemize}
 
+\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
+
+\ref{lst:CustomSensorClass}
+
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support}, label=lst:CustomSensorClass]
 #ifndef __CustomSensor_h__
 #define __CustomSensor_h__
@@ -165,7 +180,7 @@ public:
     // implement depending sensor communication interface
     bool begin(TwoWire& _wire_instance); // I2C
     bool begin(HardwareSerial& _serial_instance); // UART
-    bool begin(Pin& _pin_instance); // ANALOG like analog input / DIGITAL PIN like onewire
+    bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
     // FUNCTIONS USED BY READOUT LOGIC
     bool is_valid() override;
     String capabilities() override;
@@ -175,6 +190,10 @@ public:
 };
 #endif
 \end{lstlisting}
+
+\hypertarget{sensor-syncronsisation-interface}{%
+\section{Sensor syncronsisation
+interface}\label{sensor-syncronsisation-interface}}
 
 \hypertarget{communication-interface}{%
 \subsection{Communication interface}\label{communication-interface}}
@@ -192,7 +211,7 @@ to interact with this:
 \begin{itemize}
 \tightlist
 \item
-  Use with \gls{mrp}-library (see \ref{software-readout-framework})
+  Use with \gls{mrp}-library\ref{software-readout-framework}
 \item
   Stand-alone mode via sending commands using built-in \gls{cli}
 \end{itemize}
@@ -221,9 +240,6 @@ is also used here. However, after a connection attempt by the
 initiated using the \passthrough{\lstinline!sbm!} command. However, the
 same commands are available as for \gls{cli}-based communication.
 
-\hypertarget{sensor-syncronsisation}{%
-\section{Sensor Syncronsisation}\label{sensor-syncronsisation}}
-
 \hypertarget{example-sensors}{%
 \section{Example Sensors}\label{example-sensors}}
 
@@ -237,13 +253,13 @@ sensor concepts.
 \caption{Build sensors with different capabilities
 \label{Build_sensors_with_different_capabilities.csv}}\tabularnewline
 \toprule
-& 1D (Chapter \ref{d-single-sensor}) & 1D: dual sensor & 3D: fullsphere
-(Chapter \ref{d-fullsphere})\tabularnewline
+& 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
+Fullsphere\ref{d-fullsphere}\tabularnewline
 \midrule
 \endfirsthead
 \toprule
-& 1D (Chapter \ref{d-single-sensor}) & 1D: dual sensor & 3D: fullsphere
-(Chapter \ref{d-fullsphere})\tabularnewline
+& 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
+Fullsphere\ref{d-fullsphere}\tabularnewline
 \midrule
 \endhead
 Maximal magnet size & Cubic 30x30x30 & Cubic 30x30x30 & Cubic
@@ -354,11 +370,12 @@ temperature-compensated \passthrough{\lstinline!Voltcraft GM-70!}
 telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png},
 which has a measuring range of \passthrough{\lstinline!0-3T!} with a
 resolution of 0.1mT. This offers an \passthrough{\lstinline!RS232!}
-interface with a documented protocol for connection to a \gls{pc}. This
-connectivity makes it possible to make the device compatible with the
-\gls{mrp} library using interface software \cite{VoltcraftGM70Rest}
-executable on the host \gls{pc}. However, it does not offer the range of
-functions that the
+interface with a documented
+protocol\ref{Voltcraft_GM70_serial_protocol.csv} for connection to a
+\gls{pc}. This connectivity makes it possible to make the device
+compatible with the \gls{mrp} library using interface software
+\cite{VoltcraftGM70Rest} executable on the host \gls{pc}. However,
+it does not offer the range of functions that the
 \passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} offers.
 
 \begin{figure}
@@ -378,6 +395,30 @@ free \gls{gpio}s in \gls{uart} mode. The
 \passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} was
 adapted using a separate build configuration and the protocol of the
 measuring device was implemented.
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{Voltcraft GM70 serial protocol
+\label{Voltcraft_GM70_serial_protocol.csv}}\tabularnewline
+\toprule
+BYTE-INDEX & REPRESENTATION & VALUE\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+BYTE-INDEX & REPRESENTATION & VALUE\tabularnewline
+\midrule
+\endhead
+0 & PREAMBLE & 0x2\tabularnewline
+1 & & 0x1\tabularnewline
+2 & & 0x4\tabularnewline
+3 & UNIT & `B' =\textgreater{} Gauss `E' =\textgreater{}
+mT\tabularnewline
+5 & POLARITY & `1' =\textgreater{} \emph{0.1 `2' =\textgreater{}
+}0.01\tabularnewline
+6 & value MSB & 0x-0xFF\tabularnewline
+13 & value LSB & 0x-0xFF\tabularnewline
+14 & STOP & 0x3\tabularnewline
+\bottomrule
+\end{longtable}
 
 This software or hardware integration can be carried out on any other
 measuring device with a suitable communication interface and a known

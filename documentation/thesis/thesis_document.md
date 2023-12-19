@@ -65,17 +65,30 @@
 * usb, ethernet
 * pps input output
 * multiplexer for i2c sensors alredy implemented
+* imput / output for sync
 
 
 ## Firmware
 
+Microcontroller firmware is software that is executed on a microcontroller in embedded systems. It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and fulfil specific tasks according to the program code. It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions. Firmware is critical to the functioning of devices.
+
+* vielfalt an sensoren zu implementieren ohne dass der nutzer änderungen machen muss
+* übsersetzt sensordaten in einfache protokolle um so leicht mit der hostpc gegenseite kommunizieren zu können
+* snychronisation untereinander von mehren einzelnen sensoren,
+
+%%Unified_sensor_firmware_simplified_program_strucutre.png%%
+
+
 * automatic sensor detation ablaufdiagramm erst nach i2c geräte scannen dann analog versuchen
-* serial cli support for manual mode
+
 * sync impulse => 1 mastersensor als taktqelle
 * interene mittelung und speichern der werte im buffer ringubber welcher bei jedem sync impuls neu belegt wird
 * 2. core übernimmt mittelung und auswetung
 * was durch den user implementiert werden muss klasse
 
+\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
+
+\ref{lst:CustomSensorClass}
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
@@ -100,13 +113,18 @@ public:
 #endif
 ```
 
+## Sensor syncronsisation interface
+
+
+
+
 ### Communication interface
 
 %%Sensors_(+cli).png%%
 
 Each sensor that has been loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with this:
 
-* Use with (+mrp)-library (see \ref{software-readout-framework})
+* Use with (+mrp)-library\ref{software-readout-framework}
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters. This allows you to quickly determine whether the hardware is working properly after installation.
@@ -117,9 +135,7 @@ The (+cli) behaves like terminal programmes, displaying a detailed command refer
 The other option is to use the (+mrp)-library. The serial interface is also used here. However, after a connection attempt by the `MRPHal` module\ref{hal} of the (+mrp)-library, the system switches to binary mode, which is initiated using the `sbm` command. However, the same commands are available as for (+cli)-based communication.
 
 
-## Sensor Syncronsisation
-
-## Example Sensors
+## Example sensors
 
 Two functional sensor platforms\ref{Build_sensors_with_different_capabilities.csv} were built in order to create a solid test platform for later tests and for the development of the (+mrp) library with the previously developed sensor concepts.
 
@@ -157,14 +173,16 @@ As the magnets in the motors, as with the screws used in the 1D sensor, can infl
 
 On the electrical side, it also consists of a `SKR Pico` stepper motor controller, together with the `TLV493D` magnetic field sensor. This was chosen because of its larger measuring range and can therefore be used more universally without having to change the sensor of the arm.
 
-### Integration of an industry Teslameter
+### Integration of an industry teslameter
 
-As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system. This is shown here using a temperature-compensated `Voltcraft GM-70` telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}, which has a measuring range of `0-3T` with a resolution of 0.1mT. This offers an `RS232` interface with a documented protocol for connection to a (+pc). 
+As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system. This is shown here using a temperature-compensated `Voltcraft GM-70` telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}, which has a measuring range of `0-3T` with a resolution of 0.1mT. This offers an `RS232` interface with a documented protocol\ref{Voltcraft_GM70_serial_protocol.csv} for connection to a (+pc). 
 This connectivity makes it possible to make the device compatible with the (+mrp) library using interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the `Unified Sensor Firmware`\ref{firmware} offers.
 
 %%Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png%%
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an `RS232` interface. As with the other sensors, this interface consists of your `RaspberryPi Pico` with an additional level shifter. The Teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode. The `Unified Sensor Firmware`\ref{firmware} was adapted using a separate build configuration and the protocol of the measuring device was implemented.
+
+%%Voltcraft_GM70_serial_protocol.csv%%
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -213,7 +231,7 @@ This software or hardware integration can be carried out on any other measuring 
 
 
 
-### Multi-Sensor setup
+### Multible sensor setup
 
 At the current state of implementation, it is only possible to detect and use sensors that are directly connected to the (+pc) with the (+mrp)-library. This has the disadvantage that there must always be a physical connection. This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited. To make sensors connected to a small `remote` (+pc) available on the network, the `Proxy`\ref{MRPlib_Proxy_Module.png} module has been developed. This can be a (+sbc) (e.g. a Raspberry Pi). The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber. The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with the sensors.
 
@@ -292,7 +310,7 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
-If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock (see chapter \ref{sensor-syncronsisation}).
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in\ref{sensor-syncronsisationiinterface}.
 this no longer works for long distances and the syncronisation must be made via the network connection. 
 
 If time-critical synchronisation is required, (+ptp) and (+pps) output functionality can be used on many (+sbc), such as the `Raspberry-Pi Compute Module 4`.
@@ -307,7 +325,11 @@ If time-critical synchronisation is required, (+ptp) and (+pps) output functiona
 
 * nummerieierung zuerst lokale sensoren dann weitere proxy sensoren
 * commando templating
+* einzelne sensor capabilites werden gemerged
+* ids werden aufsuimmiert
+* spätere sensor identifikation geschieht über die jeweilige sensor id, welche über diesen index abgefragt werden kann
 
+* tablle mit mergin algorithmus
 
 
 ### Examples
@@ -323,7 +345,7 @@ In the following, some of these have been added in and around the (+mrp)-library
 
 %%MRP_(+cli)_output_to_configure_a_new_measurement.png%%
 
-In the first version of this (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code. Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them. To simplify these tasks, a (+cli)\ref{example_measurement_analysis_pipeline.png} was implemented around this (+mrp)-library, which is then also supplied as a fixed component. This (+cli) implements the following functionalities:
+In the first version of this (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code. Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them. To simplify these tasks, a (+cli)\ref{example_measurement_analysis_pipeline.png} was implemented around this (+mrp)-library. The (+mrp)-library-(+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -331,7 +353,7 @@ In the first version of this (+mrp)-library, the user had to write his own Pytho
 * Simple commands for checking recorded measurement series and their data.
 
 Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is then an exported file with the measured values.
-These can then be read in again with the (+mrp)-library and processed further. The bash code\ref{lst:mrpcli_config_run} shows this procedure in detail.
+These can then be read in again with the (+mrp)-library and processed further. The following bash code\ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
