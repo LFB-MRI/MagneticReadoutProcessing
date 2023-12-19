@@ -132,6 +132,14 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
 \hypertarget{firmware}{%
 \section{Firmware}\label{firmware}}
 
+Microcontroller firmware is software that is executed on a
+microcontroller in embedded systems. It controls the hardware and
+enables the execution of predefined functions. The firmware is used to
+process input data, control output devices and fulfil specific tasks
+according to the program code. It handles communication with sensors,
+actuators and other peripheral devices, processing data and making
+decisions. Firmware is critical to the functioning of devices.
+
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Unified_sensor_firmware_simplified_program_strucutre.png}
@@ -139,34 +147,16 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
 \label{Unified_sensor_firmware_simplified_program_strucutre.png}}
 \end{figure}
 
-\begin{itemize}
-\item
-  mbed
-\item
-  automatic sensor detation ablaufdiagramm erst nach i2c geräte scannen
-  dann analog versuchen
-\item
-  serial cli support for manual mode
-\item
-  sync impulse =\textgreater{} 1 mastersensor als taktqelle
-\item
-  interene mittelung und speichern der werte im buffer ringubber welcher
-  bei jedem sync impuls neu belegt wird
-\item
-  \begin{enumerate}
-  \def\labelenumi{\arabic{enumi}.}
-  \setcounter{enumi}{1}
-  \tightlist
-  \item
-    core übernimmt mittelung und auswetung
-  \end{enumerate}
-\item
-  was durch den user implementiert werden muss klasse
-\end{itemize}
-
-\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
-
-\ref{lst:CustomSensorClass}
+The firmware is responsible for detecting the possible connected
+sensors\ref{Implemented_digital_halleffect_sensors.csv} and reading them
+out. This measured data can be forwarded to a host \gls{pc} via a user
+interface and can then be further processed there. An important
+component is that as many common sensors as possible can be easily
+connected without having to adapt the firmware. This modularity was
+implemented using \passthrough{\lstinline!abstract!} class design. These
+are initiated according to the sensors found at startup. If new hardware
+is to be integrated, only the required
+functions\ref{lst:CustomSensorClass} need to be implemented.
 
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support}, label=lst:CustomSensorClass]
 #ifndef __CustomSensor_h__
@@ -191,9 +181,54 @@ public:
 #endif
 \end{lstlisting}
 
+The flow
+chart\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
+shows the start process and the subsequent main loop for processing the
+user commands and sensor results. When the microcontroller is started,
+the software checks whether known sensors are connected to \gls{i2c} or
+\gls{uart} interfaces. If any are found (using a dedicated \gls{lut}
+with sensor address information), the appropriate class instances are
+created and these can later be used to read out measurement results.
+
+Next, the subsystem for multi-sensor
+synchronisation\ref{sensor-syncronsisation-interface} is set up. The
+last step in the setup is to set up communication with the host or
+connected \gls{pc}. All microcontroller platforms used here have a
+\gls{usb} slave port. The used usb descriptor is
+\passthrough{\lstinline!Serial over (+usb)!}- ((+usb)\gls{cdc}). This is
+used to emulate a virtual RS232 communication port using a USB port on a
+\gls{pc} and usually no additional driver is needed on modern systems.
+
+Now that the setup process is complete, the system switches to an
+infinite loop, which processes several possible actions. One task is, to
+react to user commands which can be sent to the system by the user via
+the integrated \gls{cli}. All sensors are read out via a timer interval
+set in the setup procedure and their values are stored in a ringbuffer.
+Ring buffers, offer efficient data management in limited memory. Its
+cyclic structure enables continuous overwriting of older data, saves
+memory space and facilitates seamless processing of real-time data. Ring
+buffers are well suited for applications with variable data rates and
+minimise the need for complex memory management. The buffer can be read
+out by command and the result of the measurement is sent to the host.
+
 \hypertarget{sensor-syncronsisation-interface}{%
-\section{Sensor syncronsisation
+\subsection{Sensor syncronsisation
 interface}\label{sensor-syncronsisation-interface}}
+
+\begin{itemize}
+\tightlist
+\item
+  sync impulse =\textgreater{} 1 mastersensor als taktqelle
+\item
+  interene mittelung und speichern der werte im buffer ringubber welcher
+  bei jedem sync impuls neu belegt wird
+\item
+  ringbuffer
+\end{itemize}
+
+\%\%Unified\_sensor\_firmware\_multi\_sensor\_synchronisation\_procedure.drawio.png\%\%
+
+\ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.drawio.png}
 
 \hypertarget{communication-interface}{%
 \subsection{Communication interface}\label{communication-interface}}
@@ -241,7 +276,7 @@ initiated using the \passthrough{\lstinline!sbm!} command. However, the
 same commands are available as for \gls{cli}-based communication.
 
 \hypertarget{example-sensors}{%
-\section{Example Sensors}\label{example-sensors}}
+\section{Example sensors}\label{example-sensors}}
 
 Two functional sensor
 platforms\ref{Build_sensors_with_different_capabilities.csv} were built
@@ -361,7 +396,7 @@ used more universally without having to change the sensor of the arm.
 
 \hypertarget{integration-of-an-industry-teslameter}{%
 \subsection{Integration of an industry
-Teslameter}\label{integration-of-an-industry-teslameter}}
+teslameter}\label{integration-of-an-industry-teslameter}}
 
 As the sensors shown so far relate exclusively to self-built, low-cost
 hardware, the following section shows how existing hardware can be
@@ -489,8 +524,8 @@ protocol thanks to the modular design.
 \hypertarget{meta-data}{%
 \subsubsection{Meta-Data}\label{meta-data}}
 
-\hypertarget{multi-sensor-setup}{%
-\subsection{Multi-Sensor setup}\label{multi-sensor-setup}}
+\hypertarget{multible-sensor-setup}{%
+\subsection{Multible sensor setup}\label{multible-sensor-setup}}
 
 At the current state of implementation, it is only possible to detect
 and use sensors that are directly connected to the \gls{pc} with the
@@ -612,9 +647,9 @@ Individual sensor setups do not require any additional synchronisation
 information, as this is communicated via the \gls{usb} interface. If
 several sensors are connected locally, they can be connected to each
 other via their sync input using short cables. One sensor acts as the
-central clock (see chapter \ref{sensor-syncronsisation}). this no longer
-works for long distances and the syncronisation must be made via the
-network connection.
+central clock as described in\ref{sensor-syncronsisationiinterface}.
+this no longer works for long distances and the syncronisation must be
+made via the network connection.
 
 If time-critical synchronisation is required, \gls{ptp} and \gls{pps}
 output functionality can be used on many \gls{sbc}, such as the
@@ -634,11 +669,19 @@ output functionality can be used on many \gls{sbc}, such as the
 \subsubsection{Command-Router}\label{command-router}}
 
 \begin{itemize}
-\tightlist
 \item
   nummerieierung zuerst lokale sensoren dann weitere proxy sensoren
 \item
   commando templating
+\item
+  einzelne sensor capabilites werden gemerged
+\item
+  ids werden aufsuimmiert
+\item
+  spätere sensor identifikation geschieht über die jeweilige sensor id,
+  welche über diesen index abgefragt werden kann
+\item
+  tablle mit mergin algorithmus
 \end{itemize}
 
 \hypertarget{examples}{%
@@ -681,8 +724,8 @@ required more than 100 lines of new Python code. Although such examples
 are provided in the documentation, it must be possible for programming
 beginners in particular to use them. To simplify these tasks, a
 \gls{cli}\ref{example_measurement_analysis_pipeline.png} was implemented
-around this \gls{mrp}-library, which is then also supplied as a fixed
-component. This \gls{cli} implements the following functionalities:
+around this \gls{mrp}-library. The (+mrp)-library-\gls{cli} implements
+the following functionalities:
 
 \begin{itemize}
 \tightlist
@@ -701,8 +744,8 @@ Thanks to this functionality of the \gls{cli}, it is now possible to
 connect a sensor to the \gls{pc}, configure a measurement series with it
 and run it at the end. The result is then an exported file with the
 measured values. These can then be read in again with the
-\gls{mrp}-library and processed further. The bash
-code\ref{lst:mrpcli_config_run} shows this procedure in detail.
+\gls{mrp}-library and processed further. The following bash
+code\ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
 \begin{lstlisting}[language=bash, caption={CLI example for configuring a measurement run}, label=lst:mrpcli_config_run]
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN

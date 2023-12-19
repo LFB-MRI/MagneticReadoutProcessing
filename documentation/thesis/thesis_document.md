@@ -72,23 +72,11 @@
 
 Microcontroller firmware is software that is executed on a microcontroller in embedded systems. It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and fulfil specific tasks according to the program code. It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions. Firmware is critical to the functioning of devices.
 
-* vielfalt an sensoren zu implementieren ohne dass der nutzer änderungen machen muss
-* übsersetzt sensordaten in einfache protokolle um so leicht mit der hostpc gegenseite kommunizieren zu können
-* snychronisation untereinander von mehren einzelnen sensoren,
-
 %%Unified_sensor_firmware_simplified_program_strucutre.png%%
 
 
-* automatic sensor detation ablaufdiagramm erst nach i2c geräte scannen dann analog versuchen
-
-* sync impulse => 1 mastersensor als taktqelle
-* interene mittelung und speichern der werte im buffer ringubber welcher bei jedem sync impuls neu belegt wird
-* 2. core übernimmt mittelung und auswetung
-* was durch den user implementiert werden muss klasse
-
-\ref{Unified_sensor_firmware_simplified_program_strucutre.png}
-
-\ref{lst:CustomSensorClass}
+The firmware is responsible for detecting the possible connected sensors\ref{Implemented_digital_halleffect_sensors.csv} and reading them out. This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
+An important component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity was implemented using `abstract` class design. These are initiated according to the sensors found at startup. If new hardware is to be integrated, only the required functions\ref{lst:CustomSensorClass} need to be implemented.
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
@@ -113,9 +101,27 @@ public:
 #endif
 ```
 
-## Sensor syncronsisation interface
+The flow chart\ref{Unified_sensor_firmware_simplified_program_strucutre.png} shows the start process and the subsequent main loop for processing the user commands and sensor results.
+When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
+If any are found (using a dedicated (+lut) with sensor address information), the appropriate class instances  are created and these can later be used to read out measurement results.
 
+Next, the subsystem for multi-sensor synchronisation\ref{sensor-syncronsisation-interface} is set up. The last step in the setup is to set up communication with the host or connected (+pc).
+All microcontroller platforms used here have a (+usb) slave port. The used usb descriptor is `Serial over (+usb)`- ((+usb)(+cdc)). This is used to emulate a virtual RS232 communication port using a USB port on a (+pc) and usually no additional driver is needed on modern systems.
 
+Now that the setup process is complete, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
+All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
+Ring buffers, offer efficient data management in limited memory. Its cyclic structure enables continuous overwriting of older data, saves memory space and facilitates seamless processing of real-time data. Ring buffers are well suited for applications with variable data rates and minimise the need for complex memory management.
+The buffer can be read out by command and the result of the measurement is sent to the host.
+
+### Sensor syncronsisation interface
+
+* sync impulse => 1 mastersensor als taktqelle
+* interene mittelung und speichern der werte im buffer ringubber welcher bei jedem sync impuls neu belegt wird
+* ringbuffer
+
+%%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.drawio.png%%
+
+\ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.drawio.png}
 
 
 ### Communication interface
