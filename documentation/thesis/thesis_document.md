@@ -82,7 +82,7 @@ An important component is that as many common sensors as possible can be easily 
 #ifndef __CustomSensor_h__
 #define __CustomSensor_h__
 // register your custom sensor in implemented_sensors.h also
-class CustomSensor: public baseSensor {}
+class CustomSensor: public baseSensor
 {
 public:
     CustomSensor();
@@ -112,6 +112,9 @@ Now that the setup process is complete, the system switches to an infinite loop,
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
 Ring buffers, offer efficient data management in limited memory. Its cyclic structure enables continuous overwriting of older data, saves memory space and facilitates seamless processing of real-time data. Ring buffers are well suited for applications with variable data rates and minimise the need for complex memory management.
 The buffer can be read out by command and the result of the measurement is sent to the host.
+Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number. This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized\ref{sensor-syncronsisation-interface} in time and are not out of sequence or drift.
+
+
 
 ### Sensor syncronsisation interface
 
