@@ -117,12 +117,19 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
 \hypertarget{electrical-interface}{%
 \section{Electrical Interface}\label{electrical-interface}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_1D_sensor_schematic_and_circuit_board.png}
+\caption{1D sensor schematic and circuit board
+\label{1D_sensor_schematic_and_circuit_board.png}}
+\end{figure}
+
+\ref{1D_sensor_schematic_and_circuit_board.png}
+
 \begin{itemize}
 \tightlist
 \item
-  usb, ethernet
-\item
-  pps input output
+  usb
 \item
   multiplexer for i2c sensors alredy implemented
 \item
@@ -370,8 +377,8 @@ Scanmode & static (1 point) & static (2 points) & dynamic
 \end{longtable}
 
 These cover all the required functions described in the
-Usecases\ref{usecases}. The biggest distinguishing feature, apart from
-the sensor used, is the \passthrough{\lstinline!scan mode!}. In this
+Usecases\ref{usecases}. The most important difference, apart from the
+sensor used, is the \passthrough{\lstinline!scan mode!}. In this
 context, this describes whether the sensor can measure a
 \passthrough{\lstinline!static!} fixed point on the magnet or if the
 sensor can move \passthrough{\lstinline!dynamically!} around the magnet
@@ -391,13 +398,13 @@ the magnet.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_1D_sensor_contrsuction_with_universal_magnet_mount.png}
-\caption{1D sensor contrsuction with universal magnet mount
-\label{1D_sensor_contrsuction_with_universal_magnet_mount.png}}
+\includegraphics{./generated_images/border_1D_sensor_construction_with_universal_magnet_mount.png}
+\caption{1D sensor construction with universal magnet mount
+\label{1D_sensor_construction_with_universal_magnet_mount.png}}
 \end{figure}
 
 The \passthrough{\lstinline!1D!}
-sensor\ref{1D_sensor_contrsuction_with_universal_magnet_mount.png} is
+sensor\ref{1D_sensor_construction_with_universal_magnet_mount.png} is
 the simplest possible sensor that is compatible with the
 \passthrough{\lstinline!Unified Sensor Firmware!}\ref{firmware} platform
 and also with the \gls{mrp}-library\ref{software-readout-framework}.

@@ -70,8 +70,13 @@
 
 ## Electrical Interface
 
-* usb, ethernet
-* pps input output
+![1D sensor schematic and circuit board \label{1D_sensor_schematic_and_circuit_board.png}](./generated_images/border_1D_sensor_schematic_and_circuit_board.png)
+
+
+\ref{1D_sensor_schematic_and_circuit_board.png} 
+
+
+* usb
 * multiplexer for i2c sensors alredy implemented
 * imput / output for sync
 
@@ -181,17 +186,17 @@ Two functional sensor platforms\ref{Build_sensors_with_different_capabilities.cs
 | Sensor count        | 1                       | 2                 | 1                                |
 | Scanmode            | static (1 point)        | static (2 points) | dynamic (fullsphere)             |
 
-These cover all the required functions described in the Usecases\ref{usecases}. The biggest distinguishing feature, apart from the sensor used, is the `scan mode`. In this context, this describes whether the sensor can measure a `static` fixed point on the magnet or if the sensor can move  `dynamically` around the magnet using a controllable manipulator.
+These cover all the required functions described in the Usecases\ref{usecases}. The most important difference, apart from the sensor used, is the `scan mode`. In this context, this describes whether the sensor can measure a `static` fixed point on the magnet or if the sensor can move  `dynamically` around the magnet using a controllable manipulator.
 
 In the following, the hardware structure of a `static` and `dynamic` sensor is described. For the `static` sensor, only the `1D` variant is shown, as this does not differ significantly from the structure of the `1D: dual sensor`, except it uses two `TLV493D` sensors, mounted above and on top of the magnet.
 
 
 ### 1D: Single Sensor
 
-![1D sensor contrsuction with universal magnet mount \label{1D_sensor_contrsuction_with_universal_magnet_mount.png}](./generated_images/border_1D_sensor_contrsuction_with_universal_magnet_mount.png)
+![1D sensor construction with universal magnet mount \label{1D_sensor_construction_with_universal_magnet_mount.png}](./generated_images/border_1D_sensor_construction_with_universal_magnet_mount.png)
 
 
-The `1D` sensor\ref{1D_sensor_contrsuction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the `Unified Sensor Firmware`\ref{firmware} platform and also with the (+mrp)-library\ref{software-readout-framework}.
+The `1D` sensor\ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the `Unified Sensor Firmware`\ref{firmware} platform and also with the (+mrp)-library\ref{software-readout-framework}.
 
 The electrical level here is based on a `Raspberry-Pi Pico` together with the `MMC5603NJ` magnetic sensor.
 The mechanical setup consists of four 3D-printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
