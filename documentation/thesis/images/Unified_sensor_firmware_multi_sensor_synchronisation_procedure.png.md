@@ -1,0 +1,2 @@
+![Unified sensor firmware multi sensor synchronisation procedure \label{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}](./generated_images/border_Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png)
+

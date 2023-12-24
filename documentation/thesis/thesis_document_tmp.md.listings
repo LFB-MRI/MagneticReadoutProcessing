@@ -124,18 +124,6 @@ The buffer can be read out by command and the result of the measurement is sent 
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number. This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized\ref{sensor-syncronsisation-interface} in time and are not out of sequence or drift.
 
 
-
-### Sensor syncronsisation interface
-
-* sync impulse => 1 mastersensor als taktqelle
-* interene mittelung und speichern der werte im buffer ringubber welcher bei jedem sync impuls neu belegt wird
-* ringbuffer
-
-%%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.drawio.png%%
-
-\ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.drawio.png}
-
-
 ### Communication interface
 
 ![Sensors (+cli) \label{Sensors_(+cli).png}](./generated_images/border_Sensors_(+cli).png)
@@ -153,6 +141,31 @@ The (+cli) behaves like terminal programmes, displaying a detailed command refer
 
 
 The other option is to use the (+mrp)-library. The serial interface is also used here. However, after a connection attempt by the `MRPHal` module\ref{hal} of the (+mrp)-library, the system switches to binary mode, which is initiated using the `sbm` command. However, the same commands are available as for (+cli)-based communication.
+
+
+### Sensor syncronsisation interface
+
+![Multi sensor synchronisation wiring example \label{Multi_sensor_synchronisation_wiring_example.png}](./generated_images/border_Multi_sensor_synchronisation_wiring_example.png)
+
+
+One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur. This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies. Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
+
+The other issue is sending the trigger signal from the readout software\ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
+
+In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors. This is used together with the firmware to synchronise the readout intervals. The schematic\ref{Multi_sensor_synchronisation_wiring_example.png} shows how several sensors must be wired together in order to implement this form of synchronisation.
+
+
+![Unified sensor firmware multi sensor synchronisation procedure \label{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}](./generated_images/border_Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png)
+
+
+Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock. To do this, the `register irq on sync pin` is overwritten. To set one `primary` and several `secondary` sensors, each sensor waits for an intial pulse on the sync-pin\ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}. Each sensor starts a random timer beforehand, which sends a pulse on the sync line. All others receive this and switch to `secondary` mode and synchronise the measurements based on each sync pulse received.
+Since the presumed `primary` sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout `got pulse within 1000ms` and this becomes the `primary` sensor.
+This means that in a chain of sensors there is exactly one `primary` and many `secondary` sensors.
+In single-sensor operation, this automatically jumps to `primary` sensor operation through the `got impulse within 1000ms` query.
+The synchronisation status can be queried via the user interface\ref{communication-interface} using the `opmode`\ref{Query_opmode_using_(+cli).png} command.
+An important aspect of the implementation here was that there is no numbering or sequence of the individual sensors. This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors. The sensor differentiation takes place later in the readout software\ref{software-readout-framework} by using the sensor identification number.
+
+![Query opmode using (+cli) \label{Query_opmode_using_(+cli).png}](./generated_images/border_Query_opmode_using_(+cli).png)
 
 
 ## Example sensors
