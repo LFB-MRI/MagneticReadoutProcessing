@@ -31,16 +31,19 @@
 
 # Unified Sensor
 
+The main aim of this project is to develop a low-cost Hall sensor interface that is also universally expandable.
+The focus is on mapping different sensors and being compatible with different magnet types and shapes. This ensures broad applicability in different scenarios.
+Another goal is reproducibility to ensure consistent results. Easy communication with standard PC hardware maximises the user-friendliness of the interface.
+The flexibility to support different sensors and magnets makes the system versatile and opens up possibilities for different applications.
+This low-cost Hall sensor interface will therefore not only be economically attractive, but also facilitate the integration of Hall sensors in different contexts.
+In addition, the low-cost Hall sensor interface will serve as a development platform for the data evaluation (+mrp) library and provide real measurement data from magnets. In addition, the interface firmware creates a basis for the development of a data protocol for exchanging measured values. This makes it easy to integrate your own measuring devices into the (+mrp) ecosystem at a later date. This is only possible with a minimal functional hardware and firmware setup and was developed for this purpose first.
 
-* ziel ist es einen low cost hallsensor-interface  zu entwickeln welcher möglichst
-* universell
-* verschienee sensoren abbilden kann
-* mit verschienden magneten typen und formen nutzbar
-* reproduzierbar
-* 1d, 2d, 3d
-* integration
 
 ## Sensor selection
+
+The selection process for possible magnetic field sensors initially focussed on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. A key aspect of this selection was the preference for sensors with digital interfaces to facilitate implementation in the circuit layout. The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
+
+Linear analogue Hall sensors were deliberately omitted, although they are suitable for more precise measurements and extended measuring ranges. They were excluded due to the more complex circuit layouts required and more complex power management. In the context of the desired goal of developing a cost-efficient and universally expandable Hall sensor interface, the decision in favour of digital sensors seems appropriate.
 
 : Implemented digital halleffect sensors \label{Implemented_digital_halleffect_sensors.csv}
 
@@ -52,21 +55,25 @@
 | Range [mT]         | ±130.0       | ±0.8     | ±3        | ±50    |
 | Interface          | (+i2c)       | (+i2c)   | (+i2c)    | (+i2c) |
 
+Focussing on digital interfaces not only facilitates implementation, but also contributes to overall cost efficiency. At the same time, the integration of temperature sensors enables precise measurements under varying environmental conditions. This strategic choice forms the basis for a flexible, universally applicable Hall sensor interface that can be seamlessly integrated into various existing systems.
 
-* for higher ranges analog sensoren nutzen welche jedoch eine aufwändigere schaltung erfodern
-* datenblatte links ergänzen
-* alle i2c in der regel, welches eine einfache integration  ermöglicht
-* eingebauter temperatursensor ermöglicht temperaturkompensation
-* conrad teslameter mit seperaten temperatursensor
+The table\ref{Implemented_digital_halleffect_sensors.csv} shows a selection of sensors for which hardware and software support has been implemented.
+The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
 
 ## Mechanical Structure
 
-* 3d druck toleranztest
-* magnet halterung mit kraftloser arretierung
-* motoren und andere unter umstaänden magnetische teile in der nähe des sensors
-* nylon schrauben, 3d druck, 3d gedruckte klemmverbindungen
-* später rausrechnen durch kalibierung
+![1D sensor mechanical 3D printed structure \label{1D_sensor_mechanical_3D_printed_structure.png}](./generated_images/border_1D_sensor_mechanical_3D_printed_structure.png)
+
+
+The mechanical structure of a sensor is kept very simple for the following tests. The focus was on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
+
+The following figure\ref{1D_sensor_mechanical_3D_printed_structure.png}, shows a sectional view of the (+cad) drawing of the `1D: Single sensor`\ref{d-single-sensor}.
+
+All parts were produced using the 3D printing process. The sensor circuit board was glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
+
+The exchangeable magnetic holder (shown in green) can be adapted to different magnets. It can be produced quickly due to the small amount of material used. The two recesses lock the holder with the inserted magnet over the sensor. Due to predetermined tolerances, the magnet can be inserted into the holder with repeat accuracy and without play. This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
+
 
 ## Electrical Interface
 
@@ -120,7 +127,7 @@ When the microcontroller is started, the software checks whether known sensors a
 If any are found (using a dedicated (+lut) with sensor address information), the appropriate class instances  are created and these can later be used to read out measurement results.
 
 Next, the subsystem for multi-sensor synchronisation\ref{sensor-syncronsisation-interface} is set up. The last step in the setup is to set up communication with the host or connected (+pc).
-All microcontroller platforms used here have a (+usb) slave port. The used usb descriptor is `Serial over (+usb)`- ((+usb)(+cdc)). This is used to emulate a virtual RS232 communication port using a USB port on a (+pc) and usually no additional driver is needed on modern systems.
+All microcontroller platforms used here have a (+usb) slave port. The used usb descriptor is `Serial over (+usb)`-((+usb)(+cdc)). This is used to emulate a virtual RS232 communication port using a USB port on a (+pc) and usually no additional driver is needed on modern systems.
 
 Now that the setup process is complete, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
@@ -154,6 +161,26 @@ The other option is to use the (+mrp)-library. The serial interface is also used
 
 
 One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur. This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies. Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
+
+: Measured sensor readout to processing using host software \label{Measured_sensor_readout_to_processing_using_host_software.csv}
+
+| Run | Datapoints | Host software runtime [ms] | Average Sensor communication time per reading [ms] |  Communication jitter time [ms]  | Comment                   |
+| --- | ---------- | -------------------------- | -------------------------------------------------- | -------------------------------- | ------------------------- |
+| 1   | 1          | 9453                       | 1.44                                               | 0                                |                           |
+| 2   | 1          | 9864                       | 1.5                                                | 0                                |                           |
+| 3   | 10         | 12984                      | 1.22                                               | 0.9                              |                           |
+| 4   | 10         | 12673                      | 1.13                                               | 1.1                              |                           |
+| 5   | 10         | 43264                      | 2.19                                               | 4.2                              | High host system cpu load |
+
+The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These were performed on a `RaspberryPi 4 4GB`-(+sbc) together with an `1D: Single Sensor`\ref{d-single-sensor} and the following software settings:
+
+* `Raspberry Pi OS Lite` - `debian bookworm x64`,
+* (+mrp)\ref{software-readout-framework}-library - version `1.4.1`
+*  `Unified Sensor Firmware`\ref{unified-sensor} - version `1.0.1`
+
+It can be seen that a jitter time of up to an additional ` 1ms` is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
+If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
+
 
 The other issue is sending the trigger signal from the readout software\ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
 
