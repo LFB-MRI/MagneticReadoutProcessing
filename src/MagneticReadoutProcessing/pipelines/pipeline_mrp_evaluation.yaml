@@ -1,0 +1,32 @@
+settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_mrp_evaluation
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: 360_(.)*.mag.json
+
+
+stage find_similar_values:
+  function: custom_find_similar_values_algorithm
+  parameters:
+    _readings: stage import
+    IP_return_count: 4
+
+
+stage plot_raw:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage import
+    IP_export_folder: ./readings/evaluation/plots/plot_raw/
+    IP_plot_headline_prefix:  MRP evaluation - raw
+
+stage plot_filtered:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage find_similar_values
+    IP_export_folder: ./readings/evaluation/plots/plot_filtered/
+    IP_plot_headline_prefix:  MRP evaluation - filtered

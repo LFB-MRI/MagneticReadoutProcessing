@@ -394,3 +394,29 @@ class UDPPFunctionCollection:
         return new_readings
 
 
+    @staticmethod
+    def custom_find_similar_values_algorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
+        import heapq
+        heap = []
+        # SET RESULT VALUE COUNT
+        IP_return_count = int(IP_return_count)
+        if IP_return_count < 0:
+            IP_return_count = int(len(_readings) / 5)
+        # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
+        target_value: float = 0.0
+        for idx, r in enumerate(_readings):
+            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            target_value = target_value + mean
+        target_value = (target_value / len(_readings))
+        # PUSH READINGS TO HEAP
+        for reading in _readings:
+            reading_mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
+            # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
+            diff: float = abs(reading_mean - target_value)
+            heapq.heappush(heap, (diff, reading))
+        # RETURN X BEST ITEMS FROM HEAP
+        similar_values: [MRPReading.MRPReading] = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
+        # CLEAN UP USED LIBRARIES AND RETURN RESULT
+        del heapq
+        return similar_values
+

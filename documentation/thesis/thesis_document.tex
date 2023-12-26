@@ -152,17 +152,26 @@ over the sensor must always be the same.
 \label{1D_sensor_schematic_and_circuit_board.png}}
 \end{figure}
 
-\ref{1D_sensor_schematic_and_circuit_board.png}
+As with the mechanical design, the electronics should be kept as simple
+as possible so that it is possible to use the microcontroller and a
+magnetic field sensor.
 
-\begin{itemize}
-\tightlist
-\item
-  usb
-\item
-  multiplexer for i2c sensors alredy implemented
-\item
-  imput / output for sync
-\end{itemize}
+The focus here was on utilising existing microcontroller development and
+evaluation boards, which already integrate all the components required
+for smooth operation. This not only enabled a time-saving
+implementation, but also ensured a cost-efficient realisation.
+
+A decisive step in my work was the in-house PCB
+design\ref{1D_sensor_schematic_and_circuit_board.png}, which leads out
+all the important connections. The placement and alignment of the
+components optimised the wiring, which in turn improved the reliability
+of the sensor tests. Particular attention was paid to the implementation
+of a \passthrough{\lstinline!SYNC!}-\gls{gpio}, which enables subsequent
+multi-sensor synchronisation. This functionality opens up the
+possibility of synchronising data from different sensors to achieve
+precise and coherent measurement results. Overall, this integrated
+approach represents an effective solution for the flexible evaluation of
+sensors and helps to optimise the development process.
 
 \hypertarget{firmware}{%
 \section{Firmware}\label{firmware}}
@@ -231,8 +240,9 @@ last step in the setup is to set up communication with the host or
 connected \gls{pc}. All microcontroller platforms used here have a
 \gls{usb} slave port. The used usb descriptor is
 \passthrough{\lstinline!Serial over (+usb)!}-((+usb)\gls{cdc}). This is
-used to emulate a virtual RS232 communication port using a USB port on a
-\gls{pc} and usually no additional driver is needed on modern systems.
+used to emulate a virtual RS232 communication port using a \gls{usb}
+port on a \gls{pc} and usually no additional driver is needed on modern
+systems.
 
 Now that the setup process is complete, the system switches to an
 infinite loop, which processes several possible actions. One task is, to
@@ -262,7 +272,7 @@ out of sequence or drift.
 
 Each sensor that has been loaded with the firmware, registeres on to the
 host \gls{pc} as a serial interface. There are several ways for the user
-to interact with this:
+to interact with the sensor:
 
 \begin{itemize}
 \tightlist
@@ -274,11 +284,11 @@ to interact with this:
 
 The \gls{cli} mode is a simple text-based interface with which it is
 possible to read out current measured values, obtain debug information
-and set operating parameters. This allows you to quickly determine
-whether the hardware is working properly after installation. The
-\gls{cli} behaves like terminal programmes, displaying a detailed
-command reference\ref{Sensors_(+cli).png} to the user after connecting.
-The current measured value can be output using the
+and set operating parameters. This allows to quickly determine whether
+the hardware is working properly after installation. The \gls{cli}
+behaves like terminal programmes, displaying a detailed command
+reference\ref{Sensors_(+cli).png} to the user after connecting. The
+current measured value can be output using the
 \passthrough{\lstinline!readout!}
 command\ref{Query_sensors_b_value_using_(+cli).png}.
 
@@ -293,8 +303,8 @@ The other option is to use the \gls{mrp}-library. The serial interface
 is also used here. However, after a connection attempt by the
 \passthrough{\lstinline!MRPHal!} module\ref{hal} of the
 \gls{mrp}-library, the system switches to binary mode, which is
-initiated using the \passthrough{\lstinline!sbm!} command. However, the
-same commands are available as for \gls{cli}-based communication.
+initiated using the \passthrough{\lstinline!sbm!} command. The same
+commands are available as for \gls{cli}-based communication.
 
 \hypertarget{sensor-syncronsisation-interface}{%
 \subsection{Sensor syncronsisation
@@ -321,15 +331,15 @@ ports can lead to delays.
 \toprule
 \begin{minipage}[b]{0.02\columnwidth}\raggedright
 Run\strut
-\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright
-Datapoints\strut
-\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright
+Points\strut
+\end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright
 Host software runtime {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.32\columnwidth}\raggedright
 Average Sensor communication time per reading {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright
 Communication jitter time {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright
 Comment\strut
 \end{minipage}\tabularnewline
 \midrule
@@ -337,83 +347,83 @@ Comment\strut
 \toprule
 \begin{minipage}[b]{0.02\columnwidth}\raggedright
 Run\strut
-\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright
-Datapoints\strut
-\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright
+Points\strut
+\end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright
 Host software runtime {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.32\columnwidth}\raggedright
 Average Sensor communication time per reading {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.20\columnwidth}\raggedright
 Communication jitter time {[}ms{]}\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright
 Comment\strut
 \end{minipage}\tabularnewline
 \midrule
 \endhead
 \begin{minipage}[t]{0.02\columnwidth}\raggedright
 1\strut
-\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
 1\strut
-\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
 9453\strut
-\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
 1.44\strut
-\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright
 0\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
 \strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.02\columnwidth}\raggedright
 2\strut
-\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
 1\strut
-\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
 9864\strut
-\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
 1.5\strut
-\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright
 0\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
 \strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.02\columnwidth}\raggedright
 3\strut
-\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
 10\strut
-\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
 12984\strut
-\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
 1.22\strut
-\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright
 0.9\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
 \strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.02\columnwidth}\raggedright
 4\strut
-\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
 10\strut
-\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
 12673\strut
-\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
 1.13\strut
-\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright
 1.1\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
 \strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.02\columnwidth}\raggedright
 5\strut
-\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright
 10\strut
-\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
 43264\strut
-\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
 2.19\strut
-\end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\raggedright
-4.2\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-High host system cpu load\strut
+\end{minipage} & \begin{minipage}[t]{0.20\columnwidth}\raggedright
+8.2\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright
+96\% system load\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -574,7 +584,7 @@ setup consists of four 3D-printed components, which are fixed together
 with nylon screws to minimise possible influences on the measurement.
 
 Since the \passthrough{\lstinline!MMC5603NJ!} only has very limited
-measuring range, even small neodymium magnets already saturate this
+measuring range, even small neodymium magnets already saturate its
 range, it is possible to use 3D-printed spacers above the sensor.
 
 The standard magnet holder can be adapted for different magnet shapes
@@ -632,7 +642,7 @@ integrated into the system. This is shown here using a
 temperature-compensated \passthrough{\lstinline!Voltcraft GM-70!}
 telsameter\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png},
 which has a measuring range of \passthrough{\lstinline!0-3T!} with a
-resolution of 0.1mT. This offers an \passthrough{\lstinline!RS232!}
+resolution of 0.1mT. It offers an \passthrough{\lstinline!RS232!}
 interface with a documented
 protocol\ref{Voltcraft_GM70_serial_protocol.csv} for connection to a
 \gls{pc}. This connectivity makes it possible to make the device
@@ -757,7 +767,7 @@ protocol thanks to the modular design.
 
 At the current state of implementation, it is only possible to detect
 and use sensors that are directly connected to the \gls{pc} with the
-\gls{mrp}-library. This has the disadvantage that there must always be a
+\gls{mrp}-library. It has the disadvantage that there must always be a
 physical connection. This can make it difficult to install multiple
 sensors in measurement setups where space or cable routing options are
 limited. To make sensors connected to a small
@@ -879,19 +889,10 @@ central clock as described in\ref{sensor-syncronsisationiinterface}.
 this no longer works for long distances and the syncronisation must be
 made via the network connection.
 
-If time-critical synchronisation is required, \gls{ptp} and \gls{pps}
-output functionality can be used on many \gls{sbc}, such as the
+If time-critical synchronisation over the network is required, \gls{ptp}
+and \gls{pps} output functionality\cite{PTPIEEE1588} can be used on
+many \gls{sbc}, such as the
 \passthrough{\lstinline!Raspberry-Pi Compute Module 4!}.
-
-\begin{itemize}
-\tightlist
-\item
-  was ptp, bild pps output
-\item
-  alle clients über ptp verbunden
-\item
-  dso bild von jeff gerling über rpi4 ptp
-\end{itemize}
 
 \hypertarget{command-router}{%
 \subsubsection{Command-Router}\label{command-router}}
@@ -1232,12 +1233,11 @@ software and executed via virtualisation on the systems provided by
 
 One important point that improves usability for users is the simple
 installation of the \gls{mrp}-library. As it was created in the Python
-programming language, there are several public package directories where
+programming language, there are several public package registry where
 users can provide their software modules. Here,
 \passthrough{\lstinline!PyPi!}\cite{PyPI}\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}\cite{MagneticReadoutProcessingPyPI}
-is the most commonly used package directory and offers direct support
-for the package installation programm
-\gls{pip}\ref{lst:setup_lib_with_pip}.
+is the most commonly used package registry and offers direct support for
+the package installation programm \gls{pip}\ref{lst:setup_lib_with_pip}.
 
 \begin{figure}
 \centering
@@ -1260,11 +1260,11 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 \end{lstlisting}
 
-To make the \gls{mrp}-library compatible with the package directory,
+To make the \gls{mrp}-library compatible with the package registry,
 Python provides separate installation routines that build a package in
 an isolated environment and then provide an installation
 \passthrough{\lstinline!wheel!} archive. This can then be uploaded to
-the package directory.
+the package registry.
 
 Since the \gls{mrp}-library requires additional dependencies
 (e.g.~\passthrough{\lstinline!numpy!},
@@ -1371,9 +1371,7 @@ documentation formats, such as the used
 \passthrough{\lstinline!docstrings!}. These are converted into a
 Markdown format in an intermediate step and this also allows to add
 further user documentation such as examples or installation
-instructions.
-
-In order to make the documentation created by
+instructions. In order to make the documentation created by
 \passthrough{\lstinline!Sphinx!} accessible to the user, there are, as
 with the package management by \passthrough{\lstinline!PyPi!} services,
 which provide Python \gls{mrp}-library documentation online.
@@ -1406,8 +1404,45 @@ that it is always automatically kept up to date with new features.
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
-\hypertarget{prequesites-for-evaluation}{%
-\section{Prequesites for evaluation}\label{prequesites-for-evaluation}}
+This work successfully implemented a universal hardware and software
+framework for the automated characterisation of permanent magnets. This
+framework consists of a low-cost hardware interface that supports
+various magnetic field sensors and a library for automating and
+analysing the measurement data. The process of this framework comprises
+several steps, which I will explain below:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Hardware preperation} Users can prepare measurements using the
+  implemented framework. This includes the placement of the sensors and
+  the selection of the relevant parameters for the characterisation of
+  the permanent magnets.
+\item
+  \textbf{Configuration of the measurement} The software provides a
+  user-friendly interface for configuring the measurement parameters.
+  Users can make the desired settings here and customise the framework
+  to their specific requirements.
+\item
+  \textbf{Custom algorithm implementation} An important contribution of
+  the \gls{mrp} echosystem is the possibility for users to implement
+  their own algorithm for data analysis. This allows customisation to
+  specific research questions or experimental requirements.
+\item
+  \textbf{Execution of analysis pipeline} The analysis pipeline can then
+  be executed with the implemented algorithm. The collected measurement
+  data is automatically processed and analysed to extract characteristic
+  parameters of the permanent magnets.
+\end{enumerate}
+
+This process covers all the essential functionalities required for a
+comprehensive characterisation of permanent magnets\ref{usecases}. The
+developed framework not only offers a cost-effective and flexible
+hardware solution, but also enables customisation of the analysis
+algorithms to meet the requirements of different research projects.
+
+\hypertarget{hardware-preperation}{%
+\section{Hardware preperation}\label{hardware-preperation}}
 
 \begin{figure}
 \centering
@@ -1415,20 +1450,180 @@ that it is always automatically kept up to date with new features.
 \caption{testmagnets in holder \label{testmagnets_in_holder.png}}
 \end{figure}
 
-\hypertarget{evaluation-confiugration}{%
-\section{Evaluation confiugration}\label{evaluation-confiugration}}
+For the hardware setup, the
+\passthrough{\lstinline!3D: Fullsphere!}\ref{d-fullsphere} sensor was
+used for the evaulation of the framework. As this is equipped with an
+exchangeable magnetic holder mount, suitable holders are required for
+the magnets to be measured. Ten random
+\passthrough{\lstinline!N45 12x12x12mm!} neodymium magnets were used
+here. These were placed in modified 3D printed
+holders\ref{testmagnets_in_holder.png} and then numbered. This allows
+them to be matched to the measurement results later.
 
-\hypertarget{sensor-readout}{%
-\subsection{Sensor readout}\label{sensor-readout}}
+\hypertarget{configuration-of-the-measurement}{%
+\section{Configuration of the
+measurement}\label{configuration-of-the-measurement}}
 
-\hypertarget{processing-pipeline}{%
-\subsection{Processing pipeline}\label{processing-pipeline}}
+The configured hardware was then connected and connected to the host
+system using the
+\passthrough{\lstinline!MRPcli config setupsensor eval\_measurement\_config!}-\gls{cli}
+command. The measurement was then
+configured\ref{lst:evaluation_measurement_config}.
 
-\hypertarget{test-scenarios}{%
-\section{Test scenarios}\label{test-scenarios}}
+\begin{lstlisting}[language=bash, caption={Measurement configuration for evaluation measurement}, label=lst:evaluation_measurement_config]
+## CONFIGURE THE MEASUREMENT
+$ MRPcli config setup eval_measurement_config
+> READING-NAME: 360_eval_magnet_<id>
+> OUTPUT-FOLDER: ./readings/evaluation/
+> NUMBER DATAPOINTS: 18 # FOR A FULLSPHERE READING USE MULTIBLE OF 18
+> NUMBER AVERAGE READINGS PER DATAPOINT: 10
+\end{lstlisting}
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+The \passthrough{\lstinline!MRPcli measure run!} command was then called
+up for each individual magnet to carry out a measurement. After each
+run, the \passthrough{\lstinline!READING-NAME!} parameter was filled
+with the id of the next magnet so that all measurements could be
+assigned to the physical magnets.
+
+\hypertarget{custom-algorithm-implementation}{%
+\section{Custom algorithm
+implementation}\label{custom-algorithm-implementation}}
+
+The next step for the user is the implementation of the filter
+algorithm\ref{lst:custom_find_similar_values_algorithm}. This can have
+any function signature and is implemented in the file
+\passthrough{\lstinline!UDPPFunctionCollection.py!}. This Python file is
+loaded when the pipeline is started and all functions that are imported
+here as a module or implemented directly can be called via the pipeline.
+As this is a short algorithm, it was inserted directly into the file.
+The parameter \passthrough{\lstinline!\_readings!} should later receive
+the imported measurements from the
+\passthrough{\lstinline!stage import!} and the optional
+\passthrough{\lstinline!IP\_return\_count!} parameter specifies the
+number of best measurements that are returned. The return parameter is a
+list of measurements and should contain the measurements that are
+closest to the mean value of all measurements after the function has
+been executed.
+
+\begin{lstlisting}[language=Python, caption={User implemented custom find most similar readings algorithm}, label=lst:custom_find_similar_values_algorithm]
+    @staticmethod
+    def customFindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
+        import heapq
+        heap = []
+        # SET RESULT VALUE COUNT
+        IP_return_count = max([int(IP_return_count),len(_readings)])
+        if IP_return_count < 0:
+            IP_return_count = len(_readings) / 5
+        # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
+        target_value = 0.0
+        for idx, r in enumerate(_readings):
+            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            target_value = target_value + mean
+        target_value = target_value / len(_readings)
+        # PUSH READINGS TO HEAP
+        for value in _readings:
+            # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
+            diff = abs(value - target_value)
+            heapq.heappush(heap, (diff, value))
+        # RETURN X BEST ITEMS FROM HEAP
+        similar_values = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
+        # CLEAN UP USED LIBRARIES AND RETURN RESULT
+        del heapq
+        return similar_values
+\end{lstlisting}
+
+The python \passthrough{\lstinline!heapq!}\cite{heapq} module, which
+implements a priority queue, is used for this purpose. The calculated
+distances from the mean value of the measurements to the global mean
+value are inserted into this queue. Subsequently, as many elements of
+the queue are returned as defined by the
+\passthrough{\lstinline!IP\_return\_count!} parameter. The actual
+sorting was carried out by the queue in the background.
+
+\hypertarget{execution-of-analysis-pipeline}{%
+\section{Execution of analysis
+pipeline}\label{execution-of-analysis-pipeline}}
+
+Once the filter function has been implemented, it still needs to be
+integrated into the analysis
+pipeline\ref{lst:pipeline_mrp_evaluation_yaml}. Here, the example
+pipeline \ref{example_measurement_analysis_pipeline.png} is simplified
+and an additional stage \passthrough{\lstinline!find\_similar\_values!}
+has been added, which has set
+\passthrough{\lstinline!customFindSimilarValuesAlgorithm!} as the
+function to be called. As a final step, the result is used in the
+\passthrough{\lstinline!plot\_filtered!} stage for visualisation.
+
+\begin{lstlisting}[caption={User defined processing pipeline using custom implemented filter algorithm}, label=lst:pipeline_mrp_evaluation_yaml]
+settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_mrp_evaluation
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/evaluation/
+    IP_file_regex: 360_(.)*.mag.json
+
+stage find_similar_values:
+  function: custom_find_similar_values_algorithm
+  parameters:
+    _readings: stage import # USE RESULTS FROM import STAGE
+    IP_return_count: 4 # RETURN BEST 4 of 10 READINGS
+
+stage plot_filtered:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage find_similar_values # USE RESULTS FROM find_similar_values STAGE
+    IP_export_folder: ./readings/evaluation/plots/plot_filtered/
+    IP_plot_headline_prefix:  MRP evaluation - filtered
+\end{lstlisting}
+
+The final pipeline has been saved in the pipeline directory as
+\passthrough{\lstinline!pipeline\_mrp\_evaluation.yaml!} file and is
+ready for execution. This is carried out using the
+\passthrough{\lstinline!MRPudpp!}-(cli)\ref{lst:bash_pipeline_mrp_evaluation_yaml}.
+After the run has been successfully completed, the results are saved in
+the result folder specified in the pipeline using the
+\passthrough{\lstinline!IP\_export\_folder!} parameter.
+
+\begin{lstlisting}[language=bash, caption={Bash result log of evaluation pipeline run}, label=lst:bash_pipeline_mrp_evaluation_yaml]
+# LIST ACTIVE PIPELINES IN PIPELINE DIRECTORY 
+$ MRPudpp pipeline listenabledpipelines
+> Found enabled pipelines:
+> 1. pipeline_mrp_evaluation.yaml
+# EXECUTE THE EVALUATION PIPELINE
+$ MRPudpp pipeline run
+> loading pipeline pipeline_mrp_evaluation.yaml
+> stage nodes: ['import', 'find_similar_values', 'plot_raw', 'plot_filtered']
+> =====> stage: import 
+> =====> stage: find_similar_values 
+> =====> stage plot_filtered 
+> Process finished with exit code 0
+\end{lstlisting}
+
+The figure \ref{MRP_evaluation_result.png} shows this result. The plot
+of the raw measured values is shown on the left. The variance of the
+determined \passthrough{\lstinline!Mean [uT]!} mean values is plotted on
+ten individual measured values. Here you can see that there are measured
+values with larger deviations (see measurement
+\passthrough{\lstinline!7:0!},\passthrough{\lstinline!10-2:0!},\passthrough{\lstinline!10-1:0!}).
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MRP_evaluation_result.png}
+\caption{MRP evaluation result \label{MRP_evaluation_result.png}}
+\end{figure}
+
+On the right-hand side\ref{MRP_evaluation_result.png}, the measured
+values are plotted as a result of the filter algorithm. As the
+\passthrough{\lstinline!IP\_return\_count!} parameter was set to four,
+only the four most similar measurements were exported here. It can be
+seen from the plotted mean values \passthrough{\lstinline!Mean [uT]!}
+that these are closest to the global mean value
+\passthrough{\lstinline!208.8 uT!}. The algorithm was thus successfully
+executed using the pipeline and the results could be validated.
 
 \hypertarget{conclusion-and-dicussion}{%
 \chapter{Conclusion and dicussion}\label{conclusion-and-dicussion}}
