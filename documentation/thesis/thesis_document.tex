@@ -16,6 +16,24 @@
 \hypertarget{structure}{%
 \section{Structure}\label{structure}}
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  State of the art
+\item
+  Usecases
+\item
+  Unified Sensor
+\item
+  Software readout framework
+\item
+  Usability improvements
+\item
+  Evaluation
+\end{enumerate}
+
 \hypertarget{state-of-the-art}{%
 \chapter{State of the art}\label{state-of-the-art}}
 
@@ -48,17 +66,16 @@ goal is reproducibility to ensure consistent results. Easy communication
 with standard PC hardware maximises the user-friendliness of the
 interface. The flexibility to support different sensors and magnets
 makes the system versatile and opens up possibilities for different
-applications. This low-cost Hall sensor interface will therefore not
-only be economically attractive, but also facilitate the integration of
-Hall sensors in different contexts. In addition, the low-cost Hall
-sensor interface will serve as a development platform for the data
-evaluation \gls{mrp} library and provide real measurement data from
-magnets. In addition, the interface firmware creates a basis for the
-development of a data protocol for exchanging measured values. This
-makes it easy to integrate your own measuring devices into the \gls{mrp}
-ecosystem at a later date. This is only possible with a minimal
-functional hardware and firmware setup and was developed for this
-purpose first.
+applications. A low-cost Hall sensor interface will therefore not only
+be economically attractive, but also facilitate the integration of Hall
+sensors in different contexts. In addition, the low-cost Hall sensor
+interface will serve as a development platform for the data evaluation
+\gls{mrp} library and provide real measurement data from magnets. In
+addition, the interface firmware creates a basis for the development of
+a data protocol for exchanging measured values. This makes it easy to
+integrate your own measuring devices into the \gls{mrp} ecosystem at a
+later date. This is only possible with a minimal functional hardware and
+firmware setup and was developed for this purpose first.
 
 \hypertarget{sensor-selection}{%
 \section{Sensor selection}\label{sensor-selection}}
@@ -163,10 +180,10 @@ implementation, but also ensured a cost-efficient realisation.
 
 A decisive step in my work was the in-house PCB
 design\ref{1D_sensor_schematic_and_circuit_board.png}, which leads out
-all the important connections. The placement and alignment of the
-components optimised the wiring, which in turn improved the reliability
-of the sensor tests. Particular attention was paid to the implementation
-of a \passthrough{\lstinline!SYNC!}-\gls{gpio}, which enables subsequent
+all the important connections. The placement and alignment of components
+optimised the wiring, which in turn improved the reliability of the
+sensor tests. Particular attention was paid to the implementation of a
+\passthrough{\lstinline!SYNC!}-\gls{gpio}, which enables subsequent
 multi-sensor synchronisation. This functionality opens up the
 possibility of synchronising data from different sensors to achieve
 precise and coherent measurement results. Overall, this integrated
@@ -194,12 +211,13 @@ decisions. Firmware is critical to the functioning of devices.
 The firmware is responsible for detecting the possible connected
 sensors\ref{Implemented_digital_halleffect_sensors.csv} and reading them
 out. This measured data can be forwarded to a host \gls{pc} via a user
-interface and can then be further processed there. An important
-component is that as many common sensors as possible can be easily
-connected without having to adapt the firmware. This modularity was
-implemented using \passthrough{\lstinline!abstract!} class design. These
-are initiated according to the sensors found at startup. If new hardware
-is to be integrated, only the required
+interface and can then be further processed there.
+
+An important component is that as many common sensors as possible can be
+easily connected without having to adapt the firmware. This modularity
+was implemented using \passthrough{\lstinline!abstract!} class design.
+These are initiated according to the sensors found at startup. If new
+hardware is to be integrated, only the required
 functions\ref{lst:CustomSensorClass} need to be implemented.
 
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support}, label=lst:CustomSensorClass]
@@ -251,15 +269,16 @@ the integrated \gls{cli}. All sensors are read out via a timer interval
 set in the setup procedure and their values are stored in a ringbuffer.
 Ring buffers, offer efficient data management in limited memory. Its
 cyclic structure enables continuous overwriting of older data, saves
-memory space and facilitates seamless processing of real-time data. Ring
-buffers are well suited for applications with variable data rates and
-minimise the need for complex memory management. The buffer can be read
-out by command and the result of the measurement is sent to the host.
-Each sensor measurement result is transmitted from the buffer to the
-host together with a time stamp and a sequential number. This ensures
-that in a multi-sensor setup with several sensors. The measurements are
-synchronized\ref{sensor-syncronsisation-interface} in time and are not
-out of sequence or drift.
+memory space and facilitates seamless processing of real-time data.
+
+Ring buffers are well suited for applications with variable data rates
+and minimise the need for complex memory management. The buffer can be
+read out by command and the result of the measurement is sent to the
+host. Each sensor measurement result is transmitted from the buffer to
+the host together with a time stamp and a sequential number. This
+ensures that in a multi-sensor setup with several sensors. The
+measurements are synchronized\ref{sensor-syncronsisation-interface} in
+time and are not out of sequence or drift.
 
 \hypertarget{communication-interface}{%
 \subsection{Communication interface}\label{communication-interface}}
@@ -700,12 +719,6 @@ protocol thanks to the modular design.
 \hypertarget{software-readout-framework}{%
 \chapter{Software readout framework}\label{software-readout-framework}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_MRPlib_COMPLETE_FLOW.png}
-\caption{MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}}
-\end{figure}
-
 \hypertarget{library-requirements}{%
 \section{Library requirements}\label{library-requirements}}
 
@@ -723,16 +736,20 @@ protocol thanks to the modular design.
 \hypertarget{user-interaction-points}{%
 \subsection{User interaction points}\label{user-interaction-points}}
 
-\begin{itemize}
-\tightlist
-\item
-  grafik zeigen
-\item
-  einzelne module erleutern
-\end{itemize}
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MRPlib_COMPLETE_FLOW.png}
+\caption{MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}}
+\end{figure}
+
+\hypertarget{extension-modules}{%
+\section{Extension Modules}\label{extension-modules}}
+
+Im folgenden werden die einzelnen module, welche vom user modifiziert
+und ersetzt werden können im details erleutert.
 
 \hypertarget{hal}{%
-\subsubsection{HAL}\label{hal}}
+\subsection{HAL}\label{hal}}
 
 \begin{itemize}
 \tightlist
@@ -746,7 +763,16 @@ protocol thanks to the modular design.
 \end{itemize}
 
 \hypertarget{visualisation}{%
-\subsubsection{Visualisation}\label{visualisation}}
+\subsection{Visualisation}\label{visualisation}}
+
+\hypertarget{storage}{%
+\subsection{Storage}\label{storage}}
+
+\begin{itemize}
+\tightlist
+\item
+  metadata management
+\end{itemize}
 
 \hypertarget{export}{%
 \subsection{Export}\label{export}}
@@ -759,11 +785,8 @@ protocol thanks to the modular design.
   matlab
 \end{itemize}
 
-\hypertarget{meta-data}{%
-\subsubsection{Meta-Data}\label{meta-data}}
-
 \hypertarget{multible-sensor-setup}{%
-\subsection{Multible sensor setup}\label{multible-sensor-setup}}
+\section{Multible sensor setup}\label{multible-sensor-setup}}
 
 At the current state of implementation, it is only possible to detect
 and use sensors that are directly connected to the \gls{pc} with the
@@ -806,7 +829,7 @@ sensor opposite the Control \gls{pc}, even if there are several proxy
 instances behind it.
 
 \hypertarget{network-proxy}{%
-\subsubsection{Network-Proxy}\label{network-proxy}}
+\subsection{Network-Proxy}\label{network-proxy}}
 
 The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the
 various \gls{hal} instances, which communicate with the physically
@@ -877,7 +900,7 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 \end{lstlisting}
 
 \hypertarget{sensor-syncronisation}{%
-\subsubsection{Sensor Syncronisation}\label{sensor-syncronisation}}
+\subsection{Sensor Syncronisation}\label{sensor-syncronisation}}
 
 Another important aspect when using several sensors via the proxy system
 is the synchronisation of the measurement intervals between the sensors.
@@ -895,7 +918,7 @@ many \gls{sbc}, such as the
 \passthrough{\lstinline!Raspberry-Pi Compute Module 4!}.
 
 \hypertarget{command-router}{%
-\subsubsection{Command-Router}\label{command-router}}
+\subsection{Command-Router}\label{command-router}}
 
 \begin{itemize}
 \item
@@ -914,7 +937,84 @@ many \gls{sbc}, such as the
 \end{itemize}
 
 \hypertarget{examples}{%
-\subsection{Examples}\label{examples}}
+\section{Examples}\label{examples}}
+
+The following shows some examples of how the \gls{mrp} library can be
+used. These examples are limited to a functional minimum for selected
+modules of the \gls{mrp} library. The documentation\ref{documentation}
+contains further and more detailed examples. Many basic examples are
+also supplied in the form of test cases\ref{tests}.
+
+\hypertarget{mrpanalysis}{%
+\subsection{MRPAnalysis}\label{mrpanalysis}}
+
+Dieses beispiel zeigt
+
+\begin{lstlisting}[language=Python]
+from MRP import MRPAnalysis
+from MRP import MRPDataVisualization
+# Create a empty reading with no settings. Only the raw values are needed, no metadata
+reading = MRPReading.MRPReading()
+# CREATE A SAMPLE MEASUREMENT
+for i in range(1000):
+    measurement = MRPReadingEntry.MRPReadingEntry()
+    # readout sensor or use dummy data and assign result
+    measurement.value = (random.random() -0.5) * 2
+    reading.insert_reading_instance(measurement, False)
+
+# PLOT MEAN VISUALIZATION
+MRPDataVisualization.MRPDataVisualization.plot_error([reading])
+# APPLY COMPENSATION
+# Here the ``calculate_mean`` function is used
+# see MRPAnalysis module for alternatives
+reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
+# we want to subtract the mean value from all readings
+reading_mean_value = -reading_mean_value
+# modify measurement values
+MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
+\end{lstlisting}
+
+\hypertarget{mrphallbacharraygenerator}{%
+\subsection{MRPHallbachArrayGenerator}\label{mrphallbacharraygenerator}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}
+\caption{Generated hallbach array with generated cutouts for eight
+magnets
+\label{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}}
+\end{figure}
+
+The following example code\ref{lst:mrpexample_hallbach}, shows how a
+simple Hallbach magnetic ring can be generated. Eight random
+measurements are generated here. It is important that the magnet type
+(here \passthrough{\lstinline!N45\_CUBIC\_15x15x15!}) is specified. This
+is necessary so that the correct magnet cutouts can be generated when
+creating the 3D model. After the measurements have been generated, they
+are provided with a position and rotation offset according to the
+Hallbach design and calucation
+scheme\cite{HallbachMagnetDesignPaper} using the
+\passthrough{\lstinline!MRPHallbachArrayGenerator!} module.
+
+\begin{lstlisting}[language=Python, caption={MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring}, label=lst:mrpexample_hallbach]
+readings = []
+for idx in range(8):
+  # GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS
+  readings.append(MRPSimulation.MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15))
+## GENERATE HALLBACH
+hallbach_array: MRPHallbachArrayGenerator.MRPHallbachArrayResult = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+# EXPORT TO OPENSCAD
+## 2D MODE DXF e.g. for lasercutting
+MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./2d_test.scad",_2d_object_code=True)
+## 3D MODE e.g. for 3D printing
+MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./3d_test.scad",_2d_object_code=False)
+\end{lstlisting}
+
+In the last step, a 3D model with the dimensions of the magnet type set
+is generated from the generated magnet positions. The result is an
+\passthrough{\lstinline!OpenSCAD!}\cite{OpenSCAD} file, which
+contains the generated \passthrough{\lstinline!OpenSCAD!}
+sourcecode\ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}.
 
 \hypertarget{usability-improvements}{%
 \chapter{Usability improvements}\label{usability-improvements}}
@@ -1507,7 +1607,7 @@ been executed.
 
 \begin{lstlisting}[language=Python, caption={User implemented custom find most similar readings algorithm}, label=lst:custom_find_similar_values_algorithm]
     @staticmethod
-    def customFindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
+    def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
         import heapq
         heap = []
         # SET RESULT VALUE COUNT
@@ -1550,8 +1650,8 @@ pipeline\ref{lst:pipeline_mrp_evaluation_yaml}. Here, the example
 pipeline \ref{example_measurement_analysis_pipeline.png} is simplified
 and an additional stage \passthrough{\lstinline!find\_similar\_values!}
 has been added, which has set
-\passthrough{\lstinline!customFindSimilarValuesAlgorithm!} as the
-function to be called. As a final step, the result is used in the
+\passthrough{\lstinline!FindSimilarValuesAlgorithm!} as the function to
+be called. As a final step, the result is used in the
 \passthrough{\lstinline!plot\_filtered!} stage for visualisation.
 
 \begin{lstlisting}[caption={User defined processing pipeline using custom implemented filter algorithm}, label=lst:pipeline_mrp_evaluation_yaml]
@@ -1631,15 +1731,49 @@ executed using the pipeline and the results could be validated.
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-\hypertarget{problems}{%
-\section{Problems}\label{problems}}
+This work describes the development of a universal Python library that
+is used to efficiently process data from magnetic field sensors from
+acquisition to analysis. In order to ensure a practical application and
+to give users the opportunity to directly acquire their own magnetic
+field data, cost-effective and easily reproducible hardware was also
+developed.
+
+The hardware is based on widely used magnetic field sensors and low-cost
+microcontrollers, which enables an easily expandable and applicable
+solution for measuring magnets with repeatable accuracy. A particular
+focus was placed on expandability by the user. Interchangeable modules
+allow the user to develop their own analysis algorithms without having
+to redesign everything from scratch.
+
+This extensibility and customisability was successfully demonstrated
+during the evaluation. This underlines the performance of the developed
+framework and shows that it is not only effective in the processing of
+magnetic field sensor data, but also offers a flexible platform for the
+implementation of user-specific analyses.
 
 \hypertarget{outlook}{%
 \section{Outlook}\label{outlook}}
 
-\begin{itemize}
-\tightlist
-\item
-  magfield camera
-\end{itemize}
+In this version of the framework, a solid foundation has been laid that
+includes all the necessary features and is ready for use. During
+development, particular emphasis was placed on comprehensive
+documentation to make it easier to get started. Together with examples
+for various use cases, a user can quickly evaluate the framework.
+
+However, it should be noted that the framework is still in its infancy.
+The stable version distributed via the package registry is well suited
+for the intended purpose. All tests and evaluations took place under
+normal conditions, especially for the developed hardware sensors, as the
+\gls{mrp} library works successfully with the measurement data.
+
+On the software side, the focus is on integration for the support of
+more professional measuring devices. Only in this way is it possible to
+evaluate and improve the sensor hardware and quantify the measurement
+results.
+
+To summarise, it can be said that a solid software framework has been
+created that can be used directly for the intended purpose. It provides
+a good foundation, but can be further developed by integrating
+professional measurement devices to enable a more comprehensive
+evaluation and improvement of the sensor hardware.
 
