@@ -1,0 +1,2 @@
+![Example full sphere plot of an measurement using the MRPVisualisation module \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}](./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png)
+

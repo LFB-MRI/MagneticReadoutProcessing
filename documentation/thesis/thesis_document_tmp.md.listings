@@ -425,19 +425,19 @@ The approach of implementing this via a (+rest) interface also offers the advant
 
 
 Another application example is when sensors are physically separated or there are long distances between them.
-By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are available to the control (+pc).
+By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are available to the `control` (+pc).
 
 ![mrp proxy multi \label{mrp_proxy_multi.png}](./generated_images/border_mrp_proxy_multi.png)
 
 
 The figure \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sensor` topology.
-Here, both proxy instances do not communicate directly with the control (+pc), but `remote (+pc) #2` is connected to `remote (+pc) #1`.
+Here, both proxy instances do not communicate directly with the `control` (+pc), but `remote`(+pc)`#2` is connected to `remote`(+pc)`#1`.
 This is then visible as a sensor opposite the Control (+pc), even if there are several proxy instances behind it.
 
 
 ### Network-Proxy
 
-The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote`-(+pc) and the `control`-(+pc) side, which communicates with the remote side via the network. 
+The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote` (+pc) and the `control` (+pc) side, which communicates with the remote side via the network. 
 For the user, nothing changes in the procedure for setting up a measurement. The proxy application must always be started\ref{lst:mrpcli_proxy_start} on the `remote` (+pc) side.
 
 
@@ -506,13 +506,18 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 
 ### Command-Router
 
-* nummerieierung zuerst lokale sensoren dann weitere proxy sensoren
-* commando templating
-* einzelne sensor capabilites werden gemerged
-* ids werden aufsuimmiert
-* spätere sensor identifikation geschieht über die jeweilige sensor id, welche über diesen index abgefragt werden kann
+As it is possible to connect many identical sensors to one host using the `network proxy`, it must be possible to address them separately. This separation is done by the `MRPProxy.proxy` module and is therefore not part of the core (+mrp) library.
 
-* grafik mit mergin algorithmus
+Each connected sensor is addressed via the text-based (+cli) or the binary interface, this is initially the same for each sensor. The only identification feature is the sensor (+id).
+
+The `network proxy` instance pretends to be a sensor to the (+mrp) host, so the multiple sensors must be combined into one. This is done in several steps, in the `network proxy` start procedure:
+
+1. **Construct the Sensor ID LookUp-Table**
+
+2. **Merging the sensor capabilities**
+
+3. **Dynamic extension of the available network proxy commands**
+
 
 
 ## Examples
@@ -527,7 +532,6 @@ The `MRPReading` module is the cornerstone of the (+mrp) library.
 It is used to manage the measurement data and can be imported and exported.
 The following example\ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of `MRPReadingEntry` instances.
 An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the `set_additional_data` function.
-
 
 ~~~ { .python  #lst:mrpexample_reading caption="MRPReading example for setting up an basic measurement" }
 from MRP import MRPReading, MRPMeasurementConfig
@@ -560,22 +564,20 @@ imported_reading: MRPReading = MRPReading()
 imported_reading.load_from_file("exported_reading.mag.json")
 ~~~
 
-
 Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the `dump_to_file` function, the measurement can be converted into an open (+json) format. This file can then be imported again at a later date using `load_from_file`.
 
 ### MRPHal
 
-
-After generating simple measurements with random values in the previous example\ref{mrpreading}, the next step is to record real sensor data. For this purpose, the MRPHal module was developed, which can interact with all `Unified Sensor`\ref{unified-sensor}-compatible sensors. In the following example\ref{lst:mrpexample_hal}, an `1D: Single Sensor`\ref{d-single-sensor} is connected locally to the host (+pc).
+After generating simple measurements with random values in the previous example\ref{mrpreading}, the next step is to record real sensor data. For this purpose, the `MRPHal` module was developed, which can interact with all `Unified Sensor`\ref{unified-sensor}-compatible sensors. In the following example\ref{lst:mrpexample_hal}, an `1D: Single Sensor`\ref{d-single-sensor} is connected locally to the host-(+pc).
 
 ~~~ { .python  #lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of an measurement" }
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
-system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_sensors()
+system_ports = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("UNFSensor1")
+device_path = MRPHalSerialPortInformation("UNFSensor1")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -584,61 +586,84 @@ basesensor.query_readout()
 print(basesensor.get_b()) # GET RAW MEASUREMENT
 print(basesensor.get_b(1)) # GET RAW DATA FROM SENSOR WITH ID 1
 # TO GENERATE A READING THE perform_measurement FUNCTION CAN BE USED
-reading_source: MRPReadingSource = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
+reading_source = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 ~~~
 
-In general, a sensor can be connected using its specific system path or the sensor-(+id) via the MRPHalSerialPortInformation function.
+In general, a sensor can be connected using its specific system path or the sensor-(+id) via the `MRPHalSerialPortInformation` function.
 Locally connected or network sensors can also be automatically recognised using the `list_sensors` function.
-Once connected, these are then converted into a usable data source using the MRPReadingSource module. This automatically recognises the type of sensor and generated an `MRPReading` instance with the measured values of the sensor.
+Once connected, these are then converted into a usable data source using the `MRPReadingSource` module. This automatically recognises the type of sensor and generated an `MRPReading` instance with the measured values of the sensor.
+
 
 
 ### MRPSimulation
 
+If no hardware sensor is available or for the generation of test data, the `MRPSimulation` module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete `MRPReading` measurement with a wide range of set meta data.
+The example\ref{lst:mrpexample_simulation} illustrated the basic usage.
+Different variations of the `generate_reading` function offers the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
+The data is generated in the background using the `magpylib`[@ortner2020magpylib] library according to the specified parameters.
 
-~~~ { .python }
+~~~ { .python  #lst:mrpexample_simulation caption="MRPSimulation example illustrates the usage of several data analysis functions" }
 from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
 # GENERATE SILUMATED READING USING A SIMULATED HALLSENSOR FROM magpy LIBRARY
-reading: MRPReading = MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
+reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
 # GENERATE A FULLSPHERE MAP READING
-reading_fullsphere: MRPReading = MRPSimulation.generate_random_full_sphere_reading()
+reading_fullsphere = MRPSimulation.generate_random_full_sphere_reading()
 # RENDER READING TO FILE IN 3D
 visu = MRPPolarVisualization(reading)
 visu.plot3d(None)
-visu.plot3d("simulated_reading.mag.png")
+visu.plot3d("simulated_reading.png")
 # EXPORT READING
 reading.dump_to_file("simulated_reading.mag.json")
 ~~~
 
 ### MRPAnalysis
 
-Dieses beispiel zeigt
+Once data can be acquired using hardware or software sensors, the next step is to analyse this data. The (+mrp) library provides some simple analysis functions for this purpose. The code example shows the basic use of the module.
+The `Evaluation`\ref{evaluation} chapter shows how the user can implement their own algorithms and add them to the library.
 
-~~~ { .python }
-from MRP import MRPAnalysis, MRPDataVisualization, MRPReading
-# CREATE EMPTY READING
-reading = MRPReading.MRPReading()
-# CREATE A SAMPLE MEASUREMENT
-for i in range(1000):
-    measurement = MRPReadingEntry.MRPReadingEntry()
-    # readout sensor or use dummy data and assign result
-    measurement.value = (random.random() -0.5) * 2
-    reading.insert_reading_instance(measurement, False)
-# PLOT MEAN VISUALIZATION
-MRPDataVisualization.MRPDataVisualization.plot_error([reading])
-# APPLY COMPENSATION
-# Here the ``calculate_mean`` function is used
-reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
-# we want to subtract the mean value from all readings
-reading_mean_value = -reading_mean_value
-# modify measurement values
-MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
+~~~ { .python  #lst:mrpexample_analysis caption="MRPAnalysis example code performs several data analysis steps" }
+from MRP import MRPAnalysis, MRPReading
+# CREATE A SAMPLE MEASUREMENT WITH SIMULATED DATA
+reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_10x10x10)
+# CALCULATE MEAN
+print(MRPAnalysis.calculate_mean(reading))
+# CALCULATE STD DEVIATION ON TEMPERATURE AXIS
+print(MRPAnalysis.calculate_std_deviation(reading, _temperature_axis=True))
+# CALCULATE CENTER OF GRAVITY
+(x, y, z) = MRPAnalysis.calculate_center_of_gravity(reading)
+# APPLY CALIBRATION READING TO REMOVE BACKGROUND NOISE
+calibration_reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_10x10x10, _ideal = True)
+MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ~~~
 
 ### MRPVisualisation
 
+![Example full sphere plot of an measurement using the MRPVisualisation module \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}](./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png)
 
 
+This final example shows the use of the MRP Visualisation module, which provides general functions for visualising measurements. This makes it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the `3D: Fullsphere`\ref{d-fullsphere} sensor. The sub-module 'MRPPolarVisualisation' is specially designed for these. The figure\ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a fullsphere measurement.
+
+It is also possible to export the data from the MRPAnalysis module graphically as diagrams. The `MRPVisualisation` modules are used here.
+The following example\ref{lst:mrpexample_visualisation} shows the use of both modules.
+
+
+~~~ { .python  #lst:mrpexample_visualisation caption="MRPVisualisation example which plots a fullsphere to an image file" }
+from MRP import MRPPolarVisualization
+# CREATE MRPPolarVisualization INSTANCE
+## IT CAN BE REUSED CALLING plot2d AGAIN, AFTER LINKED READING DATA WERE MODIFIED
+visu = MRPPolarVisualization.MRPPolarVisualization(reading)
+# 2D PLOT INTO A WINDOW
+visu.plot2d_top(None)
+visu.plot2d_side(None)
+# 3D PLOT TO FILE
+visu.plot3d(os.path.join('./plot3d_3d.png'))
+
+# PLOT ANALYSIS RESULTS
+from MRP import MRPDataVisualization
+MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
+
+~~~
 ### MRPHallbachArrayGenerator
 
 ![Generated hallbach array with generated cutouts for eight magnets \label{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}](./generated_images/border_Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png)
