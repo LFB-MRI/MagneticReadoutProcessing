@@ -53,7 +53,24 @@ This work is divided into six main chapters, which deal with the approach and im
 
 # Usecases
 
-1. 
+The following section defines some use cases that the future project should be able to cover.
+They illustrate practical situations and help to understand the functionality and added value of the implemented project for the user.
+These were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected. In the later evaluation\ref{evaluation} process, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution.
+
+
+1. **Ready to use hardware sensor designs**
+
+2. **Taking automatic measurements from sensors**
+
+3. **Ready to use data analysis functions**
+
+4. **Open storage formats for data export**
+
+5. **Easy software configuration**
+
+6. **User expandable data processing pipelines**
+
+
 
 
 
@@ -495,7 +512,7 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 * ids werden aufsuimmiert
 * spätere sensor identifikation geschieht über die jeweilige sensor id, welche über diesen index abgefragt werden kann
 
-* tablle mit mergin algorithmus
+* grafik mit mergin algorithmus
 
 
 ## Examples
@@ -506,8 +523,13 @@ Many basic examples are also supplied in the form of test cases\ref{tests}.
 
 ### MRPReading
 
+The `MRPReading` module is the cornerstone of the (+mrp) library.
+It is used to manage the measurement data and can be imported and exported.
+The following example\ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of `MRPReadingEntry` instances.
+An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the `set_additional_data` function.
 
-~~~ { .python }
+
+~~~ { .python  #lst:mrpexample_reading caption="MRPReading example for setting up an basic measurement" }
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -533,23 +555,27 @@ csv: []= reading.to_value_array()
 js: dict= reading.dump()
 # EXPORT READING TO FILE
 reading.dump_to_file("exported_reading.mag.json")
-
 # IMPORT READING
 imported_reading: MRPReading = MRPReading()
 imported_reading.load_from_file("exported_reading.mag.json")
 ~~~
 
 
+Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the `dump_to_file` function, the measurement can be converted into an open (+json) format. This file can then be imported again at a later date using `load_from_file`.
+
 ### MRPHal
 
 
-~~~ { .python }
+After generating simple measurements with random values in the previous example\ref{mrpreading}, the next step is to record real sensor data. For this purpose, the MRPHal module was developed, which can interact with all `Unified Sensor`\ref{unified-sensor}-compatible sensors. In the following example\ref{lst:mrpexample_hal}, an `1D: Single Sensor`\ref{d-single-sensor} is connected locally to the host (+pc).
+
+~~~ { .python  #lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of an measurement" }
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
-system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_serial_ports()
+## LISTS LOCAL CONNECTED OR NETWORK SENSORS
+system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("/dev/serial/by-name/UNFSensor1")
+device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("UNFSensor1")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -562,8 +588,12 @@ reading_source: MRPReadingSource = MRPReadingSourceHelper.createReadingSourceIns
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 ~~~
 
-### MRPSimulation
+In general, a sensor can be connected using its specific system path or the sensor-(+id) via the MRPHalSerialPortInformation function.
+Locally connected or network sensors can also be automatically recognised using the `list_sensors` function.
+Once connected, these are then converted into a usable data source using the MRPReadingSource module. This automatically recognises the type of sensor and generated an `MRPReading` instance with the measured values of the sensor.
 
+
+### MRPSimulation
 
 
 ~~~ { .python }

@@ -66,6 +66,12 @@ class MRPHalSerialPortInformation:
             return True
         return False
 
+
+    @staticmethod
+    def list_sensors() -> []:
+        l: [MRPHalSerialPortInformation] = MRPHalSerialPortInformation.list_serial_ports()
+        r: [MRPHalSerialPortInformation] = MRPHalSerialPortInformation.list_remote_serial_ports
+        return l + r
     @staticmethod
     def list_remote_serial_ports() -> []:
         sock = socket(AF_INET, SOCK_DGRAM)

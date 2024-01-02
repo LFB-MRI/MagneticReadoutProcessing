@@ -463,7 +463,7 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 * ids werden aufsuimmiert
 * spätere sensor identifikation geschieht über die jeweilige sensor id, welche über diesen index abgefragt werden kann
 
-* tablle mit mergin algorithmus
+* grafik mit mergin algorithmus
 
 
 ## Examples
@@ -474,8 +474,13 @@ Many basic examples are also supplied in the form of test cases\ref{tests}.
 
 ### MRPReading
 
+The `MRPReading` module is the cornerstone of the (+mrp) library.
+It is used to manage the measurement data and can be imported and exported.
+The following example\ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of `MRPReadingEntry` instances.
+An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the `set_additional_data` function.
 
-```python
+
+```python {#lst:mrpexample_reading caption="MRPReading example for setting up an basic measurement"}
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -501,23 +506,27 @@ csv: []= reading.to_value_array()
 js: dict= reading.dump()
 # EXPORT READING TO FILE
 reading.dump_to_file("exported_reading.mag.json")
-
 # IMPORT READING
 imported_reading: MRPReading = MRPReading()
 imported_reading.load_from_file("exported_reading.mag.json")
 ```
 
 
+Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the `dump_to_file` function, the measurement can be converted into an open (+json) format. This file can then be imported again at a later date using `load_from_file`.
+
 ### MRPHal
 
 
-```python
+After generating simple measurements with random values in the previous example\ref{mrpreading}, the next step is to record real sensor data. For this purpose, the `MRPHal` module was developed, which can interact with all `Unified Sensor`\ref{unified-sensor}-compatible sensors. In the following example\ref{lst:mrpexample_hal}, an `1D: Single Sensor`\ref{d-single-sensor} is connected locally to the host-(+pc).
+
+```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of an measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
-system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_serial_ports()
+## LISTS LOCAL CONNECTED OR NETWORK SENSORS
+system_ports = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("/dev/serial/by-name/UNFSensor1")
+device_path = MRPHalSerialPortInformation("UNFSensor1")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -526,20 +535,24 @@ basesensor.query_readout()
 print(basesensor.get_b()) # GET RAW MEASUREMENT
 print(basesensor.get_b(1)) # GET RAW DATA FROM SENSOR WITH ID 1
 # TO GENERATE A READING THE perform_measurement FUNCTION CAN BE USED
-reading_source: MRPReadingSource = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
+reading_source = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 ```
 
-### MRPSimulation
+In general, a sensor can be connected using its specific system path or the sensor-(+id) via the `MRPHalSerialPortInformation` function.
+Locally connected or network sensors can also be automatically recognised using the `list_sensors` function.
+Once connected, these are then converted into a usable data source using the `MRPReadingSource` module. This automatically recognises the type of sensor and generated an `MRPReading` instance with the measured values of the sensor.
 
+
+### MRPSimulation
 
 
 ```python
 from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
 # GENERATE SILUMATED READING USING A SIMULATED HALLSENSOR FROM magpy LIBRARY
-reading: MRPReading = MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
+reading = MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
 # GENERATE A FULLSPHERE MAP READING
-reading_fullsphere: MRPReading = MRPSimulation.generate_random_full_sphere_reading()
+reading_fullsphere = MRPSimulation.generate_random_full_sphere_reading()
 # RENDER READING TO FILE IN 3D
 visu = MRPPolarVisualization(reading)
 visu.plot3d(None)

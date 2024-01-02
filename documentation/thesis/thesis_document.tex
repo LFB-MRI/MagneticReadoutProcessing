@@ -74,10 +74,30 @@ previously defined use cases.
 \hypertarget{usecases}{%
 \chapter{Usecases}\label{usecases}}
 
+The following section defines some use cases that the future project
+should be able to cover. They illustrate practical situations and help
+to understand the functionality and added value of the implemented
+project for the user. These were defined in the course of project
+planning and provide an overview of how the user interacts with the
+project and what functionalities can be expected. In the later
+evaluation\ref{evaluation} process, the defined usecases are also used
+as a reference to demonstrate the implemented capabilities of the
+solution.
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
+  \textbf{Ready to use hardware sensor designs}
+\item
+  \textbf{Taking automatic measurements from sensors}
+\item
+  \textbf{Ready to use data analysis functions}
+\item
+  \textbf{Open storage formats for data export}
+\item
+  \textbf{Easy software configuration}
+\item
+  \textbf{User expandable data processing pipelines}
 \end{enumerate}
 
 \hypertarget{unified-sensor}{%
@@ -955,7 +975,7 @@ many \gls{sbc}, such as the
   spätere sensor identifikation geschieht über die jeweilige sensor id,
   welche über diesen index abgefragt werden kann
 \item
-  tablle mit mergin algorithmus
+  grafik mit mergin algorithmus
 \end{itemize}
 
 \hypertarget{examples}{%
@@ -970,7 +990,17 @@ also supplied in the form of test cases\ref{tests}.
 \hypertarget{mrpreading}{%
 \subsection{MRPReading}\label{mrpreading}}
 
-\begin{lstlisting}[language=Python]
+The \passthrough{\lstinline!MRPReading!} module is the cornerstone of
+the \gls{mrp} library. It is used to manage the measurement data and can
+be imported and exported. The following
+example\ref{lst:mrpexample_reading} shows how a measurement is created
+and measurement points are added in the form of
+\passthrough{\lstinline!MRPReadingEntry!} instances. An important point
+is the management of the meta data, which further describes the
+measurement. This is realised in the example using the
+\passthrough{\lstinline!set\_additional\_data!} function.
+
+\begin{lstlisting}[language=Python, caption={MRPReading example for setting up an basic measurement}, label=lst:mrpexample_reading]
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -996,22 +1026,38 @@ csv: []= reading.to_value_array()
 js: dict= reading.dump()
 # EXPORT READING TO FILE
 reading.dump_to_file("exported_reading.mag.json")
-
 # IMPORT READING
 imported_reading: MRPReading = MRPReading()
 imported_reading.load_from_file("exported_reading.mag.json")
 \end{lstlisting}
 
+Finally, the measurement is exported for archiving and further
+processing; various export formats are available. Using the
+\passthrough{\lstinline!dump\_to\_file!} function, the measurement can
+be converted into an open \gls{json} format. This file can then be
+imported again at a later date using
+\passthrough{\lstinline!load\_from\_file!}.
+
 \hypertarget{mrphal}{%
 \subsection{MRPHal}\label{mrphal}}
 
-\begin{lstlisting}[language=Python]
+After generating simple measurements with random values in the previous
+example\ref{mrpreading}, the next step is to record real sensor data.
+For this purpose, the MRPHal module was developed, which can interact
+with all
+\passthrough{\lstinline!Unified Sensor!}\ref{unified-sensor}-compatible
+sensors. In the following example\ref{lst:mrpexample_hal}, an
+\passthrough{\lstinline!1D: Single Sensor!}\ref{d-single-sensor} is
+connected locally to the host \gls{pc}.
+
+\begin{lstlisting}[language=Python, caption={MRPHal example to use an connected hardware sensor to store readings inside of an measurement}, label=lst:mrpexample_hal]
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
-system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_serial_ports()
+## LISTS LOCAL CONNECTED OR NETWORK SENSORS
+system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("/dev/serial/by-name/UNFSensor1")
+device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("UNFSensor1")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -1023,6 +1069,15 @@ print(basesensor.get_b(1)) # GET RAW DATA FROM SENSOR WITH ID 1
 reading_source: MRPReadingSource = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 \end{lstlisting}
+
+In general, a sensor can be connected using its specific system path or
+the sensor-\gls{id} via the MRPHalSerialPortInformation function.
+Locally connected or network sensors can also be automatically
+recognised using the \passthrough{\lstinline!list\_sensors!} function.
+Once connected, these are then converted into a usable data source using
+the MRPReadingSource module. This automatically recognises the type of
+sensor and generated an \passthrough{\lstinline!MRPReading!} instance
+with the measured values of the sensor.
 
 \hypertarget{mrpsimulation}{%
 \subsection{MRPSimulation}\label{mrpsimulation}}
