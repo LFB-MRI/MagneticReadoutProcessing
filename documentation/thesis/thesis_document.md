@@ -464,10 +464,53 @@ Each connected sensor is addressed via the text-based (+cli) or the binary inter
 The `Network-Proxy`\ref{network-proxy} instance pretends to be a sensor to the (+mrp) host, so the multiple sensors must be combined into one. This is done in several steps, in the `Network-Proxy`\ref{network-proxy} start procedure:
 
 1. **Construct the Sensor ID LookUp-Table**
+  
+  Immediately after starting the `network-proxy`\ref{network-proxy}, the (+id)s of all locally connected sensors are read out.
+  These are stored together with the instance of the `MRPHal` module in a (+lut).
+  This makes it possible to address a sensor directly using its (+id).
 
 2. **Merging the sensor capabilities**
 
+  %%Sensor_capabilities_merging.csv%%
+
+  When using sensors with different capabilites, these must be combined.
+  These are used to select the appropriate measurement mode for a measurement.
+  For this purpose, the `info` command of each sensor is queried.
+  This information is added to the previously created (+lut). Duplicate entries are summarized (see Table:\ref{Sensor_capabilities_merging.csv}) and returned to the host when the `info`\ref{lst:mtsc} command is received over network.
+
+  ```bash {#lst:mtsc caption="MRPproxy REST enpoiint query examples"}
+  # QUERY Network-Proxy capabilities
+  $ wget http://proxyinstance.local:5556/proxy/status
+  {"capabilities":[
+  "static",
+  "dynamic",
+  "axis_temp",
+  "axis_x"
+  ]}
+  ```
+
+  The same procedure is performed for the `commands` (+cli)-command of each sensor, to merge to available commands of connected sensors into the (+lut).
+
+
 3. **Dynamic extension of the available network proxy commands**
+  In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
+  In addition, there are commands such as the previously used `info` or `status` command, which must be intercepted by the `MRPProxy` module so that it can be handled differently (see example \ref{lst:mtsc}).
+
+  To realize this, a (+lut) was created in the previous steps, which contains information regarding `requested capability` -> `sensor`-(+id) -> `physical sensor` and allows the commands to be routed.
+
+  For commands where there are several entries for `CAPABLE SENSORS ID LUT`\ref{Sensor_capabilities_merging.csv}, there are two possible approaches to how the command is processed:
+
+  * redirect to each capable sensor
+  * extend commands using an id parameter
+
+  These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, `redirect to each capable sensor` is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a `readsensor` command, all sensors are read out via one command and the summarized result is transmitted to the host.
+
+  The `extend commands using an id parameter` strategy is used for different sensors. Each command is extended on the `network-proxy`\ref{network-proxy} by another (+id) parameter, according to the following scheme:
+
+  * `readsensor <axis> <sensor number>`-> `readsensor <axis> <ID>`
+  * `opmode`-> `opmode <ID>`
+
+  This allows the host to address individual sensors directly via their specific (+id).
 
 
 
