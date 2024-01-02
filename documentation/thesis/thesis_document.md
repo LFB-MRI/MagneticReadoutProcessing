@@ -53,7 +53,12 @@ This work is divided into six main chapters, which deal with the approach and im
 
 # Usecases
 
-1. 
+The following section defines some use cases that the future project should be able to cover.
+These are concrete scenarios or use cases that describe how a product or technology can be used in the real world.
+They illustrate practical situations and help to understand the functionality and added value of a product for users.
+These were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected. In the later evaluation\ref{evaluation} process, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution.
+
+
 
 
 
