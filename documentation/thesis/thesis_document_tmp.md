@@ -11,13 +11,33 @@
 
 ## Structure
 
+This work is divided into six main chapters, which deal with the approach and implementation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
 
-2. State of the art
-3. Usecases
-4. Unified Sensor
-5. Software readout framework
-6. Usability improvements
-7. Evaluation
+\ref{state-of-the-art}. **State of the art**
+  describes the current state of technology and forms the basis for further development.
+  Existing measurement methods and findings are shown here in order to define the context for the current project.
+
+\ref{usecases}. **Usecases** 
+  are the application cases in which the project is to be used.
+  They illustrate the practical scenarios and define how the product can be used in the real world.
+  This is crucial for understanding the needs of the target group and designing the end result accordingly.
+
+\ref{unified-sensor}. **Unified Sensor**
+  refers to the integration of different sensors into a standardised solution.
+  This enables simple data acquisition and serves as a basic hardware system on which the subsequent data processing library can be applied.
+
+\ref{software-readout-framework}. **Software readout framework**
+  chapter describes the implementation of the data readout framework.
+  This includes an explanation of the various modules and specific application examples.
+
+\ref{usability-improvements}. **Usability improvements**
+  refers to measures to improve user-friendliness.
+  This involves optimising interfaces, interactions and processes to ensure intuitive and efficient use of the product.
+  This includes, code documentation or the distribution of source code to users.
+
+\ref{evaluation}. **Evaluation**
+  comprises the systematic review and assessment of the overall system.
+  This includes the demonstration of the implemented capabilities of the overall system against the previously defined use cases.
 
 
 # State of the art
@@ -33,6 +53,7 @@
 
 # Usecases
 
+1. 
 
 
 
@@ -134,18 +155,18 @@ These are initiated according to the sensors found at startup. If new hardware i
 class CustomSensor: public baseSensor
 {
 public:
-    CustomSensor();
-    ~CustomSensor();
-    // implement depending sensor communication interface
-    bool begin(TwoWire& _wire_instance); // I2C
-    bool begin(HardwareSerial& _serial_instance); // UART
-    bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
-    // FUNCTIONS USED BY READOUT LOGIC
-    bool is_valid() override;
-    String capabilities() override;
-    String get_sensor_name() override;
-    bool query_sensor() override;
-    sensor_result get_result() override;        
+  CustomSensor();
+  ~CustomSensor();
+  // implement depending sensor communication interface
+  bool begin(TwoWire& _wire_instance); // I2C
+  bool begin(HardwareSerial& _serial_instance); // UART
+  bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
+  // FUNCTIONS USED BY READOUT LOGIC
+  bool is_valid() override;
+  String capabilities() override;
+  String get_sensor_name() override;
+  bool query_sensor() override;
+  sensor_result get_result() override;        
 };
 #endif
 ```
@@ -415,36 +436,33 @@ Terminate  Proxy instance [y/N] [n]:
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface:\ref{lst:mrpcli_config_rest}
 
 ```bash {#lst:mrpcli_config_rest caption="MRPproxy REST enpoiint query examples"}
-    # GET PROXY STATUS
-    $ wget http://proxyinstance.local:5556/proxy/status
-    {
-    "capabilities":[
-      "static",
-      "axis_b",
-      "axis_x",
-      "axis_y",
-      "axis_z",
-      "axis_temp",
-      "axis_stimestamp"
-   ],
-   "commands":[
-      "status",
-      "initialize",
-      "disconnect",
-      "combinedsensorcnt",
-      "sensorcnt",
-      "readsensor",
-      "temp"
-   ]
-
-   # RUN A SENSOR COMMAND AND GET THE TOTAL SENSOR COUNT
-   $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
-   {
-   "output":[
-      "2"
-   ]
-}
-}
+# GET PROXY STATUS
+$ wget http://proxyinstance.local:5556/proxy/status
+{
+"capabilities":[
+  "static",
+  "axis_b",
+  "axis_x",
+  "axis_y",
+  "axis_z",
+  "axis_temp",
+  "axis_stimestamp"
+],
+"commands":[
+  "status",
+  "initialize",
+  "disconnect",
+  "combinedsensorcnt",
+  "sensorcnt",
+  "readsensor",
+  "temp"
+]}
+# RUN A SENSOR COMMAND AND GET THE TOTAL SENSOR COUNT
+$ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
+{
+"output":[
+  "2"
+]}
 ```
 
 The query result shows that the sensors are connected correctly and that their capabilites have also been recognised correctly.
@@ -486,15 +504,89 @@ The following shows some examples of how the (+mrp) library can be used.
 These examples are limited to a functional minimum for selected modules of the (+mrp) library. The documentation\ref{documentation} contains further and more detailed examples.
 Many basic examples are also supplied in the form of test cases\ref{tests}.
 
+### MRPReading
+
+
+```python
+from MRP import MRPReading, MRPMeasurementConfig
+# [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
+config: MRPMeasurementConfig = MRPMeasurementConfig
+config.sensor_distance_radius(40) # 40mm DISTANCE BETWEEN MAGNET AND SENSOR
+config.magnet_type(N45_CUBIC_12x12x12) # CHECK MRPMagnetTypes.py FOR IMPLEMENTED TYPES
+# CREATE READING
+reading: MRPReading = MRPReading(config)
+# ADD METADATA
+reading.set_name("example reading")
+## ADD FURTHER DETAILS
+reading.set_additional_data("description", "abc")
+reading.set_additional_data("test-number", 1)
+# INSERT A DATAPOINT
+measurement = MRPReadingEntry.MRPReadingEntry()
+measurement.value = random.random()
+reading.insert_reading_instance(measurement, False)
+# USE MEASURED VALUES IN OTHER FRAMEWORKS / DATAFORMATS
+## NUMPY
+npmatrix: np.ndarray = reading.to_numpy_matrix()
+## CSV
+csv: []= reading.to_value_array()
+## JSON
+js: dict= reading.dump()
+# EXPORT READING TO FILE
+reading.dump_to_file("exported_reading.mag.json")
+
+# IMPORT READING
+imported_reading: MRPReading = MRPReading()
+imported_reading.load_from_file("exported_reading.mag.json")
+```
+
+
+### MRPHal
+
+
+```python
+from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
+# SEARCH FOR CONNECTED SENSORS
+system_ports: MRPHalSerialPortInformation = MRPHalSerialPortInformation.list_serial_ports()
+sensor = MRPHal(system_ports[0])
+# OR USE SPECIFIED SENSOR DEVICE
+device_path: MRPHalSerialPortInformation = MRPHalSerialPortInformation("/dev/serial/by-name/UNFSensor1")
+sensor = MRPHal(device_path)
+# RAW SENSOR INTERACTION MODE
+sensor.connect()
+basesensor = MRPBaseSensor.MRPBaseSensor(sensor)
+basesensor.query_readout()
+print(basesensor.get_b()) # GET RAW MEASUREMENT
+print(basesensor.get_b(1)) # GET RAW DATA FROM SENSOR WITH ID 1
+# TO GENERATE A READING THE perform_measurement FUNCTION CAN BE USED
+reading_source: MRPReadingSource = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
+result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
+```
+
+### MRPSimulation
+
+
+
+```python
+from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
+# GENERATE SILUMATED READING USING A SIMULATED HALLSENSOR FROM magpy LIBRARY
+reading: MRPReading = MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
+# GENERATE A FULLSPHERE MAP READING
+reading_fullsphere: MRPReading = MRPSimulation.generate_random_full_sphere_reading()
+# RENDER READING TO FILE IN 3D
+visu = MRPPolarVisualization(reading)
+visu.plot3d(None)
+visu.plot3d("simulated_reading.mag.png")
+# EXPORT READING
+reading.dump_to_file("simulated_reading.mag.json")
+```
 
 ### MRPAnalysis
 
-Dieses beispiel zeigt 
+Dieses beispiel zeigt
 
 ```python
-from MRP import MRPAnalysis
-from MRP import MRPDataVisualization
-# Create a empty reading with no settings. Only the raw values are needed, no metadata
+from MRP import MRPAnalysis, MRPDataVisualization, MRPReading
+# CREATE EMPTY READING
 reading = MRPReading.MRPReading()
 # CREATE A SAMPLE MEASUREMENT
 for i in range(1000):
@@ -502,18 +594,19 @@ for i in range(1000):
     # readout sensor or use dummy data and assign result
     measurement.value = (random.random() -0.5) * 2
     reading.insert_reading_instance(measurement, False)
-
 # PLOT MEAN VISUALIZATION
 MRPDataVisualization.MRPDataVisualization.plot_error([reading])
 # APPLY COMPENSATION
 # Here the ``calculate_mean`` function is used
-# see MRPAnalysis module for alternatives
 reading_mean_value = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
 # we want to subtract the mean value from all readings
 reading_mean_value = -reading_mean_value
 # modify measurement values
 MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(reading, reading_mean_value)
 ```
+
+### MRPVisualisation
+
 
 
 ### MRPHallbachArrayGenerator
@@ -542,8 +635,7 @@ MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hal
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an `OpenSCAD`[@OpenSCAD] file, which contains the generated `OpenSCAD` sourcecode\ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}.
-
+The result is an `OpenSCAD`[@OpenSCAD] file, which contains the module generated. After computing the model using the `OpenSCAD`-(+cli) utility, the following model rendering\ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
 
 
 
@@ -702,30 +794,30 @@ Since all intended use cases were mapped using the test cases created, the code 
 class TestMPRReading(unittest.TestCase):
   # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
-      self.test_folder: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
-      self.test_file:str = os.path.join(self.import_export_test_folderpath, "tmp")
+    self.test_folder: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+    self.test_file:str = os.path.join(self.import_export_test_folderpath, "tmp")
 
   def test_matrix(self):
-      reading: MRPReading = MRPSimulation.generate_reading()
-      matrix: np.ndarray = reading.to_numpy_matrix()
-      n_phi: float = reading.measurement_config.n_phi
-      n_theta: float = reading.measurement_config.n_theta
-      # CHECK MATRIX SHAPE
-      self.assertTrue(matrix.shape != (n_theta,))
-      self.assertTrue(len(matrix.shape) <= n_phi)
+    reading: MRPReading = MRPSimulation.generate_reading()
+    matrix: np.ndarray = reading.to_numpy_matrix()
+    n_phi: float = reading.measurement_config.n_phi
+    n_theta: float = reading.measurement_config.n_theta
+    # CHECK MATRIX SHAPE
+    self.assertTrue(matrix.shape != (n_theta,))
+    self.assertTrue(len(matrix.shape) <= n_phi)
 
   def test_export_reading(self) -> None:
-      reading: MRPReading = MRPSimulation.generate_reading()
-      self.assertIsNotNone(reading)
-      # EXPORT READING TO A FILE
-      reading.dump_to_file(self.test_file)
+    reading: MRPReading = MRPSimulation.generate_reading()
+    self.assertIsNotNone(reading)
+    # EXPORT READING TO A FILE
+    reading.dump_to_file(self.test_file)
 
   def test_import_reading(self):
-      # CREATE EMPTY READING AND LOAD FROM FILE
-      reading_imported:MRPReading = MRPReading.MRPReading(None)
-      reading_imported.load_from_file(self.test_file)
-      # COMPARE
-      self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
+    # CREATE EMPTY READING AND LOAD FROM FILE
+    reading_imported:MRPReading = MRPReading.MRPReading(None)
+    reading_imported.load_from_file(self.test_file)
+    # COMPARE
+    self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
 ```
 
 
@@ -768,21 +860,21 @@ Since the (+mrp)-library requires additional dependencies (e.g. `numpy`, `matplo
 # dynamic requirement loading using 'requirements.txt'
 req_path = './requirements.txt'
 with pathlib.Path(req_path).open() as requirements_txt:
-    install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
+  install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(name='MagneticReadoutProcessing',
-      version='1.4.3',
-      url='https://github.com/LFB-MRI/MagnetCharacterization/',
-      packages= ['MRP', 'MRPcli', 'MRPudpp', 'MRPproxy'],
-      install_requires=install_requires,
-      entry_points={
-          'console_scripts': [
-            'MRPCli = MRPcli.cli:run',
-            'MRPUdpp = MRPudpp.uddp:run',
-            'MRPproxy = MRPproxy.mrpproxy:run'
-          ]
-      }
-    )
+  version='1.4.3',
+  url='https://github.com/LFB-MRI/MagnetCharacterization/',
+  packages= ['MRP', 'MRPcli', 'MRPudpp', 'MRPproxy'],
+  install_requires=install_requires,
+  entry_points={
+    'console_scripts': [
+      'MRPCli = MRPcli.cli:run',
+      'MRPUdpp = MRPudpp.uddp:run',
+      'MRPproxy = MRPproxy.mrpproxy:run'
+    ]
+  }
+)
 ```
 
 To make the (+cli) scripts written in Python easier for the user to execute without having to use the `python3` prefix. This has been configured in the installation configuration using the `entry_points` option, and the following commands are available to the user:
@@ -807,23 +899,23 @@ In order to provide comprehensive documentation for the enduser, the source code
 The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance.\ref{pydocstring}
 
 ```python {#lst:pydocstring caption="Python docstring example"}
-    # MRPDataVisualisation.py - example docstring
-    def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "degree C") -> str:
-        """
-        Plots a temperature plot of the reading data as figure
-        :param _readings: readings to plot
-        :type _readings: list(MRPReading.MRPReading)
-        :param _title: Title text of the figure, embedded into the head
-        :type _title: str
-        :param _filename: export graphic to an given absolute filepath with .png
-        :type _filename: str
-        :returns: returns the abs filepath of the generated file
-        :rtype: str
-        """
-        if _readings is None or len(_readings) <= 0:
-            raise MRPDataVisualizationException("no readings in _reading given")
-        num_readings = len(_readings)
-        # ...
+# MRPDataVisualisation.py - example docstring
+def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "degree C") -> str:
+  """
+  Plots a temperature bar graph of the reading data entries as figure
+  :param _readings: readings to plot
+  :type _readings: list(MRPReading.MRPReading)
+  :param _title: Title text of the figure, embedded into the head
+  :type _title: str
+  :param _filename: export graphic to an given absolute filepath with .png
+  :type _filename: str
+  :returns: returns the abs filepath of the generated file
+  :rtype: str
+  """
+  if _readings is None or len(_readings) <= 0:
+      raise MRPDataVisualizationException("no readings in _reading given")
+  num_readings = len(_readings)
+  # ...
 ```
 
 
@@ -904,30 +996,30 @@ The parameter `_readings` should later receive the imported measurements from th
 The return parameter is a list of measurements and should contain the measurements that are closest to the mean value of all measurements after the function has been executed.
 
 ```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm"}
-    @staticmethod
-    def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
-        import heapq
-        heap = []
-        # SET RESULT VALUE COUNT
-        IP_return_count = max([int(IP_return_count),len(_readings)])
-        if IP_return_count < 0:
-            IP_return_count = len(_readings) / 5
-        # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
-        target_value = 0.0
-        for idx, r in enumerate(_readings):
-            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
-            target_value = target_value + mean
-        target_value = target_value / len(_readings)
-        # PUSH READINGS TO HEAP
-        for value in _readings:
-            # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
-            diff = abs(value - target_value)
-            heapq.heappush(heap, (diff, value))
-        # RETURN X BEST ITEMS FROM HEAP
-        similar_values = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
-        # CLEAN UP USED LIBRARIES AND RETURN RESULT
-        del heapq
-        return similar_values
+@staticmethod
+def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
+  import heapq
+  heap = []
+  # SET RESULT VALUE COUNT
+  IP_return_count = max([int(IP_return_count),len(_readings)])
+  if IP_return_count < 0:
+      IP_return_count = len(_readings) / 5
+  # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
+  target_value = 0.0
+  for idx, r in enumerate(_readings):
+      mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+      target_value = target_value + mean
+  target_value = target_value / len(_readings)
+  # PUSH READINGS TO HEAP
+  for value in _readings:
+      # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
+      diff = abs(value - target_value)
+      heapq.heappush(heap, (diff, value))
+  # RETURN X BEST ITEMS FROM HEAP
+  similar_values = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
+  # CLEAN UP USED LIBRARIES AND RETURN RESULT
+  del heapq
+  return similar_values
 ```
 
 The python `heapq`[@heapq] module, which implements a priority queue, is used for this purpose.
