@@ -57,26 +57,34 @@ The following section defines some use cases that the future project should be a
 They illustrate practical situations and help to understand the functionality and added value of the implemented project for the user.
 These were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected. In the later evaluation\ref{evaluation} process, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution.
 
-
 1. **Ready to use hardware sensor designs**
+  A universal, easy-to-integrate Hall sensor design allows users to evaluate the framework quickly and cost-effectively.
+  The pre-built hardware sensors provide an optimal solution for research, reducing development time and achieving repeatable measurement results.
+  Once successfully evaluated, the Hall sensor design should be easily adaptable to other sensors without the need for major firmware changes.
 
 2. **Taking automatic measurements from sensors**
+  The purpose of the framework is to enable the automated acquisition of measurement data from various connected hadware sensors.
+  The user should be able to configure various measurement series, which should then be carried out by the framework without further user interaction.
 
-3. **Ready to use data analysis functions**
+3. **Open storage formats for data export**
+  The use of open storage formats for the export of data enables an interoperable data exchange environment.
+  The implementation of standardized formats improves the portability and long-term availability of data.
+  This encourages the exchange and further processing of measurement data in other software tools.
 
-4. **Open storage formats for data export**
+4. **Ready to integrate data analysis functions**
+  Once it is possible to record and store measured values, it should be possible for the user to analyse and visualize this data using various algorithms.
+  The focus here should be on extending the framework with user-created algorithms.
 
-5. **Easy software configuration**
-
-6. **User expandable data processing pipelines**
-
+5. **User programmable data processing pipelines**
+  User-programmable data processing pipelines enable the flexible design of data processing sequences by users.
+  The framework should enable users to create their own Anylse pipelines with the previously defined data analysis functions.
 
 
 
 
 # Unified Sensor
 
-The main aim of this project is to develop a low-cost Hall sensor interface that is also universally expandable.
+A defined main objective of this project is the development of a cost-effective Hall sensor interface that is also universally expandable.
 The focus is on mapping different sensors and being compatible with different magnet types and shapes.
 This ensures broad applicability in different scenarios.
 Another goal is reproducibility to ensure consistent results.
