@@ -433,42 +433,45 @@ The library consists of various modules, which are divided into two categories:
 * Core - All modules related to measurement data management
 * Extensions - Contains modules for visualizations, hardware sensor access
 
-An overview of these is given in the subchapters as the following. There are also introductory examples which provide an overview of the basic functions in the `Examples`\ref{examples} section, as well as further examples in the online documentation. [@MagneticReadoutProcessingReadTheDocs]
+An overview of these is given in the subchapters as the following.
+There are also introductory examples which provide an overview of the basic functions in the `Examples`\ref{examples} section, as well as further examples in the online documentation[@MagneticReadoutProcessingReadTheDocs].
 
 ### Core Modules
 
+The included core modules are essential for using the library.
+Basic data types are implemented, as well as functions for import and export.
+In addition, there are other support scripts that are required internally.
+
+The following modules are implemented in detail:
+
+* `MRPReading` - storage of measured values
+* `MRPMeasurementConfig` - storage of the measurement parameters
+* `MRPMagnetTypes` - various physical constants for basic magnet types
 
 
-### Extension Modules
+The `MRPReading` module performs a crucial role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
+To customize and add meta-data, users have the flexibility to configure parameters through the dedicated `MRPMeasurementConfig` module into an `MRPReading` instance.
+
+Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated. The process is initiated by employing specialized functions designed for the creation and addition of data records.
+To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a crucial bridge between user preferences and the robust capabilities of the `MRPReading` module.
+
+The system is also designed to be compatible with `Extension Modules`\ref{extension-modules}, allowing the generation of measurement data through various modules.
+This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
+
+To enhance the accessibility and interpretability of the recorded data, a dedicated module, MRPMagnetTypes, comes into play. This module is specifically designed for the storage of physical parameters pertaining to the magnets targeted for measurement.
+By centralizing this information, users can streamline the subsequent phases of evaluation and analysis, simplifying the overall process and ensuring a more efficient and insightful exploration of the collected data.
 
 
- 
-#### Sensor Interface
-
-Another collection of optional modules provided by the library is the connection of external hardware sensors. All compatible sensors that are compatible with the firmware developed in the `Unified Sensor`\ref{unified-sensor} chapter are supported here. The library provides the following sensor (+hal) modules for this purpose:
-
-* `MRPHal` - Firmware protocol implementation
-* `MRPHalLocal` - (+usb) sensor interface
-* `MRPHalRemote` - Remote sensor interface
-
-These provide functions to communicate with a connected hardware sensor and send commands to it. To generate these and convert the received measurement data into the appropriate format for the core modules, there is a suitable module for each sensor type:
-
-* `MRPReadingSourceStatic` - for 1D and 2D sensor such as `1D: Single Sensor`\ref{d-single-sensor}
-* `MRPReadingSourceFullsphere` - for 3D sensors such as `3D: Fullsphere`\ref{d-fullsphere}
-
-The decision which of these modules to use is made automatically depending on the connected hardware. For this purpose, a static function `createReadingSourceInstance` is implemented in the base class `MRPReadingSource`, which automatically creates the appropriate instance based on the sensor capabilites.
-
-#### Visualisation
+At the end of processing, the collected data is typically exported; various functions are provided for this purpose.
+These are described as the following.
 
 
-#### Analysis
+#### Storage and Datamanagement
 
-
-
-
-## Storage and Datamanagement
-
-An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements. On the other hand, the focus during development was that it is also possible to use the data in other programs.  For this purpose, an open, documented export format must be selected. Ideally, this should be human-readable and viewable with a simple text editor. This eliminates all binary-based formats such as the Python pickle built into Python.
+An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements.
+On the other hand, the focus during development was that it is also possible to use the data in other programs.  For this purpose, an open, documented export format must be selected.
+Ideally, this should be human-readable and viewable with a simple text editor.
+This eliminates all binary-based formats such as the Python pickle built into Python.
 
 Taking these points into account, the (+json) format was chosen. This is human and machine readable and there is a compatible parser for almost every programming language.
 
@@ -479,7 +482,7 @@ Using serialization, the `MRPReading` class inherited from Python-`Object` class
 ~~~ { .json  #lst:json_export_format_example caption="JSON export structure of an MRPReading based measurement" }
 {
   "time_start": "Wed Sep 20 08:50:13 2023",
-  "time_end": "Wed Sep 20 08:50:13 2023",
+  "time_end": "Wed Sep 20 08:54:13 2023",
   "additional_data": {
       "sensor_device_path": "/dev/cu.usbmodem3867315334391",
       "sensor_name": "Unified Sensor Single Sensor",
@@ -520,6 +523,47 @@ The different formats can be triggered by the user by calling up the correspondi
 * `.dump_savemat()` - Matlab mat-file with measurement values and temperatures
 
 Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the other options (Numpy, Matlab)loses data during the export procedure.
+
+
+### Extension Modules
+
+
+ 
+#### Sensor Interface
+
+Another collection of optional modules provided by the library is the connection of external hardware sensors. All compatible sensors that are compatible with the firmware developed in the `Unified Sensor`\ref{unified-sensor} chapter are supported here.
+The library provides the following sensor (+hal) modules for this purpose:
+
+* `MRPHal` - Firmware protocol implementation
+* `MRPHalLocal` - (+usb) sensor interface
+* `MRPHalRemote` - Remote sensor interface
+
+These provide functions to communicate with a connected hardware sensor and send commands to it. To generate these and convert the received measurement data into the appropriate format for the core modules, there is a suitable module for each sensor type:
+
+* `MRPReadingSourceStatic` - for 1D and 2D sensor such as `1D: Single Sensor`\ref{d-single-sensor}
+* `MRPReadingSourceFullsphere` - for 3D sensors such as `3D: Fullsphere`\ref{d-fullsphere}
+
+The decision which of these modules to use is made automatically depending on the connected hardware.
+For this purpose, a static function `createReadingSourceInstance` is implemented in the base class `MRPReadingSource`, which automatically creates the appropriate instance based on the sensor capabilites.
+
+#### Visualisation
+
+In order to give the user the possibility to display the recorded data visually, two modules were created, which can graphically prepare `MRPReading` instances:
+
+* `MRPVisualization` - different table, graph based plots
+* `MRPPolarVisualization` - fullsphere map plots
+
+On the one hand, it is possible with the `MRPVisualization` module to display measurement data as a table or streamplot, lineplot.
+This makes it possible, for example, to visually identify outliers or trends in the measurement data. These can also be saved as an image file.
+The module is compatible with all measurement data.
+
+In contrast to the `MRPPolarVisualization` module, this provides functions to create 2D map plots in the polar coordinate system.
+This requires measurement data with additionally set spatial coordinates. These can be generated automatically with the `3D: Fullsphere`\ref{d-fullsphere} sensor, or the user must provide the spatial information from another source.
+
+
+#### Analysis
+
+
 
 
 ## Multi Sensor Setup
