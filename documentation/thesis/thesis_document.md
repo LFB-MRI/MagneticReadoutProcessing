@@ -510,7 +510,7 @@ On the one hand, it is possible with the `MRPVisualization` module to display me
 This makes it possible, for example, to visually identify outliers or trends in the measurement data. These can also be saved as an image file.
 The module is compatible with all measurement data.
 
-In contrast to the `MRPPolarVisualization` module, this provides functions to create 2D map plots in the polar coordinate system.
+In contrast to the `MRPPolarVisualization` module, this provides functions to create 2D map plots a polar coordinate system.
 This requires measurement data with additionally set spatial coordinates. These can be generated automatically with the `3D: Fullsphere`\ref{d-fullsphere} sensor, or the user must provide the spatial information from another source.
 
 
