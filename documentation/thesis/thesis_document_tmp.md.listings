@@ -6,6 +6,14 @@
 
 ### Shimming Procedure
 
+
+### Charakterisation of Permanent Magnets
+
+* zeigt ansätzte einfacher magnet vermesseungen [@Wickenbrock_2021]
+
+* contruction of hallbach ringe [@cmr.a.20165]
+
+
 ## Aim of this Thesis
 
 
@@ -273,9 +281,9 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These were performed on a `RaspberryPi 4 4GB`-(+sbc) together with an `1D: Single Sensor`\ref{d-single-sensor} and the following software settings:
 
-* Raspberry Pi OS Lite - `debian bookworm x64`,
-* (+mrp) \ref{software-readout-framework}-library - version `1.4.1`
-*  Unified Sensor \ref{unified-sensor}-firmware - version `1.0.1`
+* Raspberry Pi OS Lite - (+os) `debian bookworm x64`,
+* (+mrp) \ref{software-readout-framework}-library - Version `1.4.1`
+*  Unified Sensor \ref{unified-sensor}-firmware - Version `1.0.1`
 
 It can be seen that a jitter time of up to an additional `1ms` is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
@@ -373,7 +381,8 @@ This connectivity makes it possible to make the device compatible with the Unifi
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical `RS232` interface.
 As with the other sensors, this interface consists of your `RaspberryPi Pico` with an additional level shifter.
 The Teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
-The firmware was adapted using a separate build configuration and the protocol of the measuring device was implemented.
+The firmware was adapted using a separate build configuration.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol from table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
 
 : Voltcraft GM70 serial protocol \label{Voltcraft_GM70_serial_protocol.csv}
 
@@ -413,37 +422,109 @@ This software or hardware integration can be carried out on any other measuring 
 ![MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}](./generated_images/border_MRPlib_COMPLETE_FLOW.png)
 
 
+* jeder schritt nach der DAQ basiert auf dem gleichen grundtyp datentyp
+* meta-daten werden bei jedem weiteren schritt hinzugeügt um nachverfolgbarkeit zu gewärleisten
 
-## Extension Modules
 
-Im folgenden werden die einzelnen module, welche vom user modifiziert und ersetzt werden können im details erleutert.
+## Modules
+
+The library consists of various modules, which are divided into two categories:
+
+* Core - All modules related to measurement data management
+* Extensions - Contains modules for visualizations, hardware sensor access
+
+An overview of these is given in the subchapters as the following. There are also introductory examples which provide an overview of the basic functions in the `Examples`\ref{examples} section, as well as further examples in the online documentation. [@MagneticReadoutProcessingReadTheDocs]
+
+### Core Modules
+
+
+
+### Extension Modules
+
+
  
-### HAL
+#### Sensor Interface
 
-* aufbau hal im grunde wird nur ein die commandos an das sensor cli weitergegeben
-* alle sensoren implementieren mehr oder weniger die gleichen befehle
-* hal gibt nur weiter und ist "dumm"
+Another collection of optional modules provided by the library is the connection of external hardware sensors. All compatible sensors that are compatible with the firmware developed in the `Unified Sensor`\ref{unified-sensor} chapter are supported here. The library provides the following sensor (+hal) modules for this purpose:
 
-### Visualisation
+* `MRPHal` - Firmware protocol implementation
+* `MRPHalLocal` - (+usb) sensor interface
+* `MRPHalRemote` - Remote sensor interface
 
+These provide functions to communicate with a connected hardware sensor and send commands to it. To generate these and convert the received measurement data into the appropriate format for the core modules, there is a suitable module for each sensor type:
 
+* `MRPReadingSourceStatic` - for 1D and 2D sensor such as `1D: Single Sensor`\ref{d-single-sensor}
+* `MRPReadingSourceFullsphere` - for 3D sensors such as `3D: Fullsphere`\ref{d-fullsphere}
 
-### Storage
+The decision which of these modules to use is made automatically depending on the connected hardware. For this purpose, a static function `createReadingSourceInstance` is implemented in the base class `MRPReadingSource`, which automatically creates the appropriate instance based on the sensor capabilites.
 
-
-* metadata management
-
-### Export
-
-* format import export
-* matlab
+#### Visualisation
 
 
+#### Analysis
+
+
+
+
+## Storage and Datamanagement
+
+An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements. On the other hand, the focus during development was that it is also possible to use the data in other programs.  For this purpose, an open, documented export format must be selected. Ideally, this should be human-readable and viewable with a simple text editor. This eliminates all binary-based formats such as the Python pickle built into Python.
+
+Taking these points into account, the (+json) format was chosen. This is human and machine readable and there is a compatible parser for almost every programming language.
+
+The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement thatt using the library is exported.
+Here you can see that by using the (+json) format, all measurement points and metadata are available in readable plain text. This means that they can also be read out in other programs.
+Using serialization, the `MRPReading` class inherited from Python-`Object` class is serialized via an dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
+
+~~~ { .json  #lst:json_export_format_example caption="JSON export structure of an MRPReading based measurement" }
+{
+  "time_start": "Wed Sep 20 08:50:13 2023",
+  "time_end": "Wed Sep 20 08:50:13 2023",
+  "additional_data": {
+      "sensor_device_path": "/dev/cu.usbmodem3867315334391",
+      "sensor_name": "Unified Sensor Single Sensor",
+      "sensor_id": "386731533439",
+      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "axis_stimestamp"],
+      "configname": "calibrationtemp30.yaml",
+      "runner": "cli"
+  },
+  "data": [{
+      "value": 0.135,
+      "is_valid": true,
+      "id": 0,
+      "temperature": 34.32
+  }],
+  "measurement_config": {
+      "id": "525771256544952",
+      "sensor_distance_radius": 40.0,
+      "magnet_type": 0
+  },
+  "name": "calibrationtemp30",
+}
+~~~
+
+The exported example \ref{lst:json_export_format_example} contains the following different object keys, which contain the following information:
+
+* `additional_data` - Additional user-defined metadata
+* `data` - Measured values with value and measured value (+id)
+* `measurement_config` - Information about the sensor used for measurement
+
+In addition, further custom objects can be inserted into the (+json) using the functions provided.
+
+Since there are popular data processing frameworks such as Numpy[@harris2020array], or the program for mathematical calculations, Matlab are often used, the library also supports export formats for these systems.
+
+The different formats can be triggered by the user by calling up the corresponding `MRPReading` class functions:
+
+* `.dump()` - (+json)
+* `.to_numpy_matrix()` - Numpy-Array of `data` object with different options
+* `.dump_savemat()` - Matlab mat-file with measurement values and temperatures
+
+Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the other options (Numpy, Matlab)loses data during the export procedure.
 
 
 ## Multi Sensor Setup
 
-At the current described scenarios, it is only possible to detect and use sensors that are directly connected to the (+pc) with the (+mrp)-library.
+At the current described scenarios, it is only possible to detect and use sensors that are directly connected to the host (+pc).
 It has the disadvantage that there must always be a physical connection.
 This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited.
 So multibe sensor can be connected to a `remote` (+pc) which is available on the network.
@@ -591,8 +672,8 @@ To realize this, a (+lut) was created in the previous steps, which contains info
 
 For commands where there are several entries for `CAPABLE SENSORS ID LUT`\ref{Sensor_capabilities_merging.csv}, there are two possible approaches to how the command is processed:
 
-* redirect to each capable sensor
-* extend commands using an id parameter
+* Redirect to each capable sensor
+* Extend commands using an id parameter
 
 These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, `redirect to each capable sensor` is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a `readsensor` command, all sensors are read out via one command and the summarized result is transmitted to the host.
 
@@ -747,7 +828,6 @@ visu.plot3d(os.path.join('./plot3d_3d.png'))
 # PLOT ANALYSIS RESULTS
 from MRP import MRPDataVisualization
 MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
-
 ~~~
 ### MRPHallbachArrayGenerator
 
@@ -1036,8 +1116,8 @@ In addition, these commands are available globally in the system without the ter
 In order to provide comprehensive documentation for the enduser, the source code was documented using Python-`docstrings`[@PythonDocstringReference] and the Python3.5 type annotations:
 
 * Function description
-* Input parameters - using `param` and `type`
-* Return value - using `returns`, `rtype`
+* Input parameters, using `param` and `type`
+* Return value, using `returns`, `rtype`
 
 The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance. \ref{lst:pydocstring}
 

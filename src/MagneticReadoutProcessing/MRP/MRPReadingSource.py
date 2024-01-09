@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from MRP import MRPHal, MRPReading
+from MRP import MRPHal, MRPReading, MRPReadingSourceHelper
 
 
 class MRPReadingSourceException(Exception):
@@ -9,6 +9,10 @@ class MRPReadingSourceException(Exception):
 
 
 class MRPReadingSource(ABC):
+
+    @staticmethod
+    def createReadingSourceInstance(_hal: MRPHal.MRPHal):
+        return MRPReadingSourceHelper.MRPReadingSourceHelper.createReadingSourceInstance(_hal)
 
     @abstractmethod
     def __init__(self, _hal: MRPHal.MRPHal):

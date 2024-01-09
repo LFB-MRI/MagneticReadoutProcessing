@@ -6,6 +6,8 @@ import numpy as np
 import json
 import sys
 
+import scipy
+
 from MRP import MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfig
 
 
@@ -139,6 +141,10 @@ class MRPReading():
 
     def get_magnet_type(self) -> MRPMagnetTypes.MagnetType:
         return self.measurement_config.magnet_type
+
+    def savemat(self):
+        import scipy.io
+        scipy.io.savemat('test.mat', dict(x=x, y=y))
 
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
 
@@ -428,6 +434,30 @@ class MRPReading():
             fout = open(_filepath_name, 'w')
             fout.write(self.dump())
             fout.close()
+        except Exception as e:
+            sys.stderr.write(str(e))
+        return _filepath_name
+
+
+    def dump_savemat(self, _filepath_name: str) -> str:
+        """
+        Dumps the reading class instance into a matlab .mat file
+        Includes datapoints only
+
+        :param _filepath_name: File path to which the file will be exported
+        :type _filepath_name: str
+
+        :returns: File path to which the file is exported, including filename
+        :rtype: str
+        """
+        if '.mat' not in _filepath_name:
+            _filepath_name = _filepath_name + '.mat'
+        print("dump_to_file with {0}".format(_filepath_name))
+
+
+        # FINALLY EXPORT TO FILE USING SCIPY AS EXPORT MIDDLEWARE
+        try:
+            scipy.io.savemat(_filepath_name, dict(x=self.to_value_array(), y=self.to_temperature_value_array()))
         except Exception as e:
             sys.stderr.write(str(e))
         return _filepath_name

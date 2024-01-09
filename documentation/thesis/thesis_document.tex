@@ -10,6 +10,18 @@
 \hypertarget{shimming-procedure}{%
 \subsection{Shimming Procedure}\label{shimming-procedure}}
 
+\hypertarget{charakterisation-of-permanent-magnets}{%
+\subsection{Charakterisation of Permanent
+Magnets}\label{charakterisation-of-permanent-magnets}}
+
+\begin{itemize}
+\item
+  zeigt ansätzte einfacher magnet vermesseungen
+  \cite{Wickenbrock_2021}
+\item
+  contruction of hallbach ringe \cite{cmr.a.20165}
+\end{itemize}
+
 \hypertarget{aim-of-this-thesis}{%
 \section{Aim of this Thesis}\label{aim-of-this-thesis}}
 
@@ -555,12 +567,13 @@ following software settings:
 \begin{itemize}
 \tightlist
 \item
-  Raspberry Pi OS Lite - \passthrough{\lstinline!debian bookworm x64!},
+  Raspberry Pi OS Lite - \gls{os}
+  \passthrough{\lstinline!debian bookworm x64!},
 \item
-  \gls{mrp} \ref{software-readout-framework}-library - version
+  \gls{mrp} \ref{software-readout-framework}-library - Version
   \passthrough{\lstinline!1.4.1!}
 \item
-  Unified Sensor \ref{unified-sensor}-firmware - version
+  Unified Sensor \ref{unified-sensor}-firmware - Version
   \passthrough{\lstinline!1.0.1!}
 \end{itemize}
 
@@ -791,8 +804,12 @@ other sensors, this interface consists of your
 \passthrough{\lstinline!RaspberryPi Pico!} with an additional level
 shifter. The Teslameter is connected to the microcontroller using two
 free \gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
-separate build configuration and the protocol of the measuring device
-was implemented.
+separate build configuration. In order to be able to read and correctly
+interpret the data from the microcontoller, the serial protocol from
+table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was
+implemented in a customized version of the
+\passthrough{\lstinline!CustomSensor!} class
+\ref{lst:CustomSensorClass}.
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Voltcraft GM70 serial protocol
@@ -848,62 +865,199 @@ protocol thanks to the modular design.
 \caption{MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}}
 \end{figure}
 
-\hypertarget{extension-modules}{%
-\section{Extension Modules}\label{extension-modules}}
+\begin{itemize}
+\tightlist
+\item
+  jeder schritt nach der DAQ basiert auf dem gleichen grundtyp datentyp
+\item
+  meta-daten werden bei jedem weiteren schritt hinzugeügt um
+  nachverfolgbarkeit zu gewärleisten
+\end{itemize}
 
-Im folgenden werden die einzelnen module, welche vom user modifiziert
-und ersetzt werden können im details erleutert.
+\hypertarget{modules}{%
+\section{Modules}\label{modules}}
 
-\hypertarget{hal}{%
-\subsection{HAL}\label{hal}}
+The library consists of various modules, which are divided into two
+categories:
 
 \begin{itemize}
 \tightlist
 \item
-  aufbau hal im grunde wird nur ein die commandos an das sensor cli
-  weitergegeben
+  Core - All modules related to measurement data management
 \item
-  alle sensoren implementieren mehr oder weniger die gleichen befehle
-\item
-  hal gibt nur weiter und ist ``dumm''
+  Extensions - Contains modules for visualizations, hardware sensor
+  access
 \end{itemize}
+
+An overview of these is given in the subchapters as the following. There
+are also introductory examples which provide an overview of the basic
+functions in the \passthrough{\lstinline!Examples!}\ref{examples}
+section, as well as further examples in the online documentation.
+\cite{MagneticReadoutProcessingReadTheDocs}
+
+\hypertarget{core-modules}{%
+\subsection{Core Modules}\label{core-modules}}
+
+\hypertarget{extension-modules}{%
+\subsection{Extension Modules}\label{extension-modules}}
+
+\hypertarget{sensor-interface}{%
+\subsubsection{Sensor Interface}\label{sensor-interface}}
+
+Another collection of optional modules provided by the library is the
+connection of external hardware sensors. All compatible sensors that are
+compatible with the firmware developed in the
+\passthrough{\lstinline!Unified Sensor!}\ref{unified-sensor} chapter are
+supported here. The library provides the following sensor \gls{hal}
+modules for this purpose:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!MRPHal!} - Firmware protocol implementation
+\item
+  \passthrough{\lstinline!MRPHalLocal!} - \gls{usb} sensor interface
+\item
+  \passthrough{\lstinline!MRPHalRemote!} - Remote sensor interface
+\end{itemize}
+
+These provide functions to communicate with a connected hardware sensor
+and send commands to it. To generate these and convert the received
+measurement data into the appropriate format for the core modules, there
+is a suitable module for each sensor type:
+
+\begin{itemize}
+\tightlist
+\item
+  \passthrough{\lstinline!MRPReadingSourceStatic!} - for 1D and 2D
+  sensor such as
+  \passthrough{\lstinline!1D: Single Sensor!}\ref{d-single-sensor}
+\item
+  \passthrough{\lstinline!MRPReadingSourceFullsphere!} - for 3D sensors
+  such as \passthrough{\lstinline!3D: Fullsphere!}\ref{d-fullsphere}
+\end{itemize}
+
+The decision which of these modules to use is made automatically
+depending on the connected hardware. For this purpose, a static function
+\passthrough{\lstinline!createReadingSourceInstance!} is implemented in
+the base class \passthrough{\lstinline!MRPReadingSource!}, which
+automatically creates the appropriate instance based on the sensor
+capabilites.
 
 \hypertarget{visualisation}{%
-\subsection{Visualisation}\label{visualisation}}
+\subsubsection{Visualisation}\label{visualisation}}
 
-\hypertarget{storage}{%
-\subsection{Storage}\label{storage}}
+\hypertarget{analysis}{%
+\subsubsection{Analysis}\label{analysis}}
+
+\hypertarget{storage-and-datamanagement}{%
+\section{Storage and Datamanagement}\label{storage-and-datamanagement}}
+
+An important aspect is data import and export. On the one hand, this
+allows the library to reuse and archive the measurements. On the other
+hand, the focus during development was that it is also possible to use
+the data in other programs. For this purpose, an open, documented export
+format must be selected. Ideally, this should be human-readable and
+viewable with a simple text editor. This eliminates all binary-based
+formats such as the Python pickle built into Python.
+
+Taking these points into account, the \gls{json} format was chosen. This
+is human and machine readable and there is a compatible parser for
+almost every programming language.
+
+The following code snippet \ref{lst:json_export_format_example} shows
+the \gls{json} structure which is generated when a measurement thatt
+using the library is exported. Here you can see that by using the
+\gls{json} format, all measurement points and metadata are available in
+readable plain text. This means that they can also be read out in other
+programs. Using serialization, the \passthrough{\lstinline!MRPReading!}
+class inherited from Python-\passthrough{\lstinline!Object!} class is
+serialized via an dictionary conversion step. This \gls{json} string can
+then be processed directly or written to the file system as a file.
+
+\begin{lstlisting}[caption={JSON export structure of an MRPReading based measurement}, label=lst:json_export_format_example]
+{
+  "time_start": "Wed Sep 20 08:50:13 2023",
+  "time_end": "Wed Sep 20 08:50:13 2023",
+  "additional_data": {
+      "sensor_device_path": "/dev/cu.usbmodem3867315334391",
+      "sensor_name": "Unified Sensor Single Sensor",
+      "sensor_id": "386731533439",
+      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "axis_stimestamp"],
+      "configname": "calibrationtemp30.yaml",
+      "runner": "cli"
+  },
+  "data": [{
+      "value": 0.135,
+      "is_valid": true,
+      "id": 0,
+      "temperature": 34.32
+  }],
+  "measurement_config": {
+      "id": "525771256544952",
+      "sensor_distance_radius": 40.0,
+      "magnet_type": 0
+  },
+  "name": "calibrationtemp30",
+}
+\end{lstlisting}
+
+The exported example \ref{lst:json_export_format_example} contains the
+following different object keys, which contain the following
+information:
 
 \begin{itemize}
 \tightlist
 \item
-  metadata management
+  \passthrough{\lstinline!additional\_data!} - Additional user-defined
+  metadata
+\item
+  \passthrough{\lstinline!data!} - Measured values with value and
+  measured value \gls{id}
+\item
+  \passthrough{\lstinline!measurement\_config!} - Information about the
+  sensor used for measurement
 \end{itemize}
 
-\hypertarget{export}{%
-\subsection{Export}\label{export}}
+In addition, further custom objects can be inserted into the \gls{json}
+using the functions provided.
+
+Since there are popular data processing frameworks such as
+Numpy\cite{harris2020array}, or the program for mathematical
+calculations, Matlab are often used, the library also supports export
+formats for these systems.
+
+The different formats can be triggered by the user by calling up the
+corresponding \passthrough{\lstinline!MRPReading!} class functions:
 
 \begin{itemize}
 \tightlist
 \item
-  format import export
+  \passthrough{\lstinline!.dump()!} - \gls{json}
 \item
-  matlab
+  \passthrough{\lstinline!.to\_numpy\_matrix()!} - Numpy-Array of
+  \passthrough{\lstinline!data!} object with different options
+\item
+  \passthrough{\lstinline!.dump\_savemat()!} - Matlab mat-file with
+  measurement values and temperatures
 \end{itemize}
+
+Currently, data re-import of an exported measurement is only supported
+via the \gls{json} format, as an export using the other options (Numpy,
+Matlab)loses data during the export procedure.
 
 \hypertarget{multi-sensor-setup}{%
 \section{Multi Sensor Setup}\label{multi-sensor-setup}}
 
 At the current described scenarios, it is only possible to detect and
-use sensors that are directly connected to the \gls{pc} with the
-\gls{mrp}-library. It has the disadvantage that there must always be a
-physical connection. This can make it difficult to install multiple
-sensors in measurement setups where space or cable routing options are
-limited. So multibe sensor can be connected to a
-\passthrough{\lstinline!remote!} \gls{pc} which is available on the
-network. This can be a \gls{sbc} (e.g.~a Raspberry Pi). The small
-footprint and low power consumption make it a good choice. It can also
-be used in a temperature chamber.
+use sensors that are directly connected to the host \gls{pc}. It has the
+disadvantage that there must always be a physical connection. This can
+make it difficult to install multiple sensors in measurement setups
+where space or cable routing options are limited. So multibe sensor can
+be connected to a \passthrough{\lstinline!remote!} \gls{pc} which is
+available on the network. This can be a \gls{sbc} (e.g.~a Raspberry Pi).
+The small footprint and low power consumption make it a good choice. It
+can also be used in a temperature chamber.
 
 The \passthrough{\lstinline!MRPProxy!}\ref{MRPlib_Proxy_Module.png}
 module has been developed to allow forwarding and interaction with
@@ -1134,9 +1288,9 @@ there are two possible approaches to how the command is processed:
 \begin{itemize}
 \tightlist
 \item
-  redirect to each capable sensor
+  Redirect to each capable sensor
 \item
-  extend commands using an id parameter
+  Extend commands using an id parameter
 \end{itemize}
 
 These two methods have been implemented and are applied automatically.
@@ -1828,10 +1982,10 @@ and the Python3.5 type annotations:
 \item
   Function description
 \item
-  Input parameters - using \passthrough{\lstinline!param!} and
+  Input parameters, using \passthrough{\lstinline!param!} and
   \passthrough{\lstinline!type!}
 \item
-  Return value - using \passthrough{\lstinline!returns!},
+  Return value, using \passthrough{\lstinline!returns!},
   \passthrough{\lstinline!rtype!}
 \end{itemize}
 
