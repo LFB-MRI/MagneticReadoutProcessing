@@ -16,9 +16,19 @@
 
 ## Aim of this Thesis
 
+The present work aims to provide an efficient and comprehensive solution for the design of low-field MRI devices by developing and implementing a software and hardware framework.
+
+The scope of the software library is to lay the foundation for the systematic characterization of magnets based on permanent magnets.
+The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
 
 
-\ref{usecases}
+The work aims to facilitate magnetic field characterization and improve the exchange of data between different user groups.
+Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
+
+
+The application of the developed framework for the characterization of different magnets and the integration of magnetic field sensors serve as practical applications and validation of the developed solution.
+
+
 
 
 ## Structure
@@ -212,7 +222,7 @@ The flow chart \ref{Unified_sensor_firmware_simplified_program_strucutre.png} sh
 When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
 
-The next initialisation system is dedicated for multi-sensor synchronisation \ref{sensor-syncronsisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
+The next initialisation system is dedicated for multi-sensor synchronisation \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
 All implemented microcontroller platforms used (Raspberry Pi Pico, STM32F4) have a (+usb) slave port.
 The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual RS232 communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
@@ -224,7 +234,7 @@ Its cyclic structure enables continuous overwriting of older data, saves memory 
 Ring buffers are well suited for applications with variable data rates and minimise the need for complex memory management.
 The buffer can be read out by command and the result of the measurement is sent to the host.
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number.
-This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized \ref{sensor-syncronsisation-interface} in time and are not out of sequence or drift.
+This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized \ref{sensor-syncronisation-interface} in time and are not out of sequence or drift.
 
 
 ### Communication interface
@@ -247,7 +257,7 @@ The other option is to use the (+mrp) \ref{software-readout-framework}-library. 
 The same commands are available as for (+cli)-based communication.
 
 
-### Sensor syncronsisation interface
+### Sensor Syncronisation Interface
 
 %%Multi_sensor_synchronisation_wiring_example.png%%
 
@@ -411,12 +421,12 @@ To configure parameters, ensuring a tailored approach to the entire measurement 
 The system is also designed to be compatible with `Extension Modules`\ref{extension-modules}, allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
 
-To enhance the accessibility and interpretability of the recorded data, a dedicated module, MRPMagnetTypes, comes into play. This module is specifically designed for the storage of physical parameters pertaining to the magnets targeted for measurement.
+To enhance the accessibility and interpretability of the recorded data, a dedicated module, `MRPMagnetTypes`, comes into play. This module is specifically designed for the storage of physical parameters pertaining to the magnets targeted for measurement.
 By centralizing this information, users can streamline the subsequent phases of evaluation and analysis, simplifying the overall process and ensuring a more efficient and insightful exploration of the collected data.
 
 
-At the end of processing, the collected data is typically exported; various functions are provided for this purpose.
-These are described as the following.
+At the end of processing, the collected and modified data are typically exported; various functions are provided for this purpose.
+This process is described in the following subchapter.
 
 
 #### Storage and Datamanagement
@@ -480,11 +490,13 @@ Currently, data re-import of an exported measurement is only supported via the (
 
 ### Extension Modules
 
-
+The extention modules build on the core modules and offer the user additional basic functionalities.
+These include functions for data acquisition, visualization and analysis.
  
 #### Sensor Interface
 
-Another collection of optional modules provided by the library is the connection of external hardware sensors. All compatible sensors that are compatible with the firmware developed in the `Unified Sensor`\ref{unified-sensor} chapter are supported here.
+Another collection of optional modules provided by the library is the connection of external hardware sensors.
+All compatible sensors that are compatible with the firmware developed in the `Unified Sensor`\ref{unified-sensor} chapter are supported here.
 The library provides the following sensor (+hal) modules for this purpose:
 
 * `MRPHal` - Firmware protocol implementation
@@ -493,17 +505,18 @@ The library provides the following sensor (+hal) modules for this purpose:
 
 These provide functions to communicate with a connected hardware sensor and send commands to it. To generate these and convert the received measurement data into the appropriate format for the core modules, there is a suitable module for each sensor type:
 
-* `MRPReadingSourceStatic` - for 1D and 2D sensor such as `1D: Single Sensor`\ref{d-single-sensor}
+* `MRPReadingSourceStatic` - for 1D and 2D sensors such as `1D: Single Sensor`\ref{d-single-sensor}
 * `MRPReadingSourceFullsphere` - for 3D sensors such as `3D: Fullsphere`\ref{d-fullsphere}
 
 The decision which of these modules to use is made automatically depending on the connected hardware.
 For this purpose, a static function `createReadingSourceInstance` is implemented in the base class `MRPReadingSource`, which automatically creates the appropriate instance based on the sensor capabilites.
 
+
 #### Visualisation
 
 In order to give the user the possibility to display the recorded data visually, two modules were created, which can graphically prepare `MRPReading` instances:
 
-* `MRPVisualization` - different table, graph based plots
+* `MRPVisualization` - different table and graph based plots
 * `MRPPolarVisualization` - fullsphere map plots
 
 On the one hand, it is possible with the `MRPVisualization` module to display measurement data as a table or streamplot, lineplot.
@@ -516,15 +529,24 @@ This requires measurement data with additionally set spatial coordinates. These 
 
 #### Analysis
 
+Data analysis offers the user the greatest flexibility to implement their own modules.
+For this reason `MRPAnalysis` contains functions for calculating the following data analyses, which are compatible with class instances of `MRPReading`:
 
+* `std_deviation` - standard deviation
+* `mean` - mean value
+* `variance` - variance
+* `center_of_gravity` - center of gravity
+* `binning` - distribution of a sample by means of a histogram
+* `k-nearest` - k-nearest neighbors
 
+In addition, the export function `.to_numpy_matrix` enables further processing of the data in the `Numpy`[@harris2020array] framework, in which many other standard analysis functions are implemented.
 
 ## Multi Sensor Setup
 
 At the current described scenarios, it is only possible to detect and use sensors that are directly connected to the host (+pc).
 It has the disadvantage that there must always be a physical connection.
 This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited.
-So multibe sensor can be connected to a `remote` (+pc) which is available on the network.
+So multibe sensor can be connected to any (+pc) which is available on the network.
 This can be a (+sbc) (e.g. a Raspberry Pi).
 The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber.
 
@@ -607,7 +629,7 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
-If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in \ref{sensor-syncronsisationiinterface}.
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in \ref{sensor-syncronisation-interface}.
 this no longer works for long distances and the syncronisation must be made via a shared network connection. 
 
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality[@PTPIEEE1588] can be used on many (+sbc), such as the `Raspberry-Pi Compute Module 4`.

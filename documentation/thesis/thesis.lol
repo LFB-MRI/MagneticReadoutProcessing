@@ -6,15 +6,15 @@
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {5.1}JSON export structure of an MRPReading based measurement}{25}{lstlisting.5.1}%
 \contentsline {lstlisting}{\numberline {5.2}MRPproxy usage to enable local sensor usage over network}{29}{lstlisting.5.2}%
-\contentsline {lstlisting}{\numberline {5.3}MRPProxy REST endpoint query examples}{29}{lstlisting.5.3}%
+\contentsline {lstlisting}{\numberline {5.3}MRPProxy REST endpoint query examples}{30}{lstlisting.5.3}%
 \contentsline {lstlisting}{\numberline {5.4}MRPcli usage example to connect with a network sensor}{30}{lstlisting.5.4}%
 \contentsline {lstlisting}{\numberline {5.5}MRPproxy REST enpoiint query examples}{32}{lstlisting.5.5}%
 \contentsline {lstlisting}{\numberline {5.6}MRPReading example for setting up an basic measurement}{34}{lstlisting.5.6}%
 \contentsline {lstlisting}{\numberline {5.7}MRPHal example to use an connected hardware sensor to store readings inside of an measurement}{35}{lstlisting.5.7}%
 \contentsline {lstlisting}{\numberline {5.8}MRPSimulation example illustrates the usage of several data analysis functions}{36}{lstlisting.5.8}%
-\contentsline {lstlisting}{\numberline {5.9}MRPAnalysis example code performs several data analysis steps}{36}{lstlisting.5.9}%
-\contentsline {lstlisting}{\numberline {5.10}MRPVisualisation example which plots a fullsphere to an image file}{38}{lstlisting.5.10}%
-\contentsline {lstlisting}{\numberline {5.11}MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring}{38}{lstlisting.5.11}%
+\contentsline {lstlisting}{\numberline {5.9}MRPAnalysis example code performs several data analysis steps}{37}{lstlisting.5.9}%
+\contentsline {lstlisting}{\numberline {5.10}MRPVisualisation example which plots a fullsphere to an image file}{37}{lstlisting.5.10}%
+\contentsline {lstlisting}{\numberline {5.11}MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring}{39}{lstlisting.5.11}%
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {6.1}CLI example for configuring a measurement run}{42}{lstlisting.6.1}%
 \contentsline {lstlisting}{\numberline {6.2}Example YAML code of an user defined processing pipeline with six stages linked together}{43}{lstlisting.6.2}%
