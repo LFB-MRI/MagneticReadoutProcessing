@@ -196,3 +196,8 @@ log/COLCON_IGNORE
 log/latest
 log/latest_list
 src/Readoutunit_single/MagCam_Devboard/.vscode/settings.json
+*.acn
+*.acn
+*.lof
+*.lof
+*.lol
