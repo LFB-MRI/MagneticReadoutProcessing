@@ -4,6 +4,10 @@
 \hypertarget{background-and-motivation}{%
 \section{Background and Motivation}\label{background-and-motivation}}
 
+As the following, the motivation for the development of this framework
+is listed. A brief introduction to the topic of low-field \gls{mri} is
+given, followed by the research problem to be solved by this work.
+
 \hypertarget{low-field-mri}{%
 \subsection{Low-Field MRI}\label{low-field-mri}}
 
@@ -31,6 +35,10 @@ Einblicke in verschiedene Shimming-Methoden und Techniken. Diese
 Fortschritte in der Shimming-Technologie tragen dazu bei, die
 diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu
 verbessern.
+
+In this work, reference is made exclusively to the hardware shim
+process. Since this project is to be used in the future to construct a
+low-field \gls{mri} B0 field magnet from permanent magnets.
 
 \hypertarget{charakterisation-of-permanent-magnets}{%
 \subsection{Charakterisation of Permanent
@@ -112,9 +120,6 @@ possible use of the developed solution by the user.
 \hypertarget{state-of-the-art}{%
 \chapter{State of the Art}\label{state-of-the-art}}
 
-\hypertarget{opensource-projects}{%
-\section{Opensource Projects}\label{opensource-projects}}
-
 \hypertarget{conceptual-design}{%
 \section{Conceptual Design}\label{conceptual-design}}
 
@@ -126,8 +131,6 @@ possible use of the developed solution by the user.
 \item
   analysetools und funktionen
 \end{itemize}
-
-accomplished
 
 \hypertarget{usecases}{%
 \chapter{Usecases}\label{usecases}}
@@ -1029,10 +1032,8 @@ be executed or passed on repeatedly. This also fulfills the goal of
 making individual user-created algorithms interchangeable. If the user
 now wishes to use a different \gls{cad} algorithm instead of the
 \passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner},
-the other steps can simply be preserved.
-
-The individual modules and their functions are explained in detail in
-the following chapters.
+the other steps can simply be preserved and only the new step needs to
+be implemented.
 
 \hypertarget{modules}{%
 \section{Modules}\label{modules}}

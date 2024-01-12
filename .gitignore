@@ -201,3 +201,6 @@ src/Readoutunit_single/MagCam_Devboard/.vscode/settings.json
 *.lof
 *.lof
 *.lol
+documentation/thesis/thesis_document_tmp.md.listings
+documentation/thesis/thesis_document_tmp.md.listings
+documentation/thesis/thesis.lol

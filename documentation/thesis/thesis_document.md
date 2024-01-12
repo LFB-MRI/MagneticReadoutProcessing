@@ -2,6 +2,8 @@
 
 ## Background and Motivation
 
+As the following, the motivation for the development of this framework is listed. A brief introduction to the topic of low-field (+mri) is given, followed by the research problem to be solved by this work.
+
 ### Low-Field MRI
 
 ### Shimming Procedure
@@ -11,6 +13,12 @@ Der Shimming-Prozess ist ein entscheidender Schritt bei der Magnetresonanztomogr
 Die Quellen für den Shimming-Prozess können Hardware- und Software-basiert sein. Hardware-Shimming beinhaltet den Einsatz von Gradienten- und Radiofrequenzspulen, die gezielt platziert werden, um das Magnetfeld auszurichten. Software-Shimming hingegen verwendet Algorithmen, um die Steuerparameter des MRT-Systems anzupassen und die Homogenität zu verbessern.
 
 Forschungspublikationen wie "Shimming Techniques in Magnetic Resonance Imaging" (DOI: 10.1007/978-1-4939-2815-6_3) bieten detaillierte Einblicke in verschiedene Shimming-Methoden und Techniken. Diese Fortschritte in der Shimming-Technologie tragen dazu bei, die diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu verbessern.
+
+
+
+In this work, reference is made exclusively to the hardware shim process. Since this project is to be used in the future to construct a low-field (+mri) B0 field magnet from permanent magnets.
+
+
 
 ### Charakterisation of Permanent Magnets
 
@@ -66,15 +74,13 @@ This work is divided into six main chapters, which deal with the approach and im
 
 # State of the Art
 
-## Opensource Projects
+
 
 ## Conceptual Design
 
 * etnwicklung eines hardware uns software framework zur einfachen aquirierung von Meagnetfelddaten
 * analysetools und funktionen
 
-
-accomplished
 
 # Usecases
 
@@ -433,13 +439,11 @@ The implementation of the same functionalities looks as follows after using the 
   In this case, more changes are required, as the configuration file is loaded from the file system.
   This logic must be removed in order to use the added meta data in the input parameter instead.
 
-After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data. This also maps the functionality of a project file, which can be executed or passed on repeatedly.
-This also fulfills the goal of making individual user-created algorithms interchangeable. If the user now wishes to use a different (+cad) algorithm instead of the `HalbachMRIDesigner`[@HalbachMRIDesigner], the other steps can simply be preserved.
+After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
+This also maps the functionality of a project file, which can be executed or passed on repeatedly.
+This also fulfills the goal of making individual user-created algorithms interchangeable.
+If the user now wishes to use a different (+cad) algorithm instead of the `HalbachMRIDesigner`[@HalbachMRIDesigner], the other steps can simply be preserved and only the new step needs to be implemented.
 
-
-
-
-The individual modules and their functions are explained in detail in the following chapters.
 
 ## Modules
 
