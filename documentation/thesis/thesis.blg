@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: thesis.aux
+The style file: plaindin.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: thesis_references.bib
+You're missing a field name---line 196 of file thesis_references.bib
+ : 
+ : %  Author = {Bohner, Max and  Fischer, Richard},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 208 of file thesis_references.bib
+ : 
+ : %author = {FH Aachen},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "HalbachOptimization"
+You've used 19 entries,
+            4335 wiz_defined-function locations,
+            943 strings with 9577 characters,
+and the built_in function-call counts, 12682 in all, are:
+= -- 1274
+> -- 303
+< -- 555
++ -- 619
+- -- 121
+* -- 794
+:= -- 2172
+add.period$ -- 37
+call.type$ -- 19
+change.case$ -- 90
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 268
+empty$ -- 803
+format.name$ -- 208
+if$ -- 2408
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 114
+newline$ -- 128
+num.names$ -- 38
+pop$ -- 147
+preamble$ -- 1
+purify$ -- 90
+quote$ -- 0
+skip$ -- 741
+stack$ -- 0
+substring$ -- 1111
+swap$ -- 83
+text.length$ -- 59
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 76
+warning$ -- 0
+while$ -- 97
+width$ -- 21
+write$ -- 267
+(There were 2 error messages)

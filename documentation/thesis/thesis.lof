@@ -1,0 +1,37 @@
+\babel@toc {ngerman}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textbf 4-1}{\ignorespaces 1D sensor mechanical 3D printed structure }}{9}{figure.4.1}%
+\contentsline {figure}{\numberline {\textbf 4-2}{\ignorespaces 1D sensor schematic and circuit board }}{10}{figure.4.2}%
+\contentsline {figure}{\numberline {\textbf 4-3}{\ignorespaces Unified sensor firmware simplified program strucutre }}{11}{figure.4.3}%
+\contentsline {figure}{\numberline {\textbf 4-4}{\ignorespaces Sensors \gls {cli} }}{13}{figure.4.4}%
+\contentsline {figure}{\numberline {\textbf 4-5}{\ignorespaces Query sensors b value using \gls {cli} }}{13}{figure.4.5}%
+\contentsline {figure}{\numberline {\textbf 4-6}{\ignorespaces Multi sensor synchronisation wiring example }}{14}{figure.4.6}%
+\contentsline {figure}{\numberline {\textbf 4-7}{\ignorespaces Unified sensor firmware multi sensor synchronisation procedure }}{16}{figure.4.7}%
+\contentsline {figure}{\numberline {\textbf 4-8}{\ignorespaces Query opmode using \gls {cli} }}{17}{figure.4.8}%
+\contentsline {figure}{\numberline {\textbf 4-9}{\ignorespaces 1D sensor construction with universal magnet mount }}{18}{figure.4.9}%
+\contentsline {figure}{\numberline {\textbf 4-10}{\ignorespaces Full-Sphere sensor implementation using two Nema17 stepper motors in a polar coordinate system }}{19}{figure.4.10}%
+\contentsline {figure}{\numberline {\textbf 4-11}{\ignorespaces 3D plot of an N45 12x12x12 magnet using the 3D fullsphere sensor }}{20}{figure.4.11}%
+\contentsline {figure}{\numberline {\textbf 4-12}{\ignorespaces Voltcraft GM70 teslameter with custom \gls {pc} interface board }}{21}{figure.4.12}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textbf 5-1}{\ignorespaces MRP library module high level overview }}{24}{figure.5.1}%
+\contentsline {figure}{\numberline {\textbf 5-2}{\ignorespaces MRPlib Proxy Module }}{32}{figure.5.2}%
+\contentsline {figure}{\numberline {\textbf 5-3}{\ignorespaces mrp proxy multi }}{32}{figure.5.3}%
+\contentsline {figure}{\numberline {\textbf 5-4}{\ignorespaces Example full sphere plot of an measurement using the MRPVisualisation module }}{41}{figure.5.4}%
+\contentsline {figure}{\numberline {\textbf 5-5}{\ignorespaces Generated hallbach array with generated cutouts for eight magnets }}{43}{figure.5.5}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textbf 6-1}{\ignorespaces MRP \gls {cli} output to configure a new measurement }}{45}{figure.6.1}%
+\contentsline {figure}{\numberline {\textbf 6-2}{\ignorespaces example measurement analysis pipeline }}{47}{figure.6.2}%
+\contentsline {figure}{\numberline {\textbf 6-3}{\ignorespaces Result step execution tree from user defined processing pipeline example }}{49}{figure.6.3}%
+\contentsline {figure}{\numberline {\textbf 6-4}{\ignorespaces pipeline output files after running example pipeline on a set of readings }}{50}{figure.6.4}%
+\contentsline {figure}{\numberline {\textbf 6-5}{\ignorespaces MRP library test results for different submodules executed in PyCharm \gls {ide} }}{50}{figure.6.5}%
+\contentsline {figure}{\numberline {\textbf 6-6}{\ignorespaces MagneticReadoutProcessing library hosted on PyPi }}{52}{figure.6.6}%
+\contentsline {figure}{\numberline {\textbf 6-7}{\ignorespaces MagneticReadoutProcessing documentation hosted on ReadTheDocs }}{55}{figure.6.7}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\textbf 7-1}{\ignorespaces Ten numbered test magnets in separate holders }}{57}{figure.7.1}%
+\contentsline {figure}{\numberline {\textbf 7-2}{\ignorespaces MRP evaluation result }}{60}{figure.7.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

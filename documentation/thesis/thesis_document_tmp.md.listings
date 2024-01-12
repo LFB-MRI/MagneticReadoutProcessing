@@ -6,6 +6,11 @@
 
 ### Shimming Procedure
 
+Der Shimming-Prozess ist ein entscheidender Schritt bei der Magnetresonanztomographie (MRT), um homogene Magnetfelder für präzise Bildgebung zu gewährleisten. Shimming korrigiert Unregelmäßigkeiten im statischen Magnetfeld, die durch äußere Einflüsse oder interne Systemfehler entstehen können. Dieser Prozess optimiert die Feldhomogenität, was für hochauflösende und artefaktfreie Bilder entscheidend ist.
+
+Die Quellen für den Shimming-Prozess können Hardware- und Software-basiert sein. Hardware-Shimming beinhaltet den Einsatz von Gradienten- und Radiofrequenzspulen, die gezielt platziert werden, um das Magnetfeld auszurichten. Software-Shimming hingegen verwendet Algorithmen, um die Steuerparameter des MRT-Systems anzupassen und die Homogenität zu verbessern.
+
+Forschungspublikationen wie "Shimming Techniques in Magnetic Resonance Imaging" (DOI: 10.1007/978-1-4939-2815-6_3) bieten detaillierte Einblicke in verschiedene Shimming-Methoden und Techniken. Diese Fortschritte in der Shimming-Technologie tragen dazu bei, die diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu verbessern.
 
 ### Charakterisation of Permanent Magnets
 
@@ -20,10 +25,11 @@ The present work aims to provide an efficient and comprehensive solution for the
 
 The scope of the software library is to lay the foundation for the systematic characterization of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
+
 The work aims to facilitate magnetic field characterization and improve the exchange of data between different user groups.
 Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
-The application of the developed framework for the characterization of different magnets and the integration of magnetic field sensors serve as practical applications and validation of the developed solution.
 
+The application of the developed framework for the characterization of different magnets and the integration of magnetic field sensors serve as practical applications and validation of the developed solution.
 
 
 
@@ -314,7 +320,7 @@ In single-sensor operation, this automatically jumps to `primary` sensor operati
 The synchronisation status can be queried via the user interface \ref{communication-interface} using the `opmode`\ref{Query_opmode_using_(+cli).png} command.
 An important aspect of the implementation here was that there is no numbering or sequence of the individual sensors.
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
-The sensor differentiation takes place later in the (+mrp) \ref{software-readout-framework}-library by using the sensor (+id).
+The sensor differentiation takes place later in the (+mrp) \ref{software-readout-framework}-library by using the sensor (+uuid).
 
 ![Query opmode using (+cli) \label{Query_opmode_using_(+cli).png}](./generated_images/border_Query_opmode_using_(+cli).png)
 
@@ -410,35 +416,86 @@ This software or hardware integration can be carried out on any other measuring 
 
 # Software readout framework
 
+The software readout framework is the central software component that was developed as part of this work.
+This software framework is intended to provide a user-oriented data acquisition and analysis environment.
+For this purpose, typical individual steps that occur in relation to these tasks were implemented:
+
+* Data acquisition - e.g. from hardware sensors \ref{unified-sensor}
+* Storage - export of data in various open formats \ref{storage-and-datamanagement}
+* Analysis - algorithms to analyze different data sets \ref{analysis}
+
+All these possible task parts were divided into different blocks and users were given the possibility of adding their own functionalities.
+
+As the following, this concept is referred to as `user interaction points`\ref{user-interaction-points} and is explained in the following chapter.
+
+
+## User Interaction Points
+
+![MRP library module high level overview \label{MRP_library_module_high_level_overview.png}](./generated_images/border_MRP_library_module_high_level_overview.png)
+
+
+
+User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimization algorithms on the other.
+For this purpose, the library was divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
+In combination, these represent a typical measurement-analysis-evaluation workflow of data.
+For this purpose, a module system with standardised functional patterns and data types was developed and packed together in a extendable Python library.
+
+According to this concept, the user should be able to replace individual components from this chain with their own modules without having to worry about implementing other of these to make the project work.
+
+### User Interaction Points Example
+
+The following example shows the advantages of using the `User interaction points`:
+
+
+A project called `HalbachOptimization`[@HalbachOptimization] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
+
+The `HalbachMRIDesigner`[@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Hallbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is then an `OpenSCAD`[@OpenSCAD] based 3D model of the magnet holder.
+
+As a result, there are two projects which are both suitable for the task of optimizing and creating Hallbach magnets for (+mri) applications. However, their data structures are not compatible with each other. However, they are executed manually one after the other in order to obtain a final result.
+
+The library created is intended to solve one problem by providing standardized and flexible data structures for use with this form of magnetic field data. On the other hand, by separating the processing pipeline into defined sub-steps, it should be possible to make individual modules and as a result functionalities interchangeable by the user.
+
+The implementation of the same functionalities looks as follows after using the library:
+
+
+1. **Create a static set of magnets**
+
+  The input parameters of the `HalbachOptimization`[@HalbachOptimization] project are on the one hand the mechanical dimensions and the number of magnets to be used.
+  We assume ideal magnets here. However, it should also be possible to import field data in a more measured form later on.
+  Using the DataAquisition sub-step, it is possible to generate any number of ideal magnets.
+
+2. **Add custom analysis processing step**
+
+  Next, the user creates his own analysis step in order to be able to call up its functions.
+  In the case of the `HalbachOptimization`[@HalbachOptimization] project, the function signature of the start function must be changed.
+  This receives the result of the previous step, in this case the generated magnet data.
+  By optionally setting meta data in the universal bilbiothekt data type, constants can be replaced in the analysis function and made dynamically configurable.
+  The return result also corresponds to this data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
+
+3. **Generate fabrication data** 
+
+  The last step is to call up the `HalbachMRIDesigner`[@HalbachMRIDesigner] project, which creates the (+cad) model of the magnet holder.
+  The data can also be exported as files here.
+  To make the project compatible, the function signatures are also adapted here.
+  In this case, more changes are required, as the configuration file is loaded from the file system.
+  This logic must be removed in order to use the added meta data in the input parameter instead.
+
+After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data. This also maps the functionality of a project file, which can be executed or passed on repeatedly.
+This also fulfills the goal of making individual user-created algorithms interchangeable. If the user now wishes to use a different (+cad) algorithm instead of the `HalbachMRIDesigner`[@HalbachMRIDesigner], the other steps can simply be preserved.
 
 
 
 
-## Library requirements
-
-
-
-### Concepts
-
-* beispiele für projekte welche nur einzelne schnritte implementieren
-* so kann man sich auf die implementierung 
-
-### User interaction points
-
-![MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}](./generated_images/border_MRPlib_COMPLETE_FLOW.png)
-
-
-* jeder schritt nach der DAQ basiert auf dem gleichen grundtyp datentyp
-* meta-daten werden bei jedem weiteren schritt hinzugeügt um nachverfolgbarkeit zu gewärleisten
-
+The individual modules and their functions are explained in detail in the following chapters.
 
 ## Modules
 
-The library consists of various modules, which are divided into two categories:
+In order to realise the concept of user interaction points, the library was divided into different modules. These can be divided into two main categories:
 
 * Core - All modules related to measurement data management
 * Extensions - Contains modules for visualizations, hardware sensor access
 
+In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
 There are also introductory examples which provide an overview of the basic functions in the `Examples`\ref{examples} section, as well as further examples in the online documentation[@MagneticReadoutProcessingReadTheDocs].
 
@@ -458,13 +515,15 @@ The following modules are implemented in detail:
 The `MRPReading` module performs a crucial role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
 To customize and add meta-data, users have the flexibility to configure parameters through the dedicated `MRPMeasurementConfig` module into an `MRPReading` instance.
 
-Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated. The process is initiated by employing specialized functions designed for the creation and addition of data records.
+Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
+The process is initiated by employing specialized functions designed for the creation and addition of data records.
 To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a crucial bridge between user preferences and the robust capabilities of the `MRPReading` module.
 
 The system is also designed to be compatible with `Extension Modules`\ref{extension-modules}, allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
 
-To enhance the accessibility and interpretability of the recorded data, a dedicated module, `MRPMagnetTypes`, comes into play. This module is specifically designed for the storage of physical parameters pertaining to the magnets targeted for measurement.
+To enhance the accessibility and interpretability of the recorded data, a dedicated module, `MRPMagnetTypes`, comes into play.
+This module is specifically designed for the storage of physical parameters pertaining to the magnets targeted for measurement.
 By centralizing this information, users can streamline the subsequent phases of evaluation and analysis, simplifying the overall process and ensuring a more efficient and insightful exploration of the collected data.
 
 
@@ -475,14 +534,17 @@ This process is described in the following subchapter.
 #### Storage and Datamanagement
 
 An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements.
-On the other hand, the focus during development was that it is also possible to use the data in other programs.  For this purpose, an open, documented export format must be selected.
+On the other hand, the focus during development was that it is also possible to use the data in other programs.
+For this purpose, an open, documented export format must be selected.
 Ideally, this should be human-readable and viewable with a simple text editor.
 This eliminates all binary-based formats such as the Python pickle built into Python.
 
-Taking these points into account, the (+json) format was chosen. This is human and machine readable and there is a compatible parser for almost every programming language.
+Taking these points into account, the (+json) format was chosen.
+This is human and machine readable and there is a compatible parser for almost every programming language.
 
 The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement thatt using the library is exported.
-Here you can see that by using the (+json) format, all measurement points and metadata are available in readable plain text. This means that they can also be read out in other programs.
+Here you can see that by using the (+json) format, all measurement points and metadata are available in readable plain text.
+This means that they can also be read out in other programs.
 Using serialization, the `MRPReading` class inherited from Python-`Object` class is serialized via an dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
 
 ~~~ { .json  #lst:json_export_format_example caption="JSON export structure of an MRPReading based measurement" }
@@ -515,7 +577,7 @@ Using serialization, the `MRPReading` class inherited from Python-`Object` class
 The exported example \ref{lst:json_export_format_example} contains the following different object keys, which contain the following information:
 
 * `additional_data` - Additional user-defined metadata
-* `data` - Measured values with value and measured value (+id)
+* `data` - Measured values with value and measured value (+uuid)
 * `measurement_config` - Information about the sensor used for measurement
 
 In addition, further custom objects can be inserted into the (+json) using the functions provided.
@@ -567,7 +629,8 @@ This makes it possible, for example, to visually identify outliers or trends in 
 The module is compatible with all measurement data.
 
 In contrast to the `MRPPolarVisualization` module, this provides functions to create 2D map plots a polar coordinate system.
-This requires measurement data with additionally set spatial coordinates. These can be generated automatically with the `3D: Fullsphere`\ref{d-fullsphere} sensor, or the user must provide the spatial information from another source.
+This requires measurement data with additionally set spatial coordinates.
+These can be generated automatically with the `3D: Fullsphere`\ref{d-fullsphere} sensor, or the user must provide the spatial information from another source.
 
 
 #### Analysis
@@ -614,7 +677,8 @@ The `control` (+pc) only communicates with the `remote` (+pc) `#1`, but can acce
 ### Network-Proxy
 
 The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the `remote` (+pc) and the `control` (+pc) side, which communicates with the remote side via the network. 
-For the user, nothing changes in the procedure for setting up a measurement. The `MRPProxy` (+cli) application must always be started \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
+For the user, nothing changes in the procedure for setting up a measurement.
+The `MRPProxy` (+cli) application must always be started \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
 
 
 ~~~ { .bash  #lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor usage over network" }
@@ -685,15 +749,15 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 As it is possible to connect many identical sensors to one host, it must be possible to address them separately.
 This separation is done by the `MRPProxy` module and is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
 
-Each connected sensor is accessed via the text-based (+cli), this is initially the same for each sensor. The only identification feature is the sensor (+id) by using the `id` command of the sensor (+cli).
+Each connected sensor is accessed via the text-based (+cli), this is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the `id` command of the sensor (+cli).
 
 The `MRPProxy` instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so the multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
 
 #### Construct the Sensor ID LookUp-Table
   
-Immediately after starting the `MRPProxy`, the (+id)s of all locally connected sensors are read out.
+Immediately after starting the `MRPProxy`, the (+uuid)s of all locally connected sensors are read out.
 These are stored together with the class instance of the `MRPHal` module in a (+lut).
-This makes it possible to address a sensor directly using its (+id).
+This makes it possible to address a sensor directly using its (+uuid).
 
 #### Merging the sensor capabilities
 
@@ -730,7 +794,7 @@ The same procedure is performed for the `commands` (+cli)-command of each sensor
 In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
 In addition, there are commands such as the previously used `info` or `status` command, which must be intercepted by the `MRPProxy` module so that it can be handled differently (see example \ref{lst:mtsc}).
 
-To realize this, a (+lut) was created in the previous steps, which contains information regarding `requested capability` -> `sensor`-(+id) -> `physical sensor` and allows the commands to be routed.
+To realize this, a (+lut) was created in the previous steps, which contains information regarding `requested capability` -> `sensor`-(+uuid) -> `physical sensor` and allows the commands to be routed.
 
 For commands where there are several entries for `CAPABLE SENSORS ID LUT`\ref{Sensor_capabilities_merging.csv}, there are two possible approaches to how the command is processed:
 
@@ -739,12 +803,12 @@ For commands where there are several entries for `CAPABLE SENSORS ID LUT`\ref{Se
 
 These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, `redirect to each capable sensor` is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a `readsensor` command, all sensors are read out via one command and the summarized result is transmitted to the host.
 
-The `extend commands using an id parameter` strategy is used for different sensors. Each command is extended on the `Network-Proxy`\ref{network-proxy} by another (+id) parameter, according to the following scheme:
+The `extend commands using an id parameter` strategy is used for different sensors. Each command is extended on the `Network-Proxy`\ref{network-proxy} by another (+uuid) parameter, according to the following scheme:
 
 * `readsensor <axis> <sensor number>`-> `readsensor <axis> <ID>`
 * `opmode`-> `opmode <ID>`
 
-This allows the host to address individual sensors directly via their specific (+id).
+This allows the host to address individual sensors directly via their specific (+uuid).
 
 
 
@@ -818,7 +882,7 @@ reading_source = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 ~~~
 
-In general, a sensor can be connected using its specific system path or the sensor-(+id) via the `MRPHalSerialPortInformation` function.
+In general, a sensor can be connected using its specific system path or the sensor-(+uuid) via the `MRPHalSerialPortInformation` function.
 Locally connected or network sensors can also be automatically recognised using the `list_sensors` function.
 Once connected, these are then converted into a usable data source using the `MRPReadingSource` module. This automatically recognises the type of sensor and generated an `MRPReading` instance with the measured values of the sensor.
 

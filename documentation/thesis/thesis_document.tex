@@ -10,6 +10,28 @@
 \hypertarget{shimming-procedure}{%
 \subsection{Shimming Procedure}\label{shimming-procedure}}
 
+Der Shimming-Prozess ist ein entscheidender Schritt bei der
+Magnetresonanztomographie (MRT), um homogene Magnetfelder für präzise
+Bildgebung zu gewährleisten. Shimming korrigiert Unregelmäßigkeiten im
+statischen Magnetfeld, die durch äußere Einflüsse oder interne
+Systemfehler entstehen können. Dieser Prozess optimiert die
+Feldhomogenität, was für hochauflösende und artefaktfreie Bilder
+entscheidend ist.
+
+Die Quellen für den Shimming-Prozess können Hardware- und
+Software-basiert sein. Hardware-Shimming beinhaltet den Einsatz von
+Gradienten- und Radiofrequenzspulen, die gezielt platziert werden, um
+das Magnetfeld auszurichten. Software-Shimming hingegen verwendet
+Algorithmen, um die Steuerparameter des MRT-Systems anzupassen und die
+Homogenität zu verbessern.
+
+Forschungspublikationen wie ``Shimming Techniques in Magnetic Resonance
+Imaging'' (DOI: 10.1007/978-1-4939-2815-6\_3) bieten detaillierte
+Einblicke in verschiedene Shimming-Methoden und Techniken. Diese
+Fortschritte in der Shimming-Technologie tragen dazu bei, die
+diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu
+verbessern.
+
 \hypertarget{charakterisation-of-permanent-magnets}{%
 \subsection{Charakterisation of Permanent
 Magnets}\label{charakterisation-of-permanent-magnets}}
@@ -32,14 +54,16 @@ software and hardware framework.
 The scope of the software library is to lay the foundation for the
 systematic characterization of magnets based on permanent magnets. The
 library will enable data acquisition, storage and analysis of magnetic
-properties, with customization possible at each step of the process. The
-work aims to facilitate magnetic field characterization and improve the
-exchange of data between different user groups. Complete documentation,
-tutorials and tests will enable users to use the framework efficiently
-and adapt it to their specific requirements. The application of the
-developed framework for the characterization of different magnets and
-the integration of magnetic field sensors serve as practical
-applications and validation of the developed solution.
+properties, with customization possible at each step of the process.
+
+The work aims to facilitate magnetic field characterization and improve
+the exchange of data between different user groups. Complete
+documentation, tutorials and tests will enable users to use the
+framework efficiently and adapt it to their specific requirements.
+
+The application of the developed framework for the characterization of
+different magnets and the integration of magnetic field sensors serve as
+practical applications and validation of the developed solution.
 
 \hypertarget{structure}{%
 \section{Structure}\label{structure}}
@@ -646,7 +670,7 @@ is no numbering or sequence of the individual sensors. This means that
 for the subsequent readout of the measurements, it is only important
 that they are taken at the same interval across all sensors. The sensor
 differentiation takes place later in the \gls{mrp}
-\ref{software-readout-framework}-library by using the sensor \gls{id}.
+\ref{software-readout-framework}-library by using the sensor \gls{uuid}.
 
 \begin{figure}
 \centering
@@ -856,42 +880,165 @@ protocol thanks to the modular design.
 \hypertarget{software-readout-framework}{%
 \chapter{Software readout framework}\label{software-readout-framework}}
 
-\hypertarget{library-requirements}{%
-\section{Library requirements}\label{library-requirements}}
-
-\hypertarget{concepts}{%
-\subsection{Concepts}\label{concepts}}
+The software readout framework is the central software component that
+was developed as part of this work. This software framework is intended
+to provide a user-oriented data acquisition and analysis environment.
+For this purpose, typical individual steps that occur in relation to
+these tasks were implemented:
 
 \begin{itemize}
 \tightlist
 \item
-  beispiele für projekte welche nur einzelne schnritte implementieren
+  Data acquisition - e.g.~from hardware sensors \ref{unified-sensor}
 \item
-  so kann man sich auf die implementierung
+  Storage - export of data in various open formats
+  \ref{storage-and-datamanagement}
+\item
+  Analysis - algorithms to analyze different data sets \ref{analysis}
 \end{itemize}
 
+All these possible task parts were divided into different blocks and
+users were given the possibility of adding their own functionalities.
+
+As the following, this concept is referred to as
+\passthrough{\lstinline!user interaction points!}\ref{user-interaction-points}
+and is explained in the following chapter.
+
 \hypertarget{user-interaction-points}{%
-\subsection{User interaction points}\label{user-interaction-points}}
+\section{User Interaction Points}\label{user-interaction-points}}
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_MRPlib_COMPLETE_FLOW.png}
-\caption{MRPlib COMPLETE FLOW \label{MRPlib_COMPLETE_FLOW.png}}
+\includegraphics{./generated_images/border_MRP_library_module_high_level_overview.png}
+\caption{MRP library module high level overview
+\label{MRP_library_module_high_level_overview.png}}
 \end{figure}
 
-\begin{itemize}
+User interaction points represent the core concept of the developed
+library and are intended to provide user-friendliness on the one hand
+and the rapid development of own analysis and optimization algorithms on
+the other. For this purpose, the library was divided into individual
+modules, which are shown in the graphic
+\ref{MRP_library_module_high_level_overview.png}. In combination, these
+represent a typical measurement-analysis-evaluation workflow of data.
+For this purpose, a module system with standardised functional patterns
+and data types was developed and packed together in a extendable Python
+library.
+
+According to this concept, the user should be able to replace individual
+components from this chain with their own modules without having to
+worry about implementing other of these to make the project work.
+
+\hypertarget{user-interaction-points-example}{%
+\subsection{User Interaction Points
+Example}\label{user-interaction-points-example}}
+
+The following example shows the advantages of using the
+\passthrough{\lstinline!User interaction points!}:
+
+A project called
+\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
+implements a data analysis step and optimizes a magnetic field that is
+as homogeneous as possible within a circular section using given
+mechanical dimensions as input parameters of the magnets used. For this
+purpose, a mutation of the magnet positions and rotations is performed.
+The result is a list of positions for each magnet.
+
+The
+\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner}
+opensource project, can generate basic \gls{cad} drawings for \gls{mri}
+magnets in a Hallbach configuration. To do this, the number of magnets
+and additional parameters for the properties of the \gls{cad} model to
+be created are passed to the function provided as input parameters using
+a \gls{json} file. The result is then an
+\passthrough{\lstinline!OpenSCAD!}\cite{OpenSCAD} based 3D model of
+the magnet holder.
+
+As a result, there are two projects which are both suitable for the task
+of optimizing and creating Hallbach magnets for \gls{mri} applications.
+However, their data structures are not compatible with each other.
+However, they are executed manually one after the other in order to
+obtain a final result.
+
+The library created is intended to solve one problem by providing
+standardized and flexible data structures for use with this form of
+magnetic field data. On the other hand, by separating the processing
+pipeline into defined sub-steps, it should be possible to make
+individual modules and as a result functionalities interchangeable by
+the user.
+
+The implementation of the same functionalities looks as follows after
+using the library:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  jeder schritt nach der DAQ basiert auf dem gleichen grundtyp datentyp
+  \textbf{Create a static set of magnets}
+\end{enumerate}
+
+The input parameters of the
+\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
+project are on the one hand the mechanical dimensions and the number of
+magnets to be used. We assume ideal magnets here. However, it should
+also be possible to import field data in a more measured form later on.
+Using the DataAquisition sub-step, it is possible to generate any number
+of ideal magnets.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
 \item
-  meta-daten werden bei jedem weiteren schritt hinzugeügt um
-  nachverfolgbarkeit zu gewärleisten
-\end{itemize}
+  \textbf{Add custom analysis processing step}
+\end{enumerate}
+
+Next, the user creates his own analysis step in order to be able to call
+up its functions. In the case of the
+\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
+project, the function signature of the start function must be changed.
+This receives the result of the previous step, in this case the
+generated magnet data. By optionally setting meta data in the universal
+bilbiothekt data type, constants can be replaced in the analysis
+function and made dynamically configurable. The return result also
+corresponds to this data type so that subsequent steps are compatible
+and contains the magnet data with modified position and rotation data.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Generate fabrication data}
+\end{enumerate}
+
+The last step is to call up the
+\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner}
+project, which creates the \gls{cad} model of the magnet holder. The
+data can also be exported as files here. To make the project compatible,
+the function signatures are also adapted here. In this case, more
+changes are required, as the configuration file is loaded from the file
+system. This logic must be removed in order to use the added meta data
+in the input parameter instead.
+
+After these customization steps, it is possible to execute both projects
+one after the other and all required configuration parameters are
+contained in the data structure looped through the individual steps as
+meta data. This also maps the functionality of a project file, which can
+be executed or passed on repeatedly. This also fulfills the goal of
+making individual user-created algorithms interchangeable. If the user
+now wishes to use a different \gls{cad} algorithm instead of the
+\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner},
+the other steps can simply be preserved.
+
+The individual modules and their functions are explained in detail in
+the following chapters.
 
 \hypertarget{modules}{%
 \section{Modules}\label{modules}}
 
-The library consists of various modules, which are divided into two
+In order to realise the concept of user interaction points, the library
+was divided into different modules. These can be divided into two main
 categories:
 
 \begin{itemize}
@@ -903,10 +1050,12 @@ categories:
   access
 \end{itemize}
 
-An overview of these is given in the subchapters as the following. There
-are also introductory examples which provide an overview of the basic
-functions in the \passthrough{\lstinline!Examples!}\ref{examples}
-section, as well as further examples in the online
+In each of these categories there are then several sub-categories
+divided into User Interaction Points. An overview of these is given in
+the subchapters as the following. There are also introductory examples
+which provide an overview of the basic functions in the
+\passthrough{\lstinline!Examples!}\ref{examples} section, as well as
+further examples in the online
 documentation\cite{MagneticReadoutProcessingReadTheDocs}.
 
 \hypertarget{core-modules}{%
@@ -1032,7 +1181,7 @@ information:
   metadata
 \item
   \passthrough{\lstinline!data!} - Measured values with value and
-  measured value \gls{id}
+  measured value \gls{uuid}
 \item
   \passthrough{\lstinline!measurement\_config!} - Information about the
   sensor used for measurement
@@ -1327,8 +1476,8 @@ small.
 
 Each connected sensor is accessed via the text-based \gls{cli}, this is
 initially the same for each sensor. The only identification feature is
-the sensor \gls{id} by using the \passthrough{\lstinline!id!} command of
-the sensor \gls{cli}.
+the sensor \gls{uuid} by using the \passthrough{\lstinline!id!} command
+of the sensor \gls{cli}.
 
 The \passthrough{\lstinline!MRPProxy!} instance claims to be a sensor to
 the host \gls{pc} running \gls{mrp} \gls{cli}, so the multiple sensors
@@ -1340,10 +1489,10 @@ start procedure described by the following sub-chapters.
 LookUp-Table}\label{construct-the-sensor-id-lookup-table}}
 
 Immediately after starting the \passthrough{\lstinline!MRPProxy!}, the
-\gls{id}s of all locally connected sensors are read out. These are
+\gls{uuid}s of all locally connected sensors are read out. These are
 stored together with the class instance of the
 \passthrough{\lstinline!MRPHal!} module in a \gls{lut}. This makes it
-possible to address a sensor directly using its \gls{id}.
+possible to address a sensor directly using its \gls{uuid}.
 
 \hypertarget{merging-the-sensor-capabilities}{%
 \subsubsection{Merging the sensor
@@ -1408,7 +1557,7 @@ differently (see example \ref{lst:mtsc}).
 To realize this, a \gls{lut} was created in the previous steps, which
 contains information regarding
 \passthrough{\lstinline!requested capability!} -\textgreater{}
-\passthrough{\lstinline!sensor!}-\gls{id} -\textgreater{}
+\passthrough{\lstinline!sensor!}-\gls{uuid} -\textgreater{}
 \passthrough{\lstinline!physical sensor!} and allows the commands to be
 routed.
 
@@ -1436,7 +1585,7 @@ transmitted to the host.
 The \passthrough{\lstinline!extend commands using an id parameter!}
 strategy is used for different sensors. Each command is extended on the
 \passthrough{\lstinline!Network-Proxy!}\ref{network-proxy} by another
-\gls{id} parameter, according to the following scheme:
+\gls{uuid} parameter, according to the following scheme:
 
 \begin{itemize}
 \tightlist
@@ -1449,7 +1598,7 @@ strategy is used for different sensors. Each command is extended on the
 \end{itemize}
 
 This allows the host to address individual sensors directly via their
-specific \gls{id}.
+specific \gls{uuid}.
 
 \hypertarget{examples}{%
 \section{Examples}\label{examples}}
@@ -1545,7 +1694,7 @@ result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, 
 \end{lstlisting}
 
 In general, a sensor can be connected using its specific system path or
-the sensor-\gls{id} via the
+the sensor-\gls{uuid} via the
 \passthrough{\lstinline!MRPHalSerialPortInformation!} function. Locally
 connected or network sensors can also be automatically recognised using
 the \passthrough{\lstinline!list\_sensors!} function. Once connected,
