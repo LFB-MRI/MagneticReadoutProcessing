@@ -8,7 +8,7 @@ As the following, the motivation for the development of this framework is listed
 
 
 Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners.
-Typically, the magnetic field in low-field MRI systems between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` in high-field (+mri) scanners.[@Hori2021-pt]
+Typically, the magnetic field in low-field MRI systems between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` and above in high-field (+mri) scanners.[@Hori2021-pt]
 
 This technology is used in medical imaging as well as in preclinical research.
 The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems.[@Hori2021-pt]
@@ -19,15 +19,15 @@ The main advantage of low-field MRI is the improved imaging of soft tissues, esp
 
 ### Shimming Procedure
 
-Der Shimming-Prozess ist ein entscheidender Schritt bei der Magnetresonanztomographie (MRT), um homogene Magnetfelder für präzise Bildgebung zu gewährleisten. Shimming korrigiert Unregelmäßigkeiten im statischen Magnetfeld, die durch äußere Einflüsse oder interne Systemfehler entstehen können. Dieser Prozess optimiert die Feldhomogenität, was für hochauflösende und artefaktfreie Bilder entscheidend ist.
+The shimming process is a crucial step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is crucial for high-resolution and artifact-free images.[@10.3389/fphy.2021.704566]
 
-Die Quellen für den Shimming-Prozess können Hardware- und Software-basiert sein. Hardware-Shimming beinhaltet den Einsatz von Gradienten- und Radiofrequenzspulen, die gezielt platziert werden, um das Magnetfeld auszurichten. Software-Shimming hingegen verwendet Algorithmen, um die Steuerparameter des MRT-Systems anzupassen und die Homogenität zu verbessern.
+The sources for the shimming process can be hardware and software based.
+Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field.
+Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity.[@10.3389/fphy.2021.704566]
 
-Forschungspublikationen wie "Shimming Techniques in Magnetic Resonance Imaging" (DOI: 10.1007/978-1-4939-2815-6_3) bieten detaillierte Einblicke in verschiedene Shimming-Methoden und Techniken. Diese Fortschritte in der Shimming-Technologie tragen dazu bei, die diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu verbessern.
 
-
-
-In this work, reference is made exclusively to the hardware shim process. Since this project is to be used in the future to construct a low-field (+mri) B0 field magnet from permanent magnets.
+In this work, reference is made exclusively to the hardware shim process.
+Since this project is to be used in the future to construct a low-field (+mri) B0 field magnet from permanent magnets.
 
 
 

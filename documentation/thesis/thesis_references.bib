@@ -1,4 +1,3 @@
-
 @ARTICLE{Hori2021-pt,
 title     = "Low-field magnetic resonance imaging: Its history and
               renaissance",
@@ -44,6 +43,40 @@ abstract = {Abstract NMR Mandhalas (Magnetic Arrangement for Novel Discrete Halb
 year = {2010}
 }
 
+@Article{10.3389/fphy.2021.704566,
+author={Wenzel, Konstantin and Alhamwey, Hazem and O’Reilly, Tom and Riemann, Layla Tabea and Silemek, Berk and Winter, Lukas},   
+title={B0-Shimming Methodology for Affordable and Compact Low-Field Magnetic Resonance Imaging Magnets},      
+journal={Frontiers in Physics},
+volume={9},          
+year={2021},
+url={https://www.frontiersin.org/articles/10.3389/fphy.2021.704566}, 
+doi={10.3389/fphy.2021.704566},
+issn={2296-424X},
+abtract={Low-field (B<sub>0</sub> < 0.2 T) magnetic resonance imaging (MRI) is emerging as a low cost, point-of-care alternative to provide access to diagnostic imaging technology even in resource scarce environments. MRI magnets can be constructed based on permanent neodymium-iron-boron (NdFeB) magnets in discretized arrangements, leading to substantially lower mass and costs. A challenge with these designs is, however, a good B<sub>0</sub> field homogeneity, which is needed to produce high quality images free of distortions. In this work, we describe an iterative approach to build a low-field MR magnet based on a B<sub>0</sub>-shimming methodology using genetic algorithms. The methodology is tested by constructing a small bore (inner bore diameter = 130 mm) desktop MR magnet (<15 kg) at a field strength of B<sub>0</sub> = 0.1 T and a target volume of 4 cm in diameter. The configuration consists of a base magnet and shim inserts, which can be placed iteratively without modifying the base magnet assembly and without changing the inner dimensions of the bore or the outer dimensions of the MR magnet. Applying the shims, B<sub>0</sub> field inhomogeneity could be reduced by a factor 8 from 5,448 to 682 ppm in the target central slice of the magnet. Further improvements of these results can be achieved in a second or third iteration, using more sensitive magnetic field probes (e.g., nuclear magnetic resonance based magnetic field measurements). The presented methodology is scalable to bigger magnet designs. The MR magnet can be reproduced with off-the-shelf components and a 3D printer and no special tools are needed for construction. All design files and code to reproduce the results will be made available as open source hardware.}
+}
+
+@Article{         harris2020array,
+title         = {Array programming with {NumPy}},
+author        = {Charles R. Harris and K. Jarrod Millman and St{\'{e}}fan J.
+                van der Walt and Ralf Gommers and Pauli Virtanen and David
+                Cournapeau and Eric Wieser and Julian Taylor and Sebastian
+                Berg and Nathaniel J. Smith and Robert Kern and Matti Picus
+                and Stephan Hoyer and Marten H. van Kerkwijk and Matthew
+                Brett and Allan Haldane and Jaime Fern{\'{a}}ndez del
+                R{\'{i}}o and Mark Wiebe and Pearu Peterson and Pierre
+                G{\'{e}}rard-Marchant and Kevin Sheppard and Tyler Reddy and
+                Warren Weckesser and Hameer Abbasi and Christoph Gohlke and
+                Travis E. Oliphant},
+year          = {2020},
+month         = sep,
+journal       = {Nature},
+volume        = {585},
+number        = {7825},
+pages         = {357--362},
+doi           = {10.1038/s41586-020-2649-2},
+publisher     = {Springer Science and Business Media {LLC}},
+url           = {https://doi.org/10.1038/s41586-020-2649-2}
+}
 
 @article{Wickenbrock_2021,
 title={High homogeneity permanent magnet for diamond magnetometry},
@@ -78,6 +111,21 @@ doi = {10.1007/s00723-023-01602-2}
   publisher={Elsevier}
 }
 
+@misc{HalbachMRIDesigner,
+author = {Benjamin Menküc, Lukas Winter, Thomas O'Reilly},
+title = {HalbachMRIDesigner - Create a Halbach MRI Magnet from parametric definitions},
+year = {01.01.2024},
+url = {https://github.com/menkueclab/HalbachMRIDesigner},
+}
+
+@misc{HalbachOptimisation,
+author = {Thomas O'Reilly},
+title = {HalbachOptimisation - An implementation of a genetic algorithm to optimise the homogeneity of a Halbach array by varying the ring diameters along the length of the Halbach cylinder},
+year = {01.01.2024},
+url = {https://github.com/LUMC-LowFieldMRI/HalbachOptimisation},
+}
+
+
 @misc{PTPIEEE1588,
 author = {Jeff Geerling},
 title = {PTP and IEEE-1588 hardware timestamping},
@@ -85,20 +133,6 @@ year = {01.01.2024},
 url = {https://www.jeffgeerling.com/blog/2022/ptp-and-ieee-1588-hardware-timestamping-on-raspberry-pi-cm4},
 }
 
-
-@misc{PyPI,
-author = {Python Software Foundation},
-title = {PyPi - The Python Package Index (PyPI) is a software directory for the Python programming language.},
-year = {01.01.2024},
-url = {https://pypi.org},
-}
-
-@misc{ReadTheDocs,
-author = {Read the Docs, Inc},
-title = {ReadTheDocs - Build, host, and share documentation, all with a single platform.},
-year = {01.01.2024},
-url = {https://readthedocs.com},
-}
 
 @misc{MagneticReadoutProcessingPyPI,
 author = {Python Software Foundation},
@@ -131,12 +165,42 @@ url = {https://www.sphinx-doc.org/en/master/},
 
 
 
+@misc{PyPI,
+author = {Python Software Foundation},
+title = {PyPi - The Python Package Index (PyPI) is a software directory for the Python programming language.},
+year = {01.01.2024},
+url = {https://pypi.org},
+}
+
+@misc{ReadTheDocs,
+author = {Read the Docs, Inc},
+title = {ReadTheDocs - Build, host, and share documentation, all with a single platform.},
+year = {01.01.2024},
+url = {https://readthedocs.com},
+}
+
+
 @misc{PyTest,
 author = {Holger Krekel and pytest-dev team},
 title = {pytest: helps you write better programs},
 year = {01.01.2024},
 url = {https://docs.pytest.org/en/7.4.x/},
 }
+
+
+
+
+@misc{OpenSCAD,
+author = {Marius Kintel},
+title = {OpenSCAD - The Programmers Solid 3D CAD Modeller},
+year = {01.01.2024},
+url = {https://openscad.org},
+}
+
+
+
+
+
 
 
 @misc{GithubActions,
@@ -168,55 +232,6 @@ title = {Python Docs - heapq},
 year = {01.01.2024},
 url = {https://docs.python.org/3/library/heapq.html},
 }
-
-@misc{OpenSCAD,
-author = {Marius Kintel},
-title = {OpenSCAD - The Programmers Solid 3D CAD Modeller},
-year = {01.01.2024},
-url = {https://openscad.org},
-}
-
-@misc{HalbachMRIDesigner,
-author = {Benjamin Menküc, Lukas Winter, Thomas O'Reilly},
-title = {HalbachMRIDesigner - Create a Halbach MRI Magnet from parametric definitions},
-year = {01.01.2024},
-url = {https://github.com/menkueclab/HalbachMRIDesigner},
-}
-
-@misc{HalbachOptimisation,
-author = {Thomas O'Reilly},
-title = {HalbachOptimisation - An implementation of a genetic algorithm to optimise the homogeneity of a Halbach array by varying the ring diameters along the length of the Halbach cylinder},
-year = {01.01.2024},
-url = {https://github.com/LUMC-LowFieldMRI/HalbachOptimisation},
-}
-
-
-@Article{         harris2020array,
-title         = {Array programming with {NumPy}},
-author        = {Charles R. Harris and K. Jarrod Millman and St{\'{e}}fan J.
-                van der Walt and Ralf Gommers and Pauli Virtanen and David
-                Cournapeau and Eric Wieser and Julian Taylor and Sebastian
-                Berg and Nathaniel J. Smith and Robert Kern and Matti Picus
-                and Stephan Hoyer and Marten H. van Kerkwijk and Matthew
-                Brett and Allan Haldane and Jaime Fern{\'{a}}ndez del
-                R{\'{i}}o and Mark Wiebe and Pearu Peterson and Pierre
-                G{\'{e}}rard-Marchant and Kevin Sheppard and Tyler Reddy and
-                Warren Weckesser and Hameer Abbasi and Christoph Gohlke and
-                Travis E. Oliphant},
-year          = {2020},
-month         = sep,
-journal       = {Nature},
-volume        = {585},
-number        = {7825},
-pages         = {357--362},
-doi           = {10.1038/s41586-020-2649-2},
-publisher     = {Springer Science and Business Media {LLC}},
-url           = {https://doi.org/10.1038/s41586-020-2649-2}
-}
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Bücher
