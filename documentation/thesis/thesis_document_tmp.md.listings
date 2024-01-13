@@ -2,7 +2,20 @@
 
 ## Background and Motivation
 
+As the following, the motivation for the development of this framework is listed. A brief introduction to the topic of low-field (+mri) is given, followed by the research problem to be solved by this work.
+
 ### Low-Field MRI
+
+
+Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners.
+Typically, the magnetic field in low-field MRI systems between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` in high-field (+mri) scanners.[@Hori2021-pt]
+
+This technology is used in medical imaging as well as in preclinical research.
+The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems.[@Hori2021-pt]
+
+
+### Magnet System
+
 
 ### Shimming Procedure
 
@@ -12,16 +25,24 @@ Die Quellen für den Shimming-Prozess können Hardware- und Software-basiert sei
 
 Forschungspublikationen wie "Shimming Techniques in Magnetic Resonance Imaging" (DOI: 10.1007/978-1-4939-2815-6_3) bieten detaillierte Einblicke in verschiedene Shimming-Methoden und Techniken. Diese Fortschritte in der Shimming-Technologie tragen dazu bei, die diagnostische Genauigkeit und Bildqualität in der MRT erheblich zu verbessern.
 
+
+
+In this work, reference is made exclusively to the hardware shim process. Since this project is to be used in the future to construct a low-field (+mri) B0 field magnet from permanent magnets.
+
+
+
 ### Charakterisation of Permanent Magnets
 
 * zeigt ansätzte einfacher magnet vermesseungen [@Wickenbrock_2021]
 
 * contruction of hallbach ringe [@cmr.a.20165]
 
+## State of the Art
+
 
 ## Aim of this Thesis
 
-The present work aims to provide an efficient and comprehensive solution for the design of low-field MRI devices by developing and implementing a software and hardware framework.
+The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
 The scope of the software library is to lay the foundation for the systematic characterization of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
@@ -63,18 +84,6 @@ This work is divided into six main chapters, which deal with the approach and im
   comprises the systematic review and assessment of the overall system.
   This includes the demonstration of the implemented capabilities of the overall system against the previously defined usecases.
 
-
-# State of the Art
-
-## Opensource Projects
-
-## Conceptual Design
-
-* etnwicklung eines hardware uns software framework zur einfachen aquirierung von Meagnetfelddaten
-* analysetools und funktionen
-
-
-accomplished
 
 # Usecases
 
@@ -480,13 +489,11 @@ The implementation of the same functionalities looks as follows after using the 
   In this case, more changes are required, as the configuration file is loaded from the file system.
   This logic must be removed in order to use the added meta data in the input parameter instead.
 
-After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data. This also maps the functionality of a project file, which can be executed or passed on repeatedly.
-This also fulfills the goal of making individual user-created algorithms interchangeable. If the user now wishes to use a different (+cad) algorithm instead of the `HalbachMRIDesigner`[@HalbachMRIDesigner], the other steps can simply be preserved.
+After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
+This also maps the functionality of a project file, which can be executed or passed on repeatedly.
+This also fulfills the goal of making individual user-created algorithms interchangeable.
+If the user now wishes to use a different (+cad) algorithm instead of the `HalbachMRIDesigner`[@HalbachMRIDesigner], the other steps can simply be preserved and only the new step needs to be implemented.
 
-
-
-
-The individual modules and their functions are explained in detail in the following chapters.
 
 ## Modules
 

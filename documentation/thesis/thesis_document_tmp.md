@@ -6,6 +6,17 @@ As the following, the motivation for the development of this framework is listed
 
 ### Low-Field MRI
 
+
+Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners.
+Typically, the magnetic field in low-field MRI systems between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` in high-field (+mri) scanners.[@Hori2021-pt]
+
+This technology is used in medical imaging as well as in preclinical research.
+The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems.[@Hori2021-pt]
+
+
+### Magnet System
+
+
 ### Shimming Procedure
 
 Der Shimming-Prozess ist ein entscheidender Schritt bei der Magnetresonanztomographie (MRT), um homogene Magnetfelder für präzise Bildgebung zu gewährleisten. Shimming korrigiert Unregelmäßigkeiten im statischen Magnetfeld, die durch äußere Einflüsse oder interne Systemfehler entstehen können. Dieser Prozess optimiert die Feldhomogenität, was für hochauflösende und artefaktfreie Bilder entscheidend ist.
@@ -26,10 +37,12 @@ In this work, reference is made exclusively to the hardware shim process. Since 
 
 * contruction of hallbach ringe [@cmr.a.20165]
 
+## State of the Art
+
 
 ## Aim of this Thesis
 
-The present work aims to provide an efficient and comprehensive solution for the design of low-field MRI devices by developing and implementing a software and hardware framework.
+The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
 The scope of the software library is to lay the foundation for the systematic characterization of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
@@ -70,16 +83,6 @@ This work is divided into six main chapters, which deal with the approach and im
 * Chapter \ref{evaluation}. **Evaluation**
   comprises the systematic review and assessment of the overall system.
   This includes the demonstration of the implemented capabilities of the overall system against the previously defined usecases.
-
-
-# State of the Art
-
-
-
-## Conceptual Design
-
-* etnwicklung eines hardware uns software framework zur einfachen aquirierung von Meagnetfelddaten
-* analysetools und funktionen
 
 
 # Usecases
