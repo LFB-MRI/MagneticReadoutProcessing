@@ -17,26 +17,82 @@ compared to conventional high-field \gls{mri} scanners. Typically, the
 magnetic field in low-field MRI systems between
 \passthrough{\lstinline!0.1T!} and \passthrough{\lstinline!0.3T!}
 compared to the usual \passthrough{\lstinline!1.5T!} to
-\passthrough{\lstinline!3T!} and above in high-field \gls{mri}
-scanners.\cite{Hori2021-pt}
+\passthrough{\lstinline!3T!} and above in high-field \gls{mri} scanners
+\cite{Hori2021-pt}.
 
 This technology is used in medical imaging as well as in preclinical
 research. The main advantage of low-field MRI is the improved imaging of
 soft tissues, especially when examining joints and muscles. It also
-offers more cost-effective alternatives to high-field MRI
-systems.\cite{Hori2021-pt}
+offers more cost-effective alternatives to high-field MRI systems
+\cite{Hori2021-pt}.
 
 \hypertarget{magnet-system}{%
 \subsection{Magnet System}\label{magnet-system}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}
+\caption{Example hallbach ring magnet with cutouts for eight cubical
+permanent magnets
+\label{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}}
+\end{figure}
+
+Halbach ring magnets \cite{Halbach1980DesignOP} have become a common
+design for low field \gls{mri} and \gls{nmr} systems
+\cite{cmr.a.20165}.
+
+They have the ability to generate extremely homogeneous magnetic flux
+densities, produce virtually no stray fields and are particularly
+attractive for larger magnets as their design has the best flux-to-mass
+ratio \cite{Wickenbrock_2021}.
+
+A halbach ring of this type is usually based on a ring with permanent
+magnets arranged in a circle. The graphic
+\ref{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}
+shows an example \gls{cad} model of such a ring, in which in this case
+eight cubic \passthrough{\lstinline!12x12x12mm!} magnets are embedded to
+generate homogeneous magnetic flux densities of around
+\passthrough{\lstinline!20mT!}.
+
+The homogeneity in this configuration depends, among other things, on
+the following aspects:
+
 \begin{itemize}
-\tightlist
 \item
-  hinzugügen bei lowmir werden durch die geringe feldstärkre oft
-  permanentmagnet systeme eingesetzt.
+  \textbf{Material}
+
+  The magnetic properties of a material influence the generated field
+  strength. Different materials have different magnetic
+  susceptibilities.
 \item
-  typische konstruktionen sind dabei hallbach arrays
+  \textbf{Magnetization}
+
+  The orientation of the magnetic moments in the material influences the
+  field strength. A higher magnetization leads to a stronger field
+  strength.
+\item
+  \textbf{Temperature}
+
+  Temperature can influence the magnetic properties of a material. The
+  magnetization of some materials decreases with increasing temperature.
+\item
+  \textbf{Manufacturing process}
+
+  The manufacturing process can influence the magnetic properties of the
+  material. This is dependent on the purity of the starting materials
+  used and the processing methods. There may also be deviations in field
+  strength if different magnets from different production batches are
+  compared.
 \end{itemize}
+
+These aspects can also be applied to individual magnets. As a result,
+this also complicates the effect on the structure of a Halbach ring
+magnet. If these are joined together to form a ring, positioning
+tolerances are also added.
+
+In order to compensate for inhomogeneities in a finished system, there
+are various so-called shimming procedures which further improve
+homogeneity after the system has been assembled.
 
 \hypertarget{shimming-procedure}{%
 \subsection{Shimming Procedure}\label{shimming-procedure}}
@@ -46,55 +102,48 @@ The shimming process is a crucial step in magnetic resonance imaging
 Shimming corrects irregularities in the static magnetic field that can
 be caused by external influences or internal system errors. This process
 optimizes field homogeneity, which is crucial for high-resolution and
-artifact-free images.\cite{10.3389/fphy.2021.704566}
+artifact-free images \cite{10.3389/fphy.2021.704566}.
 
 The sources for the shimming process can be hardware and software based.
 Hardware shimming involves the use of gradient and radio frequency coils
 that are specifically placed to align the magnetic field. Software
 shimming, on the other hand, uses algorithms to adjust the control
-parameters of the \gls{mri} system and improve
-homogeneity.\cite{10.3389/fphy.2021.704566}
+parameters of the \gls{mri} system and improve homogeneity
+\cite{10.3389/fphy.2021.704566}.
 
 In this work, reference is made exclusively to the hardware shim
 process. Since this project is to be used in the future to construct a
-low-field \gls{mri} B0 field magnet from permanent magnets.
+low-field \gls{mri} field magnet from permanent magnets.
 
 \hypertarget{charakterisation-of-permanent-magnets}{%
 \subsection{Charakterisation of Permanent
 Magnets}\label{charakterisation-of-permanent-magnets}}
 
+The shimming process described describes how, after the field magnet has
+been set up, if the homogeneous magnetic flux densities are not
+sufficient, these can be adjusted manually by means of adjustments to
+the setup or, if the hardware allows it, by software. In addition, the
+causes that cause the inhomogeneity, the output permanent magnet, are
+also known.
+
+As a result, there is the possibility of using the shimming process or
+checking the permanent magnets used in advance before they are used in a
+Hallbach configuration.
+
+There are two ways of using the data from the magnets that were
+previously measured:
+
 \begin{itemize}
+\tightlist
 \item
-  durch fabrikatio von permantentmagneten kann es zu abweichungen
-  kommen*
+  By using binning or sorting algorithms to filter for the most similar
+  magnets
 \item
-  vorallem wenn diese \textgreater N45 klassifikation sind
-\item
-  es gibt temperaturkompensierte Magnetene welche teuer sind
-\item
-  deswegen gibt es den ansatz zur vermessung
-\item
-  \begin{enumerate}
-  \def\labelenumi{\arabic{enumi}.}
-  \tightlist
-  \item
-    per algorithmus können diese dann aussortiert werden
-  \end{enumerate}
-\item
-  \begin{enumerate}
-  \def\labelenumi{\arabic{enumi}.}
-  \setcounter{enumi}{1}
-  \tightlist
-  \item
-    oder position bzw rotation angepasst werden um irregualtritie welche
-    von anderen magneten ausgehen auszucanceln
-  \end{enumerate}
-\item
-  zeigt ansätzte einfacher magnet vermesseungen
-  \cite{Wickenbrock_2021}
-\item
-  contruction of hallbach ringe \cite{cmr.a.20165}
+  Adjustment of the rotation and position within the Hallbach
+  configuration
 \end{itemize}
+
+\cite{Wickenbrock_2021}
 
 \hypertarget{state-of-the-art}{%
 \section{State of the Art}\label{state-of-the-art}}
@@ -503,8 +552,8 @@ the hardware is working properly after installation. The \gls{cli}
 behaves like terminal programmes, displaying a detailed command
 reference \ref{Sensors_(+cli).png} to the user after connecting. The
 current measured value can be output using the
-\passthrough{\lstinline!readout!}
-command\ref{Query_sensors_b_value_using_(+cli).png}.
+\passthrough{\lstinline!readout!} command
+\ref{Query_sensors_b_value_using_(+cli).png}.
 
 \begin{figure}
 \centering
@@ -515,12 +564,12 @@ command\ref{Query_sensors_b_value_using_(+cli).png}.
 
 The other option is to use the \gls{mrp}
 \ref{software-readout-framework}-library. The serial interface is also
-used here. However, after a connection attempt by the
-\passthrough{\lstinline!MRPHal!}\ref{hal} module of the \gls{mrp}
+used here. However, after a connection attempt by the \gls{hal}
+\ref{mrphal} module of the \gls{mrp}
 \ref{software-readout-framework}-library, the system switches to binary
 mode, which is initiated using the \passthrough{\lstinline!sbm!}
 command. The same commands are available as for \gls{cli}-based
-communication.
+communication, but in a binary format.
 
 \hypertarget{sensor-syncronisation-interface}{%
 \subsection{Sensor Syncronisation
@@ -634,8 +683,8 @@ The table
 shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv}
 shows various jitter measurements. These were performed on a
 \passthrough{\lstinline!RaspberryPi 4 4GB!}-\gls{sbc} together with an
-\passthrough{\lstinline!1D: Single Sensor!}\ref{d-single-sensor} and the
-following software settings:
+\passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} and
+the following software settings:
 
 \begin{itemize}
 \tightlist
@@ -698,14 +747,14 @@ this automatically jumps to \passthrough{\lstinline!primary!} sensor
 operation through the
 \passthrough{\lstinline!got impulse within 1000ms!} branch result. The
 synchronisation status can be queried via the user interface
-\ref{communication-interface} using the
-\passthrough{\lstinline!opmode!}\ref{Query_opmode_using_(+cli).png}
-command. An important aspect of the implementation here was that there
-is no numbering or sequence of the individual sensors. This means that
-for the subsequent readout of the measurements, it is only important
-that they are taken at the same interval across all sensors. The sensor
-differentiation takes place later in the \gls{mrp}
-\ref{software-readout-framework}-library by using the sensor \gls{uuid}.
+\ref{communication-interface} using the \passthrough{\lstinline!opmode!}
+\ref{Query_opmode_using_(+cli).png} command. An important aspect of the
+implementation here was that there is no numbering or sequence of the
+individual sensors. This means that for the subsequent readout of the
+measurements, it is only important that they are taken at the same
+interval across all sensors. The sensor differentiation takes place
+later in the \gls{mrp} \ref{software-readout-framework}-library by using
+the sensor \gls{uuid}.
 
 \begin{figure}
 \centering
@@ -924,7 +973,8 @@ these tasks were implemented:
 \begin{itemize}
 \tightlist
 \item
-  Data acquisition - e.g.~from hardware sensors \ref{unified-sensor}
+  Data acquisition - from hardware sensors \ref{unified-sensor} or other
+  data sources
 \item
   Storage - export of data in various open formats
   \ref{storage-and-datamanagement}
@@ -936,8 +986,8 @@ All these possible task parts were divided into different blocks and
 users were given the possibility of adding their own functionalities.
 
 As the following, this concept is referred to as
-\passthrough{\lstinline!user interaction points!}\ref{user-interaction-points}
-and is explained in the following chapter.
+\passthrough{\lstinline!user interaction points!}
+\ref{user-interaction-points} and is explained in the following chapter.
 
 \hypertarget{user-interaction-points}{%
 \section{User Interaction Points}\label{user-interaction-points}}
@@ -971,23 +1021,22 @@ Example}\label{user-interaction-points-example}}
 The following example shows the advantages of using the
 \passthrough{\lstinline!User interaction points!}:
 
-A project called
-\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
-implements a data analysis step and optimizes a magnetic field that is
-as homogeneous as possible within a circular section using given
-mechanical dimensions as input parameters of the magnets used. For this
-purpose, a mutation of the magnet positions and rotations is performed.
-The result is a list of positions for each magnet.
+A project called \passthrough{\lstinline!HalbachOptimisation!}
+\cite{HalbachOptimisation} implements a data analysis step and
+optimizes a magnetic field that is as homogeneous as possible within a
+circular section using given mechanical dimensions as input parameters
+of the magnets used. For this purpose, a mutation of the magnet
+positions and rotations is performed. The result is a list of positions
+for each magnet.
 
-The
-\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner}
-opensource project, can generate basic \gls{cad} drawings for \gls{mri}
-magnets in a Hallbach configuration. To do this, the number of magnets
-and additional parameters for the properties of the \gls{cad} model to
-be created are passed to the function provided as input parameters using
-a \gls{json} file. The result is then an
-\passthrough{\lstinline!OpenSCAD!}\cite{OpenSCAD} based 3D model of
-the magnet holder.
+The \passthrough{\lstinline!HalbachMRIDesigner!}
+\cite{HalbachMRIDesigner} opensource project, can generate basic
+\gls{cad} drawings for \gls{mri} magnets in a Hallbach configuration. To
+do this, the number of magnets and additional parameters for the
+properties of the \gls{cad} model to be created are passed to the
+function provided as input parameters using a \gls{json} file. The
+result is then an \passthrough{\lstinline!OpenSCAD!} \cite{OpenSCAD}
+based 3D model of the magnet holder.
 
 As a result, there are two projects which are both suitable for the task
 of optimizing and creating Hallbach magnets for \gls{mri} applications.
@@ -1013,12 +1062,12 @@ using the library:
 \end{enumerate}
 
 The input parameters of the
-\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
-project are on the one hand the mechanical dimensions and the number of
-magnets to be used. We assume ideal magnets here. However, it should
-also be possible to import field data in a more measured form later on.
-Using the DataAquisition sub-step, it is possible to generate any number
-of ideal magnets.
+\passthrough{\lstinline!HalbachOptimisation!}
+\cite{HalbachOptimisation} project are on the one hand the
+mechanical dimensions and the number of magnets to be used. We assume
+ideal magnets here. However, it should also be possible to import field
+data in a more measured form later on. Using the DataAquisition
+sub-step, it is possible to generate any number of ideal magnets.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1030,14 +1079,15 @@ of ideal magnets.
 
 Next, the user creates his own analysis step in order to be able to call
 up its functions. In the case of the
-\passthrough{\lstinline!HalbachOptimization!}\cite{HalbachOptimization}
-project, the function signature of the start function must be changed.
-This receives the result of the previous step, in this case the
-generated magnet data. By optionally setting meta data in the universal
-bilbiothekt data type, constants can be replaced in the analysis
-function and made dynamically configurable. The return result also
-corresponds to this data type so that subsequent steps are compatible
-and contains the magnet data with modified position and rotation data.
+\passthrough{\lstinline!HalbachOptimisation!}
+\cite{HalbachOptimisation} project, the function signature of the
+start function must be changed. This receives the result of the previous
+step, in this case the generated magnet data. By optionally setting meta
+data in the universal bilbiothekt data type, constants can be replaced
+in the analysis function and made dynamically configurable. The return
+result also corresponds to this data type so that subsequent steps are
+compatible and contains the magnet data with modified position and
+rotation data.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1048,13 +1098,13 @@ and contains the magnet data with modified position and rotation data.
 \end{enumerate}
 
 The last step is to call up the
-\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner}
-project, which creates the \gls{cad} model of the magnet holder. The
-data can also be exported as files here. To make the project compatible,
-the function signatures are also adapted here. In this case, more
-changes are required, as the configuration file is loaded from the file
-system. This logic must be removed in order to use the added meta data
-in the input parameter instead.
+\passthrough{\lstinline!HalbachMRIDesigner!}
+\cite{HalbachMRIDesigner} project, which creates the \gls{cad} model
+of the magnet holder. The data can also be exported as files here. To
+make the project compatible, the function signatures are also adapted
+here. In this case, more changes are required, as the configuration file
+is loaded from the file system. This logic must be removed in order to
+use the added meta data in the input parameter instead.
 
 After these customization steps, it is possible to execute both projects
 one after the other and all required configuration parameters are
@@ -1063,9 +1113,9 @@ meta data. This also maps the functionality of a project file, which can
 be executed or passed on repeatedly. This also fulfills the goal of
 making individual user-created algorithms interchangeable. If the user
 now wishes to use a different \gls{cad} algorithm instead of the
-\passthrough{\lstinline!HalbachMRIDesigner!}\cite{HalbachMRIDesigner},
-the other steps can simply be preserved and only the new step needs to
-be implemented.
+\passthrough{\lstinline!HalbachMRIDesigner!}
+\cite{HalbachMRIDesigner}, the other steps can simply be preserved
+and only the new step needs to be implemented.
 
 \hypertarget{modules}{%
 \section{Modules}\label{modules}}
@@ -1087,9 +1137,9 @@ In each of these categories there are then several sub-categories
 divided into User Interaction Points. An overview of these is given in
 the subchapters as the following. There are also introductory examples
 which provide an overview of the basic functions in the
-\passthrough{\lstinline!Examples!}\ref{examples} section, as well as
-further examples in the online
-documentation\cite{MagneticReadoutProcessingReadTheDocs}.
+\passthrough{\lstinline!Examples!} \ref{examples} section, as well as
+further examples in the online documentation
+\cite{MagneticReadoutProcessingReadTheDocs}.
 
 \hypertarget{core-modules}{%
 \subsection{Core Modules}\label{core-modules}}
@@ -1131,7 +1181,7 @@ between user preferences and the robust capabilities of the
 \passthrough{\lstinline!MRPReading!} module.
 
 The system is also designed to be compatible with
-\passthrough{\lstinline!Extension Modules!}\ref{extension-modules},
+\passthrough{\lstinline!Extension Modules!} \ref{extension-modules},
 allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating
 diverse measurement scenarios and expanding its utility across different
@@ -1181,7 +1231,7 @@ then be processed directly or written to the file system as a file.
   "time_start": "Wed Sep 20 08:50:13 2023",
   "time_end": "Wed Sep 20 08:54:13 2023",
   "additional_data": {
-      "sensor_device_path": "/dev/cu.usbmodem3867315334391",
+      "sensor_device_path": "/dev/ttyUnifiedSensorSingle",
       "sensor_name": "Unified Sensor Single Sensor",
       "sensor_id": "386731533439",
       "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "axis_stimestamp"],
@@ -1224,9 +1274,9 @@ In addition, further custom objects can be inserted into the \gls{json}
 using the functions provided.
 
 Since there are popular data processing frameworks such as
-Numpy\cite{harris2020array}, or the program for mathematical
-calculations, Matlab are often used, the library also supports export
-formats for these systems.
+\passthrough{\lstinline!Numpy!} \cite{harris2020array}, or the
+program for mathematical calculations, Matlab are often used, the
+library also supports export formats for these systems.
 
 The different formats can be triggered by the user by calling up the
 corresponding \passthrough{\lstinline!MRPReading!} class functions:
@@ -1236,7 +1286,8 @@ corresponding \passthrough{\lstinline!MRPReading!} class functions:
 \item
   \passthrough{\lstinline!.dump()!} - \gls{json}
 \item
-  \passthrough{\lstinline!.to\_numpy\_matrix()!} - Numpy-Array of
+  \passthrough{\lstinline!.to\_numpy\_matrix()!} -
+  \passthrough{\lstinline!Numpy!}-Array of
   \passthrough{\lstinline!data!} object with different options
 \item
   \passthrough{\lstinline!.dump\_savemat()!} - Matlab mat-file with
@@ -1244,8 +1295,9 @@ corresponding \passthrough{\lstinline!MRPReading!} class functions:
 \end{itemize}
 
 Currently, data re-import of an exported measurement is only supported
-via the \gls{json} format, as an export using the other options (Numpy,
-Matlab)loses data during the export procedure.
+via the \gls{json} format, as an export using the other options
+(\passthrough{\lstinline!Numpy!}, \passthrough{\lstinline!Matlab!})loses
+data during the export procedure. \}
 
 \hypertarget{extension-modules}{%
 \subsection{Extension Modules}\label{extension-modules}}
@@ -1260,8 +1312,8 @@ acquisition, visualization and analysis.
 Another collection of optional modules provided by the library is the
 connection of external hardware sensors. All compatible sensors that are
 compatible with the firmware developed in the
-\passthrough{\lstinline!Unified Sensor!}\ref{unified-sensor} chapter are
-supported here. The library provides the following sensor \gls{hal}
+\passthrough{\lstinline!Unified Sensor!} \ref{unified-sensor} chapter
+are supported here. The library provides the following sensor \gls{hal}
 modules for this purpose:
 
 \begin{itemize}
@@ -1283,11 +1335,11 @@ is a suitable module for each sensor type:
 \tightlist
 \item
   \passthrough{\lstinline!MRPReadingSourceStatic!} - for 1D and 2D
-  sensors such as
-  \passthrough{\lstinline!1D: Single Sensor!}\ref{d-single-sensor}
+  sensors such as \passthrough{\lstinline!1D: Single Sensor!}
+  \ref{d-single-sensor}
 \item
   \passthrough{\lstinline!MRPReadingSourceFullsphere!} - for 3D sensors
-  such as \passthrough{\lstinline!3D: Fullsphere!}\ref{d-fullsphere}
+  such as \passthrough{\lstinline!3D: Fullsphere!} \ref{d-fullsphere}
 \end{itemize}
 
 The decision which of these modules to use is made automatically
@@ -1315,16 +1367,16 @@ visually, two modules were created, which can graphically prepare
 
 On the one hand, it is possible with the
 \passthrough{\lstinline!MRPVisualization!} module to display measurement
-data as a table or streamplot, lineplot. This makes it possible, for
-example, to visually identify outliers or trends in the measurement
-data. These can also be saved as an image file. The module is compatible
-with all measurement data.
+data as a table or plot (e.g.~stream, line, point). This makes it
+possible, for example, to visually identify outliers or trends in the
+measurement data. These can also be saved as an image file. The module
+is compatible with all measurement data.
 
 In contrast to the \passthrough{\lstinline!MRPPolarVisualization!}
 module, this provides functions to create 2D map plots a polar
 coordinate system. This requires measurement data with additionally set
 spatial coordinates. These can be generated automatically with the
-\passthrough{\lstinline!3D: Fullsphere!}\ref{d-fullsphere} sensor, or
+\passthrough{\lstinline!3D: Fullsphere!} \ref{d-fullsphere} sensor, or
 the user must provide the spatial information from another source.
 
 \hypertarget{analysis}{%
@@ -1355,9 +1407,9 @@ are compatible with class instances of
 
 In addition, the export function
 \passthrough{\lstinline!.to\_numpy\_matrix!} enables further processing
-of the data in the
-\passthrough{\lstinline!Numpy!}\cite{harris2020array} framework, in
-which many other standard analysis functions are implemented.
+of the data in the \passthrough{\lstinline!Numpy!}
+\cite{harris2020array} framework, in which many other standard
+analysis functions are implemented.
 
 \hypertarget{multi-sensor-setup}{%
 \section{Multi Sensor Setup}\label{multi-sensor-setup}}
@@ -1372,7 +1424,7 @@ be a \gls{sbc} (e.g.~a Raspberry Pi). The small footprint and low power
 consumption make it a good choice. It can also be used in a temperature
 chamber.
 
-The \passthrough{\lstinline!MRPProxy!}\ref{MRPlib_Proxy_Module.png}
+The \passthrough{\lstinline!MRPProxy!} \ref{MRPlib_Proxy_Module.png}
 module has been developed to allow forwarding and interaction with
 several sensors over a network connection using a \gls{rest} interface.
 
@@ -1470,8 +1522,8 @@ The query result shows that the sensors are connected correctly and that
 their capabilites have also been recognised correctly. To be able to
 configure a measurement on the \passthrough{\lstinline!control!}
 \gls{pc}, only the \gls{ip} address or hostname of the \gls{pc} running
-an \passthrough{\lstinline!MRPProxy!} instance is
-required\ref{lst:mrpcli_config_using_rpc}.
+an \passthrough{\lstinline!MRPProxy!} instance is required
+\ref{lst:mrpcli_config_using_rpc}.
 
 \begin{lstlisting}[language=bash, caption={MRPcli usage example to connect with a network sensor}, label=lst:mrpcli_config_using_rpc]
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
@@ -1494,7 +1546,7 @@ this no longer works for long distances and the syncronisation must be
 made via a shared network connection.
 
 If time-critical synchronisation over the network is required, \gls{ptp}
-and \gls{pps} output functionality\cite{PTPIEEE1588} can be used on
+and \gls{pps} output functionality \cite{PTPIEEE1588} can be used on
 many \gls{sbc}, such as the
 \passthrough{\lstinline!Raspberry-Pi Compute Module 4!}.
 
@@ -1557,7 +1609,7 @@ measurement. For this purpose, the \passthrough{\lstinline!info!}
 command of each sensor is queried. This information is added to the
 previously created \gls{lut}. Duplicate entries are summarized (see
 Table \ref{Sensor_capabilities_merging.csv}) and returned to the host
-when the \passthrough{\lstinline!info!}\ref{lst:mtsc} command is
+when the \passthrough{\lstinline!info!} \ref{lst:mtsc} command is
 received over network.
 
 \begin{lstlisting}[language=bash, caption={MRPproxy REST enpoiint query examples}, label=lst:mtsc]
@@ -1595,8 +1647,9 @@ contains information regarding
 routed.
 
 For commands where there are several entries for
-\passthrough{\lstinline!CAPABLE SENSORS ID LUT!}\ref{Sensor_capabilities_merging.csv},
-there are two possible approaches to how the command is processed:
+\passthrough{\lstinline!CAPABLE SENSORS ID LUT!}
+\ref{Sensor_capabilities_merging.csv}, there are two possible approaches
+to how the command is processed:
 
 \begin{itemize}
 \tightlist
@@ -1617,7 +1670,7 @@ transmitted to the host.
 
 The \passthrough{\lstinline!extend commands using an id parameter!}
 strategy is used for different sensors. Each command is extended on the
-\passthrough{\lstinline!Network-Proxy!}\ref{network-proxy} by another
+\passthrough{\lstinline!Network-Proxy!} \ref{network-proxy} by another
 \gls{uuid} parameter, according to the following scheme:
 
 \begin{itemize}
@@ -1701,9 +1754,9 @@ After generating simple measurements with random values in the previous
 example \ref{mrpreading}, the next step is to record real sensor data.
 For this purpose, the \passthrough{\lstinline!MRPHal!} module was
 developed, which can interact with all
-\passthrough{\lstinline!Unified Sensor!}\ref{unified-sensor}-compatible
+\passthrough{\lstinline!Unified Sensor!} \ref{unified-sensor}-compatible
 sensors. In the following example \ref{lst:mrpexample_hal}, an
-\passthrough{\lstinline!1D: Single Sensor!}\ref{d-single-sensor} is
+\passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} is
 connected locally to the host \gls{pc}.
 
 \begin{lstlisting}[language=Python, caption={MRPHal example to use an connected hardware sensor to store readings inside of an measurement}, label=lst:mrpexample_hal]
@@ -1750,7 +1803,7 @@ variations of the \passthrough{\lstinline!generate\_reading!} function
 offers the user additional parameterisation options, such as random
 polarisation direction or a defined centre-of-gravity vector. The data
 is generated in the background using the
-\passthrough{\lstinline!magpylib!}\cite{ortner2020magpylib} library
+\passthrough{\lstinline!magpylib!} \cite{ortner2020magpylib} library
 according to the specified parameters.
 
 \begin{lstlisting}[language=Python, caption={MRPSimulation example illustrates the usage of several data analysis functions}, label=lst:mrpexample_simulation]
@@ -1773,7 +1826,7 @@ reading.dump_to_file("simulated_reading.mag.json")
 Once data can be acquired using hardware or software sensors, the next
 step is to analyse this data. \gls{mrp} provides some simple analysis
 functions for this purpose. The code example shows the basic use of the
-module. The \textbf{Evaluation}\ref{evaluation} chapter shows how the
+module. The \textbf{Evaluation} \ref{evaluation} chapter shows how the
 user can implement their own algorithms and add them to the library.
 
 \begin{lstlisting}[language=Python, caption={MRPAnalysis example code performs several data analysis steps}, label=lst:mrpexample_analysis]
@@ -1806,7 +1859,7 @@ This final example shows the use of the MRP Visualisation module, which
 provides general functions for visualising measurements. This makes it
 possible to visually assess the results of a measurement. This is
 particularly helpful for full-sphere measurements recorded with the
-\passthrough{\lstinline!3D: Fullsphere!}\ref{d-fullsphere} sensor. The
+\passthrough{\lstinline!3D: Fullsphere!} \ref{d-fullsphere} sensor. The
 sub-module \passthrough{\lstinline!MRPPolarVisualisation!} is specially
 designed for these. The figure
 \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}
@@ -1845,14 +1898,18 @@ magnets
 \end{figure}
 
 The following example code \ref{lst:mrpexample_hallbach}, shows how a
-simple hallbach magnetic ring can be generated. Eight random
-measurements are generated here. It is important that the magnet type
-(here \passthrough{\lstinline!N45\_CUBIC\_15x15x15!}) is specified. This
-is necessary so that the correct magnet cutouts can be generated when
-creating the 3D model. After the measurements have been generated, they
-are provided with a position and rotation offset according to the
-Hallbach design and calucation
-scheme\cite{HallbachMagnetDesignPaper} using the
+simple hallbach magnetic ring can be generated.
+
+This can then be used to construct a Halbach ring magnet (see chapter
+\ref{Charakterisation of Permanent Magnets}) for a low-field \gls{mri}.
+
+Eight random measurements are generated here. It is important that the
+magnet type (here \passthrough{\lstinline!N45\_CUBIC\_15x15x15!}) is
+specified. This is necessary so that the correct magnet cutouts can be
+generated when creating the 3D model. After the measurements have been
+generated, they are provided with a position and rotation offset
+according to the Hallbach design and calucation scheme
+\cite{HallbachMagnetDesignPaper} using the
 \passthrough{\lstinline!MRPHallbachArrayGenerator!} module.
 
 \begin{lstlisting}[language=Python, caption={MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring}, label=lst:mrpexample_hallbach]
@@ -1871,9 +1928,9 @@ MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hal
 
 In the last step, a 3D model with the dimensions of the magnet type set
 is generated from the generated magnet positions. The result is an
-\passthrough{\lstinline!OpenSCAD!}\cite{OpenSCAD} file, which
+\passthrough{\lstinline!OpenSCAD!} \cite{OpenSCAD} file, which
 contains the module generated. After computing the model using the
-\passthrough{\lstinline!OpenSCAD!}-\gls{cli} utility, the following
+\passthrough{\lstinline!OpenSCAD!} \gls{cli} utility, the following
 model rendering
 \ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}
 can be generated.
@@ -2008,21 +2065,20 @@ In order to implement such a pipeline, the
 \passthrough{\lstinline!yaml!} file format was chosen for the definition
 of the pipeline, as this is for non programmers to understand and can
 also be easily edited with a plain text editor. Detailed examples can be
-found in the
-documentation\cite{MagneticReadoutProcessingReadTheDocs}. The
-pipeline definition consists of sections which execute the appropriate
-Python commands in the background. The signatures in the
-\passthrough{\lstinline!yaml!} file are called using
-\passthrough{\lstinline!reflection!} and a real-time search of the
-loaded
-\passthrough{\lstinline!global() symbol table!}\cite{PythonGlobalSymbolTable}.
-This system makes almost all Python functions available to the user. To
-simplify use, a pre-defined list of verified functions for use in
-pipelines is listed in the
-documentation\cite{MagneticReadoutProcessingReadTheDocs}. The
-following pipeline definition \ref{lst:mrpuddp_example_yaml} shows the
-previously defined steps \ref{example_measurement_analysis_pipeline.png}
-as \passthrough{\lstinline!yaml!} syntax.
+found in the documentation
+\cite{MagneticReadoutProcessingReadTheDocs}. The pipeline definition
+consists of sections which execute the appropriate Python commands in
+the background. The signatures in the \passthrough{\lstinline!yaml!}
+file are called using \passthrough{\lstinline!reflection!} and a
+real-time search of the loaded \passthrough{\lstinline!global()!}
+functions symbol table \cite{PythonGlobalSymbolTable}. This system
+makes almost all Python functions available to the user. To simplify
+use, a pre-defined list of verified functions for use in pipelines is
+listed in the documentation
+\cite{MagneticReadoutProcessingReadTheDocs}. The following pipeline
+definition \ref{lst:mrpuddp_example_yaml} shows the previously defined
+steps \ref{example_measurement_analysis_pipeline.png} as
+\passthrough{\lstinline!yaml!} syntax.
 
 \begin{lstlisting}[caption={Example YAML code of an user defined processing pipeline with six stages linked together}, label=lst:mrpuddp_example_yaml]
 stage import_readings:
@@ -2131,8 +2187,9 @@ PyCharm \gls{ide}
 
 During the development of the \gls{mrp}-library, test cases were also
 created for all important functionalities and usecases. The test
-framework \passthrough{\lstinline!PyTest!}\cite{PyTest} was used for
-this purpose, as it offers direct integration in most \gls{ide}s (see
+framework \passthrough{\lstinline!PyTest!} \cite{PyTest} was used
+for this purpose, as it offers direct integration in most \gls{ide}s
+(see
 \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png})
 and also because it provides detailed and easy-to-understand test
 reports as output in order to quickly identify and correct errors. It
@@ -2183,12 +2240,12 @@ run could be carried out with real data.
 
 In the other scenario, the tests are to be carried out before a new
 release in the repository on the basis of
-\passthrough{\lstinline!Github Actions!}\cite{GithubActions}. Here
+\passthrough{\lstinline!Github Actions!} \cite{GithubActions}. Here
 there is the possibility to host local runner software, which then has
 access to the hardware, but then a \gls{pc} must be permanently
 available for this task. Instead, the hardware sensors were simulated by
 software and executed via virtualisation on the systems provided by
-\passthrough{\lstinline!Github Actions!}\cite{GithubActions}.
+\passthrough{\lstinline!Github Actions!}.
 
 \hypertarget{package-distribution}{%
 \section{Package distribution}\label{package-distribution}}
@@ -2198,10 +2255,10 @@ installation of all \gls{mrp} modules. As it was created in the Python
 programming language, there are several public package registry where
 users can provide their software modules. Here,
 \passthrough{\lstinline!PyPi!}\cite{PyPI}
-\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}\cite{MagneticReadoutProcessingPyPI}
-is the most commonly used package registry and offers direct support for
-the package installation programm \gls{pip}
-\ref{lst:setup_lib_with_pip}.
+\ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png}
+\cite{MagneticReadoutProcessingPyPI} is the most commonly used
+package registry and offers direct support for the package installation
+programm \gls{pip} \ref{lst:setup_lib_with_pip}.
 
 \begin{figure}
 \centering
@@ -2232,12 +2289,11 @@ the package registry.
 
 Since the \gls{mrp}-library requires additional Python dependencies
 (e.g.~\passthrough{\lstinline!numpy!},
-\passthrough{\lstinline!matplotlib!}), which cannot be assumed to be
-already installed on the target system, these must be installed prior to
-the actual installation. These can be specified in the library
-installation configuration
-\passthrough{\lstinline!setup.py!}\ref{lst:setup_py_req} for this
-purpose.
+\passthrough{\lstinline!matplotlib!} packages), which cannot be assumed
+to be already installed on the target system, these must be installed
+prior to the actual installation. These can be specified in the library
+installation configuration \passthrough{\lstinline!setup.py!}
+\ref{lst:setup_py_req} for this purpose.
 
 \begin{lstlisting}[language=Python, caption={setup.py with dynamic requirement parsing used given requirements.txt}, label=lst:setup_py_req]
 # dynamic requirement loading using 'requirements.txt'
@@ -2287,8 +2343,8 @@ the terminal shell being located in the \gls{mrp}-library folder.
 
 In order to provide comprehensive documentation for the enduser, the
 source code was documented using
-Python-\passthrough{\lstinline!docstrings!}\cite{PythonDocstringReference}
-and the Python3.5 type annotations:
+Python-\passthrough{\lstinline!docstrings!}
+\cite{PythonDocstringReference} and the Python3.5 type annotations:
 
 \begin{itemize}
 \tightlist
@@ -2328,11 +2384,10 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
 
 Since \passthrough{\lstinline!docstrings!} only document the source
 code, but do not provide simple how-to-use instructions, the
-documentation framework
-\passthrough{\lstinline!Sphinx!}\cite{SphinxDocumentation} was used
-for this purpose. This framework makes it possible to generate
-\gls{html} or \gls{pdf} documentation from various source code
-documentation formats, such as the used
+documentation framework \passthrough{\lstinline!Sphinx!}
+\cite{SphinxDocumentation} was used for this purpose. This framework
+makes it possible to generate \gls{html} or \gls{pdf} documentation from
+various source code documentation formats, such as the used
 \passthrough{\lstinline!docstrings!}. These are converted into a
 Markdown format in an intermediate step and this also allows to add
 further user documentation such as examples or installation
@@ -2351,20 +2406,20 @@ which provide the \gls{mrp}-library documentation online.
 Once the finished documentation has been generated from static
 \gls{html} files, it is stored in the project repository. Another
 publication option is to host the documentation via online services such
-as \passthrough{\lstinline!ReadTheDocs!}\cite{ReadTheDocs}, where
+as \passthrough{\lstinline!ReadTheDocs!} \cite{ReadTheDocs}, where
 users can make documentation for typical software projects available to
 others.
 
-The documentation has also been uploaded for
-\passthrough{\lstinline!ReadTheDocs!}\cite{MagneticReadoutProcessingReadTheDocs}
-and linked in the repository and on the overview page
+The documentation has also been uploaded to
+\passthrough{\lstinline!ReadTheDocs!}
+\cite{MagneticReadoutProcessingReadTheDocs} and linked in the
+repository and on the overview page
 \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
 on \passthrough{\lstinline!PyPi!}.
 
 The process of creating and publishing the documentation has been
-automated using
-\passthrough{\lstinline!GitHub Actions!}\cite{GithubActions}, so
-that it is always automatically kept up to date with new features.
+automated using \passthrough{\lstinline!GitHub Actions!}, so that it is
+always automatically kept up to date with new features.
 
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
@@ -2466,12 +2521,13 @@ here as a module or implemented directly can be called via the pipeline.
 As this is a short algorithm, it was inserted directly into the file.
 The parameter \passthrough{\lstinline!\_readings!} should later receive
 the imported measurements from the
-\passthrough{\lstinline!stage rawimport!}\ref{lst:pipeline_mrp_evaluation_yaml}
-and the optional \passthrough{\lstinline!IP\_return\_count!} parameter
-specifies the number of best measurements that are returned. The return
-parameter is a list of measurements and should contain the measurements
-that are closest to the mean value of all measurements after the
-function has been executed.
+\passthrough{\lstinline!stage rawimport!}
+\ref{lst:pipeline_mrp_evaluation_yaml} and the optional
+\passthrough{\lstinline!IP\_return\_count!} parameter specifies the
+number of best measurements that are returned. The return parameter is a
+list of measurements and should contain the measurements that are
+closest to the mean value of all measurements after the function has
+been executed.
 
 \begin{lstlisting}[language=Python, caption={User implemented custom find most similar readings algorithm}, label=lst:custom_find_similar_values_algorithm]
 @staticmethod
@@ -2500,11 +2556,11 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   return similar_values
 \end{lstlisting}
 
-The python \passthrough{\lstinline!heapq!}\cite{heapq} module, which
-implements a priority queue, is used for this purpose. The calculated
-distances from the mean value of the measurements to the global mean
-value are inserted into this queue. Subsequently, as many elements of
-the queue are returned as defined by the
+The python \passthrough{\lstinline!heapq!} \cite{heapq} module,
+which implements a priority queue, is used for this purpose. The
+calculated distances from the mean value of the measurements to the
+global mean value are inserted into this queue. Subsequently, as many
+elements of the queue are returned as defined by the
 \passthrough{\lstinline!IP\_return\_count!} parameter. The actual
 sorting was carried out by the queue in the background.
 
@@ -2551,7 +2607,7 @@ stage plot_filtered:
 The final pipeline has been saved in the pipeline directory as
 \passthrough{\lstinline!pipeline\_mrp\_evaluation.yaml!} file and is
 ready for execution. This is carried out using the
-\passthrough{\lstinline!MRPudpp!}-(cli)
+\passthrough{\lstinline!MRPudpp!} (cli)
 \ref{lst:bash_pipeline_mrp_evaluation_yaml}. After the run has been
 successfully completed, the results are saved in the result folder
 specified in the pipeline using the
