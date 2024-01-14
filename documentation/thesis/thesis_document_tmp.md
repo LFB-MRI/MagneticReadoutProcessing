@@ -17,6 +17,10 @@ The main advantage of low-field MRI is the improved imaging of soft tissues, esp
 ### Magnet System
 
 
+* hinzugügen bei  lowmir werden durch die geringe feldstärkre oft permanentmagnet systeme eingesetzt.
+* typische konstruktionen sind dabei hallbach arrays
+
+
 ### Shimming Procedure
 
 The shimming process is a crucial step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is crucial for high-resolution and artifact-free images.[@10.3389/fphy.2021.704566]
@@ -32,6 +36,15 @@ Since this project is to be used in the future to construct a low-field (+mri) B
 
 
 ### Charakterisation of Permanent Magnets
+
+
+* durch fabrikatio von permantentmagneten kann es zu abweichungen kommen*
+* vorallem wenn diese >N45 klassifikation sind
+* es gibt temperaturkompensierte Magnetene welche teuer sind
+
+* deswegen gibt es den ansatz zur vermessung
+* 1. per algorithmus können diese dann aussortiert werden
+* 2. oder position bzw rotation angepasst werden um irregualtritie welche von anderen magneten ausgehen auszucanceln
 
 * zeigt ansätzte einfacher magnet vermesseungen [@Wickenbrock_2021]
 
