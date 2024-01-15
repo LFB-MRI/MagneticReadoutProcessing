@@ -821,7 +821,7 @@ This makes it possible to address a sensor directly using its (+uuid).
 
 #### Merging the sensor capabilities
 
-: Sensor capabilities merging \label{Sensor_capabilities_merging.csv}
+: Sensor capabilities merging algorithm \label{Sensor_capabilities_merging_algorithm.csv}
 
 | SENSOR A  | SENSOR B  |  MERGED CAPABILITIES |  CAPABLE SENSORS ID LUT |
 | --------- | --------- | -------------------- | ----------------------- |
@@ -833,7 +833,7 @@ This makes it possible to address a sensor directly using its (+uuid).
 When using sensors with different capabilites, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the `info` command of each sensor is queried.
-This information is added to the previously created (+lut). Duplicate entries are summarized (see Table \ref{Sensor_capabilities_merging.csv}) and returned to the host when the `info` \ref{lst:mtsc} command is received over network.
+This information is added to the previously created (+lut). Duplicate entries are summarized (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the `info` \ref{lst:mtsc} command is received over network.
 
 ```bash {#lst:mtsc caption="MRPproxy REST enpoiint query examples"}
 # QUERY Network-Proxy capabilities
