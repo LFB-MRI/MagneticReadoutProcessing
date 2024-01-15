@@ -236,8 +236,10 @@ possible use of the developed solution by the user.
 The following section defines some usecases that the future project
 should be able to cover. These illustrate practical situations to
 understand the functionality and added value of the implemented solution
-for the user. These were defined in the course of project planning and
-provide an overview of how the user interacts with the project and what
+for the user.
+
+These were defined in the course of project planning and provide an
+overview of how the user interacts with the project and what
 functionalities can be expected. In the later accomplished evaluation
 process \ref{evaluation}, the defined usecases are also used as a
 reference to demonstrate the implemented capabilities of the solution.
@@ -315,22 +317,28 @@ data analysis functions.
 A defined main objective of this project is the development of a
 cost-effective magnetic field sensors interface that is also universally
 expandable. The focus is on mapping different sensors and being
-compatible with different magnet types and shapes. This ensures broad
-applicability in different scenarios. Another goal is reproducibility to
-ensure consistent results. Easy communication with standard PC hardware
-maximises the user-friendliness of the interface. The flexibility to
-support different sensors and magnets makes the system versatile and
-opens the possibility for use in different applications. A low-cost
-magnetic field sensors interface will therefore not only be economically
-attractive, but also facilitate the integration of magnetic field
-sensors in different contexts. In addition, the low-cost sensor
-interface will serve as a development platform for the data evaluation
-\gls{mrp} library and provide real measurement data from magnets. In
-addition, the interface firmware creates a basis for the development of
-a data protocol for exchanging measured values. This makes it easy to
-integrate your own measuring devices into the \gls{mrp} ecosystem at a
-later date. This is only possible with a minimal functional hardware and
-firmware setup and was developed for this purpose first.
+compatible with different magnet types and shapes.
+
+This ensures broad applicability in different scenarios. Another goal is
+reproducibility to ensure consistent results. Easy communication with
+standard PC hardware maximises the user-friendliness of the interface.
+
+The flexibility to support different sensors and magnets makes the
+system versatile and opens the possibility for use in different
+applications. A low-cost magnetic field sensors interface will therefore
+not only be economically attractive, but also facilitate the integration
+of magnetic field sensors in different contexts.
+
+In addition, the low-cost sensor interface will serve as a development
+platform for the data evaluation \gls{mrp} library and provide real
+measurement data from magnets. In addition, the interface firmware
+creates a basis for the development of a data protocol for exchanging
+measured values.
+
+This makes it easy to integrate your own measuring devices into the
+\gls{mrp} ecosystem at a later date. This is only possible with a
+minimal functional hardware and firmware setup and was developed for
+this purpose first.
 
 \hypertarget{sensor-selection}{%
 \section{Sensor Selection}\label{sensor-selection}}
@@ -338,6 +346,7 @@ firmware setup and was developed for this purpose first.
 The selection process for possible magnetic field sensors initially
 focussed on the most common and cost-effective ones, especially those
 that are already used in smartphones and are therefore widely available.
+
 A key aspect of this selection was the preference for sensors with
 digital interfaces to facilitate implementation in the circuit layout.
 The integration of integrated temperature sensors represents a
@@ -347,10 +356,11 @@ compensation.
 The use of analog sensors was purposefully avoided, though they are
 suitable for more precise measurements and extended measuring ranges.
 They were excluded because they require more carefully designed circuits
-and more complicated energy management. In the context of the desired
-goal of developing a cost-efficient and universally expandable Hall
-sensor interface, the decision in favour of digital sensors seems
-appropriate.
+and more complicated energy management.
+
+In the context of the desired goal of developing a cost-efficient and
+universally expandable Hall sensor interface, the decision in favour of
+digital sensors seems appropriate.
 
 Focussing on the digital \gls{i2c} interface not only facilitates
 implementation, but also contributes to overall cost efficiency. At the
@@ -458,9 +468,11 @@ The microcontroller firmware is software that is executed on a
 microcontroller in an embedded system. It controls the hardware and
 enables the execution of predefined functions. The firmware is used to
 process input data, control output devices and performs specific tasks
-according to the program code. It handles communication with sensors,
-actuators and other peripheral devices, processing data and making
-decisions. Firmware is critical to the functioning of devices.
+according to the program code.
+
+It handles communication with sensors, actuators and other peripheral
+devices, processing data and making decisions. Firmware is critical to
+the functioning of devices.
 
 \begin{figure}
 \centering
@@ -509,19 +521,22 @@ The flow chart
 start process and the subsequent main loop for processing the user
 commands and sensor results. When the microcontroller is started, the
 software checks whether known sensors are connected to \gls{i2c} or
-\gls{uart} interfaces. If any are found (using a dedicated \gls{lut}
-with sensor address translation information), the appropriate class
-instances are created and these can later be used to read out
-measurement results.
+\gls{uart} interfaces.
+
+If any are found (using a dedicated \gls{lut} with sensor address
+translation information), the appropriate class instances are created
+and these can later be used to read out measurement results.
 
 The next initialisation system is dedicated for multi-sensor
 synchronisation \ref{sensor-syncronisation-interface}. The last step in
 the setup is to configure communication with the host or connected
 \gls{pc}. All implemented microcontroller platforms used (Raspberry Pi
-Pico, STM32F4) have a \gls{usb} slave port. The used usb descriptor is a
-\gls{usb} \gls{cdc}. This is used to emulate a virtual RS232
-communication port using a \gls{usb} port on a \gls{pc} and usually no
-additional driver is needed on modern host systems.
+Pico, STM32F4) have a \gls{usb} slave port.
+
+The used usb descriptor is a \gls{usb} \gls{cdc}. This is used to
+emulate a virtual RS232 communication port using a \gls{usb} port on a
+\gls{pc} and usually no additional driver is needed on modern host
+systems.
 
 After the setup process is complete, the system switches to an infinite
 loop, which processes several possible actions. One task is, to react to
@@ -752,26 +767,29 @@ intial pulse on the SYNC-\gls{gpio}
 Each sensor starts a random timer beforehand, which sends a pulse on the
 sync line. All others receive this and switch to
 \passthrough{\lstinline!secondary!} mode and synchronise the
-measurements based on each sync pulse received. Since the presumed
-\passthrough{\lstinline!primary!} sensor cannot register its own sync
-pulse (because the pin is switched to output), there is a timeout branch
-condition \passthrough{\lstinline!got pulse within 1000ms!} and this
-becomes the \passthrough{\lstinline!primary!} sensor. This means that in
-a chain of sensors there is exactly one
-\passthrough{\lstinline!primary!} and many
-\passthrough{\lstinline!secondary!} sensors. In single-sensor operation,
-this automatically jumps to \passthrough{\lstinline!primary!} sensor
-operation through the
+measurements based on each sync pulse received.
+
+Since the presumed \passthrough{\lstinline!primary!} sensor cannot
+register its own sync pulse (because the pin is switched to output),
+there is a timeout branch condition
+\passthrough{\lstinline!got pulse within 1000ms!} and this becomes the
+\passthrough{\lstinline!primary!} sensor. This means that in a chain of
+sensors there is exactly one \passthrough{\lstinline!primary!} and many
+\passthrough{\lstinline!secondary!} sensors.
+
+In single-sensor operation, this automatically jumps to
+\passthrough{\lstinline!primary!} sensor operation through the
 \passthrough{\lstinline!got impulse within 1000ms!} branch result. The
 synchronisation status can be queried via the user interface
 \ref{communication-interface} using the \passthrough{\lstinline!opmode!}
 \ref{Query_opmode_using_(+cli).png} command. An important aspect of the
 implementation here was that there is no numbering or sequence of the
-individual sensors. This means that for the subsequent readout of the
-measurements, it is only important that they are taken at the same
-interval across all sensors. The sensor differentiation takes place
-later in the \gls{mrp} \ref{software-readout-framework}-library by using
-the sensor \gls{uuid}.
+individual sensors.
+
+This means that for the subsequent readout of the measurements, it is
+only important that they are taken at the same interval across all
+sensors. The sensor differentiation takes place later in the \gls{mrp}
+\ref{software-readout-framework}-library by using the sensor \gls{uuid}.
 
 \begin{figure}
 \centering
@@ -923,6 +941,7 @@ used, which has a measuring range of \passthrough{\lstinline!0-3T!} with
 a resolution of \passthrough{\lstinline!0.1mT!}. It offers an
 \passthrough{\lstinline!RS232!} interface with a documented protocol
 \ref{Voltcraft_GM70_serial_protocol.csv} for connection to a \gls{pc}.
+
 This connectivity makes it possible to make the device compatible with
 the Unified Sensor ecosystem using a separate interface software
 \cite{VoltcraftGM70Rest} executable on the host \gls{pc}. However,
@@ -941,8 +960,10 @@ This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
 offer an physical \passthrough{\lstinline!RS232!} interface. As with the
 other sensors, this interface consists of your
 \passthrough{\lstinline!RaspberryPi Pico!} with an additional level
-shifter. The Teslameter is connected to the microcontroller using two
-free \gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
+shifter.
+
+The Teslameter is connected to the microcontroller using two free
+\gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
 separate build configuration. In order to be able to read and correctly
 interpret the data from the microcontoller, the serial protocol from
 table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was
@@ -1019,8 +1040,10 @@ As the following, this concept is referred to as
 User interaction points represent the core concept of the developed
 library and are intended to provide user-friendliness on the one hand
 and the rapid development of own analysis and optimization algorithms on
-the other. For this purpose, the library was divided into individual
-modules, which are shown in the graphic
+the other.
+
+For this purpose, the library was divided into individual modules, which
+are shown in the graphic
 \ref{MRP_library_module_high_level_overview.png}. In combination, these
 represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns
@@ -1127,10 +1150,11 @@ After these customization steps, it is possible to execute both projects
 one after the other and all required configuration parameters are
 contained in the data structure looped through the individual steps as
 meta data. This also maps the functionality of a project file, which can
-be executed or passed on repeatedly. This also fulfills the goal of
-making individual user-created algorithms interchangeable. If the user
-now wishes to use a different \gls{cad} algorithm instead of the
-\passthrough{\lstinline!HalbachMRIDesigner!}
+be executed or passed on repeatedly.
+
+This also fulfills the goal of making individual user-created algorithms
+interchangeable. If the user now wishes to use a different \gls{cad}
+algorithm instead of the \passthrough{\lstinline!HalbachMRIDesigner!}
 \cite{HalbachMRIDesigner}, the other steps can simply be preserved
 and only the new step needs to be implemented.
 
@@ -1192,9 +1216,11 @@ configure parameters through the dedicated
 Within the realm of measurement data, a diverse range of data points can
 be seamlessly incorporated. The process is initiated by employing
 specialized functions designed for the creation and addition of data
-records. To configure parameters, ensuring a tailored approach to the
-entire measurement process, these parameters act as a crucial bridge
-between user preferences and the robust capabilities of the
+records.
+
+To configure parameters, ensuring a tailored approach to the entire
+measurement process, these parameters act as a crucial bridge between
+user preferences and the robust capabilities of the
 \passthrough{\lstinline!MRPReading!} module.
 
 The system is also designed to be compatible with
@@ -1207,8 +1233,9 @@ domains.
 To enhance the accessibility and interpretability of the recorded data,
 a dedicated module, \passthrough{\lstinline!MRPMagnetTypes!}, comes into
 play. This module is specifically designed for the storage of physical
-parameters pertaining to the magnets targeted for measurement. By
-centralizing this information, users can streamline the subsequent
+parameters pertaining to the magnets targeted for measurement.
+
+By centralizing this information, users can streamline the subsequent
 phases of evaluation and analysis, simplifying the overall process and
 ensuring a more efficient and insightful exploration of the collected
 data.
@@ -1224,10 +1251,12 @@ Datamanagement}\label{storage-and-datamanagement}}
 An important aspect is data import and export. On the one hand, this
 allows the library to reuse and archive the measurements. On the other
 hand, the focus during development was that it is also possible to use
-the data in other programs. For this purpose, an open, documented export
-format must be selected. Ideally, this should be human-readable and
-viewable with a simple text editor. This eliminates all binary-based
-formats such as the Python pickle built into Python.
+the data in other programs.
+
+For this purpose, an open, documented export format must be selected.
+Ideally, this should be human-readable and viewable with a simple text
+editor. This eliminates all binary-based formats such as the Python
+pickle built into Python.
 
 Taking these points into account, the \gls{json} format was chosen. This
 is human and machine readable and there is a compatible parser for
@@ -1237,11 +1266,13 @@ The following code snippet \ref{lst:json_export_format_example} shows
 the \gls{json} structure which is generated when a measurement thatt
 using the library is exported. Here you can see that by using the
 \gls{json} format, all measurement points and metadata are available in
-readable plain text. This means that they can also be read out in other
-programs. Using serialization, the \passthrough{\lstinline!MRPReading!}
-class inherited from Python-\passthrough{\lstinline!Object!} class is
-serialized via an dictionary conversion step. This \gls{json} string can
-then be processed directly or written to the file system as a file.
+readable plain text.
+
+This means that they can also be read out in other programs. Using
+serialization, the \passthrough{\lstinline!MRPReading!} class inherited
+from Python-\passthrough{\lstinline!Object!} class is serialized via an
+dictionary conversion step. This \gls{json} string can then be processed
+directly or written to the file system as a file.
 
 \begin{lstlisting}[caption={JSON export structure of an MRPReading based measurement}, label=lst:json_export_format_example]
 {
@@ -1435,11 +1466,12 @@ At the current described scenarios, it is only possible to detect and
 use sensors that are directly connected to the host \gls{pc}. It has the
 disadvantage that there must always be a physical connection. This can
 make it difficult to install multiple sensors in measurement setups
-where space or cable routing options are limited. So multibe sensor can
-be connected to any \gls{pc} which is available on the network. This can
-be a \gls{sbc} (e.g.~a Raspberry Pi). The small footprint and low power
-consumption make it a good choice. It can also be used in a temperature
-chamber.
+where space or cable routing options are limited.
+
+Multibe sensor can be connected to any \gls{pc} which is available on
+the network. This can be a \gls{sbc} (e.g.~a Raspberry Pi). The small
+footprint and low power consumption make it a good choice. It can also
+be used in a temperature chamber.
 
 The \passthrough{\lstinline!MRPProxy!} \ref{MRPlib_Proxy_Module.png}
 module has been developed to allow forwarding and interaction with
@@ -1555,8 +1587,9 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 Another important aspect when using several sensors via the proxy system
 is the synchronisation of the measurement intervals between the sensors.
 Individual sensor setups do not require any additional synchronisation
-information, as this is communicated via the \gls{usb} interface. If
-several sensors are connected locally, they can be connected to each
+information, as this is communicated via the \gls{usb} interface.
+
+If several sensors are connected locally, they can be connected to each
 other via their sync input using short cables. One sensor acts as the
 central clock as described in \ref{sensor-syncronisation-interface}.
 this no longer works for long distances and the syncronisation must be
@@ -1721,9 +1754,10 @@ The \passthrough{\lstinline!MRPReading!} is the key module of the
 imported and exported. The following example
 \ref{lst:mrpexample_reading} shows how a measurement is created and
 measurement points are added in the form of
-\passthrough{\lstinline!MRPReadingEntry!} instances. An important point
-is the management of the meta data, which further describes the
-measurement. This is realised in the example using the
+\passthrough{\lstinline!MRPReadingEntry!} instances.
+
+An important point is the management of the meta data, which further
+describes the measurement. This is realised in the example using the
 \passthrough{\lstinline!set\_additional\_data!} function.
 
 \begin{lstlisting}[language=Python, caption={MRPReading example for setting up an basic measurement}, label=lst:mrpexample_reading]
@@ -1814,12 +1848,13 @@ If no hardware sensor is available or for the generation of test data,
 the \passthrough{\lstinline!MRPSimulation!} module is available. This
 contains a series of functions that simulate various magnets and their
 fields. The result is a complete \passthrough{\lstinline!MRPReading!}
-measurement with a wide range of set meta data. The example
-\ref{lst:mrpexample_simulation} illustrated the basic usage. Different
-variations of the \passthrough{\lstinline!generate\_reading!} function
-offers the user additional parameterisation options, such as random
-polarisation direction or a defined centre-of-gravity vector. The data
-is generated in the background using the
+measurement with a wide range of set meta data.
+
+The example \ref{lst:mrpexample_simulation} illustrated the basic usage.
+Different variations of the \passthrough{\lstinline!generate\_reading!}
+function offers the user additional parameterisation options, such as
+random polarisation direction or a defined centre-of-gravity vector. The
+data is generated in the background using the
 \passthrough{\lstinline!magpylib!} \cite{ortner2020magpylib} library
 according to the specified parameters.
 
@@ -1843,8 +1878,9 @@ reading.dump_to_file("simulated_reading.mag.json")
 Once data can be acquired using hardware or software sensors, the next
 step is to analyse this data. \gls{mrp} provides some simple analysis
 functions for this purpose. The code example shows the basic use of the
-module. The \textbf{Evaluation} \ref{evaluation} chapter shows how the
-user can implement their own algorithms and add them to the library.
+module. The \passthrough{\lstinline!Evaluation!} \ref{evaluation}
+chapter shows how the user can implement their own algorithms and add
+them to the library.
 
 \begin{lstlisting}[language=Python, caption={MRPAnalysis example code performs several data analysis steps}, label=lst:mrpexample_analysis]
 from MRP import MRPAnalysis, MRPReading
@@ -1923,10 +1959,11 @@ This can then be used to construct a Halbach ring magnet (see chapter
 Eight random measurements are generated here. It is important that the
 magnet type (here \passthrough{\lstinline!N45\_CUBIC\_15x15x15!}) is
 specified. This is necessary so that the correct magnet cutouts can be
-generated when creating the 3D model. After the measurements have been
-generated, they are provided with a position and rotation offset
-according to the Hallbach design and calucation scheme
-\cite{HallbachMagnetDesignPaper} using the
+generated when creating the 3D model.
+
+After the measurements have been generated, they are provided with a
+position and rotation offset according to the Hallbach design and
+calucation scheme \cite{HallbachMagnetDesignPaper} using the
 \passthrough{\lstinline!MRPHallbachArrayGenerator!} module.
 
 \begin{lstlisting}[language=Python, caption={MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring}, label=lst:mrpexample_hallbach]
@@ -1961,13 +1998,14 @@ structured code examples and improved error messages promote a smooth
 developer experience. A \gls{gui} or \gls{cli} application for complex
 libraries can make it easier to use, especially for developers with less
 experience. Continuous feedback through automated tests and
-comprehensive error logs enable faster bug fixing. The integration of
-user feedback and regular updates promotes the adaptability of the
-\gls{mrp}-library. Effective usability improvements help to speed up
-development processes and increase the satisfaction of the developer
-community. In the following, some of these have been added in and around
-the \gls{mrp}-library, but they are only optional components for the
-intended use.
+comprehensive error logs enable faster bug fixing.
+
+The integration of user feedback and regular updates promotes the
+adaptability of the \gls{mrp}-library. Effective usability improvements
+help to speed up development processes and increase the satisfaction of
+the developer community. In the following, some of these have been added
+in and around the \gls{mrp}-library, but they are only optional
+components for the intended use.
 
 \hypertarget{command-line-interface}{%
 \section{Command Line Interface}\label{command-line-interface}}
@@ -1983,12 +2021,13 @@ In the first version of the \gls{mrp}-library, the user had to write his
 own Python scripts even for short measurement and visualisation tasks.
 However, this was already time-consuming for reading out a sensor and
 configuring the measurement parameters and metadata and quickly required
-more than 100 lines of new Python code. Although such examples are
-provided in the documentation, it must be possible for programming
-beginners in particular to use them. To simplify these tasks, a
-\gls{cli} \ref{example_measurement_analysis_pipeline.png} was
-implemented. The libaray \gls{cli} implements the following
-functionalities:
+more than 100 lines of new Python code.
+
+Although such examples are provided in the documentation, it must be
+possible for programming beginners in particular to use them. To
+simplify these tasks, a \gls{cli}
+\ref{example_measurement_analysis_pipeline.png} was implemented. The
+libaray \gls{cli} implements the following functionalities:
 
 \begin{itemize}
 \tightlist
@@ -2045,9 +2084,11 @@ After it is easy for users to carry out measurements using the
 \gls{cli}, the next logical step is to analyse the recorded data. This
 can involve one or several hundred data records. Again, the procedure
 for the user is to write their own evaluation scripts using the
-\gls{mrp}-library. This is particularly useful for complex analyses or
-custom algorithms, but not necessarily for simple standard tasks such as
-bias compensation or graphical plot outputs.
+\gls{mrp}-library.
+
+This is particularly useful for complex analyses or custom algorithms,
+but not necessarily for simple standard tasks such as bias compensation
+or graphical plot outputs.
 
 \begin{figure}
 \centering
@@ -2085,13 +2126,14 @@ also be easily edited with a plain text editor. Detailed examples can be
 found in the documentation
 \cite{MagneticReadoutProcessingReadTheDocs}. The pipeline definition
 consists of sections which execute the appropriate Python commands in
-the background. The signatures in the \passthrough{\lstinline!yaml!}
-file are called using \passthrough{\lstinline!reflection!} and a
-real-time search of the loaded \passthrough{\lstinline!global()!}
-functions symbol table \cite{PythonGlobalSymbolTable}. This system
-makes almost all Python functions available to the user. To simplify
-use, a pre-defined list of verified functions for use in pipelines is
-listed in the documentation
+the background.
+
+The signatures in the \passthrough{\lstinline!yaml!} file are called
+using \passthrough{\lstinline!reflection!} and a real-time search of the
+loaded \passthrough{\lstinline!global()!} functions symbol table
+\cite{PythonGlobalSymbolTable}. This system makes almost all Python
+functions available to the user. To simplify use, a pre-defined list of
+verified functions for use in pipelines is listed in the documentation
 \cite{MagneticReadoutProcessingReadTheDocs}. The following pipeline
 definition \ref{lst:mrpuddp_example_yaml} shows the previously defined
 steps \ref{example_measurement_analysis_pipeline.png} as
@@ -2140,10 +2182,11 @@ which contain a name, the function to be executed and its parameters.
 The various steps are then linked by using the
 \passthrough{\lstinline!stage <name>!} makro as input parameter of the
 next function to be executed (see comments in
-\ref{lst:mrpuddp_example_yaml}). It is therefore also possible to use
-the results of one function in several others without them directly
-following each other. The disadvantages of this system are the
-following:
+\ref{lst:mrpuddp_example_yaml}).
+
+It is therefore also possible to use the results of one function in
+several others without them directly following each other. The
+disadvantages of this system are the following:
 
 \begin{itemize}
 \tightlist
@@ -2189,10 +2232,12 @@ are saved for optional later use.
 Software tests in libraries offer numerous advantages for improving
 quality and efficiency. Firstly, they enable the identification of
 errors and vulnerabilities before software is published as a new
-version. This significantly improves the reliability of
-\gls{mrp}-library applications. Tests also ensures consistent and
-reliable performance, which is particularly important when libraries are
-used by different users and for different usecases.
+version.
+
+This significantly improves the reliability of \gls{mrp}-library
+applications. Tests also ensures consistent and reliable performance,
+which is particularly important when libraries are used by different
+users and for different usecases.
 
 \begin{figure}
 \centering
@@ -2494,7 +2539,9 @@ used for the evaulation of the framework. As this is equipped with an
 exchangeable magnetic holder mount, suitable holders are required for
 the magnets to be measured. Ten random
 \passthrough{\lstinline!N45 12x12x12mm!} neodymium magnets were used
-here. These were placed in modified 3D printed holders
+here.
+
+These were placed in modified 3D printed holders
 \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then
 numbered. This allows them to be matched to the measurement results
 later.
@@ -2536,6 +2583,7 @@ function signature and is implemented in the file
 loaded when the pipeline is started and all functions that are imported
 here as a module or implemented directly can be called via the pipeline.
 As this is a short algorithm, it was inserted directly into the file.
+
 The parameter \passthrough{\lstinline!\_readings!} should later receive
 the imported measurements from the
 \passthrough{\lstinline!stage rawimport!}
@@ -2684,10 +2732,11 @@ developed.
 
 The hardware is based on widely used magnetic field sensors and low-cost
 microcontrollers, which enables an easily expandable and applicable
-solution for measuring magnets with repeatable accuracy. A particular
-focus was placed on expandability by the user. Interchangeable modules
-allow the user to develop their own analysis algorithms without having
-to redesign everything from scratch.
+solution for measuring magnets with repeatable accuracy.
+
+A particular focus was placed on expandability by the user.
+Interchangeable modules allow the user to develop their own analysis
+algorithms without having to redesign everything from scratch.
 
 This extensibility and customisability was successfully demonstrated
 during the evaluation. This underlines the performance of the developed
