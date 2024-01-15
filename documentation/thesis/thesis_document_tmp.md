@@ -68,12 +68,13 @@ In this work, reference is made exclusively to the hardware shim process.
 Since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
 
 
-### Charakterisation of Permanent Magnets
+## State of the Art
 
 The shimming process described describes how, after the field magnet has been set up, if the homogeneous magnetic flux densities are not sufficient, these can be adjusted manually by means of adjustments to the setup or, if the hardware allows it, by software.
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
-
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Hallbach configuration.
+
+In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets. Individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
 
 There are two ways of using the data from the magnets that were previously measured:
 
@@ -81,12 +82,14 @@ There are two ways of using the data from the magnets that were previously measu
 * Adjustment of the rotation and position within the Hallbach configuration
 
 
+This form of data processing of previously characterized magnetic data is currently being implemented experimentally in projects using various algorithms [@Wickenbrock_2021].
+Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Hallbach ring relative to each other [@HalbachMRIDesigner].
 
-[@Wickenbrock_2021]
+These are each separate projects that implement individual aspects of data processing, which realize the process of measuring individual magnets by manual combination.
+However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
-
-## State of the Art
-
+Special algorithms from various projects are used to optimize homogeneity. The challenge here is to ensure the seamless integration and compatibility of these algorithms into the overall process.
+This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a halbach ring.
 
 ## Aim of this Thesis
 
@@ -98,7 +101,7 @@ The library will enable data acquisition, storage and analysis of magnetic prope
 The work aims to facilitate magnetic field characterization and improve the exchange of data between different user groups.
 Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
-The application of the developed framework for the characterization of different magnets and the integration of magnetic field sensors serve as practical applications and validation of the developed solution.
+The application of the developed framework for the characterization of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
 
 
