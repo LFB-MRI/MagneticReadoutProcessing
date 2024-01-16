@@ -721,7 +721,7 @@ For this reason `MRPAnalysis` contains functions for calculating the following d
 * `std_deviation` - Standard deviation
 * `mean` - Mean value
 * `variance` - Variance
-* `center_of_gravity` - Center of gravity
+* `CoG` - Center of gravity
 * `binning` - Distribution of a sample by means of a histogram
 * `k-nearest` - K-nearest neighbors
 
@@ -747,10 +747,10 @@ The approach of implementing this via a (+rest) interface also offers the advant
 Another application example is when sensors are physically separated or there are long distances between them.
 By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are available to the `control` (+pc).
 
-![mrp proxy multi \label{mrp_proxy_multi.png}](./generated_images/border_mrp_proxy_multi.png)
+![Example MRP proxy module usage, using two remote (+pc)s \label{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png}](./generated_images/border_Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png)
 
 
-The figure \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sensor` topology.
+The figure \ref{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png} shows the modified `multi-proxy - multi-sensor` topology.
 Here, both proxy instances do not communicate directly with the `control` (+pc), but the proxy instance `remote`(+pc) `#2` can acces the proxy running on `remote`(+pc) `#1`.
 
 The `control` (+pc) only communicates with the `remote` (+pc) `#1`, but can access all sensors in this chain.
@@ -1098,7 +1098,7 @@ In the following, some of these have been added in and around the (+mrp)-library
 In the first version of the (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
-To simplify these tasks, a (+cli) \ref{example_measurement_analysis_pipeline.png} was implemented. The libaray (+cli) implements the following functionalities:
+To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} was implemented. The libaray (+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -1141,11 +1141,11 @@ This can involve one or several hundred data records. Again, the procedure for t
 
 This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 
-![example measurement analysis pipeline \label{example_measurement_analysis_pipeline.png}](./generated_images/border_example_measurement_analysis_pipeline.png)
+![Example measurement analysis pipeline \label{Example_measurement_analysis_pipeline.png}](./generated_images/border_Example_measurement_analysis_pipeline.png)
 
 
 For this purpose, a further (+cli) application was created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
-The example \ref{example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
+The example \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
 1. Import the measurements
 2. Determine sensor bias value from imported measurements using a reference measurement
@@ -1161,7 +1161,7 @@ The pipeline definition consists of sections which execute the appropriate Pytho
 The signatures in the `yaml` file are called using `reflection` and a real-time search of the loaded `global()` functions symbol table [@PythonGlobalSymbolTable].
 This system makes almost all Python functions available to the user.
 To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the documentation [@MagneticReadoutProcessingReadTheDocs].
- The following pipeline definition \ref{lst:mrpuddp_example_yaml} shows the previously defined steps \ref{example_measurement_analysis_pipeline.png} as `yaml` syntax.
+ The following pipeline definition \ref{lst:mrpuddp_example_yaml} shows the previously defined steps \ref{Example_measurement_analysis_pipeline.png} as `yaml` syntax.
 
 ```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of an user defined processing pipeline with six stages linked together"}
 stage import_readings:
@@ -1216,12 +1216,12 @@ The disadvantages of this system are the following:
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
 After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph.
-The intermediate results and the final results \ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
+The intermediate results and the final results \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
 ![Example result of an step execution tree from user defined processing pipeline \label{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}](./generated_images/border_Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png)
 
 
-![pipeline output files after running example pipeline on a set of readings \label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png)
+![Pipeline output files after running example pipeline on a set of readings \label{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png)
 
 
 ## Testing
@@ -1450,22 +1450,27 @@ This Python file is loaded when the pipeline is started and all functions that a
 As this is a short algorithm, it was inserted directly into the file.
 
 The parameter `_readings` should later receive the imported measurements from the `stage rawimport` \ref{lst:pipeline_mrp_evaluation_yaml} and the optional `IP_return_count` parameter specifies the number of best measurements that are returned.
-The return parameter is a list of measurements and should contain the measurements that are closest to the mean value of all measurements after the function has been executed.
+The return parameter is a list of measurements containing the most similar measurements, measured by the smallest distance between all measurements.
+The distance for each measurement is determined using the center of gravity function `CoG`, the length is then calculated from the result vector. This value can then be used for sorting.
+
 
 ```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm"}
 @staticmethod
 def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
   import heapq
+  import math
   heap = []
   # SET RESULT VALUE COUNT
   IP_return_count = max([int(IP_return_count),len(_readings)])
   if IP_return_count < 0:
       IP_return_count = len(_readings) / 5
-  # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
+  # CALCULATE TARGET VALUE: CENTER OF GRAVITY MAGNITUDE FOR ALL READINGS
   target_value = 0.0
   for idx, r in enumerate(_readings):
-      mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
-      target_value = target_value + mean
+      cog_vecotr = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(r)
+      # COMPUTE LENGTH OF VECTOR
+      cog:float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
+      target_value = target_value + cog
   target_value = target_value / len(_readings)
   # PUSH READINGS TO HEAP
   for value in _readings:
@@ -1476,11 +1481,12 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   similar_values = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
   # CLEAN UP USED LIBRARIES AND RETURN RESULT
   del heapq
+  del math
   return similar_values
 ```
 
 The Python `heapq` [@heapq] module, which implements a priority queue, is used for this purpose.
-The calculated distances from the mean value of the measurements to the global mean value are inserted into this queue.
+The calculated distances from the `CoG` value of the measurements to are inserted into this queue.
 Subsequently, as many elements of the queue are returned as defined by the `IP_return_count` parameter.
 The actual sorting was carried out by the queue in the background.
 
@@ -1488,7 +1494,7 @@ The actual sorting was carried out by the queue in the background.
 ## Execution of Analysis Pipeline
 
 Once the filter function has been implemented, it still needs to be integrated into the analysis pipeline\ref{lst:pipeline_mrp_evaluation_yaml}.
-Here, the example pipeline \ref{example_measurement_analysis_pipeline.png} is simplified and an additional stage `find_similar_values` has been added, which has set `FindSimilarValuesAlgorithm` as the function to be called.
+Here, the example pipeline \ref{Example_measurement_analysis_pipeline.png} is simplified and an additional stage `find_similar_values` has been added, which has set `FindSimilarValuesAlgorithm` as the function to be called.
 As a final step, the result is used in the `plot_filtered` stage for visualisation.
 
 ```yaml {#lst:pipeline_mrp_evaluation_yaml caption="User defined processing pipeline using custom implemented filter algorithm"}
@@ -1537,16 +1543,16 @@ $ MRPudpp pipeline run
 > Process finished with exit code 0
 ```
 
-The figure \ref{MRP_evaluation_result.png} shows this result.
+The figure \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png} shows this result.
 The plot of the raw measured values is shown on the left.
-The variance of the determined `Mean [uT]` mean values is plotted on ten individual measured values.
+The value of the determined `GoG [uT]` values is plotted on ten individual measured values.
 Here it can be seen that there are measured values with larger deviations (see measurement `7:0`,`10-2:0`,`10-1:0`).
 
-![MRP evaluation result \label{MRP_evaluation_result.png}](./generated_images/border_MRP_evaluation_result.png)
+![MRP evaluation result after execution of the  user defined pipeline, using find similar values algorithm \label{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}](./generated_images/border_MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png)
 
 
-On the right-hand side \ref{MRP_evaluation_result.png}, the measured values are plotted as a result of the filter algorithm. As the `IP_return_count` parameter was set to four, only the four most similar measurements were exported here.
-It can be seen from the plotted mean values `Mean [uT]` that these are closest to the global mean value 208.8uT.
+On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the `IP_return_count` parameter was set to four, only the four most similar measurements were exported here.
+It can be seen from the plotted `CoG [uT]` deviation values, that these are closest to an ideal Magnet with a `CoG` value of 0uT. This ideal value was calculated with the function `MRP.MRPSimulation.generate_simulated_reading`, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
 The filter algorithm implemented by the user was thus successfully executed using the user-programmable pipeline. 
 The calculation result was successfully verified using raw measurement data and the final result of the algorithm.
 
