@@ -14,7 +14,7 @@ given, followed by the research problem to be solved by this work.
 Low-field magnetic resonance imaging (low-field \gls{mri}) is a
 \gls{mri} technique that operates at a lower magnetic field strength
 compared to conventional high-field \gls{mri} scanners. Typically, the
-magnetic field in low-field MRI systems between
+magnetic field in low-field MRI systems measured between
 \passthrough{\lstinline!0.1T!} and \passthrough{\lstinline!0.3T!}
 compared to the usual \passthrough{\lstinline!1.5T!} to
 \passthrough{\lstinline!3T!} and above in high-field \gls{mri} scanners
@@ -29,13 +29,7 @@ offers more cost-effective alternatives to high-field MRI systems
 \hypertarget{magnet-system}{%
 \subsection{Magnet System}\label{magnet-system}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}
-\caption{Example hallbach ring magnet with cutouts for eight cubical
-permanent magnets
-\label{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}}
-\end{figure}
+\%\%Example\_hallbach\_ring\_magnet\_with\_cutouts\_for\_eight\_cubical\_permanent\_magnets.png\%\%
 
 Halbach ring magnets \cite{Halbach1980DesignOP} have become a common
 design for low field \gls{mri} and \gls{nmr} systems
@@ -59,30 +53,23 @@ the following aspects:
 
 \begin{itemize}
 \item
-  \textbf{Material}
-
-  The magnetic properties of a material influence the generated field
-  strength. Different materials have different magnetic
+  \textbf{Material}: The magnetic properties of a material influence the
+  generated field strength. Different materials have different magnetic
   susceptibilities.
 \item
-  \textbf{Magnetization}
-
-  The orientation of the magnetic moments in the material influences the
-  field strength. A higher magnetization leads to a stronger field
-  strength.
+  \textbf{Magnetization}: The orientation of the magnetic moments in the
+  material influences the field strength. A higher magnetization leads
+  to a stronger field strength.
 \item
-  \textbf{Temperature}
-
-  Temperature can influence the magnetic properties of a material. The
-  magnetization of some materials decreases with increasing temperature.
+  \textbf{Temperature}: Temperature can influence the magnetic
+  properties of a material. The magnetization of some materials
+  decreases with increasing temperature.
 \item
-  \textbf{Manufacturing process}
-
-  The manufacturing process can influence the magnetic properties of the
-  material. This is dependent on the purity of the starting materials
-  used and the processing methods. There may also be deviations in field
-  strength if different magnets from different production batches are
-  compared.
+  \textbf{Manufacturing process}: The manufacturing process can
+  influence the magnetic properties of the material. This is dependent
+  on the purity of the starting materials used and the processing
+  methods. There may also be deviations in field strength if different
+  magnets from different production batches are compared.
 \end{itemize}
 
 These aspects can also be applied to individual magnets. As a result,
@@ -194,41 +181,33 @@ approach and implementation. The techniques and concepts used are
 explained in detail. Specific examples provide an overview of the
 possible use of the developed solution by the user.
 
-\begin{itemize}
-\item
-  Chapter \ref{state-of-the-art}. \textbf{State of the Art} describes
-  the current state of technology and forms the basis for further
-  development. Existing measurement methods and findings are shown here
-  in order to define the context for the current project.
-\item
-  Chapter \ref{usecases}. \textbf{Usecases} are the application cases in
-  which the project is to be used. They illustrate the practical
-  scenarios and define how the product can be used in the real world.
-  This is crucial for understanding the needs of the target group and
-  designing the end result accordingly.
-\item
-  Chapter \ref{unified-sensor}. \textbf{Unified Sensor} refers to the
-  integration of different sensors into a standardised solution. This
-  enables simple data acquisition and serves as a basic hardware system
-  on which the subsequent data processing library can be applied.
-\item
-  Chapter \ref{software-readout-framework}. \textbf{Software Readout
-  Framework} describes the implementation of the data readout framework.
-  This includes an explanation of the various modules and specific
-  application examples.
-\item
-  Chapter \ref{usability-improvements}. \textbf{Usability Improvements}
-  refers to additional activities to improve user-friendliness. This
-  includes the optimisation of interfaces, interactions and processes to
-  ensure intuitive and efficient use of the product. This also includes
-  the documentation of code and the distribution of the source code as a
-  package to users.
-\item
-  Chapter \ref{evaluation}. \textbf{Evaluation} comprises the systematic
-  review and assessment of the overall system. This includes the
-  demonstration of the implemented capabilities of the overall system
-  against the previously defined usecases.
-\end{itemize}
+Chapter \ref{usecases}. \textbf{Usecases} are the application cases in
+which the project is to be used. They illustrate the practical scenarios
+and define how the product can be used in the real world. This is
+crucial for understanding the needs of the target group and designing
+the end result accordingly.
+
+Chapter \ref{unified-sensor}. \textbf{Unified Sensor} refers to the
+integration of different sensors into a standardised solution. This
+enables simple data acquisition and serves as a basic hardware system on
+which the subsequent data processing library can be applied.
+
+Chapter \ref{software-readout-framework}. \textbf{Software Readout
+Framework} describes the implementation of the data readout framework.
+This includes an explanation of the various modules and specific
+application examples.
+
+Chapter \ref{usability-improvements}. \textbf{Usability Improvements}
+refers to additional activities to improve user-friendliness. This
+includes the optimisation of interfaces, interactions and processes to
+ensure intuitive and efficient use of the product. This also includes
+the documentation of code and the distribution of the source code as a
+package to users.
+
+Chapter \ref{evaluation}. \textbf{Evaluation} comprises the systematic
+review and assessment of the overall system. This includes the
+demonstration of the implemented capabilities of the overall system
+against the previously defined usecases.
 
 \hypertarget{usecases}{%
 \chapter{Usecases}\label{usecases}}
@@ -319,9 +298,11 @@ cost-effective magnetic field sensors interface that is also universally
 expandable. The focus is on mapping different sensors and being
 compatible with different magnet types and shapes.
 
-This ensures broad applicability in different scenarios. Another goal is
-reproducibility to ensure consistent results. Easy communication with
-standard PC hardware maximises the user-friendliness of the interface.
+This ensures a wide range of applications in different scenarios.
+Another goal is reproducibility to ensure uniform results, which as a
+result reduces the susceptibility to errors. Easy communication with
+standard \gls{pc} hardware, which offers a variety of common interface
+options, maximizes the user-friendliness.
 
 The flexibility to support different sensors and magnets makes the
 system versatile and opens the possibility for use in different
@@ -399,9 +380,9 @@ range of values required by the various magnets to be tested.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_1D_sensor_mechanical_3D_printed_structure.png}
-\caption{1D sensor mechanical 3D printed structure
-\label{1D_sensor_mechanical_3D_printed_structure.png}}
+\includegraphics{./generated_images/border_Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}
+\caption{Mechanical components for the 1D sensor using 3D printed parts
+\label{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}}
 \end{figure}
 
 The mechanical design of a sensor would be kept as simple as possible so
@@ -410,8 +391,8 @@ providing a stable foundation for the sensor \gls{ic} and an
 exchangeable holder for different magnets.
 
 The following figure
-\ref{1D_sensor_mechanical_3D_printed_structure.png}, shows a sectional
-view of the \gls{cad} drawing of the 1D-Single sensor
+\ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png},
+shows a sectional view of the \gls{cad} drawing of the 1D-Single sensor
 \ref{d-single-sensor}.
 
 All parts were produced using the 3D printing additive manufacturing
@@ -464,6 +445,13 @@ process.
 \hypertarget{firmware}{%
 \section{Firmware}\label{firmware}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Unified_sensor_firmware_simplified_program_structure.png}
+\caption{Unified sensor firmware simplified program structure
+\label{Unified_sensor_firmware_simplified_program_structure.png}}
+\end{figure}
+
 The microcontroller firmware is software that is executed on a
 microcontroller in an embedded system. It controls the hardware and
 enables the execution of predefined functions. The firmware is used to
@@ -473,13 +461,6 @@ according to the program code.
 It handles communication with sensors, actuators and other peripheral
 devices, processing data and making decisions. Firmware is critical to
 the functioning of devices.
-
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Unified_sensor_firmware_simplified_program_strucutre.png}
-\caption{Unified sensor firmware simplified program strucutre
-\label{Unified_sensor_firmware_simplified_program_strucutre.png}}
-\end{figure}
 
 The firmware is responsible for detecting the possible connected sensors
 \ref{Implemented_digital_magnetic_field_sensors.csv} and query
@@ -517,7 +498,7 @@ public:
 \end{lstlisting}
 
 The flow chart
-\ref{Unified_sensor_firmware_simplified_program_strucutre.png} shows the
+\ref{Unified_sensor_firmware_simplified_program_structure.png} shows the
 start process and the subsequent main loop for processing the user
 commands and sensor results. When the microcontroller is started, the
 software checks whether known sensors are connected to \gls{i2c} or
@@ -538,14 +519,15 @@ emulate a virtual RS232 communication port using a \gls{usb} port on a
 \gls{pc} and usually no additional driver is needed on modern host
 systems.
 
-After the setup process is complete, the system switches to an infinite
-loop, which processes several possible actions. One task is, to react to
-user commands which can be sent to the system by the user via the
-integrated \gls{cli}. All sensors are read out via a timer interval set
-in the setup procedure and their values are stored in a ringbuffer. Ring
-buffer offers efficient data management in limited memory. Its cyclic
-structure enables continuous overwriting of older data, saves memory
-space and facilitates seamless processing of real-time data.
+After execution of the setup routine is completed, the system switches
+to an infinite loop, which processes several possible actions. One task
+is, to react to user commands which can be sent to the system by the
+user via the integrated \gls{cli}. All sensors are read out via a timer
+interval set in the setup procedure and their values are stored in a
+ringbuffer. Ring buffer offers efficient data management in limited
+memory. Its cyclic structure enables continuous overwriting of older
+data, saves memory space and facilitates seamless processing of
+real-time data.
 
 Ring buffers are well suited for applications with variable data rates
 and minimise the need for complex memory management. The buffer can be
@@ -557,7 +539,7 @@ measurements are synchronized \ref{sensor-syncronisation-interface} in
 time and are not out of sequence or drift.
 
 \hypertarget{communication-interface}{%
-\subsection{Communication interface}\label{communication-interface}}
+\subsection{Communication Interface}\label{communication-interface}}
 
 \begin{figure}
 \centering
@@ -799,7 +781,7 @@ sensors. The sensor differentiation takes place later in the \gls{mrp}
 \end{figure}
 
 \hypertarget{example-sensors}{%
-\section{Example sensors}\label{example-sensors}}
+\section{Example Sensors}\label{example-sensors}}
 
 Two functional sensor platforms
 \ref{Build_sensors_with_different_capabilities.csv} were built in order
@@ -868,11 +850,10 @@ setup consists of four 3D printed components, which are fixed together
 with nylon screws to minimise possible influences on the measurement.
 
 Since the \passthrough{\lstinline!MMC5603NJ!} only has limited
-measurement range of total \passthrough{\lstinline!6uT!}, even small
-coin sized neodymium magnets already saturates the sensor. It is
-possible to mount 3D printed spacers over the sensor to increase the
-distance between the magnet and the sensor and thus also measure these
-magnets.
+measurement range of total 6uT, even small coin sized neodymium magnets
+already saturates the sensor. It is possible to mount 3D printed spacers
+over the sensor to increase the distance between the magnet and the
+sensor and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes
 and can be placed on the spacer without backlash in order to be able to
@@ -929,40 +910,31 @@ was chosen because of its larger measuring range and can therefore be
 used more universally without having to change the sensor of the arm.
 
 \hypertarget{integration-of-an-industry-teslameter}{%
-\subsection{Integration of an industry
-teslameter}\label{integration-of-an-industry-teslameter}}
+\subsection{Integration of an
+Industry-Teslameter}\label{integration-of-an-industry-teslameter}}
 
 As the sensors shown so far relate exclusively to self-built, low-cost
 hardware, the following section shows how existing hardware can be
 integrated into the system. A temperature-compensated
 \passthrough{\lstinline!Voltcraft GM-70!} telsameter
 \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is
-used, which has a measuring range of \passthrough{\lstinline!0-3T!} with
-a resolution of \passthrough{\lstinline!0.1mT!}. It offers an
-\passthrough{\lstinline!RS232!} interface with a documented protocol
+used, which has a measuring range of 0T to 3T with a resolution of
+0.1mT. It offers an RS232 interface with a documented protocol
 \ref{Voltcraft_GM70_serial_protocol.csv} for connection to a \gls{pc}.
 
 This connectivity makes it possible to make the device compatible with
-the Unified Sensor ecosystem using a separate interface software
+the unified sensor ecosystem using a separate interface software
 \cite{VoltcraftGM70Rest} executable on the host \gls{pc}. However,
-it does not offer the range of functions that the Unified Sensor
+it does not offer the range of functions that the unified sensor
 firmware offers.
-
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}
-\caption{Voltcraft GM70 teslameter with custom \gls{pc} interface board
-\label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}}
-\end{figure}
 
 Another option is a custom interface board between the meter and the PC.
 This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
-offer an physical \passthrough{\lstinline!RS232!} interface. As with the
-other sensors, this interface consists of your
-\passthrough{\lstinline!RaspberryPi Pico!} with an additional level
-shifter.
+offer an physical RS232 interface. As with the other sensors, this
+interface consists of your \passthrough{\lstinline!Raspberry-Pi Pico!}
+with an additional level shifter.
 
-The Teslameter is connected to the microcontroller using two free
+The teslameter is connected to the microcontroller using two free
 \gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
 separate build configuration. In order to be able to read and correctly
 interpret the data from the microcontoller, the serial protocol from
@@ -970,6 +942,17 @@ table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was
 implemented in a customized version of the
 \passthrough{\lstinline!CustomSensor!} class
 \ref{lst:CustomSensorClass}.
+
+This software or hardware integration can be carried out on any other
+measuring device with a suitable communication interface and a known
+protocol thanks to the modular design.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}
+\caption{Voltcraft GM70 teslameter with custom \gls{pc} interface board
+\label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}}
+\end{figure}
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Voltcraft GM70 serial protocol
@@ -995,12 +978,8 @@ mT\tabularnewline
 \bottomrule
 \end{longtable}
 
-This software or hardware integration can be carried out on any other
-measuring device with a suitable communication interface and a known
-protocol thanks to the modular design.
-
 \hypertarget{software-readout-framework}{%
-\chapter{Software readout framework}\label{software-readout-framework}}
+\chapter{Software Readout Framework}\label{software-readout-framework}}
 
 The software readout framework is the central software component that
 was developed as part of this work. This software framework is intended
@@ -1030,13 +1009,6 @@ As the following, this concept is referred to as
 \hypertarget{user-interaction-points}{%
 \section{User Interaction Points}\label{user-interaction-points}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_MRP_library_module_high_level_overview.png}
-\caption{MRP library module high level overview
-\label{MRP_library_module_high_level_overview.png}}
-\end{figure}
-
 User interaction points represent the core concept of the developed
 library and are intended to provide user-friendliness on the one hand
 and the rapid development of own analysis and optimization algorithms on
@@ -1050,9 +1022,18 @@ For this purpose, a module system with standardised functional patterns
 and data types was developed and packed together in a extendable Python
 library.
 
+\newpage
+
 According to this concept, the user should be able to replace individual
 components from this chain with their own modules without having to
 worry about implementing other of these to make the project work.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MRP_library_module_high_level_overview.png}
+\caption{MRP library module high level overview
+\label{MRP_library_module_high_level_overview.png}}
+\end{figure}
 
 \hypertarget{user-interaction-points-example}{%
 \subsection{User Interaction Points
@@ -1075,21 +1056,20 @@ The \passthrough{\lstinline!HalbachMRIDesigner!}
 do this, the number of magnets and additional parameters for the
 properties of the \gls{cad} model to be created are passed to the
 function provided as input parameters using a \gls{json} file. The
-result is then an \passthrough{\lstinline!OpenSCAD!} \cite{OpenSCAD}
+result is an \passthrough{\lstinline!OpenSCAD!} \cite{OpenSCAD}
 based 3D model of the magnet holder.
 
 As a result, there are two projects which are both suitable for the task
 of optimizing and creating Hallbach magnets for \gls{mri} applications.
-However, their data structures are not compatible with each other.
-However, they are executed manually one after the other in order to
-obtain a final result.
+The data structures are not compatible with each other. However, they
+are executed manually one after the other to obtain a final result with
+manual data conversation.
 
 The library created is intended to solve one problem by providing
 standardized and flexible data structures for use with this form of
-magnetic field data. On the other hand, by separating the processing
-pipeline into defined sub-steps, it should be possible to make
-individual modules and as a result functionalities interchangeable by
-the user.
+magnetic field data. By separating the processing pipeline into defined
+sub-steps, it should be possible to make individual modules and as a
+result functionalities interchangeable by the user.
 
 The implementation of the same functionalities looks as follows after
 using the library:
@@ -1123,8 +1103,8 @@ up its functions. In the case of the
 \cite{HalbachOptimisation} project, the function signature of the
 start function must be changed. This receives the result of the previous
 step, in this case the generated magnet data. By optionally setting meta
-data in the universal bilbiothekt data type, constants can be replaced
-in the analysis function and made dynamically configurable. The return
+data in the universal library data type, constants can be replaced in
+the analysis function and made dynamically configurable. The return
 result also corresponds to this data type so that subsequent steps are
 compatible and contains the magnet data with modified position and
 rotation data.
@@ -1146,7 +1126,7 @@ here. In this case, more changes are required, as the configuration file
 is loaded from the file system. This logic must be removed in order to
 use the added meta data in the input parameter instead.
 
-After these customization steps, it is possible to execute both projects
+After these customisation steps, it is possible to execute both projects
 one after the other and all required configuration parameters are
 contained in the data structure looped through the individual steps as
 meta data. This also maps the functionality of a project file, which can
@@ -1162,15 +1142,15 @@ and only the new step needs to be implemented.
 \section{Modules}\label{modules}}
 
 In order to realise the concept of user interaction points, the library
-was divided into different modules. These can be divided into two main
-categories:
+was divided into different modules. These modules can be divided into
+two main categories:
 
 \begin{itemize}
 \tightlist
 \item
   Core - All modules related to measurement data management
 \item
-  Extensions - Contains modules for visualizations, hardware sensor
+  Extensions - Contains modules for visualisations, hardware sensor
   access
 \end{itemize}
 
@@ -1245,7 +1225,7 @@ exported; various functions are provided for this purpose. This process
 is described in the following subchapter.
 
 \hypertarget{storage-and-datamanagement}{%
-\subsubsection{Storage and
+\subsection{Storage and
 Datamanagement}\label{storage-and-datamanagement}}
 
 An important aspect is data import and export. On the one hand, this
@@ -1311,8 +1291,8 @@ information:
   \passthrough{\lstinline!additional\_data!} - Additional user-defined
   metadata
 \item
-  \passthrough{\lstinline!data!} - Measured values with value and
-  measured value \gls{uuid}
+  \passthrough{\lstinline!data!} - Datapoint storage consists of
+  measured value, \gls{uuid} and temperature, among other parameters
 \item
   \passthrough{\lstinline!measurement\_config!} - Information about the
   sensor used for measurement
@@ -1323,8 +1303,9 @@ using the functions provided.
 
 Since there are popular data processing frameworks such as
 \passthrough{\lstinline!Numpy!} \cite{harris2020array}, or the
-program for mathematical calculations, Matlab are often used, the
-library also supports export formats for these systems.
+program for mathematical calculations, \passthrough{\lstinline!MATLAB!}
+are often used, the library also supports export formats for these
+systems.
 
 The different formats can be triggered by the user by calling up the
 corresponding \passthrough{\lstinline!MRPReading!} class functions:
@@ -1338,21 +1319,22 @@ corresponding \passthrough{\lstinline!MRPReading!} class functions:
   \passthrough{\lstinline!Numpy!}-Array of
   \passthrough{\lstinline!data!} object with different options
 \item
-  \passthrough{\lstinline!.dump\_savemat()!} - Matlab mat-file with
-  measurement values and temperatures
+  \passthrough{\lstinline!.dump\_savemat()!} -
+  \passthrough{\lstinline!MATLAB!} mat-file with measurement values and
+  temperatures
 \end{itemize}
 
 Currently, data re-import of an exported measurement is only supported
 via the \gls{json} format, as an export using the other options
-(\passthrough{\lstinline!Numpy!}, \passthrough{\lstinline!Matlab!})loses
-data during the export procedure. \}
+(\passthrough{\lstinline!Numpy!}, \passthrough{\lstinline!MATLAB!})loses
+data during the export procedure.
 
 \hypertarget{extension-modules}{%
 \subsection{Extension Modules}\label{extension-modules}}
 
 The extention modules build on the core modules and offer the user
 additional basic functionalities. These include functions for data
-acquisition, visualization and analysis.
+acquisition, visualisation and analysis.
 
 \hypertarget{sensor-interface}{%
 \subsubsection{Sensor Interface}\label{sensor-interface}}
@@ -1439,18 +1421,18 @@ are compatible with class instances of
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!std\_deviation!} - standard deviation
+  \passthrough{\lstinline!std\_deviation!} - Standard deviation
 \item
-  \passthrough{\lstinline!mean!} - mean value
+  \passthrough{\lstinline!mean!} - Mean value
 \item
-  \passthrough{\lstinline!variance!} - variance
+  \passthrough{\lstinline!variance!} - Variance
 \item
-  \passthrough{\lstinline!center\_of\_gravity!} - center of gravity
+  \passthrough{\lstinline!center\_of\_gravity!} - Center of gravity
 \item
-  \passthrough{\lstinline!binning!} - distribution of a sample by means
+  \passthrough{\lstinline!binning!} - Distribution of a sample by means
   of a histogram
 \item
-  \passthrough{\lstinline!k-nearest!} - k-nearest neighbors
+  \passthrough{\lstinline!k-nearest!} - K-nearest neighbors
 \end{itemize}
 
 In addition, the export function
@@ -1503,9 +1485,9 @@ The figure \ref{mrp_proxy_multi.png} shows the modified
 \passthrough{\lstinline!multi-proxy - multi-sensor!} topology. Here,
 both proxy instances do not communicate directly with the
 \passthrough{\lstinline!control!} \gls{pc}, but the proxy instance
-\passthrough{\lstinline!remote!}\gls{pc}\passthrough{\lstinline!\#2!}
-can acces the proxy running on
-\passthrough{\lstinline!remote!}\gls{pc}\passthrough{\lstinline!\#1!}.
+\passthrough{\lstinline!remote!}\gls{pc} \passthrough{\lstinline!\#2!}
+can acces the proxy running on \passthrough{\lstinline!remote!}\gls{pc}
+\passthrough{\lstinline!\#1!}.
 
 The \passthrough{\lstinline!control!} \gls{pc} only communicates with
 the \passthrough{\lstinline!remote!} \gls{pc}
@@ -1598,7 +1580,7 @@ made via a shared network connection.
 If time-critical synchronisation over the network is required, \gls{ptp}
 and \gls{pps} output functionality \cite{PTPIEEE1588} can be used on
 many \gls{sbc}, such as the
-\passthrough{\lstinline!Raspberry-Pi Compute Module 4!}.
+\passthrough{\lstinline!Raspberry-Pi Compute Module!}.
 
 \hypertarget{command-router}{%
 \subsection{Command-Router}\label{command-router}}
@@ -1630,8 +1612,8 @@ stored together with the class instance of the
 possible to address a sensor directly using its \gls{uuid}.
 
 \hypertarget{merging-the-sensor-capabilities}{%
-\subsubsection{Merging the sensor
-capabilities}\label{merging-the-sensor-capabilities}}
+\subsubsection{Merging the Sensor
+Capabilities}\label{merging-the-sensor-capabilities}}
 
 \begin{longtable}[]{@{}llll@{}}
 \caption{Sensor capabilities merging algorithm
@@ -1657,7 +1639,7 @@ When using sensors with different capabilites, these must be combined.
 These are used to select the appropriate measurement mode for a
 measurement. For this purpose, the \passthrough{\lstinline!info!}
 command of each sensor is queried. This information is added to the
-previously created \gls{lut}. Duplicate entries are summarized (see
+previously created \gls{lut}. Duplicate entries are summarised (see
 Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to
 the host when the \passthrough{\lstinline!info!} \ref{lst:mtsc} command
 is received over network.
@@ -1678,8 +1660,8 @@ The same procedure is performed for the
 merge available commands of connected sensors into the \gls{lut}.
 
 \hypertarget{dynamic-extension-of-the-available-network-proxy-commands}{%
-\subsubsection{Dynamic extension of the available network proxy
-commands}\label{dynamic-extension-of-the-available-network-proxy-commands}}
+\subsubsection{Dynamic extension of the available Network-Proxy
+Commands}\label{dynamic-extension-of-the-available-network-proxy-commands}}
 
 In order for the host to be able to send a command to the network
 multi-sensor setup, the command received must be forwarded to the
@@ -1698,8 +1680,8 @@ routed.
 
 For commands where there are several entries for
 \passthrough{\lstinline!CAPABLE SENSORS ID LUT!}
-\ref{Sensor_capabilities_merging.csv}, there are two possible approaches
-to how the command is processed:
+\ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible
+approaches to how the command is processed:
 
 \begin{itemize}
 \tightlist
@@ -1726,8 +1708,8 @@ strategy is used for different sensors. Each command is extended on the
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!readsensor <axis> <sensor number>!}-\textgreater{}
-  \passthrough{\lstinline!readsensor <axis> <ID>!}
+  \passthrough{\lstinline!readsensor <axis> <sensor number>!}
+  -\textgreater{} \passthrough{\lstinline!readsensor <axis> <ID>!}
 \item
   \passthrough{\lstinline!opmode!}-\textgreater{}
   \passthrough{\lstinline!opmode <ID>!}
@@ -1810,7 +1792,7 @@ sensors. In the following example \ref{lst:mrpexample_hal}, an
 \passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} is
 connected locally to the host \gls{pc}.
 
-\begin{lstlisting}[language=Python, caption={MRPHal example to use an connected hardware sensor to store readings inside of an measurement}, label=lst:mrpexample_hal]
+\begin{lstlisting}[language=Python, caption={MRPHal example to use an connected hardware sensor to store readings inside of a measurement}, label=lst:mrpexample_hal]
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
@@ -1900,25 +1882,18 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 \hypertarget{mrpvisualisation}{%
 \subsection{MRPVisualisation}\label{mrpvisualisation}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}
-\caption{Example full sphere plot of an measurement using the
-MRPVisualisation module
-\label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}}
-\end{figure}
-
-This final example shows the use of the MRP Visualisation module, which
-provides general functions for visualising measurements. This makes it
-possible to visually assess the results of a measurement. This is
-particularly helpful for full-sphere measurements recorded with the
-\passthrough{\lstinline!3D: Fullsphere!} \ref{d-fullsphere} sensor. The
-sub-module \passthrough{\lstinline!MRPPolarVisualisation!} is specially
-designed for these. The figure
+This final example shows the use of the
+\passthrough{\lstinline!MRPVisualisation!} module, which provides
+general functions for visualising measurements. The visualisation
+optionsmakes it possible to visually assess the results of a
+measurement. This is particularly helpful for full-sphere measurements
+recorded with the \passthrough{\lstinline!3D: Fullsphere!}
+\ref{d-fullsphere} sensor. The sub-module
+\passthrough{\lstinline!MRPPolarVisualisation!} is specially designed
+for these. The figure
 \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}
-shows a plot of a fullsphere measurement.
-
-It is also possible to export the data from the MRPAnalysis module
+shows a plot of a fullsphere measurement. It is also possible to export
+the data from the \passthrough{\lstinline!MRPAnalysis!} module
 graphically as diagrams. The \passthrough{\lstinline!MRPVisualisation!}
 modules are used here. The following example
 \ref{lst:mrpexample_visualisation} shows the usage of both modules.
@@ -1933,28 +1908,27 @@ visu.plot2d_top(None)
 visu.plot2d_side(None)
 # 3D PLOT TO FILE
 visu.plot3d(os.path.join('./plot3d_3d.png'))
-
 # PLOT ANALYSIS RESULTS
 from MRP import MRPDataVisualization
 MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
 \end{lstlisting}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}
+\caption{Example full sphere plot of an measurement using the
+MRPVisualisation module
+\label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}}
+\end{figure}
+
 \hypertarget{mrphallbacharraygenerator}{%
 \subsection{MRPHallbachArrayGenerator}\label{mrphallbacharraygenerator}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}
-\caption{Generated hallbach array with generated cutouts for eight
-magnets
-\label{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}}
-\end{figure}
-
 The following example code \ref{lst:mrpexample_hallbach}, shows how a
-simple hallbach magnetic ring can be generated.
+simple Hallbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter
-\ref{Charakterisation of Permanent Magnets}) for a low-field \gls{mri}.
+\ref{magnet-system}) for a low-field \gls{mri}.
 
 Eight random measurements are generated here. It is important that the
 magnet type (here \passthrough{\lstinline!N45\_CUBIC\_15x15x15!}) is
@@ -1986,11 +1960,19 @@ is generated from the generated magnet positions. The result is an
 contains the module generated. After computing the model using the
 \passthrough{\lstinline!OpenSCAD!} \gls{cli} utility, the following
 model rendering
-\ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}
+\ref{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png}
 can be generated.
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png}
+\caption{Generated Hallbach array with generated cutouts for eight
+magnets
+\label{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png}}
+\end{figure}
+
 \hypertarget{usability-improvements}{%
-\chapter{Usability improvements}\label{usability-improvements}}
+\chapter{Usability Improvements}\label{usability-improvements}}
 
 Usability improvements in software libraries are crucial for efficient
 and user-friendly development. Intuitive API documentation, clearly
@@ -2039,13 +2021,13 @@ libaray \gls{cli} implements the following functionalities:
   Recording of measured values from stored measurement series
 \item
   Simple commands for checking recorded measurement series and their
-  data.
+  data
 \end{itemize}
 
 Thanks to this functionality of the \gls{cli}, it is now possible to
 connect a sensor to the \gls{pc}, configure a measurement series with it
-and run it at the end. The result is then an exported file with the
-measured values. These can then be read in again using the
+and run it at the end. The result is an exported file with the measured
+values. These can then be read in again using the
 \passthrough{\lstinline!MRPReading!} module and processed further. The
 following bash code \ref{lst:mrpcli_config_run} shows the setup
 procedure in detail:
@@ -2077,8 +2059,8 @@ $ MRPcli measure run
 \end{lstlisting}
 
 \hypertarget{programmable-data-processing-pipeline}{%
-\section{Programmable data processing
-pipeline}\label{programmable-data-processing-pipeline}}
+\section{Programmable Data Processing
+Pipeline}\label{programmable-data-processing-pipeline}}
 
 After it is easy for users to carry out measurements using the
 \gls{cli}, the next logical step is to analyse the recorded data. This
@@ -2104,7 +2086,8 @@ measurement data without programming. The example
 measurement data analysis pipeline, which consists of the following
 steps:
 
-\begin{itemize}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   Import the measurements
@@ -2117,7 +2100,7 @@ steps:
   Export the modified measurements
 \item
   Create a graphical plot of all measurements with standard deviation
-\end{itemize}
+\end{enumerate}
 
 In order to implement such a pipeline, the
 \passthrough{\lstinline!yaml!} file format was chosen for the definition
@@ -2179,6 +2162,9 @@ stage export_readings:
 
 Each pipeline step is divided into \passthrough{\lstinline!stages!},
 which contain a name, the function to be executed and its parameters.
+
+\newpage
+
 The various steps are then linked by using the
 \passthrough{\lstinline!stage <name>!} makro as input parameter of the
 next function to be executed (see comments in
@@ -2199,14 +2185,21 @@ disadvantages of this system are the following:
 To determine the order of the pipeline steps, the parser script created
 converts them into one problem of the graph theories. Each step
 represents a node in the graph and the steps referred to by the input
-parameter form the edges.
+parameter form the edges. After several simplification steps,
+determination of possible start steps and repeated traversal, the final
+execution sequence can be determined in the form of a call tree
+\ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
+The individual steps are then executed along the graph. The intermediate
+results and the final results
+\ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
+are saved for optional later use.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}
-\caption{Result step execution tree from user defined processing
-pipeline example
-\label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}}
+\includegraphics{./generated_images/border_Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}
+\caption{Example result of an step execution tree from user defined
+processing pipeline
+\label{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}}
 \end{figure}
 
 \begin{figure}
@@ -2217,27 +2210,8 @@ of readings
 \label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}}
 \end{figure}
 
-After several simplification steps, determination of possible start
-steps and repeated traversal, the final execution sequence can be
-determined in the form of a call tree
-\ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
-The individual steps are then executed along the graph. The intermediate
-results and the final results
-\ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
-are saved for optional later use.
-
 \hypertarget{testing}{%
 \section{Testing}\label{testing}}
-
-Software tests in libraries offer numerous advantages for improving
-quality and efficiency. Firstly, they enable the identification of
-errors and vulnerabilities before software is published as a new
-version.
-
-This significantly improves the reliability of \gls{mrp}-library
-applications. Tests also ensures consistent and reliable performance,
-which is particularly important when libraries are used by different
-users and for different usecases.
 
 \begin{figure}
 \centering
@@ -2246,6 +2220,16 @@ users and for different usecases.
 PyCharm \gls{ide}
 \label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}}
 \end{figure}
+
+Software tests in libraries offer numerous advantages for improving
+quality and efficiency. Software tests make it possible to identify
+errors and vulnerabilities before the software is released as a new
+version.
+
+This significantly improves the reliability of \gls{mrp}-library
+applications. Tests also ensures consistent and reliable performance,
+which is particularly important when libraries are used by different
+users and for different usecases.
 
 During the development of the \gls{mrp}-library, test cases were also
 created for all important functionalities and usecases. The test
@@ -2291,14 +2275,16 @@ class TestMPRReading(unittest.TestCase):
     self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
 \end{lstlisting}
 
-One problem, however, is the parts of the \gls{mrp}-library that require
-direct access to external hardware. These are, for example, the
+One problem, is the parts of the \gls{mrp}-library that require direct
+access to external hardware. These are, for example, the
 \passthrough{\lstinline!MRPHal!} and
 \passthrough{\lstinline!MRPHalRest!} modules, which are required to read
 out sensors connected via the network. Two different approaches were
 used here. In the case of local development, the test runs were carried
 out on a \gls{pc} that can reach the network hardware and thus the test
 run could be carried out with real data.
+
+\newpage
 
 In the other scenario, the tests are to be carried out before a new
 release in the repository on the basis of
@@ -2310,7 +2296,14 @@ software and executed via virtualisation on the systems provided by
 \passthrough{\lstinline!Github Actions!}.
 
 \hypertarget{package-distribution}{%
-\section{Package distribution}\label{package-distribution}}
+\section{Package Distribution}\label{package-distribution}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png}
+\caption{MagneticReadoutProcessing library hosted on PyPi
+\label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
+\end{figure}
 
 One important point that improves usability for users is the simple
 installation of all \gls{mrp} modules. As it was created in the Python
@@ -2322,15 +2315,8 @@ users can provide their software modules. Here,
 package registry and offers direct support for the package installation
 programm \gls{pip} \ref{lst:setup_lib_with_pip}.
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png}
-\caption{MagneticReadoutProcessing library hosted on PyPi
-\label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
-\end{figure}
-
-In doing so, \gls{pip} not only manages possible package dependencies,
-but also manages the installation of different versions of a package. In
+\gls{pip} not only manages possible package dependencies, but also
+manages the installation of different versions of a package. In
 addition, the version compatibility is also checked during the
 installation of a new package, which can be resolved manually by the
 user in the event of conflicts.
@@ -2343,14 +2329,12 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 \end{lstlisting}
 
-To make the \gls{mrp} file strucutre compatible with the package
+To make the \gls{mrp} file structure compatible with the package
 registry, Python provides separate installation routines that build a
 package in an isolated environment and then provide an installation
 \passthrough{\lstinline!wheel!} archive. This can then be uploaded to
-the package registry.
-
-Since the \gls{mrp}-library requires additional Python dependencies
-(e.g.~\passthrough{\lstinline!numpy!},
+the package registry. Since the \gls{mrp}-library requires additional
+Python dependencies (e.g.~\passthrough{\lstinline!numpy!},
 \passthrough{\lstinline!matplotlib!} packages), which cannot be assumed
 to be already installed on the target system, these must be installed
 prior to the actual installation. These can be specified in the library
@@ -2406,7 +2390,7 @@ the terminal shell being located in the \gls{mrp}-library folder.
 In order to provide comprehensive documentation for the enduser, the
 source code was documented using
 Python-\passthrough{\lstinline!docstrings!}
-\cite{PythonDocstringReference} and the Python3.5 type annotations:
+\cite{PythonDocstringReference} and the Python 3.5 type annotations:
 
 \begin{itemize}
 \tightlist
@@ -2450,20 +2434,14 @@ documentation framework \passthrough{\lstinline!Sphinx!}
 \cite{SphinxDocumentation} was used for this purpose. This framework
 makes it possible to generate \gls{html} or \gls{pdf} documentation from
 various source code documentation formats, such as the used
-\passthrough{\lstinline!docstrings!}. These are converted into a
-Markdown format in an intermediate step and this also allows to add
-further user documentation such as examples or installation
-instructions. In order to make the documentation created by
+\passthrough{\lstinline!docstrings!}.
+
+These are converted into a Markdown format in an intermediate step and
+this also allows to add further user documentation such as examples or
+installation instructions. In order to make the documentation created by
 \passthrough{\lstinline!Sphinx!} accessible to the user, there are, as
 with the package management by \passthrough{\lstinline!PyPi!} services,
 which provide the \gls{mrp}-library documentation online.
-
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
-\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs
-\label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
-\end{figure}
 
 Once the finished documentation has been generated from static
 \gls{html} files, it is stored in the project repository. Another
@@ -2483,6 +2461,13 @@ The process of creating and publishing the documentation has been
 automated using \passthrough{\lstinline!GitHub Actions!}, so that it is
 always automatically kept up to date with new features.
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
+\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs
+\label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
+\end{figure}
+
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
@@ -2491,30 +2476,30 @@ framework for the automated characterisation of permanent magnets. This
 framework consists of a low-cost hardware interface that supports
 various magnetic field sensors and a library for automating and
 analysing the measurement data. The process of this framework comprises
-several steps, which I will explain below:
+several steps, which will be explain below:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \textbf{Hardware preperation} Users can prepare measurements using the
-  implemented framework. This includes the placement of the sensors and
-  the selection of the relevant parameters for the characterisation of
-  the permanent magnets.
+  \textbf{Hardware preperation}: Users can prepare measurements using
+  the implemented framework. This includes the placement of the sensors
+  and the selection of the relevant parameters for the characterisation
+  of the permanent magnets.
 \item
-  \textbf{Configuration of the measurement} The software provides a
+  \textbf{Configuration of the measurement}: The software provides a
   user-friendly interface for configuring the measurement parameters.
   Users can make the desired settings here and customise the framework
   to their specific requirements.
 \item
-  \textbf{Custom algorithm implementation} An important contribution of
+  \textbf{Custom algorithm implementation}: An important contribution of
   the \gls{mrp} ecosystem is the possibility for users to implement
   their own algorithm for data analysis. This allows customisation to
   specific research questions or experimental requirements.
 \item
-  \textbf{Execution of analysis pipeline} The analysis pipeline can then
-  be executed with the implemented algorithm. The collected measurement
-  data is automatically processed and analysed to extract characteristic
-  parameters of the permanent magnets.
+  \textbf{Execution of analysis pipeline}: The analysis pipeline can
+  then be executed with the implemented algorithm. The collected
+  measurement data is automatically processed and analysed to extract
+  characteristic parameters of the permanent magnets.
 \end{enumerate}
 
 This process covers all the essential functionalities required for a
@@ -2538,8 +2523,9 @@ For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was
 used for the evaulation of the framework. As this is equipped with an
 exchangeable magnetic holder mount, suitable holders are required for
 the magnets to be measured. Ten random
-\passthrough{\lstinline!N45 12x12x12mm!} neodymium magnets were used
-here.
+\passthrough{\lstinline!N45 12x12x12mm!} neodymium magnets were used,
+which are shown in figure
+\ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These were placed in modified 3D printed holders
 \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then
@@ -2548,14 +2534,15 @@ later.
 
 \hypertarget{configuration-of-the-measurement}{%
 \section{Configuration of the
-measurement}\label{configuration-of-the-measurement}}
+Measurement}\label{configuration-of-the-measurement}}
 
-The configured hardware was then connected and connected to the host
-system using the
+The configured hardware was then connected to the host system using the
 \passthrough{\lstinline!MRPcli config setupsensor!}-\gls{cli} command.
-The measurement was then configured for an measurement run, using the
-following configuration commands
+Afterwards, the measurement was configured for an measurement run, using
+the following configuration commands
 \ref{lst:evaluation_measurement_config}.
+
+\newpage
 
 \begin{lstlisting}[language=bash, caption={Measurement configuration for evaluation measurement}, label=lst:evaluation_measurement_config]
 ## CONFIGURE THE MEASUREMENT
@@ -2573,8 +2560,8 @@ id of the next magnet so that all measurements could be assigned to the
 physical magnets.
 
 \hypertarget{custom-algorithm-implementation}{%
-\section{Custom algorithm
-implementation}\label{custom-algorithm-implementation}}
+\section{Custom Algorithm
+Implementation}\label{custom-algorithm-implementation}}
 
 The next step for the user is the implementation of the filter algorithm
 \ref{lst:custom_find_similar_values_algorithm}. This can have any
@@ -2621,7 +2608,7 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   return similar_values
 \end{lstlisting}
 
-The python \passthrough{\lstinline!heapq!} \cite{heapq} module,
+The Python \passthrough{\lstinline!heapq!} \cite{heapq} module,
 which implements a priority queue, is used for this purpose. The
 calculated distances from the mean value of the measurements to the
 global mean value are inserted into this queue. Subsequently, as many
@@ -2630,8 +2617,8 @@ elements of the queue are returned as defined by the
 sorting was carried out by the queue in the background.
 
 \hypertarget{execution-of-analysis-pipeline}{%
-\section{Execution of analysis
-pipeline}\label{execution-of-analysis-pipeline}}
+\section{Execution of Analysis
+Pipeline}\label{execution-of-analysis-pipeline}}
 
 Once the filter function has been implemented, it still needs to be
 integrated into the analysis
@@ -2696,8 +2683,8 @@ $ MRPudpp pipeline run
 The figure \ref{MRP_evaluation_result.png} shows this result. The plot
 of the raw measured values is shown on the left. The variance of the
 determined \passthrough{\lstinline!Mean [uT]!} mean values is plotted on
-ten individual measured values. Here you can see that there are measured
-values with larger deviations (see measurement
+ten individual measured values. Here it can be seen that there are
+measured values with larger deviations (see measurement
 \passthrough{\lstinline!7:0!},\passthrough{\lstinline!10-2:0!},\passthrough{\lstinline!10-1:0!}).
 
 \begin{figure}
@@ -2711,14 +2698,14 @@ values are plotted as a result of the filter algorithm. As the
 \passthrough{\lstinline!IP\_return\_count!} parameter was set to four,
 only the four most similar measurements were exported here. It can be
 seen from the plotted mean values \passthrough{\lstinline!Mean [uT]!}
-that these are closest to the global mean value
-\passthrough{\lstinline!208.8uT!}. The filter algorithm implemented by
-the user was thus successfully executed using the user-programmable
-pipeline. The calculation result was successfully verified using raw
-measurement data and the final result of the algorithm.
+that these are closest to the global mean value 208.8uT. The filter
+algorithm implemented by the user was thus successfully executed using
+the user-programmable pipeline. The calculation result was successfully
+verified using raw measurement data and the final result of the
+algorithm.
 
 \hypertarget{conclusion-and-dicussion}{%
-\chapter{Conclusion and dicussion}\label{conclusion-and-dicussion}}
+\chapter{Conclusion and Dicussion}\label{conclusion-and-dicussion}}
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -2768,7 +2755,7 @@ results.
 
 To summarise, it can be said that a solid software framework has been
 created that can be used directly for the intended purpose. It provides
-a good foundation, but can be further developed by integrating
-professional measurement devices to enable a more comprehensive
-evaluation and improvement of the sensor hardware.
+a suitable working foundation, but can be further developed by
+integrating professional measurement devices to enable a more
+comprehensive evaluation and improvement of the sensor hardware.
 

@@ -7,7 +7,7 @@ As the following, the motivation for the development of this framework is listed
 ### Low-Field MRI
 
 Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners.
-Typically, the magnetic field in low-field MRI systems between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` and above in high-field (+mri) scanners [@Hori2021-pt].
+Typically, the magnetic field in low-field MRI systems measured between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` and above in high-field (+mri) scanners [@Hori2021-pt].
 
 This technology is used in medical imaging as well as in preclinical research.
 The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems [@Hori2021-pt].
@@ -15,8 +15,7 @@ The main advantage of low-field MRI is the improved imaging of soft tissues, esp
 
 ### Magnet System
 
-![Example hallbach ring magnet with cutouts for eight cubical permanent magnets \label{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}](./generated_images/border_Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png)
-
+%%Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png%%
 
 Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
 
@@ -27,26 +26,25 @@ The graphic \ref{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_per
 
 The homogeneity in this configuration depends, among other things, on the following aspects:
 
-* **Material**
-
+* **Material**:
   The magnetic properties of a material influence the generated field strength.
   Different materials have different magnetic susceptibilities.
 
-* **Magnetization**
-
+* **Magnetization**:
   The orientation of the magnetic moments in the material influences the field strength.
   A higher magnetization leads to a stronger field strength.
   
-* **Temperature**
-
+* **Temperature**:
   Temperature can influence the magnetic properties of a material.
   The magnetization of some materials decreases with increasing temperature.
 
-* **Manufacturing process**
-
+* **Manufacturing process**:
   The manufacturing process can influence the magnetic properties of the material.
   This is dependent on the purity of the starting materials used and the processing methods.
   There may also be deviations in field strength if different magnets from different production batches are compared.
+
+
+
 
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
@@ -109,29 +107,26 @@ The application of the developed framework for the characterization of different
 
 This work is divided into six main chapters, which deal with the approach and implementation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
 
-* Chapter \ref{state-of-the-art}. **State of the Art**
-  describes the current state of technology and forms the basis for further development.
-  Existing measurement methods and findings are shown here in order to define the context for the current project.
 
-* Chapter \ref{usecases}. **Usecases** 
+Chapter \ref{usecases}. **Usecases** 
   are the application cases in which the project is to be used.
   They illustrate the practical scenarios and define how the product can be used in the real world.
   This is crucial for understanding the needs of the target group and designing the end result accordingly.
 
-* Chapter \ref{unified-sensor}. **Unified Sensor**
+Chapter \ref{unified-sensor}. **Unified Sensor**
   refers to the integration of different sensors into a standardised solution.
   This enables simple data acquisition and serves as a basic hardware system on which the subsequent data processing library can be applied.
 
-* Chapter \ref{software-readout-framework}. **Software Readout Framework**
+Chapter \ref{software-readout-framework}. **Software Readout Framework**
   describes the implementation of the data readout framework.
   This includes an explanation of the various modules and specific application examples.
 
-* Chapter \ref{usability-improvements}. **Usability Improvements**
+Chapter \ref{usability-improvements}. **Usability Improvements**
   refers to additional activities to improve user-friendliness.
   This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
   This also includes the documentation of code and the distribution of the source code as a package to users.
 
-* Chapter \ref{evaluation}. **Evaluation**
+Chapter \ref{evaluation}. **Evaluation**
   comprises the systematic review and assessment of the overall system.
   This includes the demonstration of the implemented capabilities of the overall system against the previously defined usecases.
 
@@ -179,9 +174,7 @@ In the later accomplished evaluation process \ref{evaluation}, the defined useca
 A defined main objective of this project is the development of a cost-effective magnetic field sensors  interface that is also universally expandable.
 The focus is on mapping different sensors and being compatible with different magnet types and shapes.
 
-This ensures broad applicability in different scenarios.
-Another goal is reproducibility to ensure consistent results.
-Easy communication with standard PC hardware maximises the user-friendliness of the interface.
+This ensures a wide range of applications in different scenarios. Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
 
 The flexibility to support different sensors and magnets makes the system versatile and opens the possibility for use in different applications.
 A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors  in different contexts.
@@ -224,13 +217,13 @@ The resolution of the selected sensors covers the expected range of values requi
 
 ## Mechanical Structure
 
-![1D sensor mechanical 3D printed structure \label{1D_sensor_mechanical_3D_printed_structure.png}](./generated_images/border_1D_sensor_mechanical_3D_printed_structure.png)
+![Mechanical components for the 1D sensor using 3D printed parts \label{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}](./generated_images/border_Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png)
 
 
 The mechanical design of a sensor would be kept as simple as possible so that it can be replicated as easily as possible.
 The focus was on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
-The following figure \ref{1D_sensor_mechanical_3D_printed_structure.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor \ref{d-single-sensor}.
+The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor \ref{d-single-sensor}.
 
 All parts were produced using the 3D printing additive manufacturing processes. The sensor circuit board was glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
@@ -262,14 +255,15 @@ Overall, this integrated approach represents an effective solution for the flexi
 
 ## Firmware
 
+
+![Unified sensor firmware simplified program structure \label{Unified_sensor_firmware_simplified_program_structure.png}](./generated_images/border_Unified_sensor_firmware_simplified_program_structure.png)
+
+
 The microcontroller firmware is software that is executed on a microcontroller in an embedded system. 
 It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and performs specific tasks according to the program code.
 
 It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions.
 Firmware is critical to the functioning of devices.
-
-![Unified sensor firmware simplified program strucutre \label{Unified_sensor_firmware_simplified_program_strucutre.png}](./generated_images/border_Unified_sensor_firmware_simplified_program_strucutre.png)
-
 
 
 The firmware is responsible for detecting the possible connected sensors \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
@@ -301,7 +295,7 @@ public:
 #endif
 ```
 
-The flow chart \ref{Unified_sensor_firmware_simplified_program_strucutre.png} shows the start process and the subsequent main loop for processing the user commands and sensor results.
+The flow chart \ref{Unified_sensor_firmware_simplified_program_structure.png} shows the start process and the subsequent main loop for processing the user commands and sensor results.
 When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
@@ -311,7 +305,7 @@ All implemented microcontroller platforms used (Raspberry Pi Pico, STM32F4) have
 
 The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual RS232 communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
-After the setup process is complete, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
+After execution of the setup routine is completed, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
 Ring buffer offers efficient data management in limited memory.
 Its cyclic structure enables continuous overwriting of older data, saves memory space and facilitates seamless processing of real-time data.
@@ -322,7 +316,7 @@ Each sensor measurement result is transmitted from the buffer to the host togeth
 This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized \ref{sensor-syncronisation-interface} in time and are not out of sequence or drift.
 
 
-### Communication interface
+### Communication Interface
 
 ![Sensors (+cli) \label{Sensors_(+cli).png}](./generated_images/border_Sensors_(+cli).png)
 
@@ -401,7 +395,7 @@ The sensor differentiation takes place later in the (+mrp) \ref{software-readout
 ![Query opmode using (+cli) \label{Query_opmode_using_(+cli).png}](./generated_images/border_Query_opmode_using_(+cli).png)
 
 
-## Example sensors
+## Example Sensors
 
 Two functional sensor platforms \ref{Build_sensors_with_different_capabilities.csv} were built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
 
@@ -430,7 +424,7 @@ The 1D sensor \ref{1D_sensor_construction_with_universal_magnet_mount.png} is th
 The electrical level here is based on a `Raspberry-Pi Pico` together with the `MMC5603NJ` magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
 
-Since the `MMC5603NJ` only has limited measurement range of total `6uT`, even small coin sized neodymium magnets already saturates the sensor.
+Since the `MMC5603NJ` only has limited measurement range of total 6uT, even small coin sized neodymium magnets already saturates the sensor.
 It is possible to mount 3D printed spacers over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash in order to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
@@ -456,23 +450,28 @@ As the magnets in the motors, as with the screws used in the 1D sensor, can infl
 On the electrical side, it also consists of a `SKR-Pico` stepper motor controller, together with the `TLV493D` magnetic field sensor.
 This was chosen because of its larger measuring range and can therefore be used more universally without having to change the sensor of the arm.
 
-### Integration of an industry teslameter
+### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
-A temperature-compensated `Voltcraft GM-70` telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of `0-3T` with a resolution of `0.1mT`.
-It offers an `RS232` interface with a documented protocol \ref{Voltcraft_GM70_serial_protocol.csv} for connection to a (+pc). 
+A temperature-compensated `Voltcraft GM-70` telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of 0T to 3T with a resolution of 0.1mT.
+It offers an RS232 interface with a documented protocol \ref{Voltcraft_GM70_serial_protocol.csv} for connection to a (+pc). 
 
-This connectivity makes it possible to make the device compatible with the Unified Sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the Unified Sensor firmware offers.
+This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
+
+
+
+Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical RS232 interface.
+As with the other sensors, this interface consists of your `Raspberry-Pi Pico` with an additional level shifter.
+
+The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
+The firmware was adapted using a separate build configuration.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol from table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
+
+
+This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
 ![Voltcraft GM70 teslameter with custom (+pc) interface board \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}](./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png)
 
-
-Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical `RS232` interface.
-As with the other sensors, this interface consists of your `RaspberryPi Pico` with an additional level shifter.
-
-The Teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
-The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol from table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
 
 : Voltcraft GM70 serial protocol \label{Voltcraft_GM70_serial_protocol.csv}
 
@@ -487,12 +486,8 @@ In order to be able to read and correctly interpret the data from the microconto
 | 13         | value LSB      | 0x-0xFF                  |
 | 14         | STOP           | 0x3                      |
 
-This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
-
-
-
-# Software readout framework
+# Software Readout Framework
 
 The software readout framework is the central software component that was developed as part of this work.
 This software framework is intended to provide a user-oriented data acquisition and analysis environment.
@@ -509,17 +504,18 @@ As the following, this concept is referred to as `user interaction points` \ref{
 
 ## User Interaction Points
 
-![MRP library module high level overview \label{MRP_library_module_high_level_overview.png}](./generated_images/border_MRP_library_module_high_level_overview.png)
-
-
-
 User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimization algorithms on the other.
 
 For this purpose, the library was divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types was developed and packed together in a extendable Python library.
 
+\newpage
+
 According to this concept, the user should be able to replace individual components from this chain with their own modules without having to worry about implementing other of these to make the project work.
+
+![MRP library module high level overview \label{MRP_library_module_high_level_overview.png}](./generated_images/border_MRP_library_module_high_level_overview.png)
+
 
 ### User Interaction Points Example
 
@@ -528,11 +524,13 @@ The following example shows the advantages of using the `User interaction points
 
 A project called `HalbachOptimisation` [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The `HalbachMRIDesigner` [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Hallbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is then an `OpenSCAD` [@OpenSCAD] based 3D model of the magnet holder.
+The `HalbachMRIDesigner` [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Hallbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an `OpenSCAD` [@OpenSCAD] based 3D model of the magnet holder.
 
-As a result, there are two projects which are both suitable for the task of optimizing and creating Hallbach magnets for (+mri) applications. However, their data structures are not compatible with each other. However, they are executed manually one after the other in order to obtain a final result.
+As a result, there are two projects which are both suitable for the task of optimizing and creating Hallbach magnets for (+mri) applications. The data structures are not compatible with each other.
+However, they are executed manually one after the other to obtain a final result with manual data conversation.
 
-The library created is intended to solve one problem by providing standardized and flexible data structures for use with this form of magnetic field data. On the other hand, by separating the processing pipeline into defined sub-steps, it should be possible to make individual modules and as a result functionalities interchangeable by the user.
+The library created is intended to solve one problem by providing standardized and flexible data structures for use with this form of magnetic field data.
+By separating the processing pipeline into defined sub-steps, it should be possible to make individual modules and as a result functionalities interchangeable by the user.
 
 The implementation of the same functionalities looks as follows after using the library:
 
@@ -548,7 +546,7 @@ The implementation of the same functionalities looks as follows after using the 
   Next, the user creates his own analysis step in order to be able to call up its functions.
   In the case of the `HalbachOptimisation` [@HalbachOptimisation] project, the function signature of the start function must be changed.
   This receives the result of the previous step, in this case the generated magnet data.
-  By optionally setting meta data in the universal bilbiothekt data type, constants can be replaced in the analysis function and made dynamically configurable.
+  By optionally setting meta data in the universal library data type, constants can be replaced in the analysis function and made dynamically configurable.
   The return result also corresponds to this data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
 
 3. **Generate fabrication data** 
@@ -559,7 +557,7 @@ The implementation of the same functionalities looks as follows after using the 
   In this case, more changes are required, as the configuration file is loaded from the file system.
   This logic must be removed in order to use the added meta data in the input parameter instead.
 
-After these customization steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
+After these customisation steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
 This also maps the functionality of a project file, which can be executed or passed on repeatedly.
 
 This also fulfills the goal of making individual user-created algorithms interchangeable.
@@ -568,10 +566,10 @@ If the user now wishes to use a different (+cad) algorithm instead of the `Halba
 
 ## Modules
 
-In order to realise the concept of user interaction points, the library was divided into different modules. These can be divided into two main categories:
+In order to realise the concept of user interaction points, the library was divided into different modules. These modules can be divided into two main categories:
 
 * Core - All modules related to measurement data management
-* Extensions - Contains modules for visualizations, hardware sensor access
+* Extensions - Contains modules for visualisations, hardware sensor access
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
@@ -611,7 +609,7 @@ At the end of processing, the collected and modified data are typically exported
 This process is described in the following subchapter.
 
 
-#### Storage and Datamanagement
+### Storage and Datamanagement
 
 An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements.
 On the other hand, the focus during development was that it is also possible to use the data in other programs.
@@ -659,26 +657,26 @@ Using serialization, the `MRPReading` class inherited from Python-`Object` class
 The exported example \ref{lst:json_export_format_example} contains the following different object keys, which contain the following information:
 
 * `additional_data` - Additional user-defined metadata
-* `data` - Measured values with value and measured value (+uuid)
+* `data` - Datapoint storage consists of measured value, (+uuid) and temperature, among other parameters
 * `measurement_config` - Information about the sensor used for measurement
 
 In addition, further custom objects can be inserted into the (+json) using the functions provided.
 
-Since there are popular data processing frameworks such as `Numpy` [@harris2020array], or the program for mathematical calculations, Matlab are often used, the library also supports export formats for these systems.
+Since there are popular data processing frameworks such as `Numpy` [@harris2020array], or the program for mathematical calculations, `MATLAB` are often used, the library also supports export formats for these systems.
 
 The different formats can be triggered by the user by calling up the corresponding `MRPReading` class functions:
 
 * `.dump()` - (+json)
 * `.to_numpy_matrix()` - `Numpy`-Array of `data` object with different options
-* `.dump_savemat()` - Matlab mat-file with measurement values and temperatures
+* `.dump_savemat()` - `MATLAB` mat-file with measurement values and temperatures
 
-Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the other options (`Numpy`, `Matlab`)loses data during the export procedure.
-}
+Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the other options (`Numpy`, `MATLAB`)loses data during the export procedure.
+
 
 ### Extension Modules
 
 The extention modules build on the core modules and offer the user additional basic functionalities.
-These include functions for data acquisition, visualization and analysis.
+These include functions for data acquisition, visualisation and analysis.
  
 #### Sensor Interface
 
@@ -720,12 +718,12 @@ These can be generated automatically with the `3D: Fullsphere` \ref{d-fullsphere
 Data analysis offers the user the greatest flexibility to implement their own modules.
 For this reason `MRPAnalysis` contains functions for calculating the following data analyses, which are compatible with class instances of `MRPReading`:
 
-* `std_deviation` - standard deviation
-* `mean` - mean value
-* `variance` - variance
-* `center_of_gravity` - center of gravity
-* `binning` - distribution of a sample by means of a histogram
-* `k-nearest` - k-nearest neighbors
+* `std_deviation` - Standard deviation
+* `mean` - Mean value
+* `variance` - Variance
+* `center_of_gravity` - Center of gravity
+* `binning` - Distribution of a sample by means of a histogram
+* `k-nearest` - K-nearest neighbors
 
 In addition, the export function `.to_numpy_matrix` enables further processing of the data in the `Numpy` [@harris2020array] framework, in which many other standard analysis functions are implemented.
 
@@ -753,7 +751,7 @@ By connecting several sensors via the proxy module, it is possible to link sever
 
 
 The figure \ref{mrp_proxy_multi.png} shows the modified `multi-proxy - multi-sensor` topology.
-Here, both proxy instances do not communicate directly with the `control` (+pc), but the proxy instance `remote`(+pc)`#2` can acces the proxy running on `remote`(+pc)`#1`.
+Here, both proxy instances do not communicate directly with the `control` (+pc), but the proxy instance `remote`(+pc) `#2` can acces the proxy running on `remote`(+pc) `#1`.
 
 The `control` (+pc) only communicates with the `remote` (+pc) `#1`, but can access all sensors in this chain.
 
@@ -825,7 +823,7 @@ Individual sensor setups do not require any additional synchronisation informati
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in \ref{sensor-syncronisation-interface}.
 this no longer works for long distances and the syncronisation must be made via a shared network connection. 
 
-If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@PTPIEEE1588] can be used on many (+sbc), such as the `Raspberry-Pi Compute Module 4`.
+If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@PTPIEEE1588] can be used on many (+sbc), such as the `Raspberry-Pi Compute Module`.
 
 
 ### Command-Router
@@ -843,7 +841,7 @@ Immediately after starting the `MRPProxy`, the (+uuid)s of all locally connected
 These are stored together with the class instance of the `MRPHal` module in a (+lut).
 This makes it possible to address a sensor directly using its (+uuid).
 
-#### Merging the sensor capabilities
+#### Merging the Sensor Capabilities
 
 : Sensor capabilities merging algorithm \label{Sensor_capabilities_merging_algorithm.csv}
 
@@ -857,7 +855,7 @@ This makes it possible to address a sensor directly using its (+uuid).
 When using sensors with different capabilites, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the `info` command of each sensor is queried.
-This information is added to the previously created (+lut). Duplicate entries are summarized (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the `info` \ref{lst:mtsc} command is received over network.
+This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the `info` \ref{lst:mtsc} command is received over network.
 
 ```bash {#lst:mtsc caption="MRPproxy REST enpoiint query examples"}
 # QUERY Network-Proxy capabilities
@@ -873,14 +871,14 @@ $ wget http://proxyinstance.local:5556/proxy/status
 The same procedure is performed for the `commands` (+cli)-command of each sensor, to merge available commands of connected sensors into the (+lut).
 
 
-#### Dynamic extension of the available network proxy commands
+#### Dynamic extension of the available Network-Proxy Commands
 
 In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
 In addition, there are commands such as the previously used `info` or `status` command, which must be intercepted by the `MRPProxy` module so that it can be handled differently (see example \ref{lst:mtsc}).
 
 To realize this, a (+lut) was created in the previous steps, which contains information regarding `requested capability` -> `sensor`-(+uuid) -> `physical sensor` and allows the commands to be routed.
 
-For commands where there are several entries for `CAPABLE SENSORS ID LUT` \ref{Sensor_capabilities_merging.csv}, there are two possible approaches to how the command is processed:
+For commands where there are several entries for `CAPABLE SENSORS ID LUT` \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
 
 * Redirect to each capable sensor
 * Extend commands using an id parameter
@@ -889,7 +887,7 @@ These two methods have been implemented and are applied automatically. The decis
 
 The `extend commands using an id parameter` strategy is used for different sensors. Each command is extended on the `Network-Proxy` \ref{network-proxy} by another (+uuid) parameter, according to the following scheme:
 
-* `readsensor <axis> <sensor number>`-> `readsensor <axis> <ID>`
+* `readsensor <axis> <sensor number>` -> `readsensor <axis> <ID>`
 * `opmode`-> `opmode <ID>`
 
 This allows the host to address individual sensors directly via their specific (+uuid).
@@ -947,7 +945,7 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 After generating simple measurements with random values in the previous example \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the `MRPHal` module was developed, which can interact with all `Unified Sensor` \ref{unified-sensor}-compatible sensors. In the following example \ref{lst:mrpexample_hal}, an `1D: Single Sensor` \ref{d-single-sensor} is connected locally to the host (+pc).
 
-```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of an measurement"}
+```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
@@ -1017,12 +1015,11 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 
 ### MRPVisualisation
 
-![Example full sphere plot of an measurement using the MRPVisualisation module \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}](./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png)
-
-
-This final example shows the use of the MRP Visualisation module, which provides general functions for visualising measurements. This makes it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the `3D: Fullsphere` \ref{d-fullsphere} sensor. The sub-module `MRPPolarVisualisation` is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a fullsphere measurement.
-
-It is also possible to export the data from the MRPAnalysis module graphically as diagrams. The `MRPVisualisation` modules are used here.
+This final example shows the use of the `MRPVisualisation` module, which provides general functions for visualising measurements.
+The visualisation optionsmakes it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the `3D: Fullsphere` \ref{d-fullsphere} sensor.
+The sub-module `MRPPolarVisualisation` is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a fullsphere measurement.
+It is also possible to export the data from the `MRPAnalysis` module graphically as diagrams.
+The `MRPVisualisation` modules are used here.
 The following example \ref{lst:mrpexample_visualisation} shows the usage of both modules.
 
 
@@ -1036,19 +1033,22 @@ visu.plot2d_top(None)
 visu.plot2d_side(None)
 # 3D PLOT TO FILE
 visu.plot3d(os.path.join('./plot3d_3d.png'))
-
 # PLOT ANALYSIS RESULTS
 from MRP import MRPDataVisualization
 MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
 ```
+
+
+![Example full sphere plot of an measurement using the MRPVisualisation module \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png}](./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png)
+
+
+
 ### MRPHallbachArrayGenerator
 
-![Generated hallbach array with generated cutouts for eight magnets \label{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}](./generated_images/border_Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png)
 
+The following example code \ref{lst:mrpexample_hallbach}, shows how a simple Hallbach magnetic ring can be generated.
 
-The following example code \ref{lst:mrpexample_hallbach}, shows how a simple hallbach magnetic ring can be generated.
-
-This can then be used to construct a Halbach ring magnet (see chapter \ref{Charakterisation of Permanent Magnets}) for a low-field (+mri).
+This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
 
 Eight random measurements are generated here.
@@ -1072,11 +1072,14 @@ MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hal
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an `OpenSCAD` [@OpenSCAD] file, which contains the module generated. After computing the model using the `OpenSCAD` (+cli) utility, the following model rendering \ref{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+The result is an `OpenSCAD` [@OpenSCAD] file, which contains the module generated. After computing the model using the `OpenSCAD` (+cli) utility, the following model rendering \ref{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+
+
+![Generated Hallbach array with generated cutouts for eight magnets \label{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png}](./generated_images/border_Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png)
 
 
 
-# Usability improvements
+# Usability Improvements
 
 Usability improvements in software libraries are crucial for efficient and user-friendly development.
 Intuitive API documentation, clearly structured code examples and improved error messages promote a smooth developer experience.
@@ -1100,9 +1103,9 @@ To simplify these tasks, a (+cli) \ref{example_measurement_analysis_pipeline.png
 * Detection of connected sensors
 * Configuration of measurement series
 * Recording of measured values from stored measurement series
-* Simple commands for checking recorded measurement series and their data.
+* Simple commands for checking recorded measurement series and their data
 
-Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is then an exported file with the measured values.
+Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is an exported file with the measured values.
 These can then be read in again using the `MRPReading` module and processed further. The following bash code \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
@@ -1131,7 +1134,7 @@ $ MRPcli measure run
 > dump_to_file testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12.mag.json
 ```
 
-## Programmable data processing pipeline
+## Programmable Data Processing Pipeline
 
 After it is easy for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data.
 This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library.
@@ -1144,11 +1147,11 @@ This is particularly useful for complex analyses or custom algorithms, but not n
 For this purpose, a further (+cli) application was created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
 The example \ref{example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
-* Import the measurements
-* Determine sensor bias value from imported measurements using a reference measurement
-* Apply linear temperature compensation
-* Export the modified measurements
-* Create a graphical plot of all measurements with standard deviation
+1. Import the measurements
+2. Determine sensor bias value from imported measurements using a reference measurement
+3. Apply linear temperature compensation
+4. Export the modified measurements
+5. Create a graphical plot of all measurements with standard deviation
 
 
 In order to implement such a pipeline, the `yaml` file format was chosen for the definition of the pipeline, as this is  for non programmers to understand and can also be easily edited with a plain text editor.
@@ -1199,6 +1202,9 @@ stage export_readings:
 ```
 
 Each pipeline step is divided into `stages`, which contain a name, the function to be executed and its parameters.
+
+\newpage
+
 The various steps are then linked by using the `stage <name>` makro as input parameter of the next function to be executed (see comments in \ref{lst:mrpuddp_example_yaml}).
 
 It is therefore also possible to use the results of one function in several others without them directly following each other.
@@ -1208,27 +1214,25 @@ The disadvantages of this system are the following:
 * Complex determination of the execution sequence of the steps
 
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
+After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
+The individual steps are then executed along the graph.
+The intermediate results and the final results \ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
-![Result step execution tree from user defined processing pipeline example \label{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}](./generated_images/border_Result_step_execution_tree_from_user_defined_processing_pipeline_example.png)
+![Example result of an step execution tree from user defined processing pipeline \label{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}](./generated_images/border_Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png)
 
 
 ![pipeline output files after running example pipeline on a set of readings \label{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png)
 
 
-After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree \ref{Result_step_execution_tree_from_user_defined_processing_pipeline_example.png}.
-The individual steps are then executed along the graph.
-The intermediate results and the final results \ref{pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
-
-
 ## Testing
-
-Software tests in libraries offer numerous advantages for improving quality and efficiency. Firstly, they enable the identification of errors and vulnerabilities before software is published as a new version.
-
-This significantly improves the reliability of (+mrp)-library applications.
-Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
 
 ![MRP library test results for different submodules executed in PyCharm (+ide) \label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}](./generated_images/border_MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png)
 
+
+Software tests in libraries offer numerous advantages for improving quality and efficiency. Software tests make it possible to identify errors and vulnerabilities before the software is released as a new version.
+
+This significantly improves the reliability of (+mrp)-library applications.
+Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
 
 During the development of the (+mrp)-library, test cases were also created for all important functionalities and usecases.
 The test framework `PyTest` [@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
@@ -1267,26 +1271,28 @@ class TestMPRReading(unittest.TestCase):
 ```
 
 
-One problem, however, is the parts of the (+mrp)-library that require direct access to external hardware.
+One problem, is the parts of the (+mrp)-library that require direct access to external hardware.
 These are, for example, the `MRPHal` and `MRPHalRest` modules, which are required to read out sensors connected via the network.
 Two different approaches were used here.
 In the case of local development, the test runs were carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
+
+\newpage
 
 In the other scenario, the tests are to be carried out before a new release in the repository on the basis of `Github Actions` [@GithubActions].
 Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
 Instead, the hardware sensors were simulated by software and executed via virtualisation on the systems provided by `Github Actions`.
 
 
-## Package distribution
+## Package Distribution
+
+![MagneticReadoutProcessing library hosted on PyPi \label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}](./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png)
+
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
 As it was created in the Python programming language, there are several public package registry where users can provide their software modules.
 Here, `PyPi`[@PyPI] \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} [@MagneticReadoutProcessingPyPI] is the most commonly used package registry and offers direct support for the package installation programm (+pip) \ref{lst:setup_lib_with_pip}.
 
-![MagneticReadoutProcessing library hosted on PyPi \label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}](./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png)
-
-
-In doing so, (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
+(+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
 
 ```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing library using pip"}
@@ -1297,9 +1303,8 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 ```
 
-To make the (+mrp) file strucutre compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation `wheel` archive.
+To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation `wheel` archive.
 This can then be uploaded to the package registry.
-
 Since the (+mrp)-library requires additional Python dependencies (e.g. `numpy`, `matplotlib` packages), which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration `setup.py` \ref{lst:setup_py_req} for this purpose.
 
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing used given requirements.txt"}
@@ -1332,11 +1337,10 @@ To make the (+cli) scripts written in Python easier for the user to execute with
 In addition, these commands are available globally in the system without the terminal shell being located in the (+mrp)-library folder.
 
 
-
 ### Documentation
 
 
-In order to provide comprehensive documentation for the enduser, the source code was documented using Python-`docstrings` [@PythonDocstringReference] and the Python3.5 type annotations:
+In order to provide comprehensive documentation for the enduser, the source code was documented using Python-`docstrings` [@PythonDocstringReference] and the Python 3.5 type annotations:
 
 * Function description
 * Input parameters, using `param` and `type`
@@ -1367,10 +1371,10 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
 
 Since `docstrings` only document the source code, but do not provide simple how-to-use instructions, the documentation framework `Sphinx` [@SphinxDocumentation] was used for this purpose.
 This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used `docstrings`.
+
+
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
 In order to make the documentation created by `Sphinx` accessible to the user, there are, as with the package management by `PyPi` services, which provide the (+mrp)-library documentation online.
-
-![MagneticReadoutProcessing documentation hosted on ReadTheDocs \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}](./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png)
 
 
 Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
@@ -1381,6 +1385,8 @@ The documentation has also been uploaded to `ReadTheDocs` [@MagneticReadoutProce
 The process of creating and publishing the documentation has been automated using `GitHub Actions`, so that it is always automatically kept up to date with new features.
 
 
+![MagneticReadoutProcessing documentation hosted on ReadTheDocs \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}](./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png)
+
 
 
 
@@ -1388,18 +1394,18 @@ The process of creating and publishing the documentation has been automated usin
 
 This work successfully implemented a universal hardware and software framework for the automated characterisation of permanent magnets.
 This framework consists of a low-cost hardware interface that supports various magnetic field sensors and a library for automating and analysing the measurement data.
-The process of this framework comprises several steps, which I will explain below:
+The process of this framework comprises several steps, which will be explain below:
 
-1. **Hardware preperation**
+1. **Hardware preperation**:
    Users can prepare measurements using the implemented framework. This includes the placement of the sensors and the selection of the relevant parameters for the characterisation of the permanent magnets.
 
-2. **Configuration of the measurement**
+2. **Configuration of the measurement**:
    The software provides a user-friendly interface for configuring the measurement parameters. Users can make the desired settings here and customise the framework to their specific requirements.
 
-3. **Custom algorithm implementation**
+3. **Custom algorithm implementation**:
    An important contribution of the (+mrp) ecosystem is the possibility for users to implement their own algorithm for data analysis. This allows customisation to specific research questions or experimental requirements.
 
-4. **Execution of analysis pipeline**
+4. **Execution of analysis pipeline**:
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
@@ -1412,15 +1418,17 @@ The developed framework not only offers a cost-effective and flexible hardware s
 ![Ten numbered test magnets in separate holders \label{Ten_numbered_test_magnets_in_separate_holders.png}](./generated_images/border_Ten_numbered_test_magnets_in_separate_holders.png)
 
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was used for the evaulation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random `N45 12x12x12mm` neodymium magnets were used here.
+For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was used for the evaulation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random `N45 12x12x12mm` neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These were placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
-## Configuration of the measurement
+## Configuration of the Measurement
 
 
-The configured hardware was then connected and connected to the host system using the `MRPcli config setupsensor`-(+cli) command.
-The measurement was then configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
+The configured hardware was then connected to the host system using the `MRPcli config setupsensor`-(+cli) command.
+Afterwards, the measurement was configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
+
+\newpage
 
 ```bash {#lst:evaluation_measurement_config caption="Measurement configuration for evaluation measurement"}
 ## CONFIGURE THE MEASUREMENT
@@ -1435,7 +1443,7 @@ The `MRPcli measure run` command was then called up for each individual magnet t
 After each run, the `READING-NAME` parameter was filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 
-## Custom algorithm implementation
+## Custom Algorithm Implementation
 
 The next step for the user is the implementation of the filter algorithm \ref{lst:custom_find_similar_values_algorithm}.  This can have any function signature and is implemented in the file `UDPPFunctionCollection.py`.
 This Python file is loaded when the pipeline is started and all functions that are imported here as a module or implemented directly can be called via the pipeline.
@@ -1471,13 +1479,13 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   return similar_values
 ```
 
-The python `heapq` [@heapq] module, which implements a priority queue, is used for this purpose.
+The Python `heapq` [@heapq] module, which implements a priority queue, is used for this purpose.
 The calculated distances from the mean value of the measurements to the global mean value are inserted into this queue.
 Subsequently, as many elements of the queue are returned as defined by the `IP_return_count` parameter.
 The actual sorting was carried out by the queue in the background.
 
 
-## Execution of analysis pipeline
+## Execution of Analysis Pipeline
 
 Once the filter function has been implemented, it still needs to be integrated into the analysis pipeline\ref{lst:pipeline_mrp_evaluation_yaml}.
 Here, the example pipeline \ref{example_measurement_analysis_pipeline.png} is simplified and an additional stage `find_similar_values` has been added, which has set `FindSimilarValuesAlgorithm` as the function to be called.
@@ -1532,18 +1540,18 @@ $ MRPudpp pipeline run
 The figure \ref{MRP_evaluation_result.png} shows this result.
 The plot of the raw measured values is shown on the left.
 The variance of the determined `Mean [uT]` mean values is plotted on ten individual measured values.
-Here you can see that there are measured values with larger deviations (see measurement `7:0`,`10-2:0`,`10-1:0`).
+Here it can be seen that there are measured values with larger deviations (see measurement `7:0`,`10-2:0`,`10-1:0`).
 
 ![MRP evaluation result \label{MRP_evaluation_result.png}](./generated_images/border_MRP_evaluation_result.png)
 
 
 On the right-hand side \ref{MRP_evaluation_result.png}, the measured values are plotted as a result of the filter algorithm. As the `IP_return_count` parameter was set to four, only the four most similar measurements were exported here.
-It can be seen from the plotted mean values `Mean [uT]` that these are closest to the global mean value `208.8uT`.
+It can be seen from the plotted mean values `Mean [uT]` that these are closest to the global mean value 208.8uT.
 The filter algorithm implemented by the user was thus successfully executed using the user-programmable pipeline. 
 The calculation result was successfully verified using raw measurement data and the final result of the algorithm.
 
 
-# Conclusion and dicussion
+# Conclusion and Dicussion
 
 
 ## Conclusion
@@ -1574,4 +1582,4 @@ All tests and evaluations took place under normal conditions, especially for the
 On the software side, the focus is on integration for the support of more professional measuring devices. Only in this way is it possible to evaluate and improve the sensor hardware and quantify the measurement results.
 
 To summarise, it can be said that a solid software framework has been created that can be used directly for the intended purpose.
-It provides a good foundation, but can be further developed by integrating professional measurement devices to enable a more comprehensive evaluation and improvement of the sensor hardware.
+It provides a suitable working foundation, but can be further developed by integrating professional measurement devices to enable a more comprehensive evaluation and improvement of the sensor hardware.

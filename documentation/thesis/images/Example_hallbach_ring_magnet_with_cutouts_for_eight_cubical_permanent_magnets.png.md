@@ -1,2 +1,2 @@
-![Example hallbach ring magnet with cutouts for eight cubical permanent magnets \label{Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}](./generated_images/border_Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png)
+![Example Hallbach ring magnet with cutouts for eight cubical permanent magnets \label{Example_Hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png}](./generated_images/border_Example_Hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png)
 

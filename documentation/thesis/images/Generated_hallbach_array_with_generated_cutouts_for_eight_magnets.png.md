@@ -1,2 +1,2 @@
-![Generated hallbach array with generated cutouts for eight magnets \label{Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png}](./generated_images/border_Generated_hallbach_array_with_generated_cutouts_for_eight_magnets.png)
+![Generated Hallbach array with generated cutouts for eight magnets \label{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png}](./generated_images/border_Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png)
 
