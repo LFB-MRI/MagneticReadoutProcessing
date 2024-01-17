@@ -24,8 +24,9 @@
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {6.1}Measurement configuration for evaluation measurement}{60}{lstlisting.6.1}%
 \contentsline {lstlisting}{\numberline {6.2}User implemented custom find most similar readings algorithm}{60}{lstlisting.6.2}%
-\contentsline {lstlisting}{\numberline {6.3}User defined processing pipeline using custom implemented filter algorithm}{61}{lstlisting.6.3}%
-\contentsline {lstlisting}{\numberline {6.4}Bash result log of evaluation pipeline run}{62}{lstlisting.6.4}%
+\contentsline {lstlisting}{\numberline {6.3}Modified user implemented custom find algorithm using a reference magnet reading}{61}{lstlisting.6.3}%
+\contentsline {lstlisting}{\numberline {6.4}User defined processing pipeline using custom implemented filter algorithm}{62}{lstlisting.6.4}%
+\contentsline {lstlisting}{\numberline {6.5}Bash result log of evaluation pipeline run}{63}{lstlisting.6.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

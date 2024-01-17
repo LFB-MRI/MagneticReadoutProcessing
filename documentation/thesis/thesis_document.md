@@ -1401,16 +1401,18 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   # CALCULATE TARGET VALUE: CENTER OF GRAVITY MAGNITUDE FOR ALL READINGS
   target_value = 0.0
   for idx, r in enumerate(_readings):
-      cog_vecotr = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(r)
+      cog = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(r)
       # COMPUTE LENGTH OF VECTOR
-      cog:float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
+      cog_value: float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
       target_value = target_value + cog
   target_value = target_value / len(_readings)
   # PUSH READINGS TO HEAP
   for value in _readings:
       # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
-      diff = abs(value - target_value)
-      heapq.heappush(heap, (diff, value))
+      cog = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(value)
+      cog_value: float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
+      diff = abs(cog_value - target_value)
+      heapq.heappush(heap, (diff, cog_value))
   # RETURN X BEST ITEMS FROM HEAP
   similar_values = [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
   # CLEAN UP USED LIBRARIES AND RETURN RESULT
@@ -1423,6 +1425,29 @@ The Python `heapq` [@heapq] module, which implements a priority queue, is used f
 The calculated distances from the `CoG` value of the measurements to are inserted into this queue.
 Subsequently, as many elements of the queue are returned as defined by the `IP_return_count` parameter.
 The actual sorting was carried out by the queue in the background.
+
+
+### Alternative Filter Algorithm Implementation
+
+Another possibility here would be for the user to use a reference measurement instead of a simulated ideal magnet as a reference.
+This can come from a magnet selected as a reference magnet.
+As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet.The code snipped \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added `_ref` input parameter for the reference measurement.
+
+```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading"}
+@staticmethod
+def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRPReading.MRPReading], IP_return_count: int = 4) -> [MRPReading.MRPReading]:
+  # CALCULATE CoG VALUE OF REFERENCE MAGNET
+  cog_ref = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(_ref[0])
+  ref_value: float = math.sqrt(cog_ref[0]**2 + cog_ref[1]**2 cog_ref[2]**2)
+  # PUSH READINGS TO HEAP
+  for value in _readings:
+      # USE DIFF AS PRIORITY VALUE IN MIN-HEAP
+      cog = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(value)
+      cog_value: float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
+      heapq.heappush(heap, (abs(cog_value - ref_value), cog_value))
+  # RETURN X BEST ITEMS FROM HEAP
+  return [item[1] for item in heapq.nsmallest(IP_return_count, heap)]
+```
 
 
 ## Execution of Analysis Pipeline
@@ -1486,8 +1511,11 @@ Here it can be seen that there are measured values with larger deviations (see m
 
 On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the `IP_return_count` parameter was set to four, only the four most similar measurements were exported here.
 It can be seen from the plotted `CoG [uT]` deviation values, that these are closest to an ideal Magnet with a `CoG` value of 0uT. This ideal value was calculated with the function `MRP.MRPSimulation.generate_simulated_reading`, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
+
 The filter algorithm implemented by the user was thus successfully executed using the user-programmable pipeline. 
 The calculation result was successfully verified using raw measurement data and the final result of the algorithm.
+
+
 
 
 # Conclusion and Dicussion
