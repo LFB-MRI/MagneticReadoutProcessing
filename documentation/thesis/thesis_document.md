@@ -1512,6 +1512,10 @@ Here it can be seen that there are measured values with larger deviations (see m
 On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the `IP_return_count` parameter was set to four, only the four most similar measurements were exported here.
 It can be seen from the plotted `CoG [uT]` deviation values, that these are closest to an ideal Magnet with a `CoG` value of 0uT. This ideal value was calculated with the function `MRP.MRPSimulation.generate_simulated_reading`, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
 
+
+If the alternative filter algorithm from chapter `Alternative Filter Algorithm Implementation` \ref{alternative-filter-algorithm-implementation} is executed here, the same result is returned if the magnet measurement with (+id) `5:0` is used as the reference magnet.
+
+
 The filter algorithm implemented by the user was thus successfully executed using the user-programmable pipeline. 
 The calculation result was successfully verified using raw measurement data and the final result of the algorithm.
 
