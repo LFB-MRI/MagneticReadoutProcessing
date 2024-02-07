@@ -14,23 +14,66 @@ class CLIDatastorageEntries(Enum):
     READING_MAGNET_TYPE = 7
     SENSOR_SERIAL_BAUDRATE = 8
 
-class CLIDatastorage:
 
+class CLIDatastorageConfig(object):
+
+    BASE_PATH: str = os.path.dirname(__file__)
+    BASE_PATH_CONFIGS: str = BASE_PATH + '/configs/'
+    BASEPATH_READINGS: str = BASE_PATH + '/readings/'
+
+    def __init__(self):
+        pass
+
+
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(CLIDatastorageConfig, cls).__new__(cls)
+            # Put any initialization here.
+        return cls._instance
+
+    @staticmethod
+    def get_basepath() -> str:
+        return CLIDatastorageConfig.BASE_PATH
+
+    @staticmethod
+    def set_basepath(_path: str):
+        if len(_path) <= 0:
+            return
+        if not _path.endswith("/"):
+            _path += "/"
+
+        CLIDatastorageConfig.BASE_PATH = _path
+        CLIDatastorageConfig.BASE_PATH_CONFIGS = _path + 'configs/'
+        CLIDatastorageConfig.BASEPATH_READINGS = _path + 'readings/'
+
+        Path(CLIDatastorageConfig.BASE_PATH).mkdir(parents=True, exist_ok=True)
+        Path(CLIDatastorageConfig.BASE_PATH_CONFIGS).mkdir(parents=True, exist_ok=True)
+        Path(CLIDatastorageConfig.BASEPATH_READINGS).mkdir(parents=True, exist_ok=True)
+
+
+
+
+
+class CLIDatastorage(object):
+    _instance = None
 
     db: TinyDB
     cfgfp: str = ""
     cfgname: str = "global"
+
+
     @staticmethod
     def get_config_basepath() ->str:
-        return (os.path.dirname(__file__)+'/configs/')
+        return CLIDatastorageConfig.get_basepath() + '/configs/'
 
     @staticmethod
     def get_readings_basepath() -> str:
-        return (os.path.dirname(__file__) + '/readings/')
+        return CLIDatastorageConfig.get_basepath() + '/readings/'
 
     @staticmethod
     def get_config_filepath() ->str:
-        return (CLIDatastorage.get_config_basepath() + 'global_config.json')
+        return CLIDatastorageConfig.get_basepath() + 'global_config.json'
 
     @staticmethod
     def list_configs():

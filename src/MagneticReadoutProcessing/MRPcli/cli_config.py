@@ -33,20 +33,20 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
 
     curr = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
     if len(curr) <= 0:
-        curr = BASEPATH
+        curr = cli_datastorage.CLIDatastorageConfig.get_basepath()
     resp = typer.prompt("OUTPUT-FOLDER", curr)
 
     if len(curr) <= 0:
         print("user response empty: so setting the default path")
-        resp = BASEPATH
+        resp = cli_datastorage.CLIDatastorageConfig.get_basepath()
     # REL TO ABS PATHS
 
     # TRY TO CREATE FOLDER
     path_to_create = resp
     if not str(resp).startswith('/'):
-        path_to_create = str(Path(resp).resolve())
+        path_to_create = str(Path(cli_datastorage.CLIDatastorageConfig.get_basepath()).joinpath(Path(resp).resolve()))
 
-    if not os.path.exists(resp):
+    if not os.path.exists(path_to_create):
         if typer.prompt("Should now try to create the path {} ?  [y/n]".format(path_to_create), 'y') == 'y':
             Path(path_to_create).mkdir(parents=True, exist_ok=True)
         if not os.path.exists(path_to_create):
@@ -130,12 +130,12 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
             print("{} > {} - {}".format(idx, port.name, port.device_path))
 
         selected_sensor: int = -1
-        while (not selected_sensor) or selected_sensor < 0:
+        while selected_sensor < 0:
             # DISPLAY USER MESSAGE
             if len(ports) == 1:
-                resp = typer.prompt("Please select one of the found sensors [0]".format(len(ports) - 1))
+                resp = typer.prompt("Please select one of the found sensors: 1 ".format(len(ports) - 1), default="0")
             else:
-                resp = typer.prompt("Please select one of the found sensors [0-{}]".format(len(ports)-1))
+                resp = typer.prompt("Please select one of the found sensors: 0-{} ".format(len(ports)-1))
             # EVALUATE USER INPUT
             if resp and len(resp) > 0:
                 try:
@@ -144,6 +144,11 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
                         break
                 except Exception as e:
                     selected_sensor = -1
+
+            elif len(ports) == 1:
+                selected_sensor = 0
+                break
+
 
         #  ASSIGN
         device_path = ports[selected_sensor]

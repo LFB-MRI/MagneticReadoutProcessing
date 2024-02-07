@@ -1,0 +1,17 @@
+settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_minimal
+
+stage import:
+  function: import_readings
+  parameters:
+    IP_input_folder: /tmp/new
+    IP_file_regex: (.)*.mag.json
+
+stage plot_raw:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage import
+    IP_export_folder: /tmp/new/out/
+    IP_plot_headline_prefix:  pipeline_minimal

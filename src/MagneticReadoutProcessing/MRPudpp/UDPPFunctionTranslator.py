@@ -41,6 +41,54 @@ class UDPPFunctionTranslator():
     """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
     @staticmethod
+    def execute_stage_funktion(stage_information: dict, intermediate_results: dict) -> typing.Any:
+        stage_function_name: str = stage_information['function']
+        function_parameters_from_stages: [dict] = UDPPFunctionTranslator.get_stage_parameters(stage_information)
+        function_parameters_from_inspector: [dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
+        # POPULATE PARAMETER DICT
+        parameters: dict = {}
+
+        ## PROCESS PARAMETERS FROM FROM OTHER STAGES
+        if len(function_parameters_from_stages) > 0:
+            for otp_entry in function_parameters_from_stages:
+                p_stage_name: str = otp_entry['stage_name']
+                p_parameter_name: str = otp_entry['parameter_name']
+
+                if p_stage_name not in intermediate_results:
+                    raise Exception("cant find {} in intermediate_results".format(p_parameter_name))
+
+                parameters[p_parameter_name] = intermediate_results[p_stage_name]
+
+        ## PROCESS INSPECTOR PARAMETER
+        for ip_entry in function_parameters_from_inspector:
+            name: str = ip_entry['id']
+
+            # TODO COMPLEX TYPES as json objects ?
+
+            value = None
+            # ASSIGN DEFAULT VALUE
+            if 'value' in ip_entry:
+                value = ip_entry['value']
+
+            # OVERRIDE USER GIVEN PARAMETER VALUE
+            if 'parameters' in stage_information:
+                if name in stage_information['parameters']:
+                    _value = stage_information['parameters'][name]
+                    if _value:
+                        value = _value
+                    else:
+                        value = None
+
+            parameters[name] = value
+
+        # EXECUTE FUNCTION STORE RETURN RESULT
+        print("processing function:{}".format(stage_function_name))
+        fkt_call_result = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
+
+        return fkt_call_result
+
+
+    @staticmethod
     def execute_function_by_name(_function_name: str, _parameters: dict) -> typing.Any:
         if not _function_name or len(_function_name) <= 0:
             raise Exception("execute_function_by_name: _function_name")
@@ -680,7 +728,7 @@ class UDPPFunctionTranslator():
         return res
 
     @staticmethod
-    def load_pipelines(_folder: str) -> dict:
+    def load_pipelines(_folder: str, _log: bool = True) -> dict:
         """
         load all found yaml pipeline files into a dict
         but only pipelines with the settings entry enabled set to true.
@@ -698,7 +746,8 @@ class UDPPFunctionTranslator():
         if not str(_folder).startswith('/'):
             _folder = str(Path(_folder).resolve())
 
-        print("import_readings: input_folder parameter set to {}".format(_folder))
+        if _log:
+            print("import_readings: input_folder parameter set to {}".format(_folder))
 
         # CHECK FOLDER EXISTS
         if not os.path.exists(_folder):
@@ -708,7 +757,8 @@ class UDPPFunctionTranslator():
         yamls_to_import: [str] = [f for f in os.listdir(_folder) if str(f).endswith('.yaml')]
         enabled_pipelines: dict = {}
         for pipeline_yaml_file in yamls_to_import:
-            print("loading pipeline {}".format(pipeline_yaml_file))
+            if _log:
+                print("loading pipeline {}".format(pipeline_yaml_file))
             # LOAD YAML FILE
             pip: dict = {}
             with open(str(Path(_folder).joinpath(pipeline_yaml_file)), 'r') as file:

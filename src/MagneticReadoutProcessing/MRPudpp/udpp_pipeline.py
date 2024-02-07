@@ -12,27 +12,38 @@ app = typer.Typer()
 
 
 
+@app.command(help="lists all available functions for pipeline programming in json notation")
+def listfunctionsjson(ctx: typer.Context):
+    print(UDPPFunctionTranslator.listfunctions())
+
 @app.command(help="lists all available functions for pipeline programming ")
 def listfunctions(ctx: typer.Context):
-    print(UDPPFunctionTranslator.listfunctions())
+    print("\n".join(list(UDPPFunctionTranslator.listfunctions().keys())))
 
 @app.command(help="list all found pipelines in pipelines folder")
 def listenabledpipelines(ctx: typer.Context):
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    print("PIPELINE STORAGE FOLDER: {}".format(udpp_config.UDPPConfig.get_pipeline_folder()))
+
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder(), _log=False)
     for k in pipelines:
-        print(k)
+        print("> {}".format(k))
+
+
+@app.command(help="get current pipelines folder path")
+def currentpipelinefolder(ctx: typer.Context):
+    print("{}".format(udpp_config.UDPPConfig.get_pipeline_folder()))
 
 
 @app.command()
 def run(ctx: typer.Context):
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
 
 
     # ITERATE OVER EACH PIPELINE
     for pipeline_k, pipeline_v in pipelines.items():
         # CREATE TEMP FOLDER FOR PIPELINE to store some intermediate results
         pipeline_temp_folder_name: str = str(pipeline_k).replace('.', '_').replace('/', '')
-        pipeline_temp_folder_path: str = str(Path(udpp_config.TMP_FOLDER).joinpath("{}/".format(pipeline_temp_folder_name)))
+        pipeline_temp_folder_path: str = str(Path(udpp_config.UDPPConfig.get_tmp_folder()).joinpath("{}/".format(pipeline_temp_folder_name)))
 
         Path().mkdir(parents=True, exist_ok=True)
 
@@ -83,10 +94,7 @@ def run(ctx: typer.Context):
         # THIS STORES ALL INTERMEDIATE RESULTS DURING COMPUTATION OF THE SUB CALL-TREES
         intermediate_results: dict = {}
 
-        for subcalltree in sub_call_trees:
-            for node in subcalltree.nodes:
-                pass
-                #intermediate_results[str(node)] = None
+
 
 
         # OPTION TO EXPORT THE EXPORT A SNAPSHOT OF THE CURRENT COMPUTED READING AFTER EACH STEP
@@ -95,7 +103,25 @@ def run(ctx: typer.Context):
             export_intermediate_results = True
 
 
+
+        # EXECUTE STARTSTEPS FIRST
+        # THIS ACCELERATES THE PROCESSING LASTER ON
+        for st in startsteps:
+            print("=====> {} {} ".format(st, st))
+            stage_information: dict = steps[st]
+            fkt_call_result = UDPPFunctionTranslator.execute_stage_funktion(stage_information, intermediate_results)
+
+            if fkt_call_result is not None:
+                print("warning result value of stage {} is None".format(st))
+            intermediate_results[st] = fkt_call_result
+
+
         for subcalltree in sub_call_trees:
+
+            if subcalltree.nodes is not None and len(subcalltree.nodes) == 1:
+                if list(subcalltree.nodes)[0] in startsteps:
+                    continue
+
             # ITERATE OVER ALL CONNECTED STAGES PRESENT IN THE SUCCESSOR FIELD
             # ALTERNATIVE IS TO USE:
             # ALLE NODES WITH INGRAD 0 AND OUTGRAD > 0
@@ -119,63 +145,19 @@ def run(ctx: typer.Context):
                     continue
 
                 stage_information: dict = steps[stage_name]
-                stage_function_name: str = stage_information['function']
-                print("=====> {} {} ".format(stage_name,  stage_function_name))
 
-                function_parameters_from_stages: [dict] = UDPPFunctionTranslator.get_stage_parameters(stage_information)
-                function_parameters_from_inspector: [dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
-                # POPULATE PARAMETER DICT
-                parameters: dict = {}
+                print("=====> execute stage {}".format(stage_name))
 
-
-                ## PROCESS PARAMETERS FROM FROM OTHER STAGES
-                if len(function_parameters_from_stages) > 0:
-                    for otp_entry in function_parameters_from_stages:
-                        p_stage_name: str = otp_entry['stage_name']
-                        p_parameter_name: str = otp_entry['parameter_name']
-
-                        if p_stage_name not in intermediate_results:
-                            raise Exception("cant find {} in intermediate_results".format(p_parameter_name))
-
-                        parameters[p_parameter_name] = intermediate_results[p_stage_name]
-
-                ## PROCESS INSPECTOR PARAMETER
-                for ip_entry in function_parameters_from_inspector:
-                    name: str = ip_entry['id']
-
-
-                    # TODO COMPLEX TYPES as json objects ?
-
-                    value = None
-                    # ASSIGN DEFAULT VALUE
-                    if 'value' in ip_entry:
-                        value = ip_entry['value']
-
-
-
-                    # OVERRIDE USER GIVEN PARAMETER VALUE
-                    if 'parameters' in stage_information:
-                        if name in stage_information['parameters']:
-                            _value = stage_information['parameters'][name]
-                            if _value:
-                                value = _value
-                            else:
-                                value = None
-
-                    parameters[name] = value
-
-                # EXECUTE FUNCTION STORE RETURN RESULT
-                print("processing:{}".format(stage_name))
-                fkt_call_result = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
+                fkt_call_result = UDPPFunctionTranslator.execute_stage_funktion(stage_information, intermediate_results)
 
                 if fkt_call_result:
                     intermediate_results[str(stage_name)] = fkt_call_result
+
                 print("end processing:{}".format(stage_name))
 
                 if export_intermediate_results:
                     with open(str(Path(pipeline_temp_folder_path).joinpath(Path("intermediate_results_{}".format(str(stage_name))))), 'wb') as outp:  # Overwrites any existing file.
                         pickle.dump(intermediate_results, outp, pickle.HIGHEST_PROTOCOL)
-                    #pipeline_temp_folder_path intermediate_results[str(stage_name)]
 
 
 
@@ -185,11 +167,8 @@ def run(ctx: typer.Context):
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
-    Path(udpp_config.PIPELINES_FOLDER).mkdir(parents=True, exist_ok=True)
-    Path(udpp_config.TMP_FOLDER).mkdir(parents=True, exist_ok=True)
-
-
-
+    Path(udpp_config.UDPPConfig.get_pipeline_folder()).mkdir(parents=True, exist_ok=True)
+    Path(udpp_config.UDPPConfig.get_tmp_folder()).mkdir(parents=True, exist_ok=True)
 
 
 

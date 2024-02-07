@@ -59,8 +59,10 @@ def perform_measurement(configname: str):
         filename = (r.get_name() + "_cIDX{}".format(idx)).strip('/').strip('.')
         target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
         # RESOLVE REL TO ABS PATH
+
         if not str(target_folder).startswith('/'):
-            target_folder = str(Path(target_folder).resolve())
+            target_folder = str(Path(cli_datastorage.CLIDatastorageConfig.get_basepath()).joinpath(Path(target_folder).resolve()))
+        print("target_folder: {}".format(target_folder))
         # CREATE COMPLETE PATH WITH FILENAME
         complete_path = os.sep.join([target_folder, filename])
         # EXPORT

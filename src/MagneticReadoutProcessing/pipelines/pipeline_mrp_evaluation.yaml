@@ -1,5 +1,5 @@
 settings:
-  enabled: true
+  enabled: false
   export_intermediate_results: false
   name: pipeline_mrp_evaluation
 
@@ -9,6 +9,23 @@ stage import:
     IP_input_folder: ./readings/fullsphere/
     IP_file_regex: 360_(.)*.mag.json
 
+stage importq:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: 360_(.)*.mag.json
+
+stage importb:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: 360_(.)*.mag.json
+
+stage importc:
+  function: import_readings
+  parameters:
+    IP_input_folder: ./readings/fullsphere/
+    IP_file_regex: 360_(.)*.mag.json
 
 stage find_similar_values:
   function: custom_find_similar_values_algorithm

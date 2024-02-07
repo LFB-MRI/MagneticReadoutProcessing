@@ -14,7 +14,7 @@ import multiprocessing
 from waitress import serve
 from threading import Lock
 import MRP
-import machineid
+from MRPproxy import machineid
 
 from MRP import MRPPHalRestRequestResponseState, MRPHalSerialPortInformation, MRPHal, MRPHalHelper
 

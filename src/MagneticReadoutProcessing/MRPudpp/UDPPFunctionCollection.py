@@ -75,9 +75,9 @@ class UDPPFunctionCollection:
             log.run_log("export_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
         else:
             raise UDPPFunctionCollectionException("export_readings: IP_export_folder parameter empty")
+
         r: MRPReading.MRPReading
         for r in readings_to_export:
-
             reading_name: str = r.get_name()
             reading_name = reading_name.strip("/.")
             reading_name = "{}_{}".format(reading_name, r.measurement_config.id)
@@ -147,11 +147,10 @@ class UDPPFunctionCollection:
                 log.run_log("inspect_readings: report exported to {}".format(reading_abs_filepath))
                 # CREATE FOLDER
                 if not os.path.exists(IP_export_folder):
-                    os.makedirs(IP_export_folder)
+                    os.makedirs(IP_export_folder, exist_ok=True)
                 # WRITE REPORT TEXT TO FILE
                 with open(reading_abs_filepath, 'w') as f:
                     f.write(report_text)
-
 
     @staticmethod
     def plot_fullsphere(readings_to_plot: [MRPReading.MRPReading], IP_plot_headline_prefix: str = "Plot", IP_export_folder: str = ""):
@@ -175,19 +174,25 @@ class UDPPFunctionCollection:
                 IP_export_folder = str(Path(IP_export_folder).resolve())
 
                 exp_path = IP_export_folder
-
-                if not os.path.exists(exp_path):
-                    os.makedirs(exp_path)
-                # GET LOGGER
-            log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
+            else:
+                exp_path = IP_export_folder
 
 
-            r: MRPReading.MRPReading
-            for r in readings_to_plot:
-                filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).strip(" /."))))
-                visu: MRPPolarVisualization.MRPPolarVisualization = MRPPolarVisualization.MRPPolarVisualization(r)
-                visu.set_title("")
-                visu.plot3d(filename)
+            if not os.path.exists(exp_path):
+                os.makedirs(exp_path, exist_ok=True)
+
+        elif len(IP_export_folder) < 0:
+            exp_path = "./"
+
+        log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
+
+
+        r: MRPReading.MRPReading
+        for r in readings_to_plot:
+            filename: str = str(Path(exp_path).joinpath("plot3d_{}.png".format(str(r.get_name()).strip(" /."))))
+            visu: MRPPolarVisualization.MRPPolarVisualization = MRPPolarVisualization.MRPPolarVisualization(r)
+            visu.set_title("")
+            visu.plot3d(filename)
 
     @staticmethod
     def plot_readings(readings_to_plot: [MRPReading.MRPReading], IP_plot_headline_prefix: str = "Plot", IP_export_folder: str = ""):
@@ -213,10 +218,20 @@ class UDPPFunctionCollection:
 
                 exp_path = IP_export_folder
 
-                if not os.path.exists(exp_path):
-                    os.makedirs(exp_path)
+
                 # GET LOGGER
-            log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
+            else:
+                exp_path = IP_export_folder
+
+            if not os.path.exists(exp_path):
+                os.makedirs(exp_path, exist_ok=True)
+
+        elif len(IP_export_folder) < 0:
+            exp_path = "./"
+
+
+
+        log.run_log("readings_to_plot: IP_export_folder parameter set to {}".format(IP_export_folder))
 
         MRPDataVisualization.MRPDataVisualization.plot_error(readings_to_plot, IP_plot_headline_prefix , str(Path(exp_path).joinpath("error_plot_{}.png".format(str(IP_plot_headline_prefix).strip(" /.")))))
         MRPDataVisualization.MRPDataVisualization.plot_scatter(readings_to_plot, IP_plot_headline_prefix,str(Path(exp_path).joinpath("scatter_plot_{}.png".format(str(IP_plot_headline_prefix).strip(" /.")))))
@@ -313,7 +328,6 @@ class UDPPFunctionCollection:
 
         return imported_results
 
-
     @staticmethod
     def get_best(binning_readings: [MRPReading.MRPReading], IP_bins: int = 0) -> [MRPReading.MRPReading]:
         if binning_readings is None or len(binning_readings) <= 0:
@@ -339,7 +353,6 @@ class UDPPFunctionCollection:
             res.append(binning_readings[lut[v[idx]]])
         return res
 
-
     @staticmethod
     def generate_hallbach_slice(readings_for_slice: [MRPReading.MRPReading], IP_2D_projection: bool = True, IP_output_folder:str = "./", IP_output_filename: str = "array.scad"):
         log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
@@ -351,14 +364,20 @@ class UDPPFunctionCollection:
         exp_path = "./"
         if len(IP_output_folder) > 0:
             if not str(IP_output_folder).startswith('/'):
-                IP_export_folder = str(Path(IP_output_folder).resolve())
+                IP_output_folder = str(Path(IP_output_folder).resolve())
 
-                exp_path = IP_export_folder
+                exp_path = IP_output_folder
+            else:
+                exp_path = IP_output_folder
 
-                if not os.path.exists(exp_path):
-                    os.makedirs(exp_path)
-                # GET LOGGER
-            log.run_log("generate_hallbach_slice: IP_export_folder parameter set to {}".format(exp_path))
+            if not os.path.exists(exp_path):
+                os.makedirs(exp_path, exist_ok=True)
+
+        elif len(IP_output_folder) < 0:
+            exp_path = "./"
+
+
+        log.run_log("generate_hallbach_slice: IP_export_folder parameter set to {}".format(exp_path))
 
         res83d = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings_for_slice)
         MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([res83d], str(Path(exp_path).joinpath(Path(IP_output_filename))), _2d_object_code=IP_2D_projection, _add_annotations=True)
@@ -374,7 +393,7 @@ class UDPPFunctionCollection:
         # CALCULATE AVERAGE OF GIVEN BIAS READINGS
         mean_value: float = 0.0
         for br in bias_readings:
-            v =MRPAnalysis.MRPAnalysis.calculate_mean(br)
+            v = MRPAnalysis.MRPAnalysis.calculate_mean(br)
             mean_value = mean_value + v
         mean_value = mean_value / len(bias_readings)
         print("apply_sensor_bias_offset calculated sensor bias".format(mean_value))
@@ -392,7 +411,6 @@ class UDPPFunctionCollection:
         MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(new_readings, mean_value)
 
         return new_readings
-
 
     @staticmethod
     def custom_find_similar_values_algorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:

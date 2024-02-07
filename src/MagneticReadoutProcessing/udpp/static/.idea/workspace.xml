@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="06b3d3f1-b7df-4bb2-9346-467776186c3c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_reset.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_reset.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setup_proxy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setup_proxy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor_custom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor_custom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor_proxy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_config_setupsensor_proxy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_run.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_run_proxy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_run_proxy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_runall.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_measure_runall.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_proxy_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_proxy_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_proxy_start.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_proxy_start.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_query.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/cli_sensor_query.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_help.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_help.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote_disbale_precheck.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote_disbale_precheck.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote_sensor_only.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/proxy_launch_remote_sensor_only.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_editor_launch.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_editor_launch.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_editor_launch_debug.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_editor_launch_debug.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_listenabledpipelines.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_listenabledpipelines.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_listfunctions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_listfunctions.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/runConfigurations/udpp_pipeline_run.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MRPudpp/udpp_editor.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MRPudpp/udpp_editor.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2WbnZ0qhgEylA1MbEQZXZSc6tgP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/marcel/MagneticReadoutProcessing/src/MagneticReadoutProcessing/MRPudpp/static",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "ts.external.directory.path": "/home/marcel/MagneticReadoutProcessing/src/MagneticReadoutProcessing/udpp/static/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06b3d3f1-b7df-4bb2-9346-467776186c3c" name="Changes" comment="" />
+      <created>1697010199601</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697010199601</updated>
+      <workItem from="1697010200809" duration="32111000" />
+      <workItem from="1698116388889" duration="55000" />
+      <workItem from="1706480163077" duration="35000" />
+      <workItem from="1707230905302" duration="31000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

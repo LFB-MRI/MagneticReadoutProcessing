@@ -1,18 +1,19 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="cli_proxy_help" type="PythonConfigurationType" factoryName="Python" folderName="CLI">
     <module name="MagneticReadoutProcessing" />
+    <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
     </envs>
     <option name="SDK_HOME" value="" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="WORKING_DIRECTORY" value="$ProjectFileDir$/" />
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-    <option name="SCRIPT_NAME" value="MRPcli/cli.py" />
+    <option name="SCRIPT_NAME" value="$ProjectFileDir$/MRPcli/cli.py" />
     <option name="PARAMETERS" value="proxy --help" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />

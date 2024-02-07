@@ -2,12 +2,17 @@
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+
+
 [project]
 name = "MagneticReadoutProcessing"
+version = "1.5.0"
+description = "This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors. The focus is on visualization, followed by the provision of simple interfaces to work with this data. In general its possible to use this lib on all kinds of sensor data."
+license = {file = "LICENSE"}
 authors = [{name = "Marcel Ochsendorf", email = "info@marcelochsendorf.com"}]
-dynamic = ["version", "description", "dependencies"]
+dynamic = ["dependencies"]
 requires-python = ">=3.7"
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent"
@@ -16,6 +21,7 @@ classifiers = [
 [project.scripts]
 MRPCli = "MRPcli.cli:run"
 MRPUdpp = "MRPudpp.udpp:run"
+MRPUdppeditor = "MRPudppeditor.app:run"
 MRPProxy = "MRPproxy.mrpproxy:run"
 
 #[tool.setuptools.packages.find]

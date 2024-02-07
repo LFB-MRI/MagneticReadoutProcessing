@@ -205,7 +205,7 @@ class MRPHalSerialPortInformation:
 
 
 
-    def __init__(self, _path: str, _name: str = "Unified Sensor", _baudrate: int = 0):
+    def __init__(self, _path: str, _name: str = "Unified Sensor", _baudrate: int = 115200):
         """
         contructor to save some information about the serial port
 

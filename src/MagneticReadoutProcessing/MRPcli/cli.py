@@ -16,8 +16,15 @@ app.add_typer(cli_proxy.app, name="proxy")
 
 
 @app.callback(invoke_without_command=True)
-def main(ctx: typer.Context):
-    pass
+def main(ctx: typer.Context, basepath: str = ""):
+    if basepath is not None and len(basepath) > 0:
+
+        cli_config.cli_datastorage.CLIDatastorageConfig.set_basepath(basepath)
+
+        print(f"set cli storage folder to: {cli_config.cli_datastorage.CLIDatastorageConfig.get_basepath()}")
+
+
+
 
 
 
