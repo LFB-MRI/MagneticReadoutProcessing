@@ -40,13 +40,14 @@ class MRPDataVisualization:
 
         fig, (ax0, ax1) = plt.subplots(1, 2, width_ratios=[3, 1])
 
+        #fig.title('Sine Curve', y=1.05)
         # ADD LINE PLOT
         ax0.plot(x1, y1)
-        ax0.set_yticks(range(num_readings))
-        ax0.set_yticklabels(ylabels)
+        #ax0.set_yticks(range(_reading.len()))
+        #ax0.set_yticklabels(ylabels)
         ax0.set_xlabel('Data-Point Index')
-        ax0.set_ylabel('reading [id:sensor_id]')
-        ax0.set_title('{} Temperature'.format(_title))
+        ax0.set_ylabel('Noise Level [%]')
+        ax0.set_title('Noise Level'.format(_title))
 
 
 

@@ -19,7 +19,7 @@ class MRPAnalysisException(Exception):
 
 class MRPAnalysis:
 
-    
+
     @staticmethod
     def apply_temperature_coefficient(_reading: MRPReading.MRPReading, _temp_lower: MRPReading.MRPReading, _temp_upper: MRPReading.MRPReading):
 
