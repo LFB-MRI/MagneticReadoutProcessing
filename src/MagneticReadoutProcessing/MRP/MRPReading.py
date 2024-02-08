@@ -180,6 +180,8 @@ class MRPReading():
             ret.append(entry.value)
         return np.array(ret)
 
+    def len(self) -> int:
+        return len(self.data)
     def to_temperature_value_array(self) -> np.ndarray:
         """
         Returns all temperature values as 1d array in order of insertion.

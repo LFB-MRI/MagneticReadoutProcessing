@@ -17,7 +17,7 @@ terminate_flask: bool = False
 
 
 app_typer = typer.Typer()
-app_flask = Flask(__name__, static_url_path='/static', static_folder=udpp_config.STATIC_FOLDER, template_folder=udpp_config.TEMPLATE_FOLDER)
+app_flask = Flask(__name__, static_url_path='/static', static_folder=udpp_config.UDPPConfig.get_static_folder(), template_folder=udpp_config.UDPPConfig.get_template_folder())
 cors = CORS(app_flask)
 app_flask.config['CORS_HEADERS'] = 'Content-Type'
 def signal_andler(signum, frame):
@@ -46,14 +46,14 @@ def updateinspectorparameter(pipeline:str, stagename:str, parameter:str, value: 
 
 
     # CHECK PIPELINE EXIST
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    pipelines = UDPPFunctionTranslator.UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
     if pipeline not in pipelines:
         return jsonify({'error': 'pipeline does not exist'}), 500
 
     pipeline_data:dict = pipelines[pipeline]
 
     # CHECK STAGE EXIST
-    stage = UDPPFunctionTranslator.extract_pipelines_steps(_pipeline=pipeline_data)
+    stage = UDPPFunctionTranslator.UDPPFunctionTranslator.extract_pipelines_steps(_pipeline=pipeline_data)
     if stagename not in stage:
         return jsonify({'error': 'stage does not exist'}), 500
 
@@ -85,7 +85,7 @@ def updateblock(pipeline:str, stagename:str, action:str, functionname:str):
 @app_flask.route("/api/listpipelines")
 @cross_origin()
 def listpipelines():
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    pipelines = UDPPFunctionTranslator.UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
     res: [str] = []
 
     for k, v in pipelines.items():
@@ -124,9 +124,9 @@ def getnodeinformation(functionname: str):
             'x': -1,
             'y': -1
         },
-        'parameters': UDPPFunctionTranslator.get_function_parameters(functionname),
-        'inspector_parameters': UDPPFunctionTranslator.get_inspector_parameters(functionname),
-        'returns': UDPPFunctionTranslator.get_function_return_parameters(functionname)
+        'parameters': UDPPFunctionTranslator.UDPPFunctionTranslator.get_function_parameters(functionname),
+        'inspector_parameters': UDPPFunctionTranslator.UDPPFunctionTranslator.get_inspector_parameters(functionname),
+        'returns': UDPPFunctionTranslator.UDPPFunctionTranslator.get_function_return_parameters(functionname)
     })
 
 
@@ -143,13 +143,13 @@ def getpipeline(filename: str):
     canvas_size_x: int = request.args.get("canvas_size_x", default=100, type=int)
     canvas_size_y: int = request.args.get("canvas_size_y", default=100, type=int)
 
-    pipelines: dict = UDPPFunctionTranslator.load_pipelines(udpp_config.PIPELINES_FOLDER)
+    pipelines: dict = UDPPFunctionTranslator.UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
     # pipeline found
     if filename in pipelines:
-       return jsonify(UDPPFunctionTranslator.EDITOR_get_stages_as_array(pipelines[filename], _canvas_view_size_x=canvas_size_x, _canvas_view_size_y=canvas_size_y))
+       return jsonify(UDPPFunctionTranslator.UDPPFunctionTranslator.EDITOR_get_stages_as_array(pipelines[filename], _canvas_view_size_x=canvas_size_x, _canvas_view_size_y=canvas_size_y))
 
     # create new pipeline and return content
-    pipeline: dict = UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.PIPELINES_FOLDER)
+    pipeline: dict = UDPPFunctionTranslator.UDPPFunctionTranslator.create_empty_pipeline(filename, udpp_config.UDPPConfig.get_pipeline_folder())
     # here we will perform a redirect to the new pipeline name
     pipelinefilename: str = list(pipeline.keys())[0]
     # redirect to new base url with replaced filename
@@ -158,7 +158,13 @@ def getpipeline(filename: str):
 
 @app_flask.route("/")
 def index():
-    return render_template("index.html", apiendpoint="127.0.0.1:5555")
+
+    apiendpoint: str = request.base_url.strip("http://").strip("https://") # webclient decides method
+    if not apiendpoint.endswith("/"):
+        apiendpoint += "/"
+
+    return redirect("/static/dist/index.html?apiendpoint={}".format(apiendpoint + "api/"))
+
 
 
 
