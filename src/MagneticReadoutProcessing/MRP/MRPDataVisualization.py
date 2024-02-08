@@ -14,6 +14,60 @@ class MRPDataVisualizationException(Exception):
 class MRPDataVisualization:
 
     @staticmethod
+    def plot_histogram(_reading: MRPReading.MRPReading, _title: str = '', _filename: str = None, _unit: str = "uT"):
+        """
+        Plots the histogram and line plot of an reading
+
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+
+        if _reading is None:
+            raise MRPDataVisualizationException("no reading given")
+
+        x1 = np.linspace(0, _reading.len(), _reading.len(), dtype=np.int32)
+        y1 = _reading.to_value_array()
+
+
+
+
+
+        fig, (ax0, ax1) = plt.subplots(1, 2, width_ratios=[3, 1])
+
+        # ADD LINE PLOT
+        ax0.plot(x1, y1)
+        ax0.set_yticks(range(num_readings))
+        ax0.set_yticklabels(ylabels)
+        ax0.set_xlabel('Data-Point Index')
+        ax0.set_ylabel('reading [id:sensor_id]')
+        ax0.set_title('{} Temperature'.format(_title))
+
+
+
+        fig.dpi = 1200
+        fig.tight_layout()
+
+
+
+        #
+
+        plt.show()
+
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename, dpi=1200)
+        else:
+            plt.show()
+
+        plt.close()
+
+    @staticmethod
     def plot_error(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "uT"):
         """
         Plots the deviation and mean values from several readings using two plots
@@ -65,7 +119,7 @@ class MRPDataVisualization:
 
         fig, (ax0, ax1) = plt.subplots(2,1)
 
-        fig.dpi = 300
+        fig.dpi = 1200
         # Add a table at the bottom of the axes
         ax0.axis('tight')
         ax0.axis('off')
