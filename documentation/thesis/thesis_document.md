@@ -207,6 +207,8 @@ The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
 
+TODO: REV TO EVALLATION FOR SENSOR PERFORMANCE
+
 ## Mechanical Structure
 
 %%Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png%%
@@ -1324,12 +1326,37 @@ The process of creating and publishing the documentation has been automated usin
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
 
+TODO: fix links o evaluation
 
 # Evaluation
 
 This work successfully implemented a universal hardware and software framework for the automated characterisation of permanent magnets.
 This framework consists of a low-cost hardware interface that supports various magnetic field sensors and a library for automating and analysing the measurement data.
 The process of this framework comprises several steps, which will be explain below:
+
+## Hardware Evaluation
+
+ cheap sensors used 
+
+### Read Noise
+
+
+
+### Temperature Deviation
+
+### Drift
+
+#### Accuracy of the method
+
+are they suitable for <1000ppm ? 
+
+
+nmr probes for better results
+
+
+## Software Evaluation
+
+TODO: HOW TO TEST library SOFTWARE
 
 1. **Hardware preperation**:
    Users can prepare measurements using the implemented framework. This includes the placement of the sensors and the selection of the relevant parameters for the characterisation of the permanent magnets.
@@ -1348,7 +1375,7 @@ These were previously described in the Usecases \ref{usecases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
-## Hardware preperation
+### Hardware preperation
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
@@ -1356,7 +1383,7 @@ For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was used for 
 
 These were placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
-## Configuration of the Measurement
+### Configuration of the Measurement
 
 
 The configured hardware was then connected to the host system using the `MRPcli config setupsensor`-(+cli) command.
@@ -1377,7 +1404,7 @@ The `MRPcli measure run` command was then called up for each individual magnet t
 After each run, the `READING-NAME` parameter was filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 
-## Custom Algorithm Implementation
+### Custom Algorithm Implementation
 
 The next step for the user is the implementation of the filter algorithm \ref{lst:custom_find_similar_values_algorithm}.  This can have any function signature and is implemented in the file `UDPPFunctionCollection.py`.
 This Python file is loaded when the pipeline is started and all functions that are imported here as a module or implemented directly can be called via the pipeline.
@@ -1427,7 +1454,7 @@ Subsequently, as many elements of the queue are returned as defined by the `IP_r
 The actual sorting was carried out by the queue in the background.
 
 
-### Alternative Filter Algorithm Implementation
+#### Alternative Filter Algorithm Implementation
 
 Another possibility here would be for the user to use a reference measurement instead of a simulated ideal magnet as a reference.
 This can come from a magnet selected as a reference magnet.
@@ -1450,7 +1477,7 @@ def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRP
 ```
 
 
-## Execution of Analysis Pipeline
+### Execution of Analysis Pipeline
 
 Once the filter function has been implemented, it still needs to be integrated into the analysis pipeline\ref{lst:pipeline_mrp_evaluation_yaml}.
 Here, the example pipeline \ref{Example_measurement_analysis_pipeline.png} is simplified and an additional stage `find_similar_values` has been added, which has set `FindSimilarValuesAlgorithm` as the function to be called.
@@ -1501,6 +1528,8 @@ $ MRPudpp pipeline run
 > =====> stage plot_filtered 
 > Process finished with exit code 0
 ```
+
+### Result Analysis
 
 The figure \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png} shows this result.
 The plot of the raw measured values is shown on the left.
