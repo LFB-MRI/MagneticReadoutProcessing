@@ -1,5 +1,4 @@
-from MRPudpp import udpp_pipeline, udpp_config
-#from MRPudppeditor import MRPudppeditor
+from MRPudpp import udpp_pipeline, udpp_config, udpp_editor
 import typer
 
 
@@ -8,7 +7,7 @@ import typer
 #load_dotenv()
 app = typer.Typer(add_completion=True)
 app.add_typer(udpp_pipeline.app, name="pipeline")
-#app.add_typer(MRPudppeditor.app_typer, name="editor")
+app.add_typer(udpp_editor.app_typer, name="editor")
 
 
 
