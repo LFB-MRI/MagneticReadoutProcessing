@@ -1,7 +1,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {3.1}CustomSensor-Class for adding new sensor hardware support}{12}{lstlisting.3.1}%
+\contentsline {lstlisting}{\numberline {3.1}CustomSensor-Class for adding new sensor hardware support}{13}{lstlisting.3.1}%
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {4.1}JSON export structure of an MRPReading based measurement}{30}{lstlisting.4.1}%
 \contentsline {lstlisting}{\numberline {4.2}MRPproxy usage to enable local sensor usage over network}{35}{lstlisting.4.2}%
@@ -22,11 +22,11 @@
 \contentsline {lstlisting}{\numberline {5.5}setup.py with dynamic requirement parsing used given requirements.txt}{55}{lstlisting.5.5}%
 \contentsline {lstlisting}{\numberline {5.6}Documentation using Python docstring example}{56}{lstlisting.5.6}%
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {6.1}Measurement configuration for evaluation measurement}{60}{lstlisting.6.1}%
-\contentsline {lstlisting}{\numberline {6.2}User implemented custom find most similar readings algorithm}{60}{lstlisting.6.2}%
-\contentsline {lstlisting}{\numberline {6.3}Modified user implemented custom find algorithm using a reference magnet reading}{61}{lstlisting.6.3}%
-\contentsline {lstlisting}{\numberline {6.4}User defined processing pipeline using custom implemented filter algorithm}{62}{lstlisting.6.4}%
-\contentsline {lstlisting}{\numberline {6.5}Bash result log of evaluation pipeline run}{63}{lstlisting.6.5}%
+\contentsline {lstlisting}{\numberline {6.1}Measurement configuration for evaluation measurement}{63}{lstlisting.6.1}%
+\contentsline {lstlisting}{\numberline {6.2}User implemented custom find most similar readings algorithm}{63}{lstlisting.6.2}%
+\contentsline {lstlisting}{\numberline {6.3}Modified user implemented custom find algorithm using a reference magnet reading}{64}{lstlisting.6.3}%
+\contentsline {lstlisting}{\numberline {6.4}User defined processing pipeline using custom implemented filter algorithm}{65}{lstlisting.6.4}%
+\contentsline {lstlisting}{\numberline {6.5}Bash result log of evaluation pipeline run}{66}{lstlisting.6.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

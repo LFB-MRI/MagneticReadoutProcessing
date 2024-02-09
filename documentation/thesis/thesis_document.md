@@ -1335,13 +1335,48 @@ The process of this framework comprises several steps, which will be explain bel
 
 ## Hardware Evaluation
 
- cheap sensors used 
+* cheap sensors used 
+* used hardware list
+* tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung standen
 
 ### Read Noise
 
+
+%%Sensor_evaluation_setup_for_noise_measurements.png%%
+
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external interference.
+
+The sensor platform used here is a ready-built `1D: Single Sensor` \ref{d-single-sensor} sensor platform, which has been equipped with the sensors to be measured one after the other. 
+
+
+The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
+For this purpose, a sample size of N=10000 measured values was recorded for the reference measurement.
+
+The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, N=1000 measured values were also taken with a trigger and readout rate of one measurement per second.
+
+The baseline measurement and the continuous measurement were configured in advance using `MRPCli` (+cli).
+
+
+In order to quantify the noise, the standard deviation or the mean square deviation of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
+
+After the measurements were completed, the data was evaluated using the available MRPDataVisualization and MRPAnalysis functions. These graphically represent the following measured values:
+
+* Plot of the raw measurement data, as well as its mean value `$\mu_{rv}$` using Baselin
+* Plot of the temperature curve over the complete measurement series, which was recorded with the sensor's internal temperature sensor
+* Noise level as a percentage deviation from the baseline
+* Histogram of the noise level with marked standard deviation
+
+
+
+
 ### Temperature Deviation
 
+using same setup as in read noise but with programmed temperature controller of the chamber
+
 ### Linearity
+
+%%Sensor_evaluation_setup_for_linearity_measurements.png%%
+
 
 * minimal distance between sensor and magnet due to messbreich
 
