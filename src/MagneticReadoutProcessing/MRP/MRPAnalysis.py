@@ -47,9 +47,8 @@ class MRPAnalysis:
 
         if len(values) <= 0:
             raise MRPAnalysisException("_reading contains to reading entries")
-        sum = np.sum(values)
 
-        return sum/len(values)
+        return np.sum(values) / len(values)
 
     @staticmethod
     def calculate_variance(_reading: MRPReading.MRPReading, _temperature_axis:bool=False) -> float:

@@ -189,9 +189,9 @@ class MRPReading():
         :returns: Returns [value, value]
         :rtype: np.ndarray
         """
-        ret = []
+        ret: [float] = []
         for entry in self.data:
-            ret.append(entry.temperature)
+            ret.append(entry.temperature * 1.0)
         return np.array(ret)
 
 

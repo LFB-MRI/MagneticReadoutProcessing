@@ -22,23 +22,21 @@ class TestMPRDataVisualization(unittest.TestCase):
 
 
     def test_histogram_realdata(self):
-        reading = MRPReading.MRPReading()
-        import_file: str = os.path.join(self.asset_folder_path, 'MMC5603NJ_1000_SAMPLES_1_AVG.mag.json')
-        reading.load_from_file(import_file)
 
-        export_filename: str = os.path.join(self.result_folder_path, 'MMC5603NJ_1000_SAMPLES_1_AVG_HISTOGRAMM.mag.json.png')
-        MRPDataVisualization.MRPDataVisualization.plot_histogram(reading, "MMC5603NJ_1000_SAMPLES_1_AVG_HISTOGRAMM", export_filename)
+        rlist: [str] = ['MMC5603NJ_1000_SAMPLES_1_AVG.mag.json', 'MMC5603NJ_1000_SAMPLES_5_AVG.mag.json']
+        for e in rlist:
+            reading = MRPReading.MRPReading()
+            import_file: str = os.path.join(self.asset_folder_path, e)
+            reading.load_from_file(import_file)
 
-        reading = MRPReading.MRPReading()
-        import_file: str = os.path.join(self.asset_folder_path, 'MMC5603NJ_1000_SAMPLES_5_AVG.mag.json')
-        reading.load_from_file(import_file)
-
-        export_filename: str = os.path.join(self.result_folder_path,'MMC5603NJ_1000_SAMPLES_5_AVG_HISTOGRAMM.mag.json.png')
-        MRPDataVisualization.MRPDataVisualization.plot_histogram(reading, "MMC5603NJ_1000_SAMPLES_5_AVG_HISTOGRAMM",export_filename)
+            export_filename: str = os.path.join(self.result_folder_path, reading.get_name().replace(" ", "_") + ".png")
+            name: str = reading.get_name()
+            MRPDataVisualization.MRPDataVisualization.plot_histogram(reading, name, export_filename)
 
     def test_histogram_generated_data(self):
         reading = MRPReading.MRPReading()
-        reading.measurement_config.configure_halfsphere()
+        #reading.measurement_config.configure_halfsphere()
+        reading.set_name("test_histogram_generated_data")
         self.assertIsNotNone(reading)
 
         for i in range(0, 10000):
@@ -50,7 +48,7 @@ class TestMPRDataVisualization(unittest.TestCase):
 
         self.assertIsNotNone(reading)
 
-        export_filename: str = os.path.join(self.result_folder_path, 'test_histogram_generated_data.png')
+        export_filename: str = os.path.join(self.result_folder_path, reading.get_name())
         MRPDataVisualization.MRPDataVisualization.plot_histogram(reading, "test_histogram_generated_data", export_filename)
 
 

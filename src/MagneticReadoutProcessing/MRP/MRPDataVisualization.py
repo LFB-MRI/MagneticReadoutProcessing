@@ -1,6 +1,9 @@
 """ collection of reading data plotting functions """
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import gridspec, mlab
 
 
 from MRP import MRPReading, MRPAnalysis
@@ -31,34 +34,94 @@ class MRPDataVisualization:
         if _reading is None:
             raise MRPDataVisualizationException("no reading given")
 
-        x1 = np.linspace(0, _reading.len(), _reading.len(), dtype=np.int32)
-        y1 = _reading.to_value_array()
+        raw_x = np.linspace(0, _reading.len(), _reading.len(), dtype=np.int32)
+        raw_y = _reading.to_value_array()
+
+        mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(_reading)
+        noise_y: [float] = []
+
+        for v in raw_y:
+            deviation = abs(1.0 - (v / mean))
+            noise_y.append(deviation)
+
+        noise_mean: float = np.sum(noise_y) / len(noise_y)
+        noise_variance: float = 0
+        for value in noise_y:
+            noise_variance += (noise_mean - value) ** 2
+        noise_variance = noise_variance / len(noise_y)
+
+
+
+
+        # Create 2x2 sub plots
+        gs = gridspec.GridSpec(3, 2)
+
+
+        fig = plt.figure()
+        fig.suptitle('{}'.format(_title), fontsize=12)
+
+
+
+        noise_plot = plt.subplot(gs[0, 0])
+        noise_plot.plot(raw_x, noise_y, linewidth=0.8)
+        noise_plot.axhline(y=noise_mean, color='red', linestyle='--', linewidth=1, label='Mean')
+        noise_plot.set_xlabel('Data-Point Index', fontsize=8)
+        noise_plot.set_ylabel('Noise Level\n[%]', fontsize=8)
+        noise_plot.set_title('Noise Level $\mu={:.2f}$% of {:.2f}{}'.format(noise_mean, mean, _unit), fontsize=9)
+
+
+
+
+        hist_plot = plt.subplot(gs[0, 1])
+        hist_mu: float = noise_mean
+        hist_sigma: float = np.sqrt(noise_variance)  # standard deviation of distribution
+        num_bins: int = int(math.log(_reading.len()) * 4)
+        # the histogram of the data
+        n, bins, patches = hist_plot.hist(noise_y, num_bins, density=True)
+        # add a 'best fit' line
+        hist_best_fit_y = ((1 / (np.sqrt(2 * np.pi) * hist_sigma)) * np.exp(-0.5 * (1 / hist_sigma * (bins - hist_mu)) ** 2))
+        hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8)
+        hist_plot.set_xlabel('Noise Level [%]', fontsize=8)
+        hist_plot.set_ylabel('Probability\ndensity', fontsize=8)
+        hist_plot.set_title('Histogram of Noise Level\n$\mu={:.2f}$%, $\sigma={:.2f}$ bins={}'.format(hist_mu, hist_sigma, num_bins), fontsize=9)
 
 
 
 
 
-        fig, (ax0, ax1) = plt.subplots(1, 2, width_ratios=[3, 1])
-
-        #fig.title('Sine Curve', y=1.05)
-        # ADD LINE PLOT
-        ax0.plot(x1, y1)
-        #ax0.set_yticks(range(_reading.len()))
-        #ax0.set_yticklabels(ylabels)
-        ax0.set_xlabel('Data-Point Index')
-        ax0.set_ylabel('Noise Level [%]')
-        ax0.set_title('Noise Level'.format(_title))
+        raw_plot = plt.subplot(gs[1, :])
+        raw_plot.plot(raw_x, raw_y, linewidth=0.8)
+        ylim = max(abs(raw_y.max()), abs(raw_y.min())) * 1.3
+        raw_plot.set_xlim([0, _reading.len()])
+        raw_plot.axhline(y=mean, color='red', linestyle='--', linewidth=1, label='Mean')
+        raw_plot.set_xlabel('Data-Point Index', fontsize=8)
+        raw_plot.set_ylabel('Raw Value\n[{}]'.format(_unit), fontsize=8)
+        raw_plot.set_title('Raw Sensor Values $\mu={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading), _unit), fontsize=9)
 
 
 
-        fig.dpi = 1200
+
+        # ADD HEATMAP COLORPLOT
+        temperature_plot = plt.subplot(gs[2, :])
+        temperature_mean: float = (np.sum(_reading.to_temperature_value_array())/_reading.len())
+        temperature_plot.plot(raw_x, _reading.to_temperature_value_array(), linewidth=0.8)
+        temperature_plot.set_xlim([0, _reading.len()])
+        temperature_plot.axhline(y=temperature_mean, color='red', linestyle='--', linewidth=1, label='Mean')
+        temperature_plot.set_xlabel('Data-Point Index', fontsize=8)
+        temperature_plot.set_ylabel('Temperature\n[$^\circ\mathrm{C}$]', fontsize=8)
+        temperature_plot.set_title('Sensor Temperature $\mu={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$', fontsize=9)
+
+
+
+
+
         fig.tight_layout()
 
 
 
         #
-
-        plt.show()
+        plt.interactive(False)
+        #plt.show()
 
         # SAVE FIGURE IF NEEDED
         if _filename is not None:

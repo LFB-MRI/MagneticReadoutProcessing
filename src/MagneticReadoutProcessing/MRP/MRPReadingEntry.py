@@ -6,14 +6,14 @@ class MRPReadingEntryException(Exception):
 
 class MRPReadingEntry:
     """ Class holds all values for one read entry such as value and position"""
-    _value = None # [mT]
-    _phi = None
-    _theta = None
-    _reading_index_phi = None
-    _reading_index_theta = None
-    _is_valid = False
-    _id = None
-    _temperature = -254.0
+    _value: float = None # [mT]
+    _phi: float = None
+    _theta: float = None
+    _reading_index_phi: int = None
+    _reading_index_theta: int = None
+    _is_valid: bool = False
+    _id: int = None
+    _temperature: float = -254.0
 
     @property
     def temperature(self):
@@ -55,7 +55,7 @@ class MRPReadingEntry:
         return self._reading_index_phi
 
     @reading_index_phi.setter
-    def reading_index_phi(self, value: float):
+    def reading_index_phi(self, value: int):
         self._reading_index_phi = value
 
     @property
@@ -63,7 +63,7 @@ class MRPReadingEntry:
         return self._reading_index_theta
 
     @reading_index_theta.setter
-    def reading_index_theta(self, value: float):
+    def reading_index_theta(self, value: int):
         self._reading_index_theta = value
 
     @property
@@ -71,7 +71,7 @@ class MRPReadingEntry:
         return self._is_valid
 
     @is_valid.setter
-    def is_valid(self, value: float):
+    def is_valid(self, value: bool):
         self._is_valid = value
 
     @property
@@ -79,7 +79,7 @@ class MRPReadingEntry:
         return self._id
 
     @id.setter
-    def id(self, value: float):
+    def id(self, value: int):
         self._id = value
 
 
@@ -145,7 +145,7 @@ class MRPReadingEntry:
             v = _dict.get('temperature')
             if v is None:
                 v = 0.0
-            self._temperature = int(v)
+            self._temperature = float(v)
             errors = errors + 1
 
         if errors < len(self.__dict__()):
