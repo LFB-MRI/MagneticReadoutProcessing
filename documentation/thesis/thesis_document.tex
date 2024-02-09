@@ -375,6 +375,13 @@ selection of sensors for which hardware and software support has been
 implemented. The resolution of the selected sensors covers the expected
 range of values required by the various magnets to be tested.
 
+In the Evaluation \ref{evaluation} chapter, basic characterisation
+methods are used to evaluate the sensors listed in
+\ref{Implemented_digital_magnetic_field_sensors.csv} with regard to
+their sensitivity and other parameters. This is done at this point, as
+the components of the readout interface that enable interaction with the
+sensors are considered first.
+
 \hypertarget{mechanical-structure}{%
 \section{Mechanical Structure}\label{mechanical-structure}}
 
@@ -2470,6 +2477,8 @@ always automatically kept up to date with new features.
 \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
 \end{figure}
 
+TODO: fix links o evaluation
+
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
@@ -2479,6 +2488,120 @@ framework consists of a low-cost hardware interface that supports
 various magnetic field sensors and a library for automating and
 analysing the measurement data. The process of this framework comprises
 several steps, which will be explain below:
+
+\hypertarget{hardware-evaluation}{%
+\section{Hardware Evaluation}\label{hardware-evaluation}}
+
+\begin{itemize}
+\tightlist
+\item
+  cheap sensors used
+\item
+  used hardware list
+\item
+  tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung
+  standen
+\end{itemize}
+
+\hypertarget{read-noise}{%
+\subsection{Read Noise}\label{read-noise}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png}
+\caption{Sensor evaluation setup for noise measurements
+\label{Sensor_evaluation_setup_for_noise_measurements.png}}
+\end{figure}
+
+Measuring the noise in a magnetic field sensor requires a precise
+procedure and a special measurement setup. First, the magnetic field
+sensor is placed in a quiet environment to minimize external
+interference.
+
+The sensor platform used here is a ready-built
+\passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} sensor
+platform, which has been equipped with the sensors to be measured one
+after the other.
+
+The procedure begins with the acquisition of the baseline by operating
+the sensor without external magnetic fields. For this purpose, a sample
+size of N=10000 measured values was recorded for the reference
+measurement.
+
+The output signal of the sensor is then continuously measured and
+recorded. It is important to carry out the measurement over a
+sufficiently long period of time in order to record both short-term and
+long-term fluctuations. For this purpose, N=1000 measured values were
+also taken with a trigger and readout rate of one measurement per
+second.
+
+The baseline measurement and the continuous measurement were configured
+in advance using \passthrough{\lstinline!MRPCli!} \gls{cli}.
+
+In order to quantify the noise, the standard deviation or the mean
+square deviation of the signal is calculated. These parameters provide
+information about the variation of the signal over time and therefore
+about the sensor background noise.
+
+After the measurements were completed, the data was evaluated using the
+available MRPDataVisualization and MRPAnalysis functions. These
+graphically represent the following measured values:
+
+\begin{itemize}
+\tightlist
+\item
+  Plot of the raw measurement data, as well as its mean value
+  \passthrough{\lstinline!$\\mu\_\{rv\}$!} using Baselin
+\item
+  Plot of the temperature curve over the complete measurement series,
+  which was recorded with the sensor's internal temperature sensor
+\item
+  Noise level as a percentage deviation from the baseline
+\item
+  Histogram of the noise level with marked standard deviation
+\end{itemize}
+
+\hypertarget{temperature-deviation}{%
+\subsection{Temperature Deviation}\label{temperature-deviation}}
+
+using same setup as in read noise but with programmed temperature
+controller of the chamber
+
+\hypertarget{linearity}{%
+\subsection{Linearity}\label{linearity}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
+\caption{Sensor evaluation setup for linearity measurements
+\label{Sensor_evaluation_setup_for_linearity_measurements.png}}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  minimal distance between sensor and magnet due to messbreich
+\end{itemize}
+
+\hypertarget{result-analysis}{%
+\subsubsection{Result Analysis}\label{result-analysis}}
+
+are they suitable for \textless1000ppm ?
+
+\begin{itemize}
+\tightlist
+\item
+  https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
+\item
+  27cm / 50mT bore
+\item
+  nmr probes for better results
+\end{itemize}
+
+\hypertarget{software-evaluation}{%
+\section{Software Evaluation}\label{software-evaluation}}
+
+TODO: HOW TO TEST library SOFTWARE
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2512,7 +2635,7 @@ hardware solution, but also enables customisation of the analysis
 algorithms to meet the requirements of different research projects.
 
 \hypertarget{hardware-preperation}{%
-\section{Hardware preperation}\label{hardware-preperation}}
+\subsection{Hardware preperation}\label{hardware-preperation}}
 
 \begin{figure}
 \centering
@@ -2535,7 +2658,7 @@ numbered. This allows them to be matched to the measurement results
 later.
 
 \hypertarget{configuration-of-the-measurement}{%
-\section{Configuration of the
+\subsection{Configuration of the
 Measurement}\label{configuration-of-the-measurement}}
 
 The configured hardware was then connected to the host system using the
@@ -2562,7 +2685,7 @@ id of the next magnet so that all measurements could be assigned to the
 physical magnets.
 
 \hypertarget{custom-algorithm-implementation}{%
-\section{Custom Algorithm
+\subsection{Custom Algorithm
 Implementation}\label{custom-algorithm-implementation}}
 
 The next step for the user is the implementation of the filter algorithm
@@ -2627,7 +2750,7 @@ elements of the queue are returned as defined by the
 sorting was carried out by the queue in the background.
 
 \hypertarget{alternative-filter-algorithm-implementation}{%
-\subsection{Alternative Filter Algorithm
+\subsubsection{Alternative Filter Algorithm
 Implementation}\label{alternative-filter-algorithm-implementation}}
 
 Another possibility here would be for the user to use a reference
@@ -2657,7 +2780,7 @@ def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRP
 \end{lstlisting}
 
 \hypertarget{execution-of-analysis-pipeline}{%
-\section{Execution of Analysis
+\subsection{Execution of Analysis
 Pipeline}\label{execution-of-analysis-pipeline}}
 
 Once the filter function has been implemented, it still needs to be
@@ -2719,6 +2842,9 @@ $ MRPudpp pipeline run
 > =====> stage plot_filtered 
 > Process finished with exit code 0
 \end{lstlisting}
+
+\hypertarget{result-analysis-1}{%
+\subsection{Result Analysis}\label{result-analysis-1}}
 
 The figure
 \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}
