@@ -91,7 +91,7 @@ def perform_measurement(configname: str, alternativefilename: str = ""):
 
 
 @app.command()
-def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: Annotated[str, typer.Argument()] = "", ignoreinvalid: Annotated[bool, typer.Argument()] = False, ignoremeasurementerror: Annotated[bool, typer.Argument()] = True):
+def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: str = "", ignoreinvalid: Annotated[bool, typer.Argument()] = False, ignoremeasurementerror: Annotated[bool, typer.Argument()] = True):
 
     configs:[str] = []
     if configname is not None and len(configname) > 0:
