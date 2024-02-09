@@ -17,7 +17,77 @@ class MRPDataVisualizationException(Exception):
 class MRPDataVisualization:
 
     @staticmethod
-    def plot_histogram(_reading: MRPReading.MRPReading, _title: str = '', _filename: str = None, _unit: str = "uT"):
+    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
+        """
+        Plots the linearityfrom several readings
+
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+        if _readings is None or len(_readings) <= 0:
+            raise MRPDataVisualizationException("no readings in _reading given")
+
+        x = np.linspace(0, len(_readings), len(_readings), dtype=np.int32)
+        xlabels: [str] = []
+        for reading in _readings:
+
+
+            name: str = reading.get_name().split("_")
+            distance_was_in: bool = False
+            for n in reading.get_name().split("_"):
+                if 'DISTANCE=' in n:
+                    distance_was_in = True
+                    xlabels.append(n.split('DISTANCE=')[1])
+
+            if not distance_was_in:
+                xlabels.append('-')
+
+        y: [float] = []
+        for reading in _readings:
+            y.append(MRPAnalysis.MRPAnalysis.calculate_mean(reading))
+        #raw_y = _reading.to_value_array()
+
+
+
+
+        # Create 2x2 sub plots
+        gs = gridspec.GridSpec(1, 1)
+
+        fig = plt.figure()
+        fig.suptitle('{}'.format(_title), fontsize=12)
+
+        distance_plot = plt.subplot(gs[0, 0])
+        distance_plot.set_xlabel('Distance', fontsize=8)
+        distance_plot.set_ylabel('Reading Mean Value $\mu_{nl}$ ['+ _unit + ']', fontsize=8)
+        distance_plot.set_xticklabels(xlabels)
+        #distance_plot.set_yticklabels(ylabels)
+        distance_plot.plot(x, y, linewidth=0.8)
+        #distance_plot.set
+        distance_plot.set_title('Sensor Linearity', fontsize=9)
+
+
+
+        fig.tight_layout()
+        plt.interactive(False)
+        # plt.show()
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename, dpi=1200)
+        else:
+            plt.show()
+
+        plt.close()
+
+
+
+    @staticmethod
+    def plot_histogram(_reading: MRPReading.MRPReading, _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
         Plots the histogram and line plot of an reading
 
@@ -67,7 +137,7 @@ class MRPDataVisualization:
         noise_plot.axhline(y=noise_mean, color='red', linestyle='--', linewidth=1, label='Mean')
         noise_plot.set_xlabel('Data-Point Index', fontsize=8)
         noise_plot.set_ylabel('Noise Level\n[%]', fontsize=8)
-        noise_plot.set_title('Noise Level $\mu={:.2f}$% of {:.2f}{}'.format(noise_mean, mean, _unit), fontsize=9)
+        noise_plot.set_title('Noise Level $\mu_{nl}'+'={:.2f}'.format(noise_mean)+'$% of $\mu_'+'{rv}'+'={:.2f}${}'.format(mean, _unit), fontsize=9)
 
 
 
@@ -83,7 +153,7 @@ class MRPDataVisualization:
         hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8)
         hist_plot.set_xlabel('Noise Level [%]', fontsize=8)
         hist_plot.set_ylabel('Probability\ndensity', fontsize=8)
-        hist_plot.set_title('Histogram of Noise Level\n$\mu={:.2f}$%, $\sigma={:.2f}$% bins={}'.format(hist_mu, hist_sigma, num_bins), fontsize=9)
+        hist_plot.set_title('Histogram of Noise Level\n$\mu_{nl}'+'={:.2f}$%'.format(hist_mu)+ ', $\sigma_{nl}'+'={:.2f}$% bins={}'.format( hist_sigma, num_bins), fontsize=9)
 
 
 
@@ -96,7 +166,7 @@ class MRPDataVisualization:
         raw_plot.axhline(y=mean, color='red', linestyle='--', linewidth=1, label='Mean')
         raw_plot.set_xlabel('Data-Point Index', fontsize=8)
         raw_plot.set_ylabel('Raw Value\n[{}]'.format(_unit), fontsize=8)
-        raw_plot.set_title('Raw Sensor Values $\mu={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading), _unit), fontsize=9)
+        raw_plot.set_title('Raw Sensor Values $\mu_{rv}'+'={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading), _unit), fontsize=9)
 
 
 
@@ -109,7 +179,7 @@ class MRPDataVisualization:
         temperature_plot.axhline(y=temperature_mean, color='red', linestyle='--', linewidth=1, label='Mean')
         temperature_plot.set_xlabel('Data-Point Index', fontsize=8)
         temperature_plot.set_ylabel('Temperature\n[$^\circ\mathrm{C}$]', fontsize=8)
-        temperature_plot.set_title('Sensor Temperature $\mu={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$', fontsize=9)
+        temperature_plot.set_title('Sensor Temperature $\mu_{t}'+'={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$', fontsize=9)
 
 
 
@@ -132,7 +202,7 @@ class MRPDataVisualization:
         plt.close()
 
     @staticmethod
-    def plot_error(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "uT"):
+    def plot_error(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
         Plots the deviation and mean values from several readings using two plots
 
@@ -206,7 +276,7 @@ class MRPDataVisualization:
         plt.close()
 
     @staticmethod
-    def plot_scatter(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "uT"):
+    def plot_scatter(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
         Plots a1 1d scatter plot of the reading data
 
@@ -341,6 +411,8 @@ class MRPDataVisualization:
             plt.show()
 
         plt.close()
+
+
 
 
 

@@ -59,7 +59,9 @@ class MRPReading():
             else:
                 self.measurement_config.id = 0
 
-
+    import_scale_factor: float = 1.0
+    def set_unit_import_scale_factor(self, _factor: float = 1.0):
+        self.import_scale_factor = _factor
 
     def load_from_dict(self, _jsondict: dict):
         self.time_start = None
@@ -75,7 +77,7 @@ class MRPReading():
         self.data = []
         for idx, entry in enumerate(_jsondict['data']):
             _re = MRPReadingEntry.MRPReadingEntry()
-            _re.from_dict(entry)
+            _re.from_dict(entry, self.import_scale_factor)
             self.data.append(_re)
 
         self.measurement_config = MRPMeasurementConfig.MRPMeasurementConfig()

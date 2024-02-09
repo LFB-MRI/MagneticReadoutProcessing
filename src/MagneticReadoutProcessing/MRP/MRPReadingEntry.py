@@ -93,10 +93,10 @@ class MRPReadingEntry:
             self._is_valid = p_is_valid
             self._temperature = p_temperature
 
-    def from_dict(self, _dict: dict):
+    def from_dict(self, _dict: dict, _import_scale_factor: float = 1.0):
         errors = 0
         if 'value' in _dict:
-            self._value = float(_dict['value'])
+            self._value = float(_dict['value']) * _import_scale_factor
             errors = errors + 1
 
         if 'phi' in _dict:
