@@ -44,8 +44,6 @@ The homogeneity in this configuration depends, among other things, on the follow
   There may also be deviations in field strength if different magnets from different production batches are compared.
 
 
-
-
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
 
@@ -207,7 +205,8 @@ The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
 
-TODO: REV TO EVALLATION FOR SENSOR PERFORMANCE
+In the Evaluation \ref{evaluation} chapter, basic characterisation methods are used to evaluate the sensors listed in \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
+
 
 ## Mechanical Structure
 
@@ -1340,18 +1339,20 @@ The process of this framework comprises several steps, which will be explain bel
 
 ### Read Noise
 
-
-
 ### Temperature Deviation
 
-### Drift
+### Linearity
 
-#### Accuracy of the method
+* minimal distance between sensor and magnet due to messbreich
+
+
+#### Result Analysis
 
 are they suitable for <1000ppm ? 
 
-
-nmr probes for better results
+* https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
+* 27cm / 50mT bore
+* nmr probes for better results
 
 
 ## Software Evaluation
