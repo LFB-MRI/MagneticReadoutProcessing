@@ -1,5 +1,6 @@
 """ collection of reading data plotting functions """
 import math
+import re
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,26 +34,38 @@ class MRPDataVisualization:
         if _readings is None or len(_readings) <= 0:
             raise MRPDataVisualizationException("no readings in _reading given")
 
-        x = np.linspace(0, len(_readings), len(_readings), dtype=np.int32)
+        x = list(range(len(_readings)))
         xlabels: [str] = []
+        distance_array: [float] = []
+
         for reading in _readings:
-
-
             name: str = reading.get_name().split("_")
             distance_was_in: bool = False
-            for n in reading.get_name().split("_"):
+            for n in name:
                 if 'DISTANCE=' in n:
                     distance_was_in = True
-                    xlabels.append(n.split('DISTANCE=')[1])
+                    d = n.split('DISTANCE=')[1]
+                    xlabels.append(d)
+
+                    distance_array.append(int(re.findall(r'\d+', d)[0]))
 
             if not distance_was_in:
-                xlabels.append('-')
+                xlabels.append('0mm')
+                distance_array.append(0)
+
 
         y: [float] = []
         for reading in _readings:
             y.append(MRPAnalysis.MRPAnalysis.calculate_mean(reading))
+
+        min_value = abs(min(y))
+        y = [e+min_value for e in y]
         #raw_y = _reading.to_value_array()
 
+
+
+        #RESORT ARRAY TO DISTANCE
+        y = [v for _,v in sorted(zip(distance_array, y))]
 
 
 
@@ -63,7 +76,7 @@ class MRPDataVisualization:
         fig.suptitle('{}'.format(_title), fontsize=12)
 
         distance_plot = plt.subplot(gs[0, 0])
-        distance_plot.set_xlabel('Distance', fontsize=8)
+        distance_plot.set_xlabel('Distance [mm]', fontsize=8)
         distance_plot.set_ylabel('Reading Mean Value $\mu_{nl}$ ['+ _unit + ']', fontsize=8)
         distance_plot.set_xticklabels(xlabels)
         #distance_plot.set_yticklabels(ylabels)

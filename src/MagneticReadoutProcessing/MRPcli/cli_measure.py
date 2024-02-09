@@ -13,7 +13,7 @@ app = typer.Typer()
 def perform_measurement_rotationalsensor(configname: str):
     pass
 
-def perform_measurement(configname: str):
+def perform_measurement(configname: str, alternativefilename: str = ""):
     print("perform_measurement for {}".format(configname))
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(configname)
 
@@ -51,8 +51,13 @@ def perform_measurement(configname: str):
 
 
         # MODIFY NAME
+
         name: str = r.get_name()
-        name = "{}_{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), name)
+
+        if alternativefilename is not None and len(alternativefilename):
+            name = alternativefilename
+        else:
+            name = "{}_{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), name)
         r.set_name(name)
 
         # EXPORT READING TO FILESYSTEM
@@ -86,7 +91,7 @@ def perform_measurement(configname: str):
 
 
 @app.command()
-def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", ignoreinvalid: Annotated[bool, typer.Argument()] = False, ignoremeasurementerror: Annotated[bool, typer.Argument()] = True):
+def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: Annotated[str, typer.Argument()] = "", ignoreinvalid: Annotated[bool, typer.Argument()] = False, ignoremeasurementerror: Annotated[bool, typer.Argument()] = True):
 
     configs:[str] = []
     if configname is not None and len(configname) > 0:
@@ -142,7 +147,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", i
     print("START MEASUREMENT CYCLE".format())
     for cfg in cfg_to_run:
         try:
-            perform_measurement(configname)
+            perform_measurement(configname, alternativefilename)
         except Exception as e:
             print(e)
             if not ignoremeasurementerror:

@@ -79,10 +79,11 @@ class TestMPRDataVisualization(unittest.TestCase):
                     reading.set_unit_import_scale_factor(10000.0)
 
 
-                reading.set_name("DISTANCE={}".format(e['distance'][idx]))
+
 
                 import_file: str = os.path.join(self.asset_linearity_folder_path, r)
                 reading.load_from_file(import_file)
+                reading.set_name("DISTANCE={}".format(e['distance'][idx]))
                 readings.append(reading)
 
 
