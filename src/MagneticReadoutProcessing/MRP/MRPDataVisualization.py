@@ -83,7 +83,7 @@ class MRPDataVisualization:
         hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8)
         hist_plot.set_xlabel('Noise Level [%]', fontsize=8)
         hist_plot.set_ylabel('Probability\ndensity', fontsize=8)
-        hist_plot.set_title('Histogram of Noise Level\n$\mu={:.2f}$%, $\sigma={:.2f}$ bins={}'.format(hist_mu, hist_sigma, num_bins), fontsize=9)
+        hist_plot.set_title('Histogram of Noise Level\n$\mu={:.2f}$%, $\sigma={:.2f}$% bins={}'.format(hist_mu, hist_sigma, num_bins), fontsize=9)
 
 
 

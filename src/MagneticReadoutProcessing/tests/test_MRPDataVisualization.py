@@ -1,3 +1,5 @@
+import re
+
 from fix_import import __fix_import__fix_import
 __fix_import__fix_import()
 
@@ -16,15 +18,17 @@ class TestMPRDataVisualization(unittest.TestCase):
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
         self.result_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_plots")
-        self.asset_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+        self.asset_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/test_histogram")
         if not os.path.exists(self.result_folder_path):
             os.makedirs(self.result_folder_path)
 
 
     def test_histogram_realdata(self):
 
-        rlist: [str] = ['MMC5603NJ_1000_SAMPLES_1_AVG.mag.json', 'MMC5603NJ_1000_SAMPLES_5_AVG.mag.json']
-        for e in rlist:
+        files = [f for f in os.listdir(self.asset_folder_path) if re.match(r'(.)*.mag.json', f)]
+
+
+        for e in files:
             reading = MRPReading.MRPReading()
             import_file: str = os.path.join(self.asset_folder_path, e)
             reading.load_from_file(import_file)
