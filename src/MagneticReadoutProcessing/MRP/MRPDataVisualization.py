@@ -58,8 +58,8 @@ class MRPDataVisualization:
         for reading in _readings:
             y.append(MRPAnalysis.MRPAnalysis.calculate_mean(reading))
 
-        min_value = abs(min(y))
-        y = [e+min_value for e in y]
+        #min_value = abs(min(y))
+        y = [abs(e) for e in y]
         #raw_y = _reading.to_value_array()
 
 
@@ -76,9 +76,12 @@ class MRPDataVisualization:
         fig.suptitle('{}'.format(_title), fontsize=12)
 
         distance_plot = plt.subplot(gs[0, 0])
-        distance_plot.set_xlabel('Distance [mm]', fontsize=8)
+        distance_plot.set_xlabel('Distance between sensor IC package and N45 12x12x12 cubic magnet [mm]', fontsize=8)
         distance_plot.set_ylabel('Reading Mean Value $\mu_{nl}$ ['+ _unit + ']', fontsize=8)
-        distance_plot.set_xticklabels(xlabels)
+
+        if len(xlabels) < 20:
+            distance_plot.set_xticklabels(xlabels)
+
         #distance_plot.set_yticklabels(ylabels)
         distance_plot.plot(x, y, linewidth=0.8)
         #distance_plot.set

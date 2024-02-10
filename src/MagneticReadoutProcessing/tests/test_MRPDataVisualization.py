@@ -41,8 +41,11 @@ class TestMPRDataVisualization(unittest.TestCase):
                 'files': [],
                 'distance': [],
                 'N': [],
-                'RUN': []
+                'RUN': [],
+                'dist_min': 1000,
+                'dist_max': 0
             }
+
         for s in sensors:
             for e in files:
                 if e.startswith(s):
@@ -53,6 +56,9 @@ class TestMPRDataVisualization(unittest.TestCase):
                     for sp in splr:
                         if "DISTANCE=" in sp:
                             DISTANCE = sp.split("=")[1]
+                            d: int = (int(re.findall(r'\d+', DISTANCE)[0]))
+                            to_process[s]['dist_min'] = min(to_process[s]['dist_min'], d)
+                            to_process[s]['dist_max'] = max(to_process[s]['dist_max'], d)
                         elif "RUN=" in sp:
                             RUN = sp.split("=")[1]
                         elif "N=" in sp:
@@ -66,9 +72,9 @@ class TestMPRDataVisualization(unittest.TestCase):
         for k in to_process:
             e = to_process[k]
 
-
-            reading_name: str = "linearity_sensor=" + k + "_readingcount=" + str(len(e['files']))
-            export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_") + ".png")
+            total_dst: int = to_process[s]['dist_max'] - to_process[s]['dist_min']
+            reading_name: str = "Linearity of " + k + " using " + str(len(e['files'])) + " samples over an distance of {}".format(total_dst) + "mm"
+            export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
 
             # IMPORT READINGS
             readings: [MRPReading.MRPReading] = []
