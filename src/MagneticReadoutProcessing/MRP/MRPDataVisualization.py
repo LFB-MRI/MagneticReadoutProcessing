@@ -5,7 +5,7 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec, mlab
-
+import scipy.optimize as opt
 
 from MRP import MRPReading, MRPAnalysis
 
@@ -18,14 +18,9 @@ class MRPDataVisualizationException(Exception):
 class MRPDataVisualization:
 
     @staticmethod
-    def func(x, a, b, c):
+    def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
-    @staticmethod
-    def generate_inverse_proportional_curve(start_x, start_y, end_x, end_y, num_points) -> ([], []):
 
-        x_values = np.linspace(start_x, end_x, num_points)
-        y_values = start_y + (start_y * end_x - end_y * start_x) / (x_values -start_x)
-        return x_values, y_values
 
     @staticmethod
     def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
@@ -47,7 +42,7 @@ class MRPDataVisualization:
         x = list(range(len(_readings)))
         xlabels: [str] = []
         distance_array: [float] = []
-
+        avg = "100"
         for reading in _readings:
             name: str = reading.get_name().split("_")
             distance_was_in: bool = False
@@ -58,7 +53,8 @@ class MRPDataVisualization:
                     xlabels.append(d)
 
                     distance_array.append(int(re.findall(r'\d+', d)[0]))
-
+                elif 'AVG' in n:
+                    avg = avg.split('AVG=')[1]
             if not distance_was_in:
                 xlabels.append('0mm')
                 distance_array.append(0)
@@ -83,22 +79,51 @@ class MRPDataVisualization:
         gs = gridspec.GridSpec(1, 1)
 
         fig = plt.figure()
-        fig.suptitle('{}'.format(_title), fontsize=12)
+        fig.suptitle('{}'.format(_title), fontsize=10)
 
         distance_plot = plt.subplot(gs[0, 0])
-        distance_plot.set_xlabel('Distance between sensor IC package and N45 12x12x12 cubic magnet [mm]', fontsize=8)
-        distance_plot.set_ylabel('Reading Mean Value $\mu_{nl}$ ['+ _unit + ']', fontsize=8)
+
+        distance_plot.set_xlabel('Distance between sensor IC package\nand N45 12x12x12mm cubic magnet [mm]', fontsize=8)
+        distance_plot.set_ylabel('Sensor mean value $\mu_{nl}$ ['+ _unit + '] using ' + avg + ' samples per captured value', fontsize=8)
 
         if len(xlabels) < 20:
             distance_plot.set_xticklabels(xlabels)
 
-        distance_plot.plot(x, y, linewidth=0.8)
-        #distance_plot.set
-        distance_plot.set_title('Sensor Linearity', fontsize=9)
+        distance_plot.plot(x, y, linewidth=0.8, linestyle='-', label='Sensor Value')
 
-        ideal_x, ideal_y = MRPDataVisualization.generate_inverse_proportional_curve(x[0], y[0], x[len(_readings)-1], y[len(_readings)-1], len(_readings))
-        #distance_plot.plot(x, ideal_y, linewidth=0.5, color='red', linestyle='--', label='Ideal curve')
 
+        opt_params, pcov = opt.curve_fit(MRPDataVisualization.inverse_proportional_curve_func, x, y)
+        a = opt_params[0]
+        b = opt_params[1]
+        c = opt_params[2]
+        ideal_y: [float] = []
+
+        for xe in x:
+            ideal_y.append(MRPDataVisualization.inverse_proportional_curve_func(xe, a, b, c))
+        distance_plot.plot(x, ideal_y, linewidth=0.5, color='red', linestyle='--', label='Ideal Curve')
+
+
+
+
+        deviation: [float] = []
+        deviation_ut: [float] = []
+        for idx, xe in enumerate(x):
+            t = abs(1.0 - (ideal_y[idx] / y[idx]))
+            deviation_ut.append(t * ideal_y[idx])
+            deviation.append(t)
+
+        deviation_mu: float = np.sum(deviation) / len(deviation)
+        deviation__ut_mu: float = np.sum(deviation_ut) / len(deviation_ut)
+
+        deviation_variance: float = 0
+        for value in deviation:
+            deviation_variance += value ** 2
+
+        sigma: float = np.sqrt(deviation_variance)
+
+        distance_plot.set_title('Sensor Linearity with deviation $\mu_{sl}' + '={:.2f}$% ({:.2f}{})'.format(deviation_mu, deviation__ut_mu, _unit) + 'and $\sigma_{sl}' + '={:.2f}$% from ideal curve'.format(sigma), fontsize=9)
+
+        fig.legend(loc='lower left', fontsize=8)
         fig.tight_layout()
         plt.interactive(False)
         # plt.show()
@@ -159,7 +184,7 @@ class MRPDataVisualization:
 
 
         noise_plot = plt.subplot(gs[0, 0])
-        noise_plot.plot(raw_x, noise_y, linewidth=0.8)
+        noise_plot.plot(raw_x, noise_y, linewidth=0.8, label='Noise Level')
         noise_plot.axhline(y=noise_mean, color='red', linestyle='--', linewidth=1, label='Mean')
         noise_plot.set_xlabel('Data-Point Index', fontsize=8)
         noise_plot.set_ylabel('Noise Level\n[%]', fontsize=8)
@@ -176,7 +201,7 @@ class MRPDataVisualization:
         n, bins, patches = hist_plot.hist(noise_y, num_bins, density=True)
         # add a 'best fit' line
         hist_best_fit_y = ((1 / (np.sqrt(2 * np.pi) * hist_sigma)) * np.exp(-0.5 * (1 / hist_sigma * (bins - hist_mu)) ** 2))
-        hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8)
+        hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8, label='Mean')
         hist_plot.set_xlabel('Noise Level [%]', fontsize=8)
         hist_plot.set_ylabel('Probability\ndensity', fontsize=8)
         hist_plot.set_title('Histogram of Noise Level\n$\mu_{nl}'+'={:.2f}$%'.format(hist_mu)+ ', $\sigma_{nl}'+'={:.2f}$% bins={}'.format( hist_sigma, num_bins), fontsize=9)
@@ -186,7 +211,7 @@ class MRPDataVisualization:
 
 
         raw_plot = plt.subplot(gs[1, :])
-        raw_plot.plot(raw_x, raw_y, linewidth=0.8)
+        raw_plot.plot(raw_x, raw_y, linewidth=0.8, label='Raw Values')
         ylim = max(abs(raw_y.max()), abs(raw_y.min())) * 1.3
         raw_plot.set_xlim([0, _reading.len()])
         raw_plot.axhline(y=mean, color='red', linestyle='--', linewidth=1, label='Mean')
@@ -200,7 +225,7 @@ class MRPDataVisualization:
         # ADD HEATMAP COLORPLOT
         temperature_plot = plt.subplot(gs[2, :])
         temperature_mean: float = (np.sum(_reading.to_temperature_value_array())/_reading.len())
-        temperature_plot.plot(raw_x, _reading.to_temperature_value_array(), linewidth=0.8)
+        temperature_plot.plot(raw_x, _reading.to_temperature_value_array(), linewidth=0.8, label='Sensor Raw Temperature Values')
         temperature_plot.set_xlim([0, _reading.len()])
         temperature_plot.axhline(y=temperature_mean, color='red', linestyle='--', linewidth=1, label='Mean')
         temperature_plot.set_xlabel('Data-Point Index', fontsize=8)
@@ -212,7 +237,7 @@ class MRPDataVisualization:
 
 
         fig.tight_layout()
-
+        #fig.legend()
 
 
         #

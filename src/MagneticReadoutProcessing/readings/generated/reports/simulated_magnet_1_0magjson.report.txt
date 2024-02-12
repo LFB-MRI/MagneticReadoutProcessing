@@ -1,7 +1,0 @@
-########## READING REPORT ##########
-            NAME: simulated_magnet_1_0.mag.json
-            No Datapoints: 648
-            B [mT]: 0.00011884283651551221
-            Temperature [°C]: -254.0
-            CenterOfGravity [x y z] normalized: [0.016653886816761675 1.4369529665112585e-17 -4.968590696624929e-17]
-            ######## END READING REPORT ########
