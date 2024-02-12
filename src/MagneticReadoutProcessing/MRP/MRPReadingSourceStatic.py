@@ -89,10 +89,12 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
             # LOOP OVER ALL DATAPOINTS
             try:
                 rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[0], _average_readings_per_datapoint)
-                rentry.is_valid = valid
+
 
                 for idx, r in enumerate(rentry):
+                    r.is_valid = valid
                     result_readings[idx].insert_reading_instance(r, _autoupdate_measurement_config=False)
+
             except Exception as e:
                 print("get_base_sensor_reading error: {}".format(e))
                 valid = False
