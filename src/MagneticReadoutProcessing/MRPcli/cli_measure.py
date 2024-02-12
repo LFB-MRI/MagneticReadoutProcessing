@@ -13,7 +13,7 @@ app = typer.Typer()
 def perform_measurement_rotationalsensor(configname: str):
     pass
 
-def perform_measurement(configname: str, alternativefilename: str = ""):
+def perform_measurement(configname: str, alternativefilename: str = "", generate_plots: bool =  False):
     print("perform_measurement for {}".format(configname))
     cfg: cli_datastorage.CLIDatastorage = cli_datastorage.CLIDatastorage(configname)
 
@@ -75,12 +75,13 @@ def perform_measurement(configname: str, alternativefilename: str = ""):
 
 
     # GENERATE VISUALISATION GRAPHICS
-    visu_name = "{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX))
-    visu_target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
-    if not str(visu_target_folder).startswith('/'):
-        visu_target_folder = str(Path(visu_target_folder).resolve())
-    visu_exp_path: str = os.sep.join([visu_target_folder, visu_name])
-    reading_source.export_visualisation(result_readings, visu_exp_path)
+    if generate_plots:
+        visu_name = "{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX))
+        visu_target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
+        if not str(visu_target_folder).startswith('/'):
+            visu_target_folder = str(Path(visu_target_folder).resolve())
+        visu_exp_path: str = os.sep.join([visu_target_folder, visu_name])
+        reading_source.export_visualisation(result_readings, visu_exp_path)
 
 
 
@@ -91,7 +92,7 @@ def perform_measurement(configname: str, alternativefilename: str = ""):
 
 
 @app.command()
-def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: str = "", ignoreinvalid: Annotated[bool, typer.Argument()] = False, ignoremeasurementerror: Annotated[bool, typer.Argument()] = True):
+def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: str = "", generate_plots: bool = False, ignoreinvalid: bool = False, ignoremeasurementerror: bool = True):
 
     configs:[str] = []
     if configname is not None and len(configname) > 0:
@@ -147,7 +148,7 @@ def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", a
     print("START MEASUREMENT CYCLE".format())
     for cfg in cfg_to_run:
         try:
-            perform_measurement(configname, alternativefilename)
+            perform_measurement(configname, alternativefilename, generate_plots)
         except Exception as e:
             print(e)
             if not ignoremeasurementerror:

@@ -73,7 +73,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             e = to_process[k]
 
             total_dst: int = to_process[s]['dist_max'] - to_process[s]['dist_min']
-            reading_name: str = "Linearity of " + k + " using " + str(len(e['files'])) + " samples over an distance of {}".format(total_dst) + "mm"
+            reading_name: str = "Linearity of " + k + " using " + str(len(e['files'])-1) + " samples over an distance of {}".format(total_dst) + "mm"
             export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
 
             # IMPORT READINGS
