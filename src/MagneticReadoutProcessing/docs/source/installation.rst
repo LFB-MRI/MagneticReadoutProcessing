@@ -30,9 +30,7 @@ To install them use ``$ pip3 install -r requirements.txt`` command.
 
     $ git clone https://github.com/LFB-MRI/MagneticReadoutProcessing ./MagneticReadoutProcessing
     $ cd ./MagneticReadoutProcessing/src/MagneticReadoutProcessing
-    $ pip3 install -r ,/requirements.txt
-    # COPY LIB-ONLY TO YOUR PROJECT
-    $ cp -R ./MRP ~/yourPythonProject/
+    $ pip install -e .
 
 
 .. note::

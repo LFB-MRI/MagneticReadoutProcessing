@@ -20,10 +20,14 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
 
             avg_temp: float = 0.0
             avg_bf: float = 0.0
+            valid: bool = True
             # CALCULATE AVERAGE
             for avg_idx in range(_average_readings_per_datapoint):
                 # READOUT SENSOR
-                _sensor.query_readout()
+                try:
+                    _sensor.query_readout()
+                except Exception as e:
+                    valid = False
                 avg_temp = avg_temp + _sensor.get_temp(_sensor_id=s_idx)
                 avg_bf = avg_bf + _sensor.get_b(_sensor_id=s_idx)
 
@@ -34,13 +38,14 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
             print("SID{} DP{} B{} TEMP{}".format(s_idx, index, avg_bf, avg_temp))
             rentry: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry(p_id=index, p_value=avg_bf,
                                                                                       p_temperature=avg_temp,
-                                                                                      p_is_valid=True)
+                                                                                      p_is_valid=valid)
             ret.append(rentry)
         return ret
 
 
 
     hal_instance: MRPHal.MRPHal = None
+
     def __init__(self, _hal: MRPHal.MRPHal):
         if not _hal.is_connected():
             _hal.connect()
@@ -78,14 +83,19 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
 
 
 
-
+        valid : bool = True
         for m_idx in range(_measurement_points):
             # PERFORM READING FOR EACH USER SET DATAPOINT
             # LOOP OVER ALL DATAPOINTS
-            rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[0], _average_readings_per_datapoint)
+            try:
+                rentry: [MRPReadingEntry.MRPReadingEntry] = MRPReadingSourceStatic.get_base_sensor_reading(sensor, result_readings[0], _average_readings_per_datapoint)
+                rentry.is_valid = valid
 
-            for idx, r in enumerate(rentry):
-                result_readings[idx].insert_reading_instance(r, _autoupdate_measurement_config=False)
+                for idx, r in enumerate(rentry):
+                    result_readings[idx].insert_reading_instance(r, _autoupdate_measurement_config=False)
+            except Exception as e:
+                print("get_base_sensor_reading error: {}".format(e))
+                valid = False
 
 
         return result_readings
