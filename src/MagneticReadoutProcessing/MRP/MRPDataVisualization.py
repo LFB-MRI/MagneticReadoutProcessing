@@ -18,6 +18,16 @@ class MRPDataVisualizationException(Exception):
 class MRPDataVisualization:
 
     @staticmethod
+    def func(x, a, b, c):
+        return a * np.exp(-b * x) + c
+    @staticmethod
+    def generate_inverse_proportional_curve(start_x, start_y, end_x, end_y, num_points) -> ([], []):
+
+        x_values = np.linspace(start_x, end_x, num_points)
+        y_values = start_y + (start_y * end_x - end_y * start_x) / (x_values -start_x)
+        return x_values, y_values
+
+    @staticmethod
     def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
         Plots the linearityfrom several readings
@@ -82,12 +92,12 @@ class MRPDataVisualization:
         if len(xlabels) < 20:
             distance_plot.set_xticklabels(xlabels)
 
-        #distance_plot.set_yticklabels(ylabels)
         distance_plot.plot(x, y, linewidth=0.8)
         #distance_plot.set
         distance_plot.set_title('Sensor Linearity', fontsize=9)
 
-
+        ideal_x, ideal_y = MRPDataVisualization.generate_inverse_proportional_curve(x[0], y[0], x[len(_readings)-1], y[len(_readings)-1], len(_readings))
+        #distance_plot.plot(x, ideal_y, linewidth=0.5, color='red', linestyle='--', label='Ideal curve')
 
         fig.tight_layout()
         plt.interactive(False)

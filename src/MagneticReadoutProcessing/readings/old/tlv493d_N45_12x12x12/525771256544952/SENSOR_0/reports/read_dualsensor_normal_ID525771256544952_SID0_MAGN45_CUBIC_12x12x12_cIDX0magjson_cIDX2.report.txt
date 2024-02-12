@@ -1,0 +1,7 @@
+########## READING REPORT ##########
+            NAME: read_dualsensor_normal_ID525771256544952_SID0_MAGN45_CUBIC_12x12x12_cIDX0.mag.json_cIDX2
+            No Datapoints: 1
+            B [mT]: 49.98849999999999
+            Temperature [°C]: 29.0
+            CenterOfGravity [x y z] normalized: [0.0 0.0 1.0]
+            ######## END READING REPORT ########
