@@ -2,7 +2,7 @@
 
 ## Background and Motivation
 
-As the following, the motivation for the development of this framework is listed. A brief introduction to the topic of low-field (+mri) is given, followed by the research problem to be solved by this work.
+As the following, the motivation for the development of this framework is listed. The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field MRI research and applications, articulates the research question driving this thesis and delineates the anticipated use cases and benefits that will be explored and analyzed throughout the study.
 
 ### Low-Field MRI
 
