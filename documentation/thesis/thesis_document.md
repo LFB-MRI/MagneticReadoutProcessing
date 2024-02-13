@@ -6,9 +6,9 @@ As the following, the motivation for the development of this framework is listed
 
 Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional MRI systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
-Various types of magnets find application in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electricity and induction. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for measurements.
+Various types of magnets find application in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electric induction. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
-The challenge with conventional first-order homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
+The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021.
 
 Permanent magnets, usually arranged in a circular "Hallbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
@@ -23,17 +23,20 @@ This research initiative seeks to contribute to the improvement of low-frequency
 
 ### Low-Field MRI
 
+In the realm of modern medical imaging, high-field superconducting magnets dominate most (+mri) machines, providing high blac-withe image resolution. However, the substantial costs, space prerequisites, and safety considerations associated with these systems pose considerable challenges.
+
+Magnetic resonance imaging (+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the B0 field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic B0 field; growing magnetic field leads automatically to higher (+snr).
+
+Notably, the focus on high-field systems predominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths began to emerge. This marked a pivotal shift in exploring the potential advantages and applications of low-field (+mri) systems. [@Nitz2016]
+
 Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners.
 Typically, the magnetic field in low-field MRI systems measured between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` and above in high-field (+mri) scanners [@Hori2021-pt].
 
 This technology is used in medical imaging as well as in preclinical research.
-The main advantage of low-field (+mri) is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt].
+The main advantage of low-field (+mri) is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@Arnold2023-cn]
 
-Contemporary most (+mri) machines employ high-field superconducting magnets cooled cryogenically, delivering exceptional image resolution. However, the associated costs, space requirements, and safety considerations can be substantial. In contrast, permanent magnets present an economical and space-efficient alternative. Nevertheless, they generate lower magnetic field strengths, impacting the (+snr) and resulting in lower image resolution within clinically viable scan times. [@Arnold2023-cn]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to 0.35 Tesla can be generated. However, this achievement comes at the cost of an average system weight of 14 tons. Despite their cost-effectiveness in production and maintenance, permanent magnets exhibit drawbacks such as high temperature dependence and a limited signal-to-noise ratio (SNR) due to the constrained field strength. [@Nitz2016]
 
-In response to these challenges, recent endeavors in both academia and industry aim to leverage the benefits of lower field strength—such as reduced costs, a smaller device footprint, and diminished safety concerns—while addressing the inherent drawbacks that compromise image quality. The optimization of low-field approaches is becoming increasingly prevalent, tailored to specific clinical inquiries and contexts.
-
-To overcome limitations associated with lower field strengths, ongoing research focuses on the meticulous selection and validation of use cases. This strategic approach is essential for ensuring that the advantages of lower cost and reduced device size are harnessed without sacrificing diagnostic accuracy or compromising patient outcomes. [@Arnold2023-cn]
 
 ### Magnet System
 
