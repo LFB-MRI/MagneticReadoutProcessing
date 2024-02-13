@@ -10,7 +10,7 @@ with pathlib.Path(req_path).open() as requirements_txt:
     install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
 
 setup(name='MagneticReadoutProcessing',
-      version='1.5.5',
+      version='1.5.6',
       license='Apache 2',
       description='This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors. The focus is on visualization, followed by the provision of simple interfaces to work with this data. In general its possible to use this lib on all kinds of sensor data.',
       author='Marcel Ochsendorf',

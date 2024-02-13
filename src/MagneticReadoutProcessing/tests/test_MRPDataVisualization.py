@@ -110,7 +110,7 @@ class TestMPRDataVisualization(unittest.TestCase):
                 reading.set_unit_import_scale_factor(10000.0)
             reading.load_from_file(import_file)
 
-            export_filename: str = os.path.join(self.result_folder_path, reading.get_name().replace(" ", "_") + ".png")
+            export_filename: str = os.path.join(self.result_folder_path, 'Noise_'+reading.get_name().replace(" ", "_") + ".png")
             name: str = reading.get_name()
             MRPDataVisualization.MRPDataVisualization.plot_histogram(reading, name, export_filename)
 

@@ -22,6 +22,8 @@ class MRPDataVisualization:
         return a * np.exp(-b * x) + c
 
 
+
+
     @staticmethod
     def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
@@ -377,7 +379,6 @@ class MRPDataVisualization:
             plt.show()
 
         plt.close()
-
 
     @staticmethod
     def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "°C"):
