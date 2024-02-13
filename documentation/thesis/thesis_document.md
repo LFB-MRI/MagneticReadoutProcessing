@@ -35,7 +35,7 @@ Typically, the magnetic field in low-field MRI systems measured between `0.1T` a
 This technology is used in medical imaging as well as in preclinical research.
 The main advantage of low-field (+mri) is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@Arnold2023-cn]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to 0.35 Tesla can be generated. However, this achievement comes at the cost of an average system weight of 14 tons. Despite their cost-effectiveness in production and maintenance, permanent magnets exhibit drawbacks such as high temperature dependence and a limited signal-to-noise ratio (SNR) due to the constrained field strength. [@Nitz2016]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to 0.35 Tesla can be generated. However, this achievement comes at the cost of an average system weight of 14 tons. Despite their cost-effectiveness in production and maintenance, permanent magnets exhibit drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@Nitz2016]
 
 In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and need to be analysed.
 
@@ -74,6 +74,8 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a compelling choice for mobile NMR due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
+The Halbach magnetic array emerges as a crucial element for future Magnet Characterization. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
+
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.  
 
 
@@ -86,7 +88,6 @@ Optimal homogeneity is attained through intricate designs facilitating active sh
 The sources for the shimming process can be hardware and software based.
 Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field.
 Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@10.3389/fphy.2021.704566].
-
 
 In this work, reference is made exclusively to the hardware shim process.
 Since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
