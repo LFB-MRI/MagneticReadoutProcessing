@@ -95,27 +95,27 @@ compared to the usual \passthrough{\lstinline!1.5T!} to
 \cite{Hori2021-pt}.
 
 This technology is used in medical imaging as well as in preclinical
-research. The main advantage of low-field MRI is the improved imaging of
-soft tissues, especially when examining joints and muscles. It also
-offers more cost-effective alternatives to high-field MRI systems
-\cite{Hori2021-pt}.
+research. The main advantage of low-field \gls{mri} is the improved
+imaging of soft tissues, especially when examining joints and muscles.
+It also offers more cost-effective alternatives to high-field \gls{mri}
+systems \cite{Hori2021-pt}.
 
-Contemporary most MRI machines employ high-field superconducting magnets
-cooled cryogenically, delivering exceptional image resolution. However,
-the associated costs, space requirements, and safety considerations can
-be substantial. In contrast, permanent magnets present an economical and
-space-efficient alternative. Nevertheless, they generate lower magnetic
-field strengths, impacting the signal-to-noise ratio (SNR) and resulting
-in lower image resolution within clinically viable scan times.
-\cite{Arnold2023-cn}
+Contemporary most \gls{mri} machines employ high-field superconducting
+magnets cooled cryogenically, delivering exceptional image resolution.
+However, the associated costs, space requirements, and safety
+considerations can be substantial. In contrast, permanent magnets
+present an economical and space-efficient alternative. Nevertheless,
+they generate lower magnetic field strengths, impacting the \gls{snr}
+and resulting in lower image resolution within clinically viable scan
+times. \cite{Arnold2023-cn}
 
 In response to these challenges, recent endeavors in both academia and
 industry aim to leverage the benefits of lower field strength---such as
 reduced costs, a smaller device footprint, and diminished safety
 concerns---while addressing the inherent drawbacks that compromise image
-quality (refer to Table 1). The optimization of low-field approaches is
-becoming increasingly prevalent, tailored to specific clinical inquiries
-and contexts.
+quality. The optimization of low-field approaches is becoming
+increasingly prevalent, tailored to specific clinical inquiries and
+contexts.
 
 To overcome limitations associated with lower field strengths, ongoing
 research focuses on the meticulous selection and validation of use
@@ -1024,8 +1024,8 @@ integrated into the system. A temperature-compensated
 \passthrough{\lstinline!Voltcraft GM-70!} telsameter
 \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is
 used, which has a measuring range of 0T to 3T with a resolution of
-0.1mT. It offers an RS232 interface with a documented protocol
-\ref{Voltcraft_GM70_serial_protocol.csv} for connection to a \gls{pc}.
+0.1mT. It offers an RS232 interface with a documented protocol for
+connection to a \gls{pc}.
 
 This connectivity makes it possible to make the device compatible with
 the unified sensor ecosystem using a separate interface software
@@ -2562,8 +2562,22 @@ various magnetic field sensors and a library for automating and
 analysing the measurement data. The process of this framework comprises
 several steps, which will be explain below:
 
+\begin{itemize}
+\tightlist
+\item
+  TODO
+\end{itemize}
+
 \hypertarget{hardware-evaluation}{%
 \section{Hardware Evaluation}\label{hardware-evaluation}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
+\caption{Sensor evaluation plattform with TLV493D and MMC5603 sensors
+placed with thermal conductive glue on an aluminium baseplate
+\label{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}}
+\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -2575,6 +2589,35 @@ several steps, which will be explain below:
   tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung
   standen
 \end{itemize}
+
+The sensor platform used here is an adapted version of the
+\passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} sensor
+platform. The sensors to be measured were fixed together on an aluminium
+plate with thermally conductive adhesive. This compensates for thermal
+differences.
+
+This is crucial for the subsequent temperature deviation tests in order
+to obtain comparable measurement results. The graphic
+\ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
+shows this basic setup, the Raspberry Pi Pico shown here was used as the
+readout hardware, on which the Unified Sensor Firmware version
+\passthrough{\lstinline!1.0.2!} is running.
+
+A separate \passthrough{\lstinline!KA30005D!} laboratory power supply is
+used as the power supply for the sensors. An Raspberry Pi 4 is used as
+the host computer, which is connected to the sensors via a
+\passthrough{\lstinline!Hailege ADUM3160!} \gls{usb} isolator and is
+placed outside the temperature chamber. \passthrough{\lstinline!MRPCli!}
+\ref{command-line-interface} version \passthrough{\lstinline!1.5.0!} was
+used to control and record the measurement series, with the functions of
+the \passthrough{\lstinline!MRPDataVisualisation!}
+\ref{mrpvisualisation} and \passthrough{\lstinline!MRPAnalysis!}
+\ref{mrpanalysis} packages from the library
+\ref{software-readout-framework} being used for subsequent evaluation.
+The recorded measurement series are automatically analysed using the
+\passthrough{\lstinline!Programmable-  Data Pprocessing Pipeline!}
+\ref{programmable-data-processing-pipeline} and the results are
+visualised.
 
 \hypertarget{read-noise}{%
 \subsection{Read Noise}\label{read-noise}}
@@ -2590,11 +2633,6 @@ Measuring the noise in a magnetic field sensor requires a precise
 procedure and a special measurement setup. First, the magnetic field
 sensor is placed in a quiet environment to minimize external
 interference.
-
-The sensor platform used here is a ready-built
-\passthrough{\lstinline!1D: Single Sensor!} \ref{d-single-sensor} sensor
-platform, which has been equipped with the sensors to be measured one
-after the other.
 
 The procedure begins with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample

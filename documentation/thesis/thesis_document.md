@@ -443,11 +443,9 @@ This was chosen because of its larger measuring range and can therefore be used 
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
 A temperature-compensated `Voltcraft GM-70` telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of 0T to 3T with a resolution of 0.1mT.
-It offers an RS232 interface with a documented protocol \ref{Voltcraft_GM70_serial_protocol.csv} for connection to a (+pc). 
+It offers an RS232 interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
-
-
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical RS232 interface.
 As with the other sensors, this interface consists of your `Raspberry-Pi Pico` with an additional level shifter.
@@ -455,7 +453,6 @@ As with the other sensors, this interface consists of your `Raspberry-Pi Pico` w
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware was adapted using a separate build configuration.
 In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
-
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -1053,6 +1050,7 @@ The integration of user feedback and regular updates promotes the adaptability o
 Effective usability improvements help to speed up development processes and increase the satisfaction of the developer community.
 In the following, some of these have been added in and around the (+mrp)-library, but they are only optional components for the intended use.
 
+
 ## Command Line Interface
 
 %%MRP_(+cli)_output_to_configure_a_new_measurement.png%%
@@ -1353,11 +1351,39 @@ This work successfully implemented a universal hardware and software framework f
 This framework consists of a low-cost hardware interface that supports various magnetic field sensors and a library for automating and analysing the measurement data.
 The process of this framework comprises several steps, which will be explain below:
 
+
+* TODO
+
 ## Hardware Evaluation
+
+%%Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png%%
 
 * cheap sensors used 
 * used hardware list
 * tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung standen
+
+
+The sensor platform used here is an adapted version of the `1D: Single Sensor` \ref{d-single-sensor} sensor platform. The sensors to be measured were fixed together on an aluminium plate with thermally conductive adhesive. This compensates for thermal differences.
+
+This is crucial for the subsequent temperature deviation tests in order to obtain comparable measurement results.
+The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the Raspberry Pi Pico shown here was used as the readout hardware, on which the Unified Sensor Firmware version `1.0.2` is running.
+
+A separate `KA30005D` laboratory power supply is used as the power supply for the sensors.
+An Raspberry Pi 4 is used as the host computer, which is connected to the sensors via a `Hailege ADUM3160` (+usb) isolator and is placed outside the temperature chamber.
+`MRPCli` \ref{command-line-interface} version `1.5.0` was used to control and record the measurement series, with the functions of the `MRPDataVisualisation` \ref{mrpvisualisation} and `MRPAnalysis` \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
+The recorded measurement series are automatically analysed using the `Programmable-  Data Pprocessing Pipeline` \ref{programmable-data-processing-pipeline} and the results are visualised.
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Read Noise
 
@@ -1365,9 +1391,6 @@ The process of this framework comprises several steps, which will be explain bel
 %%Sensor_evaluation_setup_for_noise_measurements.png%%
 
 Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external interference.
-
-The sensor platform used here is a ready-built `1D: Single Sensor` \ref{d-single-sensor} sensor platform, which has been equipped with the sensors to be measured one after the other. 
-
 
 The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of N=10000 measured values was recorded for the reference measurement.
