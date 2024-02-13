@@ -1,6 +1,6 @@
 # Introduction
 
-As the following, the motivation for the development of this framework is listed. The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field MRI research and applications, articulates the research question driving this thesis and delineates the anticipated use cases and benefits that will be explored and analyzed throughout the study.
+As the following, the motivation for the development of this framework is listed. The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field MRI research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analyzed throughout the study.
 
 ## Background and Motivation
 
@@ -135,13 +135,13 @@ This should make it possible to create a workflow from the individual magnet to 
 
 The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
-Within the framework of the "DeLoRI" (Dedicated Low-field MRI for breast) project, Fraunhofer MEVIS in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field MRIs have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by Fraunhofer MEVIS exemplifies the ongoing commitment to harnessing the potential of low-field MRI for enhanced breast screening applications.
+Within the framework of the "DeLoRI" (Dedicated Low-field (+mri) for breast) project, Fraunhofer MEVIS in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field (+mri)s have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by Fraunhofer MEVIS exemplifies the ongoing commitment to harnessing the potential of low-field (+mri) for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1.000ppm, primarily driven by the goal of establishing a compact low-field MRI for breast cancer detection. 
+The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1.000ppm, primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
 
-Beyond the development and prototype construction of low-field MRI scanners, the project encompasses electromagnetic simulation of components within the low-field MRI system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
+Beyond the development and prototype construction of low-field (+mri) scanners, the project encompasses electromagnetic simulation of components within the low-field MRI system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
 
-This comprehensive effort serves to bolster the prototyping phase of the low-field MRI. Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, DeLoRI aims to design an open MRI, departing from the circular MRI configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
+This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, DeLoRI aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
 In addition DeLoRI endeavors to achieve heightened accuracy, striving for precision levels below 1,000 ppm. While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
 
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterization process.
@@ -156,13 +156,27 @@ The application of the developed framework for the characterisation of different
 
 Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1,000 ppm. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
+## Research Question and Approach
+
+Concerning the DeLoRI project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous B0 field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the DeLoRI project. 
+
+The primary objectives of this work revolve around addressing two pivotal research questions:
+
+* Sensor Characterization: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
+
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1,000 ppm? The desired outcome is a measurement of less than 50 mühT at 1,000 ppm, with a specific focus on determining the sensors' viability for noise measurements.
+
+It is crucial to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
+
+This work distinctly prioritizes the development of both hardware and software tailored for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
+
 ## Usecases
 
-The following section defines some usecases that the future project should be able to cover.
+The following section defines some usecases that the future project should be able to cover. These usecases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
-These were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process \ref{evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution.
+The usecases were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
+In the later accomplished evaluation process \ref{usecase-evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution. This is crucial for understanding the needs of the target group and designing the end result accordingly.
 
 1. **Ready to use hardware sensor designs**
 
@@ -194,13 +208,7 @@ In the later accomplished evaluation process \ref{evaluation}, the defined useca
 
 ## Structure
 
-This work is divided into six main chapters, which deal with the approach and implementation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
-
-
-Chapter \ref{usecases}. **Usecases** 
-  are the application cases in which the project is to be used.
-  They illustrate the practical scenarios and define how the product can be used in the real world.
-  This is crucial for understanding the needs of the target group and designing the end result accordingly.
+This work is divided into six main chapters, which deal with the approach, implementation and evaluation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
 
 Chapter \ref{unified-sensor}. **Unified Sensor**
   refers to the integration of different sensors into a standardised solution.
@@ -215,14 +223,16 @@ Chapter \ref{usability-improvements}. **Usability Improvements**
   This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
   This also includes the documentation of code and the distribution of the source code as a package to users.
 
-
 Chapter \ref{usecase-evaluation}. **Usecase Evaluation**
-  describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
+  describes the application of the framework to the previously defined usecases and thus forms the basis for later evaluation.
 
 Chapter \ref{evaluation}. **Evaluation**
   outlines the evaluation process for permanent magnets using the developed framework. The research questions posed regarding the suitability of the sensors used for the characterisation of permanent magnets are examined.
 
+Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
+  bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This section ensures closure and aids readers in grasping the broader context and significance of the research.
 
+Finally, a comprehensive hardware and software framework must be established, capable of measuring diverse objects using various sensors. Additionally, conclusive remarks should be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
 # Unified Sensor
 
