@@ -20,7 +20,7 @@ class MRPDataVisualization:
 
 
     @staticmethod
-    def plot_temperature_deviation(_readings: [MRPReading.MRPReading],_title: str = '', _filename: str = None, _uni_temp: str = "°C", _unit_mag: str = "$\mu$T"):
+    def plot_temperature_deviation(_readings: [MRPReading.MRPReading], max_value: float = None, min_value: float = None, _title: str = '', _filename: str = None, _uni_temp: str = "°C", _unit_mag: str = "$\mu$T"):
         """
         Plots the temperature deviation  several readings
 
@@ -43,35 +43,56 @@ class MRPDataVisualization:
 
         gs = gridspec.GridSpec(1, 1)
 
-        N: int = _readings[0].len()
-        raw_x = np.linspace(0, N, N, dtype=np.int32)
 
+        raw_x = np.linspace(0, len(_readings), len(_readings), dtype=np.int32)
+        raw_y = []
+        xlabels = []
         raw_plot = plt.subplot(gs[0, :])
-        raw_plot.set_xlabel('Data-Point Index', fontsize=8)
-        raw_plot.set_ylabel('Raw Sensor Value [{}]'.format(_unit_mag), fontsize=8)
-        #raw_plot.set_title(
-        #    'Raw Sensor Values $\mu_{rv}' + '={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading),
-         #                                                       _unit), fontsize=9)
+        raw_plot.set_xlabel('Temperature {}'.format(_uni_temp), fontsize=8)
+        raw_plot.set_ylabel('Sensor Raw Value [{}]'.format(_unit_mag), fontsize=8)
 
-        max_y_value = -10000.0
-        min_y_value = 10000.0
 
+        temps: [int] = []
         for r in _readings:
-            raw_y = r.to_value_array()
             mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
-            max_y_value = max(max_y_value, raw_y.max())
-            min_y_value = min(min_y_value, raw_y.min())
+            raw_y.append(mean)
             temperature = "-"
+            was_in :bool = False
             for ne in r.get_name().split("_"):
                 if ne.startswith("TEMPERATURE="):
                     temperature = ne.split("TEMPERATURE=")[1]
-            raw_plot.plot(raw_x, raw_y, linewidth=0.8, label='Raw Values at {}{} with '.format(temperature, _uni_temp) + '$\mu_'+'{'+ 'mtd{}'.format(temperature) +'}'+'={:.2f}${}'.format(mean, _unit_mag))
+                    was_in = True
+                    temps.append(int(temperature))
+            if not was_in:
+                temps.append(0)
+            xlabels.append("{}{}".format(temperature, _uni_temp))
+
+        raw_y = [v for _, v in sorted(zip(temps, raw_y))]
+        #raw_y = raw_y.reverse()
+
+        xlabels = [v for _, v in sorted(zip(temps, xlabels))]
+        temps = [v for _, v in sorted(zip(temps, temps))]
+        #xlabels = xlabels.reverse()
+
+        raw_plot.plot(raw_x, raw_y, linewidth=0.8) #label='Raw Values at {}{} with '.format(temperature, _uni_temp) + '$\mu_'+'{'+ 'mtd{}'.format(temperature) +'}'+'={:.2f}${}'.format(mean, _unit_mag))
+
+        max_temp_dev: float = 0.0
+        for i in range(0, len(temps) - 1):
+            temp_diff: float =  temps[i+1] - temps[i]
+            mag_diff: float =  raw_y[i+1] - raw_y[i]
+
+            u_per_c: float = abs(mag_diff / temp_diff)
+
+            max_temp_dev = max(max_temp_dev, u_per_c)
+
+
+        raw_plot.set_title("With maximum deviation of {:.2f}{} per {}".format(max_temp_dev, _unit_mag, _uni_temp))
 
             #raw_plot.axhline(y=mean, linestyle='--', linewidth=1, label='Mean of {}{}'.format(temperature, _uni_temp))
-
-
-        raw_plot.set_ylim([min_y_value, max_y_value*1.2])
-        raw_plot.legend(fontsize=7)
+        raw_plot.set_xticks(raw_x, xlabels)
+        if min_value is not None and max_value is not None:
+            raw_plot.set_ylim([min_value, max_value*1.1])
+        #raw_plot.legend(fontsize=7)
 
 
         fig.tight_layout()

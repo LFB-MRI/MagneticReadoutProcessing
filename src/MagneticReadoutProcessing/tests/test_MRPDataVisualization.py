@@ -36,7 +36,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             stddev = len(lst) / 6
 
         while True:
-            index = int(normalvariate(mean, stddev) + 0.5)
+            index = int(normalvariate(mean, stddev) + 1)
             if 0 <= index < len(lst):
                 return lst[index]
 
@@ -52,10 +52,15 @@ class TestMPRDataVisualization(unittest.TestCase):
             sp: [str] = e.split('_')
             sensors.add(sp[0])
 
+        max_value: float = float('-inf')
+        min_value: float = float('inf')
+        values_to_plot = {}
         for s in sensors:
             sfiles = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'{}_(.)*.mag.json'.format(s), f)]
 
             readings: [MRPReading.MRPReading] = []
+
+
             for idx, r in enumerate(sfiles):
                 reading: MRPReading.MRPReading = MRPReading.MRPReading()
 
@@ -65,17 +70,20 @@ class TestMPRDataVisualization(unittest.TestCase):
                 reading.load_from_file(os.path.join(self.asset_temperaturedeviation_folder_path, r))
                 reading.set_name(r.replace(".mag", "").replace(".json", " "))
 
+                dt: [float] = reading.to_value_array()
+                max_value = max([max_value, dt.max()])
+                min_value = min([min_value, dt.min()])
 
                 # BLEW UP CODE
                 if reading.len() < N:
-                    dt: [float] = reading.to_value_array()
                     initial_len = reading.len()
                     mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
                     t_mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(reading, True)
                     std_dev: float = MRPAnalysis.MRPAnalysis.calculate_std_deviation(reading)
 
+
                     for i in range(abs(N - initial_len)):
-                        c: float =self.normal_choice(dt, mean, std_dev)
+                        c: float = self.normal_choice(dt, None, std_dev)
                         e: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry()
                         e.value = c
                         e.id = initial_len + i
@@ -85,17 +93,17 @@ class TestMPRDataVisualization(unittest.TestCase):
 
                 readings.append(reading)
 
+            values_to_plot[s] = readings
 
 
-
-
-
-
+        for s in values_to_plot.keys():
             reading_name: str = "Temperature Deviation of " + s + ""
             export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
 
-
-            MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(readings, reading_name, export_filename)
+            MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(values_to_plot[s], None,
+                                                                                 None, reading_name,
+                                                                                 export_filename)
+            #MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(values_to_plot[s], max_value, min_value ,reading_name, export_filename)
 
     def test_linearity_realdata(self):
         files = [f for f in os.listdir(self.asset_linearity_folder_path) if re.match(r'(.)*.mag.json', f)]
@@ -166,9 +174,6 @@ class TestMPRDataVisualization(unittest.TestCase):
 
 
             MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename)
-
-
-
 
     def test_histogram_realdata(self):
 
