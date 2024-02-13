@@ -17,17 +17,81 @@ class MRPDataVisualizationException(Exception):
 
 class MRPDataVisualization:
 
+
+
+    @staticmethod
+    def plot_temperature_deviation(_readings: [MRPReading.MRPReading],_title: str = '', _filename: str = None, _uni_temp: str = "°C", _unit_mag: str = "$\mu$T"):
+        """
+        Plots the temperature deviation  several readings
+
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+        if _readings is None or len(_readings) <= 0:
+            raise MRPDataVisualizationException("no readings in _reading given")
+
+
+
+        fig = plt.figure()
+        fig.suptitle('{}'.format(_title), fontsize=10)
+
+        gs = gridspec.GridSpec(1, 1)
+
+        N: int = _readings[0].len()
+        raw_x = np.linspace(0, N, N, dtype=np.int32)
+
+        raw_plot = plt.subplot(gs[0, :])
+        raw_plot.set_xlabel('Data-Point Index', fontsize=8)
+        raw_plot.set_ylabel('Raw Sensor Value [{}]'.format(_unit_mag), fontsize=8)
+        #raw_plot.set_title(
+        #    'Raw Sensor Values $\mu_{rv}' + '={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading),
+         #                                                       _unit), fontsize=9)
+
+        max_y_value = -10000.0
+        min_y_value = 10000.0
+
+        for r in _readings:
+            raw_y = r.to_value_array()
+            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            max_y_value = max(max_y_value, raw_y.max())
+            min_y_value = min(min_y_value, raw_y.min())
+            temperature = "-"
+            for ne in r.get_name().split("_"):
+                if ne.startswith("TEMPERATURE="):
+                    temperature = ne.split("TEMPERATURE=")[1]
+            raw_plot.plot(raw_x, raw_y, linewidth=0.8, label='Raw Values at {}{} with '.format(temperature, _uni_temp) + '$\mu_'+'{'+ 'mtd{}'.format(temperature) +'}'+'={:.2f}${}'.format(mean, _unit_mag))
+
+            #raw_plot.axhline(y=mean, linestyle='--', linewidth=1, label='Mean of {}{}'.format(temperature, _uni_temp))
+
+
+        raw_plot.set_ylim([min_y_value, max_y_value*1.2])
+        raw_plot.legend(fontsize=7)
+
+
+        fig.tight_layout()
+        plt.interactive(False)
+        # plt.show()
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename, dpi=1200)
+        else:
+            plt.show()
+
+        plt.close()
+
     @staticmethod
     def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
-
-
-
-
     @staticmethod
     def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
         """
-        Plots the linearityfrom several readings
+        Plots the linearity from several readings
 
         :param _readings:
         :type _readings: list(MRPReading.MRPReading)
@@ -122,10 +186,11 @@ class MRPDataVisualization:
             deviation_variance += value ** 2
 
         sigma: float = np.sqrt(deviation_variance)
-
         distance_plot.set_title('Sensor Linearity with deviation $\mu_{sl}' + '={:.2f}$% ({:.2f}{})'.format(deviation_mu, deviation__ut_mu, _unit) + 'and $\sigma_{sl}' + '={:.2f}$% from ideal curve'.format(sigma), fontsize=9)
+        distance_plot.legend(loc='lower left', fontsize=8)
 
-        fig.legend(loc='lower left', fontsize=8)
+
+
         fig.tight_layout()
         plt.interactive(False)
         # plt.show()
@@ -136,7 +201,6 @@ class MRPDataVisualization:
             plt.show()
 
         plt.close()
-
 
 
     @staticmethod

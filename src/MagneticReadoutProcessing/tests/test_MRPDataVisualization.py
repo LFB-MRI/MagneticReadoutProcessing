@@ -7,9 +7,9 @@ import os
 import random
 import unittest
 import numpy as np
+from random import normalvariate
 
-
-from MRP import MRPDataVisualization, MRPSimulation, MRPReading, MRPReadingEntry
+from MRP import MRPDataVisualization, MRPSimulation, MRPReading, MRPReadingEntry, MRPAnalysis
 
 
 class TestMPRDataVisualization(unittest.TestCase):
@@ -20,10 +20,82 @@ class TestMPRDataVisualization(unittest.TestCase):
         self.result_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_plots")
         self.asset_histogram_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/test_histogram")
         self.asset_linearity_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/test_linearity")
+        self.asset_temperaturedeviation_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"assets/test_temperaturedeviation")
         if not os.path.exists(self.result_folder_path):
             os.makedirs(self.result_folder_path)
 
 
+
+    def normal_choice(self, lst, mean=None, stddev=None):
+        if mean is None:
+            # if mean is not specified, use center of list
+            mean = (len(lst) - 1) / 2
+
+        if stddev is None:
+            # if stddev is not specified, let list be -3 .. +3 standard deviations
+            stddev = len(lst) / 6
+
+        while True:
+            index = int(normalvariate(mean, stddev) + 0.5)
+            if 0 <= index < len(lst):
+                return lst[index]
+
+
+
+    def test_temperature_deviation(self):
+        files = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'(.)*.mag.json', f)]
+
+        N: int = 2000
+        # GET SENSORS OUT OF FILENAME
+        sensors: set = set()
+        for e in files:
+            sp: [str] = e.split('_')
+            sensors.add(sp[0])
+
+        for s in sensors:
+            sfiles = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'{}_(.)*.mag.json'.format(s), f)]
+
+            readings: [MRPReading.MRPReading] = []
+            for idx, r in enumerate(sfiles):
+                reading: MRPReading.MRPReading = MRPReading.MRPReading()
+
+                if 'tlv493d' in r.lower():
+                    reading.set_unit_import_scale_factor(10000.0)
+
+                reading.load_from_file(os.path.join(self.asset_temperaturedeviation_folder_path, r))
+                reading.set_name(r.replace(".mag", "").replace(".json", " "))
+
+
+                # BLEW UP CODE
+                if reading.len() < N:
+                    dt: [float] = reading.to_value_array()
+                    initial_len = reading.len()
+                    mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(reading)
+                    t_mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(reading, True)
+                    std_dev: float = MRPAnalysis.MRPAnalysis.calculate_std_deviation(reading)
+
+                    for i in range(abs(N - initial_len)):
+                        c: float =self.normal_choice(dt, mean, std_dev)
+                        e: MRPReadingEntry.MRPReadingEntry = MRPReadingEntry.MRPReadingEntry()
+                        e.value = c
+                        e.id = initial_len + i
+                        e.is_valid = True
+                        e.temperature = t_mean
+                        reading.insert_reading_instance(e, _autoupdate_measurement_config=False)
+
+                readings.append(reading)
+
+
+
+
+
+
+
+            reading_name: str = "Temperature Deviation of " + s + ""
+            export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
+
+
+            MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(readings, reading_name, export_filename)
 
     def test_linearity_realdata(self):
         files = [f for f in os.listdir(self.asset_linearity_folder_path) if re.match(r'(.)*.mag.json', f)]
