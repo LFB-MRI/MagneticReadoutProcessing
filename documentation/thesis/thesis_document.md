@@ -156,39 +156,7 @@ The application of the developed framework for the characterisation of different
 
 Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1,000 ppm. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
-
-## Structure
-
-This work is divided into six main chapters, which deal with the approach and implementation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
-
-
-Chapter \ref{usecases}. **Usecases** 
-  are the application cases in which the project is to be used.
-  They illustrate the practical scenarios and define how the product can be used in the real world.
-  This is crucial for understanding the needs of the target group and designing the end result accordingly.
-
-Chapter \ref{unified-sensor}. **Unified Sensor**
-  refers to the integration of different sensors into a standardised solution.
-  This enables simple data acquisition and serves as a basic hardware system on which the subsequent data processing library can be applied.
-
-Chapter \ref{software-readout-framework}. **Software Readout Framework**
-  describes the implementation of the data readout framework.
-  This includes an explanation of the various modules and specific application examples.
-
-Chapter \ref{usability-improvements}. **Usability Improvements**
-  refers to additional activities to improve user-friendliness.
-  This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
-  This also includes the documentation of code and the distribution of the source code as a package to users.
-
-
-Chapter \ref{usecase-evaluation}. **Usecase Evaluation**
-  describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
-
-Chapter \ref{evaluation}. **Evaluation**
-  outlines the evaluation process for permanent magnets using the developed framework. The research questions posed regarding the suitability of the sensors used for the characterisation of permanent magnets are examined.
-
-
-# Usecases
+## Usecases
 
 The following section defines some usecases that the future project should be able to cover.
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
@@ -223,6 +191,36 @@ In the later accomplished evaluation process \ref{evaluation}, the defined useca
   User-programmable data processing pipelines enable the flexible design of data processing sequences  as pipeline by users.
   The framework should enable users to create their own pipelines with the previously defined data analysis functions.
 
+
+## Structure
+
+This work is divided into six main chapters, which deal with the approach and implementation. The techniques and concepts used are explained in detail. Specific examples provide an overview of the possible use of the developed solution by the user.
+
+
+Chapter \ref{usecases}. **Usecases** 
+  are the application cases in which the project is to be used.
+  They illustrate the practical scenarios and define how the product can be used in the real world.
+  This is crucial for understanding the needs of the target group and designing the end result accordingly.
+
+Chapter \ref{unified-sensor}. **Unified Sensor**
+  refers to the integration of different sensors into a standardised solution.
+  This enables simple data acquisition and serves as a basic hardware system on which the subsequent data processing library can be applied.
+
+Chapter \ref{software-readout-framework}. **Software Readout Framework**
+  describes the implementation of the data readout framework.
+  This includes an explanation of the various modules and specific application examples.
+
+Chapter \ref{usability-improvements}. **Usability Improvements**
+  refers to additional activities to improve user-friendliness.
+  This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
+  This also includes the documentation of code and the distribution of the source code as a package to users.
+
+
+Chapter \ref{usecase-evaluation}. **Usecase Evaluation**
+  describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
+
+Chapter \ref{evaluation}. **Evaluation**
+  outlines the evaluation process for permanent magnets using the developed framework. The research questions posed regarding the suitability of the sensors used for the characterisation of permanent magnets are examined.
 
 
 
