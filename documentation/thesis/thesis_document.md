@@ -93,7 +93,23 @@ In this work, reference is made exclusively to the hardware shim process.
 Since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
 
 
-## State of the Art
+## State of the Art 
+
+**Low-Field MRI**
+
+According to Wolfgang R. Nitz in 2016, just 13.4% of actively used MRI systems are low-field MRI (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [Nitz2016]
+Nitz also highlights that presently, the landscape of MRI technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up MRI from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their MRI systems. This notable concentration underscores the distinctive position of Stand-up MRI as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [Nitz2016]
+
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional MRI in a homogeneous 27 cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field MRI system [@De_Vos2023-pb].
+
+The objective of this MRI system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
+This MRI system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
+
+The Halbach magnet incorporated in this system boasts a 27cm diameter, a B0 field strength of 50.4 mT, and an impressive homogeneity of 2400 ppm over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+
+To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach cylinder along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
+
+**Magnet Characerisation**
 
 The shimming process described describes how, after the field magnet has been set up, if the homogeneous magnetic flux densities are not sufficient, these can be adjusted manually by means of adjustments to the setup or, if the hardware allows it, by software.
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
@@ -106,8 +122,7 @@ There are two ways of using the data from the magnets that were previously measu
 * By using binning or sorting algorithms to filter for the most similar magnets
 * Adjustment of the rotation and position within the Hallbach configuration
 
-
-This form of data processing of previously characterized magnetic data is currently being implemented experimentally in projects using various algorithms [@Wickenbrock_2021].
+This form of data processing of previously characterised magnetic data is currently being implemented experimentally in projects using various algorithms [@Wickenbrock_2021].
 Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Hallbach ring relative to each other [@HalbachMRIDesigner].
 
 These are each separate projects that implement individual aspects of data processing, which realize the process of measuring individual magnets by manual combination.
@@ -120,13 +135,13 @@ This should make it possible to create a workflow from the individual magnet to 
 
 The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
-The scope of the software library is to lay the foundation for the systematic characterization of magnets based on permanent magnets.
+The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
 
-The work aims to facilitate magnetic field characterization and improve the exchange of data between different user groups.
+The work aims to facilitate magnetic field characterisation and improve the exchange of data between different user groups.
 Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
-The application of the developed framework for the characterization of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
+The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
 
 
