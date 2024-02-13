@@ -37,10 +37,11 @@ The main advantage of low-field (+mri) is the improved imaging of soft tissues, 
 
 Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to 0.35 Tesla can be generated. However, this achievement comes at the cost of an average system weight of 14 tons. Despite their cost-effectiveness in production and maintenance, permanent magnets exhibit drawbacks such as high temperature dependence and a limited signal-to-noise ratio (SNR) due to the constrained field strength. [@Nitz2016]
 
+In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems.
 
 ### Magnet System
 
-Die Zusammenführung von Permanentmageneten ist eine der beiden häufig
+Many low-field MRI systems use permanent magnets, often arranged in specific configurations like a Hallbach array. These permanent magnets are simpler and more cost-effective than the superconducting magnets used in high-field systems.
 
 %%Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png%%
 
