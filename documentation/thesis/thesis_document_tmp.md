@@ -1,8 +1,25 @@
 # Introduction
 
+As the following, the motivation for the development of this framework is listed. The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field MRI research and applications, articulates the research question driving this thesis and delineates the anticipated use cases and benefits that will be explored and analyzed throughout the study.
+
 ## Background and Motivation
 
-As the following, the motivation for the development of this framework is listed. A brief introduction to the topic of low-field (+mri) is given, followed by the research problem to be solved by this work.
+Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional MRI systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
+
+Various types of magnets find application in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electricity and induction. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for measurements.
+
+The challenge with conventional first-order homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
+In response to this, there is a growing interest in developing low-field (+mri) systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021.
+
+Permanent magnets, usually arranged in a circular "Hallbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
+
+The focus of this thesis is on advancing low-frequency (+mri) technology by addressing the sensor-usability of permanent magnets used in these systems. The variability in the strength of permanent magnets poses a significant obstacle to constructing an (+mri) with the necessary precision for homogenous field generation.
+
+To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. The accompanying open-source software is designed not only to facilitate measurements with different sensors but also to enable the characterization of different objects.
+
+The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1,000 (+ppm).
+
+This research initiative seeks to contribute to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterization. The outcomes of this thesis will provide insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
 ### Low-Field MRI
 
@@ -12,6 +29,11 @@ Typically, the magnetic field in low-field MRI systems measured between `0.1T` a
 This technology is used in medical imaging as well as in preclinical research.
 The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems [@Hori2021-pt].
 
+Contemporary most MRI machines employ high-field superconducting magnets cooled cryogenically, delivering exceptional image resolution. However, the associated costs, space requirements, and safety considerations can be substantial. In contrast, permanent magnets present an economical and space-efficient alternative. Nevertheless, they generate lower magnetic field strengths, impacting the signal-to-noise ratio (SNR) and resulting in lower image resolution within clinically viable scan times. [@Arnold2023-cn]
+
+In response to these challenges, recent endeavors in both academia and industry aim to leverage the benefits of lower field strength—such as reduced costs, a smaller device footprint, and diminished safety concerns—while addressing the inherent drawbacks that compromise image quality (refer to Table 1). The optimization of low-field approaches is becoming increasingly prevalent, tailored to specific clinical inquiries and contexts.
+
+To overcome limitations associated with lower field strengths, ongoing research focuses on the meticulous selection and validation of use cases. This strategic approach is essential for ensuring that the advantages of lower cost and reduced device size are harnessed without sacrificing diagnostic accuracy or compromising patient outcomes. [@Arnold2023-cn]
 
 ### Magnet System
 
@@ -466,26 +488,13 @@ As with the other sensors, this interface consists of your `Raspberry-Pi Pico` w
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol from table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
 
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
 ![Voltcraft GM70 teslameter with custom (+pc) interface board \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}](./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png)
 
-
-: Voltcraft GM70 serial protocol \label{Voltcraft_GM70_serial_protocol.csv}
-
-| BYTE-INDEX | REPRESENTATION |  VALUE                   |
-| ---------- | -------------- | ------------------------ |
-| 0          | PREAMBLE       | 0x2                      |
-| 1          |                | 0x1                      |
-| 2          |                | 0x4                      |
-| 3          | UNIT           | 'B' => Gauss 'E' => mT   |
-| 5          | POLARITY       | '1' => *0.1 '2' => *0.01 |
-| 6          | value MSB      | 0x-0xFF                  |
-| 13         | value LSB      | 0x-0xFF                  |
-| 14         | STOP           | 0x3                      |
 
 
 # Software Readout Framework
