@@ -456,14 +456,12 @@ As with the other sensors, this interface consists of your `Raspberry-Pi Pico` w
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol from table \ref{Voltcraft_GM70_serial_protocol.csv} of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customized version of the `CustomSensor` class \ref{lst:CustomSensorClass}.
 
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
 %%Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png%%
-
-%%Voltcraft_GM70_serial_protocol.csv%%
 
 
 # Software Readout Framework
