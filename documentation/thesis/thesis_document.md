@@ -41,13 +41,9 @@ In particular, the advantages of the small design, the fast and simple image acq
 
 ### Magnet System
 
-<<<<<<< HEAD
-Many low-field MRI systems use permanent magnets, often arranged in specific configurations like a Hallbach array. These permanent magnets are simpler and more cost-effective than the superconducting magnets used in high-field systems.
-
-%%Example_hallbach_ring_magnet_with_cutouts_for_eight_cubical_permanent_magnets.png%%
-=======
 %%Example_Hallbach_ring_with_cutouts_for_eight_magnets.png%%
->>>>>>> a232550e191110689c0c0986aab6a4da09af5808
+
+Many low-field MRI systems use permanent magnets, often arranged in specific configurations like a Hallbach array. These permanent magnets are simpler and more cost-effective than the superconducting magnets used in high-field systems.
 
 Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
 
