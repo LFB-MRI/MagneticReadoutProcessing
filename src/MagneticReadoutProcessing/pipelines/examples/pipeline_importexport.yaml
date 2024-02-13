@@ -6,7 +6,7 @@ settings:
 stage import:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+    IP_input_folder: ./readings/_tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
 #    IP_file_regex: (.)*.mag.json
 #    IP_parse_idx_in_filename: True
 
@@ -14,4 +14,4 @@ stage export:
   function: export_readings
   parameters:
     readings_to_inspect: stage import
-    IP_export_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/re_export
+    IP_export_folder: ./readings/_tlv493d_N45_12x12x12/525771256544952/SENSOR_0/re_export

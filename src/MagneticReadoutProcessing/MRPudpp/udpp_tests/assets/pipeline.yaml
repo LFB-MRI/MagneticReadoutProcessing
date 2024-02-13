@@ -6,7 +6,7 @@ settings:
 stage a:
   function: import_readings
   parameters:
-    IP_input_folder: tlv493d_N45_12x12x12
+    IP_input_folder: _tlv493d_N45_12x12x12
 
 
 stage e:
