@@ -4,24 +4,22 @@ As the following, the motivation for the development of this framework is listed
 
 ## Background and Motivation
 
-Magnetic Resonance Imaging (MRI) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (NMR) to generate cross-sectional images of the body. This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional MRI systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. 
+Magnetic Resonance Imaging (MRI) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (NMR) to generate cross-sectional black-and-white images of the body. This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional MRI systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
 Various types of magnets find application in different MRI systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electricity and induction. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the MRI. The higher the homogeneity, the more accurate the measurements. This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for measurements.
 
 The challenge with conventional first-order homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
-In response to this, there is a growing interest in developing low-field MRI systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. 
+In response to this, there is a growing interest in developing low-field MRI systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field MRI in 2021.
 
 Permanent magnets, usually arranged in a circular "Hallbach array" around the MRI, are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and MRI construction.
 
-The focus of this thesis is on advancing low-frequency MRI technology by addressing the characterization of permanent magnets used in these systems. The variability in the strength of permanent magnets poses a significant obstacle to constructing an MRI with the necessary precision for homogenous field generation.
+The focus of this thesis is on advancing low-frequency MRI technology by addressing the sensor-usability of permanent magnets used in these systems. The variability in the strength of permanent magnets poses a significant obstacle to constructing an MRI with the necessary precision for homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. The accompanying open-source software is designed not only to facilitate measurements with different sensors but also to enable the characterization of different objects.
 
-The characterization process involves two key tests. Firstly, the linearity of the magnetic fields is measured to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensor is evaluated to determine its capability to measure with precision greater than 1,000 ppm.
+The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1,000 ppm.
 
 This research initiative seeks to contribute to the improvement of low-frequency MRI systems by enhancing the accuracy of permanent magnet characterization. The outcomes of this thesis will provide insights into the selection and evaluation of sensors for future low-field MRI research, ultimately contributing to advancements in medical imaging technologies.
-
-### MRI
 
 Magnetic Resonance Imaging (MRI) is an established imaging technique in clinical practice that is based on the principles of nuclear magnetic resonance (NMR) and produces cross-sectional images of the body.
 
@@ -33,6 +31,11 @@ Typically, the magnetic field in low-field MRI systems measured between `0.1T` a
 This technology is used in medical imaging as well as in preclinical research.
 The main advantage of low-field MRI is the improved imaging of soft tissues, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field MRI systems [@Hori2021-pt].
 
+Contemporary most MRI machines employ high-field superconducting magnets cooled cryogenically, delivering exceptional image resolution. However, the associated costs, space requirements, and safety considerations can be substantial. In contrast, permanent magnets present an economical and space-efficient alternative. Nevertheless, they generate lower magnetic field strengths, impacting the signal-to-noise ratio (SNR) and resulting in lower image resolution within clinically viable scan times. [@Arnold2023-cn]
+
+In response to these challenges, recent endeavors in both academia and industry aim to leverage the benefits of lower field strength—such as reduced costs, a smaller device footprint, and diminished safety concerns—while addressing the inherent drawbacks that compromise image quality (refer to Table 1). The optimization of low-field approaches is becoming increasingly prevalent, tailored to specific clinical inquiries and contexts.
+
+To overcome limitations associated with lower field strengths, ongoing research focuses on the meticulous selection and validation of use cases. This strategic approach is essential for ensuring that the advantages of lower cost and reduced device size are harnessed without sacrificing diagnostic accuracy or compromising patient outcomes. [@Arnold2023-cn]
 
 ### Magnet System
 
