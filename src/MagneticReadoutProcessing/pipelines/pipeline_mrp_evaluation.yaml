@@ -6,25 +6,25 @@ settings:
 stage import:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/fullsphere/
+    IP_input_folder: ./readings/_fullsphere/
     IP_file_regex: 360_(.)*.mag.json
 
 stage importq:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/fullsphere/
+    IP_input_folder: ./readings/_fullsphere/
     IP_file_regex: 360_(.)*.mag.json
 
 stage importb:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/fullsphere/
+    IP_input_folder: ./readings/_fullsphere/
     IP_file_regex: 360_(.)*.mag.json
 
 stage importc:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/fullsphere/
+    IP_input_folder: ./readings/_fullsphere/
     IP_file_regex: 360_(.)*.mag.json
 
 stage find_similar_values:

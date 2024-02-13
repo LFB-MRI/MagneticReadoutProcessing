@@ -6,7 +6,7 @@ settings:
 stage import:
   function: import_readings
   parameters:
-    IP_input_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
+    IP_input_folder: ./readings/_tlv493d_N45_12x12x12/525771256544952/SENSOR_0/
 
 stage import_bias_reading:
   function: import_readings
@@ -33,4 +33,4 @@ stage generate_hallbach_slice:
   function: generate_hallbach_slice
   parameters:
     readings_for_slice: stage apply_binning
-    IP_output_folder: ./readings/tlv493d_N45_12x12x12/525771256544952/SENSOR_0/hallbach/
+    IP_output_folder: ./readings/_tlv493d_N45_12x12x12/525771256544952/SENSOR_0/hallbach/
