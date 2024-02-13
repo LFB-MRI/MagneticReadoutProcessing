@@ -11,7 +11,7 @@ Various types of magnets find application in different (+mri) systems. Permanent
 The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021.
 
-Permanent magnets, usually arranged in a circular "Hallbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction. Completed MRI systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment becomes formidable. An approach dictates that meticulous adjustments to the magnets should be undertaken proactively, prior to the finalization of the MRI system.
+Permanent magnets, usually arranged in a circular "Halbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction. Completed MRI systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment becomes formidable. An approach dictates that meticulous adjustments to the magnets should be undertaken proactively, prior to the finalization of the MRI system.
 
 The focus of this thesis is on advancing low-frequency (+mri) technology by addressing the sensor-usability of permanent magnets used in these systems. The variability in the strength of permanent magnets poses a significant obstacle to constructing an (+mri) with the necessary precision for homogenous field generation.
 
@@ -97,13 +97,13 @@ Since this project is to be used in the future to construct a low-field (+mri) f
 
 **Low-Field MRI**
 
-According to Wolfgang R. Nitz in 2016, just 13.4% of actively used MRI systems are low-field MRI (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [Nitz2016]
-Nitz also highlights that presently, the landscape of MRI technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up MRI from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their MRI systems. This notable concentration underscores the distinctive position of Stand-up MRI as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [Nitz2016]
+According to Wolfgang R. Nitz in 2016, just 13.4% of actively used v systems are low-field (+mri)  (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [Nitz2016]
+Nitz also highlights that presently, the landscape of (+mri)  technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up (+mri)  from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their (+mri)  systems. This notable concentration underscores the distinctive position of Stand-up (+mri)  as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [Nitz2016]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional MRI in a homogeneous 27 cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field MRI system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27 cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri)  system [@De_Vos2023-pb].
 
-The objective of this MRI system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
-This MRI system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
+The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
+This (+mri)  system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
 
 The Halbach magnet incorporated in this system boasts a 27cm diameter, a B0 field strength of 50.4 mT, and an impressive homogeneity of 2400 ppm over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -120,10 +120,10 @@ In order to measure the magnets individually, there are already implementations 
 There are two ways of using the data from the magnets that were previously measured:
 
 * By using binning or sorting algorithms to filter for the most similar magnets
-* Adjustment of the rotation and position within the Hallbach configuration
+* Adjustment of the rotation and position within the Halbach configuration
 
 This form of data processing of previously characterised magnetic data is currently being implemented experimentally in projects using various algorithms [@Wickenbrock_2021].
-Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Hallbach ring relative to each other [@HalbachMRIDesigner].
+Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Halbach ring relative to each other [@HalbachMRIDesigner].
 
 These are each separate projects that implement individual aspects of data processing, which realize the process of measuring individual magnets by manual combination.
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
@@ -135,14 +135,26 @@ This should make it possible to create a workflow from the individual magnet to 
 
 The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
+Within the framework of the "DeLoRI" (Dedicated Low-field MRI for breast) project, Fraunhofer MEVIS in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field MRIs have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by Fraunhofer MEVIS exemplifies the ongoing commitment to harnessing the potential of low-field MRI for enhanced breast screening applications.
+
+The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1.000ppm, primarily driven by the goal of establishing a compact low-field MRI for breast cancer detection. 
+
+Beyond the development and prototype construction of low-field MRI scanners, the project encompasses electromagnetic simulation of components within the low-field MRI system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
+
+This comprehensive effort serves to bolster the prototyping phase of the low-field MRI. Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, DeLoRI aims to design an open MRI, departing from the circular MRI configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
+In addition DeLoRI endeavors to achieve heightened accuracy, striving for precision levels below 1,000 ppm. While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
+
+It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterization process.
+
+To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterization process.
+
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
-
-The work aims to facilitate magnetic field characterisation and improve the exchange of data between different user groups.
 Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
+Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1,000 ppm. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
 
 ## Structure
@@ -520,9 +532,9 @@ The following example shows the advantages of using the `User interaction points
 
 A project called `HalbachOptimisation` [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The `HalbachMRIDesigner` [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Hallbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an `OpenSCAD` [@OpenSCAD] based 3D model of the magnet holder.
+The `HalbachMRIDesigner` [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an `OpenSCAD` [@OpenSCAD] based 3D model of the magnet holder.
 
-As a result, there are two projects which are both suitable for the task of optimizing and creating Hallbach magnets for (+mri) applications. The data structures are not compatible with each other.
+As a result, there are two projects which are both suitable for the task of optimizing and creating Halbach magnets for (+mri) applications. The data structures are not compatible with each other.
 However, they are executed manually one after the other to obtain a final result with manual data conversation.
 
 The library created is intended to solve one problem by providing standardized and flexible data structures for use with this form of magnetic field data.
@@ -1029,10 +1041,10 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 %%Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png%%
 
 
-### MRPHallbachArrayGenerator
+### MRPHalbachArrayGenerator
 
 
-The following example code \ref{lst:mrpexample_hallbach}, shows how a simple Hallbach magnetic ring can be generated.
+The following example code \ref{lst:mrpexample_hallbach}, shows how a simple Halbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
@@ -1041,20 +1053,20 @@ Eight random measurements are generated here.
 It is important that the magnet type (here *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
-After the measurements have been generated, they are provided with a position and rotation offset according to the Hallbach design and calucation scheme [@HallbachMagnetDesignPaper] using the *MRPHallbachArrayGenerator* module.
+After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calucation scheme [@HallbachMagnetDesignPaper] using the *MRPHalbachArrayGenerator* module.
 
-```python {#lst:mrpexample_hallbach caption="MRPHallbachArrayGenerator example for generating an OpenSCAD based hallbach ring"}
+```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based halbach ring"}
 readings = []
 for idx in range(8):
   # GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS
   readings.append(MRPSimulation.MRPSimulation.generate_reading(MRPMagnetTypes.MagnetType.N45_CUBIC_15x15x15))
-## GENERATE HALLBACH
-hallbach_array: MRPHallbachArrayGenerator.MRPHallbachArrayResult = MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_1k_hallbach_using_polarisation_direction(readings)
+## GENERATE HALBACH
+halbach_array: MRPHalbachArrayGenerator.MRPHalbachArrayResult = MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_1k_halbach_using_polarisation_direction(readings)
 # EXPORT TO OPENSCAD
 ## 2D MODE DXF e.g. for lasercutting
-MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./2d_test.scad",_2d_object_code=True)
+MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halbach_array], "./2d_test.scad",_2d_object_code=True)
 ## 3D MODE e.g. for 3D printing
-MRPHallbachArrayGenerator.MRPHallbachArrayGenerator.generate_openscad_model([hallbach_array], "./3d_test.scad",_2d_object_code=False)
+MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halbach_array], "./3d_test.scad",_2d_object_code=False)
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
