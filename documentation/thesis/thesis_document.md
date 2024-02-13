@@ -72,13 +72,16 @@ The homogeneity in this configuration depends, among other things, on the follow
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
 
+Halbach magnetic arrays present a compelling choice for mobile NMR due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled.
+In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.  
 
 
 ### Shimming Procedure
 
 The shimming process is a crucial step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is crucial for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
+
+Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique crucial for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@inbook]
 
 The sources for the shimming process can be hardware and software based.
 Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field.
