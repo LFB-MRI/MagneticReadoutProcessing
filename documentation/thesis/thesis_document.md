@@ -11,13 +11,13 @@ Various types of magnets find application in different (+mri) systems. Permanent
 The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize various magnet types, including permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While incapable of producing images due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of anomalies. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021.
 
-Permanent magnets, usually arranged in a circular "Hallbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
+Permanent magnets, usually arranged in a circular "Hallbach array" around the (+mri), are commonly employed in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction. Completed MRI systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment becomes formidable. An approach dictates that meticulous adjustments to the magnets should be undertaken proactively, prior to the finalization of the MRI system.
 
 The focus of this thesis is on advancing low-frequency (+mri) technology by addressing the sensor-usability of permanent magnets used in these systems. The variability in the strength of permanent magnets poses a significant obstacle to constructing an (+mri) with the necessary precision for homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. The accompanying open-source software is designed not only to facilitate measurements with different sensors but also to enable the characterization of different objects.
 
-The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1,000 (+ppm).
+The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1,000 (+ppm). In the end, the sensors should also measure how uniform the magnetic field is in a completed (+mri) system.
 
 This research initiative seeks to contribute to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterization. The outcomes of this thesis will provide insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
@@ -37,17 +37,15 @@ The main advantage of low-field (+mri) is the improved imaging of soft tissues, 
 
 Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to 0.35 Tesla can be generated. However, this achievement comes at the cost of an average system weight of 14 tons. Despite their cost-effectiveness in production and maintenance, permanent magnets exhibit drawbacks such as high temperature dependence and a limited signal-to-noise ratio (SNR) due to the constrained field strength. [@Nitz2016]
 
-In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems.
+In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and need to be analysed.
 
 ### Magnet System
 
 %%Example_Hallbach_ring_with_cutouts_for_eight_magnets.png%%
 
-Many low-field MRI systems use permanent magnets, often arranged in specific configurations like a Hallbach array. These permanent magnets are simpler and more cost-effective than the superconducting magnets used in high-field systems.
+The positioning of permanent magnets holds a pivotal role in constructing an MRI and influencing the homogeneity of the B0 magnetic field. Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
 
-Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
-
-They have the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and are particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
+This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
 A halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
 The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic `12x12x12mm`  magnets are embedded to generate homogeneous magnetic flux densities of around `20mT`.
@@ -69,8 +67,7 @@ The homogeneity in this configuration depends, among other things, on the follow
 * **Manufacturing process**:
   The manufacturing process can influence the magnetic properties of the material.
   This is dependent on the purity of the starting materials used and the processing methods.
-  There may also be deviations in field strength if different magnets from different production batches are compared.
-
+  There may also be deviations in field strength if different magnets from different production batches are compared. [@inbook]
 
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
