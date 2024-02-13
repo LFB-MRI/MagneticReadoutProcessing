@@ -1,6 +1,0 @@
-udpp.import\_MRP
-================
-
-.. currentmodule:: udpp
-
-.. automodule:: import_MRP

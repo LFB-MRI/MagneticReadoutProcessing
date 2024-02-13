@@ -1,6 +1,0 @@
-﻿udpp.UDPPFFunctionCollection
-============================
-
-.. currentmodule:: udpp
-
-.. automodule:: UDPPFFunctionCollection

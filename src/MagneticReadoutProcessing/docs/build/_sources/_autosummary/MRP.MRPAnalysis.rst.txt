@@ -1,6 +1,0 @@
-MRP.MRPAnalysis
-===============
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPAnalysis

@@ -1,6 +1,0 @@
-MRP.MRPMeasurementConfig
-========================
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPMeasurementConfig

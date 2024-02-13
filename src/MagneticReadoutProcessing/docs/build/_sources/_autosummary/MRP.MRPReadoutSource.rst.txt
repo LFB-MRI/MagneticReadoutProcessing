@@ -1,6 +1,0 @@
-MRP.MRPReadoutSource
-====================
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPReadoutSource

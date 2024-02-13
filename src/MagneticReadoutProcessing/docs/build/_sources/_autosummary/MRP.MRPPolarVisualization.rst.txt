@@ -1,6 +1,0 @@
-MRP.MRPPolarVisualization
-=========================
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPPolarVisualization

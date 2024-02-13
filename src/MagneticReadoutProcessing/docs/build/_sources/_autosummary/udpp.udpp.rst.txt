@@ -1,6 +1,0 @@
-udpp.udpp
-=========
-
-.. currentmodule:: udpp
-
-.. automodule:: udpp

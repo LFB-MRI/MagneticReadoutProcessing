@@ -1,6 +1,0 @@
-MRP.MRPHallbachArrayGenerator
-=============================
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPHallbachArrayGenerator

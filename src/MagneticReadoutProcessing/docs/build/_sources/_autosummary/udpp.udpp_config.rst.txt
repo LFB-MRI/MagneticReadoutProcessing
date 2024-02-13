@@ -1,6 +1,0 @@
-udpp.udpp\_config
-=================
-
-.. currentmodule:: udpp
-
-.. automodule:: udpp_config

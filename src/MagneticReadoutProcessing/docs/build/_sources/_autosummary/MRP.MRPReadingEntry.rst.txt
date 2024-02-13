@@ -1,6 +1,0 @@
-MRP.MRPReadingEntry
-===================
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPReadingEntry

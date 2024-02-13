@@ -1,6 +1,0 @@
-MRP.MRPHelpers
-==============
-
-.. currentmodule:: MRP
-
-.. automodule:: MRPHelpers
