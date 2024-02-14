@@ -1702,33 +1702,52 @@ The recorded measurement series are automatically analysed using the *Programmab
 
 
 
-### Sensor Characterisation: Noise
+## Sensor Characterisation: Background-Noise
 
 
 ![Sensor evaluation setup for noise measurements \label{Sensor_evaluation_setup_for_noise_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png)
 
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to *20°C*.
 
 The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
-For this purpose, a sample size of N=10000 measured values was recorded for the baseline measurement.
+For this purpose, a sample size of *N=10000* measured values was recorded for the baseline measurement.
 
-The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, N=2000 further measured values were taken with a trigger and readout rate of one measurement per second.
+The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values were taken with a trigger and readout rate of one measurement per second.
 
-In order to quantify the noise, the standard deviation or the mean square deviation of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
-
-: Sensor noise evaluation result used symbols \label{Sensor_noise_evaluation_result_used_symbols.csv}
-
-| Symbol         |  Unit  |  Description |
-| -------------- | ------ | ------------ |
-| $\mu_{rv}$     | $\mu$T |              |
-| $\mu_{t}$      | $\mu$T |              |
-| $\mu_{nl}$     | %      |              |
-| $\sigma_{nl}$  | %      |              |
-
+In order to quantify the noise, the standard deviation of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
 
 
 ![Sensor noise evaluation results for TLV493D and MMC5603NJ with N=2000 samples and no averaging \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}](./generated_images/border_Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png)
+
+
+The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} shows the measured values of these sensors. In the following, these are analysed for each sensor examined.
+
+The following data is shown in the plots:
+
+* Plot of the raw data of the sensor
+* Plot of the sensor's internal temperature sensor
+* Background noise level with reference to the baseline
+* Histogram of the background noise level
+
+
+
+
+%%Sensor_noise_evaluation_results.csv%%
+
+
+### Sensor Temperature Analysis
+
+Compared to the *MMC5603NJ*, the temperature plot of the *TLV493D* shows that the internal temperature sensor is very noisy (maximum of $\sigma^2_{t}$=*2$^{\circ}$C*)and deviates from the ambient temperature at almost *10$^{\circ}$C*.
+With a further measurement run with a different temperature setting of *30$^{\circ}$C*, the offset is reduced to only *4$^{\circ}$C* to the set temperature. However, the noise remains constant.
+When using an alternative sensor, this behaviour is reflected and therefore the internal temperature sensor of the *TLV493D* should not be used for subsequent temperature compensation.
+
+
+### Raw Sensor Data Analysis
+
+
+
+### Noise Level Data Analysis
 
 
 
@@ -1740,15 +1759,20 @@ In order to quantify the noise, the standard deviation or the mean square deviat
  TODO TABELLE
 EINORDNUNG MITTELUNGEN ALS TABELLE
 
-### Temperature Sensitivity
+## Temperature Sensitivity
 
 ![Sensor evaluation setup for temperature sensitivity measurements \label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png)
 
 
 
-using same setup as in read noise but with programmed temperature controller of the chamber
+![Sensor temperature sensitivity evaluation results for TLV493D and MMC5603NJ \label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}](./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png)
 
-### Linearity
+
+
+
+using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
+
+## Linearity
 
 ![Sensor evaluation setup for linearity measurements \label{Sensor_evaluation_setup_for_linearity_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png)
 
@@ -1761,13 +1785,20 @@ using same setup as in read noise but with programmed temperature controller of 
 * minimal distance between sensor and magnet due to messbreich
 
 
-#### Result Analysis
+## Result Analysis
 
 are they suitable for <1000ppm ? 
 
 * https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
 * 27cm / 50mT bore
 * nmr probes for better results
+
+
+
+###  recommendation for action
+
+* folgendes setup woird für eine vermessung nach der sensor auswertung emholen:
+* temperaturkomensation sowie linearitäts kompensation mit separaten temperatur sensor
 
 
 

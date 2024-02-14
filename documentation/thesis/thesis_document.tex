@@ -3065,9 +3065,9 @@ The recorded measurement series are automatically analysed using the
 \ref{programmable-data-processing-pipeline} and the results are
 visualised.
 
-\hypertarget{sensor-characterisation-noise}{%
-\subsection{Sensor Characterisation:
-Noise}\label{sensor-characterisation-noise}}
+\hypertarget{sensor-characterisation-background-noise}{%
+\section{Sensor Characterisation:
+Background-Noise}\label{sensor-characterisation-background-noise}}
 
 \begin{figure}
 \centering
@@ -3079,42 +3079,24 @@ Noise}\label{sensor-characterisation-noise}}
 Measuring the noise in a magnetic field sensor requires a precise
 procedure and a special measurement setup. First, the magnetic field
 sensor is placed in a quiet environment to minimize external field
-interference.
+interference. The temperature chamber for all noise tests is set to
+\emph{20°C}.
 
 The procedure begins with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
-size of N=10000 measured values was recorded for the baseline
+size of \emph{N=10000} measured values was recorded for the baseline
 measurement.
 
 The output signal of the sensor is then continuously measured and
 recorded. It is important to carry out the measurement over a
 sufficiently long period of time in order to record both short-term and
-long-term fluctuations. For this purpose, N=2000 further measured values
-were taken with a trigger and readout rate of one measurement per
+long-term fluctuations. For this purpose, \emph{N=2000} further measured
+values were taken with a trigger and readout rate of one measurement per
 second.
 
-In order to quantify the noise, the standard deviation or the mean
-square deviation of the signal is calculated. These parameters provide
-information about the variation of the signal over time and therefore
-about the sensor background noise.
-
-\begin{longtable}[]{@{}lll@{}}
-\caption{Sensor noise evaluation result used symbols
-\label{Sensor_noise_evaluation_result_used_symbols.csv}}\tabularnewline
-\toprule
-Symbol & Unit & Description\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Symbol & Unit & Description\tabularnewline
-\midrule
-\endhead
-\(\mu_{rv}\) & \(\mu\)T &\tabularnewline
-\(\mu_{t}\) & \(\mu\)T &\tabularnewline
-\(\mu_{nl}\) & \% &\tabularnewline
-\(\sigma_{nl}\) & \% &\tabularnewline
-\bottomrule
-\end{longtable}
+In order to quantify the noise, the standard deviation of the signal is
+calculated. These parameters provide information about the variation of
+the signal over time and therefore about the sensor background noise.
 
 \begin{figure}
 \centering
@@ -3123,6 +3105,48 @@ Symbol & Unit & Description\tabularnewline
 N=2000 samples and no averaging
 \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}}
 \end{figure}
+
+The following figure
+\ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
+shows the measured values of these sensors. In the following, these are
+analysed for each sensor examined.
+
+The following data is shown in the plots:
+
+\begin{itemize}
+\tightlist
+\item
+  Plot of the raw data of the sensor
+\item
+  Plot of the sensor's internal temperature sensor
+\item
+  Background noise level with reference to the baseline
+\item
+  Histogram of the background noise level
+\end{itemize}
+
+\%\%Sensor\_noise\_evaluation\_results.csv\%\%
+
+\hypertarget{sensor-temperature-analysis}{%
+\subsection{Sensor Temperature
+Analysis}\label{sensor-temperature-analysis}}
+
+Compared to the \emph{MMC5603NJ}, the temperature plot of the
+\emph{TLV493D} shows that the internal temperature sensor is very noisy
+(maximum of \(\sigma^2_{t}\)=\emph{2\(^{\circ}\)C})and deviates from the
+ambient temperature at almost \emph{10\(^{\circ}\)C}. With a further
+measurement run with a different temperature setting of
+\emph{30\(^{\circ}\)C}, the offset is reduced to only
+\emph{4\(^{\circ}\)C} to the set temperature. However, the noise remains
+constant. When using an alternative sensor, this behaviour is reflected
+and therefore the internal temperature sensor of the \emph{TLV493D}
+should not be used for subsequent temperature compensation.
+
+\hypertarget{raw-sensor-data-analysis}{%
+\subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
+
+\hypertarget{noise-level-data-analysis}{%
+\subsection{Noise Level Data Analysis}\label{noise-level-data-analysis}}
 
 \begin{itemize}
 \tightlist
@@ -3141,7 +3165,7 @@ N=2000 samples and no averaging
 TODO TABELLE EINORDNUNG MITTELUNGEN ALS TABELLE
 
 \hypertarget{temperature-sensitivity}{%
-\subsection{Temperature Sensitivity}\label{temperature-sensitivity}}
+\section{Temperature Sensitivity}\label{temperature-sensitivity}}
 
 \begin{figure}
 \centering
@@ -3151,11 +3175,20 @@ measurements
 \label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+\caption{Sensor temperature sensitivity evaluation results for TLV493D
+and MMC5603NJ
+\label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
+\end{figure}
+
 using same setup as in read noise but with programmed temperature
-controller of the chamber
+controller of the chamber and separate temperature probe under the
+sensors pcb
 
 \hypertarget{linearity}{%
-\subsection{Linearity}\label{linearity}}
+\section{Linearity}\label{linearity}}
 
 \begin{figure}
 \centering
@@ -3178,7 +3211,7 @@ controller of the chamber
 \end{itemize}
 
 \hypertarget{result-analysis-1}{%
-\subsubsection{Result Analysis}\label{result-analysis-1}}
+\section{Result Analysis}\label{result-analysis-1}}
 
 are they suitable for \textless1000ppm ?
 
@@ -3190,6 +3223,19 @@ are they suitable for \textless1000ppm ?
   27cm / 50mT bore
 \item
   nmr probes for better results
+\end{itemize}
+
+\hypertarget{recommendation-for-action}{%
+\subsection{recommendation for action}\label{recommendation-for-action}}
+
+\begin{itemize}
+\tightlist
+\item
+  folgendes setup woird für eine vermessung nach der sensor auswertung
+  emholen:
+\item
+  temperaturkomensation sowie linearitäts kompensation mit separaten
+  temperatur sensor
 \end{itemize}
 
 \hypertarget{conclusion-and-discussion}{%
