@@ -1,0 +1,70 @@
+<mxfile host="Electron" modified="2024-02-09T13:56:53.058Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="Cs6e7rsxhxxnjJlNPeBF" version="22.1.2" type="device">
+  <diagram name="Seite-1" id="LVsIx8To8QwGvgg_5ai1">
+    <mxGraphModel dx="3193" dy="554" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4N-B-asAUeovzKVmC_IK-16" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="-2137.847533632287" y="10" width="2109.847533632287" height="740.48" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-10" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2074.45067264574" y="141.86630136986304" width="938.2735426008969" height="507.17808219178085" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="-2011.053811659193" y="585.6471232876712" width="811.4798206278028" height="50.71780821917808" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-3" value="Mounting base plate" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-2011.053811659193" y="572.9676712328767" width="811.4798206278028" height="76.07671232876713" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" vertex="1" parent="1">
+          <mxGeometry x="-1884.2600896860986" y="509.5704109589041" width="557.8923766816145" height="63.397260273972606" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-5" value="Temperature isolating spacer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-1896.939461883408" y="501.9627397260274" width="583.2511210762333" height="76.07671232876713" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-11" value="Temperature chamber" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-2084" y="92.47" width="294.4" height="61.53" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-13" value="" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1656.031390134529" y="349.80931506849316" width="152.15246636771303" height="152.15342465753426" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-14" value="DUT: Unified Sensor" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-1920" y="387.85" width="250.76" height="76.08" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-15" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="-1503.8789237668161" y="367.5605479452055" width="811.4798206278028" height="50.71780821917808" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-17" value="Lab environment" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-2130" y="10" width="220" height="76.08" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-20" value="Isolated USB connection" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-1100" y="332.05" width="292.24" height="76.08" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-22" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-783.3991031390133" y="266.1249315068493" width="304.30493273542606" height="152.15342465753426" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-23" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="-1503.8789237668161" y="433.49369863013703" width="811.4798206278028" height="50.71780821917808" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-783.3991031390133" y="433.49369863013703" width="304.30493273542606" height="88.75616438356164" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-26" value="5V Battery based&lt;br style=&quot;font-size: 26px;&quot;&gt;power supply" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-781" y="439.83" width="300" height="76.08" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-27" value="Raspberry Pi 4&lt;br style=&quot;font-size: 26px;&quot;&gt;with running&lt;br style=&quot;font-size: 26px;&quot;&gt;MRPProxy instance" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-771" y="280" width="290" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-29" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="-479.0941704035872" y="332.0580821917808" width="121.72197309417042" height="25.35890410958904" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-35" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-357.3691031390133" y="266.1249315068493" width="304.30493273542606" height="152.15342465753426" as="geometry" />
+        </mxCell>
+        <mxCell id="4N-B-asAUeovzKVmC_IK-30" value="Control PC with MRPCli and configured measurements" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="-359.91" y="286.27000000000004" width="309.38" height="111.87" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
