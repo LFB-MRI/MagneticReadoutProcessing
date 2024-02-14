@@ -1,0 +1,2 @@
+![Sensor evaluation setup for temperature sensitivity measurements \label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png)
+
