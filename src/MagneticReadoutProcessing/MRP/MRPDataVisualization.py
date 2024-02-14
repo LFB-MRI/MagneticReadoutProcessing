@@ -65,7 +65,7 @@ class MRPDataVisualization:
                     temps.append(int(temperature))
             if not was_in:
                 temps.append(0)
-            xlabels.append("{}{}".format(temperature, _uni_temp))
+            xlabels.append("{}".format(temperature, _uni_temp))
 
         raw_y = [v for _, v in sorted(zip(temps, raw_y))]
         #raw_y = raw_y.reverse()
