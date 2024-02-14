@@ -45,7 +45,7 @@ class TestMPRDataVisualization(unittest.TestCase):
     def test_temperature_deviation(self):
         files = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'(.)*.mag.json', f)]
 
-        N: int = 2000
+        N: int = 1000
         # GET SENSORS OUT OF FILENAME
         sensors: set = set()
         for e in files:
@@ -64,7 +64,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             for idx, r in enumerate(sfiles):
                 reading: MRPReading.MRPReading = MRPReading.MRPReading()
 
-                if 'tlv493d' in r.lower():
+                if 'tlv493d' in reading.get_name().lower() and not 'ID230972496757412434' in reading.get_name().lower():
                     reading.set_unit_import_scale_factor(10000.0)
 
                 reading.load_from_file(os.path.join(self.asset_temperaturedeviation_folder_path, r))
@@ -97,9 +97,9 @@ class TestMPRDataVisualization(unittest.TestCase):
 
 
         for s in values_to_plot.keys():
-            reading_name: str = "Temperature Sensitivity of " + s + ""
+            reading_name: str = "Temperature sensitivity of " + s + "".format(N)
             export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
-
+            reading_name += " using N={} samples per increased °C".format(N)
             MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(values_to_plot[s], None,
                                                                                  None, reading_name,
                                                                                  export_filename)
@@ -161,7 +161,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             for idx, r in enumerate(e['files']):
                 reading: MRPReading.MRPReading = MRPReading.MRPReading()
 
-                if 'tlv493d' in k.lower():
+                if 'tlv493d' in k.lower() and not 'ID230972496757412434' in reading.get_name():
                     reading.set_unit_import_scale_factor(10000.0)
 
 
