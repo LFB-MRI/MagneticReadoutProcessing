@@ -3,9 +3,9 @@ mkdir /tmp/linear_results
 MRPCli --basepath /tmp/linear config setup linear
 MRPCli --basepath /tmp/linear config setupsensor linear
 
-wget http://192.168.178.88/printer/gcode/script?script=G90
-wget http://192.168.178.88/printer/gcode/script?script=G0%20Z51
-wget http://192.168.178.88/printer/gcode/script?script=G91
+wget --quiet http://192.168.178.88/printer/gcode/script?script=G90
+wget --quiet http://192.168.178.88/printer/gcode/script?script=G0%20Z51
+wget --quiet http://192.168.178.88/printer/gcode/script?script=G91
 
 
 
@@ -19,7 +19,7 @@ do
 
     rm /tmp/linear/*.mag.json
 
-    wget http://192.168.178.88/printer/gcode/script?script=G1%20Z+1
+    wget --quiet http://192.168.178.88/printer/gcode/script?script=G1%20Z+1
     sleep 1
     MRPCli --basepath /tmp/linear measure run linear
 

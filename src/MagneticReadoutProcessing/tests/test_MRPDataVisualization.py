@@ -97,7 +97,7 @@ class TestMPRDataVisualization(unittest.TestCase):
 
 
         for s in values_to_plot.keys():
-            reading_name: str = "Temperature Deviation of " + s + ""
+            reading_name: str = "Temperature Sensitivity of " + s + ""
             export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
 
             MRPDataVisualization.MRPDataVisualization.plot_temperature_deviation(values_to_plot[s], None,

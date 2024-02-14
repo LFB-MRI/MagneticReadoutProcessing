@@ -56,6 +56,7 @@ class MRPHalSerialPortInformation:
         SERIAL_LUT = [
             '386731533439'  # FIRST EVER BUILD SENSOR :)
             '00000000d0ad2036'  # FIRST ROTATIONAL SENSOR
+            '230972496757412434'
             # '0483:5740'     # USB VID:PID IS WORKING TOO
         ]
 
