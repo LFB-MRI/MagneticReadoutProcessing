@@ -1613,7 +1613,10 @@ The developed framework is directly compatible with a variety of magnetic field 
 
 %%Digital_magnetic_field_sensors_characterised_for_evaluation.csv%%
 
-For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation. This selection was made for the following reasons:
+For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
+The additional column for the *Background-Noise* was taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
+
+This selection was made for the following reasons:
 
 The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
 For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection was made for the following reasons:
@@ -1623,7 +1626,10 @@ For this evaluation, the sensors listed in the table were used for sensor charac
 * Availability for testing
 
 
-It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose.
+*MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
+The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
+
+It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose are packaged with library.
 
 
 
@@ -1649,9 +1655,8 @@ With additional connected switch, its possible to isolate or select a sensor or 
 A separate battery powered supply is used as low-noise power supply for the sensors boards.
 An *Raspberry Pi 4* is used as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
-*MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
-The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
 
+* professionelle temperatur und kalibierte meter zeigt "hläfte" und liegt somit in der mitte der messergbisse 
 
 
 

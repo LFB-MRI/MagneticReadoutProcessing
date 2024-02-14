@@ -1678,7 +1678,10 @@ The developed framework is directly compatible with a variety of magnetic field 
 | Range [mT]            | ±130.0       | ±3        |
 | Background-Noise [uT] | 100          | 0.2       |
 
-For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation. This selection was made for the following reasons:
+For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
+The additional column for the *Background-Noise* was taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
+
+This selection was made for the following reasons:
 
 The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
 For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection was made for the following reasons:
