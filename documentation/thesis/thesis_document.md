@@ -17,7 +17,7 @@ The focus of this thesis is on advancing low-frequency (+mri) technology by addr
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. The accompanying open-source software is designed not only to facilitate measurements with different sensors but also to enable the characterization of different objects.
 
-The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1,000 (+ppm). In the end, the sensors should also measure how uniform the magnetic field is in a completed (+mri) system.
+The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1000 (+ppm). In the end, the sensors should also measure how uniform the magnetic field is in a completed (+mri) system.
 
 This research initiative seeks to contribute to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterization. The outcomes of this thesis will provide insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
@@ -105,7 +105,7 @@ Within the research domain, various implementations have emerged. An exemplar in
 The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
 This (+mri)  system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
 
-The Halbach magnet incorporated in this system boasts a 27cm diameter, a B0 field strength of 50.4 mT, and an impressive homogeneity of 2400 ppm over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a 27cm diameter, a B0 field strength of 50.4 mT, and an impressive homogeneity of 2400 (+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach cylinder along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -137,12 +137,12 @@ The present work aims to provide an efficient and comprehensive solution for the
 
 Within the framework of the "DeLoRI" (Dedicated Low-field (+mri) for breast) project, Fraunhofer MEVIS in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field (+mri)s have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by Fraunhofer MEVIS exemplifies the ongoing commitment to harnessing the potential of low-field (+mri) for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1.000ppm, primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
+The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1000(+ppm), primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
 
 Beyond the development and prototype construction of low-field (+mri) scanners, the project encompasses electromagnetic simulation of components within the low-field MRI system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
 
 This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, DeLoRI aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
-In addition DeLoRI endeavors to achieve heightened accuracy, striving for precision levels below 1,000 ppm. While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
+In addition DeLoRI endeavors to achieve heightened accuracy, striving for precision levels below 1000 (+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
 
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterization process.
 
@@ -154,7 +154,7 @@ Complete documentation, tutorials and tests will enable users to use the framewo
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
-Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1,000 ppm. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
+Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1000 (+ppm). Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
 ## Research Question and Approach
 
@@ -164,7 +164,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Sensor Characterization: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1,000 ppm? The desired outcome is a measurement of less than 50 $\mu$T at 1,000 ppm, with a specific focus on determining the sensors' viability for noise measurements.
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1,000 (+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at 1000 (+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
 It is crucial to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
 
@@ -1593,43 +1593,47 @@ The calculation result was successfully verified using raw measurement data and 
 
 # Evaluation
 
-This work successfully implemented a universal hardware and software framework for the automated characterisation of permanent magnets.
-This framework consists of a low-cost hardware interface that supports various magnetic field sensors and a library for automating and analysing the measurement data.
 
-next step is the sensor evaluation
+In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it was shown that the implementation of the hardware and software framework for various magnetic field sensors was successfully implemented.
 
-* software wurde erfolgreich evaluiert anhand der zuvor definierten usecases.
-* folgend wird der zweite anwendungsfall evaluiert mit der frage ob die magnete vermessen werden können
-* TODO
+In addition, the basic application by the user was demonstrated using an example.
+This makes it possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
+
+After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
+
+* Measure a wide range of different permanent magnets with regard to their systematic field strength
+* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than 1000 (+ppm)
+
+These questions are answered in the following, as a basic readout and analysis functionality platform had to be created first and thus an automated sensor characterisation can be performed.
 
 
-%%Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png%%
+## Sensors for Evaluation
 
-* cheap sensors used 
-* used hardware list
-* tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung standen
-
-%%Implemented_digital_magnetic_field_sensors.csv%%
-
+%%Digital_magnetic_field_sensors_characterised_for_evaluation.csv%%
 
 ## Evaluation Sensor Setup
 
-The sensor platform used here is an adapted version of the *1D: Single Sensor* \ref{d-single-sensor} sensor platform. The sensors to be measured were fixed together on an aluminium plate with thermally conductive adhesive. This compensates for thermal differences.
+%%Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png%%
+
+The sensor platform used here is an adapted version of the *1D: Single Sensor* \ref{d-single-sensor} sensor platform.
+The sensors to be measured were fixed together on an aluminium plate with thermally conductive adhesive.
+This compensates for thermal differences.
 This is crucial for the subsequent temperature deviation tests in order to obtain comparable measurement results.
 
 The setup was placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
-The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, was used as the temperature chamber. To verify the temperature, an additional thermometer *VC-7055BT* was placed on the base plate.
+The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, was used as the temperature chamber.
+To verify the temperature, an additional thermometer *VC-7055BT* was placed on the base plate.
 A 10mm thick *PTFE* insulation plate was placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
 
-The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here was used as the readout hardware, on which the *Unified Sensor Firmware* is running. With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
+The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here was used as the readout hardware, on which the *Unified Sensor Firmware* is running.
+With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
 A separate battery powered supply is used as low-noise power supply for the sensors boards.
 An *Raspberry Pi 4* is used as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
 *MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
 The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
-
 
 
 
@@ -1679,7 +1683,7 @@ When using an alternative sensor, this behaviour is reflected and therefore the 
 
 
 
-### Noise Level Data Analysis
+
 
 
 
@@ -1715,7 +1719,7 @@ using same setup as in read noise but with programmed temperature controller of 
 
 ## Result Analysis
 
-are they suitable for <1000ppm ? 
+are they suitable for <1000(+(+ppm)) ? 
 
 * https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
 * 27cm / 50mT bore

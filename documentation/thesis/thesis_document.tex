@@ -79,7 +79,7 @@ The sensor testing process involves two key tests. Firstly, the
 linearity of the magnetic fields is measured with all sensors to assess
 the feasibility of using specific sensors. Secondly, the homogeneity of
 the sensors is evaluated to determine its capability to measure with
-precision greater than 1,000 \gls{ppm}. In the end, the sensors should
+precision greater than 1000 \gls{ppm}. In the end, the sensors should
 also measure how uniform the magnetic field is in a completed \gls{mri}
 system.
 
@@ -292,11 +292,11 @@ accurate imaging through a simplified approach, prioritizing clarity and
 ease in the resulting images.
 
 The Halbach magnet incorporated in this system boasts a 27cm diameter, a
-B0 field strength of 50.4 mT, and an impressive homogeneity of 2400 ppm
-over a 20cm diameter using smaller magnets (\(12 x 12 x 12 mm^3\)). This
-exceptional homogeneity enables the utilization of coil-based gradients
-for spatial encoding, significantly enhancing the flexibility of image
-acquisition.
+B0 field strength of 50.4 mT, and an impressive homogeneity of 2400
+\gls{ppm} over a 20cm diameter using smaller magnets
+(\(12 x 12 x 12 mm^3\)). This exceptional homogeneity enables the
+utilization of coil-based gradients for spatial encoding, significantly
+enhancing the flexibility of image acquisition.
 
 To further refine the magnet's homogeneity, optimization techniques are
 employed by adjusting the radius of the Halbach cylinder along the
@@ -373,9 +373,9 @@ potential of low-field \gls{mri} for enhanced breast screening
 applications.
 
 The focus of the ongoing efforts is to enhance the homogeneity of
-magnets within low-field MRI systems below 1.000ppm, primarily driven by
-the goal of establishing a compact low-field \gls{mri} for breast cancer
-detection.
+magnets within low-field MRI systems below 1000\gls{ppm}, primarily
+driven by the goal of establishing a compact low-field \gls{mri} for
+breast cancer detection.
 
 Beyond the development and prototype construction of low-field \gls{mri}
 scanners, the project encompasses electromagnetic simulation of
@@ -391,8 +391,8 @@ departing from the circular \gls{mri} configuration discussed in the
 publication. This innovation is geared towards streamlining breast
 examinations, offering enhanced accessibility, and minimizing the
 spatial requirements during installation. In addition DeLoRI endeavors
-to achieve heightened accuracy, striving for precision levels below
-1,000 ppm. While O'Reilly, Teeuwisse, and Webb were able to modify the
+to achieve heightened accuracy, striving for precision levels below 1000
+\gls{ppm}. While O'Reilly, Teeuwisse, and Webb were able to modify the
 ring diameter to influence field homogeneity, the unique goal here is to
 characterize the magnets pre-installation, allowing for proactive
 assessments of homogeneity characteristics. This nuanced approach aims
@@ -428,10 +428,11 @@ developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study.
 The ultimate objective is to assess whether these selected sensors align
-with the stringent criteria of achieving an accuracy level of 1,000 ppm.
-Furthermore, the study seeks to validate whether the measuring range of
-these sensors appropriately corresponds to the required field strength,
-ensuring their suitability for the intended application.
+with the stringent criteria of achieving an accuracy level of 1000
+\gls{ppm}. Furthermore, the study seeks to validate whether the
+measuring range of these sensors appropriately corresponds to the
+required field strength, ensuring their suitability for the intended
+application.
 
 \hypertarget{research-question-and-approach}{%
 \section{Research Question and
@@ -456,9 +457,10 @@ pivotal research questions:
 \item
   Homogeneity Measurement: Can the chosen sensors be adeptly utilized to
   measure the homogeneity of a Halbach ring-based B0 field within the
-  stringent limit of less than 1,000 ppm? The desired outcome is a
-  measurement of less than 50 \(\mu\)T at 1,000 ppm, with a specific
-  focus on determining the sensors' viability for noise measurements.
+  stringent limit of less than 1,000 \gls{ppm}? The desired outcome is a
+  measurement of less than 50 \(\mu\)T at 1000 \gls{ppm}, with a
+  specific focus on determining the sensors' viability for noise
+  measurements.
 \end{itemize}
 
 It is crucial to emphasize that the intention is not to characterize the
@@ -2965,25 +2967,58 @@ result of the algorithm.
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
-This work successfully implemented a universal hardware and software
-framework for the automated characterisation of permanent magnets. This
-framework consists of a low-cost hardware interface that supports
-various magnetic field sensors and a library for automating and
-analysing the measurement data.
+In the previous chapter \emph{Usecase Evaluation}
+\ref{usecase-evaluation} it was shown that the implementation of the
+hardware and software framework for various magnetic field sensors was
+successfully implemented.
 
-next step is the sensor evaluation
+In addition, the basic application by the user was demonstrated using an
+example. This makes it possible to systematically characterise magnets
+from the software and readout hardware side by means of data
+acquisition, storage and analysis.
+
+After discussing the developed hardware and software components in
+particular, this chapter will answer the question of whether the
+selected sensors meet the requirements:
 
 \begin{itemize}
 \tightlist
 \item
-  software wurde erfolgreich evaluiert anhand der zuvor definierten
-  usecases.
+  Measure a wide range of different permanent magnets with regard to
+  their systematic field strength
 \item
-  folgend wird der zweite anwendungsfall evaluiert mit der frage ob die
-  magnete vermessen werden können
-\item
-  TODO
+  Automated measurement of the homogeneity of Hallbach rings with an
+  accuracy of less than 1000 \gls{ppm}
 \end{itemize}
+
+These questions are answered in the following, as a basic readout and
+analysis functionality platform had to be created first and thus an
+automated sensor characterisation can be performed.
+
+\hypertarget{sensors-for-evaluation}{%
+\section{Sensors for Evaluation}\label{sensors-for-evaluation}}
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{Digital magnetic field sensors characterised for evaluation
+\label{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}}\tabularnewline
+\toprule
+& TLV493D-A1B6 & MMC5603NJ\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+& TLV493D-A1B6 & MMC5603NJ\tabularnewline
+\midrule
+\endhead
+Readout-Axis & 3D & 3D\tabularnewline
+Temperature-Sensor & yes & yes\tabularnewline
+Resolution {[}uT{]} & 98 & 0.007\tabularnewline
+Range {[}mT{]} & ±130.0 & ±3\tabularnewline
+Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{evaluation-sensor-setup}{%
+\section{Evaluation Sensor Setup}\label{evaluation-sensor-setup}}
 
 \begin{figure}
 \centering
@@ -2992,39 +3027,6 @@ next step is the sensor evaluation
 placed with thermal conductive glue on an aluminium baseplate
 \label{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}}
 \end{figure}
-
-\begin{itemize}
-\tightlist
-\item
-  cheap sensors used
-\item
-  used hardware list
-\item
-  tested sensor tlv mmc, da diese zum zeitpunkt des tests zur verfüung
-  standen
-\end{itemize}
-
-\begin{longtable}[]{@{}lllll@{}}
-\caption{Implemented digital magnetic field sensors
-\label{Implemented_digital_magnetic_field_sensors.csv}}\tabularnewline
-\toprule
-& TLV493D-A1B6 & HMC5883L & MMC5603NJ & AS5510\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-& TLV493D-A1B6 & HMC5883L & MMC5603NJ & AS5510\tabularnewline
-\midrule
-\endhead
-Readout-Axis & 3D & 3D & 3D & 1D\tabularnewline
-Temperature-Sensor & yes & no & yes & no\tabularnewline
-Resolution {[}uT{]} & 98 & 0.2 & 0.007 & 48\tabularnewline
-Range {[}mT{]} & ±130.0 & ±0.8 & ±3 & ±50\tabularnewline
-Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\hypertarget{evaluation-sensor-setup}{%
-\section{Evaluation Sensor Setup}\label{evaluation-sensor-setup}}
 
 The sensor platform used here is an adapted version of the \emph{1D:
 Single Sensor} \ref{d-single-sensor} sensor platform. The sensors to be
@@ -3145,9 +3147,6 @@ should not be used for subsequent temperature compensation.
 \hypertarget{raw-sensor-data-analysis}{%
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
 
-\hypertarget{noise-level-data-analysis}{%
-\subsection{Noise Level Data Analysis}\label{noise-level-data-analysis}}
-
 \begin{itemize}
 \tightlist
 \item
@@ -3213,7 +3212,7 @@ sensors pcb
 \hypertarget{result-analysis-1}{%
 \section{Result Analysis}\label{result-analysis-1}}
 
-are they suitable for \textless1000ppm ?
+are they suitable for <1000(+\gls{ppm}) ?
 
 \begin{itemize}
 \tightlist
@@ -3226,7 +3225,7 @@ are they suitable for \textless1000ppm ?
 \end{itemize}
 
 \hypertarget{recommendation-for-action}{%
-\subsection{recommendation for action}\label{recommendation-for-action}}
+\subsection{Recommendation for Action}\label{recommendation-for-action}}
 
 \begin{itemize}
 \tightlist
