@@ -176,7 +176,7 @@ To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a
 
   $ (1000/1,000,000) × (50 mT) = 0.05 mT $ 
 
-To convert this into microtesla (%\mu%T), a multiplication by *1000* is needed:
+To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
   $ (0.05 mT) × 1000 = 50 \mu$ T
 
 This means that to measure a deviation of better than *1000*(+ppm) in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
