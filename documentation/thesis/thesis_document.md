@@ -1,24 +1,39 @@
 # Introduction
 
-As the following, the motivation for the development of this framework is listed. The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri)research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analyzed throughout the study.
+As the following, the motivation for the development of this framework is listed.
+The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri)research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analyzed throughout the study.
 
 ## Background and Motivation
 
-Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri)systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
+Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body.
+This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives.
+Despite its widespread use, traditional (+mri)systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
-Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electric induction. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
+Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electric induction.
+Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements.
+This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
 The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
-In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets. These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses. While tipically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculationg images of a head sucessfully. 
+In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets.
+These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
+While tipically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculationg images of a head sucessfully. 
 
-Permanent magnets, usually arranged in a circular "Halbach array" inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction. Completed (+mri)systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is taken into account. It is less costintensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri)system.
+Permanent magnets, usually arranged in a circular "Halbach array" inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
-The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems. The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) with the necessary precision for homogenous field generation.
+Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is taken into account.
+It is less costintensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri)system.
 
-To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
+The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems.
+The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) with the necessary precision for homogenous field generation.
+
+To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework.
+The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
+
 The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterisation of different objects. 
 
-The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve. At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than  *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than *1000(+ppm)*.  
+The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
+
+At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than *1000(+ppm)*.
 
 This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcomes of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
@@ -47,7 +62,7 @@ The positioning of permanent magnets holds an important role in constructing an 
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
 A halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm*  magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
+The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 
 The homogeneity in this configuration depends, among other things, on the following main aspects:
 
@@ -75,7 +90,7 @@ Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability 
 
 The Halbach magnetic array emerges as a crucial element for future Magnet characterisation. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
 
-In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.  
+In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
 
 ### Shimming Procedure
@@ -347,7 +362,7 @@ public:
   String capabilities() override;
   String get_sensor_name() override;
   bool query_sensor() override;
-  sensor_result get_result() override;        
+  sensor_result get_result() override;
 };
 #endif
 ```
@@ -407,7 +422,7 @@ The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.cs
 
 * Raspberry Pi OS Lite - (+os) *debian bookworm x64*,
 * (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
-*  Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
+* Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
 
 It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
@@ -782,7 +797,7 @@ $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add anoth
 Proxy started. http://remotepc.local:5556/
 PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
 PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-Terminate  Proxy instance [y/N] [n]: 
+Terminate Proxy instance [y/N] [n]: 
 ```
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface: \ref{lst:mrpcli_config_rest}
@@ -850,7 +865,7 @@ Each connected sensor is accessed via the text-based (+cli), this is initially t
 The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so the multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
 
 #### Construct the Sensor ID LookUp-Table
-  
+
 Immediately after starting the *MRPProxy*, the (+uuid)s of all locally connected sensors are read out.
 These are stored together with the class instance of the *MRPHal* module in a (+lut).
 This makes it possible to address a sensor directly using its (+uuid).
@@ -904,7 +919,7 @@ This allows the host to address individual sensors directly via their specific (
 ## Examples
 
 The following shows some examples of how the (+mrp)-library can be used.
-These examples are limited to a functional minimum for selected modules of the (+mrp)-library. The  documentation \ref{documentation} contains further and more detailed examples.
+These examples are limited to a functional minimum for selected modules of the (+mrp)-library. The documentation \ref{documentation} contains further and more detailed examples.
 Many basic examples are also supplied in the form of the test scripts used for testing \ref{testing}.
 
 ### MRPReading
@@ -1159,7 +1174,7 @@ The example \ref{Example_measurement_analysis_pipeline.png} shows a typical meas
 5. Create a graphical plot of all measurements with standard deviation
 
 
-In order to implement such a pipeline, the *yaml* file format was chosen for the definition of the pipeline, as this is  for non programmers to understand and can also be easily edited with a plain text editor.
+In order to implement such a pipeline, the *yaml* file format was chosen for the definition of the pipeline, as this is for non programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the documentation [@MagneticReadoutProcessingReadTheDocs].
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
@@ -1772,9 +1787,17 @@ The temperature sensitivity of magnetic field sensors describes how sensitively 
 It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes.
 An accurate temperature sensitivity characteristic is therefore crucial for subsequent precise magnetic field measurements.
 
-
-
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
+
+As the temperature sensor *TLV493D* in particular produced very different results in the previous measurements, an additional temperature sensor was attached to the sensor circuit board for this measurement. 
+The figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} shows these modifications in detail.
+This makes it possible to accurately determine the sensors (+ic) temperature.
+The temperature measuring device *VC-7055BT* can be analysed using a (+pc) interface.
+The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
+
+
+
+
 
 
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
