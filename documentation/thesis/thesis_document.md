@@ -1053,13 +1053,13 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 ### MRPHalbachArrayGenerator
 
 
-The following example code \ref{lst:mrpexample_hallbach}, shows how a simple Halbach magnetic ring can be generated.
+The following example code \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
 
 Eight random measurements are generated here.
-It is important that the magnet type (here *N45_CUBIC_15x15x15*) is specified.
+It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
 After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calucation scheme [@HallbachMagnetDesignPaper] using the *MRPHalbachArrayGenerator* module.
@@ -1101,7 +1101,8 @@ In the following, some of these have been added in and around the (+mrp)-library
 
 %%MRP_(+cli)_output_to_configure_a_new_measurement.png%%
 
-In the first version of the (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks. However, this was already time-consuming for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
+In the first version of the (+mrp)-library, the user had to write his own Python scripts even for short measurement and visualisation tasks.
+This is already a time-consuming process for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
 To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} was implemented. The libaray (+cli) implements the following functionalities:
@@ -1760,10 +1761,10 @@ To ensure comparability, the ideal curve was determined.
 In order to be able to make quantifiable statements about the measurement results, the mean and (+sd) deviation of these two curves was determined.
 
 For both sensors, the deviation is less than 1% over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
-The previously performed *Background-Noise*\ref{sensor-characterisation-background-Noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
+The previously performed *Background-Noise* \ref{sensor-characterisation-background-noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
 
 In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
-It is also possible to calculate these small deviations using curve fitting software. Suitable functions are available in the library.
+It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
 
 
 ## Temperature Sensitivity
