@@ -1,7 +1,7 @@
 # Introduction
 
 As the following, the motivation for the development of this framework is listed.
-The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri)research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analyzed throughout the study.
+The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri) research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analysed throughout the study.
 
 ## Background and Motivation
 
@@ -15,12 +15,12 @@ The challenge with conventional homogeneity systems lies in their substantial si
 
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
-While tipically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculationg images of a head sucessfully. 
+While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
 
 Permanent magnets, usually arranged in a circular "Halbach array" inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
 Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is taken into account.
-It is less costintensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri)system.
+It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system.
 
 The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems.
 The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) with the necessary precision for homogenous field generation.
@@ -38,9 +38,9 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 ### Low-Field MRI
 
-For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing high blac-withe image resolution. However, the substantial costs, space requierments and safety considerations cause considerable challenges.
+For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing high black-withe image resolution. However, the substantial costs, space requirements and safety considerations cause considerable challenges.
 
-(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The inital *B0* field of an (+mri) aims to be homogenouse, for image aquisition the second step requires imhomoginity of the *B0* field to stimulate spin in the atoms of materials. For high resultion images, the initial *B0* field aims to be a homogenouse as possible. 
+(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The initial *B0* field of an (+mri) aims to be homogeneous, for image acquisition  the second step requires inhomogeneity  of the *B0* field to stimulate spin in the atoms of materials. For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
 
 Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@Nitz2016]
 
@@ -60,7 +60,7 @@ The positioning of permanent magnets holds an important role in constructing an 
 
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
-A halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
+A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
 The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 
 The homogeneity in this configuration depends, among other things, on the following main aspects:
@@ -87,7 +87,7 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centeres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
@@ -110,7 +110,7 @@ In this thesis, reference is made exclusively to the hardware shimming processes
 
 According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) systems are low-field (+mri) (*66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T*). [@Nitz2016]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
 
 Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
@@ -120,11 +120,11 @@ The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* 
 
 To further refine the magnet's homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
-**Magnet Characerisation**
+**Magnet Characterisation**
 
 The shimming process described describes how, after the field magnet has been set up, if the homogeneous magnetic flux densities are not sufficient, these can be adjusted manually by means of adjustments to the setup or, if the hardware allows it, by software.
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
-As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Hallbach configuration.
+As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Halbach configuration.
 
 In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
 
@@ -171,7 +171,7 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
 
-Before naming the research focus, it is important to understand the difference and connection between deviation and resulution of the system. 
+Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a resolution that is less than *1000*(+ppm) of *50mT* is needed.
 
 
@@ -191,7 +191,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than *50* $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
-It is essential to emphasize that the intention is not to characterize the magnets; the sensores which might be used for characterisation are be analised and evaluated.
+It is essential to emphasize that the intention is not to characterize the magnets; the sensors which might be used for characterisation are be analysed and evaluated.
 
 This work prioritises the development of both hardware and software customised for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
 
@@ -211,7 +211,7 @@ In the later accomplished evaluation process \ref{usecase-evaluation}, the defin
 
 2. **Taking automatic measurements from sensors**
 
-  The purpose of the framework is to enable the automated acquisition of measurement data from various connected hadware sensors.
+  The purpose of the framework is to enable the automated acquisition of measurement data from various connected hardware sensors.
   The user should be able to configure various measurement series, which should then be carried out by the framework without further user interaction.
 
 3. **Open storage formats for data export**
@@ -326,7 +326,7 @@ This not only enabled a time-saving implementation, but also ensured a cost-effi
 
 All the necessary components and their circuitry are recorded on a (+pcb) \ref{1D_sensor_schematic_and_circuit_board.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
-By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts ontop of the sensor (+ic)s.
+By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s.
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
 This enables subsequent multi-sensor synchronization and also offers options for later extensions.
@@ -383,7 +383,7 @@ All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) 
 The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
 After execution of the setup routine is completed, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
-All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
+All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ring buffer.
 Ring buffer offers efficient data management in limited memory.
 Its cyclic structure enables continuous overwriting of older data, saves memory space and facilitates seamless processing of real-time data.
 
@@ -397,9 +397,9 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 %%Sensors_(+cli).png%%
 
-Each sensor that is loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
+Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
-* Use with (+mrp) \ref{software-readout-framework}-libaray
+* Use with (+mrp) \ref{software-readout-framework}-libraray
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
@@ -425,7 +425,7 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These were performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
 
-* *Raspberry Pi OS Lite* - (+os) *debian bookworm x64*,
+* *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*,
 * (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
 * Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
 
@@ -441,7 +441,7 @@ The schematic \ref{Multi_sensor_synchronisation_wiring_example.png} shows how se
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png%%
 
 Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
-To do this, the function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an intial pulse on the SYNC-(+gpio) \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}.
+To do this, the function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio) \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}.
 Each sensor starts a random timer beforehand, which sends a pulse on the sync line. All others receive this and switch to *secondary* mode and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
@@ -484,11 +484,11 @@ It is possible to mount 3D printed spacers over the sensor to increase the dista
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash in order to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
 
-### 3D: Fullsphere
+### 3D: Full Sphere
 
 %%Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
 
-The 3D fullsphere sensor \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
+The 3D full sphere sensor \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
 The graphic \ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
@@ -515,7 +515,7 @@ As with the other sensors, this interface consists of a *Raspberry-Pi Pico* with
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware is adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -530,7 +530,7 @@ For this purpose, typical individual steps that occur in relation to these tasks
 
 * Data acquisition - from hardware sensors \ref{unified-sensor} or other data sources
 * Storage - export of data in various open formats \ref{storage-and-datamanagement}
-* Analysis - algorithms to analyze different data sets \ref{analysis}
+* Analysis - algorithms to analyse different data sets \ref{analysis}
 
 All these possible task parts is divided into different blocks and users is given the possibility of adding their own functionalities.
 
@@ -593,7 +593,7 @@ The implementation of the same functionalities looks as follows after using the 
 After these customisation steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
 This also maps the functionality of a project file, which can be executed or passed on repeatedly.
 
-This also fulfills the goal of making individual user-created algorithms interchangeable.
+This also fulfils the goal of making individual user-created algorithms interchangeable.
 If the user now wishes to use a different (+cad) algorithm instead of the *HalbachMRIDesigner* [@HalbachMRIDesigner], the other steps can simply be preserved and only the new step needs to be implemented.
 
 
