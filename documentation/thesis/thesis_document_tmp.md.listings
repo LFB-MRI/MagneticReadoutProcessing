@@ -136,7 +136,7 @@ This should make it possible to create a workflow from the individual magnet to 
 
 The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
-Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, Fraunhofer MEVIS in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field (+mri)s have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by Fraunhofer MEVIS exemplifies the ongoing commitment to harnessing the potential of low-field (+mri) for enhanced breast screening applications.
+Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, *Fraunhofer MEVIS* in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field (+mri)s have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by *Fraunhofer MEVIS* exemplifies the ongoing commitment to harnessing the potential of low-field (+mri) for enhanced breast screening applications.
 
 The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field MRI systems below 1000(+ppm), primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
 
@@ -1678,7 +1678,10 @@ The developed framework is directly compatible with a variety of magnetic field 
 | Range [mT]            | ±130.0       | ±3        |
 | Background-Noise [uT] | 100          | 0.2       |
 
-For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation. This selection was made for the following reasons:
+For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
+The additional column for the *Background-Noise* was taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
+
+This selection was made for the following reasons:
 
 The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
 For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection was made for the following reasons:
@@ -1688,7 +1691,7 @@ For this evaluation, the sensors listed in the table were used for sensor charac
 * Availability for testing
 
 
-It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose.
+It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose are packaged with library.
 
 
 
@@ -1715,9 +1718,9 @@ With additional connected switch, its possible to isolate or select a sensor or 
 A separate battery powered supply is used as low-noise power supply for the sensors boards.
 An *Raspberry Pi 4* is used as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
-*MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
-The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
 
+For the software setup, *MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
+The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
 
 
 
@@ -1747,14 +1750,25 @@ The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC560
 The following data is shown in the plots:
 
 * Plot of the raw data of the sensor
-* Plot of the sensor's internal temperature sensor
-* Background noise level with reference to the baseline
+* Plot of the sensors internal temperature sensor
+* Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
 
 
 
-%%Sensor_noise_evaluation_results.csv%%
+
+
+: Sensor noise evaluation results \label{Sensor_noise_evaluation_results.csv}
+
+| Symbol         |  Unit  | TLV493D |
+| -------------- | ------ | ------- |
+| $\mu_{rv}$     | $\mu$T |         |
+| $\mu_{t}$      | $\mu$T |         |
+| $\mu_{nl}$     | %      |         |
+| $\sigma_{nl}$  | %      |         |
+
+
 
 
 ### Sensor Temperature Analysis
@@ -1768,6 +1782,9 @@ When using an alternative sensor, this behaviour is reflected and therefore the 
 
 
 
+In the raw data plot, as well as its mean value $\mu_{rv}$ of both sensors, an offset can also be recognised, which is dependent on the ambient conditions.
+For verification, a reference measurement of the environment was carried out with the calibrated *Voltcraft GM70* Telsameter.
+This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
 
@@ -1779,6 +1796,13 @@ When using an alternative sensor, this behaviour is reflected and therefore the 
 
  TODO TABELLE
 EINORDNUNG MITTELUNGEN ALS TABELLE
+
+
+
+
+
+
+
 
 ## Temperature Sensitivity
 
