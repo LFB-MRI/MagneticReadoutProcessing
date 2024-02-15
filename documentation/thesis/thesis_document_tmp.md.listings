@@ -1723,16 +1723,12 @@ For the software setup, *MRPCli* \ref{command-line-interface} was used to contro
 The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
 
 
-
-
-
 ## Sensor Characterisation: Background-Noise
-
 
 ![Sensor evaluation setup for noise measurements \label{Sensor_evaluation_setup_for_noise_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png)
 
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to *20°C*.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed 24 hours before the measurement run in the final measurement configuration inside of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of *N=10000* measured values was recorded for the baseline measurement.
@@ -1740,7 +1736,6 @@ For this purpose, a sample size of *N=10000* measured values was recorded for th
 The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values were taken with a trigger and readout rate of one measurement per second.
 
 In order to quantify the noise, the standard deviation of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
-
 
 ![Sensor noise evaluation results for TLV493D and MMC5603NJ with N=2000 samples and no averaging \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}](./generated_images/border_Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png)
 
@@ -1754,48 +1749,47 @@ The following data is shown in the plots:
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
-
-
-
+The table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that were extracted from the measurement data of the sensors \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
+These measured values are categorised below.
 
 
 : Sensor noise evaluation results \label{Sensor_noise_evaluation_results.csv}
 
-| Symbol         |  Unit  | TLV493D |
-| -------------- | ------ | ------- |
-| $\mu_{rv}$     | $\mu$T |         |
-| $\mu_{t}$      | $\mu$T |         |
-| $\mu_{nl}$     | %      |         |
-| $\sigma_{nl}$  | %      |         |
-
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
+|  |
 
 
 
 ### Sensor Temperature Analysis
 
-Compared to the *MMC5603NJ*, the temperature plot of the *TLV493D* shows that the internal temperature sensor is very noisy (maximum of $\sigma^2_{t}$=*2$^{\circ}$C*)and deviates from the ambient temperature at almost *10$^{\circ}$C*.
-With a further measurement run with a different temperature setting of *30$^{\circ}$C*, the offset is reduced to only *4$^{\circ}$C* to the set temperature. However, the noise remains constant.
-When using an alternative sensor, this behaviour is reflected and therefore the internal temperature sensor of the *TLV493D* should not be used for subsequent temperature compensation.
+The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a standard deviation of $\sigma_{t}$=0.53$^{\circ}$C indicates a consistent trend.  This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between 20.15$^{\circ}$C and 21.21$^{\circ}$C, which indicates a stable and consistent temperature measurement.
+This result is more noisy compared to the temperature stability of the *MMC5603*.
+
+Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
+
+With an additional measurement run with a different temperature setting of 30.0$^{\circ}$C, the measured temperature deviations and offsets remains constant.
+
+Thus, the sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
+
 
 
 ### Raw Sensor Data Analysis
 
 
-
 In the raw data plot, as well as its mean value $\mu_{rv}$ of both sensors, an offset can also be recognised, which is dependent on the ambient conditions.
-For verification, a reference measurement of the environment was carried out with the calibrated *Voltcraft GM70* Telsameter.
+For verification, a reference measurement of the environment was carried out with the calibrated *Voltcraft GM70* Telsameter next to the sensor (+ic)
 This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
-
-
-* Plot of the raw measurement data, as well as its mean value $\mu_{rv}$$\mu$T using Baselin
-* Plot of the temperature curve over the complete measurement series, which was recorded with the sensor's internal temperature sensor
-* Noise level as a percentage deviation from the baseline
-* Histogram of the noise level with marked standard deviation
-
- TODO TABELLE
-EINORDNUNG MITTELUNGEN ALS TABELLE
 
 
 

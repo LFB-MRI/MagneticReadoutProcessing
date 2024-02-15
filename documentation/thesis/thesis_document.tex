@@ -3116,7 +3116,9 @@ Measuring the noise in a magnetic field sensor requires a precise
 procedure and a special measurement setup. First, the magnetic field
 sensor is placed in a quiet environment to minimize external field
 interference. The temperature chamber for all noise tests is set to
-\emph{20°C}.
+\(\mu_{trev}\)=21.0\(^{\circ}\) and the sensors are placed 24 hours
+before the measurement run in the final measurement configuration inside
+of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
@@ -3161,38 +3163,51 @@ The following data is shown in the plots:
   Histogram of the background noise level
 \end{itemize}
 
-\begin{longtable}[]{@{}lll@{}}
-\caption{Sensor noise evaluation results
-\label{Sensor_noise_evaluation_results.csv}}\tabularnewline
-\toprule
-Symbol & Unit & TLV493D\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Symbol & Unit & TLV493D\tabularnewline
-\midrule
-\endhead
-\(\mu_{rv}\) & \(\mu\)T &\tabularnewline
-\(\mu_{t}\) & \(\mu\)T &\tabularnewline
-\(\mu_{nl}\) & \% &\tabularnewline
-\(\sigma_{nl}\) & \% &\tabularnewline
-\bottomrule
-\end{longtable}
+The table \ref{Sensor_noise_evaluation_results.csv} lists the measured
+values that were extracted from the measurement data of the sensors
+\ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
+These measured values are categorised below.
+
+: Sensor noise evaluation results
+\label{Sensor_noise_evaluation_results.csv}
+
+~\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}\\
+\hspace*{0.333em}\textbar{}
 
 \hypertarget{sensor-temperature-analysis}{%
 \subsection{Sensor Temperature
 Analysis}\label{sensor-temperature-analysis}}
 
-Compared to the \emph{MMC5603NJ}, the temperature plot of the
-\emph{TLV493D} shows that the internal temperature sensor is very noisy
-(maximum of \(\sigma^2_{t}\)=\emph{2\(^{\circ}\)C})and deviates from the
-ambient temperature at almost \emph{10\(^{\circ}\)C}. With a further
-measurement run with a different temperature setting of
-\emph{30\(^{\circ}\)C}, the offset is reduced to only
-\emph{4\(^{\circ}\)C} to the set temperature. However, the noise remains
-constant. When using an alternative sensor, this behaviour is reflected
-and therefore the internal temperature sensor of the \emph{TLV493D}
-should not be used for subsequent temperature compensation.
+The temperature stability of the \emph{TLV493D} with a mean value of
+20.68\(^{\circ}\)C and a standard deviation of
+\(\sigma_{t}\)=0.53\(^{\circ}\)C indicates a consistent trend. This
+implies a constant tendency. The close grouping of the measured values
+around the mean value indicates good stability. The confidence interval
+is expected to be between 20.15\(^{\circ}\)C and 21.21\(^{\circ}\)C,
+which indicates a stable and consistent temperature measurement. This
+result is more noisy compared to the temperature stability of the
+\emph{MMC5603}.
+
+Both sensors provide an offset to the measured chamber temperature
+\(\mu_{trev}\).
+
+With an additional measurement run with a different temperature setting
+of 30.0\(^{\circ}\)C, the measured temperature deviations and offsets
+remains constant.
+
+Thus, the sensor internal temperature sensors of both tested sensors are
+suitable to perform an ambient temperature compensation of measured
+values and calibration of the sensor. This is considered in section
+\emph{Temperature Sensitivity} \ref{temperature-sensitivity}.
 
 \hypertarget{raw-sensor-data-analysis}{%
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
@@ -3201,24 +3216,8 @@ In the raw data plot, as well as its mean value \(\mu_{rv}\) of both
 sensors, an offset can also be recognised, which is dependent on the
 ambient conditions. For verification, a reference measurement of the
 environment was carried out with the calibrated \emph{Voltcraft GM70}
-Telsameter. This provides a \emph{real} baseline value of
-\(\mu_{rev}\)=-21\(\mu\)T.
-
-\begin{itemize}
-\tightlist
-\item
-  Plot of the raw measurement data, as well as its mean value
-  \(\mu_{rv}\)\(\mu\)T using Baselin
-\item
-  Plot of the temperature curve over the complete measurement series,
-  which was recorded with the sensor's internal temperature sensor
-\item
-  Noise level as a percentage deviation from the baseline
-\item
-  Histogram of the noise level with marked standard deviation
-\end{itemize}
-
-TODO TABELLE EINORDNUNG MITTELUNGEN ALS TABELLE
+Telsameter next to the sensor \gls{ic} This provides a \emph{real}
+baseline value of \(\mu_{rev}\)=-21\(\mu\)T.
 
 \hypertarget{temperature-sensitivity}{%
 \section{Temperature Sensitivity}\label{temperature-sensitivity}}
