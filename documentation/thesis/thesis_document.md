@@ -18,7 +18,7 @@ The focus of this thesis is to improve low-frequency (+mri) technology by examin
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
 The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterisation of different objects. 
 
-The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve. At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than  `50$\mu$T` to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than 1000(+ppm).  
+The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve. At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than  *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than *1000(+ppm)*.  
 
 This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcomes of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
@@ -26,30 +26,30 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing high blac-withe image resolution. However, the substantial costs, space requierments and safety considerations cause considerable challenges.
 
-(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the $B0$ field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic $B0$ field; growing magnetic field leads automatically to higher (+snr). The inital %B0% field of an (+mri) aims to be homogenouse, for image aquisition the second step requires imhomoginity of the %B0% field to stimulate spin in the atoms of materials.
+(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The inital *B0* field of an (+mri) aims to be homogenouse, for image aquisition the second step requires imhomoginity of the *B0* field to stimulate spin in the atoms of materials.
 
 Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@Nitz2016]
 
-Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)systems measured between `0.1T` and `0.3T` compared to the usual `1.5T` to `3T` and above in high-field (+mri) scanners [@Hori2021-pt].
+Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@Hori2021-pt].
 
 This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@Arnold2023-cn]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to `0.35T` can be generated. However, this achievement comes at the cost of an average system weight of `14t`. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@Nitz2016]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@Nitz2016]
 
-In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and need to be analysed.
+In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and needs to be analysed.
 
 ### Magnet System
 
 %%Example_Hallbach_ring_with_cutouts_for_eight_magnets.png%%
 
-The positioning of permanent magnets holds a pivotal role in constructing an (+mri)and influencing the homogeneity of the $B0$ magnetic field. Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
+The positioning of permanent magnets holds an important role in constructing an (+mri) and is influencing the homogeneity of the *B0* magnetic field. Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
 
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
 A halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic `12x12x12mm`  magnets are embedded to generate homogeneous magnetic flux densities of around `20mT`.
+The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm*  magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 
-The homogeneity in this configuration depends, among other things, on the following aspects:
+The homogeneity in this configuration depends, among other things, on the following main aspects:
 
 * **Material**:
   The magnetic properties of a material influence the generated field strength.
@@ -71,7 +71,7 @@ The homogeneity in this configuration depends, among other things, on the follow
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
 
-Halbach magnetic arrays present a compelling choice for mobile NMR due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
+Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
 The Halbach magnetic array emerges as a crucial element for future Magnet characterisation. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
 
@@ -96,15 +96,16 @@ Since this project is to be used in the future to construct a low-field (+mri) f
 
 **Low-Field MRI**
 
-According to Wolfgang R. Nitz in 2016, just 13.4% of actively used v systems are low-field (+mri)  (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [Nitz2016]
-Nitz also highlights that presently, the landscape of (+mri)  technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up (+mri)  from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their (+mri)  systems. This notable concentration underscores the distinctive position of Stand-up (+mri)  as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [Nitz2016]
+According to Wolfgang R. Nitz in 2016, just 13.4% of actively used v systems are low-field (+mri)  (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [@Nitz2016]
+Nitz also highlights that presently, the landscape of (+mri)  technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up (+mri)  from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their (+mri)  systems. This notable concentration underscores the distinctive position of Stand-up (+mri)  as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [@Nitz2016]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri)  system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri)  system [@De_Vos2023-pb].
 
 The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
 This (+mri)  system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
 
-The Halbach magnet incorporated in this system boasts a 27cm diameter, a $B0$ field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a 27cm diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+
 
 To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach cylinder along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -157,7 +158,7 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 ## Research Question and Approach
 
-Concerning the DeLoRI project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous $B0$ field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the DeLoRI project. 
+Concerning the DeLoRI project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the DeLoRI project. 
 
 The primary objectives of this work revolve around addressing two pivotal research questions:
 
@@ -456,7 +457,7 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 The 1D sensor \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware \ref{firmware} platform.
 
-The electrical level here is based on a *Raspberry-Pi Pico* together with the `MMC5603NJ` magnetic sensor.
+The electrical level here is based on a *Raspberry-Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
 
 Since the *MMC5603NJ* only has limited measurement range of total 6uT, even small coin sized neodymium magnets already saturates the sensor.
@@ -604,7 +605,7 @@ The following modules are implemented in detail:
 
 
 The *MRPReading* module performs a crucial role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
-To customize and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an `MRPReading` instance.
+To customize and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
@@ -1330,9 +1331,9 @@ setup(name='MagneticReadoutProcessing',
 
 To make the (+cli) scripts written in Python easier for the user to execute without having to use the *python3* prefix. This has been configured in the installation configuration using the *entry_points* option, and the following commands are available to the user:
 
-* `MRPcli --help` instead of `python3 cli.py --help`
-* `MRPudpp --help` instead of `python3 udpp.py --help`
-* `MRPproxy --help` instead of `python3 proxy.py --help`
+* *$ MRPcli --help* instead of *$ python3 cli.py --help*
+* *$ MRPudpp --help* instead of *$ python3 udpp.py --help*
+* *$ MRPproxy --help* instead of *$ python3 proxy.py --help*
 
 In addition, these commands are available globally in the system without the terminal shell being located in the (+mrp)-library folder.
 
