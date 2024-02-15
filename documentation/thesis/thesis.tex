@@ -164,7 +164,8 @@
 \renewcommand{\thefigure}{\textbf\thechapter-\arabic{figure}}	% im Stil 3-2
 
 %\usepackage{subfig}		% Unterfigures mit eigenen Bildunterschriften
-
+\usepackage{caption}
+\captionsetup[table]{name=Table}
 %\setcounter{tocdepth}{3} % SHOW SUB SUB SUB SUB SECTIONS
 
 
@@ -222,7 +223,7 @@
 \renewcaptionname{ngerman}{\figurename}{\textbf Figure} 	% Bild ... statt Abbildung ...
 \renewcaptionname{ngerman}{\contentsname}{Contents}% Inhalt statt Inhaltsverzeichnis
 \renewcaptionname{ngerman}{\bibname}{Bibliography}
-
+\renewcaptionname{ngerman}{\tablename}{Table}
 \renewcaptionname{ngerman}{\listfigurename}{List of Figures}
 \renewcaptionname{ngerman}{\listtablename}{List of Tables}
 

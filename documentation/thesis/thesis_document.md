@@ -174,12 +174,10 @@ Concerning the *DeLoRI* project, this study exclusively delves into the realm of
 Before naming the research focus, it is important to understand the difference and connection between deviation and resulution of the system. 
 To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a resolution that is less than *1000*(+ppm) of *50mT* is needed.
 
-
   $$\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT $$
 
 
 To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
-
 
   $$ 0.05 \, mT \times 1000 = 50 \, \mu T $$
 
@@ -1814,11 +1812,9 @@ The temperature range was selected so that it is within a sufficient range for t
 The figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
+The graph of the *TLV493d* is significantly steeper with a gradient of *-5.13 $\mu$T / $^{\circ}$C*, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with 70$\mu$T, if the total measurement range of the sensors is also taken into account.
 
-In the evaluation (see figure ), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to calculate these deviations based on the ambient temperature during the software calibration.
-
-
-
+In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
 
 
 
@@ -1829,11 +1825,20 @@ In the evaluation (see figure ), a linear function was also calculated using cur
 %%Overview_of_all_characterised_sensor_properties.csv%%
 
 
+Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*. It can be clearly seen that these differ significantly by a factor of *x10*.
+The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{Research Question and Approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+
+
+
+
 are they suitable for <1000(+(+ppm)) ? 
 
 * https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
 * 27cm / 50mT bore
 * nmr probes for better results
+
+
+
 
 * mit software calibrierung ist es möglich vermutlich möglich sowie mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu kommen
 * mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit avg=20 kommt man auf 45

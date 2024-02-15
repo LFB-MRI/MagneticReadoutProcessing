@@ -7,9 +7,9 @@
 \contentsline {lstlisting}{\numberline {3.3}MRPProxy REST endpoint query examples}{41}{lstlisting.3.3}%
 \contentsline {lstlisting}{\numberline {3.4}MRPcli usage example to connect with a network sensor}{42}{lstlisting.3.4}%
 \contentsline {lstlisting}{\numberline {3.5}MRPproxy REST enpoiint query examples}{44}{lstlisting.3.5}%
-\contentsline {lstlisting}{\numberline {3.6}MRPReading example for setting up an basic measurement}{46}{lstlisting.3.6}%
-\contentsline {lstlisting}{\numberline {3.7}MRPHal example to use an connected hardware sensor to store readings inside of a measurement}{47}{lstlisting.3.7}%
-\contentsline {lstlisting}{\numberline {3.8}MRPSimulation example illustrates the usage of several data analysis functions}{48}{lstlisting.3.8}%
+\contentsline {lstlisting}{\numberline {3.6}MRPReading example for setting up an basic measurement}{45}{lstlisting.3.6}%
+\contentsline {lstlisting}{\numberline {3.7}MRPHal example to use an connected hardware sensor to store readings inside of a measurement}{46}{lstlisting.3.7}%
+\contentsline {lstlisting}{\numberline {3.8}MRPSimulation example illustrates the usage of several data analysis functions}{47}{lstlisting.3.8}%
 \contentsline {lstlisting}{\numberline {3.9}MRPAnalysis example code performs several data analysis steps}{48}{lstlisting.3.9}%
 \contentsline {lstlisting}{\numberline {3.10}MRPVisualisation example which plots a fullsphere to an image file}{49}{lstlisting.3.10}%
 \contentsline {lstlisting}{\numberline {3.11}MRPHalbachArrayGenerator example for generating an OpenSCAD based halbach ring}{51}{lstlisting.3.11}%

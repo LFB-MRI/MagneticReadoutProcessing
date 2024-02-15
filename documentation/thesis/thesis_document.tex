@@ -659,7 +659,7 @@ measurement data from magnets. In addition, the interface firmware
 creates a basis for the development of a data protocol for exchanging
 measured values.
 
-This makes it easy to integrate your own measuring devices into the
+This makes it easy to integrate an own measuring devices into the
 \gls{mrp} ecosystem at a later date. This is only possible with a
 minimal functional hardware and firmware setup and was developed for
 this purpose first.
@@ -898,9 +898,9 @@ time and are not out of sequence or drift.
 \caption{Sensors \gls{cli} \label{Sensors_(+cli).png}}
 \end{figure}
 
-Each sensor that has been loaded with the firmware, registeres on to the
-host \gls{pc} as a serial interface. There are several ways for the user
-to interact with the sensor:
+Each sensor that is loaded with the firmware, registeres on to the host
+\gls{pc} as a serial interface. There are several ways for the user to
+interact with the sensor:
 
 \begin{itemize}
 \tightlist
@@ -1126,7 +1126,7 @@ sensors. The sensor differentiation takes place later in the \gls{mrp}
 \section{Example Sensors}\label{example-sensors}}
 
 Two functional sensor platforms
-\ref{Build_sensors_with_different_capabilities.csv} were built in order
+\ref{Build_sensors_with_different_capabilities.csv} are built in order
 to create a solid test platform for later tests and for the development
 of the \gls{mrp} \ref{software-readout-framework}-library with the
 previously developed sensor concepts.
@@ -1187,9 +1187,9 @@ consists of four 3D printed components, which are fixed together with
 nylon screws to minimise possible influences on the measurement.
 
 Since the \emph{MMC5603NJ} only has limited measurement range of total
-6uT, even small coin sized neodymium magnets already saturates the
-sensor. It is possible to mount 3D printed spacers over the sensor to
-increase the distance between the magnet and the sensor and thus also
+\emph{6uT}, even small coin sized neodymium magnets already saturates
+the sensor. It is possible to mount 3D printed spacers over the sensor
+to increase the distance between the magnet and the sensor and thus also
 measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes
@@ -1268,15 +1268,15 @@ firmware offers.
 Another option is a custom interface board between the meter and the PC.
 This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
 offer an physical \emph{RS232} interface. As with the other sensors,
-this interface consists of your \emph{Raspberry-Pi Pico} with an
-additional level shifter.
+this interface consists of a \emph{Raspberry-Pi Pico} with an additional
+level shifter.
 
 The teslameter is connected to the microcontroller using two free
-\gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
-separate build configuration. In order to be able to read and correctly
-interpret the data from the microcontoller, the serial protocol of the
-sensor was implemented in a customised version of the
-\emph{CustomSensor} class \ref{lst:CustomSensorClass}.
+\gls{gpio}s in \gls{uart} mode. The firmware is adapted using a separate
+build configuration. In order to be able to read and correctly interpret
+the data from the microcontoller, the serial protocol of the sensor is
+implemented in a customised version of the \emph{CustomSensor} class
+\ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other
 measuring device with a suitable communication interface and a known
@@ -1292,11 +1292,11 @@ protocol thanks to the modular design.
 \hypertarget{software-readout-framework}{%
 \chapter{Software Readout Framework}\label{software-readout-framework}}
 
-The software readout framework is the central software component that
-was developed as part of this work. This software framework is intended
-to provide a user-oriented data acquisition and analysis environment.
-For this purpose, typical individual steps that occur in relation to
-these tasks were implemented:
+The software readout framework is the central software component that is
+developed as part of this work. This software framework is intended to
+provide a user-oriented data acquisition and analysis environment. For
+this purpose, typical individual steps that occur in relation to these
+tasks are implemented:
 
 \begin{itemize}
 \tightlist
@@ -1310,8 +1310,8 @@ these tasks were implemented:
   Analysis - algorithms to analyze different data sets \ref{analysis}
 \end{itemize}
 
-All these possible task parts were divided into different blocks and
-users were given the possibility of adding their own functionalities.
+All these possible task parts is divided into different blocks and users
+is given the possibility of adding their own functionalities.
 
 As the following, this concept is referred to as \emph{user interaction
 points} \ref{user-interaction-points} and is explained in the following
@@ -1325,12 +1325,12 @@ library and are intended to provide user-friendliness on the one hand
 and the rapid development of own analysis and optimisation algorithms on
 the other.
 
-For this purpose, the library was divided into individual modules, which
+For this purpose, the library is divided into individual modules, which
 are shown in the graphic
 \ref{MRP_library_module_high_level_overview.png}. In combination, these
 represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns
-and data types was developed and packed together in a extendable Python
+and data types is developed and packed together in a extendable Python
 library.
 
 \newpage
@@ -1449,8 +1449,8 @@ and only the new step needs to be implemented.
 \section{Modules}\label{modules}}
 
 In order to realise the concept of user interaction points, the library
-was divided into different modules. These modules can be divided into
-two main categories:
+is divided into different modules. These modules can be divided into two
+main categories:
 
 \begin{itemize}
 \tightlist
@@ -1533,7 +1533,7 @@ Datamanagement}\label{storage-and-datamanagement}}
 
 An important aspect is data import and export. On the one hand, this
 allows the library to reuse and archive the measurements. On the other
-hand, the focus during development was that it is also possible to use
+hand, the focus during development is that it is also possible to use
 the data in other programs.
 
 For this purpose, an open, documented export format must be selected.
@@ -1541,13 +1541,13 @@ Ideally, this should be human-readable and viewable with a simple text
 editor. This eliminates all binary-based formats such as the Python
 pickle built into Python.
 
-Taking these points into account, the \gls{json} format was chosen. This
+Taking these points into account, the \gls{json} format is chosen. This
 is human and machine readable and there is a compatible parser for
 almost every programming language.
 
 The following code snippet \ref{lst:json_export_format_example} shows
 the \gls{json} structure which is generated when a measurement thatt
-using the library is exported. Here you can see that by using the
+using the library is exported. It can be seen that by using the
 \gls{json} format, all measurement points and metadata are available in
 readable plain text.
 
@@ -1954,7 +1954,7 @@ used \emph{info} or \emph{status} command, which must be intercepted by
 the \emph{MRPProxy} module so that it can be handled differently (see
 example \ref{lst:mtsc}).
 
-To realize this, a \gls{lut} was created in the previous steps, which
+To realize this, a \gls{lut} is created in the previous steps, which
 contains information regarding \emph{requested capability}
 -\textgreater{} \emph{sensor}-\gls{uuid} -\textgreater{} \emph{physical
 sensor} and allows the commands to be routed.
@@ -2059,7 +2059,7 @@ open \gls{json} format.
 
 After generating simple measurements with random values in the previous
 example \ref{mrpreading}, the next step is to record real sensor data.
-For this purpose, the \emph{MRPHal} module was developed, which can
+For this purpose, the \emph{MRPHal} module is developed, which can
 interact with all \emph{Unified Sensor} \ref{unified-sensor}-compatible
 sensors. In the following example \ref{lst:mrpexample_hal}, an \emph{1D:
 Single Sensor} \ref{d-single-sensor} is connected locally to the host
@@ -2274,7 +2274,7 @@ more than 100 lines of new Python code.
 Although such examples are provided in the documentation, it must be
 possible for programming beginners in particular to use them. To
 simplify these tasks, a \gls{cli}
-\ref{Example_measurement_analysis_pipeline.png} was implemented. The
+\ref{Example_measurement_analysis_pipeline.png} is implemented. The
 libaray \gls{cli} implements the following functionalities:
 
 \begin{itemize}
@@ -2344,7 +2344,7 @@ or graphical plot outputs.
 \label{Example_measurement_analysis_pipeline.png}}
 \end{figure}
 
-For this purpose, a further \gls{cli} application was created, which
+For this purpose, a further \gls{cli} application is created, which
 enables the user to create and execute complex evaluation pipelines for
 measurement data without programming. The example
 \ref{Example_measurement_analysis_pipeline.png} shows a typical
@@ -2367,7 +2367,7 @@ steps:
   Create a graphical plot of all measurements with standard deviation
 \end{enumerate}
 
-In order to implement such a pipeline, the \emph{yaml} file format was
+In order to implement such a pipeline, the \emph{yaml} file format is
 chosen for the definition of the pipeline, as this is for non
 programmers to understand and can also be easily edited with a plain
 text editor. Detailed examples can be found in the documentation
@@ -2495,7 +2495,7 @@ users and for different usecases.
 
 During the development of the \gls{mrp}-library, test cases were also
 created for all important functionalities and usecases. The test
-framework \emph{PyTest} \cite{PyTest} was used for this purpose, as
+framework \emph{PyTest} \cite{PyTest} is used for this purpose, as
 it offers direct integration in most \gls{ide}s (see
 \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png})
 and also because it provides detailed and easy-to-understand test
@@ -2565,7 +2565,7 @@ virtualisation on the systems provided by \emph{Github Actions}.
 \end{figure}
 
 One important point that improves usability for users is the simple
-installation of all \gls{mrp} modules. As it was created in the Python
+installation of all \gls{mrp} modules. As it is created in the Python
 programming language, there are several public package registry where
 users can provide their software modules. Here, \emph{PyPi}
 \cite{PyPI}
@@ -2642,7 +2642,7 @@ the terminal shell being located in the \gls{mrp}-library folder.
 \subsection{Documentation}\label{documentation}}
 
 In order to provide comprehensive documentation for the enduser, the
-source code was documented using Python-\emph{docstrings}
+source code is documented using Python-\emph{docstrings}
 \cite{PythonDocstringReference} and the Python type annotations. The
 use of type annotations also simplifies further development, as modern
 \gls{ide}s can more reliably display possible methods to the user as an
@@ -2670,7 +2670,7 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
 
 Since \emph{docstrings} only document the source code, but do not
 provide simple how-to-use instructions, the documentation framework
-\emph{Sphinx} \cite{SphinxDocumentation} was used for this purpose.
+\emph{Sphinx} \cite{SphinxDocumentation} is used for this purpose.
 This framework makes it possible to generate \gls{html} or \gls{pdf}
 documentation from various source code documentation formats, such as
 the used \emph{docstrings}.
@@ -2761,7 +2761,7 @@ algorithms to meet the requirements of different research projects.
 \label{Ten_numbered_test_magnets_in_separate_holders.png}}
 \end{figure}
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was
+For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is
 used for the evaulation of the framework. As this is equipped with an
 exchangeable magnetic holder mount, suitable holders are required for
 the magnets to be measured. Ten random \emph{N45 12x12x12mm} neodymium
@@ -2777,9 +2777,9 @@ later.
 \section{Configuration of the
 Measurement}\label{configuration-of-the-measurement}}
 
-The configured hardware was then connected to the host system using the
+The configured hardware is then connected to the host system using the
 \emph{MRPcli config setupsensor}-\gls{cli} command. Afterwards, the
-measurement was configured for an measurement run, using the following
+measurement is configured for an measurement run, using the following
 configuration commands \ref{lst:evaluation_measurement_config}.
 
 \newpage
@@ -2793,9 +2793,9 @@ $ MRPcli config setup eval_measurement_config
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 \end{lstlisting}
 
-The \emph{MRPcli measure run} command was then called up for each
+The \emph{MRPcli measure run} command is then called up for each
 individual magnet to execute a measurement. After each run, the
-\emph{READING-NAME} parameter was filled with the id of the next magnet
+\emph{READING-NAME} parameter is filled with the id of the next magnet
 so that all measurements could be assigned to the physical magnets.
 
 \hypertarget{custom-algorithm-implementation}{%
@@ -2808,7 +2808,7 @@ function signature and is implemented in the file
 \emph{UDPPFunctionCollection.py}. This Python file is loaded when the
 pipeline is started and all functions that are imported here as a module
 or implemented directly can be called via the pipeline. As this is a
-short algorithm, it was inserted directly into the file.
+short algorithm, it is inserted directly into the file.
 
 The parameter *\_readings* should later receive the imported
 measurements from the \emph{stage rawimport}
@@ -2858,8 +2858,8 @@ The Python \emph{heapq} \cite{heapq} module, which implements a
 priority queue, is used for this purpose. The calculated distances from
 the \emph{CoG} value of the measurements to are inserted into this
 queue. Subsequently, as many elements of the queue are returned as
-defined by the \emph{IP\_return\_count} parameter. The actual sorting
-was carried out by the queue in the background.
+defined by the \emph{IP\_return\_count} parameter. The actual sorting is
+carried out by the queue in the background.
 
 \hypertarget{alternative-filter-algorithm-implementation}{%
 \subsection{Alternative Filter Algorithm
@@ -2976,7 +2976,7 @@ the measured values are plotted as a result of the filter algorithm. As
 the \emph{IP\_return\_count} parameter was set to four, only the four
 most similar measurements were exported here. It can be seen from the
 plotted \emph{CoG} \(\mu\)T deviation values, that these are closest to
-an ideal Magnet with a CoG value of 0\(\mu\)T. This ideal value was
+an ideal Magnet with a CoG value of 0\(\mu\)T. This ideal value is
 calculated with the function
 \emph{MRP.MRPSimulation.generate\_simulated\_reading}, with the same
 measurement parameters (magnet type, dimensions, sensor distance) as
@@ -2989,20 +2989,20 @@ Filter Algorithm Implementation}
 same result is returned if the magnet measurement with \gls{id}
 \emph{5:0} is used as the reference magnet.
 
-The filter algorithm implemented by the user was thus successfully
+The filter algorithm implemented by the user is thus successfully
 executed using the user-programmable pipeline. The calculation result
-was successfully verified using raw measurement data and the final
+waiss successfully verified using raw measurement data and the final
 result of the algorithm.
 
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
 
 In the previous chapter \emph{Usecase Evaluation}
-\ref{usecase-evaluation} it was shown that the implementation of the
-hardware and software framework for various magnetic field sensors was
+\ref{usecase-evaluation} it is shown that the implementation of the
+hardware and software framework for various magnetic field sensors is
 successfully implemented.
 
-In addition, the basic application by the user was demonstrated using an
+In addition, the basic application by the user is demonstrated using an
 example. This makes it possible to systematically characterise magnets
 from the software and readout hardware side by means of data
 acquisition, storage and analysis.
@@ -3054,16 +3054,16 @@ Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
 For this evaluation, the sensors listed in the table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
 were used for sensor characterisation. The additional column for the
-\emph{Background-Noise} was taken from the respective data sheets of the
+\emph{Background-Noise} is taken from the respective data sheets of the
 sesors and will be verified in the later \emph{Background-Noise}
 measurement \ref{sensor-characterisation-background-noise}.
 
-This selection was made for the following reasons:
+This selection is made for the following reasons:
 
 The developed framework is directly compatible with a variety of
 magnetic field sensors without modifications, including those listed in
 the table. For this evaluation, the sensors listed in the table were
-used for sensor characterisation. This selection was made for the
+used for sensor characterisation. This selection is made for the
 following reasons:
 
 \begin{itemize}
@@ -3100,18 +3100,18 @@ conductive adhesive. This compensates for thermal differences. This is
 essential for the subsequent temperature deviation tests in order to
 obtain comparable measurement results.
 
-The setup was placed and pre-wired in the temperature chamber 24 hours
+The setup is placed and pre-wired in the temperature chamber 24 hours
 before the series of measurements were carried out. The insulated
 housing of a \emph{Voron 2.4} 3D printer, which has a separately
-controlled internal heating system, was used as the temperature chamber.
-To verify the temperature, an additional thermometer \emph{VC-7055BT}
-was placed on the base plate. A 10mm thick \emph{PTFE} insulation plate
-was placed between the floor and the sensor base plate to prevent direct
-and uneven heating of the base plate by the heated floor.
+controlled internal heating system, is used as the temperature chamber.
+To verify the temperature, an additional thermometer \emph{VC-7055BT} is
+placed on the base plate. A 10mm thick \emph{PTFE} insulation plate is
+placed between the floor and the sensor base plate to prevent direct and
+uneven heating of the base plate by the heated floor.
 
 The graphic
 \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
-shows this basic setup, the \emph{Raspberry Pi Pico} shown here was used
+shows this basic setup, the \emph{Raspberry Pi Pico} shown here is used
 as the readout hardware, on which the \emph{Unified Sensor Firmware} is
 running. With additional connected switch, its possible to isolate or
 select a sensor or both sensors to be queried from the firmware.
@@ -3122,7 +3122,7 @@ computer, which is connected to the sensors via a \emph{Hailege
 ADUM3160} \gls{usb} isolator and is placed outside the temperature
 chamber.
 
-For the software setup, \emph{MRPCli} \ref{command-line-interface} was
+For the software setup, \emph{MRPCli} \ref{command-line-interface} is
 used to control and record the measurement series, with the functions of
 the \emph{MRPDataVisualisation} \ref{mrpvisualisation} and
 \emph{MRPAnalysis} \ref{mrpanalysis} packages from the library
@@ -3153,7 +3153,7 @@ inside of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
-size of \emph{N=10000} measured values was recorded for the baseline
+size of \emph{N=10000} measured values is recorded for the baseline
 measurement.
 
 The output signal of the sensor is then continuously measured and
@@ -3440,10 +3440,19 @@ field strength with increasing temperatures. However, this is very
 constant with a value of \emph{-2 \(\mu\)T / \(^{\circ}\)C} and is
 therefore predictable.
 
-In the evaluation (see figure ), a linear function was also calculated
-using curve fitting to determine the temperature coefficients of the
-sensors. This makes it possible to calculate these deviations based on
-the ambient temperature during the software calibration.
+The graph of the \emph{TLV493d} is significantly steeper with a gradient
+of \emph{-5.13 \(\mu\)T / \(^{\circ}\)C}, and it is also not as linear
+as the \emph{MMC5603NJ}; there are clear jumps in the gradient. However,
+the total change between the temperature regions of 175\(\mu\)T is less
+than that of the \emph{MMC5603NJ} with 70\(\mu\)T, if the total
+measurement range of the sensors is also taken into account.
+
+In the evaluation (see figure
+\ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}),
+a linear function was also calculated using curve fitting to determine
+the temperature coefficients of the sensors. This makes it possible to
+compensate these deviations based on the ambient temperature during the
+software calibration.
 
 \hypertarget{result-analysis-1}{%
 \section{Result Analysis}\label{result-analysis-1}}
@@ -3479,6 +3488,17 @@ linearity\tabularnewline
 temperature coefficients\tabularnewline
 \bottomrule
 \end{longtable}
+
+Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a
+summary of all recorded and analysed measured values of the two
+characterised sensors \emph{TLV493D} and \emph{MMC5603NJ}. It can be
+clearly seen that these differ significantly by a factor of \emph{x10}.
+The \emph{TLV493D} performs seriously in the Senosr Noise measurement
+and also performs worse than specified in the data sheet (98\(\mu\)T
+instead of 175\(\mu\)T), but the large measuring range, which fulfils
+the required specifications from chapter \emph{Research Question}
+\ref{Research Question and Approach}, must be taken into account here,
+which is not met by the \emph{MMC5603NJ}.
 
 are they suitable for <1000(+\gls{ppm}) ?
 
