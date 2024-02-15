@@ -5,15 +5,14 @@ The chapter provides a brief introduction into the problem domain, delineates th
 
 ## Background and Motivation
 
-Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body.
-This indispensable method plays a crucial role in contemporary medicine and research, contributing significantly to saving lives.
-Despite its widespread use, traditional (+mri)systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
+Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
 Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents, and superconducting electro magnets produce magnetic fields through electric induction.
 Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements.
 This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
 The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
+
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
 While tipically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviors and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculationg images of a head sucessfully. 
@@ -41,11 +40,11 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing high blac-withe image resolution. However, the substantial costs, space requierments and safety considerations cause considerable challenges.
 
-(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The inital *B0* field of an (+mri) aims to be homogenouse, for image aquisition the second step requires imhomoginity of the *B0* field to stimulate spin in the atoms of materials.
+(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proprtional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The inital *B0* field of an (+mri) aims to be homogenouse, for image aquisition the second step requires imhomoginity of the *B0* field to stimulate spin in the atoms of materials. For high resultion images, the initial *B0* field aims to be a homogenouse as possible. 
 
 Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@Nitz2016]
 
-Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@Hori2021-pt].
+Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)-systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@Hori2021-pt].
 
 This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@Arnold2023-cn]
 
@@ -88,41 +87,38 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-The Halbach magnetic array emerges as a crucial element for future Magnet characterisation. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
 
 ### Shimming Procedure
 
-The shimming process is a crucial step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is crucial for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
+The shimming process is a essential step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
 
-Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique crucial for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@inbook]
+Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@inbook]
 
 The sources for the shimming process can be hardware and software based.
 Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field.
 Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@10.3389/fphy.2021.704566].
 
-In this work, reference is made exclusively to the hardware shim process.
-Since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
-
+In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
 
 ## State of the Art 
 
 **Low-Field MRI**
 
-According to Wolfgang R. Nitz in 2016, just 13.4% of actively used v systems are low-field (+mri)  (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [@Nitz2016]
-Nitz also highlights that presently, the landscape of (+mri)  technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up (+mri)  from FONAR Corp. In contrast, the industry giants such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their (+mri)  systems. This notable concentration underscores the distinctive position of Stand-up (+mri)  as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [@Nitz2016]
+According to Wolfgang R. Nitz in 2016, just 13.4% of actively used (+mri) systems are low-field (+mri) (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [@Nitz2016]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri)  system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
-The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
-This (+mri)  system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
+Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
 The Halbach magnet incorporated in this system boasts a 27cm diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets (*12 x 12 x 12 mm^3*). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
-To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach cylinder along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
+To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
 **Magnet Characerisation**
 
@@ -181,7 +177,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1000(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at 1000(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
-It is crucial to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
+It is essential to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
 
 This work distinctly prioritizes the development of both hardware and software tailored for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
 
@@ -191,7 +187,7 @@ The following section defines some usecases that the future project should be ab
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The usecases were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process \ref{usecase-evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution. This is crucial for understanding the needs of the target group and designing the end result accordingly.
+In the later accomplished evaluation process \ref{usecase-evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
 
 1. **Ready to use hardware sensor designs**
 
@@ -217,7 +213,7 @@ In the later accomplished evaluation process \ref{usecase-evaluation}, the defin
 
 5. **User programmable data processing pipelines**
 
-  User-programmable data processing pipelines enable the flexible design of data processing sequences  as pipeline by users.
+  User-programmable data processing pipelines enable the flexible design of data processing sequences as pipeline by users.
   The framework should enable users to create their own pipelines with the previously defined data analysis functions.
 
 
@@ -251,7 +247,7 @@ Finally, a comprehensive hardware and software framework must be established, ca
 
 # Unified Sensor
 
-A defined main objective of this project is the development of a cost-effective magnetic field sensors  interface that is also universally expandable.
+A defined main objective of this project is the development of a cost-effective magnetic field sensors interface that is also universally expandable.
 The focus is on mapping different sensors and being compatible with different magnet types and shapes.
 
 This ensures a wide range of applications in different scenarios. Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
@@ -619,13 +615,13 @@ The following modules are implemented in detail:
 * *MRPMagnetTypes* - various physical constants for basic magnet types
 
 
-The *MRPReading* module performs a crucial role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
+The *MRPReading* module performs a essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
 To customize and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
 
-To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a crucial bridge between user preferences and the robust capabilities of the *MRPReading* module.
+To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a cessential bridge between user preferences and the robust capabilities of the *MRPReading* module.
 
 The system is also designed to be compatible with *Extension Modules* \ref{extension-modules}, allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
@@ -1101,7 +1097,7 @@ The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generate
 
 # Usability Improvements
 
-Usability improvements in software libraries are crucial for efficient and user-friendly development.
+Usability improvements in software libraries are essential for efficient and user-friendly development.
 Intuitive API documentation, clearly structured code examples and improved error messages promote a smooth developer experience.
 A (+gui) or (+cli) application for complex libraries can make it easier to use, especially for developers with less experience.
 Continuous feedback through automated tests and comprehensive error logs enable faster bug fixing.
@@ -1212,7 +1208,7 @@ stage plot_normal_bias_offset:
   parameters:
     readings_to_plot: stage apply_temp_compensation
     IP_export_folder: ./readings/fullsphere/plots/
-    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated
+    IP_plot_headline_prefix: Sample N45 12x12x12 magnets calibrated
 
 stage export_readings:
   function: export_readings
@@ -1654,7 +1650,7 @@ It is possible to carry out the sensor characterisation shown here for other com
 The sensor platform used here is an adapted version of the *1D: Single Sensor* \ref{d-single-sensor} sensor platform.
 The sensors to be measured were fixed together on an aluminium plate with thermally conductive adhesive.
 This compensates for thermal differences.
-This is crucial for the subsequent temperature deviation tests in order to obtain comparable measurement results.
+This is essential for the subsequent temperature deviation tests in order to obtain comparable measurement results.
 
 The setup was placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
 The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, was used as the temperature chamber.
@@ -1790,8 +1786,7 @@ An accurate temperature sensitivity characteristic is therefore crucial for subs
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
 
 As the temperature sensor *TLV493D* in particular produced very different results in the previous measurements, an additional temperature sensor was attached to the sensor circuit board for this measurement. 
-The figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} shows these modifications in detail.
-This makes it possible to accurately determine the sensors (+ic) temperature.
+The figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} shows these modifications in detail. These changes makes it possible to accurately determine the sensors (+ic) temperature.
 The temperature measuring device *VC-7055BT* can be analysed using a (+pc) interface.
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
 
