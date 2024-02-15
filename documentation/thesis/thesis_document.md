@@ -253,14 +253,14 @@ Chapter \ref{evaluation}. **Evaluation**
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
   bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This section ensures closure and aids readers in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework must be established, capable of measuring diverse objects using various sensors. Additionally, conclusive remarks should be provided regarding the suitability of the employed sensors for magnetic field measurements.
+Finally, a comprehensive hardware and software framework needs to be established, which is capable of measuring diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
 # Unified Sensor
 
-A defined main objective of this project is the development of a cost-effective magnetic field sensors interface that is also universally expandable.
-The focus is on mapping different sensors and being compatible with different magnet types and shapes.
+A defined main objective of this project is the development of a cost-effective magnetic field sensors interface that is universally expandable as well.
+The focus is on mapping different sensors and being compatible with different magnet types and shapes. This ensures a wide range of applications in different scenarios.
 
-This ensures a wide range of applications in different scenarios. Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
+Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
 
 The flexibility to support different sensors and magnets makes the system versatile and opens the possibility for use in different applications.
 A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors in different contexts.
@@ -275,7 +275,7 @@ This makes it easy to integrate your own measuring devices into the (+mrp) ecosy
 
 The selection process for possible magnetic field sensors initially focussed on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
 
-A key aspect of this selection was the preference for sensors with digital interfaces to facilitate implementation in the circuit layout.
+A key aspect of this selection was the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kind of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
 The use of analog sensors was purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
