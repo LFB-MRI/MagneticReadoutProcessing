@@ -474,7 +474,7 @@ The 1D sensor \ref{1D_sensor_construction_with_universal_magnet_mount.png} is th
 The electrical level here is based on a *Raspberry-Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
 
-Since the *MMC5603NJ* only has limited measurement range of total 6uT, even small coin sized neodymium magnets already saturates the sensor.
+Since the *MMC5603NJ* only has limited measurement range of total *6uT*, even small coin sized neodymium magnets already saturates the sensor.
 It is possible to mount 3D printed spacers over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash in order to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
@@ -507,11 +507,11 @@ It offers an *RS232* interface with a documented protocol for connection to a (+
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical *RS232* interface.
-As with the other sensors, this interface consists of your *Raspberry-Pi Pico* with an additional level shifter.
+As with the other sensors, this interface consists of a *Raspberry-Pi Pico* with an additional level shifter.
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
-The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
+The firmware is adapted using a separate build configuration.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -520,15 +520,15 @@ This software or hardware integration can be carried out on any other measuring 
 
 # Software Readout Framework
 
-The software readout framework is the central software component that was developed as part of this work.
+The software readout framework is the central software component that is developed as part of this work.
 This software framework is intended to provide a user-oriented data acquisition and analysis environment.
-For this purpose, typical individual steps that occur in relation to these tasks were implemented:
+For this purpose, typical individual steps that occur in relation to these tasks are implemented:
 
 * Data acquisition - from hardware sensors \ref{unified-sensor} or other data sources
 * Storage - export of data in various open formats \ref{storage-and-datamanagement}
 * Analysis - algorithms to analyze different data sets \ref{analysis}
 
-All these possible task parts were divided into different blocks and users were given the possibility of adding their own functionalities.
+All these possible task parts is divided into different blocks and users is given the possibility of adding their own functionalities.
 
 As the following, this concept is referred to as *user interaction points* \ref{user-interaction-points} and is explained in the following chapter.
 
@@ -537,7 +537,7 @@ As the following, this concept is referred to as *user interaction points* \ref{
 
 User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other.
 
-For this purpose, the library was divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
+For this purpose, the library is divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types was developed and packed together in a extendable Python library.
 
