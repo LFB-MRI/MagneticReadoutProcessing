@@ -1630,7 +1630,7 @@ The developed framework is directly compatible with a variety of magnetic field 
 %%Digital_magnetic_field_sensors_characterised_for_evaluation.csv%%
 
 For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
-The additional column for the *Background-Noise* is taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
+The additional column for the *Background-Noise* is taken from the respective data sheets of the sensors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
 
 This selection is made for the following reasons:
 
@@ -1655,7 +1655,7 @@ This is essential for the subsequent temperature deviation tests in order to obt
 The setup is placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
 The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, is used as the temperature chamber.
 To verify the temperature, an additional thermometer *VC-7055BT* is placed on the base plate.
-A 10mm thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
+A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
 
 The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
