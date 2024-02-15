@@ -87,7 +87,7 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centeres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
@@ -397,7 +397,7 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
-* Use with (+mrp) \ref{software-readout-framework}-libraray
+* Use with (+mrp) \ref{software-readout-framework}-library
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
@@ -750,9 +750,9 @@ For this reason *MRPAnalysis* contains functions for calculating the following d
 * *std_deviation* - Standard deviation
 * *mean* - Mean value
 * *variance* - Variance
-* *CoG* - Center of gravity
+* *CoG* - Centre of gravity
 * *binning* - Distribution of a sample by means of a histogram
-* *k-nearest* - K-nearest neighbors
+* *k-nearest* - K-nearest neighbours
 
 In addition, the export function *.to_numpy_matrix* enables further processing of the data in the *Numpy* [@harris2020array] framework, in which many other standard analysis functions are implemented.
 
@@ -762,7 +762,7 @@ At the current described scenarios, it is only possible to detect and use sensor
 It has the disadvantage that there must always be a physical connection.
 This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited.
 
-Multibe sensor can be connected to any (+pc) which is available on the network.
+Multiple sensor can be connected to any (+pc) which is available on the network.
 This can be a (+sbc) (e.g. a Raspberry Pi).
 The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber.
 
@@ -778,7 +778,7 @@ By connecting several sensors via the proxy module, it is possible to link sever
 %%Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png%%
 
 The figure \ref{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
-Here, both proxy instances do not communicate directly with the *control* (+pc), but the proxy instance *remote* (+pc) *#2* can acces the proxy running on *remote* (+pc) *#1*.
+Here, both proxy instances do not communicate directly with the *control* (+pc), but the proxy instance *remote* (+pc) *#2* can access the proxy running on *remote* (+pc) *#1*.
 
 The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can access all sensors in this chain.
 
@@ -1036,7 +1036,7 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ### MRPVisualisation
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
-The visualisation optionsmakes it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Fullsphere* \ref{d-fullsphere} sensor.
+The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Fullsphere* \ref{d-fullsphere} sensor.
 The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a fullsphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used here.
@@ -1074,7 +1074,7 @@ Eight random measurements are generated here.
 It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
-After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calucation scheme [@HallbachMagnetDesignPaper] using the *MRPHalbachArrayGenerator* module.
+After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@HallbachMagnetDesignPaper] using the *MRPHalbachArrayGenerator* module.
 
 ```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based halbach ring"}
 readings = []
@@ -1117,7 +1117,7 @@ In the first version of the (+mrp)-library, the user had to write his own Python
 This is already a time-consuming process for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
-To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} is implemented. The libaray (+cli) implements the following functionalities:
+To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} is implemented. The library (+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -1304,7 +1304,7 @@ Instead, the hardware sensors were simulated by software and executed via virtua
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
 As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
-Here, *PyPi* [@PyPI] \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} [@MagneticReadoutProcessingPyPI] is the most commonly used package registry and offers direct support for the package installation programm (+pip) \ref{lst:setup_lib_with_pip}.
+Here, *PyPi* [@PyPI] \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} [@MagneticReadoutProcessingPyPI] is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
@@ -1410,7 +1410,7 @@ This is determined using a sorting algorithm developed by the user.
 The process is broken down into the following steps and the practical application of *User Interaction Points* \ref{user-interaction-points} is shown:
 
 
-1. **Hardware preperation**:
+1. **Hardware preparation**:
    Users can prepare measurements using the implemented framework. This includes the placement of the sensors and the selection of the relevant parameters for the characterisation of the permanent magnets.
 
 2. **Configuration of the measurement**:
@@ -1427,11 +1427,11 @@ These were previously described in the Usecases \ref{usecases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
-## Hardware preperation
+## Hardware preparation
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaulation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These were placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
@@ -1463,7 +1463,7 @@ As this is a short algorithm, it is inserted directly into the file.
 
 The parameter *_readings* should later receive the imported measurements from the *stage rawimport* \ref{lst:pipeline_mrp_evaluation_yaml} and the optional *IP_return_count* parameter specifies the number of best measurements that are returned.
 The return parameter is a list of measurements containing the most similar measurements, measured by the smallest distance between all measurements.
-The distance for each measurement is determined using the center of gravity function *CoG*, the length is then calculated from the result vector. This value can then be used for sorting.
+The distance for each measurement is determined using the centre of gravity function *CoG*, the length is then calculated from the result vector. This value can then be used for sorting.
 
 
 ```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm"}
@@ -1597,7 +1597,7 @@ If the alternative filter algorithm from chapter *Alternative Filter Algorithm I
 
 
 The filter algorithm implemented by the user is thus successfully executed using the user-programmable pipeline. 
-The calculation result waiss successfully verified using raw measurement data and the final result of the algorithm.
+The calculation result is successfully verified using raw measurement data and the final result of the algorithm.
 
 
 
@@ -1616,7 +1616,7 @@ In this way is possible to systematically characterise magnets from the software
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
 
 * Measure a wide range of different permanent magnets with regard to their systematic field strength
-* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than *1000(+ppm)*
+* Automated measurement of the homogeneity of Halbach rings with an accuracy of less than *1000(+ppm)*
 
 These questions are answered in the following, as a basic readout and analysis functionality platform had to be created first and thus an automated sensor characterisation can be performed.
 
@@ -1822,7 +1822,7 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 
 
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*. It can be clearly seen that these differ significantly by a factor of *x10*.
-The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{Research Question and Approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs seriously in the Sensor Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{Research Question and Approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
 
 
