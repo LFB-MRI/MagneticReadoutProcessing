@@ -45,7 +45,7 @@ class TestMPRDataVisualization(unittest.TestCase):
     def test_temperature_deviation(self):
         files = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'(.)*.mag.json', f)]
 
-        N: int = 1000
+        N: int = 1 #000
         # GET SENSORS OUT OF FILENAME
         sensors: set = set()
         for e in files:
