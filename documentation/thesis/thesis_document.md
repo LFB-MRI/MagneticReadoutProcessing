@@ -104,7 +104,7 @@ Within the research domain, various implementations have emerged. An exemplar in
 The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on swift and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
 This (+mri)  system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
 
-The Halbach magnet incorporated in this system boasts a 27cm diameter, a $B0$ field strength of 50.4 mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a 27cm diameter, a $B0$ field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach cylinder along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -1766,6 +1766,12 @@ It is also possible to calculate these small deviations using curve fitting meth
 
 
 ## Temperature Sensitivity
+
+The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
+It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes.
+An accurate temperature sensitivity characteristic is therefore crucial for subsequent precise magnetic field measurements.
+
+
 
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
 
