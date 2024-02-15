@@ -1821,8 +1821,24 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 %%Overview_of_all_characterised_sensor_properties.csv%%
 
 
-Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*. It can be clearly seen that these differ significantly by a factor of *x10*.
-The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{Research Question and Approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
+It can be clearly seen that these differ significantly by a factor of *x10*.
+
+The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+
+The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
+
+However, due to the limited measuring range of *$\pm$3mT*, direct measurement of stronger magnets is not possible. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm*.
+
+
+
+In the following chapter, recommendations for action are defined, which were derived from the analysis results.
+
+### Recommendation for Action
+
+* folgendes setup woird für eine vermessung nach der sensor auswertung emholen:
+* temperaturkomensation sowie linearitäts kompensation mit separaten temperatur sensor
+
 
 
 
@@ -1833,9 +1849,6 @@ are they suitable for <1000(+(+ppm)) ?
 * 27cm / 50mT bore
 * nmr probes for better results
 
-
-
-
 * mit software calibrierung ist es möglich vermutlich möglich sowie mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu kommen
 * mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit avg=20 kommt man auf 45
 * sollte ein geeignerter ersatzsensor gefunden werden
@@ -1843,13 +1856,6 @@ are they suitable for <1000(+(+ppm)) ?
 * beide sensoren sind jedoch durch chrakterisierung von permanentmagneten geeignet
 * beim tlv493d ist es möglich absolut werte zu erfassen.
 * beim mmc ist es möglich relativ magnete untereinander zu vergleichen
-
-### Recommendation for Action
-
-* folgendes setup woird für eine vermessung nach der sensor auswertung emholen:
-* temperaturkomensation sowie linearitäts kompensation mit separaten temperatur sensor
-
-
 
 
 
