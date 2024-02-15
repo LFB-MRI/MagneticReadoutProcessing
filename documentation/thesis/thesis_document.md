@@ -555,7 +555,6 @@ According to this concept, the user should be able to replace individual compone
 
 The following example shows the advantages of using the *User interaction points*:
 
-
 A project called *HalbachOptimisation* [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
 The *HalbachMRIDesigner* [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@OpenSCAD] based 3D model of the magnet holder.
