@@ -1806,7 +1806,7 @@ With this setup, it is possible to automatically acquire measured values from th
 The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from 20$^{\circ}$ to 50$^{\circ}$.
 Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
-The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality magnets).
+The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality type N magnets [@magna-c]).
 The temperature range was selected so that it is within a sufficient range for the application.
 
 
