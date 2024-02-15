@@ -193,7 +193,7 @@ This work prioritises the development of both hardware and software customised f
 
 ## Usecases
 
-The following section defines some usecases that the future project should be able to cover. These usecases define the setup of the hard- and software. 
+The following section defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The usecases were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
