@@ -625,7 +625,7 @@ To customise and add meta-data, users have the flexibility to configure paramete
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
 
-To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a cessential bridge between user preferences and the robust capabilities of the *MRPReading* module.
+To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a essential bridge between user preferences and the robust capabilities of the *MRPReading* module.
 
 The system is also designed to be compatible with *Extension Modules* \ref{extension-modules}, allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
@@ -650,7 +650,7 @@ This eliminates all binary-based formats such as the Python pickle built into Py
 Taking these points into account, the (+json) format is chosen.
 This is human and machine readable and there is a compatible parser for almost every programming language.
 
-The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement thatt using the library is exported.
+The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement that using the library is exported.
 It can be seen that by using the (+json) format, all measurement points and metadata are available in readable plain text.
 
 This means that they can also be read out in other programs.
@@ -704,7 +704,7 @@ Currently, data re-import of an exported measurement is only supported via the (
 
 ### Extension Modules
 
-The extention modules build on the core modules and offer the user additional basic functionalities.
+The extension modules build on the core modules and offer the user additional basic functionalities.
 These include functions for data acquisition, visualisation and analysis.
  
 #### Sensor Interface
