@@ -508,12 +508,12 @@ This was chosen because of its larger measuring range and can therefore be used 
 ### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
-A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of 0T to 3T with a resolution of 0.1mT.
-It offers an RS232 interface with a documented protocol for connection to a (+pc). 
+A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
+It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
-Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical RS232 interface.
+Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical *RS232* interface.
 As with the other sensors, this interface consists of your *Raspberry-Pi Pico* with an additional level shifter.
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
@@ -1734,7 +1734,7 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
 
-## Linearity
+## Sensor Characterisation: Linearity
 
 %%Sensor_evaluation_setup_for_linearity_measurements.png%%
 
@@ -1787,7 +1787,7 @@ In general, the measured values correspond to the data sheet specifications of b
 It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
 
 
-## Temperature Sensitivity
+## Sensor Characterisation: Temperature Sensitivity
 
 The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
 It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes.
@@ -1801,15 +1801,23 @@ The temperature measuring device *VC-7055BT* can be analysed using a (+pc) inter
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
 
 
+With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
 
+The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from 20$^{\circ}$ to 50$^{\circ}$.
+Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
+The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality magnets).
+The temperature range was selected so that it is within a sufficient range for the application.
+
+
+### Temperature Sensitivity Analysis
 
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
 
 
-using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
+
 
 
 
