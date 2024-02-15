@@ -498,12 +498,12 @@ This was chosen because of its larger measuring range and can therefore be used 
 ### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
-A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of 0T to 3T with a resolution of 0.1mT.
-It offers an RS232 interface with a documented protocol for connection to a (+pc). 
+A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
+It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
-Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical RS232 interface.
+Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical *RS232* interface.
 As with the other sensors, this interface consists of your *Raspberry-Pi Pico* with an additional level shifter.
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
