@@ -20,7 +20,12 @@ for e in files:
     name: str = e.replace("COMBINED", "%").replace(".mag","").replace(".json", "")
     reading.load_from_file(os.path.join(import_folder_path, e))
 
-    for tidx, tv in enumerate(reading.to_value_array()):
+
+
+    values: [float] = reading.to_value_array()
+    values = [v for _, v in sorted(zip(values, values))]
+
+    for tidx, tv in enumerate(values):
         new_reading: MRPReading.MRPReading = MRPReading.MRPReading()
         new_reading.set_name(name.replace("%", "{}".format(tidx+initial_temp)))
 
