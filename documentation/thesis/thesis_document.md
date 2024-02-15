@@ -339,7 +339,6 @@ It controls the hardware and enables the execution of predefined functions. The 
 It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions.
 Firmware is critical to the functioning of devices.
 
-
 The firmware is responsible for detecting the possible connected sensors \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
 This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
 
@@ -394,7 +393,7 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 %%Sensors_(+cli).png%%
 
-Each sensor that has been loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
+Each sensor that is loaded with the firmware, registeres on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
 * Use with (+mrp) \ref{software-readout-framework}-libaray
 * Stand-alone mode via sending commands using built-in (+cli)
@@ -429,13 +428,11 @@ The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.cs
 It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
 
-
 The other issue is sending the trigger signal from the readout software \ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
 
 In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
 The schematic \ref{Multi_sensor_synchronisation_wiring_example.png} shows how several sensors must be wired together in order to implement this form of synchronisation.
-
 
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png%%
 
@@ -458,7 +455,7 @@ The sensor differentiation takes place later in the (+mrp) \ref{software-readout
 
 ## Example Sensors
 
-Two functional sensor platforms \ref{Build_sensors_with_different_capabilities.csv} were built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
+Two functional sensor platforms \ref{Build_sensors_with_different_capabilities.csv} are built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
 
 %%Build_sensors_with_different_capabilities.csv%%
 
