@@ -183,7 +183,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             reading = MRPReading.MRPReading()
             import_file: str = os.path.join(self.asset_histogram_folder_path, e)
 
-            if 'tlv493d' in e.lower():
+            if 'tlv493d' in reading.get_name().lower() and not 'ID230972496757412434' in reading.get_name().lower():
                 reading.set_unit_import_scale_factor(10000.0)
             reading.load_from_file(import_file)
 

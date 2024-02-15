@@ -283,7 +283,7 @@ class MRPDataVisualization:
         raw_y = _reading.to_value_array()
 
         mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(_reading)
-        raw_variance: float = MRPAnalysis.MRPAnalysis.calculate_variance(_reading)
+        raw_stddeviation: float = MRPAnalysis.MRPAnalysis.calculate_std_deviation(_reading)
         noise_y: [float] = []
 
         for v in raw_y:
@@ -342,7 +342,7 @@ class MRPDataVisualization:
         raw_plot.axhline(y=mean, color='red', linestyle='--', linewidth=1, label='Sensor Raw Mean $\mu_{rv}$')
         raw_plot.set_xlabel('Data-Point Index', fontsize=8)
         raw_plot.set_ylabel('Raw Value\n[{}]'.format(_unit), fontsize=8)
-        raw_plot.set_title('Raw Sensor Values $\mu_{rv}'+'={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading), _unit) + '   $\sigma_{rv}^2$'+'={:.2f}{}'.format(raw_variance, _unit), fontsize=9)
+        raw_plot.set_title('Raw Sensor Values $\mu_{rv}'+'={:.2f}${}'.format(MRPAnalysis.MRPAnalysis.calculate_mean(_reading), _unit) + '   $\sigma_{rv}$'+'={:.2f}{}'.format(raw_stddeviation, _unit), fontsize=9)
         raw_plot.legend(fontsize=4)
 
 

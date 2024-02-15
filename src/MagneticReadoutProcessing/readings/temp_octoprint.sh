@@ -17,9 +17,9 @@ do
     rm /tmp/temp/*.mag.json
 
     curl -X POST -H "Content-Type: application/json" -H "X-Api-Key":"$TOKEN" -d "{\"command\":\"M140 S$i\"}" http://octopi.local/api/printer/command
-    sleep 30
-    curl -X POST -H "Content-Type: application/json" -H "X-Api-Key":"$TOKEN" -d '{"command":"M140 S0"}' http://octopi.local/api/printer/command
     sleep 10
+    #curl -X POST -H "Content-Type: application/json" -H "X-Api-Key":"$TOKEN" -d '{"command":"M140 S0"}' http://octopi.local/api/printer/command
+    #sleep 10
     MRPCli --basepath /tmp/temp measure run temp
 
     #cp /tmp/linear/*SID0*.mag.json /home/pi/linear_results/DISTANCE=$i.mag.json
