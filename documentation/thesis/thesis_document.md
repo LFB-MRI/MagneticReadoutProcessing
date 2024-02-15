@@ -161,7 +161,7 @@ It is important to note that the primary objective of this thesis is not merely 
 To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterisation process.
 
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
-The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
+The library will enable data acquisition, storage and analysis of magnetic properties, with customisation possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
@@ -187,9 +187,9 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
-It is essential to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
+It is essential to emphasize that the intention is not to characterize the magnets; the sensores which might be used for characterisation are be analised and evaluated.
 
-This work distinctly prioritizes the development of both hardware and software tailored for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
+This work prioritises the development of both hardware and software customised for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
 
 ## Usecases
 
@@ -518,7 +518,7 @@ As with the other sensors, this interface consists of your *Raspberry-Pi Pico* w
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customized version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -626,7 +626,7 @@ The following modules are implemented in detail:
 
 
 The *MRPReading* module performs a essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
-To customize and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
+To customise and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
