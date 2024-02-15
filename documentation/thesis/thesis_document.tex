@@ -4,7 +4,7 @@
 As the following, the motivation for the development of this framework
 is listed. The chapter provides a brief introduction into the problem
 domain, delineates the scope and boundaries of the present research,
-surveys the current state of the art in low-field MRI research and
+surveys the current state of the art in low-field \gls{mri}research and
 applications, articulates the research question driving this thesis and
 delineates the anticipated usecases and benefits that will be explored
 and analyzed throughout the study.
@@ -15,18 +15,18 @@ and analyzed throughout the study.
 Magnetic Resonance Imaging \gls{mri} stands as a cornerstone in clinical
 diagnostics, utilizing the principles of nuclear magnetic resonance
 \gls{nmr} to generate cross-sectional black-and-white images of the
-body. This indispensable method plays a crucial role in contemporary
+body. This indispensable method plays a central role in contemporary
 medicine and research, contributing significantly to saving lives.
-Despite its widespread use, traditional MRI systems often rely on large,
-heavy, and expensive magnets to achieve the necessary homogeneity of the
-magnetic field for accurate imaging. \cite{Nitz2016}
+Despite its widespread use, traditional \gls{mri} systems often rely on
+large, heavy, and expensive magnets to achieve the necessary homogeneity
+of the magnetic field for accurate imaging. \cite{Nitz2016}
 
-Various types of magnets find application in different \gls{mri}
-systems. Permanent magnets generate a steady yet relatively weak
-magnetic field, electro magnets are energized by electrical currents,
-and superconducting electro magnets produce magnetic fields through
-electric induction. Regardless of the type, the primary objective is to
-create a homogeneous magnetic field within the \gls{mri}. The higher the
+Various types of magnets are applicated in different \gls{mri} systems.
+Permanent magnets generate a steady yet relatively weak magnetic field,
+electro magnets are energized by electrical currents, and
+superconducting electro magnets produce magnetic fields through electric
+induction. Regardless of the type, the primary objective is to create a
+homogeneous magnetic field within the \gls{mri}. The higher the
 homogeneity, the more accurate the measurements. This uniform magnetic
 field aligns the molecules within the body or object, setting the stage
 for a second magnetic system to stimulate these molecules for
@@ -34,97 +34,113 @@ spin-measurements.
 
 The challenge with conventional homogeneity systems lies in their
 substantial size, weight, and cost. Even when targeting smaller areas of
-the body, large devices are often necessary. In response to this, there
-is a growing interest in developing low-field \gls{mri} systems that
-utilize various magnet types, including permanent magnets. These
+the body, large devices are often necessary.
+
+In response to this, there is a growing interest in developing low-field
+\gls{mri} systems that utilize in many cases permanent magnets. These
 systems, while offering advantages in energy efficiency and reduced
 complexity, face a significant challenge related to the inherent
 variability in the strength of permanent magnets. Achieving homogeneity
 in the magnetic field is crucial for accurate imaging or comparative
-analyses. While incapable of producing images due to lower magnetic
-field strength, low-field systems facilitate the comparison of different
-field behaviors and the identification of anomalies. O'Reilly and
-Teeuwisse and de Gans \cite{OReilly2019-rn} have already
-demonstrated low-cost and small-scale implementations with low-field
-\gls{mri} in 2021.
+analyses. While tipically calculated images have lower resolution due to
+lower magnetic field strength, low-field systems facilitate the
+comparison of different field behaviors and the identification of all
+kinds of irritations. O'Reilly and Teeuwisse and de Gans
+\cite{OReilly2019-rn} have already demonstrated low-cost and
+small-scale implementations with low-field \gls{mri} in 2021
+calculationg images of a head sucessfully.
 
 Permanent magnets, usually arranged in a circular ``Halbach array''
-around the \gls{mri}, are commonly employed in low-field systems.
-However, their drawback is the inherent variability in strength,
-complicating the achievement of a homogeneous field and requiring
-precise strength information for correct magnet ordering and \gls{mri}
-construction. Completed MRI systems pose significant challenges for
+inside the \gls{mri}, are commonly used in low-field systems. However,
+their drawback is the inherent variability in strength, complicating the
+achievement of a homogeneous field and requiring precise strength
+information for correct magnet ordering and \gls{mri} construction.
+
+Completed \gls{mri} systems pose significant challenges for
 retrospective adjustments, particularly when individual magnets impact
 the overall homogeneity of the magnetic field. While deviations in
 homogeneity can be measured post-assembly, the intricate task of
-readjustment becomes formidable. An approach dictates that meticulous
-adjustments to the magnets should be undertaken proactively, prior to
-the finalization of the MRI system.
+readjustment is taken into account. It is less costintensive and less
+complicated to measure the magnets proactively, prior to the
+finalization of the \gls{mri}system.
 
-The focus of this thesis is on advancing low-frequency \gls{mri}
-technology by addressing the sensor-usability of permanent magnets used
-in these systems. The variability in the strength of permanent magnets
-poses a significant obstacle to constructing an \gls{mri} with the
-necessary precision for homogenous field generation.
+The focus of this thesis is to improve low-frequency \gls{mri}
+technology by examining the usability of magnetic field sensors for
+characterising permanent magnets used in these systems. The variability
+in the strength of permanent magnets leads to significant difficulties
+in constructing an \gls{mri} with the necessary precision for homogenous
+field generation.
 
 To address this challenge, the thesis proposes the development of a
 comprehensive hardware and software framework. The hardware system aims
 to selectively measure magnetic fields at different locations or fully
-around a permanent magnet using different sensors. The accompanying
-open-source software is designed not only to facilitate measurements
-with different sensors but also to enable the characterization of
-different objects.
+around a permanent magnet using different sensors. Several existing
+open-source software solutions implement individual parts, but do not
+provide a complete data processing pipeline from acquisition to
+analysis, and their data storage formats are not compatible with each
+other.
 
-The sensor testing process involves two key tests. Firstly, the
-linearity of the magnetic fields is measured with all sensors to assess
-the feasibility of using specific sensors. Secondly, the homogeneity of
-the sensors is evaluated to determine its capability to measure with
-precision greater than 1000\gls{ppm}. In the end, the sensors should
-also measure how uniform the magnetic field is in a completed \gls{mri}
-system.
+The accompanying open-source software for this thesis is designed not
+only to facilitate measurements with different sensors but also to
+enable the characterisation of different objects.
 
-This research initiative seeks to contribute to the improvement of
-low-frequency \gls{mri} systems by enhancing the accuracy of permanent
-magnet characterization. The outcomes of this thesis will provide
-insights into the selection and evaluation of sensors for future
-low-field \gls{mri} research, ultimately contributing to advancements in
-medical imaging technologies.
+The sensor testing process involves three key test procedures for two
+digital sensors. Firstly, the background noise for both sensors is
+quantified by measuring with the sensors in a constant environment
+without any magnets. Secondly, the linearity of the magnetic fields is
+measured for all sensors to detect deviations from the estimated ideal
+magnetic curve.
+
+At last, the temperature drift is measured by repeating the background
+noise test in different temperature environments. Sensor noise should be
+less than \emph{50\(\mu\)T} to characterise precisely a magnetic field
+in a Halbach-Array of an \gls{mri}with precision greater than
+\emph{1000\gls{ppm}}.
+
+This research initiative contributes to the improvement of low-frequency
+\gls{mri} systems by enhancing the accuracy of permanent magnet
+characterisation. The outcomes of this thesis provides insights into the
+selection and evaluation of sensors for future low-field \gls{mri}
+research, ultimately contributing to advancements in medical imaging
+technologies.
 
 \hypertarget{low-field-mri}{%
 \subsection{Low-Field MRI}\label{low-field-mri}}
 
-In the realm of modern medical imaging, high-field superconducting
-magnets dominate most \gls{mri} machines, providing high blac-withe
-image resolution. However, the substantial costs, space prerequisites,
-and safety considerations associated with these systems pose
-considerable challenges.
+For modern medical imaging high-field superconducting magnets dominate
+most \gls{mri} machines, providing high blac-withe image resolution.
+However, the substantial costs, space requierments and safety
+considerations cause considerable challenges.
 
-Magnetic resonance imaging \gls{mri} relies on the presence of a robust
-magnetic field, and over time, there has been a continual push to
-enhance the strength of these magnetic fields. This strength is
-quantified in units of Tesla {[}T{]}, commonly referred to as the B0
-field in medical contexts, while physicists use the term magnetic field
-induction. The \gls{snr} is proprtional to the magnetic B0 field;
-growing magnetic field leads automatically to higher \gls{snr}.
+\gls{mri} relies on the presence of a robust magnetic field, and over
+time, there has been a continual push to enhance the strength of these
+magnetic fields. This strength is quantified in units of Tesla {[}T{]},
+commonly referred to as the \emph{B0} field in medical contexts, while
+physicists use the term magnetic field induction. The \gls{snr} is
+proprtional to the magnetic \emph{B0} field; growing magnetic field
+leads automatically to higher \gls{snr}. The inital \emph{B0} field of
+an \gls{mri} aims to be homogenouse, for image aquisition the second
+step requires imhomoginity of the \emph{B0} field to stimulate spin in
+the atoms of materials. For high resultion images, the initial \emph{B0}
+field aims to be a homogenouse as possible.
 
-Notably, the focus on high-field systems predominated discussions until
+Notably, the focus on high-field systems dominated discussions until
 around 1991 when the possibility of constructing \gls{mri} machines with
-lower magnetic field strengths began to emerge. This marked a pivotal
-shift in exploring the potential advantages and applications of
-low-field \gls{mri} systems. \cite{Nitz2016}
+lower magnetic field strengths came up. This marked a shift in exploring
+the potential advantages and applications of low-field \gls{mri}
+systems. \cite{Nitz2016}
 
 Low-field magnetic resonance imaging (low-field \gls{mri}) is a
 \gls{mri} technique that operates at a lower magnetic field strength
 compared to conventional high-field \gls{mri} scanners. Typically, the
-magnetic field in low-field MRI systems measured between
-\passthrough{\lstinline!0.1T!} and \passthrough{\lstinline!0.3T!}
-compared to the usual \passthrough{\lstinline!1.5T!} to
-\passthrough{\lstinline!3T!} and above in high-field \gls{mri} scanners
+magnetic field in low-field \gls{mri}-systems measured between
+\emph{0.1T} and \emph{0.3T} compared to the usual \emph{1.5T} to
+\emph{3T} and above in high-field \gls{mri} scanners
 \cite{Hori2021-pt}.
 
 This technology is used in medical imaging as well as in preclinical
-research. The main advantage of low-field \gls{mri} is the improved
-imaging of soft tissues, especially when examining joints and muscles.
+research. The main advantage of low-field \gls{mri}s is the improved
+imaging of soft material, especially when examining joints and muscles.
 It also offers more cost-effective alternatives to high-field \gls{mri}
 systems \cite{Hori2021-pt}, cost reduction, a smaller device
 footprint, alleviated safety concerns and leading to diminished image
@@ -133,18 +149,18 @@ resolution within clinically feasible scan durations.
 
 Low-field \gls{mri} systems are predominantly composed of permanent
 magnets. Through the connection of these permanent magnets, a consistent
-magnetic field of up to 0.35 Tesla can be generated. However, this
-achievement comes at the cost of an average system weight of 14 tons.
+magnetic field of up to \emph{0.35T} can be generated. However, this
+achievement comes at the cost of an average system weight of \emph{14t}.
 Despite their cost-effectiveness in production and maintenance,
-permanent magnets exhibit drawbacks such as high temperature dependence
-and a limited \gls{snr} due to the constrained field strength.
+permanent magnets show drawbacks such as high temperature dependence and
+a limited \gls{snr} due to the constrained field strength.
 \cite{Nitz2016}
 
 In particular, the advantages of the small design, the fast and simple
 image acquisition and the low costs are advantages that will become
 increasingly important in the future. However, the use of permanent
 magnets and their structure is particularly important in such systems
-and need to be analysed.
+and needs to be analysed.
 
 \hypertarget{magnet-system}{%
 \subsection{Magnet System}\label{magnet-system}}
@@ -156,11 +172,11 @@ and need to be analysed.
 \label{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png}}
 \end{figure}
 
-The positioning of permanent magnets holds a pivotal role in
-constructing an MRI and influencing the homogeneity of the B0 magnetic
-field. Halbach ring magnets \cite{Halbach1980DesignOP} have become a
-common design for low field \gls{mri} and \gls{nmr} systems
-\cite{cmr.a.20165}.
+The positioning of permanent magnets holds an important role in
+constructing an \gls{mri} and is influencing the homogeneity of the
+\emph{B0} magnetic field. Halbach ring magnets
+\cite{Halbach1980DesignOP} have become a common design for low field
+\gls{mri} and \gls{nmr} systems \cite{cmr.a.20165}.
 
 This positioning has the ability to generate extremely homogeneous
 magnetic flux densities, produce virtually no stray fields and is
@@ -171,12 +187,11 @@ A halbach ring of this type is usually based on a ring with permanent
 magnets arranged in a circle. The graphic
 \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an
 example \gls{cad} model of such a ring, in which in this case eight
-cubic \passthrough{\lstinline!12x12x12mm!} magnets are embedded to
-generate homogeneous magnetic flux densities of around
-\passthrough{\lstinline!20mT!}.
+cubic \emph{12x12x12mm} magnets are embedded to generate homogeneous
+magnetic flux densities of around \emph{20mT}.
 
 The homogeneity in this configuration depends, among other things, on
-the following aspects:
+the following main aspects:
 
 \begin{itemize}
 \item
@@ -205,19 +220,19 @@ this also complicates the effect on the structure of a Halbach ring
 magnet. If these are joined together to form a ring, positioning
 tolerances are also added.
 
-Halbach magnetic arrays present a compelling choice for mobile NMR due
-to their ability to produce highly homogeneous and robust magnetic
-fields per unit of magnetic mass, coupled with minimal stray fields. The
-term ``Halbach Array'' (commonly known as ``magic rings'') denotes a
-precise configuration of permanent magnets designed to amplify magnetic
-flux on one side while concurrently mitigating or eliminating it on the
-opposite side. \cite{inbook}
+Halbach magnetic arrays present a choice for mobile \gls{nmr} due to
+their ability to produce highly homogeneous and robust magnetic fields
+per unit of magnetic mass, coupled with minimal stray fields. The term
+``Halbach Array'' (commonly known as ``magic rings'') denotes a precise
+configuration of permanent magnets designed to amplify magnetic flux on
+one side while concurrently mitigating or eliminating it on the opposite
+side. \cite{inbook}
 
-The Halbach magnetic array emerges as a crucial element for future
-Magnet Characterization. Given that this thesis centers on assessing the
-sensors' applicability, the Halbach magnetic array serves as a tool for
-measurements, although its implementation and further discussion will
-not be the primary focus.
+The Halbach magnetic array appears as a essential element for future
+Magnet characterisation. Based on this fact this thesis centers on
+assessing the sensors' applicability, the Halbach magnetic array serves
+as a tool for later measurements, although its implementation and
+further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there
 are various so-called shimming procedures which further improve
@@ -227,15 +242,15 @@ explained in the following chapter.
 \hypertarget{shimming-procedure}{%
 \subsection{Shimming Procedure}\label{shimming-procedure}}
 
-The shimming process is a crucial step in magnetic resonance imaging
+The shimming process is a essential step in magnetic resonance imaging
 \gls{mri} to ensure homogeneous magnetic fields for precise imaging.
 Shimming corrects irregularities in the static magnetic field that can
 be caused by external influences or internal system errors. This process
-optimizes field homogeneity, which is crucial for high-resolution and
+optimizes field homogeneity, which is essential for high-resolution and
 artifact-free images \cite{10.3389/fphy.2021.704566}.
 
 Optimal homogeneity is attained through intricate designs facilitating
-active shimming, a technique crucial for achieving high-resolution
+active shimming, a technique essential for achieving high-resolution
 spectroscopy. Beyond this, simpler combinations and adaptations of
 Halbach rings offer versatility, making them suitable for variable field
 magnets or magnets that can be effortlessly opened without applying
@@ -248,8 +263,8 @@ shimming, on the other hand, uses algorithms to adjust the control
 parameters of the \gls{mri} system and improve homogeneity
 \cite{10.3389/fphy.2021.704566}.
 
-In this work, reference is made exclusively to the hardware shim
-process. Since this project is to be used in the future to construct a
+In this thesis, reference is made exclusively to the hardware shimming
+processes, since this project is to be used in the future to construct a
 low-field \gls{mri} field magnet from permanent magnets.
 
 \hypertarget{state-of-the-art}{%
@@ -257,55 +272,55 @@ low-field \gls{mri} field magnet from permanent magnets.
 
 \textbf{Low-Field MRI}
 
-According to Wolfgang R. Nitz in 2016, just 13.4\% of actively used v
-systems are low-field \gls{mri} (66.6\% 1.5T systems, 20\% 3.0 T system,
-14.4\% low field with \textless0.5T). {[}Nitz2016{]} Nitz also
-highlights that presently, the landscape of \gls{mri} technology is
-dominated by a single manufacturer dealing with resistive magnets,
-namely Stand-up \gls{mri} from FONAR Corp.~In contrast, the industry
-giants such as Siemens, General Electric, Philips, Toshiba, among
-others, predominantly rely on either permanent magnets or
-superconducting magnets in their \gls{mri} systems. This notable
-concentration underscores the distinctive position of Stand-up \gls{mri}
-as a trailblazer in utilizing resistive magnets within the competitive
-realm of magnetic resonance imaging. {[}Nitz2016{]}
+According to Wolfgang R. Nitz in 2016, just \emph{13.4\%} of actively
+used \gls{mri} systems are low-field \gls{mri} (\emph{66.6\% 1.5T
+systems, 20\% 3.0 T system, 14.4\% low field with \textless0.5T}).
+\cite{Nitz2016}
 
 Within the research domain, various implementations have emerged. An
 exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who
 introduced a groundbreaking ``three-dimensional \gls{mri} in a
-homogeneous 27cm diameter Bore Halbach Array magnet''
-\cite{OReilly2019-rn} in 2019. This innovative setup was
-subsequently employed in 2020 to acquire in vivo MR images, showcasing
-the practical applications of their pioneering research
-\cite{OReilly2021-ep}. 2023 veröffentlichten de Vos, Remis und Webb
-eine zusammenfassung zur gestaltng eines oint-of-care halbach array
-low-field \gls{mri} system \cite{De_Vos2023-pb}.
+homogeneous \emph{27cm} diameter Bore Halbach Array magnet''
+\cite{OReilly2019-rn} in 2019.This innovative setup was subsequently
+employed in 2020 to acquire in vivo MR images, showcasing the practical
+applications of their pioneering research \cite{OReilly2021-ep}.
+2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur
+gestaltng eines oint-of-care halbach array low-field \gls{mri} system
+\cite{De_Vos2023-pb}.
 
-The objective of this \gls{mri} system is to prioritize
-cost-effectiveness while efficiently capturing low-frequency images of
-the head. The emphasis lies on swift and accurate imaging, achieved
-through a streamlined approach that favors simplicity in the resultant
-images. This \gls{mri} system is strategically designed with a primary
-focus on cost-effectiveness, aiming to efficiently capture low-frequency
-images of the head. The overarching goal is to achieve rapid and
-accurate imaging through a simplified approach, prioritizing clarity and
-ease in the resulting images.
+Within the research domain, various implementations came up. An exemplar
+instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a
+groundbreaking ``three-dimensional \gls{mri} in a homogeneous 27cm
+diameter Bore Halbach Array magnet'' \cite{OReilly2019-rn} in 2019.
+This innovative setup was subsequently employed in 2020 to acquire in
+vivo MR images, showcasing the practical applications of their
+pioneering research \cite{OReilly2021-ep}. In 2023, de Vos, Remis
+and Webb published a summary of the design of an oint-of-care halbach
+array low-field \gls{mri} system \cite{De_Vos2023-pb}.
 
 The Halbach magnet incorporated in this system boasts a 27cm diameter, a
-B0 field strength of 50.4 mT, and an impressive homogeneity of
+\emph{B0} field strength of 50.4mT, and an impressive homogeneity of
 2400\gls{ppm} over a 20cm diameter using smaller magnets
 (\(12 x 12 x 12 mm^3\)). This exceptional homogeneity enables the
 utilization of coil-based gradients for spatial encoding, significantly
 enhancing the flexibility of image acquisition.
 
-To further refine the magnet's homogeneity, optimization techniques are
-employed by adjusting the radius of the Halbach cylinder along the
-length of the magnet. The deliberate choice of smaller magnets, as
-opposed to other Halbach designs, serves to compensate for inherent
-manufacturing imperfections in each individual magnet. This strategic
-decision not only mitigates structural demands on the magnet housing in
-terms of strength and weight but also augments safety throughout the
-construction process.
+The Halbach magnet incorporated in this system boasts a \emph{27cm}
+diameter, a \emph{B0} field strength of \emph{50.4 mT}, and an
+impressive homogeneity of \emph{2400}\gls{ppm} over a \emph{20cm}
+diameter using smaller magnets (\emph{12 x 12 x 12 mm\^{}3}). This
+exceptional homogeneity enables the utilization of coil-based gradients
+for spatial encoding, significantly enhancing the flexibility of image
+acquisition.
+
+To further refine the magnet's homogeneity, optimisation techniques are
+employed by adjusting the radius of the Halbach ring along the length of
+the magnet. The deliberate choice of smaller magnets, as opposed to
+other Halbach designs, serves to compensate for inherent manufacturing
+imperfections in each individual magnet. This strategic decision not
+only mitigates structural demands on the magnet housing in terms of
+strength and weight but also augments safety throughout the construction
+process.
 
 \textbf{Magnet Characerisation}
 
@@ -320,7 +335,7 @@ are used in a Hallbach configuration.
 
 In order to measure the magnets individually, there are already
 implementations that use different measurement methods to determine the
-field strength of individual magnets. Individual measuring points are
+field strength of individual magnets and individual measuring points are
 recorded. This data is then evaluated in separate software
 \cite{Wickenbrock_2021}.
 
@@ -365,21 +380,21 @@ implementing a software and hardware framework.
 Within the framework of the \emph{DeLoRI} (Dedicated Low-field \gls{mri}
 for breast) project, \emph{Fraunhofer MEVIS} in Bremen is actively
 engaged in crafting a compact and mobile low-field \gls{mri} unit
-tailored specifically for screening purposes. As described since 1991
-low-field \gls{mri}s have evolved into a burgeoning realm of research,
-showcasing substantial promise within the field of medical technology.
-The endeavor by \emph{Fraunhofer MEVIS} exemplifies the ongoing
-commitment to harnessing the potential of low-field \gls{mri} for
-enhanced breast screening applications.
+customised specifically for screening purposes. As described before,
+since 1991 low-field \gls{mri}s have evolved into a growing realm of
+research, showcasing significant opportunities within the field of
+medical technology. The efforts by \emph{Fraunhofer MEVIS} exemplifies
+the ongoing commitment to utilizing the potential of low-field \gls{mri}
+for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to enhance the homogeneity of
-magnets within low-field MRI systems below 1000\gls{ppm}, primarily
-driven by the goal of establishing a compact low-field \gls{mri} for
-breast cancer detection.
+The focus of the ongoing efforts is to improve the homogeneity of
+magnets within low-field \gls{mri}systems below \emph{1000}\gls{ppm},
+primarily driven by the goal of establishing a compact low-field
+\gls{mri} for breast cancer detection.
 
 Beyond the development and prototype construction of low-field \gls{mri}
 scanners, the project encompasses electromagnetic simulation of
-components within the low-field MRI system, coupled with machine
+components within the low-field \gls{mri}system, coupled with machine
 learning-driven control and data acquisition. The resultant software
 will be instrumental in reconstruction, with a specific focus on
 leveraging AI-based methodologies.
@@ -390,20 +405,21 @@ O'Reilly, Teeuwisse, and Webb, \emph{DeLoRI} aims to design an open
 \gls{mri}, departing from the circular \gls{mri} configuration discussed
 in the publication. This innovation is geared towards streamlining
 breast examinations, offering enhanced accessibility, and minimizing the
-spatial requirements during installation. In addition \emph{DeLoRI}
-endeavors to achieve heightened accuracy, striving for precision levels
-below 1000\gls{ppm}. While O'Reilly, Teeuwisse, and Webb were able to
-modify the ring diameter to influence field homogeneity, the unique goal
-here is to characterize the magnets pre-installation, allowing for
-proactive assessments of homogeneity characteristics. This nuanced
-approach aims to provide insights into magnetic field uniformity before
-the magnets are integrated, thereby streamlining the optimization
-process. Furthermore,
+spatial requirements during installation.
+
+In addition \emph{DeLoRI} efforts to achieve heightened accuracy,
+striving for precision levels below 1000\gls{ppm}. While O'Reilly,
+Teeuwisse, and Webb were able to modify the ring diameter to influence
+field homogeneity, the unique goal here is to characterize the magnets
+pre-installation, allowing for proactive assessments of homogeneity
+characteristics. This approach aims to provide insights into magnetic
+field uniformity before the magnets are integrated, thereby streamlining
+the optimisation process. Furthermore,
 
 It is important to note that the primary objective of this thesis is not
 merely to characterize the magnet itself; rather, the emphasis lies in
 the selection and comparison of potential sensors for the
-characterization process.
+characterisation process.
 
 To achieve this, a versatile hardware setup is in development, designed
 to accommodate various sensors for the measurement of magnets or other
@@ -411,13 +427,13 @@ objects. Simultaneously, a software interface is being crafted to
 universally read data from different sensors and interact seamlessly
 with the diverse firmware associated with various Halbach sensors. A key
 feature of this system is the ease of sensor interchangeability,
-facilitating adaptability and versatility in the characterization
+facilitating adaptability and versatility in the characterisation
 process.
 
 The scope of the software library is to lay the foundation for the
 systematic characterisation of magnets based on permanent magnets. The
 library will enable data acquisition, storage and analysis of magnetic
-properties, with customization possible at each step of the process.
+properties, with customisation possible at each step of the process.
 Complete documentation, tutorials and tests will enable users to use the
 framework efficiently and adapt it to their specific requirements.
 
@@ -438,18 +454,35 @@ application.
 \section{Research Question and
 Approach}\label{research-question-and-approach}}
 
-Concerning the DeLoRI project, this study exclusively delves into the
-realm of permanent magnets employed for creating a homogeneous B0 field
-through Halbach rings. Other systems and spin generation for
-measurements are deliberately excluded from consideration but will be
-necessary in later stages of the DeLoRI project.
+Concerning the \emph{DeLoRI} project, this study exclusively delves into
+the realm of permanent magnets employed for creating a homogeneous
+\emph{B0} field through Halbach rings. Other systems and spin generation
+for measurements are deliberately excluded from consideration but will
+be necessary in later stages of the \emph{DeLoRI} project.
+
+Before naming the research focus, it is important to understand the
+difference and connection between deviation and resulution of the
+system. To measure a deviation of better than \emph{1000}\gls{ppm} in a
+\emph{50mT} magnetic field, a resolution that is less than
+\emph{1000}\gls{ppm} of \emph{50mT} is needed.
+
+\[\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT \]
+
+To convert this into microtesla (\(\mu\)T), a multiplication by
+\emph{1000} is needed:
+
+\[ 0.05 \, mT \times 1000 = 50 \, \mu T \]
+
+This means that to measure a deviation of better than
+\emph{1000}\gls{ppm} in a \(50mT\) magnetic field, a resolution of less
+than \emph{50} \(\mu\)T is needed.
 
 The primary objectives of this work revolve around addressing two
 pivotal research questions:
 
 \begin{itemize}
 \item
-  Sensor Characterization: Can the carefully selected sensors
+  Sensor characterisation: Can the carefully selected sensors
   effectively measure a magnet? Specifically, this involves
   investigating the saturation of the sensors, the linearity of field
   strength concerning distance from the sensor, and, in a subsequent
@@ -457,26 +490,27 @@ pivotal research questions:
 \item
   Homogeneity Measurement: Can the chosen sensors be adeptly utilized to
   measure the homogeneity of a Halbach ring-based B0 field within the
-  stringent limit of less than 1000\gls{ppm}? The desired outcome is a
-  measurement of less than 50 \(\mu\)T at 1000\gls{ppm}, with a specific
-  focus on determining the sensors' viability for noise measurements.
+  stringent limit of less than \emph{1000}\gls{ppm}? The desired outcome
+  is a measurement of less than \emph{50} \(\mu\)T at
+  \emph{1000}\gls{ppm}, with a specific focus on determining the
+  sensors' viability for noise measurements.
 \end{itemize}
 
-It is crucial to emphasize that the intention is not to characterize the
-magnets per se; rather, the emphasis lies in deriving meaningful
-insights about the sensors deployed.
+It is essential to emphasize that the intention is not to characterize
+the magnets; the sensores which might be used for characterisation are
+be analised and evaluated.
 
-This work distinctly prioritizes the development of both hardware and
-software tailored for sensor utilization and final testing. Physical
-properties and considerations take a secondary role in comparison to the
+This work prioritises the development of both hardware and software
+customised for sensor utilization and final testing. Physical properties
+and considerations take a secondary role in comparison to the
 overarching goal of refining the sensor-based methodologies.
 
 \hypertarget{usecases}{%
 \section{Usecases}\label{usecases}}
 
-The following section defines some usecases that the future project
-should be able to cover. These usecases define the setup of the hard-
-and software. These illustrate practical situations to understand the
+The following section defines possible usecases that the future project
+need to cover. These usecases define the setup of the hard- and
+software. These illustrate practical situations to understand the
 functionality and added value of the implemented solution for the user.
 
 The usecases were defined in the course of project planning and provide
@@ -484,7 +518,7 @@ an overview of how the user interacts with the project and what
 functionalities can be expected. In the later accomplished evaluation
 process \ref{usecase-evaluation}, the defined usecases are also used as
 a reference to demonstrate the implemented capabilities of the solution.
-This is crucial for understanding the needs of the target group and
+This is essential for understanding the needs of the target group and
 designing the end result accordingly.
 
 \begin{enumerate}
@@ -594,20 +628,20 @@ synthesizes study outcomes, discusses implications, and provides
 insights for future work. This section ensures closure and aids readers
 in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework must be
-established, capable of measuring diverse objects using various sensors.
-Additionally, conclusive remarks should be provided regarding the
+Finally, a comprehensive hardware and software framework needs to be
+established, which is capable of measuring diverse objects using various
+sensors. Additionally, remarks need to be provided regarding the
 suitability of the employed sensors for magnetic field measurements.
 
 \hypertarget{unified-sensor}{%
 \chapter{Unified Sensor}\label{unified-sensor}}
 
 A defined main objective of this project is the development of a
-cost-effective magnetic field sensors interface that is also universally
-expandable. The focus is on mapping different sensors and being
-compatible with different magnet types and shapes.
+cost-effective magnetic field sensors interface that is universally
+expandable as well. The focus is on mapping different sensors and being
+compatible with different magnet types and shapes. This ensures a wide
+range of applications in different scenarios.
 
-This ensures a wide range of applications in different scenarios.
 Another goal is reproducibility to ensure uniform results, which as a
 result reduces the susceptibility to errors. Easy communication with
 standard \gls{pc} hardware, which offers a variety of common interface
@@ -638,10 +672,11 @@ focussed on the most common and cost-effective ones, especially those
 that are already used in smartphones and are therefore widely available.
 
 A key aspect of this selection was the preference for sensors with
-digital interfaces to facilitate implementation in the circuit layout.
-The integration of integrated temperature sensors represents a
-significant enhancement that will later enable precise temperature
-compensation.
+digital interfaces to facilitate implementation in the circuit layout
+since these kind of sensors are easy to integrate compared to
+non-digital sensors, which require specific frameworks. The integration
+of integrated temperature sensors represents a significant enhancement
+that will later enable precise temperature compensation.
 
 The use of analog sensors was purposefully avoided, though they are
 suitable for more precise measurements and extended measuring ranges.
@@ -701,17 +736,17 @@ sensors are considered first.
 \label{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}}
 \end{figure}
 
-The mechanical design of a sensor would be kept as simple as possible so
-that it can be replicated as easily as possible. The focus was on
-providing a stable foundation for the sensor \gls{ic} and an
-exchangeable holder for different magnets.
+The mechanical design of a sensor is kept as simple as possible so that
+it can be replicated as easily as possible. The focus is on providing a
+stable foundation for the sensor \gls{ic} and an exchangeable holder for
+different magnets.
 
 The following figure
 \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png},
 shows a sectional view of the \gls{cad} drawing of the 1D-Single sensor
 \ref{d-single-sensor}.
 
-All parts were produced using the 3D printing additive manufacturing
+All parts are produced using the 3D printing additive manufacturing
 processes. The sensor circuit board was glued underneath the magnet
 holder. This is interchangeable, so different distances between sensor
 and magnet can be realised.
@@ -737,14 +772,14 @@ positioning over the sensor must always be the same.
 The electronics consist of the magnetic field sensor and the electrical
 interface to connect it to a \gls{pc} in the form of a microcontroller.
 
-The focus here was on utilising existing microcontroller development and
+The focus is on utilising existing microcontroller development and
 evaluation boards, which already integrate all the components required
 for basic operation. This not only enabled a time-saving implementation,
 but also ensured a cost-efficient realisation.
 
-All the necessary components and their circuitry were then recorded on a
+All the necessary components and their circuitry are recorded on a
 \gls{pcb} \ref{1D_sensor_schematic_and_circuit_board.png} and
-subsequently manufactured. In addition, footprints were provided for
+subsequently manufactured. In addition, footprints are provided for
 various sensor \gls{ic} packages. By placing mounting holes on the
 \gls{pcb}, it is possible to attach various mechanical mounts ontop of
 the sensor \gls{ic}s.
@@ -808,7 +843,7 @@ public:
   String capabilities() override;
   String get_sensor_name() override;
   bool query_sensor() override;
-  sensor_result get_result() override;        
+  sensor_result get_result() override;
 };
 #endif
 \end{lstlisting}
@@ -1017,7 +1052,7 @@ Sensor} \ref{d-single-sensor} and the following software settings:
 \begin{itemize}
 \tightlist
 \item
-  Raspberry Pi OS Lite - \gls{os} \emph{debian bookworm x64},
+  \emph{Raspberry Pi OS Lite} - \gls{os} \emph{debian bookworm x64},
 \item
   \gls{mrp} \ref{software-readout-framework}-library - Version
   \emph{1.4.1}
@@ -1147,10 +1182,9 @@ simplest possible sensor that is compatible with the Unified Sensor
 firmware \ref{firmware} platform.
 
 The electrical level here is based on a \emph{Raspberry-Pi Pico}
-together with the \passthrough{\lstinline!MMC5603NJ!} magnetic sensor.
-The mechanical setup consists of four 3D printed components, which are
-fixed together with nylon screws to minimise possible influences on the
-measurement.
+together with the \emph{MMC5603NJ} magnetic sensor. The mechanical setup
+consists of four 3D printed components, which are fixed together with
+nylon screws to minimise possible influences on the measurement.
 
 Since the \emph{MMC5603NJ} only has limited measurement range of total
 6uT, even small coin sized neodymium magnets already saturates the
@@ -1221,9 +1255,9 @@ hardware, the following section shows how existing hardware can be
 integrated into the system. A temperature-compensated \emph{Voltcraft
 GM-70} telsameter
 \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is
-used, which has a measuring range of 0T to 3T with a resolution of
-0.1mT. It offers an RS232 interface with a documented protocol for
-connection to a \gls{pc}.
+used, which has a measuring range of \emph{0T} to \emph{3T} with a
+resolution of \emph{0.1mT}. It offers an \emph{RS232} interface with a
+documented protocol for connection to a \gls{pc}.
 
 This connectivity makes it possible to make the device compatible with
 the unified sensor ecosystem using a separate interface software
@@ -1233,15 +1267,15 @@ firmware offers.
 
 Another option is a custom interface board between the meter and the PC.
 This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
-offer an physical RS232 interface. As with the other sensors, this
-interface consists of your \emph{Raspberry-Pi Pico} with an additional
-level shifter.
+offer an physical \emph{RS232} interface. As with the other sensors,
+this interface consists of your \emph{Raspberry-Pi Pico} with an
+additional level shifter.
 
 The teslameter is connected to the microcontroller using two free
 \gls{gpio}s in \gls{uart} mode. The firmware was adapted using a
 separate build configuration. In order to be able to read and correctly
 interpret the data from the microcontoller, the serial protocol of the
-sensor was implemented in a customized version of the
+sensor was implemented in a customised version of the
 \emph{CustomSensor} class \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other
@@ -1288,7 +1322,7 @@ chapter.
 
 User interaction points represent the core concept of the developed
 library and are intended to provide user-friendliness on the one hand
-and the rapid development of own analysis and optimization algorithms on
+and the rapid development of own analysis and optimisation algorithms on
 the other.
 
 For this purpose, the library was divided into individual modules, which
@@ -1455,13 +1489,13 @@ The following modules are implemented in detail:
   types
 \end{itemize}
 
-The \emph{MRPReading} module performs a crucial role in streamlining the
-centralized management of measurement data. It serves as a storage
+The \emph{MRPReading} module performs a essential role in streamlining
+the centralized management of measurement data. It serves as a storage
 provider for various measurements, offering functionalities that
-facilitate the creation and addition of data records. To customize and
+facilitate the creation and addition of data records. To customise and
 add meta-data, users have the flexibility to configure parameters
 through the dedicated \emph{MRPMeasurementConfig} module into an
-\passthrough{\lstinline!MRPReading!} instance.
+\emph{MRPReading} instance.
 
 Within the realm of measurement data, a diverse range of data points can
 be seamlessly incorporated. The process is initiated by employing
@@ -1469,7 +1503,7 @@ specialized functions designed for the creation and addition of data
 records.
 
 To configure parameters, ensuring a tailored approach to the entire
-measurement process, these parameters act as a crucial bridge between
+measurement process, these parameters act as a cessential bridge between
 user preferences and the robust capabilities of the \emph{MRPReading}
 module.
 
@@ -1766,7 +1800,7 @@ $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add anoth
 Proxy started. http://remotepc.local:5556/
 PRECHECK: SENSOR_HAL: 1337 # SENSOR A FOUND
 PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
-Terminate  Proxy instance [y/N] [n]: 
+Terminate Proxy instance [y/N] [n]: 
 \end{lstlisting}
 
 After the proxy instance has been successfully started, it is optionally
@@ -2157,15 +2191,15 @@ MRPVisualisation module
 \hypertarget{mrphalbacharraygenerator}{%
 \subsection{MRPHalbachArrayGenerator}\label{mrphalbacharraygenerator}}
 
-The following example code \ref{lst:mrpexample_hallbach}, shows how a
+The following example code \ref{lst:mrpexample_halbach}, shows how a
 simple Halbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter
 \ref{magnet-system}) for a low-field \gls{mri}.
 
 Eight random measurements are generated here. It is important that the
-magnet type (here \emph{N45\_CUBIC\_15x15x15}) is specified. This is
-necessary so that the correct magnet cutouts can be generated when
+magnet type (for example \emph{N45\_CUBIC\_15x15x15}) is specified. This
+is necessary so that the correct magnet cutouts can be generated when
 creating the 3D model.
 
 After the measurements have been generated, they are provided with a
@@ -2206,7 +2240,7 @@ magnets
 \hypertarget{usability-improvements}{%
 \chapter{Usability Improvements}\label{usability-improvements}}
 
-Usability improvements in software libraries are crucial for efficient
+Usability improvements in software libraries are essential for efficient
 and user-friendly development. Intuitive API documentation, clearly
 structured code examples and improved error messages promote a smooth
 developer experience. A \gls{gui} or \gls{cli} application for complex
@@ -2233,7 +2267,7 @@ components for the intended use.
 
 In the first version of the \gls{mrp}-library, the user had to write his
 own Python scripts even for short measurement and visualisation tasks.
-However, this was already time-consuming for reading out a sensor and
+This is already a time-consuming process for reading out a sensor and
 configuring the measurement parameters and metadata and quickly required
 more than 100 lines of new Python code.
 
@@ -2380,7 +2414,7 @@ stage plot_normal_bias_offset:
   parameters:
     readings_to_plot: stage apply_temp_compensation
     IP_export_folder: ./readings/fullsphere/plots/
-    IP_plot_headline_prefix:  Sample N45 12x12x12 magnets calibrated
+    IP_plot_headline_prefix: Sample N45 12x12x12 magnets calibrated
 
 stage export_readings:
   function: export_readings
@@ -2594,14 +2628,11 @@ the user:
 \begin{itemize}
 \tightlist
 \item
-  \passthrough{\lstinline!MRPcli --help!} instead of
-  \passthrough{\lstinline!python3 cli.py --help!}
+  \emph{\$ MRPcli --help} instead of \emph{\$ python3 cli.py --help}
 \item
-  \passthrough{\lstinline!MRPudpp --help!} instead of
-  \passthrough{\lstinline!python3 udpp.py --help!}
+  \emph{\$ MRPudpp --help} instead of \emph{\$ python3 udpp.py --help}
 \item
-  \passthrough{\lstinline!MRPproxy --help!} instead of
-  \passthrough{\lstinline!python3 proxy.py --help!}
+  \emph{\$ MRPproxy --help} instead of \emph{\$ python3 proxy.py --help}
 \end{itemize}
 
 In addition, these commands are available globally in the system without
@@ -2900,7 +2931,7 @@ stage plot_filtered:
 
 The final pipeline has been saved in the pipeline directory as
 \emph{pipeline\_mrp\_evaluation.yaml} file and is ready for execution.
-This is carried out using the \emph{MRPudpp} (cli)
+This is carried out using the \emph{MRPudpp} \gls{cli}
 \ref{lst:bash_pipeline_mrp_evaluation_yaml}. After the run has been
 successfully completed, the results are saved in the result folder
 specified in the pipeline using the \emph{IP\_export\_folder} parameter.
@@ -2987,7 +3018,7 @@ selected sensors meet the requirements:
   their systematic field strength
 \item
   Automated measurement of the homogeneity of Hallbach rings with an
-  accuracy of less than 1000\gls{ppm}
+  accuracy of less than \emph{1000\gls{ppm}}
 \end{itemize}
 
 These questions are answered in the following, as a basic readout and
@@ -3066,7 +3097,7 @@ The sensor platform used here is an adapted version of the \emph{1D:
 Single Sensor} \ref{d-single-sensor} sensor platform. The sensors to be
 measured were fixed together on an aluminium plate with thermally
 conductive adhesive. This compensates for thermal differences. This is
-crucial for the subsequent temperature deviation tests in order to
+essential for the subsequent temperature deviation tests in order to
 obtain comparable measurement results.
 
 The setup was placed and pre-wired in the temperature chamber 24 hours
@@ -3116,9 +3147,9 @@ Measuring the noise in a magnetic field sensor requires a precise
 procedure and a special measurement setup. First, the magnetic field
 sensor is placed in a quiet environment to minimize external field
 interference. The temperature chamber for all noise tests is set to
-\(\mu_{trev}\)=21.0\(^{\circ}\) and the sensors are placed 24 hours
-before the measurement run in the final measurement configuration inside
-of the chamber.
+\(\mu_{trev}\)=21.0\(^{\circ}\) and the sensors are placed \emph{24}
+hours before the measurement run in the final measurement configuration
+inside of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
@@ -3132,7 +3163,7 @@ long-term fluctuations. For this purpose, \emph{N=2000} further measured
 values were taken with a trigger and readout rate of one measurement per
 second.
 
-In order to quantify the noise, the standard deviation of the signal is
+In order to quantify the noise, the \gls{sd} of the signal is
 calculated. These parameters provide information about the variation of
 the signal over time and therefore about the sensor background noise.
 
@@ -3168,34 +3199,44 @@ values that were extracted from the measurement data of the sensors
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
 
-: Sensor noise evaluation results
-\label{Sensor_noise_evaluation_results.csv}
-
-~\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}\\
-\hspace*{0.333em}\textbar{}
+\begin{longtable}[]{@{}lllll@{}}
+\caption{Sensor noise evaluation results
+\label{Sensor_noise_evaluation_results.csv}}\tabularnewline
+\toprule
+Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
+\midrule
+\endhead
+\(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
+\(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
+\(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean sensor value
+(Baseline)\tabularnewline
+\(\sigma_{rv}\) & 172.00 & 0.20 & \(\mu\)T & \gls{sd} sensor
+value\tabularnewline
+\(\mu_{t}\) & 20.68 & 19.40 & \(^{\circ}\)C & Mean sensor
+temperature\tabularnewline
+\(\sigma_{t}\) & 0.53 & 0.00 & \(^{\circ}\)C & \gls{sd} sensor
+temperature\tabularnewline
+\(\mu_{trev}\) & 21.0 & 21.0 & \(^{\circ}\)C & Ambient
+temperature\tabularnewline
+\bottomrule
+\end{longtable}
 
 \hypertarget{sensor-temperature-analysis}{%
 \subsection{Sensor Temperature
 Analysis}\label{sensor-temperature-analysis}}
 
 The temperature stability of the \emph{TLV493D} with a mean value of
-20.68\(^{\circ}\)C and a standard deviation of
-\(\sigma_{t}\)=0.53\(^{\circ}\)C indicates a consistent trend. This
-implies a constant tendency. The close grouping of the measured values
-around the mean value indicates good stability. The confidence interval
-is expected to be between 20.15\(^{\circ}\)C and 21.21\(^{\circ}\)C,
-which indicates a stable and consistent temperature measurement. This
-result is more noisy compared to the temperature stability of the
-\emph{MMC5603}.
+20.68\(^{\circ}\)C and a \gls{sd} of \(\sigma_{t}\)=0.53\(^{\circ}\)C
+indicates a consistent trend. This implies a constant tendency. The
+close grouping of the measured values around the mean value indicates
+good stability. The confidence interval is expected to be between
+20.15\(^{\circ}\)C and 21.21\(^{\circ}\)C, which indicates a stable and
+consistent temperature measurement. This result is more noisy compared
+to the temperature stability of the \emph{MMC5603}.
 
 Both sensors provide an offset to the measured chamber temperature
 \(\mu_{trev}\).
@@ -3204,10 +3245,15 @@ With an additional measurement run with a different temperature setting
 of 30.0\(^{\circ}\)C, the measured temperature deviations and offsets
 remains constant.
 
-Thus, the sensor internal temperature sensors of both tested sensors are
+The sensor internal temperature sensors of both tested sensors are
 suitable to perform an ambient temperature compensation of measured
 values and calibration of the sensor. This is considered in section
 \emph{Temperature Sensitivity} \ref{temperature-sensitivity}.
+
+It is recommended, however, to use a separate temperature sensor when
+using the \emph{TLV493D} or to use a suitable averaging of the
+temperature and measured values in order to perform temperature
+compensation.
 
 \hypertarget{raw-sensor-data-analysis}{%
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
@@ -3219,31 +3265,16 @@ environment was carried out with the calibrated \emph{Voltcraft GM70}
 Telsameter next to the sensor \gls{ic} This provides a \emph{real}
 baseline value of \(\mu_{rev}\)=-21\(\mu\)T.
 
-\hypertarget{temperature-sensitivity}{%
-\section{Temperature Sensitivity}\label{temperature-sensitivity}}
+\hypertarget{sensor-characterisation-linearity}{%
+\section{Sensor Characterisation:
+Linearity}\label{sensor-characterisation-linearity}}
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
-\caption{Sensor evaluation setup for temperature sensitivity
-measurements
-\label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}}
+\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
+\caption{Sensor evaluation setup for linearity measurements
+\label{Sensor_evaluation_setup_for_linearity_measurements.png}}
 \end{figure}
-
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
-\caption{Sensor temperature sensitivity evaluation results for TLV493D
-and MMC5603NJ
-\label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
-\end{figure}
-
-using same setup as in read noise but with programmed temperature
-controller of the chamber and separate temperature probe under the
-sensors pcb
-
-\hypertarget{linearity}{%
-\section{Linearity}\label{linearity}}
 
 The sensor linearity of a magnetic field sensor describes the ability of
 the sensor to provide a proportional linear response to changes in the
@@ -3252,13 +3283,6 @@ output signals of the sensor vary directly proportional to the input
 magnetic fields without deviations or distortions and is therefore an
 important indicator for measurements of fields at different distances or
 objects.
-
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
-\caption{Sensor evaluation setup for linearity measurements
-\label{Sensor_evaluation_setup_for_linearity_measurements.png}}
-\end{figure}
 
 This is achieved here by means of an additional linear axis installed
 above the sensor setup. A holder for an \emph{N45 12x12x12mm} magnet was
@@ -3273,8 +3297,7 @@ The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
 shows this updated measurement setup with the added components. To
 control the linear axis, an additional motion controller of the type
 \emph{SKR-Pico} placed outside the temperature chamber is required,
-which can be controlled via a network interface. A bash console script
-controls the measurement process.
+which can be controlled via a network interface.
 
 \hypertarget{measurement-setup}{%
 \subsection{Measurement Setup}\label{measurement-setup}}
@@ -3282,16 +3305,38 @@ controls the measurement process.
 After the sensor baseline has been determined with \emph{N=10000}
 samples, the magnet is inserted into the holder. The linear axis is
 moved by the user until it is maximally saturated. With the
-\emph{TLV493D}, this corresponds to \(\mu_{rev}\)=250.000\(\mu\)T and
-below in low resolution mode. \emph{MCC5603NJ} around
-\(\mu_{rev}\)=3000\(\mu\)T. This ensures that the linearity is
-determined over the entire measuring range.
+\emph{TLV493D}, this corresponds to 250.000\(\mu\)T and below in low
+resolution mode. \emph{MCC5603NJ} around 3000\(\mu\)T. This ensures that
+the linearity is determined over the entire measuring range.
 
 \hypertarget{measurement-run}{%
 \subsection{Measurement Run}\label{measurement-run}}
 
+The measurement run is then started using a script. The user defines the
+path to be travelled by the linear axis. The complete range of
+\emph{120mm} in \emph{1mm} steps was selected here. The following
+automated process then runs as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Move the linear axis upwards by the selected distance
+\item
+  De-energise the axis motor
+\item
+  Create measurement using \emph{MRPCli} with N=2000 data points per
+  reading
+\item
+  Export reading to filesystem with current linear axis position in
+  meta-data and filename
+\end{enumerate}
+
 \hypertarget{linearity-analysis}{%
 \subsection{Linearity Analysis}\label{linearity-analysis}}
+
+After the measurements were exported, they were analysed for linearity
+using \emph{MRPAnalysis} \ref{mrpanalysis} functions.
 
 \begin{figure}
 \centering
@@ -3300,27 +3345,166 @@ determined over the entire measuring range.
 \label{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
 \end{figure}
 
+The figure
 \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+shows the visual representation of linearity as a plot. The distance
+from the magnet to the sensor is plotted in \emph{mm} on the x-axis. The
+measured value of the sensor is plotted on the y-axis. This is not
+directly comparable for both plots, as the sensors have different
+measuring ranges. To ensure comparability, the ideal curve was
+determined. In order to be able to make quantifiable statements about
+the measurement results, the mean and \gls{sd} deviation of these two
+curves was determined.
 
-\begin{itemize}
-\tightlist
-\item
-  minimal distance between sensor and magnet due to messbreich
-\end{itemize}
+For both sensors, the deviation is less than 1\% over the entire
+resolution. With the \emph{MMC5603NJ} this is on average only
+\emph{0.04\%}. With the \emph{TLV493D}, however, the \gls{sd} is
+\emph{3.64\%}, for which the deviations at the end in particular (with
+field strengths towards zero) are decisive. The previously performed
+\emph{Background-Noise} \ref{sensor-characterisation-background-noise}
+characterisation shows that the linearity deviation here is due to the
+sensitivity of the sensor.
+
+In general, the measured values correspond to the data sheet
+specifications of both sensors, which specify a value of \emph{5\%}. It
+is also possible to calculate these small deviations using curve fitting
+methods. Suitable functions are implemented in the library.
+
+\hypertarget{sensor-characterisation-temperature-sensitivity}{%
+\section{Sensor Characterisation: Temperature
+Sensitivity}\label{sensor-characterisation-temperature-sensitivity}}
+
+The temperature sensitivity of magnetic field sensors describes how
+sensitively the sensors output is sensitive to temperature changes. It
+is important to ensure that temperature fluctuations do not affect
+measurement accuracy. A low temperature sensitivity reduces errors due
+to temperature changes. An accurate temperature sensitivity
+characteristic is therefore crucial for subsequent precise magnetic
+field measurements.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
+\caption{Sensor evaluation setup for temperature sensitivity
+measurements
+\label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}}
+\end{figure}
+
+As the temperature sensor \emph{TLV493D} in particular produced very
+different results in the previous measurements, an additional
+temperature sensor was attached to the sensor circuit board for this
+measurement. The figure
+\ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
+shows these modifications in detail. These changes makes it possible to
+accurately determine the sensors \gls{ic} temperature. The temperature
+measuring device \emph{VC-7055BT} can be analysed using a \gls{pc}
+interface. The controller of the temperature chamber can also be
+programmed via a \gls{pc} interface and a target temperature can be
+specified.
+
+With this setup, it is possible to automatically acquire measured values
+from the sensors under controlled temperature conditions.
+
+The same procedure is used as for the \emph{Linearity}
+\ref{sensor-characterisation-linearity} measurement, except that instead
+of moving the linear axis, the temperature of the temperature chamber is
+systematically increased from 20\(^{\circ}\) to 50\(^{\circ}\). Between
+each of these temperature changes, the system is given a waiting time of
+30 minutes after reaching the target temperature.
+
+The field of permanent magnets is very temperature-dependent and can
+lose its magnetisation at higher temperatures (typically
+\textgreater=80\(^{\circ}\) for non-high-quality type N magnets
+\cite{magna-c}). The temperature range was selected so that it is
+within a sufficient range for the application.
+
+\hypertarget{temperature-sensitivity-analysis}{%
+\subsection{Temperature Sensitivity
+Analysis}\label{temperature-sensitivity-analysis}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+\caption{Sensor temperature sensitivity evaluation results for TLV493D
+and MMC5603NJ
+\label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
+\end{figure}
+
+The figure
+\ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+shows the measured data as a plot with the temperature measured by the
+measuring devices on the X-axis and the sensor measured value on the
+Y-axis. The ideal baseline is also shown as a red line. It can be seen
+that the \emph{MMC5603NJ} shows a straight-line drop in the measured
+field strength with increasing temperatures. However, this is very
+constant with a value of \emph{-2 \(\mu\)T / \(^{\circ}\)C} and is
+therefore predictable.
+
+In the evaluation (see figure ), a linear function was also calculated
+using curve fitting to determine the temperature coefficients of the
+sensors. This makes it possible to calculate these deviations based on
+the ambient temperature during the software calibration.
 
 \hypertarget{result-analysis-1}{%
 \section{Result Analysis}\label{result-analysis-1}}
 
+\begin{longtable}[]{@{}lllll@{}}
+\caption{Overview of all characterised sensor properties
+\label{Overview_of_all_characterised_sensor_properties.csv}}\tabularnewline
+\toprule
+Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
+\midrule
+\endhead
+\(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
+\(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
+\(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean sensor value
+(Baseline)\tabularnewline
+\(\sigma_{rv}\) & 172.00 & 0.20 & \(\mu\)T & \gls{sd} sensor
+value\tabularnewline
+\(\mu_{t}\) & 20.68 & 19.40 & \(^{\circ}\)C & Mean sensor
+temperature\tabularnewline
+\(\sigma_{t}\) & 0.53 & 0.00 & \(^{\circ}\)C & \gls{sd} sensor
+temperature\tabularnewline
+\(\mu_{trev}\) & 21.0 & 21.0 & \(^{\circ}\)C & Ambient
+temperature\tabularnewline
+\(\mu_{sl}\) & 0.25 & 0.04 & \% & Mean sensor linearity
+deviation\tabularnewline
+\(\sigma_{sl}\) & 3.64 & 0.56 & \% & \gls{sd} sensor
+linearity\tabularnewline
+\(\mu_{td}\) & -1.99 & -5.13 & \(\mu\)T / \(^{\circ}\)C & Mean sensor
+temperature coefficients\tabularnewline
+\bottomrule
+\end{longtable}
+
 are they suitable for <1000(+\gls{ppm}) ?
 
 \begin{itemize}
-\tightlist
 \item
   https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
 \item
   27cm / 50mT bore
 \item
   nmr probes for better results
+\item
+  mit software calibrierung ist es möglich vermutlich möglich sowie
+  mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu
+  kommen
+\item
+  mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit
+  avg=20 kommt man auf 45
+\item
+  sollte ein geeignerter ersatzsensor gefunden werden
+\item
+  beide sensoren sind jedoch durch chrakterisierung von
+  permanentmagneten geeignet
+\item
+  beim tlv493d ist es möglich absolut werte zu erfassen.
+\item
+  beim mmc ist es möglich relativ magnete untereinander zu vergleichen
 \end{itemize}
 
 \hypertarget{recommendation-for-action}{%

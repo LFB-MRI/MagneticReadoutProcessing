@@ -169,15 +169,19 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 ## Research Question and Approach
 
-Concerning the DeLoRI project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the DeLoRI project. 
+Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
 
 Before naming the research focus, it is important to understand the difference and connection between deviation and resulution of the system. 
 To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a resolution that is less than *1000*(+ppm) of *50mT* is needed.
 
-  $ (1000/1,000,000) × (50 mT) = 0.05 mT $ 
+
+  $$\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT $$
+
 
 To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
-  $ (0.05 mT) × 1000 = 50 \mu$ T
+
+
+  $$ 0.05 \, mT \times 1000 = 50 \, \mu T $$
 
 This means that to measure a deviation of better than *1000*(+ppm) in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
@@ -185,7 +189,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than *50* $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
 It is essential to emphasize that the intention is not to characterize the magnets; the sensores which might be used for characterisation are be analised and evaluated.
 
@@ -422,7 +426,7 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These were performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
 
-* Raspberry Pi OS Lite - (+os) *debian bookworm x64*,
+* *Raspberry Pi OS Lite* - (+os) *debian bookworm x64*,
 * (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
 * Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
 
@@ -1565,7 +1569,7 @@ stage plot_filtered:
 ```
 
 The final pipeline has been saved in the pipeline directory as *pipeline_mrp_evaluation.yaml* file and is ready for execution.
-This is carried out using the *MRPudpp* (cli) \ref{lst:bash_pipeline_mrp_evaluation_yaml}.
+This is carried out using the *MRPudpp* (+cli) \ref{lst:bash_pipeline_mrp_evaluation_yaml}.
 After the run has been successfully completed, the results are saved in the result folder specified in the pipeline using the *IP_export_folder* parameter.
 
 
@@ -1620,7 +1624,7 @@ This makes it possible to systematically characterise magnets from the software 
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
 
 * Measure a wide range of different permanent magnets with regard to their systematic field strength
-* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than *1000*(+ppm)
+* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than *1000(+ppm)*
 
 These questions are answered in the following, as a basic readout and analysis functionality platform had to be created first and thus an automated sensor characterisation can be performed.
 
@@ -1679,7 +1683,7 @@ The recorded measurement series are automatically analysed using the *Programmab
 
 %%Sensor_evaluation_setup_for_noise_measurements.png%%
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed 24 hours before the measurement run in the final measurement configuration inside of the chamber.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of *N=10000* measured values was recorded for the baseline measurement.

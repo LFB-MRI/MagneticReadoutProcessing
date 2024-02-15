@@ -27,12 +27,14 @@ mkdir -p generated_images
 
 rm -f ./thesis_document_tmp.md
 rm -f ./thesis_document_tmp.md.*
+if [[ ! -v BUILD_FAST ]]; then
 # REMOVE GENERATED TEX
 rm -f ./thesis_declaration.tex
 rm -f ./thesis_document.tex
 rm -f ./thesis_document_tmp.tex
 rm -f ./thesis_abstract.tex
 rm -f ./thesis_attachments.tex
+fi
 # REMOVE GENERATED PDF
 rm -f ./thesis.pdf
 
@@ -41,6 +43,7 @@ echo "-- STARTING BUILDING THESIS DOCUMENT --"
 pandoc --version
 
 # CONVERT CSV TABLES to MARKDOWN
+if [[ ! -v BUILD_FAST ]]; then
 cp ./thesis_document.md ./thesis_document_tmp.md 
 FILES="./tables/*.csv"
 for f in $FILES
@@ -70,12 +73,12 @@ do
     echo "$str"
     sed -e "/$str/ {" -e "r $f.md" -e 'd' -e '}' -i ./thesis_document_tmp.md 
 done
+fi
 
 
 
 
-
-
+if [[ ! -v BUILD_FAST ]]; then
 # ADD IMAGES
 imagefiles="./images/*.png"
 for f in $imagefiles
@@ -114,7 +117,7 @@ do
     echo "$str"
     sed -e "/$str/ {" -e "r $f.md" -e 'd' -e '}' -i ./thesis_document_tmp.md 
 done
-
+fi
 
 # CONVERT LISTINGS
 python3 convert_listings_head.py ./thesis_document_tmp.md 
