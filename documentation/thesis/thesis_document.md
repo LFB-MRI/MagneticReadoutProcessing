@@ -1612,8 +1612,8 @@ The calculation result waiss successfully verified using raw measurement data an
 
 In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
-In addition, the basic application by the user is demonstrated using an example.
-This makes it possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
+In addition, the basic application by the user is demonstrated based on an example.
+In this way is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
 
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
 
@@ -1641,11 +1641,7 @@ For this evaluation, the sensors listed in the table were used for sensor charac
 * Specifications correspond to the application areas
 * Availability for testing
 
-
 It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose are packaged with library.
-
-
-
 
 ## Evaluation Sensor Setup
 
