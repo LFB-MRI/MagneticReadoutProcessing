@@ -1715,22 +1715,6 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
 
-
-
-
-
-## Temperature Sensitivity
-
-%%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
-
-
-%%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
-
-
-
-using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
-
-
 ## Linearity
 
 %%Sensor_evaluation_setup_for_linearity_measurements.png%%
@@ -1759,24 +1743,46 @@ The measurement run is then started using a script.
 The user defines the path to be travelled by the linear axis.
 The complete range of *120mm* in *1mm* steps was selected here. The following automated process then runs as follows:
  
-* Move the linear axis upwards by the selected distance
-* De-energise the axis motor
-* Create measurement using *MRPCli* with N=2000 data points per reading
-* Export reading to filesystem with current linear axis position in meta-data and filename
+1. Move the linear axis upwards by the selected distance
+2. De-energise the axis motor
+3. Create measurement using *MRPCli* with N=2000 data points per reading
+4. Export reading to filesystem with current linear axis position in meta-data and filename
 
 
 ### Linearity Analysis
 
+After the measurements were exported, they were analysed for linearity using *MRPAnalysis* \ref{mrpanalysis} functions.
+
 %%Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
-\ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+The figure \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the visual representation of linearity as a plot.
+The distance from the magnet to the sensor is plotted in *mm* on the x-axis.
+The measured value of the sensor is plotted on the y-axis.
+This is not directly comparable for both plots, as the sensors have different measuring ranges.
+To ensure comparability, the ideal curve was determined.
+In order to be able to make quantifiable statements about the measurement results, the mean and (+sd) deviation of these two curves was determined.
+
+For both sensors, the deviation is less than 1% over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive. The previously performed *Background-Noise*\ref{sensor-characterisation-background-Noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
+
+
+
+
+## Temperature Sensitivity
+
+%%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
+
+
+%%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
+
+
+
+using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
 
 
 
 
 
 
-* minimal distance between sensor and magnet due to messbreich
 
 
 ## Result Analysis
