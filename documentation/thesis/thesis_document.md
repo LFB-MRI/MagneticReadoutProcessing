@@ -1713,8 +1713,6 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
 
-
-
 ## Linearity
 
 %%Sensor_evaluation_setup_for_linearity_measurements.png%%
@@ -1729,7 +1727,6 @@ The ambient temperature is set to $\mu_{trev}$=21.0$^{\circ}$ in the measurement
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components.
 To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
-A bash console script controls the measurement process and.
 
 ### Measurement Setup
 
@@ -1762,9 +1759,11 @@ This is not directly comparable for both plots, as the sensors have different me
 To ensure comparability, the ideal curve was determined.
 In order to be able to make quantifiable statements about the measurement results, the mean and (+sd) deviation of these two curves was determined.
 
-For both sensors, the deviation is less than 1% over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive. The previously performed *Background-Noise*\ref{sensor-characterisation-background-Noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
+For both sensors, the deviation is less than 1% over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
+The previously performed *Background-Noise*\ref{sensor-characterisation-background-Noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
 
-
+In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
+It is also possible to calculate these small deviations using curve fitting software. Suitable functions are available in the library.
 
 
 ## Temperature Sensitivity
