@@ -16,11 +16,11 @@ Permanent magnets, usually arranged in a circular "Halbach array" inside the (+m
 The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems. The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) with the necessary precision for homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework. The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
-The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterization of different objects. 
+The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterisation of different objects. 
 
-The sensor testing process involves two key tests. Firstly, the linearity of the magnetic fields is measured with all sensors to assess the feasibility of using specific sensors. Secondly, the homogeneity of the sensors is evaluated to determine its capability to measure with precision greater than 1000(+ppm). In the end, the sensors should also measure how uniform the magnetic field is in a completed (+mri) system.
+The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve. At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than $\si{50}{\mu\tesla}$ to characterise precisely a magnetic field in a Halbach-Array of an MRI with precision greater than 1000(+ppm).  
 
-This research initiative seeks to contribute to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterization. The outcomes of this thesis will provide insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
+This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcomes of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
 ### Low-Field MRI
 
@@ -75,7 +75,7 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a compelling choice for mobile NMR due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-The Halbach magnetic array emerges as a crucial element for future Magnet Characterization. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array emerges as a crucial element for future Magnet characterisation. Given that this thesis centers on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.  
 
@@ -145,9 +145,9 @@ Beyond the development and prototype construction of low-field (+mri) scanners, 
 This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, *DeLoRI* aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
 In addition *DeLoRI* endeavors to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
 
-It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterization process.
+It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterisation process.
 
-To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterization process.
+To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterisation process.
 
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
@@ -163,7 +163,7 @@ Concerning the DeLoRI project, this study exclusively delves into the realm of p
 
 The primary objectives of this work revolve around addressing two pivotal research questions:
 
-* Sensor Characterization: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
+* Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
 * Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1000(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at 1000(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
