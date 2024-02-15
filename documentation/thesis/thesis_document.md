@@ -1669,7 +1669,7 @@ For this purpose, a sample size of *N=10000* measured values was recorded for th
 
 The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values were taken with a trigger and readout rate of one measurement per second.
 
-In order to quantify the noise, the standard deviation of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
+In order to quantify the noise, the (+sd) of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
 
 %%Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png%%
 
@@ -1692,14 +1692,14 @@ These measured values are categorised below.
 
 ### Sensor Temperature Analysis
 
-The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a standard deviation of $\sigma_{t}$=0.53$^{\circ}$C indicates a consistent trend.  This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between 20.15$^{\circ}$C and 21.21$^{\circ}$C, which indicates a stable and consistent temperature measurement.
+The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a (+sd) of $\sigma_{t}$=0.53$^{\circ}$C indicates a consistent trend.  This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between 20.15$^{\circ}$C and 21.21$^{\circ}$C, which indicates a stable and consistent temperature measurement.
 This result is more noisy compared to the temperature stability of the *MMC5603*.
 
 Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
 
 With an additional measurement run with a different temperature setting of 30.0$^{\circ}$C, the measured temperature deviations and offsets remains constant.
 
-Thus, the sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
+The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
 
 It is recommended, however, to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
@@ -1733,24 +1733,36 @@ using same setup as in read noise but with programmed temperature controller of 
 
 ## Linearity
 
+%%Sensor_evaluation_setup_for_linearity_measurements.png%%
+
 The sensor linearity of a magnetic field sensor describes the ability of the sensor to provide a proportional linear response to changes in the magnetic field without non-linear distortions.
 This means that the output signals of the sensor vary directly proportional to the input magnetic fields without deviations or distortions and is therefore an important indicator for measurements of fields at different distances or objects.
 
-%%Sensor_evaluation_setup_for_linearity_measurements.png%%
 
 This is achieved here by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet was attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
 The ambient temperature is set to $\mu_{trev}$=21.0$^{\circ}$ in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise*\ref{sensor-characterisation-background-noise} setup.
 
-The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components. To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface. A bash console script controls the measurement process.
+The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components.
+To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
+A bash console script controls the measurement process and.
 
 ### Measurement Setup
 
 After the sensor baseline has been determined with *N=10000* samples, the magnet is inserted into the holder.
-The linear axis is moved by the user until it is maximally saturated. With the *TLV493D*, this corresponds to $\mu_{rev}$=250.000$\mu$T and below in low resolution mode. *MCC5603NJ* around $\mu_{rev}$=3000$\mu$T.
+The linear axis is moved by the user until it is maximally saturated. With the *TLV493D*, this corresponds to 250.000$\mu$T and below in low resolution mode. *MCC5603NJ* around 3000$\mu$T.
 This ensures that the linearity is determined over the entire measuring range.
 
 ### Measurement Run
+
+The measurement run is then started using a script.
+The user defines the path to be travelled by the linear axis.
+The complete range of *120mm* in *1mm* steps was selected here. The following automated process then runs as follows:
+ 
+* Move the linear axis upwards by the selected distance
+* De-energise the axis motor
+* Create measurement using *MRPCli* with N=2000 data points per reading
+* Export reading to filesystem with current linear axis position in meta-data and filename
 
 
 ### Linearity Analysis
@@ -1768,6 +1780,10 @@ This ensures that the linearity is determined over the entire measuring range.
 
 
 ## Result Analysis
+
+
+%%Overview_of_all_characterised_sensor_properties.csv%%
+
 
 are they suitable for <1000(+(+ppm)) ? 
 
