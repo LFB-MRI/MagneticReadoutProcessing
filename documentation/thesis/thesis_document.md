@@ -268,7 +268,7 @@ A low-cost magnetic field sensors interface will therefore not only be economica
 In addition, the low-cost sensor interface will serve as a development platform for the data evaluation (+mrp) library and provide real measurement data from magnets.
 In addition, the interface firmware creates a basis for the development of a data protocol for exchanging measured values.
 
-This makes it easy to integrate your own measuring devices into the (+mrp) ecosystem at a later date. This is only possible with a minimal functional hardware and firmware setup and was developed for this purpose first.
+This makes it easy to integrate an own measuring devices into the (+mrp) ecosystem at a later date. This is only possible with a minimal functional hardware and firmware setup and was developed for this purpose first.
 
 
 ## Sensor Selection
@@ -539,7 +539,7 @@ User interaction points represent the core concept of the developed library and 
 
 For this purpose, the library is divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
-For this purpose, a module system with standardised functional patterns and data types was developed and packed together in a extendable Python library.
+For this purpose, a module system with standardised functional patterns and data types is developed and packed together in a extendable Python library.
 
 \newpage
 
@@ -596,7 +596,7 @@ If the user now wishes to use a different (+cad) algorithm instead of the *Halba
 
 ## Modules
 
-In order to realise the concept of user interaction points, the library was divided into different modules. These modules can be divided into two main categories:
+In order to realise the concept of user interaction points, the library is divided into different modules. These modules can be divided into two main categories:
 
 * Core - All modules related to measurement data management
 * Extensions - Contains modules for visualisations, hardware sensor access
@@ -634,25 +634,23 @@ This module is specifically designed for the storage of physical parameters pert
 
 By centralizing this information, users can streamline the subsequent phases of evaluation and analysis, simplifying the overall process and ensuring a more efficient and insightful exploration of the collected data.
 
-
 At the end of processing, the collected and modified data are typically exported; various functions are provided for this purpose.
 This process is described in the following subchapter.
-
 
 ### Storage and Datamanagement
 
 An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements.
-On the other hand, the focus during development was that it is also possible to use the data in other programs.
+On the other hand, the focus during development is that it is also possible to use the data in other programs.
 
 For this purpose, an open, documented export format must be selected.
 Ideally, this should be human-readable and viewable with a simple text editor.
 This eliminates all binary-based formats such as the Python pickle built into Python.
 
-Taking these points into account, the (+json) format was chosen.
+Taking these points into account, the (+json) format is chosen.
 This is human and machine readable and there is a compatible parser for almost every programming language.
 
 The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement thatt using the library is exported.
-Here you can see that by using the (+json) format, all measurement points and metadata are available in readable plain text.
+It can be seen that by using the (+json) format, all measurement points and metadata are available in readable plain text.
 
 This means that they can also be read out in other programs.
 Using serialization, the *MRPReading* class inherited from Python-*Object* class is serialized via an dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
@@ -897,7 +895,7 @@ The same procedure is performed for the *commands* (+cli)-command of each sensor
 In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
 In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example \ref{lst:mtsc}).
 
-To realize this, a (+lut) was created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
+To realize this, a (+lut) is created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
 
 For commands where there are several entries for *CAPABLE SENSORS ID LUT* \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
 
@@ -964,7 +962,7 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 ### MRPHal
 
-After generating simple measurements with random values in the previous example \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module was developed, which can interact with all *Unified Sensor* \ref{unified-sensor}-compatible sensors. In the following example \ref{lst:mrpexample_hal}, an *1D: Single Sensor* \ref{d-single-sensor} is connected locally to the host (+pc).
+After generating simple measurements with random values in the previous example \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* \ref{unified-sensor}-compatible sensors. In the following example \ref{lst:mrpexample_hal}, an *1D: Single Sensor* \ref{d-single-sensor} is connected locally to the host (+pc).
 
 ```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
@@ -1118,7 +1116,7 @@ In the first version of the (+mrp)-library, the user had to write his own Python
 This is already a time-consuming process for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
-To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} was implemented. The libaray (+cli) implements the following functionalities:
+To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} is implemented. The libaray (+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -1163,7 +1161,7 @@ This is particularly useful for complex analyses or custom algorithms, but not n
 
 %%Example_measurement_analysis_pipeline.png%%
 
-For this purpose, a further (+cli) application was created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
+For this purpose, a further (+cli) application is created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
 The example \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
 1. Import the measurements
@@ -1173,7 +1171,7 @@ The example \ref{Example_measurement_analysis_pipeline.png} shows a typical meas
 5. Create a graphical plot of all measurements with standard deviation
 
 
-In order to implement such a pipeline, the *yaml* file format was chosen for the definition of the pipeline, as this is for non programmers to understand and can also be easily edited with a plain text editor.
+In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the documentation [@MagneticReadoutProcessingReadTheDocs].
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
@@ -1251,7 +1249,7 @@ This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
 
 During the development of the (+mrp)-library, test cases were also created for all important functionalities and usecases.
-The test framework *PyTest* [@PyTest] was used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
+The test framework *PyTest* [@PyTest] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
 Since all intended usecases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
 
@@ -1304,7 +1302,7 @@ Instead, the hardware sensors were simulated by software and executed via virtua
 %%MagneticReadoutProcessing_library_hosted_on_PyPi.png%%
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
-As it was created in the Python programming language, there are several public package registry where users can provide their software modules.
+As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
 Here, *PyPi* [@PyPI] \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} [@MagneticReadoutProcessingPyPI] is the most commonly used package registry and offers direct support for the package installation programm (+pip) \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
@@ -1355,7 +1353,7 @@ In addition, these commands are available globally in the system without the ter
 ### Documentation
 
 
-In order to provide comprehensive documentation for the enduser, the source code was documented using Python-*docstrings* [@PythonDocstringReference] and the Python type annotations.
+In order to provide comprehensive documentation for the enduser, the source code is documented using Python-*docstrings* [@PythonDocstringReference] and the Python type annotations.
 The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance. \ref{lst:pydocstring}
 
 ```python {#lst:pydocstring caption="Documentation using Python docstring example"}
@@ -1379,7 +1377,7 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
 ```
 
 
-Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@SphinxDocumentation] was used for this purpose.
+Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@SphinxDocumentation] is used for this purpose.
 This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used *docstrings*.
 
 
@@ -1432,14 +1430,14 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor was used for the evaulation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaulation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These were placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
 ## Configuration of the Measurement
 
-The configured hardware was then connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
-Afterwards, the measurement was configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
+The configured hardware is then connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
+Afterwards, the measurement is configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
 
 \newpage
 
@@ -1452,15 +1450,15 @@ $ MRPcli config setup eval_measurement_config
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 ```
 
-The *MRPcli measure run* command was then called up for each individual magnet to execute a measurement. 
-After each run, the *READING-NAME* parameter was filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
+The *MRPcli measure run* command is then called up for each individual magnet to execute a measurement. 
+After each run, the *READING-NAME* parameter is filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 
 ## Custom Algorithm Implementation
 
 The next step for the user is the implementation of the filter algorithm \ref{lst:custom_find_similar_values_algorithm}.  This can have any function signature and is implemented in the file *UDPPFunctionCollection.py*.
 This Python file is loaded when the pipeline is started and all functions that are imported here as a module or implemented directly can be called via the pipeline.
-As this is a short algorithm, it was inserted directly into the file.
+As this is a short algorithm, it is inserted directly into the file.
 
 The parameter *_readings* should later receive the imported measurements from the *stage rawimport* \ref{lst:pipeline_mrp_evaluation_yaml} and the optional *IP_return_count* parameter specifies the number of best measurements that are returned.
 The return parameter is a list of measurements containing the most similar measurements, measured by the smallest distance between all measurements.
@@ -1503,7 +1501,7 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
 The Python *heapq* [@heapq] module, which implements a priority queue, is used for this purpose.
 The calculated distances from the *CoG* value of the measurements to are inserted into this queue.
 Subsequently, as many elements of the queue are returned as defined by the *IP_return_count* parameter.
-The actual sorting was carried out by the queue in the background.
+The actual sorting is carried out by the queue in the background.
 
 
 ### Alternative Filter Algorithm Implementation
@@ -1591,14 +1589,14 @@ Here it can be seen that there are measured values with larger deviations (see m
 %%MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png%%
 
 On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter was set to four, only the four most similar measurements were exported here.
-It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value was calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
+It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
 
 
 If the alternative filter algorithm from chapter *Alternative Filter Algorithm Implementation* \ref{alternative-filter-algorithm-implementation} is executed here, the same result is returned if the magnet measurement with (+id) *5:0* is used as the reference magnet.
 
 
-The filter algorithm implemented by the user was thus successfully executed using the user-programmable pipeline. 
-The calculation result was successfully verified using raw measurement data and the final result of the algorithm.
+The filter algorithm implemented by the user is thus successfully executed using the user-programmable pipeline. 
+The calculation result waiss successfully verified using raw measurement data and the final result of the algorithm.
 
 
 
@@ -1609,9 +1607,9 @@ The calculation result was successfully verified using raw measurement data and 
 # Evaluation
 
 
-In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it was shown that the implementation of the hardware and software framework for various magnetic field sensors was successfully implemented.
+In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
-In addition, the basic application by the user was demonstrated using an example.
+In addition, the basic application by the user is demonstrated using an example.
 This makes it possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
 
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
@@ -1629,12 +1627,12 @@ The developed framework is directly compatible with a variety of magnetic field 
 %%Digital_magnetic_field_sensors_characterised_for_evaluation.csv%%
 
 For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
-The additional column for the *Background-Noise* was taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
+The additional column for the *Background-Noise* is taken from the respective data sheets of the sesors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
 
-This selection was made for the following reasons:
+This selection is made for the following reasons:
 
 The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
-For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection was made for the following reasons:
+For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection is made for the following reasons:
 
 * Availability of ready to use development boards
 * Specifications correspond to the application areas
@@ -1655,20 +1653,20 @@ The sensors to be measured were fixed together on an aluminium plate with therma
 This compensates for thermal differences.
 This is essential for the subsequent temperature deviation tests in order to obtain comparable measurement results.
 
-The setup was placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
-The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, was used as the temperature chamber.
-To verify the temperature, an additional thermometer *VC-7055BT* was placed on the base plate.
-A 10mm thick *PTFE* insulation plate was placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
+The setup is placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
+The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, is used as the temperature chamber.
+To verify the temperature, an additional thermometer *VC-7055BT* is placed on the base plate.
+A 10mm thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
 
-The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here was used as the readout hardware, on which the *Unified Sensor Firmware* is running.
+The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
 With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
 A separate battery powered supply is used as low-noise power supply for the sensors boards.
 An *Raspberry Pi 4* is used as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
 
-For the software setup, *MRPCli* \ref{command-line-interface} was used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
+For the software setup, *MRPCli* \ref{command-line-interface} is used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
 The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
 
 
@@ -1679,7 +1677,7 @@ The recorded measurement series are automatically analysed using the *Programmab
 Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed 24 hours before the measurement run in the final measurement configuration inside of the chamber.
 
 The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
-For this purpose, a sample size of *N=10000* measured values was recorded for the baseline measurement.
+For this purpose, a sample size of *N=10000* measured values is recorded for the baseline measurement.
 
 The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values were taken with a trigger and readout rate of one measurement per second.
 
