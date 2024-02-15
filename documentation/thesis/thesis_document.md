@@ -96,12 +96,11 @@ In this thesis, reference is made exclusively to the hardware shimming processes
 
 According to Wolfgang R. Nitz in 2016, just 13.4% of actively used (+mri) systems are low-field (+mri) (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [@Nitz2016]
 
-Nitz also highlights that presently, the landscape of (+mri) technology is dominated by a single manufacturer dealing with resistive magnets, namely Stand-up (+mri) from FONAR Corp. In contrast, the industry such as Siemens, General Electric, Philips, Toshiba, among others, predominantly rely on either permanent magnets or superconducting magnets in their (+mri)  systems. This notable concentration underscores the distinctive position of Stand-up (+mri)  as a trailblazer in utilizing resistive magnets within the competitive realm of magnetic resonance imaging. [@Nitz2016]
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri)  system [@De_Vos2023-pb].
 
 Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri)  in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
-The objective of this (+mri) system is to prioritize cost-effectiveness while efficiently capturing low-frequency images of the head. The emphasis lies on fast and accurate imaging, achieved through a streamlined approach that favors simplicity in the resultant images.
-This (+mri) system is strategically designed with a primary focus on cost-effectiveness, aiming to efficiently capture low-frequency images of the head. The overarching goal is to achieve rapid and accurate imaging through a simplified approach, prioritizing clarity and ease in the resulting images.
+The Halbach magnet incorporated in this system boasts a 27cm diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets (*12 x 12 x 12 mm^3*). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -1765,6 +1764,12 @@ It is also possible to calculate these small deviations using curve fitting meth
 
 
 ## Temperature Sensitivity
+
+The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
+It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes.
+An accurate temperature sensitivity characteristic is therefore crucial for subsequent precise magnetic field measurements.
+
+
 
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
 
