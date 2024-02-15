@@ -1724,7 +1724,7 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 
 
-## Linearity
+## Sensor Characterisation: Linearity
 
 %%Sensor_evaluation_setup_for_linearity_measurements.png%%
 
@@ -1777,7 +1777,7 @@ In general, the measured values correspond to the data sheet specifications of b
 It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
 
 
-## Temperature Sensitivity
+## Sensor Characterisation: Temperature Sensitivity
 
 The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
 It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes.
@@ -1791,15 +1791,23 @@ The temperature measuring device *VC-7055BT* can be analysed using a (+pc) inter
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
 
 
+With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
 
+The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from 20$^{\circ}$ to 50$^{\circ}$.
+Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
+The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality magnets).
+The temperature range was selected so that it is within a sufficient range for the application.
+
+
+### Temperature Sensitivity Analysis
 
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
 
 
-using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
+
 
 
 
