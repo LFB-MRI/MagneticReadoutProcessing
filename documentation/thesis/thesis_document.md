@@ -177,7 +177,7 @@ To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a
   $ (1000/1,000,000) × (50 mT) = 0.05 mT $ 
 
 To convert this into microtesla (%\mu%T), a multiplication by *1000* is needed:
-  $ (0.05 mT) × 1000 = 50 \mu$T
+  $ (0.05 mT) × 1000 = 50 \mu$ T
 
 This means that to measure a deviation of better than *1000*(+ppm) in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
@@ -292,7 +292,6 @@ This strategic choice forms the basis for a flexible, universally applicable Hal
 The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
-
 In the Evaluation \ref{evaluation} chapter, basic characterisation methods are used to evaluate the sensors listed in \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
 
 
@@ -300,12 +299,12 @@ In the Evaluation \ref{evaluation} chapter, basic characterisation methods are u
 
 %%Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png%%
 
-The mechanical design of a sensor would be kept as simple as possible so that it can be replicated as easily as possible.
-The focus was on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
+The mechanical design of a sensor is kept as simple as possible so that it can be replicated as easily as possible.
+The focus is on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
 The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor \ref{d-single-sensor}.
 
-All parts were produced using the 3D printing additive manufacturing processes. The sensor circuit board was glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
+All parts are produced using the 3D printing additive manufacturing processes. The sensor circuit board was glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
 The exchangeable magnetic holder (shown in green) can be adapted to different magnets. It can be produced quickly due to the small amount of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
