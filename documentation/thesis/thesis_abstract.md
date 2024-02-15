@@ -17,5 +17,5 @@ It implements all important aspects of acquisition, storage and analysis, and ea
 Complete documentation, tutorials and tests enable users to use and adapt the framework as quickly as possible. 
 The framework was used to characterise different magnets, which requires integrating magnetic field sensors.
 
-To evaluate the software framework and hardware, two digital sensors were characterised and tested under the same conditions for noise, temperature dependence and linearity. The result is that both sensors can only be used under certain conditions, as the noise intensity is higher than the specified 50 mühT and the value ranges fluctuate too much as a result.
+To evaluate the software framework and hardware, two digital sensors were characterised and tested under the same conditions for noise, temperature dependence and linearity. The result is that both sensors can only be used under certain conditions, as the noise intensity is higher than the specified 50 $\mu$T and the value ranges fluctuate too much as a result.
 It is recommended to consider analogue sensors or NMR probes in the future.
