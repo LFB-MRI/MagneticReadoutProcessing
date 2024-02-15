@@ -827,12 +827,12 @@ and these can later be used to read out measurement results.
 The next initialisation system is dedicated for multi-sensor
 synchronisation \ref{sensor-syncronisation-interface}. The last step in
 the setup is to configure communication with the host or connected
-\gls{pc}. All implemented microcontroller platforms used (Raspberry Pi
-Pico, STM32F4) have a \gls{usb} slave port.
+\gls{pc}. All implemented microcontroller platforms used
+(\emph{Raspberry Pi Pico}, \emph{STM32F4}) have a \gls{usb} slave port.
 
 The used usb descriptor is a \gls{usb} \gls{cdc}. This is used to
-emulate a virtual RS232 communication port using a \gls{usb} port on a
-\gls{pc} and usually no additional driver is needed on modern host
+emulate a virtual \emph{RS232} communication port using a \gls{usb} port
+on a \gls{pc} and usually no additional driver is needed on modern host
 systems.
 
 After execution of the setup routine is completed, the system switches
@@ -3245,6 +3245,14 @@ sensors pcb
 \hypertarget{linearity}{%
 \section{Linearity}\label{linearity}}
 
+The sensor linearity of a magnetic field sensor describes the ability of
+the sensor to provide a proportional linear response to changes in the
+magnetic field without non-linear distortions. This means that the
+output signals of the sensor vary directly proportional to the input
+magnetic fields without deviations or distortions and is therefore an
+important indicator for measurements of fields at different distances or
+objects.
+
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
@@ -3252,12 +3260,47 @@ sensors pcb
 \label{Sensor_evaluation_setup_for_linearity_measurements.png}}
 \end{figure}
 
+This is achieved here by means of an additional linear axis installed
+above the sensor setup. A holder for an \emph{N45 12x12x12mm} magnet was
+attached to the end effector of this axis, which can thus be moved at
+different distances above the respective sensor \gls{ic}. The ambient
+temperature is set to \(\mu_{trev}\)=21.0\(^{\circ}\) in the measurement
+runs and thus corresponds to the same conditions as in the
+\emph{Background-Noise}\ref{sensor-characterisation-background-noise}
+setup.
+
+The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
+shows this updated measurement setup with the added components. To
+control the linear axis, an additional motion controller of the type
+\emph{SKR-Pico} placed outside the temperature chamber is required,
+which can be controlled via a network interface. A bash console script
+controls the measurement process.
+
+\hypertarget{measurement-setup}{%
+\subsection{Measurement Setup}\label{measurement-setup}}
+
+After the sensor baseline has been determined with \emph{N=10000}
+samples, the magnet is inserted into the holder. The linear axis is
+moved by the user until it is maximally saturated. With the
+\emph{TLV493D}, this corresponds to \(\mu_{rev}\)=250.000\(\mu\)T and
+below in low resolution mode. \emph{MCC5603NJ} around
+\(\mu_{rev}\)=3000\(\mu\)T. This ensures that the linearity is
+determined over the entire measuring range.
+
+\hypertarget{measurement-run}{%
+\subsection{Measurement Run}\label{measurement-run}}
+
+\hypertarget{linearity-analysis}{%
+\subsection{Linearity Analysis}\label{linearity-analysis}}
+
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
 \caption{Sensor linearity evaluation results for TLV493D and MMC5603NJ
 \label{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
 \end{figure}
+
+\ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
 
 \begin{itemize}
 \tightlist

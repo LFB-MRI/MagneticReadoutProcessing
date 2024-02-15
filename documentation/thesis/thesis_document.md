@@ -358,9 +358,9 @@ When the microcontroller is started, the software checks whether known sensors a
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
 
 The next initialisation system is dedicated for multi-sensor synchronisation \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
-All implemented microcontroller platforms used (Raspberry Pi Pico, STM32F4) have a (+usb) slave port.
+All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) have a (+usb) slave port.
 
-The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual RS232 communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
+The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
 After execution of the setup routine is completed, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ringbuffer.
@@ -1700,7 +1700,7 @@ With an additional measurement run with a different temperature setting of 30.0$
 
 Thus, the sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
 
-
+It is recommended, however, to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
 ### Raw Sensor Data Analysis
 
@@ -1729,11 +1729,37 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 using same setup as in read noise but with programmed temperature controller of the chamber and separate temperature probe under the sensors pcb
 
+
 ## Linearity
+
+The sensor linearity of a magnetic field sensor describes the ability of the sensor to provide a proportional linear response to changes in the magnetic field without non-linear distortions.
+This means that the output signals of the sensor vary directly proportional to the input magnetic fields without deviations or distortions and is therefore an important indicator for measurements of fields at different distances or objects.
 
 %%Sensor_evaluation_setup_for_linearity_measurements.png%%
 
+This is achieved here by means of an additional linear axis installed above the sensor setup.
+A holder for an *N45 12x12x12mm* magnet was attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
+The ambient temperature is set to $\mu_{trev}$=21.0$^{\circ}$ in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise*\ref{sensor-characterisation-background-noise} setup.
+
+The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components. To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface. A bash console script controls the measurement process.
+
+### Measurement Setup
+
+After the sensor baseline has been determined with *N=10000* samples, the magnet is inserted into the holder.
+The linear axis is moved by the user until it is maximally saturated. With the *TLV493D*, this corresponds to $\mu_{rev}$=250.000$\mu$T and below in low resolution mode. *MCC5603NJ* around $\mu_{rev}$=3000$\mu$T.
+This ensures that the linearity is determined over the entire measuring range.
+
+### Measurement Run
+
+
+### Linearity Analysis
+
 %%Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
+
+\ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+
+
+
 
 
 
