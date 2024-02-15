@@ -357,7 +357,7 @@ class MRPDataVisualization:
         temperature_plot.axhline(y=temperature_mean, color='red', linestyle='--', linewidth=1, label='Temperature Mean $\mu_{t}$')
         temperature_plot.set_xlabel('Data-Point Index', fontsize=8)
         temperature_plot.set_ylabel('Temperature\n[$^\circ\mathrm{C}$]', fontsize=8)
-        temperature_plot.set_title('Sensor Temperature $\mu_{t}'+'={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$', fontsize=9)
+        temperature_plot.set_title('Sensor Temperature $\mu_{t}'+'={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$'+'   $\sigma_{t}$'+'={:.2f}'.format(MRPAnalysis.MRPAnalysis.calculate_std_deviation(_reading, True), _unit) + '$^\circ\mathrm{C}$', fontsize=9)
         temperature_plot.legend(fontsize=4)
 
 
