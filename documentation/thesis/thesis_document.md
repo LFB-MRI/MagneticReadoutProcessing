@@ -1806,9 +1806,11 @@ The temperature range was selected so that it is within a sufficient range for t
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
 
+The figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
+It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
 
-
+In the evaluation (see figure ), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to calculate these deviations based on the ambient temperature during the software calibration.
 
 
 
@@ -1828,7 +1830,13 @@ are they suitable for <1000(+(+ppm)) ?
 * 27cm / 50mT bore
 * nmr probes for better results
 
+* mit software calibrierung ist es möglich vermutlich möglich sowie mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu kommen
+* mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit avg=20 kommt man auf 45
+* sollte ein geeignerter ersatzsensor gefunden werden
 
+* beide sensoren sind jedoch durch chrakterisierung von permanentmagneten geeignet
+* beim tlv493d ist es möglich absolut werte zu erfassen.
+* beim mmc ist es möglich relativ magnete untereinander zu vergleichen
 
 ### Recommendation for Action
 
