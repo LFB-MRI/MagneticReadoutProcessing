@@ -108,9 +108,9 @@ In this thesis, reference is made exclusively to the hardware shimming processes
 
 **Low-Field MRI**
 
-According to Wolfgang R. Nitz in 2016, just 13.4% of actively used (+mri) systems are low-field (+mri) (66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T). [@Nitz2016]
+According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) systems are low-field (+mri) (*66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T*). [@Nitz2016]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. 2023 veröffentlichten de Vos, Remis und Webb eine zusammenfassung zur gestaltng eines oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
 Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup was subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
@@ -118,7 +118,7 @@ The Halbach magnet incorporated in this system boasts a 27cm diameter, a *B0* fi
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets (*12 x 12 x 12 mm^3*). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
-To further refine the magnet's homogeneity, optimization techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
+To further refine the magnet's homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
 **Magnet Characerisation**
 
@@ -126,7 +126,7 @@ The shimming process described describes how, after the field magnet has been se
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Hallbach configuration.
 
-In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets. Individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
+In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
 
 There are two ways of using the data from the magnets that were previously measured:
 
@@ -146,22 +146,22 @@ This should make it possible to create a workflow from the individual magnet to 
 
 The present work aims to provide an efficient and comprehensive solution for the design of low-field (+mri) devices by developing and implementing a software and hardware framework.
 
-Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, *Fraunhofer MEVIS* in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit tailored specifically for screening purposes. As described since 1991 low-field (+mri)s have evolved into a burgeoning realm of research, showcasing substantial promise within the field of medical technology. The endeavor by *Fraunhofer MEVIS* exemplifies the ongoing commitment to harnessing the potential of low-field (+mri) for enhanced breast screening applications.
+Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, *Fraunhofer MEVIS* in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit customised specifically for screening purposes. As described before, since 1991 low-field (+mri)s have evolved into a growing realm of research, showcasing significant opportunities within the field of medical technology. The efforts by *Fraunhofer MEVIS* exemplifies the ongoing commitment to utilizing the potential of low-field (+mri) for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to enhance the homogeneity of magnets within low-field (+mri)systems below 1000(+ppm), primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
+The focus of the ongoing efforts is to improve the homogeneity of magnets within low-field (+mri)systems below *1000*(+ppm), primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
 
 Beyond the development and prototype construction of low-field (+mri) scanners, the project encompasses electromagnetic simulation of components within the low-field (+mri)system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
 
 This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, *DeLoRI* aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
-In addition *DeLoRI* endeavors to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This nuanced approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimization process. Furthermore, 
+
+In addition *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
 
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterisation process.
 
 To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterisation process.
 
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
-The library will enable data acquisition, storage and analysis of magnetic properties, with customization possible at each step of the process.
-Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
+The library will enable data acquisition, storage and analysis of magnetic properties, with customisation possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
@@ -171,19 +171,29 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 Concerning the DeLoRI project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the DeLoRI project. 
 
+Before naming the research focus, it is important to understand the difference and connection between deviation and resulution of the system. 
+To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a resolution that is less than *1000*(+ppm) of *50mT* is needed.
+
+  $ (1000/1,000,000) × (50 mT) = 0.05 mT $ 
+
+To convert this into microtesla (%\mu%T), a multiplication by *1000* is needed:
+  $ (0.05 mT) × 1000 = 50 \mu$T
+
+This means that to measure a deviation of better than *1000*(+ppm) in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
+
 The primary objectives of this work revolve around addressing two pivotal research questions:
 
 * Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than 1000(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at 1000(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than 50 $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
 
-It is essential to emphasize that the intention is not to characterize the magnets per se; rather, the emphasis lies in deriving meaningful insights about the sensors deployed.
+It is essential to emphasize that the intention is not to characterize the magnets; the sensores which might be used for characterisation are be analised and evaluated.
 
-This work distinctly prioritizes the development of both hardware and software tailored for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
+This work prioritises the development of both hardware and software customised for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
 
 ## Usecases
 
-The following section defines some usecases that the future project should be able to cover. These usecases define the setup of the hard- and software. 
+The following section defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The usecases were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
@@ -243,14 +253,14 @@ Chapter \ref{evaluation}. **Evaluation**
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
   bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This section ensures closure and aids readers in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework must be established, capable of measuring diverse objects using various sensors. Additionally, conclusive remarks should be provided regarding the suitability of the employed sensors for magnetic field measurements.
+Finally, a comprehensive hardware and software framework needs to be established, which is capable of measuring diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
 # Unified Sensor
 
-A defined main objective of this project is the development of a cost-effective magnetic field sensors interface that is also universally expandable.
-The focus is on mapping different sensors and being compatible with different magnet types and shapes.
+A defined main objective of this project is the development of a cost-effective magnetic field sensors interface that is universally expandable as well.
+The focus is on mapping different sensors and being compatible with different magnet types and shapes. This ensures a wide range of applications in different scenarios.
 
-This ensures a wide range of applications in different scenarios. Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
+Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
 
 The flexibility to support different sensors and magnets makes the system versatile and opens the possibility for use in different applications.
 A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors in different contexts.
@@ -265,7 +275,7 @@ This makes it easy to integrate your own measuring devices into the (+mrp) ecosy
 
 The selection process for possible magnetic field sensors initially focussed on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
 
-A key aspect of this selection was the preference for sensors with digital interfaces to facilitate implementation in the circuit layout.
+A key aspect of this selection was the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kind of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
 The use of analog sensors was purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
@@ -508,7 +518,7 @@ As with the other sensors, this interface consists of your *Raspberry-Pi Pico* w
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware was adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customized version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontoller, the serial protocol of the sensor was implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -532,7 +542,7 @@ As the following, this concept is referred to as *user interaction points* \ref{
 
 ## User Interaction Points
 
-User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimization algorithms on the other.
+User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other.
 
 For this purpose, the library was divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
@@ -616,7 +626,7 @@ The following modules are implemented in detail:
 
 
 The *MRPReading* module performs a essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
-To customize and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
+To customise and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
@@ -1614,7 +1624,7 @@ This makes it possible to systematically characterise magnets from the software 
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
 
 * Measure a wide range of different permanent magnets with regard to their systematic field strength
-* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than 1000(+ppm)
+* Automated measurement of the homogeneity of Hallbach rings with an accuracy of less than *1000*(+ppm)
 
 These questions are answered in the following, as a basic readout and analysis functionality platform had to be created first and thus an automated sensor characterisation can be performed.
 
