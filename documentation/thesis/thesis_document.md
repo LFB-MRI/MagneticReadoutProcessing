@@ -1830,7 +1830,7 @@ The *MMC5603NJ* can be used directly without additional software calibration for
 
 However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm*.
 
-
+The *TLV493D*, on the other hand, is able to measure these directly, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
 
 In the following chapter, recommendations for action are defined, which were derived from the analysis results.
 
