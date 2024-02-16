@@ -1291,7 +1291,7 @@ In the case of local development, the test runs are carried out on a (+pc) that 
 
 In the other scenario, the tests are to be carried out before a new release in the repository on the basis of \href{https://github.com/features/actions}{GithubActions}.
 Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
-Instead, the hardware sensors are simulated by software and executed via virtualisation on the systems provided by *Github Actions*.
+Instead, the hardware sensors are simulated by software and executed via virtualisation on the services systems.
 
 
 ## Package Distribution
@@ -1385,9 +1385,9 @@ In order to make the documentation created by *Sphinx* accessible to the user, t
 Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
 Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
 
-The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service and linked in the repository and on the overview page \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} on *PyPi*.
+The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. The figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also shows separate menu items for tutorials on the individual functionalities.
 
-The process of creating and publishing the documentation has been automated using *GitHub Actions*, so that it is always automatically kept up to date with new features.
+The process of creating and publishing the documentation has been automated using \href{https://github.com/features/actions}{GithubActions}, so that it is always automatically kept up to date with new features.
 
 
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
