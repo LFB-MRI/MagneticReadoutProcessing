@@ -1,7 +1,7 @@
 # Introduction
 
 As the following, the motivation for the development of this framework is listed.
-The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri) research and applications, articulates the research question driving this thesis and delineates the anticipated usecases and benefits that will be explored and analysed throughout the study.
+The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri) research and applications, articulates the research question driving this thesis and delineates the anticipated use cases and benefits that will be explored and analysed throughout the study.
 
 ## Background and Motivation
 
@@ -193,13 +193,13 @@ It is essential to emphasize that the intention is not to characterize the magne
 
 This work prioritises the development of both hardware and software customised for sensor utilization and final testing. Physical properties and considerations take a secondary role in comparison to the overarching goal of refining the sensor-based methodologies.
 
-## Usecases
+## Use cases
 
-The following section defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
+The following chapter defines possible use cases that the future project need to cover. These use cases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
-The usecases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process \ref{usecase-evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
+The use cases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
+In the later accomplished evaluation process \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
 
 1. **Ready to use hardware sensor designs**
 
@@ -246,14 +246,14 @@ Chapter \ref{usability-improvements}. **Usability Improvements**
   This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
   This also includes the documentation of code and the distribution of the source code as a package to users.
 
-Chapter \ref{usecase-evaluation}. **Usecase Evaluation**
-  describes the application of the framework to the previously defined usecases and thus forms the basis for later evaluation.
+Chapter \ref{use-case-evaluation}. **Use case Evaluation**
+  describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
 
 Chapter \ref{evaluation}. **Evaluation**
   outlines the evaluation process for permanent magnets using the developed framework. The research questions posed regarding the suitability of the sensors used for the characterisation of permanent magnets are examined.
 
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
-  bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This section ensures closure and aids readers in grasping the broader context and significance of the research.
+  bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This chapter ensures closure and aids readers in grasping the broader context and significance of the research.
 
 Finally, a comprehensive hardware and software framework needs to be established, which is capable of measuring diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
@@ -461,7 +461,7 @@ Two functional sensor platforms \ref{Build_sensors_with_different_capabilities.c
 
 %%Build_sensors_with_different_capabilities.csv%%
 
-These cover all the required functions described in the usecases \ref{usecases}. The most important difference, apart from the sensor used, is the *scan mode*.
+These cover all the required functions described in the use cases \ref{use-cases}. The most important difference, apart from the sensor used, is the *scan mode*.
 In this context, this describes whether the sensor can measure a *static* fixed point on the magnet or if the sensor can move *dynamically* around the magnet using a controllable manipulator.
 
 In the following, the hardware structure of a *static* and *dynamic* sensor is described. For the *static* sensor, only the *1D* variant is shown, as this does not differ significantly from the structure of the *1D: dual sensor*, except it uses two *TLV493D* sensors, mounted above and on top of the magnet.
@@ -501,7 +501,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 
 ### Integration of an Industry-Teslameter
 
-As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
+As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
 A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
@@ -525,11 +525,11 @@ The software readout framework is the central software component that is develop
 This software framework is intended to provide a user-oriented data acquisition and analysis environment.
 For this purpose, typical individual steps that occur in relation to these tasks are implemented:
 
-* Data acquisition - from hardware sensors \ref{unified-sensor} or other data sources
-* Storage - export of data in various open formats \ref{storage-and-datamanagement}
-* Analysis - algorithms to analyse different data sets \ref{analysis}
+* Data acquisition - from hardware sensors or other data sources - see \ref{unified-sensor} 
+* Storage - export of data in various open formats - see \ref{storage-and-datamanagement}
+* Analysis - algorithms to analyse different data sets - see \ref{analysis}
 
-All these possible task parts is divided into different blocks and users is given the possibility of adding their own functionalities.
+All these psteps are divided into different blocks and users is given the possibility of adding their own functionalities.
 
 As the following, this concept is referred to as *user interaction points* \ref{user-interaction-points} and is explained in the following chapter.
 
@@ -603,7 +603,7 @@ In order to realise the concept of user interaction points, the library is divid
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
-There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} section, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
+There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} chapter, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
 
 ### Core Modules
 
@@ -876,7 +876,7 @@ These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the *info* command of each sensor is queried.
 This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
 
-```bash {#lst:mtsc caption="MRPproxy REST enpoiint query examples"}
+```bash {#lst:mtsc caption="MRPproxy REST entrypoint query examples"}
 # QUERY Network-Proxy capabilities
 $ wget http://proxyinstance.local:5556/proxy/status
 {"capabilities":[
@@ -1246,12 +1246,12 @@ The intermediate results and the final results \ref{Pipeline_output_files_after_
 Software tests in libraries offer numerous advantages for improving quality and efficiency. Software tests make it possible to identify errors and vulnerabilities before the software is released as a new version.
 
 This significantly improves the reliability of (+mrp)-library applications.
-Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
+Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different use cases.
 
-During the development of the (+mrp)-library, test cases are also created for all important functionalities and usecases.
+During the development of the (+mrp)-library, test cases are also created for all important functionalities and use cases.
 The test framework *PyTest* [@PyTest] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
-Since all intended usecases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
+Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
 
 
 ```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
@@ -1398,10 +1398,10 @@ The process of creating and publishing the documentation has been automated usin
 
 
 
-# Usecase Evaluation
+# Use case Evaluation
 
 The practical application of the hardware and software framework is shown below.
-This is shown using the previously defined usecases \ref{usecases}.
+This is shown using the previously defined use cases \ref{use-cases}.
 In the application example, various permanent magnets are measured and then sorted according to their field strength.
 The result should then list the magnets that deviate the least from each other in terms of their field strength.
 This is determined using a sorting algorithm developed by the user.
@@ -1422,7 +1422,7 @@ The process is broken down into the following steps and the practical applicatio
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These are previously described in the Usecases \ref{usecases} chapter.
+These are previously described in the Use cases \ref{use-cases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1604,7 +1604,7 @@ The calculation result is successfully verified using raw measurement data and t
 # Evaluation
 
 
-In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
+In the previous chapter *use case Evaluation* \ref{use-case-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
 In addition, the basic application by the user is demonstrated based on an example.
 Based on this it is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
@@ -1696,7 +1696,7 @@ Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
 
 With an additional measurement run with a different temperature setting of *30.0$^{\circ}$C*, the measured temperature deviations and offsets remains constant.
 
-The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
+The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in chapter *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
 
 Though it is recommended to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
@@ -1836,12 +1836,12 @@ In the following, methods will be shown with which it is nevertheless possible t
 #### Permanent Magnet charakterisation
 
 Both sensors are suitable for precisely measuring and quantifying magnetic fields.
-To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully realised with implemented \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
 
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
-This was shown in the chapter *Usecase Evaluation* \ref{usecase-evaluation} by comparing and sorting different permanent magnets using these sensors.
+This was shown in the chapter *use case Evaluation* \ref{use case-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
 
@@ -1876,7 +1876,7 @@ This underlines the performance of the developed framework and shows that it is 
 ## Outlook
 
 A solid foundation has been built in this version of the framework, which contains all the necessary functions and is ready for immediate use. During development, particular emphasis is placed on comprehensive documentation to make it easier to get started.
-Together with examples for various usecases, a user can quickly evaluate the framework.
+Together with examples for various use cases, a user can quickly evaluate the framework.
 
 However, it should be noted that the framework has already been released with its first stable version, but extensions and improvements are still necessary.
 The stable version distributed via the package registry is well suited for the intended purpose.
