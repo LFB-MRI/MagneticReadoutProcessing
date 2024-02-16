@@ -268,10 +268,9 @@ The flexibility to support different sensors and magnets makes the system versat
 A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors in different contexts.
 
 In addition, the low-cost sensor interface will serve as a development platform for the data evaluation (+mrp) library and provide real measurement data from magnets.
-In addition, the interface firmware creates a basis for the development of a data protocol for exchanging measured values.
+Further, the interface firmware creates a basis for the development of a data protocol for exchanging measured values.
 
-This makes it easy to integrate an own measuring devices into the (+mrp) ecosystem at a later date. This is only possible with a minimal functional hardware and firmware setup and is developed for this purpose first.
-
+It simplifies of own measuring devices into the (+mrp) ecosystem at a later date. This is only applicable with a minimal functional hardware and firmware setup; it is developed for this purpose in the first step.
 
 ## Sensor Selection
 
@@ -550,17 +549,17 @@ According to this concept, the user should be able to replace individual compone
 
 The following example shows the advantages of using the *User interaction points*:
 
-A project called *HalbachOptimisation* [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
+A project called *HalbachOptimisation* [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The *HalbachMRIDesigner* [@HalbachMRIDesigner] opensource project, can generate basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@OpenSCAD] based 3D model of the magnet holder.
+The *HalbachMRIDesigner* [@HalbachMRIDesigner] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@OpenSCAD] based 3D model of the magnet holder.
 
 As a result, there are two projects which are both suitable for the task of optimizing and creating Halbach magnets for (+mri) applications. The data structures are not compatible with each other.
 However, they are executed manually one after the other to obtain a final result with manual data conversation.
 
-The library created is intended to solve one problem by providing standardized and flexible data structures for use with this form of magnetic field data.
-By separating the processing pipeline into defined sub-steps, it should be possible to make individual modules and as a result functionalities interchangeable by the user.
+The library created is intended to solve this compatibility problem by providing standardized and flexible data structures with this format of magnetic field data.
+By separating the processing pipeline into defined sub-steps, it is feasible to connect individual modules and as a result functionalities interchangeable by the user.
 
-The implementation of the same functionalities looks as follows after using the library:
+The implementation of the same functionalities appears as the following by using the library:
 
 
 1. **Create a static set of magnets**
