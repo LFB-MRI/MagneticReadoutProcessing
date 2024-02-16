@@ -245,7 +245,7 @@ Chapter \ref{usability-improvements}. **Usability Improvements**
   This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
   This also includes the documentation of code and the distribution of the source code as a package to users.
 
-Chapter \ref{use-case-evaluation}. **Use case Evaluation**
+Chapter \ref{use-case-evaluation}. **Use Case Evaluation**
   describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
 
 Chapter \ref{evaluation}. **Evaluation**
@@ -1395,7 +1395,7 @@ The process of creating and publishing the documentation has been automated usin
 
 
 
-# Use case Evaluation
+# Use Case Evaluation
 
 The practical application of the hardware and software framework is shown below.
 This is shown using the previously defined use cases in chapter \ref{use-cases}.
@@ -1419,7 +1419,7 @@ The process is broken down into the following steps and the practical applicatio
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These are previously described in the use cases in chapter \ref{use-cases}.
+These are previously described in the *Use cases* \ref{use-cases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1429,12 +1429,12 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 For the hardware setup, the 3D-Full Sphere sensor, explained in chapter \ref{d-full-sphere}, is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
-These are placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
+These are placed in modified 3D printed holders shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
 ## Configuration of the Measurement
 
 The configured hardware is then connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
-Afterwards, the measurement is configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
+Afterwards, the measurement is configured for an measurement run, using the following configuration commands from listing \ref{lst:evaluation_measurement_config}.
 
 \newpage
 
@@ -1447,7 +1447,7 @@ $ MRPcli config setup eval_measurement_config
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 ```
 
-The *MRPcli measure run* command is then called up for each individual magnet to execute a measurement. 
+The *MRPcli measure ruxn* command is then called up for each individual magnet to execute a measurement. 
 After each run, the *READING-NAME* parameter is filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 
@@ -1502,7 +1502,7 @@ The calculated distances from the *CoG* value of the measurements to are inserte
 
 Another possibility here would be for the user to use a reference measurement instead of a simulated ideal magnet as a reference.
 This can come from a magnet selected as a reference magnet.
-As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet.The code snipped \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added *_ref* input parameter for the reference measurement.
+As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet.The code snipped \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added _ref input parameter for the reference measurement.
 
 ```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading"}
 @staticmethod
@@ -1582,7 +1582,7 @@ Here it can be seen that there are measured values with larger deviations (see m
 
 %%MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png%%
 
-On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
+Also, the figure \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png} illustrates, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
 It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-full-sphere}.
 
 
@@ -1601,7 +1601,7 @@ The calculation result is successfully verified using raw measurement data and t
 # Evaluation
 
 
-In the previous chapter *use case Evaluation* \ref{use-case-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
+In the previous chapter *Use Case Evaluation* \ref{use-case-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
 In addition, the basic application by the user is demonstrated based on an example.
 Based on this it is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
@@ -1838,7 +1838,7 @@ To ensure the linearity of the sensors, compensation can be performed using a de
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
-This was shown in the chapter *use case Evaluation* \ref{use-case-evaluation} by comparing and sorting different permanent magnets using these sensors.
+This was shown in the chapter *Use Case Evaluation* \ref{use-case-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
 
