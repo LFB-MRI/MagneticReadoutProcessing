@@ -198,7 +198,7 @@ The following chapter defines possible use cases that the future project need to
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The use cases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
+In the later accomplished evaluation process in chapter \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
 
 1. **Ready to use hardware sensor designs**
 
@@ -292,7 +292,7 @@ This strategic choice forms the basis for a flexible, universally applicable Hal
 The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
-In the Evaluation \ref{evaluation} chapter, basic characterisation methods are used to evaluate the sensors listed in \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
+In the Evaluation in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
 
 
 ## Mechanical Structure
@@ -302,7 +302,7 @@ In the Evaluation \ref{evaluation} chapter, basic characterisation methods are u
 The mechanical design of a sensor is kept as simple as possible so that it can be replicated as easily as possible.
 The focus is on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
-The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor \ref{d-single-sensor}.
+The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor in chapter \ref{d-single-sensor}.
 
 All parts are produced using the 3D printing additive manufacturing processes. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
@@ -320,7 +320,7 @@ The electronics consist of the magnetic field sensor and the electrical interfac
 The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation.
 This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation.
 
-All the necessary components and their circuitry are recorded on a (+pcb) \ref{1D_sensor_schematic_and_circuit_board.png} and subsequently manufactured.
+All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_and_circuit_board.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
 By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s.
 
@@ -339,11 +339,11 @@ It controls the hardware and enables the execution of predefined functions. The 
 It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions.
 Firmware is critical to the functioning of devices.
 
-The firmware is responsible for detecting the possible connected sensors \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
+The firmware is responsible for detecting the possible connected sensors shwon in table \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
 This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
 
 An important component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
-These are initiated according to the sensors found at startup. If new hardware is to be integrated, only the required functions \ref{lst:CustomSensorClass} need to be implemented.
+These are initiated according to the sensors found at startup. If new hardware is to be integrated, only the required functions in listing \ref{lst:CustomSensorClass} need to be implemented.
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
@@ -373,7 +373,7 @@ When the microcontroller is started, the software checks whether known sensors a
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
 
-The next initialisation system is dedicated for multi-sensor synchronisation \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
+The next initialisation system is dedicated for multi-sensor synchronisation in chapter \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
 All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) have a (+usb) slave port.
 
 The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
@@ -386,7 +386,7 @@ Its cyclic structure enables continuous overwriting of older data, saves memory 
 Ring buffers are well suited for applications with variable data rates and minimise the need for complex memory management.
 The buffer can be read out by command and the result of the measurement is sent to the host.
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number.
-This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized \ref{sensor-syncronisation-interface} in time and are not out of sequence or drift.
+This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like shown in chapter \ref{sensor-syncronisation-interface} and are not out of sequence or drift.
 
 
 ### Communication Interface
@@ -395,7 +395,7 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
-* Use with (+mrp) \ref{software-readout-framework}-library
+* Use with (+mrp)-library, explained in chapter \ref{software-readout-framework}
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
@@ -405,7 +405,7 @@ The figure \ref{Query_sensors_b_value_using_(+cli).png} shows the current measur
 
 %%Query_sensors_b_value_using_(+cli).png%%
 
-The other option is to use the (+mrp) \ref{software-readout-framework}-library. The serial interface is also used here. However, after a connection attempt by the (+hal) \ref{mrphal} module of the (+mrp) \ref{software-readout-framework}-library, the system switches to binary mode, which is initiated using the *sbm* command.
+The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used here. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command.
 The same commands are available as for (+cli)-based communication, but in a binary format.
 
 
@@ -419,16 +419,16 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 %%Measured_sensor_readout_to_processing_using_host_software.csv%%
 
-The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These are performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
+The table \ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These are performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
 
 * *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*,
-* (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
-* Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
+* (+mrp)-library described in chapter \ref{software-readout-framework} - Version *1.4.1*
+* Unified Sensor-firmware described in chapter \ref{unified-sensor} - Version *1.0.1*
 
 It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
 
-The other issue is sending the trigger signal from the readout software \ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
+The other issue is sending the trigger signal from the readout software, which is described in \ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
 
 In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
@@ -1679,7 +1679,7 @@ The following data is shown in the plots:
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
-The table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that are extracted from the measurement data of the sensors \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
+The table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that are extracted from the measurement data of the sensors in figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
 
 %%Sensor_noise_evaluation_results.csv%%
@@ -1731,7 +1731,7 @@ This means that the output signals of the sensor vary directly proportional to t
 
 This is achieved here by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
-The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise*\ref{sensor-characterisation-background-noise} setup.
+The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise* chappter \ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components.
 To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
@@ -1756,7 +1756,7 @@ The complete range of *120mm* in *1mm* steps is selected here. The following aut
 
 ### Linearity Analysis
 
-After the measurements are exported, they are analysed for linearity using *MRPAnalysis* \ref{mrpanalysis} functions.
+After the measurements are exported, these are analysed for linearity using *MRPAnalysis* functions in chapter \ref{mrpanalysis}.
 
 %%Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
@@ -1768,7 +1768,7 @@ To ensure comparability, the ideal curve is determined.
 In order to be able to make quantifiable statements about the measurement results, the mean and (+sd) deviation of these two curves is determined.
 
 For both sensors, the deviation is less than *1%* over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
-The previously performed *Background-Noise* \ref{sensor-characterisation-background-noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
+The previously performed *Background-Noise* charecterisation in chapter \ref{sensor-characterisation-background-noise} shows that the linearity deviation here is due to the sensitivity of the sensor.
 
 In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
 It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
@@ -1788,7 +1788,7 @@ The controller of the temperature chamber can also be programmed via a (+pc) int
 
 With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
-The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
+The same procedure is used as for the *Linearity* measurement in chapter \ref{sensor-characterisation-linearity}, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
 Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
 The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality type N magnets [@magna-c]).
@@ -1812,7 +1812,7 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
 
@@ -1833,7 +1833,7 @@ In the following, methods will be shown with which it is nevertheless possible t
 #### Permanent Magnet charakterisation
 
 Both sensors are suitable for precisely measuring and quantifying magnetic fields.
-To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter *Example Sensors* \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter *Example Sensors* \ref{example-sensors}, in particular *1D: Single Sensor* in chapter \ref{d-single-sensor}, and proven to be functional in earlier chapters.
 
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
