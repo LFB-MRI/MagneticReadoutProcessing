@@ -61,7 +61,7 @@ The positioning of permanent magnets holds an important role in constructing an 
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The graphic \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
+The figure \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 
 The homogeneity in this configuration depends, among other things, on the following main aspects:
 
@@ -487,7 +487,7 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 The 3D full sphere sensor \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The graphic \ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
+The figure \ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis.
 In order to be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
@@ -536,13 +536,13 @@ This concept is explained in the following chapter.
 
 User interaction points represent one core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other. For this thesis it also eases the option to change sensors for measurments. 
 
-For this purpose, the library is divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
+For this purpose, the library is divided into individual modules, which are shown in the figure \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types is developed and packed together in a extendable Python library.
 
 \newpage
 
-According to this concept, the user should be able to replace individual components from this chain with their own modules without having to worry about implementing other of these to make the project work.
+According to this concept, the user should be able to replace individual components from this chain with own modules without having to worry about implementing other of these to make the project work.
 
 %%MRP_library_module_high_level_overview.png%%
 
@@ -1649,7 +1649,7 @@ The insulated housing of a *Voron 2.4* 3D printer, which has a separately contro
 To verify the temperature, an additional thermometer *VC-7055BT* is placed on the base plate.
 A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
-The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
+The figure \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
 With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
 A separate battery power supply is used as low-noise power supply for the sensors boards.
