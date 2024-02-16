@@ -1312,9 +1312,8 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 ```
 
-
 To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation \href{https://peps.python.org/pep-0427/}{wheel} archive.
-This can then be uploaded to the package registry.
+This can be uploaded to the package registry.
 Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* in listing \ref{lst:setup_py_req} for this purpose.
 
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing used given requirements.txt"}
@@ -1373,14 +1372,11 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
   # ...
 ```
 
-
 Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@SphinxDocumentation] is used for this purpose.
-This framework makes it possible to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used *docstrings*.
-
+This framework offers the functionality to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used *docstrings*.
 
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
 In order to make the documentation created by *Sphinx* accessible to the user, there are, as with the package management by *PyPi* services, which provide the (+mrp)-library documentation online.
-
 
 Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
 Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
@@ -1389,11 +1385,7 @@ The documentation has also been uploaded to the \href{https://magneticreadoutpro
 
 The process of creating and publishing the documentation has been automated using \href{https://github.com/features/actions}{GithubActions}, so that it is always automatically kept up to date with new features.
 
-
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
-
-
-
 
 # Use Case Evaluation
 
