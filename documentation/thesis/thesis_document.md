@@ -7,7 +7,7 @@ The chapter provides a brief introduction into the problem domain, delineates th
 
 Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
-Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electro magnets are energized by electrical currents and superconducting electro magnets produce magnetic fields through electric induction.
+Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electromagnets are energized by electrical currents and superconducting electromagnets produce magnetic fields through electric induction.
 Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
 This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
@@ -33,7 +33,7 @@ The sensor testing process involves three key test procedures for two digital se
 
 At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than *1000(+ppm)*.
 
-This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcomes of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
+This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcome of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
 ### Low-Field MRI
 
@@ -86,14 +86,14 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term *Halbach Array* (commonly known as *magic rings*) denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
-The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array appears as an essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
 
 ### Shimming Procedure
 
-The shimming process is a essential step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
+The shimming process is an essential step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
 
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@inbook]
 
@@ -111,7 +111,7 @@ According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) syst
 
 Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
 
-Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -153,7 +153,7 @@ Beyond the development and prototype construction of low-field (+mri) scanners, 
 
 This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, *DeLoRI* aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
 
-In addition *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
+In addition, *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal here is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
 
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterisation process.
 
@@ -275,7 +275,7 @@ It simplifies of own measuring devices into the (+mrp) ecosystem at a later date
 
 The selection process for possible magnetic field sensors initially focussed on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
 
-A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kind of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
+A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
 The use of analogue sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
@@ -306,7 +306,7 @@ The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_print
 
 All parts are produced using the 3D printing additive manufacturing processes. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
-The exchangeable magnetic holder (shown in green in figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}) can be adapted to different magnets. It can be produced quickly due to the small amount of parts used.
+The exchangeable magnetic holder (shown in green in figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
 
@@ -509,7 +509,7 @@ It offers an *RS232* interface with a documented protocol for connection to a (+
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
-Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical *RS232* interface.
+Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer a physical *RS232* interface.
 As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter.
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
@@ -540,7 +540,7 @@ User interaction points represent one core concept of the developed library and 
 
 For this purpose, the library is divided into individual modules, which are shown in the figure \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
-For this purpose, a module system with standardised functional patterns and data types is developed and packed together in a extendable Python library.
+For this purpose, a module system with standardised functional patterns and data types is developed and packed together in an extendable Python library.
 
 \newpage
 
@@ -623,7 +623,7 @@ To customise and add meta-data, users have the flexibility to configure paramete
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
 
-To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as a essential bridge between user preferences and the robust capabilities of the *MRPReading* module.
+To configure parameters, ensuring a tailored approach to the entire measurement process, these parameters act as an essential bridge between user preferences and the robust capabilities of the *MRPReading* module.
 
 The system is also designed to be compatible with *Extension Modules* \ref{extension-modules}, allowing the generation of measurement data through various modules.
 This extensibility enhances the versatility of the system, accommodating diverse measurement scenarios and expanding its utility across different domains.
@@ -730,7 +730,7 @@ For this purpose, a static function *createReadingSourceInstance* is implemented
 
 In order to give the user the possibility to display the recorded data visually, two modules are created, which can graphically prepare *MRPReading* instances:
 
-* *MRPVisualization* - different table and graph based plots
+* *MRPVisualization* - different table and graph-based plots
 * *MRPPolarVisualization* - full sphere map plots
 
 On the one hand, it is possible with the *MRPVisualization* module to display measurement data as a table or plot (e.g. stream, line, point).
@@ -745,7 +745,7 @@ These can be generated automatically with the *3D: Full Sphere* \ref{d-full-sphe
 #### Analysis
 
 Data analysis offers the user the greatest flexibility to implement their own modules.
-For this reason *MRPAnalysis* contains functions for calculating the following data analyses, which are compatible with class instances of *MRPReading*:
+For this reason, *MRPAnalysis* contains functions for calculating the following data analyses, which are compatible with class instances of *MRPReading*:
 
 * *std_deviation* - Standard deviation
 * *mean* - Mean value
@@ -762,7 +762,7 @@ In the previous described scenarios, only the sensors that are directly connecte
 That functionality has the disadvantage that there must always be a physical connection.
 Difficulties arise when installing multiple sensors in measurement setups where space or cable routing options are limited.
 
-Multiple sensor can be connected to any (+pc) which is available on the network.
+Multiple sensors can be connected to any (+pc) which is available on the network.
 This can be a (+sbc) (e.g. a *Raspberry Pi*).
 The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber.
 
@@ -929,7 +929,7 @@ The following example listing \ref{lst:mrpexample_reading} shows how a measureme
 
 An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
 
-```python {#lst:mrpexample_reading caption="MRPReading example for setting up an basic measurement"}
+```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement"}
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -966,7 +966,7 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors. In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 
-```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of a measurement"}
+```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store readings inside of a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
