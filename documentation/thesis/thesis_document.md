@@ -339,11 +339,11 @@ It controls the hardware and enables the execution of predefined functions. The 
 It handles communication with sensors, actuators and other peripheral devices, processing data and making decisions.
 Firmware is critical to the functioning of devices.
 
-The firmware is responsible for detecting the possible connected sensors \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
+The firmware is responsible for detecting the possible connected sensors from table \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
 This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
 
 An important component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
-These are initiated according to the sensors found at startup. If new hardware is to be integrated, only the required functions \ref{lst:CustomSensorClass} need to be implemented.
+These are initiated according to the sensors found at startup. If new hardware is to be integrated, only the required functions from listing \ref{lst:CustomSensorClass} need to be implemented.
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
@@ -373,7 +373,7 @@ When the microcontroller is started, the software checks whether known sensors a
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
 
-The next initialisation system is dedicated for multi-sensor synchronisation \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
+The next initialisation system is dedicated for multi-sensor synchronisation described in chapter \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
 All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) have a (+usb) slave port.
 
 The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
@@ -386,7 +386,7 @@ Its cyclic structure enables continuous overwriting of older data, saves memory 
 Ring buffers are well suited for applications with variable data rates and minimise the need for complex memory management.
 The buffer can be read out by command and the result of the measurement is sent to the host.
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number.
-This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized \ref{sensor-syncronisation-interface} in time and are not out of sequence or drift.
+This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time and are not out of sequence or drift.
 
 
 ### Communication Interface
@@ -395,7 +395,7 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
-* Use with (+mrp) \ref{software-readout-framework}-library
+* Use with (+mrp)-library - see chapter \ref{software-readout-framework}
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
@@ -405,7 +405,7 @@ The figure \ref{Query_sensors_b_value_using_(+cli).png} shows the current measur
 
 %%Query_sensors_b_value_using_(+cli).png%%
 
-The other option is to use the (+mrp) \ref{software-readout-framework}-library. The serial interface is also used here. However, after a connection attempt by the (+hal) \ref{mrphal} module of the (+mrp) \ref{software-readout-framework}-library, the system switches to binary mode, which is initiated using the *sbm* command.
+The other option is to use the devloped (+mrp)-library from chapter \ref{software-readout-framework}. The serial interface is also used here. However, After a connection attempt by the (+hal) \ref{mrphal} module of the (+mrp)-library \ref{software-readout-framework} , the system switches to binary mode, which is initiated using the *sbm* command.
 The same commands are available as for (+cli)-based communication, but in a binary format.
 
 
@@ -414,7 +414,7 @@ The same commands are available as for (+cli)-based communication, but in a bina
 %%Multi_sensor_synchronisation_wiring_example.png%%
 
 One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur.
-This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.
+This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.[@Wimmer2019]
 Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
 
 %%Measured_sensor_readout_to_processing_using_host_software.csv%%
@@ -422,8 +422,8 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These are performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
 
 * *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*,
-* (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
-* Unified Sensor \ref{unified-sensor}-firmware - Version *1.0.1*
+* (+mrp)-library (see chapter \ref{software-readout-framework}) - Version *1.4.1*
+* Unified Sensor-firmware - Version *1.0.1*
 
 It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
@@ -445,17 +445,17 @@ This means that in a chain of sensors there is exactly one *primary* and many *s
 
 
 In single-sensor operation, this automatically jumps to *primary* sensor operation through the *got impulse within 1000ms* branch result.
-The figure \ref{Query_opmode_using_(+cli).png} shows the synchronisation status of the sensor which can be queried via the user interface \ref{communication-interface} using the *opmode* command.
+The figure \ref{Query_opmode_using_(+cli).png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
 An important aspect of the implementation here is that there is no numbering or sequence of the individual sensors.
 
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
-The sensor differentiation takes place later in the (+mrp) \ref{software-readout-framework}-library by using the sensor (+uuid).
+The sensor differentiation takes place later in the (+mrp)-library \ref{software-readout-framework} by using the sensor (+uuid).
 
 %%Query_opmode_using_(+cli).png%%
 
 ## Example Sensors
 
-Two functional sensor platforms are built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
+Two functional sensor platforms are built in order to create a solid test platform for later tests and for the development of the (+mrp)-library \ref{software-readout-framework} with the previously developed sensor concepts.
 
 %%Build_sensors_with_different_capabilities.csv%%
 
@@ -482,16 +482,16 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 ### 3D: Full Sphere
 
-%%Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
+%%Full-sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
 
-The 3D full sphere sensor shown in figure \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
+The 3D full sphere sensor shown in figure \ref{Full-sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
+The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_full-sphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis.
 In order to be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
-%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_fullsphere_sensor.png%%
+%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_full-sphere_sensor.png%%
 
 As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these components and the sensor or magnets is increased. The turntable and its drive motor are connected to each other via a belt.
 
@@ -511,7 +511,7 @@ As with the other sensors, this interface consists of a *Raspberry-Pi Pico* with
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware is adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* \ref{lst:CustomSensorClass} class.
+In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class as shown in listing \ref{lst:CustomSensorClass}.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -599,7 +599,7 @@ In order to realise the concept of user interaction points, the library is divid
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
-There are also introductory examples which provide an overview of the basic functions in the *Examples* chapter \ref{examples}, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
+There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} chapter, as well as further examples in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{online documentation}.
 
 ### Core Modules
 
@@ -640,12 +640,14 @@ On the other hand, the focus during development is that it is also possible to u
 
 For this purpose, an open, documented export format must be selected.
 Ideally, this should be human-readable and viewable with a simple text editor.
-This eliminates all binary-based formats such as the Python pickle built into Python.
+This eliminates all binary-based formats such as the \href{https://docs.python.org/3/library/pickle.html}{Python-Pickle} package.
+
+
 
 Taking these points into account, the (+json) format is chosen.
 This is human and machine readable and there is a compatible parser for almost every programming language.
 
-The following code snippet \ref{lst:json_export_format_example} shows the (+json) structure which is generated when a measurement that using the library is exported.
+The following listing \ref{lst:json_export_format_example} shows an example (+json) structure which is generated when a measurement that using the library is dumped to the filesystem.
 It can be seen that by using the (+json) format, all measurement points and metadata are available in readable plain text.
 
 This means that they can also be read out in other programs.
@@ -678,7 +680,7 @@ Using serialization, the *MRPReading* class inherited from Python-*Object* class
 }
 ```
 
-The exported example \ref{lst:json_export_format_example} contains the following different object keys, which contain the following information:
+The exported example listing \ref{lst:json_export_format_example} contains different object keys, which contain the following information:
 
 * *additional_data* - Additional user-defined metadata
 * *data* - Datapoint storage consists of measured value, (+uuid) and temperature, among other parameters
@@ -870,7 +872,7 @@ This makes it possible to address a sensor directly using its (+uuid).
 When using sensors with different capabilites, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the *info* command of each sensor is queried.
-This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
+This information is added to the previously created (+lut). Duplicate entries are summarised (see table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
 
 ```bash {#lst:mtsc caption="MRPproxy REST entrypoint query examples"}
 # QUERY Network-Proxy capabilities
@@ -919,7 +921,7 @@ Many basic examples are also supplied in the form of the test scripts used for t
 
 The *MRPReading* is the key module of the (+mrp) core.
 It is used to manage the measurement data and can be imported and exported.
-The following example \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
+The following example listing \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
 
 An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
 
@@ -990,7 +992,7 @@ Once connected, these are then converted into a usable data source using the *MR
 
 If no hardware sensor is available or for the generation of test data, the *MRPSimulation* module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete *MRPReading* measurement with a wide range of set meta data.
 
-The example \ref{lst:mrpexample_simulation} illustrated the basic usage.
+The example listing \ref{lst:mrpexample_simulation} illustrated the basic usage.
 Different variations of the *generate_reading* function offers the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
 The data is generated in the background using the *magpylib* [@ortner2020magpylib] library according to the specified parameters.
 
@@ -1060,7 +1062,7 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 ### MRPHalbachArrayGenerator
 
 
-The following example code \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
+The following example listing \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
@@ -1086,7 +1088,7 @@ MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halba
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering shown in figure \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
 
 
 %%Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png%%
@@ -1158,7 +1160,7 @@ This is particularly useful for complex analyses or custom algorithms, but not n
 %%Example_measurement_analysis_pipeline.png%%
 
 For this purpose, a further (+cli) application is created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
-The example \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
+The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
 1. Import the measurements
 2. Determine sensor bias value from imported measurements using a reference measurement
@@ -1299,7 +1301,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
 As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
-Here, \href{https://pypi.org}{PyPI} \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
+Here, \href{https://pypi.org}{PyPI} screenshot shown in figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
