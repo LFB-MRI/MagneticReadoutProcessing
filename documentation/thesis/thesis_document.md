@@ -111,7 +111,7 @@ According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) syst
 
 Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
 
-Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an point-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -617,7 +617,7 @@ The following modules are implemented in detail:
 * *MRPMagnetTypes* - various physical constants for basic magnet types
 
 
-The *MRPReading* module performs a essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
+The *MRPReading* module performs an essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
 To customise and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
@@ -654,7 +654,7 @@ The following listing \ref{lst:json_export_format_example} shows an example (+js
 It can be seen that by using the (+json) format, all measurement points and metadata are available in readable plain text.
 
 This means that they can also be read out in other programs.
-Using serialization, the *MRPReading* class inherited from Python-*Object* class is serialized via an dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
+Using serialization, the *MRPReading* class inherited from Python-*Object* class is serialized via a dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
 
 ```json {#lst:json_export_format_example caption="JSON export structure of an MRPReading based measurement"}
 {
@@ -1174,7 +1174,7 @@ The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measu
 5. Create a graphical plot of all measurements with standard deviation
 
 
-In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non programmers to understand and can also be easily edited with a plain text editor.
+In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the documentation [@MagneticReadoutProcessingReadTheDocs].
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
@@ -1183,7 +1183,7 @@ This system makes almost all Python functions available to the user.
 To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the documentation [@MagneticReadoutProcessingReadTheDocs].
  The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
 
-```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of an user defined processing pipeline with six stages linked together"}
+```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
 stage import_readings:
   function: import_readings
   parameters:
@@ -1259,7 +1259,7 @@ Since all intended use cases are mapped using the test cases created, the code o
 
 ```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
 class TestMPRReading(unittest.TestCase):
-  # PREPARE A INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
+  # PREPARE AN INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
     self.test_folder: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
     self.test_file:str = os.path.join(self.import_export_test_folderpath, "tmp")
@@ -1288,7 +1288,7 @@ class TestMPRReading(unittest.TestCase):
 ```
 
 
-One problem, is the parts of the (+mrp)-library that require direct access to external hardware.
+One problem are the parts of the (+mrp)-library that require direct access to external hardware.
 These are, for example, the *MRPHal* and *MRPHalRest* modules, which are required to read out sensors connected via the network.
 Two different approaches are used here.
 In the case of local development, the test runs are carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
@@ -1305,7 +1305,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 %%MagneticReadoutProcessing_library_hosted_on_PyPi.png%%
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
-As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
+As it is created in the Python programming language, there are several public package registries where users can provide their software modules.
 
 Here, \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
 
@@ -1371,7 +1371,7 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
   :type _readings: list(MRPReading.MRPReading)
   :param _title: Title text of the figure, embedded into the head
   :type _title: str
-  :param _filename: export graphic to an given absolute file path with .png
+  :param _filename: export graphic to a given absolute file path with .png
   :type _filename: str
   :returns: returns the abs file path of the generated file
   :rtype: str
@@ -1443,7 +1443,7 @@ These are placed in modified 3D printed holders shown in figure \ref{Ten_numbere
 ## Configuration of the Measurement
 
 The configured hardware is then connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
-Afterwards, the measurement is configured for an measurement run, using the following configuration commands from listing \ref{lst:evaluation_measurement_config}.
+Afterwards, the measurement is configured for a measurement run, using the following configuration commands from listing \ref{lst:evaluation_measurement_config}.
 
 \newpage
 
