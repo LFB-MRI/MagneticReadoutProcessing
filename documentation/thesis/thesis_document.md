@@ -504,7 +504,7 @@ As the sensors shown so far relate exclusively to self-built, low-cost hardware,
 A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
-This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate interface software [@VoltcraftGM70Rest] executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
+This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer an physical *RS232* interface.
 As with the other sensors, this interface consists of a *Raspberry-Pi Pico* with an additional level shifter.
@@ -1172,7 +1172,7 @@ In order to implement such a pipeline, the *yaml* file format is chosen for the 
 Detailed examples can be found in the documentation [@MagneticReadoutProcessingReadTheDocs].
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
-The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions symbol table [@PythonGlobalSymbolTable].
+The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system makes almost all Python functions available to the user.
 To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the documentation [@MagneticReadoutProcessingReadTheDocs].
  The following pipeline definition \ref{lst:mrpuddp_example_yaml} shows the previously defined steps \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
@@ -1289,7 +1289,7 @@ In the case of local development, the test runs are carried out on a (+pc) that 
 
 \newpage
 
-In the other scenario, the tests are to be carried out before a new release in the repository on the basis of *Github Actions* [@GithubActions].
+In the other scenario, the tests are to be carried out before a new release in the repository on the basis of \href{https://github.com/features/actions}{GithubActions}.
 Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
 Instead, the hardware sensors are simulated by software and executed via virtualisation on the systems provided by *Github Actions*.
 
@@ -1300,7 +1300,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
 As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
-Here, *PyPi* [@PyPI] \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} [@MagneticReadoutProcessingPyPI] is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
+Here, \href{https://pypi.org}{PyPI} \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
@@ -1350,7 +1350,7 @@ In addition, these commands are available globally in the system without the ter
 ### Documentation
 
 
-In order to provide comprehensive documentation for the enduser, the source code is documented using Python-*docstrings* [@PythonDocstringReference] and the Python type annotations.
+In order to provide comprehensive documentation for the enduser, the source code is documented using Python-\href{https://peps.python.org/pep-0257/}{Docstrings} and the Python type annotations.
 The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance. \ref{lst:pydocstring}
 
 ```python {#lst:pydocstring caption="Documentation using Python docstring example"}
@@ -1383,9 +1383,9 @@ In order to make the documentation created by *Sphinx* accessible to the user, t
 
 
 Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
-Another publication option is to host the documentation via online services such as *ReadTheDocs* [@ReadTheDocs], where users can make documentation for typical software projects available to others.
+Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
 
-The documentation has also been uploaded to *ReadTheDocs* [@MagneticReadoutProcessingReadTheDocs] and linked in the repository and on the overview page \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} on *PyPi*.
+The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service and linked in the repository and on the overview page \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} on *PyPi*.
 
 The process of creating and publishing the documentation has been automated using *GitHub Actions*, so that it is always automatically kept up to date with new features.
 
