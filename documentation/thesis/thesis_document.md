@@ -53,14 +53,14 @@ In particular, the advantages of the small design, the fast and simple image acq
 
 ### Magnet System
 
-%%Example_Hallbach_ring_with_cutouts_for_eight_magnets.png%%
+%%Example_Halbach_ring_with_cutouts_for_eight_magnets.png%%
 
 The positioning of permanent magnets holds an important role in constructing an (+mri) and is influencing the homogeneity of the *B0* magnetic field. Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
 
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
 
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The figure \ref{Example_Hallbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring, in which in this case eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
+The figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 
 The homogeneity in this configuration depends, among other things, on the following main aspects:
 
@@ -115,7 +115,7 @@ Within the research domain, various implementations came up. An exemplar instanc
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets (*12 x 12 x 12 mm^3*). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 To further refine the magnet's homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -368,7 +368,7 @@ public:
 #endif
 ```
 
-The flow chart \ref{Unified_sensor_firmware_simplified_program_structure.png} shows the start process and the subsequent main loop for processing the user commands and sensor results.
+The figure \ref{Unified_sensor_firmware_simplified_program_structure.png} shows a flow chart of the start process after powering on the sensor and the subsequent main loop for processing the user commands and sensor results.
 When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
@@ -400,8 +400,8 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly determine whether the hardware is working properly after installation.
-The (+cli) behaves like terminal programmes, displaying a detailed command reference \ref{Sensors_(+cli).png} to the user after connecting.
-The current measured value can be output using the *readout* command \ref{Query_sensors_b_value_using_(+cli).png}. 
+The (+cli) behaves like terminal programmes, displaying a detailed command reference as shown in the figure \ref{Sensors_(+cli).png} to the user after connecting.
+The figure \ref{Query_sensors_b_value_using_(+cli).png} shows the current measured value queried by using the *readout* command by the user. 
 
 %%Query_sensors_b_value_using_(+cli).png%%
 
@@ -432,20 +432,20 @@ The other issue is sending the trigger signal from the readout software \ref{sof
 
 In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
-The schematic \ref{Multi_sensor_synchronisation_wiring_example.png} shows how several sensors must be wired together in order to implement this form of synchronisation.
+The figure \ref{Multi_sensor_synchronisation_wiring_example.png} illustrates the schematic how several sensors must be wired together in order to implement this form of synchronisation.
 
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png%%
 
 Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
-To do this, the function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio) \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png}.
-Each sensor starts a random timer beforehand, which sends a pulse on the sync line. All others receive this and switch to *secondary* mode and synchronise the measurements based on each sync pulse received.
+To do this, the function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio).
+A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
 This means that in a chain of sensors there is exactly one *primary* and many *secondary* sensors.
 
 
 In single-sensor operation, this automatically jumps to *primary* sensor operation through the *got impulse within 1000ms* branch result.
-The synchronisation status can be queried via the user interface \ref{communication-interface} using the *opmode* \ref{Query_opmode_using_(+cli).png} command.
+The figure \ref{Query_opmode_using_(+cli).png} shows the synchronisation status of the sensor which can be queried via the user interface \ref{communication-interface} using the *opmode* command.
 An important aspect of the implementation here is that there is no numbering or sequence of the individual sensors.
 
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
@@ -455,10 +455,11 @@ The sensor differentiation takes place later in the (+mrp) \ref{software-readout
 
 ## Example Sensors
 
-Two functional sensor platforms \ref{Build_sensors_with_different_capabilities.csv} are built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
+Two functional sensor platforms are built in order to create a solid test platform for later tests and for the development of the (+mrp) \ref{software-readout-framework}-library with the previously developed sensor concepts.
 
 %%Build_sensors_with_different_capabilities.csv%%
 
+The table \ref{Build_sensors_with_different_capabilities.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
 These cover all the required functions described in the use cases \ref{use-cases}. The most important difference, apart from the sensor used, is the *scan mode*.
 In this context, this describes whether the sensor can measure a *static* fixed point on the magnet or if the sensor can move *dynamically* around the magnet using a controllable manipulator.
 
@@ -468,7 +469,7 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 %%1D_sensor_construction_with_universal_magnet_mount.png%%
 
-The 1D sensor \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware \ref{firmware} platform.
+The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware \ref{firmware} platform.
 
 The electrical level here is based on a *Raspberry-Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
@@ -483,7 +484,7 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 %%Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
 
-The 3D full sphere sensor \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
+The 3D full sphere sensor shown in figure \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
 The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
@@ -500,7 +501,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 ### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
-A temperature-compensated *Voltcraft GM-70* telsameter shown in Figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
+A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
@@ -510,7 +511,7 @@ As with the other sensors, this interface consists of a *Raspberry-Pi Pico* with
 
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware is adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class \ref{lst:CustomSensorClass}.
+In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* \ref{lst:CustomSensorClass} class.
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -523,9 +524,9 @@ The software readout framework is the central software component that is develop
 This software framework is intended to provide a user-oriented data acquisition and analysis environment.
 For this purpose, typical individual steps that occur in relation to these tasks are implemented:
 
-* Data acquisition - from hardware sensors or other data sources - see \ref{unified-sensor} 
-* Storage - export of data in various open formats - see \ref{storage-and-datamanagement}
-* Analysis - algorithms to analyse different data sets - see \ref{analysis}
+* Data acquisition - from hardware sensors or other data sources - see chapter \ref{unified-sensor} 
+* Storage - export of data in various open formats - see chapter \ref{storage-and-datamanagement}
+* Analysis - algorithms to analyse different data sets - see chapter \ref{analysis}
 
 All these steps are divided into different blocks with an editional functionality for users to add own modules.
 This concept is explained in the following chapter.
@@ -1069,7 +1070,7 @@ Eight random measurements are generated here.
 It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
-After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@HallbachMagnetDesignPaper] using the *MRPHalbachArrayGenerator* module.
+After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@HalbachOptimisation] using the *MRPHalbachArrayGenerator* module.
 
 ```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based halbach ring"}
 readings = []
@@ -1086,10 +1087,10 @@ MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halba
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering \ref{Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
 
 
-%%Generated_Hallbach_array_with_generated_cutouts_for_eight_magnets.png%%
+%%Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png%%
 
 
 # Usability Improvements
@@ -1826,7 +1827,7 @@ In the following chapter, recommendations for action are defined, which were der
 After analysing the measurement results, it can be seen that the selected sensors are only partially suitable for the previously defined requirements.
 
 In general, further digital and analogue sensors should be characterised with the developed framework.
-In particular, the use of analogue Hallbach sensors with separate bias voltage should be evaluated, as a simplified characterisation procedure can be applied due to the lack of a base offset.
+In particular, the use of analogue magnetic field sensors with separate bias voltage should be evaluated, as a simplified characterisation procedure can be applied due to the lack of a base offset.
 
 In the following, methods will be shown with which it is nevertheless possible to use these sensors.
 
