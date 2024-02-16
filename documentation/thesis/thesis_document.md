@@ -306,7 +306,7 @@ The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_print
 
 All parts are produced using the 3D printing additive manufacturing processes. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
-The exchangeable magnetic holder (shown in green) can be adapted to different magnets. It can be produced quickly due to the small amount of parts used.
+The exchangeable magnetic holder (shown in green in figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}) can be adapted to different magnets. It can be produced quickly due to the small amount of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
 
