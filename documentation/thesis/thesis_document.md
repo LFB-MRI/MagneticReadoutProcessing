@@ -1658,9 +1658,9 @@ To verify the temperature, an additional thermometer *VC-7055BT* is placed on th
 A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
 The figure \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
-With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
+With additional connected switch, it is possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
-A separate battery power supply is used as low-noise power supply for the sensors boards.
+A separate battery power supply is used as low-noise power supply for the sensor boards.
 An *Raspberry Pi 4* is implemented as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
 For the software setup, *MRPCli* \ref{command-line-interface} is used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
@@ -1684,7 +1684,7 @@ The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC560
 The following data is shown in the plots:
 
 * Plot of the raw data of the sensor
-* Plot of the sensors internal temperature sensor
+* Plot of the sensor's internal temperature sensor
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
@@ -1697,7 +1697,7 @@ These measured values are categorised below.
 ### Sensor Temperature Analysis
 
 The temperature stability of the *TLV493D* with a mean value of *20.68$^{\circ}$C* and a (+sd) of *$\sigma_{t}$=0.53$^{\circ}$C* indicates a consistent trend. This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between *20.15$^{\circ}$C* and *21.21$^{\circ}$C*, which indicates a stable and consistent temperature measurement.
-This result is more noisy compared to the temperature stability of the *MMC5603*.
+This result is noisier compared to the temperature stability of the *MMC5603*.
 Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
 
 With an additional measurement run with a different temperature setting of *30.0$^{\circ}$C*, the measured temperature deviations and offsets remains constant.
