@@ -579,17 +579,16 @@ The implementation of the same functionalities appears as the following by using
 3. **Generate fabrication data** 
 
   The last step is to call up the *HalbachMRIDesigner* [@HalbachMRIDesigner] project, which creates the (+cad) model of the magnet holder.
-  The data can also be exported as files here.
-  To make the project compatible, the function signatures are also adapted here.
+  The data can also be exported as files.
+  To make the project compatible, the function signatures are also adapted.
   In this case, more changes are required, as the configuration file is loaded from the file system.
-  This logic must be removed in order to use the added meta data in the input parameter instead.
+  This logic needs to be removed in order to use the added meta data as input parameter instead.
 
-After these customisation steps, it is possible to execute both projects one after the other and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
+After these customisation steps, executing both projects one after the other is possible and all required configuration parameters are contained in the data structure looped through the individual steps as meta data.
 This also maps the functionality of a project file, which can be executed or passed on repeatedly.
 
 This also fulfils the goal of making individual user-created algorithms interchangeable.
 If the user now wishes to use a different (+cad) algorithm instead of the *HalbachMRIDesigner* [@HalbachMRIDesigner], the other steps can simply be preserved and only the new step needs to be implemented.
-
 
 ## Modules
 
@@ -600,7 +599,7 @@ In order to realise the concept of user interaction points, the library is divid
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
-There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} chapter, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
+There are also introductory examples which provide an overview of the basic functions in the *Examples* chapter \ref{examples}, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
 
 ### Core Modules
 
