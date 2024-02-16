@@ -773,7 +773,7 @@ The approach of implementing this via a (+rest) interface also offers the advant
 %%MRPlib_Proxy_Module.png%%
 
 Another application example is when sensors are physically separated or there are long distances between them.
-By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are available to the *control* (+pc).
+By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are accessable to the *control* (+pc).
 
 %%Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png%%
 
@@ -798,7 +798,7 @@ PRECHECK: SENSOR_HAL: 4242 # SENSOR B FOUND
 Terminate Proxy instance [y/N] [n]: 
 ```
 
-After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface: \ref{lst:mrpcli_config_rest}
+After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface, which is shown in listing \ref{lst:mrpcli_config_rest}:
 
 ```bash {#lst:mrpcli_config_rest caption="MRPProxy REST endpoint query examples"}
 # GET PROXY STATUS
@@ -844,23 +844,22 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 ### Sensor Syncronisation
 
-Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
+Another important aspect for using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
 
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-syncronisation-interface}.
-this no longer works for long distances and the syncronisation must be made via a shared network connection. 
+This no longer works for long distances and the syncronisation must be established via a shared network connection. 
 
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@PTPIEEE1588] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
 
-
 ### Command-Router
 
-As it is possible to connect many identical sensors to one host, it must be possible to address them separately.
-This separation is done by the *MRPProxy* module and is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
+As it is possible to connect many identical sensors to one host, therefore it needs to be possible to address them separately.
+This separation is done by the *MRPProxy* module, which is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
 
-Each connected sensor is accessed via the text-based (+cli), this is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli).
+Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli).
 
-The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so the multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
+The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
 
 #### Construct the Sensor ID Lookup-Table
 
@@ -889,35 +888,33 @@ $ wget http://proxyinstance.local:5556/proxy/status
 ]}
 ```
 
-The same procedure is performed for the *commands* (+cli)-command of each sensor, to merge available commands of connected sensors into the (+lut).
+The same procedure is performed for all available (+cli)-command of each sensor, to merge available commands of connected sensors into the (+lut).
 
 
 #### Dynamic extension of the available Network-Proxy Commands
 
-In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
+In order for the host to be able to send a command to the network multi-sensor setup, the command received needs to be forwarded to the correct sensor.
 In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example listing \ref{lst:mtsc}).
 
 To realize this, a (+lut) is created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
 
-For commands where there are several entries for *CAPABLE SENSORS ID LUT* in chapter \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
+For commands, which have several entries for *CAPABLE SENSORS ID LUT* from table \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
 
 * Redirect to each capable sensor
 * Extend commands using an id parameter
 
-These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, *redirect to each capable sensor* is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a *readsensor* command, all sensors are read out via one command and the summarized result is transmitted to the host.
+These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, *redirect to each capable sensor* is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a *readsensor* command, all sensors are read out via one command and the summarised result is transmitted to the host.
 
-The *extend commands using an id parameter* strategy is used for different sensors. Each command is extended on the *Network-Proxy*, which is explained in chapter \ref{network-proxy}. by another (+uuid) parameter, according to the following scheme:
+The *extend commands using an id parameter* strategy is used for different sensors. Each command is extended on the *Network-Proxy*, which is explained in chapter \ref{network-proxy} by another (+uuid) parameter, according to the following scheme:
 
 * *readsensor <axis> <sensor number>* -> *readsensor <axis> <ID>*
 * *opmode* -> *opmode <ID>*
 
 This allows the host to address individual sensors directly via their specific (+uuid).
 
-
-
 ## Examples
 
-The following shows some examples of how the (+mrp)-library can be used.
+The following chapter shows some examples of how the (+mrp)-library can be used.
 These examples are limited to a functional minimum for selected modules of the (+mrp)-library. The documentation in chapter \ref{documentation} contains further and more detailed examples.
 Many basic examples are also supplied in the form of the test scripts used for testing in chapter \ref{testing}.
 
@@ -990,14 +987,12 @@ In general, a sensor can be connected using its specific system path or the sens
 Locally connected or network sensors can also be automatically recognised using the *list_sensors* function.
 Once connected, these are then converted into a usable data source using the *MRPReadingSource* module. This automatically recognises the type of sensor and generated an *MRPReading* instance with the measured values of the sensor.
 
-
-
 ### MRPSimulation
 
-If no hardware sensor is available or for the generation of test data, the *MRPSimulation* module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete *MRPReading* measurement with a wide range of set meta data.
+If no hardware sensor is available for the generation of test data, the *MRPSimulation* module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete *MRPReading* measurement with a wide range of set meta data.
 
-The example listing \ref{lst:mrpexample_simulation} illustrated the basic usage.
-Different variations of the *generate_reading* function offers the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
+The example listing \ref{lst:mrpexample_simulation} illustrates the basic usage.
+Different variations of the *generate_reading* function offer the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
 The data is generated in the background using the *magpylib* [@ortner2020magpylib] library according to the specified parameters.
 
 ```python {#lst:mrpexample_simulation caption="MRPSimulation example illustrates the usage of several data analysis functions"}
@@ -1037,12 +1032,11 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ### MRPVisualisation
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
-The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* sensor introduced in chapter \ref{d-full-sphere}.
-The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
+The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full sphere measurements recorded with the *3D: Full sphere* sensor introduced in chapter \ref{d-full-sphere}.
+The sub-module *MRPPolarVisualisation* is specially designed for these. Figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used here.
 The following example listing \ref{lst:mrpexample_visualisation} shows the usage of both modules.
-
 
 ```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a full sphere to an image file"}
 from MRP import MRPPolarVisualization
@@ -1058,7 +1052,6 @@ visu.plot3d(os.path.join('./plot3d_3d.png'))
 from MRP import MRPDataVisualization
 MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
 ```
-
 
 %%Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png%%
 
