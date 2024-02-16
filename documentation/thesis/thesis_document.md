@@ -1059,12 +1059,11 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 ### MRPHalbachArrayGenerator
 
 
-The following example listing \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
+The following example listing \ref{lst:mrpexample_halbach} shows how a simple Halbach magnetic ring can be generated.
 
-This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
+This can be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
-
-Eight random measurements are generated here.
+Eight random measurements are generated at this point.
 It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
