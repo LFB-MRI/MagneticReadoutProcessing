@@ -280,7 +280,7 @@ The selection process for possible magnetic field sensors initially focussed on 
 A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kind of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
-The use of analog sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
+The use of analogue sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
 They are excluded because they require more carefully designed circuits and more complicated energy management.
 
 In the context of the desired goal of developing a cost-efficient and universally expandable Hall sensor interface, the decision in favour of digital sensors seems appropriate.
@@ -1763,7 +1763,6 @@ The previously performed *Background-Noise* \ref{sensor-characterisation-backgro
 In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
 It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
 
-
 ## Sensor Characterisation: Temperature Sensitivity
 
 The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
@@ -1785,7 +1784,6 @@ Between each of these temperature changes, the system is given a waiting time of
 The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality type N magnets [@magna-c]).
 The temperature range is selected so that it is within a sufficient range for the application.
 
-
 ### Temperature Sensitivity Analysis
 
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
@@ -1797,7 +1795,6 @@ The graph of the *TLV493d* is significantly steeper with a gradient of *-5.13 $\
 
 In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
 
-
 ## Result Analysis
 
 %%Overview_of_all_characterised_sensor_properties.csv%%
@@ -1805,13 +1802,13 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
 
-However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm*.
+However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible using the *MMC5603NJ*. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm* which is more than the *MMC5603NJ* can measure.
 
-The *TLV493D*, on the other hand, is able to measure these directly, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
+The *TLV493D*, on the other hand, is able to measure these ranges, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
 
 In the following chapter, recommendations for action are defined, which were derived from the analysis results.
 
@@ -1834,11 +1831,7 @@ However, this limitation also makes it possible to compare relative magnetic fie
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
 This was shown in the chapter *Usecase Evaluation* \ref{usecase-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
-
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
-
-
-
 
 #### Homogeneity Measurement of a Halbach ring-based B0 field
 
@@ -1850,11 +1843,7 @@ However, further measurement runs must be carried out to verify these results.
 
 In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the B0 field).
 
-
-
-
 # Conclusion and Discussion
-
 
 ## Conclusion
 
