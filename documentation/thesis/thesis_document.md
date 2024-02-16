@@ -27,7 +27,6 @@ The variability in the strength of permanent magnets leads to significant diffic
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework.
 The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
-
 The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterisation of different objects. 
 
 The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
@@ -1313,7 +1312,8 @@ $ pip3 install MagneticReadoutProcessing
 $ pip3 install MagneticReadoutProcessing==1.4.0
 ```
 
-To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation *wheel* archive.
+
+To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation \href{https://peps.python.org/pep-0427/}{wheel} archive.
 This can then be uploaded to the package registry.
 Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* \ref{lst:setup_py_req} for this purpose.
 
