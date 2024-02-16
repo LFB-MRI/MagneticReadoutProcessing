@@ -1833,12 +1833,12 @@ In the following, methods will be shown with which it is nevertheless possible t
 #### Permanent Magnet charakterisation
 
 Both sensors are suitable for precisely measuring and quantifying magnetic fields.
-To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter *Example Sensors* \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
 
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
-This was shown in the chapter *use case Evaluation* \ref{use case-evaluation} by comparing and sorting different permanent magnets using these sensors.
+This was shown in the chapter *use case Evaluation* \ref{use-case-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
 
@@ -1847,7 +1847,7 @@ Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characte
 The *MMC5603NJ* cannot be used here due to the limited value range. The method of increasing the distance, as with permanent magnet characterisation, cannot be used here as the magnet is located within a limited space in the Halbach ring.
 
 In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is probably possible to reduce the noise to below *50$\mu$T* with the *TLV493D*. 
-As a test, several further measurement runs were carried out, which achieved results for the sensor noise of *71*$\mu$T* to *41$\mu$T* when averaging *100* measured values and *1000* measured values.
+As a test, several further measurement runs were carried out, which achieved results for the sensor noise of *71$\mu$T* to *41$\mu$T* when averaging *100* to *1000* measured values.
 However, further measurement runs must be carried out to verify these results.
 
 In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the *B0* field).
