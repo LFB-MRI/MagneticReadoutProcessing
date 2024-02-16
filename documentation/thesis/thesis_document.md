@@ -715,7 +715,7 @@ The library provides the following sensor (+hal) modules for this purpose:
 These provide functions to communicate with a connected hardware sensor and send commands to it. To generate these and convert the received measurement data into the appropriate format for the core modules, there is a suitable module for each sensor type:
 
 * *MRPReadingSourceStatic* - for 1D and 2D sensors such as *1D: Single Sensor* \ref{d-single-sensor}
-* *MRPReadingSourceFullsphere* - for 3D sensors such as *3D: Fullsphere* \ref{d-fullsphere}
+* *MRPReadingSourceFullSphere* - for 3D sensors such as *3D: Full Sphere* \ref{d-full-sphere}
 
 The decision which of these modules to use is made automatically depending on the connected hardware.
 For this purpose, a static function *createReadingSourceInstance* is implemented in the base class *MRPReadingSource*, which automatically creates the appropriate instance based on the sensor capabilites.
@@ -726,7 +726,7 @@ For this purpose, a static function *createReadingSourceInstance* is implemented
 In order to give the user the possibility to display the recorded data visually, two modules are created, which can graphically prepare *MRPReading* instances:
 
 * *MRPVisualization* - different table and graph based plots
-* *MRPPolarVisualization* - fullsphere map plots
+* *MRPPolarVisualization* - full sphere map plots
 
 On the one hand, it is possible with the *MRPVisualization* module to display measurement data as a table or plot (e.g. stream, line, point).
 This makes it possible, for example, to visually identify outliers or trends in the measurement data. These can also be saved as an image file.
@@ -734,7 +734,7 @@ The module is compatible with all measurement data.
 
 In contrast to the *MRPPolarVisualization* module, this provides functions to create 2D map plots a polar coordinate system.
 This requires measurement data with additionally set spatial coordinates.
-These can be generated automatically with the *3D: Fullsphere* \ref{d-fullsphere} sensor, or the user must provide the spatial information from another source.
+These can be generated automatically with the *3D: Full Sphere* \ref{d-full-sphere} sensor, or the user must provide the spatial information from another source.
 
 
 #### Analysis
@@ -998,7 +998,7 @@ The data is generated in the background using the *magpylib* [@ortner2020magpyli
 from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
 # GENERATE SILUMATED READING USING A SIMULATED HALLSENSOR FROM magpy LIBRARY
 reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
-# GENERATE A FULLSPHERE MAP READING
+# GENERATE A FULL SPHERE MAP READING
 reading_fullsphere = MRPSimulation.generate_random_full_sphere_reading()
 # RENDER READING TO FILE IN 3D
 visu = MRPPolarVisualization(reading)
@@ -1031,14 +1031,14 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ### MRPVisualisation
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
-The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Fullsphere* \ref{d-fullsphere} sensor.
-The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a fullsphere measurement.
+The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* \ref{d-full-sphere} sensor.
+The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used here.
 The following example \ref{lst:mrpexample_visualisation} shows the usage of both modules.
 
 
-```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a fullsphere to an image file"}
+```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a full sphere to an image file"}
 from MRP import MRPPolarVisualization
 # CREATE MRPPolarVisualization INSTANCE
 ## IT CAN BE REUSED CALLING plot2d AGAIN, AFTER LINKED READING DATA WERE MODIFIED
@@ -1427,7 +1427,7 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Full Sphere\ref{d-full-sphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These are placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
@@ -1443,7 +1443,7 @@ Afterwards, the measurement is configured for an measurement run, using the foll
 $ MRPcli config setup eval_measurement_config
 > READING-NAME: 360_eval_magnet_<id>
 > OUTPUT-FOLDER: ./readings/evaluation/ 
-> NUMBER DATAPOINTS: 18 # FOR A FULLSPHERE READING USE MULTIBLE OF 18
+> NUMBER DATAPOINTS: 18 # FOR A FULL SPHERE READING USE MULTIBLE OF 18
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 ```
 
@@ -1583,7 +1583,7 @@ Here it can be seen that there are measured values with larger deviations (see m
 %%MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png%%
 
 On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
-It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
+It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-full-sphere}.
 
 
 If the alternative filter algorithm from chapter *Alternative Filter Algorithm Implementation* \ref{alternative-filter-algorithm-implementation} is executed here, the same result is returned if the magnet measurement with (+id) *5:0* is used as the reference magnet.
