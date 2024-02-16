@@ -129,7 +129,7 @@ As a result, there is the possibility of using the shimming process or checking 
 
 In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
 
-There are two ways of using the data from the magnets that were previously measured:
+There are two ways of using the data from the magnets that are previously measured:
 
 * By using binning or sorting algorithms to filter for the most similar magnets
 * Adjustment of the rotation and position within the Halbach configuration
@@ -199,7 +199,7 @@ This work prioritises the development of both hardware and software customised f
 The following section defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
-The usecases were defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
+The usecases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
 In the later accomplished evaluation process \ref{usecase-evaluation}, the defined usecases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
 
 1. **Ready to use hardware sensor designs**
@@ -282,7 +282,7 @@ A key aspect of this selection is the preference for sensors with digital interf
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
 The use of analog sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
-They were excluded because they require more carefully designed circuits and more complicated energy management.
+They are excluded because they require more carefully designed circuits and more complicated energy management.
 
 In the context of the desired goal of developing a cost-efficient and universally expandable Hall sensor interface, the decision in favour of digital sensors seems appropriate.
 
@@ -444,7 +444,7 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 | 10          | 12673            | 1.13                                               | 1.1                              |                 |
 | 10          | 43264            | 2.19                                               | 8.2                              | 96% system load |
 
-The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These were performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
+The table shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These are performed on a *RaspberryPi 4 4GB*-(+sbc) together with an *1D: Single Sensor* \ref{d-single-sensor} and the following software settings:
 
 * *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*,
 * (+mrp) \ref{software-readout-framework}-library - Version *1.4.1*
@@ -764,7 +764,7 @@ For this purpose, a static function *createReadingSourceInstance* is implemented
 
 #### Visualisation
 
-In order to give the user the possibility to display the recorded data visually, two modules were created, which can graphically prepare *MRPReading* instances:
+In order to give the user the possibility to display the recorded data visually, two modules are created, which can graphically prepare *MRPReading* instances:
 
 * *MRPVisualization* - different table and graph based plots
 * *MRPPolarVisualization* - fullsphere map plots
@@ -1301,10 +1301,10 @@ Software tests in libraries offer numerous advantages for improving quality and 
 This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different usecases.
 
-During the development of the (+mrp)-library, test cases were also created for all important functionalities and usecases.
+During the development of the (+mrp)-library, test cases are also created for all important functionalities and usecases.
 The test framework *PyTest* [@PyTest] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
-Since all intended usecases were mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
+Since all intended usecases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
 
 
 ```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
@@ -1340,14 +1340,14 @@ class TestMPRReading(unittest.TestCase):
 
 One problem, is the parts of the (+mrp)-library that require direct access to external hardware.
 These are, for example, the *MRPHal* and *MRPHalRest* modules, which are required to read out sensors connected via the network.
-Two different approaches were used here.
-In the case of local development, the test runs were carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
+Two different approaches are used here.
+In the case of local development, the test runs are carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
 
 \newpage
 
 In the other scenario, the tests are to be carried out before a new release in the repository on the basis of *Github Actions* [@GithubActions].
 Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
-Instead, the hardware sensors were simulated by software and executed via virtualisation on the systems provided by *Github Actions*.
+Instead, the hardware sensors are simulated by software and executed via virtualisation on the systems provided by *Github Actions*.
 
 
 ## Package Distribution
@@ -1477,7 +1477,7 @@ The process is broken down into the following steps and the practical applicatio
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These were previously described in the Usecases \ref{usecases} chapter.
+These are previously described in the Usecases \ref{usecases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1486,9 +1486,9 @@ The developed framework not only offers a cost-effective and flexible hardware s
 ![Ten numbered test magnets in separate holders \label{Ten_numbered_test_magnets_in_separate_holders.png}](./generated_images/border_Ten_numbered_test_magnets_in_separate_holders.png)
 
 
-For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets were used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
-These were placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
+These are placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
 ## Configuration of the Measurement
 
@@ -1645,7 +1645,7 @@ Here it can be seen that there are measured values with larger deviations (see m
 ![MRP evaluation result after execution of the  user defined pipeline, using find similar values algorithm \label{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}](./generated_images/border_MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png)
 
 
-On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements were exported here.
+On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
 It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-fullsphere}.
 
 
@@ -1667,7 +1667,7 @@ The calculation result is successfully verified using raw measurement data and t
 In the previous chapter *Usecase Evaluation* \ref{usecase-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
 In addition, the basic application by the user is demonstrated based on an example.
-In this way is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
+Based on this it is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
 
 After discussing the developed hardware and software components in particular, this chapter will answer the question of whether the selected sensors meet the requirements:
 
@@ -1691,19 +1691,19 @@ The developed framework is directly compatible with a variety of magnetic field 
 | Range [mT]            | ±130.0       | ±3        |
 | Background-Noise [uT] | 100          | 0.2       |
 
-For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} were used for sensor characterisation.
+For this evaluation, the sensors listed in the table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} are used for sensor characterisation.
 The additional column for the *Background-Noise* is taken from the respective data sheets of the sensors and will be verified in the later *Background-Noise* measurement \ref{sensor-characterisation-background-noise}.
 
 This selection is made for the following reasons:
 
 The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
-For this evaluation, the sensors listed in the table were used for sensor characterisation. This selection is made for the following reasons:
+For this evaluation, the sensors listed in the table are used for sensor characterisation. This selection is made for the following reasons:
 
 * Availability of ready to use development boards
 * Specifications correspond to the application areas
 * Availability for testing
 
-It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline} are available for this purpose are packaged with library.
+It is possible to carry out the sensor characterisation shown here for other compatible sensors using the same procedure. Pre-configured measurements \ref{command-line-interface} and analysis pipelines \ref{programmable-data-processing-pipeline}, which are available for this purpose, are packaged within the library.
 
 ## Evaluation Sensor Setup
 
@@ -1711,45 +1711,42 @@ It is possible to carry out the sensor characterisation shown here for other com
 
 
 The sensor platform used here is an adapted version of the *1D: Single Sensor* \ref{d-single-sensor} sensor platform.
-The sensors to be measured were fixed together on an aluminium plate with thermally conductive adhesive.
+The sensors to be measured are fixed together on an aluminium plate with thermally conductive adhesive.
 This compensates for thermal differences.
 This is essential for the subsequent temperature deviation tests in order to obtain comparable measurement results.
 
-The setup is placed and pre-wired in the temperature chamber 24 hours before the series of measurements were carried out.
+The setup is placed and pre-wired in the temperature chamber 24 hours before the series of measurements are carried out.
 The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, is used as the temperature chamber.
 To verify the temperature, an additional thermometer *VC-7055BT* is placed on the base plate.
 A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
-
-The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* shown here is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
+The graphic \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
 With additional connected switch, its possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
-A separate battery powered supply is used as low-noise power supply for the sensors boards.
-An *Raspberry Pi 4* is used as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
-
+A separate battery power supply is used as low-noise power supply for the sensors boards.
+An *Raspberry Pi 4* is implemented as the host computer, which is connected to the sensors via a *Hailege ADUM3160* (+usb) isolator and is placed outside the temperature chamber.
 
 For the software setup, *MRPCli* \ref{command-line-interface} is used to control and record the measurement series, with the functions of the *MRPDataVisualisation* \ref{mrpvisualisation} and *MRPAnalysis* \ref{mrpanalysis} packages from the library \ref{software-readout-framework} being used for subsequent evaluation.
 The recorded measurement series are automatically analysed using the *Programmable-Data Processing Pipeline* \ref{programmable-data-processing-pipeline} and the results are visualised.
-
 
 ## Sensor Characterisation: Background-Noise
 
 ![Sensor evaluation setup for noise measurements \label{Sensor_evaluation_setup_for_noise_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png)
 
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet and static environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
 
-The procedure begins with the acquisition of the baseline by operating the sensor without external magnetic fields.
+The procedure starts with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of *N=10000* measured values is recorded for the baseline measurement.
 
-The output signal of the sensor is then continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values were taken with a trigger and readout rate of one measurement per second.
+The output signal of the sensor is continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values are taken with a trigger and readout rate of one measurement per second.
 
 In order to quantify the noise, the (+sd) of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
 
 ![Sensor noise evaluation results for TLV493D and MMC5603NJ with N=2000 samples and no averaging \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}](./generated_images/border_Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png)
 
 
-The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} shows the measured values of these sensors. In the following, these are analysed for each sensor examined.
+The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} shows the measured values of these sensors. In the next phases these are analysed for each sensor examined.
 
 The following data is shown in the plots:
 
@@ -1758,9 +1755,8 @@ The following data is shown in the plots:
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
-The table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that were extracted from the measurement data of the sensors \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
+The table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that are extracted from the measurement data of the sensors \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
-
 
 : Sensor noise evaluation results \label{Sensor_noise_evaluation_results.csv}
 
@@ -1775,7 +1771,6 @@ These measured values are categorised below.
 | $\mu_{trev}$  | 21.0    | 21.0      | $^{\circ}$C | Ambient temperature           |
 
 
-
 ### Sensor Temperature Analysis
 
 The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a (+sd) of $\sigma_{t}$=0.53$^{\circ}$C indicates a consistent trend.  This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between 20.15$^{\circ}$C and 21.21$^{\circ}$C, which indicates a stable and consistent temperature measurement.
@@ -1787,17 +1782,13 @@ With an additional measurement run with a different temperature setting of 30.0$
 
 The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
 
-It is recommended, however, to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
+Though it is recommended to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
 ### Raw Sensor Data Analysis
-
 
 In the raw data plot, as well as its mean value $\mu_{rv}$ of both sensors, an offset can also be recognised, which is dependent on the ambient conditions.
 For verification, a reference measurement of the environment is carried out with the calibrated *Voltcraft GM70* Telsameter next to the sensor (+ic)
 This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
-
-
-
 
 ## Sensor Characterisation: Linearity
 
@@ -1806,7 +1797,6 @@ This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
 
 The sensor linearity of a magnetic field sensor describes the ability of the sensor to provide a proportional linear response to changes in the magnetic field without non-linear distortions.
 This means that the output signals of the sensor vary directly proportional to the input magnetic fields without deviations or distortions and is therefore an important indicator for measurements of fields at different distances or objects.
-
 
 This is achieved here by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
@@ -1818,7 +1808,7 @@ To control the linear axis, an additional motion controller of the type *SKR-Pic
 ### Measurement Setup
 
 After the sensor baseline has been determined with *N=10000* samples, the magnet is inserted into the holder.
-The linear axis is moved by the user until it is maximally saturated. With the *TLV493D*, this corresponds to 250.000$\mu$T and below in low resolution mode. *MCC5603NJ* around 3000$\mu$T.
+The linear axis is moved by the user until it is maximally saturated. With the *TLV493D*, this corresponds to *250.000$\mu$T* and below in low resolution mode. *MCC5603NJ* around *3000$\mu$T*.
 This ensures that the linearity is determined over the entire measuring range.
 
 ### Measurement Run
@@ -1835,7 +1825,7 @@ The complete range of *120mm* in *1mm* steps is selected here. The following aut
 
 ### Linearity Analysis
 
-After the measurements were exported, they were analysed for linearity using *MRPAnalysis* \ref{mrpanalysis} functions.
+After the measurements are exported, they are analysed for linearity using *MRPAnalysis* \ref{mrpanalysis} functions.
 
 ![Sensor linearity evaluation results for TLV493D and MMC5603NJ \label{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}](./generated_images/border_Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png)
 
@@ -1868,9 +1858,7 @@ The figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements
 The temperature measuring device *VC-7055BT* can be analysed using a (+pc) interface.
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
 
-
 With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
-
 
 The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from 20$^{\circ}$ to 50$^{\circ}$.
 Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
@@ -1884,18 +1872,15 @@ The temperature range is selected so that it is within a sufficient range for th
 ![Sensor temperature sensitivity evaluation results for TLV493D and MMC5603NJ \label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}](./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png)
 
 
-
 The figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
 The graph of the *TLV493d* is significantly steeper with a gradient of *-5.13 $\mu$T / $^{\circ}$C*, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with 70$\mu$T, if the total measurement range of the sensors is also taken into account.
 
-
 In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
 
 
 ## Result Analysis
-
 
 : Overview of all characterised sensor properties \label{Overview_of_all_characterised_sensor_properties.csv}
 
@@ -1911,7 +1896,6 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 | $\mu_{sl}$    | 0.25    | 0.04      | %                    |  Mean sensor linearity deviation      |
 | $\sigma_{sl}$ | 3.64    | 0.56      | %                    | (+sd) sensor linearity                |
 | $\mu_{td}$    | -1.99   | -5.13     | $\mu$T / $^{\circ}$C |  Mean sensor temperature coefficients |
-
 
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
