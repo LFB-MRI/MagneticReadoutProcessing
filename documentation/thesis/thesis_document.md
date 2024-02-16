@@ -753,7 +753,7 @@ In addition, the export function *.to_numpy_matrix* enables further processing o
 
 ## Multi Sensor Setup
 
-At the current described scenarios, it is only possible to detect and use sensors that are directly connected to the host (+pc).
+In the previouse described scenarios, it is only possible to detect and use sensors that are directly connected to the host (+pc).
 It has the disadvantage that there must always be a physical connection.
 This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited.
 
