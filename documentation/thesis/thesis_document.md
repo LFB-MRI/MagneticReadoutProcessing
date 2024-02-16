@@ -485,12 +485,12 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 The 3D full sphere sensor \ref{Full-Sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The figure \ref{3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
+The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_fullsphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis.
 In order to be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
-%%3D_plot_of_an_N45_12x12x12_magnet_using_the_3D_fullsphere_sensor.png%%
+%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_fullsphere_sensor.png%%
 
 As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these components and the sensor or magnets is increased. The turntable and its drive motor are connected to each other via a belt.
 
@@ -500,7 +500,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 ### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
-A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
+A temperature-compensated *Voltcraft GM-70* telsameter shown in Figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
@@ -1144,7 +1144,7 @@ $ MRPcli measure run
 > sampling 10 datapoints with 100 average readings
 > SID:0 DP:0 B:47.359mT TEMP:23.56
 > ....
-> dump_to_file testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12.mag.json
+> dump_to_file testreading_ID:525771256544952_SID:0_MAG:N45_CUBIC_12x12x12mm.mag.json
 ```
 
 ## Programmable Data Processing Pipeline
@@ -1204,7 +1204,7 @@ stage plot_normal_bias_offset:
   parameters:
     readings_to_plot: stage apply_temp_compensation
     IP_export_folder: ./readings/fullsphere/plots/
-    IP_plot_headline_prefix: Sample N45 12x12x12 magnets calibrated
+    IP_plot_headline_prefix: Sample N45 12x12x12mm magnets calibrated
 
 stage export_readings:
   function: export_readings
