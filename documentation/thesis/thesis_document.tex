@@ -3521,42 +3521,67 @@ were derived from the analysis results.
 \hypertarget{recommendation-for-action}{%
 \subsection{Recommendation for Action}\label{recommendation-for-action}}
 
-\begin{itemize}
-\tightlist
-\item
-  folgendes setup woird für eine vermessung nach der sensor auswertung
-  emholen:
-\item
-  temperaturkomensation sowie linearitäts kompensation mit separaten
-  temperatur sensor
-\end{itemize}
+After analysing the measurement results, it can be seen that the
+selected sensors are only partially suitable for the previously defined
+requirements.
 
-are they suitable for <1000(+\gls{ppm}) ?
+In general, further digital and analogue sensors should be characterised
+with the developed framework. In particular, the use of analogue
+Hallbach sensors with separate bias voltage should be evaluated, as a
+simplified characterisation procedure can be applied due to the lack of
+a base offset.
 
-\begin{itemize}
-\item
-  https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
-\item
-  27cm / 50mT bore
-\item
-  nmr probes for better results
-\item
-  mit software calibrierung ist es möglich vermutlich möglich sowie
-  mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu
-  kommen
-\item
-  mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit
-  avg=20 kommt man auf 45
-\item
-  sollte ein geeignerter ersatzsensor gefunden werden
-\item
-  beide sensoren sind jedoch durch chrakterisierung von
-  permanentmagneten geeignet
-\item
-  beim tlv493d ist es möglich absolut werte zu erfassen.
-\item
-  beim mmc ist es möglich relativ magnete untereinander zu vergleichen
-\end{itemize}
+In the following, methods will be shown with which it is nevertheless
+possible to use these sensors.
+
+\hypertarget{permanent-magnet-charakterisation}{%
+\subsubsection{Permanent Magnet
+charakterisation}\label{permanent-magnet-charakterisation}}
+
+Both sensors are suitable for precisely measuring and quantifying
+magnetic fields. To ensure the linearity of the sensors, compensation
+can be performed using a defined measurement setup. This concept has
+already been successfully realised with implemented
+\ref{example-sensors}, in particular \emph{1D: Single Sensor}
+\ref{d-single-sensor}, and proven to be functional in earlier chapters.
+
+The \emph{MMC5603NJ} sensor has a limited measuring range, which means
+that it may not the best choise for this application parameters.
+However, this limitation also makes it possible to compare relative
+magnetic field strengths with each other. Furthermore, by using
+software, it is possible to achieve absolute comparability of the
+magnetic fields by scaling the measured values accordingly. This was
+shown in the chapter \emph{Usecase Evaluation} \ref{usecase-evaluation}
+by comparing and sorting different permanent magnets using these
+sensors.
+
+Overall, both the \emph{TLV493D} and the \emph{MMC5603NJ} offer
+possibilities for characterising permanent magnets. By using suitable
+hardware setup, software calibration methods and precise
+characterisations can be carried out.
+
+\hypertarget{homogeneity-measurement-of-a-halbach-ring-based-b0-field}{%
+\subsubsection{Homogeneity Measurement of a Halbach ring-based B0
+field}\label{homogeneity-measurement-of-a-halbach-ring-based-b0-field}}
+
+The \emph{MMC5603NJ} cannot be used here due to the limited value range.
+The method of increasing the distance, as with permanent magnet
+characterisation, cannot be used here as the magnet is located within a
+limited space in the Halbach ring.
+
+In contrast, the \emph{TLV493D} has too much noise, so that the measured
+values cannot be used directly without post-processing. With software
+calibration, it is probably possible to reduce the noise to below
+50\(\mu\)T with the \emph{TLV493D}. As a test, several further
+measurement runs were carried out, which achieved results for the sensor
+noise of 71\(\mu\)T to 41\(\mu\)T when averaging \emph{100} measured
+values and \emph{1000} measured values. However, further measurement
+runs must be carried out to verify these results.
+
+In general post-processing of the measurements should, include
+temperature compensation with a separate temperature sensor, especially
+in the case of changing measurement conditions (e.g.~movement of the
+sensor in the B0 field).
 
 \hypertarget{conclusion-and-discussion}{%
 \chapter{Conclusion and Discussion}\label{conclusion-and-discussion}}
