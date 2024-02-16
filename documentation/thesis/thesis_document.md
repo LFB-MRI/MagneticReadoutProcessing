@@ -195,7 +195,7 @@ This work prioritises the development of both hardware and software customised f
 
 ## Usecases
 
-The following section defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
+The following chapter defines possible usecases that the future project need to cover. These usecases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The usecases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
@@ -253,7 +253,7 @@ Chapter \ref{evaluation}. **Evaluation**
   outlines the evaluation process for permanent magnets using the developed framework. The research questions posed regarding the suitability of the sensors used for the characterisation of permanent magnets are examined.
 
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
-  bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This section ensures closure and aids readers in grasping the broader context and significance of the research.
+  bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This chapter ensures closure and aids readers in grasping the broader context and significance of the research.
 
 Finally, a comprehensive hardware and software framework needs to be established, which is capable of measuring diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
@@ -501,7 +501,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 
 ### Integration of an Industry-Teslameter
 
-As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following section shows how existing hardware can be integrated into the system.
+As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
 A temperature-compensated *Voltcraft GM-70* telsameter \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
@@ -603,7 +603,7 @@ In order to realise the concept of user interaction points, the library is divid
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
-There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} section, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
+There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} chapter, as well as further examples in the online documentation [@MagneticReadoutProcessingReadTheDocs].
 
 ### Core Modules
 
@@ -1696,7 +1696,7 @@ Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
 
 With an additional measurement run with a different temperature setting of *30.0$^{\circ}$C*, the measured temperature deviations and offsets remains constant.
 
-The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
+The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in chapter *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
 
 Though it is recommended to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
@@ -1836,7 +1836,7 @@ In the following, methods will be shown with which it is nevertheless possible t
 #### Permanent Magnet charakterisation
 
 Both sensors are suitable for precisely measuring and quantifying magnetic fields.
-To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully realised with implemented \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
 
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
