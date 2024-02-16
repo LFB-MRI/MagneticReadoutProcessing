@@ -1148,23 +1148,21 @@ $ MRPcli measure run
 
 ## Programmable Data Processing Pipeline
 
-After it is easy for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data.
+It is more applicable for users to carry out measurements using the (+cli), the next logical step is to analyse the recorded data.
 This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library.
 
 This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 
 %%Example_measurement_analysis_pipeline.png%%
 
-For this purpose, a further (+cli) application is created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
+For this purpose, (+cli) application is created further, to enable the user to create and execute complex evaluation pipelines for measurement data without programming.
 The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
-
 
 1. Import the measurements
 2. Determine sensor bias value from imported measurements using a reference measurement
 3. Apply linear temperature compensation
 4. Export the modified measurements
 5. Create a graphical plot of all measurements with standard deviation
-
 
 In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
@@ -1173,8 +1171,8 @@ The pipeline definition consists of sections which execute the appropriate Pytho
 
 The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system makes almost all Python functions available to the user.
-To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
-The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
+To simplify usage, a pre-defined list of verified functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
+The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
 
 ```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
 stage import_readings:
@@ -1220,7 +1218,7 @@ Each pipeline step is divided into *stages*, which contain a name, the function 
 
 The various steps are then linked by using the *stage <name>* makro as input parameter of the next function to be executed (see comments in listing \ref{lst:mrpuddp_example_yaml}).
 
-It is therefore also possible to use the results of one function in several others without them directly following each other.
+Therefore it is feasable to use the results of one function in several others without them directly following each other.
 The disadvantages of this system are the following:
 
 * No circular parameter dependencies
@@ -1289,7 +1287,7 @@ In the case of local development, the test runs are carried out on a (+pc) that 
 \newpage
 
 In the other scenario, the tests are to be carried out before a new release in the repository on the basis of \href{https://github.com/features/actions}{GithubActions}.
-Here there is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
+There is the possibility to host local runner software, which then has access to the hardware, but then a (+pc) must be permanently available for this task.
 Instead, the hardware sensors are simulated by software and executed via virtualisation on the services systems.
 
 
