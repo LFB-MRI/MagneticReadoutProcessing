@@ -753,15 +753,15 @@ In addition, the export function *.to_numpy_matrix* enables further processing o
 
 ## Multi Sensor Setup
 
-In the previouse described scenarios, it is only possible to detect and use sensors that are directly connected to the host (+pc).
-It has the disadvantage that there must always be a physical connection.
-This can make it difficult to install multiple sensors in measurement setups where space or cable routing options are limited.
+In the previouse described scenarios, only the sensors that are directly connected to the host (+pc) can be detected and used.
+That functionality has the disadvantage that there must always be a physical connection.
+Difficulties aries when installing multiple sensors in measurement setups where space or cable routing options are limited.
 
 Multiple sensor can be connected to any (+pc) which is available on the network.
 This can be a (+sbc) (e.g. a Raspberry Pi).
 The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber.
 
-The *MRPProxy* \ref{MRPlib_Proxy_Module.png} module has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
+The *MRPProxy* chapter \ref{MRPlib_Proxy_Module.png} module has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
 
 The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with one remote sensor setup.
 
@@ -772,7 +772,7 @@ By connecting several sensors via the proxy module, it is possible to link sever
 
 %%Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png%%
 
-The figure \ref{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
+Figure \ref{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
 Here, both proxy instances do not communicate directly with the *control* (+pc), but the proxy instance *remote* (+pc) *#2* can access the proxy running on *remote* (+pc) *#1*.
 
 The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can access all sensors in this chain.
@@ -781,7 +781,7 @@ The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can acce
 
 The figure \ref{MRPlib_Proxy_Module.png} shows the separation of the various (+hal) instances, which communicate with the physically connected sensors on the *remote* (+pc) and the *control* (+pc) side, which communicates with the remote side via the network. 
 For the user, nothing changes in the procedure for setting up a measurement.
-The *MRPProxy* (+cli) application must always be started \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
+The *MRPProxy* (+cli) application must always be started like shown in listing \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
 
 
 ```bash {#lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor usage over network"}
@@ -826,7 +826,7 @@ $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
 ```
 
 The query result shows that the sensors are connected correctly and that their capabilites have also been recognised correctly.
-To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required \ref{lst:mrpcli_config_using_rpc}. 
+To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required as shown in listing \ref{lst:mrpcli_config_using_rpc}. 
 
 
 ```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a network sensor"}
@@ -842,7 +842,7 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 Another important aspect when using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
 
-If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in \ref{sensor-syncronisation-interface}.
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-syncronisation-interface}.
 this no longer works for long distances and the syncronisation must be made via a shared network connection. 
 
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@PTPIEEE1588] can be used on many (+sbc), such as the *Raspberry-Pi Compute Module*.
@@ -870,7 +870,7 @@ This makes it possible to address a sensor directly using its (+uuid).
 When using sensors with different capabilites, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the *info* command of each sensor is queried.
-This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
+This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* command is received over network as shown in listing \ref{lst:mtsc}.
 
 ```bash {#lst:mtsc caption="MRPproxy REST entrypoint query examples"}
 # QUERY Network-Proxy capabilities
@@ -889,18 +889,18 @@ The same procedure is performed for the *commands* (+cli)-command of each sensor
 #### Dynamic extension of the available Network-Proxy Commands
 
 In order for the host to be able to send a command to the network multi-sensor setup, the command received must be forwarded to the correct sensor.
-In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example \ref{lst:mtsc}).
+In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example listing \ref{lst:mtsc}).
 
 To realize this, a (+lut) is created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
 
-For commands where there are several entries for *CAPABLE SENSORS ID LUT* \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
+For commands where there are several entries for *CAPABLE SENSORS ID LUT* in chapter \ref{Sensor_capabilities_merging_algorithm.csv}, there are two possible approaches to how the command is processed:
 
 * Redirect to each capable sensor
 * Extend commands using an id parameter
 
 These two methods have been implemented and are applied automatically. The decision is based on which hardware sensors are connected. In a setup where only the same sensor variants are connected, *redirect to each capable sensor* is applied. This offers a time advantage as fewer commands need to be sent from the host. Thus, with a *readsensor* command, all sensors are read out via one command and the summarized result is transmitted to the host.
 
-The *extend commands using an id parameter* strategy is used for different sensors. Each command is extended on the *Network-Proxy* \ref{network-proxy} by another (+uuid) parameter, according to the following scheme:
+The *extend commands using an id parameter* strategy is used for different sensors. Each command is extended on the *Network-Proxy*, which is explained in chapter \ref{network-proxy}. by another (+uuid) parameter, according to the following scheme:
 
 * *readsensor <axis> <sensor number>* -> *readsensor <axis> <ID>*
 * *opmode* -> *opmode <ID>*
@@ -912,14 +912,14 @@ This allows the host to address individual sensors directly via their specific (
 ## Examples
 
 The following shows some examples of how the (+mrp)-library can be used.
-These examples are limited to a functional minimum for selected modules of the (+mrp)-library. The documentation \ref{documentation} contains further and more detailed examples.
-Many basic examples are also supplied in the form of the test scripts used for testing \ref{testing}.
+These examples are limited to a functional minimum for selected modules of the (+mrp)-library. The documentation in chapter \ref{documentation} contains further and more detailed examples.
+Many basic examples are also supplied in the form of the test scripts used for testing in chapter \ref{testing}.
 
 ### MRPReading
 
 The *MRPReading* is the key module of the (+mrp) core.
 It is used to manage the measurement data and can be imported and exported.
-The following example \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
+The following example listing \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
 
 An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
 
@@ -958,7 +958,7 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 ### MRPHal
 
-After generating simple measurements with random values in the previous example \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* \ref{unified-sensor}-compatible sensors. In the following example \ref{lst:mrpexample_hal}, an *1D: Single Sensor* \ref{d-single-sensor} is connected locally to the host (+pc).
+After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors. In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 
 ```python {#lst:mrpexample_hal caption="MRPHal example to use an connected hardware sensor to store readings inside of a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
@@ -990,7 +990,7 @@ Once connected, these are then converted into a usable data source using the *MR
 
 If no hardware sensor is available or for the generation of test data, the *MRPSimulation* module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete *MRPReading* measurement with a wide range of set meta data.
 
-The example \ref{lst:mrpexample_simulation} illustrated the basic usage.
+The example listing \ref{lst:mrpexample_simulation} illustrated the basic usage.
 Different variations of the *generate_reading* function offers the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
 The data is generated in the background using the *magpylib* [@ortner2020magpylib] library according to the specified parameters.
 
@@ -1011,7 +1011,7 @@ reading.dump_to_file("simulated_reading.mag.json")
 ### MRPAnalysis
 
 Once data can be acquired using hardware or software sensors, the next step is to analyse this data. (+mrp) provides some simple analysis functions for this purpose. The code example shows the basic use of the module.
-The *Evaluation* \ref{evaluation} chapter shows how the user can implement their own algorithms and add them to the library.
+The *Evaluation* in chapter \ref{evaluation} chapter shows how the user can implement their own algorithms and add them to the library.
 
 ```python {#lst:mrpexample_analysis caption="MRPAnalysis example code performs several data analysis steps"}
 from MRP import MRPAnalysis, MRPReading
@@ -1031,11 +1031,11 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ### MRPVisualisation
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
-The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* \ref{d-full-sphere} sensor.
+The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* sensor explained in \ref{d-full-sphere}.
 The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used here.
-The following example \ref{lst:mrpexample_visualisation} shows the usage of both modules.
+The following example listing \ref{lst:mrpexample_visualisation} shows the usage of both modules.
 
 
 ```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a full sphere to an image file"}
@@ -1060,7 +1060,7 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 ### MRPHalbachArrayGenerator
 
 
-The following example code \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
+The following example listing \ref{lst:mrpexample_halbach}, shows how a simple Halbach magnetic ring can be generated.
 
 This can then be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 
@@ -1086,7 +1086,7 @@ MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halba
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering, which is explained in \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png}, can be generated.
 
 
 %%Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png%%
@@ -1112,7 +1112,7 @@ In the first version of the (+mrp)-library, the user had to write his own Python
 This is already a time-consuming process for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
-To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png} is implemented. The library (+cli) implements the following functionalities:
+To simplify these tasks, a (+cli) (explained in \ref{Example_measurement_analysis_pipeline.png}) is implemented. The library (+cli) implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
@@ -1120,7 +1120,7 @@ To simplify these tasks, a (+cli) \ref{Example_measurement_analysis_pipeline.png
 * Simple commands for checking recorded measurement series and their data
 
 Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is an exported file with the measured values.
-These can then be read in again using the *MRPReading* module and processed further. The following bash code \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
+These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
@@ -1158,7 +1158,7 @@ This is particularly useful for complex analyses or custom algorithms, but not n
 %%Example_measurement_analysis_pipeline.png%%
 
 For this purpose, a further (+cli) application is created, which enables the user to create and execute complex evaluation pipelines for measurement data without programming.
-The example \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
+The example figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
 1. Import the measurements
 2. Determine sensor bias value from imported measurements using a reference measurement
@@ -1174,7 +1174,7 @@ The pipeline definition consists of sections which execute the appropriate Pytho
 The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system makes almost all Python functions available to the user.
 To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the documentation [@MagneticReadoutProcessingReadTheDocs].
- The following pipeline definition \ref{lst:mrpuddp_example_yaml} shows the previously defined steps \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
+ The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
 
 ```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of an user defined processing pipeline with six stages linked together"}
 stage import_readings:
@@ -1218,7 +1218,7 @@ Each pipeline step is divided into *stages*, which contain a name, the function 
 
 \newpage
 
-The various steps are then linked by using the *stage <name>* makro as input parameter of the next function to be executed (see comments in \ref{lst:mrpuddp_example_yaml}).
+The various steps are then linked by using the *stage <name>* makro as input parameter of the next function to be executed (see comments in listing \ref{lst:mrpuddp_example_yaml}).
 
 It is therefore also possible to use the results of one function in several others without them directly following each other.
 The disadvantages of this system are the following:
@@ -1227,9 +1227,9 @@ The disadvantages of this system are the following:
 * Complex determination of the execution sequence of the steps
 
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
-After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
+After several simplification steps, determination of possible start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree in figure \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph.
-The intermediate results and the final results \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
+The intermediate results and the final results in figure \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
 %%Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png%%
 
@@ -1245,9 +1245,9 @@ This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different use cases.
 
 During the development of the (+mrp)-library, test cases are also created for all important functionalities and use cases.
-The test framework *PyTest* [@Pajankar2017] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
+The test framework *PyTest* [@Pajankar2017] is used for this purpose, as it offers direct integration in most (+ide)s (see figure \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
-Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
+Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants of listing \ref{lst:pytest_example_code} as examples for the documentation. 
 
 
 ```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
@@ -1299,7 +1299,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 
 One important point that improves usability for users is the simple installation of all (+mrp) modules.
 As it is created in the Python programming language, there are several public package registry where users can provide their software modules.
-Here, \href{https://pypi.org}{PyPI} \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) \ref{lst:setup_lib_with_pip}.
+Here, \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages possible package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
@@ -1315,7 +1315,7 @@ $ pip3 install MagneticReadoutProcessing==1.4.0
 
 To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation \href{https://peps.python.org/pep-0427/}{wheel} archive.
 This can then be uploaded to the package registry.
-Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* \ref{lst:setup_py_req} for this purpose.
+Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* in listing \ref{lst:setup_py_req} for this purpose.
 
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing used given requirements.txt"}
 # dynamic requirement loading using 'requirements.txt'
@@ -1351,7 +1351,7 @@ In addition, these commands are available globally in the system without the ter
 
 
 In order to provide comprehensive documentation for the enduser, the source code is documented using Python-\href{https://peps.python.org/pep-0257/}{Docstrings} and the Python type annotations.
-The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance. \ref{lst:pydocstring}
+The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display possible methods to the user as an assistance. It is implemented in listing \ref{lst:pydocstring}.
 
 ```python {#lst:pydocstring caption="Documentation using Python docstring example"}
 # MRPDataVisualisation.py - example docstring
@@ -1398,12 +1398,12 @@ The process of creating and publishing the documentation has been automated usin
 # Use case Evaluation
 
 The practical application of the hardware and software framework is shown below.
-This is shown using the previously defined use cases \ref{use-cases}.
+This is shown using the previously defined use cases in chapter \ref{use-cases}.
 In the application example, various permanent magnets are measured and then sorted according to their field strength.
 The result should then list the magnets that deviate the least from each other in terms of their field strength.
 This is determined using a sorting algorithm developed by the user.
 
-The process is broken down into the following steps and the practical application of *User Interaction Points* \ref{user-interaction-points} is shown:
+The process is broken down into the following steps and the practical application of *User Interaction Points* in chapter \ref{user-interaction-points} is shown:
 
 
 1. **Hardware preparation**:
@@ -1419,7 +1419,7 @@ The process is broken down into the following steps and the practical applicatio
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These are previously described in the Use cases \ref{use-cases} chapter.
+These are previously described in the use cases in chapter \ref{use-cases}.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1427,7 +1427,7 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
-For the hardware setup, the 3D-Full Sphere\ref{d-full-sphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Full Sphere sensor, explained in chapter \ref{d-full-sphere}, is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
 These are placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
