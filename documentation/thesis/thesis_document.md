@@ -1246,7 +1246,7 @@ This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensures consistent and reliable performance, which is particularly important when libraries are used by different users and for different use cases.
 
 During the development of the (+mrp)-library, test cases are also created for all important functionalities and use cases.
-The test framework *PyTest* [@PyTest] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
+The test framework *PyTest* [@Pajankar2017] is used for this purpose, as it offers direct integration in most (+ide)s (see \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
 Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants \ref{lst:pytest_example_code} as examples for the documentation. 
 
