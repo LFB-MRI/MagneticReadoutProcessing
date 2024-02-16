@@ -1419,7 +1419,7 @@ The process is broken down into the following steps and the practical applicatio
    The analysis pipeline can then be executed with the implemented algorithm. The collected measurement data is automatically processed and analysed to extract characteristic parameters of the permanent magnets.
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These are previously described in the Use cases \ref{use-cases} chapter.
+These are previously described in the *Use cases* \ref{use-cases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1427,14 +1427,14 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
-For the hardware setup, the 3D-Full Sphere\ref{d-full-sphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Full Sphere \ref{d-full-sphere} sensor is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
-These are placed in modified 3D printed holders \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
+These are placed in modified 3D printed holders shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then numbered. This allows them to be matched to the measurement results later.
 
 ## Configuration of the Measurement
 
 The configured hardware is then connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
-Afterwards, the measurement is configured for an measurement run, using the following configuration commands \ref{lst:evaluation_measurement_config}.
+Afterwards, the measurement is configured for an measurement run, using the following configuration commands from listing \ref{lst:evaluation_measurement_config}.
 
 \newpage
 
@@ -1447,7 +1447,7 @@ $ MRPcli config setup eval_measurement_config
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 ```
 
-The *MRPcli measure run* command is then called up for each individual magnet to execute a measurement. 
+The *MRPcli measure ruxn* command is then called up for each individual magnet to execute a measurement. 
 After each run, the *READING-NAME* parameter is filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 
@@ -1502,7 +1502,7 @@ The calculated distances from the *CoG* value of the measurements to are inserte
 
 Another possibility here would be for the user to use a reference measurement instead of a simulated ideal magnet as a reference.
 This can come from a magnet selected as a reference magnet.
-As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet.The code snipped \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added *_ref* input parameter for the reference measurement.
+As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet.The code snipped \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added _ref input parameter for the reference measurement.
 
 ```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading"}
 @staticmethod
@@ -1582,7 +1582,7 @@ Here it can be seen that there are measured values with larger deviations (see m
 
 %%MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png%%
 
-On the right-hand side \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
+Also, the figure \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png} illustrates, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported here.
 It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor \ref{d-full-sphere}.
 
 
