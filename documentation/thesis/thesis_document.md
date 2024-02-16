@@ -245,7 +245,7 @@ Chapter \ref{usability-improvements}. **Usability Improvements**
   This includes the optimisation of interfaces, interactions and processes to ensure intuitive and efficient use of the product.
   This also includes the documentation of code and the distribution of the source code as a package to users.
 
-Chapter \ref{use-case-evaluation}. **Use case Evaluation**
+Chapter \ref{use-case-evaluation}. **Use Case Evaluation**
   describes the application of the framework to the previously defined use cases and thus forms the basis for later evaluation.
 
 Chapter \ref{evaluation}. **Evaluation**
@@ -1395,7 +1395,7 @@ The process of creating and publishing the documentation has been automated usin
 
 
 
-# Use case Evaluation
+# Use Case Evaluation
 
 The practical application of the hardware and software framework is shown below.
 This is shown using the previously defined use cases \ref{use-cases}.
@@ -1601,7 +1601,7 @@ The calculation result is successfully verified using raw measurement data and t
 # Evaluation
 
 
-In the previous chapter *use case Evaluation* \ref{use-case-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
+In the previous chapter *Use Case Evaluation* \ref{use-case-evaluation} it is shown that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
 
 In addition, the basic application by the user is demonstrated based on an example.
 Based on this it is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
@@ -1838,7 +1838,7 @@ To ensure the linearity of the sensors, compensation can be performed using a de
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
-This was shown in the chapter *use case Evaluation* \ref{use-case-evaluation} by comparing and sorting different permanent magnets using these sensors.
+This was shown in the chapter *Use Case Evaluation* \ref{use-case-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
 
