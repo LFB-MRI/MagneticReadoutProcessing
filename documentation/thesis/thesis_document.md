@@ -1498,10 +1498,7 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   return similar_values
 ```
 
-The Python *heapq* [@heapq] module, which implements a priority queue, is used for this purpose.
-The calculated distances from the *CoG* value of the measurements to are inserted into this queue.
-Subsequently, as many elements of the queue are returned as defined by the *IP_return_count* parameter.
-The actual sorting is carried out by the queue in the background.
+The calculated distances from the *CoG* value of the measurements to are inserted into a heapq priority queue. Subsequently, as many elements of the queue are returned as defined by the *IP_return_count* parameter. The actual sorting is carried out by the queue in the background.
 
 
 ### Alternative Filter Algorithm Implementation
@@ -1650,7 +1647,7 @@ This compensates for thermal differences.
 This is essential for the subsequent temperature deviation tests in order to obtain comparable measurement results.
 
 The setup is placed and pre-wired in the temperature chamber 24 hours before the series of measurements are carried out.
-The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal heating system, is used as the temperature chamber.
+The insulated housing of a *Voron 2.4* 3D printer, which has a separately controlled internal equipped heating system, is used as the temperature chamber.
 To verify the temperature, an additional thermometer *VC-7055BT* is placed on the base plate.
 A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
