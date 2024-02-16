@@ -339,7 +339,7 @@ field strength of individual magnets and individual measuring points are
 recorded. This data is then evaluated in separate software
 \cite{Wickenbrock_2021}.
 
-There are two ways of using the data from the magnets that were
+There are two ways of using the data from the magnets that are
 previously measured:
 
 \begin{itemize}
@@ -513,7 +513,7 @@ need to cover. These usecases define the setup of the hard- and
 software. These illustrate practical situations to understand the
 functionality and added value of the implemented solution for the user.
 
-The usecases were defined in the course of project planning and provide
+The usecases are defined in the course of project planning and provide
 an overview of how the user interacts with the project and what
 functionalities can be expected. In the later accomplished evaluation
 process \ref{usecase-evaluation}, the defined usecases are also used as
@@ -680,7 +680,7 @@ that will later enable precise temperature compensation.
 
 The use of analog sensors is purposefully avoided, though they are
 suitable for more precise measurements and extended measuring ranges.
-They were excluded because they require more carefully designed circuits
+They are excluded because they require more carefully designed circuits
 and more complicated energy management.
 
 In the context of the desired goal of developing a cost-efficient and
@@ -1045,7 +1045,7 @@ Comment\strut
 
 The table
 shows\ref{Measured_sensor_readout_to_processing_using_host_software.csv}
-shows various jitter measurements. These were performed on a
+shows various jitter measurements. These are performed on a
 \emph{RaspberryPi 4 4GB}-\gls{sbc} together with an \emph{1D: Single
 Sensor} \ref{d-single-sensor} and the following software settings:
 
@@ -1678,7 +1678,7 @@ instance based on the sensor capabilites.
 \subsubsection{Visualisation}\label{visualisation}}
 
 In order to give the user the possibility to display the recorded data
-visually, two modules were created, which can graphically prepare
+visually, two modules are created, which can graphically prepare
 \emph{MRPReading} instances:
 
 \begin{itemize}
@@ -2493,7 +2493,7 @@ applications. Tests also ensures consistent and reliable performance,
 which is particularly important when libraries are used by different
 users and for different usecases.
 
-During the development of the \gls{mrp}-library, test cases were also
+During the development of the \gls{mrp}-library, test cases are also
 created for all important functionalities and usecases. The test
 framework \emph{PyTest} \cite{PyTest} is used for this purpose, as
 it offers direct integration in most \gls{ide}s (see
@@ -2502,7 +2502,7 @@ and also because it provides detailed and easy-to-understand test
 reports as output in order to quickly identify and correct errors. It
 also allows to tag tests, which is useful for grouping tests or
 excluding certain tests in certain build environment scenarios. Since
-all intended usecases were mapped using the test cases created, the code
+all intended usecases are mapped using the test cases created, the code
 of the test cases could later be used in slightly simplified variants
 \ref{lst:pytest_example_code} as examples for the documentation.
 
@@ -2539,8 +2539,8 @@ class TestMPRReading(unittest.TestCase):
 One problem, is the parts of the \gls{mrp}-library that require direct
 access to external hardware. These are, for example, the \emph{MRPHal}
 and \emph{MRPHalRest} modules, which are required to read out sensors
-connected via the network. Two different approaches were used here. In
-the case of local development, the test runs were carried out on a
+connected via the network. Two different approaches are used here. In
+the case of local development, the test runs are carried out on a
 \gls{pc} that can reach the network hardware and thus the test run could
 be carried out with real data.
 
@@ -2551,7 +2551,7 @@ release in the repository on the basis of \emph{Github Actions}
 \cite{GithubActions}. Here there is the possibility to host local
 runner software, which then has access to the hardware, but then a
 \gls{pc} must be permanently available for this task. Instead, the
-hardware sensors were simulated by software and executed via
+hardware sensors are simulated by software and executed via
 virtualisation on the systems provided by \emph{Github Actions}.
 
 \hypertarget{package-distribution}{%
@@ -2745,7 +2745,7 @@ application of \emph{User Interaction Points}
 \end{enumerate}
 
 This process covers all the essential functionalities required for a
-comprehensive characterisation of permanent magnets. These were
+comprehensive characterisation of permanent magnets. These are
 previously described in the Usecases \ref{usecases} chapter. The
 developed framework not only offers a cost-effective and flexible
 hardware solution, but also enables customisation of the analysis
@@ -2765,10 +2765,10 @@ For the hardware setup, the 3D-Fullsphere\ref{d-fullsphere} sensor is
 used for the evaluation of the framework. As this is equipped with an
 exchangeable magnetic holder mount, suitable holders are required for
 the magnets to be measured. Ten random \emph{N45 12x12x12mm} neodymium
-magnets were used, which are shown in figure
+magnets are used, which are shown in figure
 \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
 
-These were placed in modified 3D printed holders
+These are placed in modified 3D printed holders
 \ref{Ten_numbered_test_magnets_in_separate_holders.png} and then
 numbered. This allows them to be matched to the measurement results
 later.
@@ -2974,7 +2974,7 @@ On the right-hand side
 \ref{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png},
 the measured values are plotted as a result of the filter algorithm. As
 the \emph{IP\_return\_count} parameter is set to four, only the four
-most similar measurements were exported here. It can be seen from the
+most similar measurements are exported here. It can be seen from the
 plotted \emph{CoG} \(\mu\)T deviation values, that these are closest to
 an ideal Magnet with a CoG value of 0\(\mu\)T. This ideal value is
 calculated with the function
@@ -3003,7 +3003,7 @@ hardware and software framework for various magnetic field sensors is
 successfully implemented.
 
 In addition, the basic application by the user is demonstrated based on
-an example. In this way is possible to systematically characterise
+an example. Based on this it is possible to systematically characterise
 magnets from the software and readout hardware side by means of data
 acquisition, storage and analysis.
 
@@ -3053,7 +3053,7 @@ Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
 
 For this evaluation, the sensors listed in the table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
-were used for sensor characterisation. The additional column for the
+are used for sensor characterisation. The additional column for the
 \emph{Background-Noise} is taken from the respective data sheets of the
 sensors and will be verified in the later \emph{Background-Noise}
 measurement \ref{sensor-characterisation-background-noise}.
@@ -3062,9 +3062,9 @@ This selection is made for the following reasons:
 
 The developed framework is directly compatible with a variety of
 magnetic field sensors without modifications, including those listed in
-the table. For this evaluation, the sensors listed in the table were
-used for sensor characterisation. This selection is made for the
-following reasons:
+the table. For this evaluation, the sensors listed in the table are used
+for sensor characterisation. This selection is made for the following
+reasons:
 
 \begin{itemize}
 \tightlist
@@ -3079,8 +3079,8 @@ following reasons:
 It is possible to carry out the sensor characterisation shown here for
 other compatible sensors using the same procedure. Pre-configured
 measurements \ref{command-line-interface} and analysis pipelines
-\ref{programmable-data-processing-pipeline} are available for this
-purpose are packaged with library.
+\ref{programmable-data-processing-pipeline}, which are available for
+this purpose, are packaged within the library.
 
 \hypertarget{evaluation-sensor-setup}{%
 \section{Evaluation Sensor Setup}\label{evaluation-sensor-setup}}
@@ -3095,29 +3095,29 @@ placed with thermal conductive glue on an aluminium baseplate
 
 The sensor platform used here is an adapted version of the \emph{1D:
 Single Sensor} \ref{d-single-sensor} sensor platform. The sensors to be
-measured were fixed together on an aluminium plate with thermally
+measured are fixed together on an aluminium plate with thermally
 conductive adhesive. This compensates for thermal differences. This is
 essential for the subsequent temperature deviation tests in order to
 obtain comparable measurement results.
 
 The setup is placed and pre-wired in the temperature chamber 24 hours
-before the series of measurements were carried out. The insulated
-housing of a \emph{Voron 2.4} 3D printer, which has a separately
-controlled internal heating system, is used as the temperature chamber.
-To verify the temperature, an additional thermometer \emph{VC-7055BT} is
-placed on the base plate. A \emph{10mm} thick \emph{PTFE} insulation
-plate is placed between the floor and the sensor base plate to prevent
-direct and uneven heating of the base plate by the heated floor.
+before the series of measurements are carried out. The insulated housing
+of a \emph{Voron 2.4} 3D printer, which has a separately controlled
+internal heating system, is used as the temperature chamber. To verify
+the temperature, an additional thermometer \emph{VC-7055BT} is placed on
+the base plate. A \emph{10mm} thick \emph{PTFE} insulation plate is
+placed between the floor and the sensor base plate to prevent direct and
+uneven heating of the base plate by the heated floor.
 
 The graphic
 \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
-shows this basic setup, the \emph{Raspberry Pi Pico} shown here is used
-as the readout hardware, on which the \emph{Unified Sensor Firmware} is
+shows this basic setup, the \emph{Raspberry Pi Pico} is used as the
+readout hardware, on which the \emph{Unified Sensor Firmware} is
 running. With additional connected switch, its possible to isolate or
 select a sensor or both sensors to be queried from the firmware.
 
-A separate battery powered supply is used as low-noise power supply for
-the sensors boards. An \emph{Raspberry Pi 4} is used as the host
+A separate battery power supply is used as low-noise power supply for
+the sensors boards. An \emph{Raspberry Pi 4} is implemented as the host
 computer, which is connected to the sensors via a \emph{Hailege
 ADUM3160} \gls{usb} isolator and is placed outside the temperature
 chamber.
@@ -3145,23 +3145,22 @@ Background-Noise}\label{sensor-characterisation-background-noise}}
 
 Measuring the noise in a magnetic field sensor requires a precise
 procedure and a special measurement setup. First, the magnetic field
-sensor is placed in a quiet environment to minimize external field
-interference. The temperature chamber for all noise tests is set to
-\(\mu_{trev}\)=21.0\(^{\circ}\) and the sensors are placed \emph{24}
+sensor is placed in a quiet and static environment to minimize external
+field interference. The temperature chamber for all noise tests is set
+to \(\mu_{trev}\)=21.0\(^{\circ}\) and the sensors are placed \emph{24}
 hours before the measurement run in the final measurement configuration
 inside of the chamber.
 
-The procedure begins with the acquisition of the baseline by operating
+The procedure starts with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
 size of \emph{N=10000} measured values is recorded for the baseline
 measurement.
 
-The output signal of the sensor is then continuously measured and
-recorded. It is important to carry out the measurement over a
-sufficiently long period of time in order to record both short-term and
-long-term fluctuations. For this purpose, \emph{N=2000} further measured
-values were taken with a trigger and readout rate of one measurement per
-second.
+The output signal of the sensor is continuously measured and recorded.
+It is important to carry out the measurement over a sufficiently long
+period of time in order to record both short-term and long-term
+fluctuations. For this purpose, \emph{N=2000} further measured values
+are taken with a trigger and readout rate of one measurement per second.
 
 In order to quantify the noise, the \gls{sd} of the signal is
 calculated. These parameters provide information about the variation of
@@ -3177,7 +3176,7 @@ N=2000 samples and no averaging
 
 The following figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
-shows the measured values of these sensors. In the following, these are
+shows the measured values of these sensors. In the next phases these are
 analysed for each sensor examined.
 
 The following data is shown in the plots:
@@ -3195,7 +3194,7 @@ The following data is shown in the plots:
 \end{itemize}
 
 The table \ref{Sensor_noise_evaluation_results.csv} lists the measured
-values that were extracted from the measurement data of the sensors
+values that are extracted from the measurement data of the sensors
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
 
@@ -3250,10 +3249,9 @@ suitable to perform an ambient temperature compensation of measured
 values and calibration of the sensor. This is considered in section
 \emph{Temperature Sensitivity} \ref{temperature-sensitivity}.
 
-It is recommended, however, to use a separate temperature sensor when
-using the \emph{TLV493D} or to use a suitable averaging of the
-temperature and measured values in order to perform temperature
-compensation.
+Though it is recommended to use a separate temperature sensor when using
+the \emph{TLV493D} or to use a suitable averaging of the temperature and
+measured values in order to perform temperature compensation.
 
 \hypertarget{raw-sensor-data-analysis}{%
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
@@ -3305,9 +3303,10 @@ which can be controlled via a network interface.
 After the sensor baseline has been determined with \emph{N=10000}
 samples, the magnet is inserted into the holder. The linear axis is
 moved by the user until it is maximally saturated. With the
-\emph{TLV493D}, this corresponds to 250.000\(\mu\)T and below in low
-resolution mode. \emph{MCC5603NJ} around 3000\(\mu\)T. This ensures that
-the linearity is determined over the entire measuring range.
+\emph{TLV493D}, this corresponds to \emph{250.000\(\mu\)T} and below in
+low resolution mode. \emph{MCC5603NJ} around \emph{3000\(\mu\)T}. This
+ensures that the linearity is determined over the entire measuring
+range.
 
 \hypertarget{measurement-run}{%
 \subsection{Measurement Run}\label{measurement-run}}
@@ -3335,7 +3334,7 @@ automated process then runs as follows:
 \hypertarget{linearity-analysis}{%
 \subsection{Linearity Analysis}\label{linearity-analysis}}
 
-After the measurements were exported, they were analysed for linearity
+After the measurements are exported, they are analysed for linearity
 using \emph{MRPAnalysis} \ref{mrpanalysis} functions.
 
 \begin{figure}
