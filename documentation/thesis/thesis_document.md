@@ -17,7 +17,7 @@ In response to this, there is a growing interest in developing low-field (+mri) 
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
 While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
 
-Permanent magnets, usually arranged in a circular "Halbach array" inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
+Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
 Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is taken into account.
 It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system.
@@ -84,7 +84,7 @@ The homogeneity in this configuration depends, among other things, on the follow
 These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
 
-Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term "Halbach Array" (commonly known as "magic rings") denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
+Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term *Halbach Array* (commonly known as *magic rings*) denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@inbook]
 
 The Halbach magnetic array appears as a essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
@@ -292,7 +292,7 @@ This strategic choice forms the basis for a flexible, universally applicable Hal
 The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
-In the Evaluation in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
+In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
 
 
 ## Mechanical Structure
@@ -378,7 +378,7 @@ If any are found (using a dedicated (+lut) with sensor address translation infor
 The next initialisation system is dedicated for multi-sensor synchronisation described in chapter \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
 All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) have a (+usb) slave port.
 
-The used usb descriptor is a (+usb) (+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
+The used usb descriptor is a (+usb)-(+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
 After execution of the setup routine is completed, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ring buffer.
@@ -431,7 +431,7 @@ The table \ref{Measured_sensor_readout_to_processing_using_host_software.csv} sh
 It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
 
-The other issue is sending the trigger signal from the readout software, which is described in \ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
+The other issue is sending the trigger signal from the readout software, which is described in chapter \ref{software-readout-framework}. Here too, unpredictable latencies can occur, depending on which other tasks are also executed on this port.
 
 In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
@@ -472,7 +472,7 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 %%1D_sensor_construction_with_universal_magnet_mount.png%%
 
-The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware \ref{firmware} platform.
+The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
 
 The electrical level here is based on a *Raspberry Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
@@ -602,7 +602,7 @@ In order to realise the concept of user interaction points, the library is divid
 
 In each of these categories there are then several sub-categories divided into User Interaction Points.
 An overview of these is given in the subchapters as the following.
-There are also introductory examples which provide an overview of the basic functions in the *Examples* \ref{examples} chapter, as well as further examples in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{online documentation}.
+There are also introductory examples which provide an overview of the provided functions in the *Examples* \ref{examples} chapter, as well as further examples in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{online documentation}.
 
 ### Core Modules
 
@@ -986,7 +986,7 @@ reading_source = MRPReadingSourceHelper.createReadingSourceInstance(sensor)
 result_readings: [MRPReading] = reading_source.perform_measurement(_readings=1, _hwavg=1)
 ```
 
-In general, a sensor can be connected using its specific system path or the sensor-(+uuid) via the *MRPHalSerialPortInformation* function.
+In general, a sensor can be connected using its specific system path or the sensor (+uuid) via the *MRPHalSerialPortInformation* function.
 Locally connected or network sensors can also be automatically recognised using the *list_sensors* function.
 Once connected, these are then converted into a usable data source using the *MRPReadingSource* module. This automatically recognises the type of sensor and generated an *MRPReading* instance with the measured values of the sensor.
 
@@ -1037,7 +1037,7 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 ### MRPVisualisation
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
-The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* sensor explained in \ref{d-full-sphere}.
+The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full-sphere measurements recorded with the *3D: Full sphere* sensor introduced in chapter \ref{d-full-sphere}.
 The sub-module *MRPPolarVisualisation* is specially designed for these. The figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used here.
@@ -1118,14 +1118,14 @@ In the first version of the (+mrp)-library, the user had to write his own Python
 This is already a time-consuming process for reading out a sensor and configuring the measurement parameters and metadata and quickly required more than 100 lines of new Python code.
 
 Although such examples are provided in the documentation, it must be possible for programming beginners in particular to use them.
-To simplify these tasks, a (+cli) (explained in \ref{Example_measurement_analysis_pipeline.png}) is implemented. The library (+cli) implements the following functionalities:
+To simplify these tasks, a (+cli) is implemented and implements the following functionalities:
 
 * Detection of connected sensors
 * Configuration of measurement series
 * Recording of measured values from stored measurement series
 * Simple commands for checking recorded measurement series and their data
 
-Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end. The result is an exported file with the measured values.
+Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
 These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
@@ -1175,13 +1175,14 @@ The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measu
 
 
 In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
-Detailed examples can be found in the documentation [@MagneticReadoutProcessingReadTheDocs].
+Detailed examples can be found in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
+
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
 The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system makes almost all Python functions available to the user.
-To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the documentation [@MagneticReadoutProcessingReadTheDocs].
- The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
+To simplify use, a pre-defined list of verified functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
+The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
 
 ```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
 stage import_readings:
@@ -1394,7 +1395,7 @@ In order to make the documentation created by *Sphinx* accessible to the user, t
 Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
 Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
 
-The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. The figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also shows separate menu items for tutorials on the individual functionalities.
+The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. The figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also lists separate menu items for tutorials on the individual functionalities.
 
 The process of creating and publishing the documentation has been automated using \href{https://github.com/features/actions}{GithubActions}, so that it is always automatically kept up to date with new features.
 
@@ -1407,7 +1408,7 @@ The process of creating and publishing the documentation has been automated usin
 # Use Case Evaluation
 
 The practical application of the hardware and software framework is shown below.
-This is shown using the previously defined use cases in chapter \ref{use-cases}.
+This is shown using the previously defined use cases in chapter *Use cases* \ref{use-cases}.
 In the application example, various permanent magnets are measured and then sorted according to their field strength.
 The result should then list the magnets that deviate the least from each other in terms of their field strength.
 This is determined using a sorting algorithm developed by the user.
@@ -1842,7 +1843,7 @@ In the following, methods will be shown with which it is nevertheless possible t
 #### Permanent Magnet Characterisation
 
 Both sensors are suitable for precisely measuring and quantifying magnetic fields.
-To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter *Example Sensors* \ref{example-sensors}, in particular *1D: Single Sensor* in chapter \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully implemented in chapter *Example Sensors* \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
 
 The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choice considering these application parameters.
 However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
