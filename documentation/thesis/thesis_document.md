@@ -466,7 +466,6 @@ In this context, this describes whether the sensor can measure a *static* fixed 
 
 In the following, the hardware structure of a *static* and *dynamic* sensor is described. For the *static* sensor, only the *1D* variant is shown, as this does not differ significantly from the structure of the *1D: dual sensor*, except it uses two *TLV493D* sensors, mounted above and on top of the magnet.
 
-
 ### 1D: Single Sensor
 
 %%1D_sensor_construction_with_universal_magnet_mount.png%%
@@ -1803,31 +1802,53 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 
 %%Overview_of_all_characterised_sensor_properties.csv%%
 
-Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*. It can be clearly seen that these differ significantly by a factor of *x10*.
-The *TLV493D* performs seriously in the Sensor Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{Research Question and Approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
+It can be clearly seen that these differ significantly by a factor of *x10*.
 
-are they suitable for <1000(+(+ppm)) ? 
+The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
-* https://onlinelibrary.wiley.com/doi/epdf/10.1002/mrm.28396
-* 27cm / 50mT bore
-* nmr probes for better results
+The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
 
+However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm*.
 
+The *TLV493D*, on the other hand, is able to measure these directly, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
 
-
-* mit software calibrierung ist es möglich vermutlich möglich sowie mittelung ist es möglich auch mit dem tlv493d kanpp unter die 50uT zu kommen
-* mess durchläufe mit ist es mögloch von 175uT nach 70uT zu kommen mit avg=20 kommt man auf 45
-* sollte ein geeignerter ersatzsensor gefunden werden
-
-* beide sensoren sind jedoch durch chrakterisierung von permanentmagneten geeignet
-* beim tlv493d ist es möglich absolut werte zu erfassen.
-* beim mmc ist es möglich relativ magnete untereinander zu vergleichen
+In the following chapter, recommendations for action are defined, which were derived from the analysis results.
 
 ### Recommendation for Action
 
-* folgendes setup woird für eine vermessung nach der sensor auswertung emholen:
-* temperaturkomensation sowie linearitäts kompensation mit separaten temperatur sensor
+After analysing the measurement results, it can be seen that the selected sensors are only partially suitable for the previously defined requirements.
 
+In general, further digital and analogue sensors should be characterised with the developed framework.
+In particular, the use of analogue Hallbach sensors with separate bias voltage should be evaluated, as a simplified characterisation procedure can be applied due to the lack of a base offset.
+
+In the following, methods will be shown with which it is nevertheless possible to use these sensors.
+
+#### Permanent Magnet charakterisation
+
+Both sensors are suitable for precisely measuring and quantifying magnetic fields.
+To ensure the linearity of the sensors, compensation can be performed using a defined measurement setup. This concept has already been successfully realised with implemented \ref{example-sensors}, in particular *1D: Single Sensor* \ref{d-single-sensor}, and proven to be functional in earlier chapters.
+
+The *MMC5603NJ* sensor has a limited measuring range, which means that it may not the best choise for this application parameters.
+However, this limitation also makes it possible to compare relative magnetic field strengths with each other.
+Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
+This was shown in the chapter *Usecase Evaluation* \ref{usecase-evaluation} by comparing and sorting different permanent magnets using these sensors.
+
+
+Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
+
+
+
+
+#### Homogeneity Measurement of a Halbach ring-based B0 field
+
+The *MMC5603NJ* cannot be used here due to the limited value range. The method of increasing the distance, as with permanent magnet characterisation, cannot be used here as the magnet is located within a limited space in the Halbach ring.
+
+In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is probably possible to reduce the noise to below 50$\mu$T with the *TLV493D*. 
+As a test, several further measurement runs were carried out, which achieved results for the sensor noise of 71$\mu$T to 41$\mu$T when averaging *100* measured values and *1000* measured values.
+However, further measurement runs must be carried out to verify these results.
+
+In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the B0 field).
 
 
 
