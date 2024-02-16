@@ -1,0 +1,2 @@
+![ Sensor evaluation plattform with TLV493D and MMC5603 sensors placed with thermal conductive glue on an aluminium baseplate \label{_Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}](./generated_images/border__Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png)
+

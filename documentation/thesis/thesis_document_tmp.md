@@ -23,7 +23,7 @@ Completed (+mri) systems pose significant challenges for retrospective adjustmen
 It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system.
 
 The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems.
-The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) with the necessary precision for homogenous field generation.
+The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) magnet with the necessary precision for homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework.
 The hardware system aims to selectively measure magnetic fields at different locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
@@ -115,7 +115,7 @@ Within the research domain, various implementations have emerged. An exemplar in
 
 Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of an oint-of-care halbach array low-field (+mri) system [@De_Vos2023-pb].
 
-The Halbach magnet incorporated in this system boasts a 27cm diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a 20cm diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets (*12 x 12 x 12 mm^3*). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -166,7 +166,7 @@ The library will enable data acquisition, storage and analysis of magnetic prope
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
-Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of 1000(+ppm). Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
+Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000*(+ppm). Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
 ## Research Question and Approach
 
@@ -281,7 +281,7 @@ The selection process for possible magnetic field sensors initially focussed on 
 A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kind of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
 
-The use of analog sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
+The use of analogue sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
 They are excluded because they require more carefully designed circuits and more complicated energy management.
 
 In the context of the desired goal of developing a cost-efficient and universally expandable Hall sensor interface, the decision in favour of digital sensors seems appropriate.
@@ -362,7 +362,7 @@ These are initiated according to the sensors found at startup. If new hardware i
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
 #ifndef __CustomSensor_h__
 #define __CustomSensor_h__
-// register your custom sensor in implemented_sensors.h also
+// register custom sensor in implemented_sensors.h also
 class CustomSensor: public baseSensor
 {
 public:
@@ -1516,7 +1516,7 @@ The next step for the user is the implementation of the filter algorithm \ref{ls
 This Python file is loaded when the pipeline is started and all functions that are imported here as a module or implemented directly can be called via the pipeline.
 As this is a short algorithm, it is inserted directly into the file.
 
-The parameter *_readings* should later receive the imported measurements from the *stage rawimport* \ref{lst:pipeline_mrp_evaluation_yaml} and the optional *IP_return_count* parameter specifies the number of best measurements that are returned.
+The parameter _readings should later receive the imported measurements from the *stage rawimport* \ref{lst:pipeline_mrp_evaluation_yaml} and the optional *IP_return_count* parameter specifies the number of best measurements that are returned.
 The return parameter is a list of measurements containing the most similar measurements, measured by the smallest distance between all measurements.
 The distance for each measurement is determined using the centre of gravity function *CoG*, the length is then calculated from the result vector. This value can then be used for sorting.
 
@@ -1734,13 +1734,11 @@ The recorded measurement series are automatically analysed using the *Programmab
 ![Sensor evaluation setup for noise measurements \label{Sensor_evaluation_setup_for_noise_measurements.png}](./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png)
 
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet and static environment to minimize external field interference. The temperature chamber for all noise tests is set to $\mu_{trev}$=21.0$^{\circ}$ and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet and static environment to minimize external field interference. The temperature chamber for all noise tests is set to *$\mu_{trev}$=21.0$^{\circ}$* and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
 
 The procedure starts with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of *N=10000* measured values is recorded for the baseline measurement.
-
 The output signal of the sensor is continuously measured and recorded. It is important to carry out the measurement over a sufficiently long period of time in order to record both short-term and long-term fluctuations. For this purpose, *N=2000* further measured values are taken with a trigger and readout rate of one measurement per second.
-
 In order to quantify the noise, the (+sd) of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
 
 ![Sensor noise evaluation results for TLV493D and MMC5603NJ with N=2000 samples and no averaging \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}](./generated_images/border_Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png)
@@ -1773,22 +1771,40 @@ These measured values are categorised below.
 
 ### Sensor Temperature Analysis
 
-The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a (+sd) of $\sigma_{t}$=0.53$^{\circ}$C indicates a consistent trend.  This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between 20.15$^{\circ}$C and 21.21$^{\circ}$C, which indicates a stable and consistent temperature measurement.
+The temperature stability of the *TLV493D* with a mean value of *20.68$^{\circ}$C* and a (+sd) of *$\sigma_{t}$=0.53$^{\circ}$C* indicates a consistent trend. This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between *20.15$^{\circ}$C* and *21.21$^{\circ}$C*, which indicates a stable and consistent temperature measurement.
 This result is more noisy compared to the temperature stability of the *MMC5603*.
-
 Both sensors provide an offset to the measured chamber temperature $\mu_{trev}$.
 
-With an additional measurement run with a different temperature setting of 30.0$^{\circ}$C, the measured temperature deviations and offsets remains constant.
+With an additional measurement run with a different temperature setting of *30.0$^{\circ}$C*, the measured temperature deviations and offsets remains constant.
 
-The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{temperature-sensitivity}.
+The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in section *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
 
 Though it is recommended to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
 
 ### Raw Sensor Data Analysis
 
-In the raw data plot, as well as its mean value $\mu_{rv}$ of both sensors, an offset can also be recognised, which is dependent on the ambient conditions.
-For verification, a reference measurement of the environment is carried out with the calibrated *Voltcraft GM70* Telsameter next to the sensor (+ic)
-This provides a *real* baseline value of $\mu_{rev}$=-21$\mu$T.
+
+The noise of a sensor describes unwanted, random fluctuations or signals in the measured data. These are clearly recognisable in the figure ** in the raw data plot. 
+The baseline determined for each sensor is shown by the red ** line. Here it can be seen that each sensor has a different mean value or baseline offset in the same environment.
+
+The noise of a sensor describes unwanted, random fluctuations or signals in the measured data. These are clearly recognisable in the figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} in the raw data plot. 
+The baseline determined for each sensor is shown by the red $\mu_{rv}$ [$\mu$T] line. Here can be seen that each sensor has a different mean value or baseline offset in the same environment.
+For verification, a reference measurement of the environment is carried out with the calibrated *Voltcraft GM70* Telsameter next to the sensor (+ic).
+This provides a reference baseline value of *$\mu_{rev}$=-21.0$\mu$T*.
+
+
+The noise of the sensor is drawn around this using the blue line. 
+For the *TLV493D* the (+sd) *$\sigma_{rv}$=172.0$^{\mu}$T*, which is twice the value given by the datasheet as the noise value.
+Under the same conditions, the *MMC5603NJ* undercuts the value specified by the manufacturer. The (+sd) approaches *$\sigma_{rv}$=0.20$^{\mu}$T* and is negligible, especially when additional averaging is used.
+
+
+As the baseline was determined first for each sensor, it can be seen that the 
+Another recognisable feature is 
+Further measurement series were also recorded with inserted *N45 12x12x12mm* magnets, so that these are saturated halfway through the measurement range.
+This allows the noise measurement values to be compared with a blank measurement. These values correspond, so it can be concluded that the noise is within the same range across the measuring range.
+
+
+
 
 ## Sensor Characterisation: Linearity
 
@@ -1800,7 +1816,7 @@ This means that the output signals of the sensor vary directly proportional to t
 
 This is achieved here by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
-The ambient temperature is set to $\mu_{trev}$=21.0$^{\circ}$ in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise*\ref{sensor-characterisation-background-noise} setup.
+The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise*\ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components.
 To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
@@ -1819,7 +1835,7 @@ The complete range of *120mm* in *1mm* steps is selected here. The following aut
  
 1. Move the linear axis upwards by the selected distance
 2. De-energise the axis motor
-3. Create measurement using *MRPCli* with N=2000 data points per reading
+3. Create measurement using *MRPCli* with *N=2000* data points per reading
 4. Export reading to filesystem with current linear axis position in meta-data and filename
 
 
@@ -1837,12 +1853,11 @@ This is not directly comparable for both plots, as the sensors have different me
 To ensure comparability, the ideal curve is determined.
 In order to be able to make quantifiable statements about the measurement results, the mean and (+sd) deviation of these two curves is determined.
 
-For both sensors, the deviation is less than 1% over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
+For both sensors, the deviation is less than *1%* over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D*, however, the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
 The previously performed *Background-Noise* \ref{sensor-characterisation-background-noise} characterisation shows that the linearity deviation here is due to the sensitivity of the sensor.
 
 In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
 It is also possible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
-
 
 ## Sensor Characterisation: Temperature Sensitivity
 
@@ -1860,12 +1875,11 @@ The controller of the temperature chamber can also be programmed via a (+pc) int
 
 With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
-The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from 20$^{\circ}$ to 50$^{\circ}$.
+The same procedure is used as for the *Linearity* \ref{sensor-characterisation-linearity} measurement, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
 Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
-The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically >=80$^{\circ}$ for non-high-quality type N magnets [@magna-c]).
+The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality type N magnets [@magna-c]).
 The temperature range is selected so that it is within a sufficient range for the application.
-
 
 ### Temperature Sensitivity Analysis
 
@@ -1875,10 +1889,9 @@ The temperature range is selected so that it is within a sufficient range for th
 The figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
-The graph of the *TLV493d* is significantly steeper with a gradient of *-5.13 $\mu$T / $^{\circ}$C*, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with 70$\mu$T, if the total measurement range of the sensors is also taken into account.
+The graph of the *TLV493d* is significantly steeper with a gradient of *-5.13 $\mu$T / $^{\circ}$C*, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of *175$\mu$T* is less than that of the *MMC5603NJ* with *70$\mu$T*, if the total measurement range of the sensors is also taken into account.
 
 In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}), a linear function was also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
-
 
 ## Result Analysis
 
@@ -1900,14 +1913,13 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} shows a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs seriously in the Senosr Noise measurement and also performs worse than specified in the data sheet (98$\mu$T instead of 175$\mu$T), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
 
-However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm*.
+However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible using the *MMC5603NJ*. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm* which is more than the *MMC5603NJ* can measure.
 
-The *TLV493D*, on the other hand, is able to measure these directly, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
-
+The *TLV493D*, on the other hand, is able to measure these ranges, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
 In the following chapter, recommendations for action are defined, which were derived from the analysis results.
 
 ### Recommendation for Action
@@ -1929,27 +1941,19 @@ However, this limitation also makes it possible to compare relative magnetic fie
 Furthermore, by using software, it is possible to achieve absolute comparability of the magnetic fields by scaling the measured values accordingly.
 This was shown in the chapter *Usecase Evaluation* \ref{usecase-evaluation} by comparing and sorting different permanent magnets using these sensors.
 
-
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
-
-
-
 
 #### Homogeneity Measurement of a Halbach ring-based B0 field
 
 The *MMC5603NJ* cannot be used here due to the limited value range. The method of increasing the distance, as with permanent magnet characterisation, cannot be used here as the magnet is located within a limited space in the Halbach ring.
 
-In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is probably possible to reduce the noise to below 50$\mu$T with the *TLV493D*. 
-As a test, several further measurement runs were carried out, which achieved results for the sensor noise of 71$\mu$T to 41$\mu$T when averaging *100* measured values and *1000* measured values.
+In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is probably possible to reduce the noise to below *50$\mu$T* with the *TLV493D*. 
+As a test, several further measurement runs were carried out, which achieved results for the sensor noise of *71*$\mu$T* to *41$\mu$T* when averaging *100* measured values and *1000* measured values.
 However, further measurement runs must be carried out to verify these results.
 
-In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the B0 field).
-
-
-
+In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the *B0* field).
 
 # Conclusion and Discussion
-
 
 ## Conclusion
 
