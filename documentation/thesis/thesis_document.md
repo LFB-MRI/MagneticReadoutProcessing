@@ -1744,7 +1744,7 @@ A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this 
 The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise* chapter \ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} shows this updated measurement setup with the added components.
-To control the linear axis, an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
+To control the linear axis an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
 
 ### Measurement Setup
 
@@ -1860,7 +1860,7 @@ In contrast, the *TLV493D* has too much noise, so that the measured values canno
 As a test, several further measurement runs are carried out, which achieved results for the sensor noise of *71$\mu$T* to *41$\mu$T* when averaging *100* to *1000* measured values.
 However, further measurement runs must be carried out to verify these results.
 
-In general post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the *B0* field).
+In general, post-processing of the measurements should, include temperature compensation with a separate temperature sensor, especially in the case of changing measurement conditions (e.g. movement of the sensor in the *B0* field).
 
 # Conclusion and Discussion
 
@@ -1882,7 +1882,7 @@ This underlines the performance of the developed framework and shows that it is 
 
 ## Outlook
 
-A solid foundation has been built in this version of the framework, which contains all the necessary functions and is ready for immediate use. During development, particular emphasis is placed on comprehensive documentation to make it easier to get started.
+A solid basement has been built in this version of the framework, which contains all the necessary functions and is ready for immediate use. During development, particular emphasis is placed on comprehensive documentation to make it easier to get started.
 Together with examples for various use cases, a user can quickly evaluate the framework.
 
 However, it should be noted that the framework has already been released with its first stable version, but extensions and improvements are still necessary.
@@ -1892,4 +1892,4 @@ All tests and evaluations took place under normal conditions, especially for the
 On the software side, the focus is on integration for the support of more professional measuring devices. Only in this way is it possible to evaluate and improve the sensor hardware and quantify the measurement results.
 
 To summarise, it can be said that a solid software framework has been created that can be used directly for the intended purpose.
-It provides a suitable working foundation, but can be further developed by integrating professional measurement devices to enable a more comprehensive evaluation and improvement of the sensor hardware.
+It provides a suitable base for working, but further developments by integrating professional measurement devices to enable a more comprehensive evaluation and improvement of the sensor hardware are necessary.
