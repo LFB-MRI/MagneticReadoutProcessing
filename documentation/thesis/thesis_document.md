@@ -529,14 +529,12 @@ For this purpose, typical individual steps that occur in relation to these tasks
 * Storage - export of data in various open formats - see \ref{storage-and-datamanagement}
 * Analysis - algorithms to analyse different data sets - see \ref{analysis}
 
-All these psteps are divided into different blocks and users is given the possibility of adding their own functionalities.
-
-As the following, this concept is referred to as *user interaction points* \ref{user-interaction-points} and is explained in the following chapter.
-
+All these steps are divided into different blocks with an editional functionality for users to add own modules.
+This concept is explained in the following chapter.
 
 ## User Interaction Points
 
-User interaction points represent the core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other.
+User interaction points represent one core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other. For this thesis it also eases the option to change sensors for measurments. 
 
 For this purpose, the library is divided into individual modules, which are shown in the graphic \ref{MRP_library_module_high_level_overview.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
