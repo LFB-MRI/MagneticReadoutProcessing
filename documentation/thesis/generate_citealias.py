@@ -32,25 +32,26 @@ text_content:str = ""
 lines : [str] = []
 
 out_lines : [str] = []
+
+pattern: [] = [r"\\cite{(\w+)}", r"\\customcite{(\w+)}", r"\\autocite{(\w+)}"]
 with open(file_to_open,'r') as file:
     text_content = file.read()
     #lines = text_content.split('\n')
     
-    
-    regex_pattern = r"\\customcite{(\w+)}"
-    regex = re.compile(regex_pattern, re.IGNORECASE) # FOR CLOSING CASE ```
+    for rp in pattern:
+        regex = re.compile(rp, re.IGNORECASE) # FOR CLOSING CASE ```
 
-    groups = re.findall(regex, text_content)
-    unique_groups = list(set(groups))
-    # SCAN FOR \customcite{ AND PARSE \customcite{xXx}
-    # GET GROUPS
-    for idx, gr in enumerate(unique_groups):
-        
-        cite: str = gr #"SB2010"
-        cite_text: str = gr #"SB2010"
-        #xout_lines.append("\\"+"citefield{"+ "{}".format(cite) + "}{"+ "{}".format('shortauthor') + "}")
-        out_lines.append("\\"+"defcitealias{"+ "{}".format(cite) + "}{"+ "{}".format(cite_text) + "}")
-        out_lines.append("\n")
+        groups = re.findall(regex, text_content)
+        unique_groups = list(set(groups))
+        # SCAN FOR \customcite{ AND PARSE \customcite{xXx}
+        # GET GROUPS
+        for idx, gr in enumerate(unique_groups):
+            
+            cite: str = gr #"SB2010"
+            cite_text: str = gr #"SB2010"
+            #out_lines.append("\\"+"citefield{"+ "{}".format(cite) + "}{"+ "{}".format('shortauthor') + "}")
+            out_lines.append("\\"+"defcitealias{"+ "{}".format(cite) + "}{"+ "{}".format(cite_text) + "}")
+            out_lines.append("\n")
 
 
 

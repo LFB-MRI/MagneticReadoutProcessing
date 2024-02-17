@@ -1,0 +1,2 @@
+![Example full sphere plot of an measurement using the MRPVisualisation module using different shaded vertices on a sphere \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png}](./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png)
+

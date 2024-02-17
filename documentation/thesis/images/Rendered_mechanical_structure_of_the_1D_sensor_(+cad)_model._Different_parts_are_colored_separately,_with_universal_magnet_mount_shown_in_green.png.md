@@ -1,0 +1,2 @@
+![Rendered mechanical structure of the 1D sensor (+cad) model \label{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png}](./generated_images/border_Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png)
+

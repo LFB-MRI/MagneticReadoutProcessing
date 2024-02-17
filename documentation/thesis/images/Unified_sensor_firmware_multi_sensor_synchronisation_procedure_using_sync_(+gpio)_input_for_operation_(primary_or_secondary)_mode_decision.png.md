@@ -1,0 +1,2 @@
+![Unified sensor firmware multi sensor synchronisation procedure using sync (+gpio) input for operation (primary or secondary) mode decision \label{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}](./generated_images/border_Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png)
+

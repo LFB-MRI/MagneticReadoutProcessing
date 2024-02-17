@@ -287,26 +287,26 @@ Focussing on the digital (+i2c) interface not only facilitates implementation, b
 At the same time, the integration of temperature sensors enables precise measurements under varying environmental conditions.
 This strategic choice forms the basis for a flexible, universally applicable Hall sensor interface that can be seamlessly integrated into various existing systems.
 
-%%Implemented_digital_magnetic_field_sensors.csv%%
+%%List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv%%
 
-The table \ref{Implemented_digital_magnetic_field_sensors.csv} shows a selection of sensors for which hardware and software support has been implemented.
+The table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
-In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{Implemented_digital_magnetic_field_sensors.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
+In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
 
 
 ## Mechanical Structure
 
-%%Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png%%
+%%Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png%%
 
 The mechanical design of a sensor is kept as simple as possible so that it can be replicated as easily as possible.
 The focus is on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
-Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}.
+Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}.
 
 All parts are produced using 3D printing additive manufacturing proces. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
-The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
+The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
 
@@ -330,7 +330,7 @@ Overall, this integrated approach represents an effective solution for the flexi
 
 ## Firmware
 
-%%Unified_sensor_firmware_simplified_program_structure.png%%
+%%Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png%%
 
 The microcontroller firmware is software that is executed on a microcontroller in an embedded system. 
 It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and performs specific tasks according to the program code.
@@ -339,14 +339,14 @@ It handles communication with sensors, actuators and other peripheral devices, p
 Firmware is critical to the functioning of devices.
 
 
-The firmware is responsible for detecting the possible connected sensors shown in table \ref{Implemented_digital_magnetic_field_sensors.csv} and query measurements.
+The firmware is responsible for detecting the possible connected sensors shown in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} and query measurements.
 This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
 
 An important component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
 These are initiated according to the sensors found at startup. If new hardware needs to be integrated, only the required functions in listing \ref{lst:CustomSensorClass} need to be implemented.
 
 
-```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support"}
+```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package"}
 #ifndef __CustomSensor_h__
 #define __CustomSensor_h__
 // register custom sensor in implemented_sensors.h also
@@ -369,7 +369,7 @@ public:
 #endif
 ```
 
-The figure \ref{Unified_sensor_firmware_simplified_program_structure.png} shows a flow chart of the start process after powering on the sensor and the subsequent main loop for processing the user commands and sensor results.
+The figure \ref{Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png} shows a flow chart of the start process after powering on the sensor and the subsequent main loop for processing the user commands and sensor results.
 When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
@@ -392,7 +392,7 @@ This ensures that in a multi-sensor setup with several sensors. The measurements
 
 ### Communication Interface
 
-%%Sensors_(+cli).png%%
+%%Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png%%
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
@@ -401,10 +401,10 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly determine whether the hardware is working properly after installation.
-The (+cli) behaves like terminal programmes, displaying a detailed command reference as shown in the figure \ref{Sensors_(+cli).png} to the user after connecting.
-The figure \ref{Query_sensors_b_value_using_(+cli).png} shows the current measured value queried by using the *readout* command by the user. 
+The (+cli) behaves like terminal programmes, displaying a detailed command reference as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user after connecting.
+The figure \ref{Result_of_an_executed_b_field_query_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
 
-%%Query_sensors_b_value_using_(+cli).png%%
+%%Result_of_an_executed_b_field_query_using_the_sensors_(+cli)_with_immediate_user_readable_response.png%%
 
 The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command. The command is only sent by the library, not by the user.
 The same commands are available as for (+cli)-based communication, but in a binary format.
@@ -412,15 +412,15 @@ The same commands are available as for (+cli)-based communication, but in a bina
 
 ### Sensor Syncronisation Interface
 
-%%Multi_sensor_synchronisation_wiring_example.png%%
+%%Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png%%
 
 One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur.
 This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.[@W19]
 Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
 
-%%Measured_sensor_readout_to_processing_using_host_software.csv%%
+%%(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv%%
 
-Table \ref{Measured_sensor_readout_to_processing_using_host_software.csv} contains various jitter measurements. These are performed on a *Raspberry Pi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
+Table \ref{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv} contains various jitter measurements. These are performed on a *Raspberry Pi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
 
 * *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*
 * (+mrp)-library described in chapter \ref{software-readout-framework} - Version *1.4.1*
@@ -434,12 +434,13 @@ The other issue is sending the trigger signal from the readout software, which i
 
 In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
-The figure \ref{Multi_sensor_synchronisation_wiring_example.png} illustrates the schematic how several sensors must be wired together in order to implement this form of synchronisation.
+The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together in order to implement this form of synchronisation.
 
-%%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png%%
+%%Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png%%
 
 Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
-To do this, the firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the funtionality to detect if the sensor is a primary or a secondary sensor.
+The figure \ref{Unified_sensor_fiUnified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.pngrmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} shows how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
+The firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the funtionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
@@ -447,21 +448,21 @@ This means that in a chain of sensors there is exactly one *primary* and many *s
 
 
 In single-sensor operation, this automatically jumps to *primary* sensor operation through the *got impulse within 1000ms* branch result.
-The figure \ref{Query_opmode_using_(+cli).png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
+The figure \ref{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
 An important aspect of the implementation is that there is no numbering or sequence of the individual sensors.
 
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
 The sensor differentiation takes place later in the (+mrp)-library \ref{software-readout-framework} by using the sensor (+uuid).
 
-%%Query_opmode_using_(+cli).png%%
+%%Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png%%
 
 ## Example Sensors
 
 Two functional sensor platforms are built in order to create a solid test platform for later tests and for the development of the (+mrp)-library \ref{software-readout-framework} with the previously developed sensor concepts.
 
-%%Build_sensors_with_different_capabilities.csv%%
+%%Build_hardware_sensors_with_equipped_with_different_sensor_(+ic)s_to_cover_different_magnet_charaterisation_setups.csv%%
 
-The table \ref{Build_sensors_with_different_capabilities.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
+The table \ref{Build_hardware_sensors_with_equipped_with_different_sensor_(+ic)s_to_cover_different_magnet_charaterisation_setups.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
 These cover all the required functions described in the use cases \ref{use-cases}. The most important difference, apart from the sensor used, is the *scan mode*.
 In this context, this describes whether the sensor can measure a *static* fixed point on the magnet or if the sensor can move *dynamically* around the magnet using a controllable manipulator.
 
@@ -490,12 +491,12 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 The 3D full sphere sensor shown in figure \ref{Full-sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_full-sphere_sensor.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
+The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full-sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis.
 In order to be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
-%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_3D_full-sphere_sensor.png%%
+%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full-sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png%%
 
 As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these components and the sensor or magnets is increased. The turntable and its drive motor are connected to each other via a belt.
 
@@ -539,7 +540,7 @@ This concept is explained in the following chapter.
 
 User interaction points represent one core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other. For this thesis it also eases the option to change sensors for measurements. 
 
-For this purpose, the library is divided into individual modules, which are shown in the figure \ref{MRP_library_module_high_level_overview.png}.
+For this purpose, the library is divided into individual modules, which are shown in the figure \ref{MRP_library_implemented_modules_high_level_overview_each_of_which_can_be_replaced_by_the_user_with_custom_ones.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types is developed and packed together in an extendable Python library.
 
@@ -547,7 +548,7 @@ For this purpose, a module system with standardised functional patterns and data
 
 According to this concept, the user should be able to replace individual components from this chain with own modules without having to worry about implementing other of these to make the project work.
 
-%%MRP_library_module_high_level_overview.png%%
+%%MRP_library_implemented_modules_high_level_overview_each_of_which_can_be_replaced_by_the_user_with_custom_ones.png%%
 
 ### User Interaction Points Example
 
@@ -767,11 +768,11 @@ Multiple sensors can be connected to any (+pc) which is available on the network
 This can be a (+sbc) (e.g. a *Raspberry Pi*).
 The small footprint and low power consumption make it a good choice. It can also be used in a temperature chamber.
 
-The *MRPProxy* module in figure \ref{MRPlib_Proxy_Module.png} has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
+The *MRPProxy* module in figure \ref{MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png} has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
 
 The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with one remote sensor setup.
 
-%%MRPlib_Proxy_Module.png%%
+%%MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png%%
 
 Another application example is when sensors are physically separated or there are long distances between them.
 By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are accessable to the *control* (+pc).
@@ -1034,7 +1035,7 @@ MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
 
 This final example shows the use of the *MRPVisualisation* module, which provides general functions for visualising measurements.
 The visualisation options make it possible to visually assess the results of a measurement. This is particularly helpful for full sphere measurements recorded with the *3D: Full sphere* sensor introduced in chapter \ref{d-full-sphere}.
-The sub-module *MRPPolarVisualisation* is specially designed for these. Figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png} shows a plot of a full sphere measurement.
+The sub-module *MRPPolarVisualisation* is specially designed for these. Figure \ref{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png} shows a plot of a full sphere measurement.
 It is also possible to export the data from the *MRPAnalysis* module graphically as diagrams.
 The *MRPVisualisation* modules are used for this.
 The following example listing \ref{lst:mrpexample_visualisation} shows the usage of both modules.
@@ -1054,7 +1055,7 @@ from MRP import MRPDataVisualization
 MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, reading_c])
 ```
 
-%%Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module.png%%
+%%Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png%%
 
 
 ### MRPHalbachArrayGenerator

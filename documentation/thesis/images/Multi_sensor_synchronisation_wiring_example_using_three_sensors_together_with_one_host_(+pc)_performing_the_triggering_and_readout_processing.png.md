@@ -1,0 +1,2 @@
+![Multi sensor synchronisation wiring example using three sensors together with one host (+pc) performing the triggering and readout processing \label{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}](./generated_images/border_Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png)
+
