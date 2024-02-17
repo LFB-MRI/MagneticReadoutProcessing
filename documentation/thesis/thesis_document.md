@@ -31,7 +31,7 @@ The accompanying open-source software for this thesis is designed not only to fa
 
 The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
 
-At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri)with precision greater than *1000(+ppm)*.
+At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri) with precision greater than *1000 (+ppm)*.
 
 This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcome of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
@@ -113,9 +113,9 @@ Within the research domain, various implementations have emerged. An exemplar in
 
 Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OTW19] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400*(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
 To further refine the magnet's homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -147,13 +147,13 @@ The present work aims to provide an efficient and comprehensive solution for the
 
 Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, *Fraunhofer MEVIS* in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit customised specifically for screening purposes. As described before, since 1991 low-field (+mri)s have evolved into a growing realm of research, showcasing significant opportunities within the field of medical technology. The efforts by *Fraunhofer MEVIS* exemplifies the ongoing commitment to utilizing the potential of low-field (+mri) for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to improve the homogeneity of magnets within low-field (+mri)systems below *1000*(+ppm), primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
+The focus of the ongoing efforts is to improve the homogeneity of magnets within low-field (+mri)systems below *1000 (+ppm)*, primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
 
 Beyond the development and prototype construction of low-field (+mri) scanners, the project encompasses electromagnetic simulation of components within the low-field (+mri)system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging AI-based methodologies.
 
 This comprehensive effort serves to bolster the prototyping phase of the low-field (+mri). Diverging from the approach implemented by O'Reilly, Teeuwisse, and Webb, *DeLoRI* aims to design an open (+mri), departing from the circular (+mri) configuration discussed in the publication. This innovation is geared towards streamlining breast examinations, offering enhanced accessibility, and minimizing the spatial requirements during installation. 
 
-In addition, *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below 1000(+ppm). While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal at this point is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
+In addition, *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below *1000 (+ppm)*. While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal at this point is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
 
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterisation process.
 
@@ -164,14 +164,14 @@ The library will enable data acquisition, storage and analysis of magnetic prope
 
 The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
 
-Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000*(+ppm). Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
+Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000 (+ppm)*. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
 ## Research Question and Approach
 
 Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
 
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
-To measure a deviation of better than *1000*(+ppm) in a *50mT* magnetic field, a resolution that is less than *1000*(+ppm) of *50mT* is needed.
+To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
 
   $$\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT $$
 
@@ -186,7 +186,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000*(+ppm)? The desired outcome is a measurement of less than *50* $\mu$T at *1000*(+ppm), with a specific focus on determining the sensors' viability for noise measurements.
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000 (+ppm)*? The desired outcome is a measurement of less than *50* $\mu$T at *1000 (+ppm)*, with a specific focus on determining the sensors' viability for noise measurements.
 
 It is essential to emphasize that the intention is not to characterize the magnets; the sensors which might be used for characterisation are be analysed and evaluated.
 
@@ -506,7 +506,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 ### Integration of an Industry-Teslameter
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
-A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
+A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
 
 This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
@@ -520,7 +520,7 @@ In order to be able to read and correctly interpret the data from the microcontr
 
 This software or hardware integration can be carried out on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
-%%Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png%%
+%%Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png%%
 
 
 # Software Readout Framework
@@ -658,7 +658,7 @@ It can be seen that by using the (+json) format, all measurement points and meta
 This means that they can also be read out in other programs.
 Using serialization, the *MRPReading* class inherited from Python-*Object* class is serialized via a dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
 
-```json {#lst:json_export_format_example caption="JSON export structure of an MRPReading based measurement"}
+```json {#lst:json_export_format_example caption="JSON structure of an exported MRPReading based measurement with information about the measurement environment, additional meta-data and raw data value objects"}
 {
   "time_start": "Wed Sep 20 08:50:13 2023",
   "time_end": "Wed Sep 20 08:54:13 2023",
@@ -791,7 +791,7 @@ For the user, nothing changes in the procedure for setting up a measurement.
 The *MRPProxy* (+cli) application must always be started like shown in listing \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
 
 
-```bash {#lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor usage over network"}
+```bash {#lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor forwarding over the network. The (+cli) output shows the available sensor to the connected (+host) pc"}
 # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
 $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
 Proxy started. http://remotepc.local:5556/
@@ -802,7 +802,7 @@ Terminate Proxy instance [y/N] [n]:
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface, which is shown in listing \ref{lst:mrpcli_config_rest}:
 
-```bash {#lst:mrpcli_config_rest caption="MRPProxy REST endpoint query examples"}
+```bash {#lst:mrpcli_config_rest caption="MRPProxy provided (+rest) endpoint query example using wget commandline tool to send requests"}
 # GET PROXY STATUS
 $ wget http://proxyinstance.local:5556/proxy/status
 {
@@ -836,7 +836,7 @@ The query result shows that the sensors are connected correctly and that the cap
 To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required as shown in listing \ref{lst:mrpcli_config_using_rpc}. 
 
 
-```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a network sensor"}
+```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPproxy based network sensor"}
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
 $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 > remote sensor connected: True using proxy connection:
@@ -879,7 +879,7 @@ For this purpose, the *info* command of each sensor is queried.
 This information is added to the previously created (+lut). Duplicate entries are summarised (see table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
 
 
-```bash {#lst:mtsc caption="MRPproxy REST entry point query examples"}
+```bash {#lst:mtsc caption="MRPproxy (+rest) capabilities query result after execution of the merging algorithm"}
 # QUERY Network-Proxy capabilities
 $ wget http://proxyinstance.local:5556/proxy/status
 {"capabilities":[
@@ -928,7 +928,7 @@ The following example listing \ref{lst:mrpexample_reading} shows how a measureme
 
 An important point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
 
-```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement"}
+```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement using Python code"}
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -965,14 +965,14 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors. In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 
-```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store readings inside of a measurement"}
+```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store raw sensor readings inside of a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
 system_ports = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path = MRPHalSerialPortInformation("UNFSensor1")
+device_path = MRPHalSerialPortInformation("UnifiedSensor_4242")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -1122,7 +1122,7 @@ To simplify these tasks, a (+cli) is implemented and implements the following fu
 Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
 These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
 
-```bash {#lst:mrpcli_config_run caption="CLI example for configuring a measurement run"}
+```bash {#lst:mrpcli_config_run caption="MRP(+cli) example usage for configuration of a measurement run"}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
 ## CONFIGURE THE SENSOR TO USE
 $ MRPcli config setupsensor testcfg
@@ -1166,17 +1166,17 @@ The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measu
 4. Export the modified measurements
 5. Create a graphical plot of all measurements with standard deviation
 
-In order to implement such a pipeline, the *yaml* file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
+In order to implement such a pipeline, the(+yaml) file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
 
 The pipeline definition consists of sections which execute the appropriate Python commands in the background.
 
-The signatures in the *yaml* file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
+The signatures in the (+yaml) file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system makes almost all Python functions available to the user.
 To simplify usage, a pre-defined list of verified functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
-The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown in figure \ref{Example_measurement_analysis_pipeline.png} as *yaml* syntax.
+The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown in figure \ref{Example_measurement_analysis_pipeline.png} as (+yaml) syntax.
 
-```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
+```yaml {#lst:mrpuddp_example_yaml caption="Example (+yaml) code of a user defined processing pipeline with six stages linked together"}
 stage import_readings:
   function: import_readings
   parameters:
@@ -1584,7 +1584,7 @@ Based on this it is possible to systematically characterise magnets from the sof
 After discussing the developed hardware and software components in particular, the following chapter answers the question of whether the selected sensors meet the requirements:
 
 * Measure a wide range of different permanent magnets with regard to their systematic field strength
-* Automated measurement of the homogeneity with an accuracy of less than *1000(+ppm)* what is demanded to measure Halbach rings
+* Automated measurement of the homogeneity with an accuracy of less than *1000 (+ppm)* what is demanded to measure Halbach rings
 
 These questions are answered in the following as a basic readout and analysis functionality platform had to be created first and thus an automated sensor characterisation can be performed.
 
@@ -1779,7 +1779,7 @@ It can be clearly seen that these differ significantly by a factor of *x10*.
 
 The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
 
-The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000(+ppm)*.
+The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000 (+ppm)*.
 
 However, due to the limited measuring range of *±3mT*, direct measurement of stronger magnets is not possible using the *MMC5603NJ*. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm* which is more than the *MMC5603NJ* can measure.
 
