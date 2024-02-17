@@ -321,7 +321,7 @@ The focus is on utilising existing microcontroller development and evaluation bo
 
 All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
-By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These hole are necessary for later adaptions and sensor changes.
+By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These hole are necessary for later adaptions and sensor changes, such as different magnet holders or measurement equipment (e.g. temperature sensors).
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
 This enables subsequent multi-sensor synchronization and also offers options for later extensions. 
