@@ -216,12 +216,11 @@
 \renewcommand*{\arraystretch}{2} %2.0 IS  THE SPACING
 
 
-%\usepackage{natbib}
-%\bibliographystyle{apalike}
-\usepackage{natbib}
-\bibliographystyle{apalike}
-\setcitestyle{square}
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{abbrvnat}
 \newcommand{\customcite}[1]{\citepalias{#1}}
+%\bibliographystyle{plaindin}
+%\newcommand{\customcite}[1]{\cite{#1}}
 
 \begin{document}
 
@@ -235,8 +234,7 @@
 \renewcaptionname{ngerman}{\tablename}{Table}
 \renewcaptionname{ngerman}{\listfigurename}{List of Figures}
 \renewcaptionname{ngerman}{\listtablename}{List of Tables}
-
-\renewcommand*{\acronymname}{List of abbreviations}
+\renewcommand*{\acronymname}{List of Abbreviations}
 % printglossaries
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Titel im FH Style
@@ -317,7 +315,7 @@
 % REFERENZEN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Verschiedene Versionen, nach DIN 1505 zu zitieren
-\bibliographystyle{plaindin}
+%\bibliographystyle{plaindin}
 %\interlinepenalty=10000
 \bibliography{thesis_references}
 

@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-02-09T14:56:59.263Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="ISdxcVklvO4zoyF3Ys6m" version="22.1.2" type="device">
+<mxfile host="Electron" modified="2024-02-09T14:57:18.554Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="3xm8bG9xKeMgPPDe-zPR" version="22.1.2" type="device">
   <diagram name="Seite-1" id="LVsIx8To8QwGvgg_5ai1">
     <mxGraphModel dx="3621" dy="831" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -82,14 +82,8 @@
         <mxCell id="Dzjv2LDsBl6swFXnv9jS-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;rotation=0;" vertex="1" parent="1">
           <mxGeometry x="-2010.05" y="121.72" width="450.05" height="50.72" as="geometry" />
         </mxCell>
-        <mxCell id="Dzjv2LDsBl6swFXnv9jS-6" value="100mm Linear axis" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
+        <mxCell id="Dzjv2LDsBl6swFXnv9jS-6" value="100mm linear axis" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
           <mxGeometry x="-1550" y="104.91" width="250" height="61.53" as="geometry" />
-        </mxCell>
-        <mxCell id="Dzjv2LDsBl6swFXnv9jS-8" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="4N-B-asAUeovzKVmC_IK-10" target="4N-B-asAUeovzKVmC_IK-10">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="-1460" y="-70" as="sourcePoint" />
-            <mxPoint x="-1520" y="130" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="Dzjv2LDsBl6swFXnv9jS-9" value="Test magnet" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;spacing=2;" vertex="1" parent="1">
           <mxGeometry x="-1530" y="209.99" width="187.8" height="61.53" as="geometry" />

@@ -15,13 +15,13 @@ and analysed throughout the study.
 \gls{mri} stands as a cornerstone in clinical diagnostics, utilizing the
 principles of nuclear magnetic resonance \gls{nmr} to generate
 cross-sectional black-and-white images of the body. This indispensable
-method plays a central role in contemporary medicine and research,
+method plays a significant role in contemporary medicine and research,
 contributing significantly to saving lives. Despite its widespread use,
 traditional \gls{mri} systems often rely on large, heavy, and expensive
 magnets to achieve the necessary homogeneity of the magnetic field for
 accurate imaging. \customcite{NK16}
 
-Various types of magnets are applicated in different \gls{mri} systems.
+Several types of magnets are applicated in different \gls{mri} systems.
 Permanent magnets generate a steady yet relatively weak magnetic field,
 electromagnets are energized by electrical currents and superconducting
 electromagnets produce magnetic fields through electric induction.
@@ -61,7 +61,7 @@ Completed \gls{mri} systems pose significant challenges for
 retrospective adjustments, particularly when individual magnets impact
 the overall homogeneity of the magnetic field. While deviations in
 homogeneity can be measured post-assembly, the intricate task of
-readjustment is taken into account. It is less cost-intensive and less
+readjustment is considered. It is less cost-intensive and less
 complicated to measure the magnets proactively, prior to the
 finalization of the \gls{mri} system.
 
@@ -74,7 +74,7 @@ homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a
 comprehensive hardware and software framework. The hardware system aims
-to selectively measure magnetic fields at different locations or fully
+to selectively measure magnetic fields at various locations or fully
 around a permanent magnet using different sensors. Several existing
 open-source software solutions implement individual parts, but do not
 provide a complete data processing pipeline from acquisition to
@@ -93,8 +93,8 @@ magnetic curve.
 At last, the temperature drift is measured by repeating the background
 noise test in different temperature environments. Sensor noise should be
 less than \emph{50\(\mu\)T} to characterise precisely a magnetic field
-in a Halbach-Array of an \gls{mri}with precision greater than
-\emph{1000\gls{ppm}}.
+in a Halbach-Array of an \gls{mri} with precision greater than
+\emph{1000 \gls{ppm}}.
 
 This research initiative contributes to the improvement of low-frequency
 \gls{mri} systems by enhancing the accuracy of permanent magnet
@@ -169,7 +169,7 @@ and needs to be analysed.
 \label{Example_Halbach_ring_with_cutouts_for_eight_magnets.png}}
 \end{figure}
 
-The positioning of permanent magnets holds an important role in
+The positioning of permanent magnets holds a significant role in
 constructing an \gls{mri} and is influencing the homogeneity of the
 \emph{B0} magnetic field. Halbach ring magnets \customcite{H80} have
 become a common design for low field \gls{mri} and \gls{nmr} systems
@@ -193,7 +193,7 @@ the following main aspects:
 \begin{itemize}
 \item
   \textbf{Material}: The magnetic properties of a material influence the
-  generated field strength. Different materials have different magnetic
+  generated field strength. Various materials have different magnetic
   susceptibilities.
 \item
   \textbf{Magnetization}: The orientation of the magnetic moments in the
@@ -296,14 +296,14 @@ summary of the design of a point-of-care Halbach array low-field
 
 The Halbach magnet incorporated in this system boasts a \emph{27cm}
 diameter, a \emph{B0} field strength of 50.4mT, and an impressive
-homogeneity of 2400\gls{ppm} over a \emph{20cm} diameter using smaller
-magnets (\(12 x 12 x 12 mm^3\)). This exceptional homogeneity enables
-the utilization of coil-based gradients for spatial encoding,
+homogeneity of \emph{2400 \gls{ppm}} over a \emph{20cm} diameter using
+smaller magnets (\(12 x 12 x 12 mm^3\)). This exceptional homogeneity
+enables the utilization of coil-based gradients for spatial encoding,
 significantly enhancing the flexibility of image acquisition.
 
 The Halbach magnet incorporated in this system boasts a \emph{27cm}
 diameter, a \emph{B0} field strength of \emph{50.4 mT}, and an
-impressive homogeneity of \emph{2400}\gls{ppm} over a \emph{20cm}
+impressive homogeneity of \emph{2400 \gls{ppm}} over a \emph{20cm}
 diameter using smaller magnets (\(12 x 12 x 12 mm^3\)). This exceptional
 homogeneity enables the utilization of coil-based gradients for spatial
 encoding, significantly enhancing the flexibility of image acquisition.
@@ -360,7 +360,7 @@ magnets by manual combination. However, there are still compatibility
 problems and limitations in the adaptation of hardware and software.
 
 Special algorithms from various, public projects are used to optimize
-homogeneity, like a genetic algorithms which O'Reilly implemented
+homogeneity, like a genetic algorithm which O'Reilly implemented
 \customcite{O24}. Therefore, the challenge is to ensure the seamless
 integration and compatibility of these algorithms into the overall
 process. This should make it possible to create a workflow from the
@@ -385,7 +385,7 @@ the ongoing commitment to utilizing the potential of low-field \gls{mri}
 for enhanced breast screening applications.
 
 The focus of the ongoing efforts is to improve the homogeneity of
-magnets within low-field \gls{mri}systems below \emph{1000}\gls{ppm},
+magnets within low-field \gls{mri}systems below \emph{1000 \gls{ppm}},
 primarily driven by the goal of establishing a compact low-field
 \gls{mri} for breast cancer detection.
 
@@ -405,13 +405,13 @@ breast examinations, offering enhanced accessibility, and minimizing the
 spatial requirements during installation.
 
 In addition, \emph{DeLoRI} efforts to achieve heightened accuracy,
-striving for precision levels below 1000\gls{ppm}. While O'Reilly,
-Teeuwisse, and Webb were able to modify the ring diameter to influence
-field homogeneity, the unique goal at this point is to characterize the
-magnets pre-installation, allowing for proactive assessments of
-homogeneity characteristics. This approach aims to provide insights into
-magnetic field uniformity before the magnets are integrated, thereby
-streamlining the optimisation process. Furthermore,
+striving for precision levels below \emph{1000 \gls{ppm}}. While
+O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to
+influence field homogeneity, the unique goal at this point is to
+characterize the magnets pre-installation, allowing for proactive
+assessments of homogeneity characteristics. This approach aims to
+provide insights into magnetic field uniformity before the magnets are
+integrated, thereby streamlining the optimisation process. Furthermore,
 
 It is important to note that the primary objective of this thesis is not
 merely to characterize the magnet itself; rather, the emphasis lies in
@@ -441,9 +441,9 @@ developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study.
 The ultimate objective is to assess whether these selected sensors align
-with the stringent criteria of achieving an accuracy level of
-\emph{1000}\gls{ppm}. Furthermore, the study seeks to validate whether
-the measuring range of these sensors appropriately corresponds to the
+with the stringent criteria of achieving an accuracy level of \emph{1000
+\gls{ppm}}. Furthermore, the study seeks to validate whether the
+measuring range of these sensors appropriately corresponds to the
 required field strength, ensuring their suitability for the intended
 application.
 
@@ -459,9 +459,9 @@ be necessary in later stages of the \emph{DeLoRI} project.
 
 Before naming the research focus, it is important to understand the
 difference and connection between deviation and resolution of the
-system. To measure a deviation of better than \emph{1000}\gls{ppm} in a
-\emph{50mT} magnetic field, a resolution that is less than
-\emph{1000}\gls{ppm} of \emph{50mT} is needed.
+system. To measure a deviation of better than \emph{1000 \gls{ppm}} in a
+\emph{50mT} magnetic field, a resolution that is less than \emph{1000
+\gls{ppm}} of \emph{50mT} is needed.
 
 \[\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT \]
 
@@ -487,10 +487,10 @@ pivotal research questions:
 \item
   Homogeneity Measurement: Can the chosen sensors be adeptly utilized to
   measure the homogeneity of a Halbach ring-based B0 field within the
-  stringent limit of less than \emph{1000}\gls{ppm}? The desired outcome
-  is a measurement of less than \emph{50} \(\mu\)T at
-  \emph{1000}\gls{ppm}, with a specific focus on determining the
-  sensors' viability for noise measurements.
+  stringent limit of less than \emph{1000 \gls{ppm}}? The desired
+  outcome is a measurement of less than \emph{50} \(\mu\)T at \emph{1000
+  \gls{ppm}}, with a specific focus on determining the sensors'
+  viability for noise measurements.
 \end{itemize}
 
 It is essential to emphasize that the intention is not to characterize
@@ -505,18 +505,18 @@ overarching goal of refining the sensor-based methodologies.
 \hypertarget{use-cases}{%
 \section{Use cases}\label{use-cases}}
 
-The following chapter defines possible use cases that the future project
-need to cover. These use cases define the setup of the hard- and
+The following chapter defines desirable use cases that the future
+project need to cover. These use cases define the setup of the hard- and
 software. These illustrate practical situations to understand the
 functionality and added value of the implemented solution for the user.
 
-The use cases are defined in the course of project planning and provide
-an overview of how the user interacts with the project and what
+The use cases are defined during project planning and provide an
+overview of how the user interacts with the project and what
 functionalities can be expected. In the later accomplished evaluation
 process in chapter \ref{use-case-evaluation}, the defined use cases are
 also used as a reference to demonstrate the implemented capabilities of
 the solution. This is essential for understanding the needs of the
-target group and designing the end result accordingly.
+target group and designing the result accordingly.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -626,9 +626,9 @@ insights for future work. This chapter ensures closure and aids readers
 in grasping the broader context and significance of the research.
 
 Finally, a comprehensive hardware and software framework needs to be
-established, which is capable of measuring diverse objects using various
-sensors. Additionally, remarks need to be provided regarding the
-suitability of the employed sensors for magnetic field measurements.
+established, which can measure diverse objects using various sensors.
+Additionally, remarks need to be provided regarding the suitability of
+the employed sensors for magnetic field measurements.
 
 \hypertarget{unified-sensor}{%
 \chapter{Unified Sensor}\label{unified-sensor}}
@@ -657,15 +657,15 @@ measurement data from magnets. Further, the interface firmware creates a
 basis for the development of a data protocol for exchanging measured
 values.
 
-It simplifies of own measuring devices into the \gls{mrp} ecosystem at a
-later date. This is only applicable with a minimal functional hardware
-and firmware setup; it is developed for this purpose in the first step.
+It simplifies of own measuring devices into the \gls{mrp} ecosystem
+later. This is only applicable with a minimal functional hardware and
+firmware setup; it is developed for this purpose in the first step.
 
 \hypertarget{sensor-selection}{%
 \section{Sensor Selection}\label{sensor-selection}}
 
 The selection process for possible magnetic field sensors initially
-focisses on the most common and cost-effective ones, especially those
+focuses on the most common and cost-effective ones, especially those
 that are already used in smartphones and are therefore widely available.
 
 A key aspect of this selection is the preference for sensors with
@@ -722,8 +722,8 @@ In the \emph{Evaluation} in chapter \ref{evaluation} basic
 characterisation methods are used to evaluate the sensors listed in
 table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
-with regard to their sensitivity and other parameters. This is done at
-this point, as the components of the readout interface that enable
+regarding their sensitivity and other parameters. This is done at this
+point, as the components of the readout interface that enable
 interaction with the sensors are considered first.
 
 \hypertarget{mechanical-structure}{%
@@ -748,7 +748,7 @@ Figure
 shows rendered view of the 1D-Single sensor \gls{cad} drawing, which is
 described in chapter \ref{d-single-sensor}.
 
-All parts are produced using 3D printing additive manufacturing proces.
+All parts are produced using 3D printing additive manufacturing process.
 The sensor circuit board is glued underneath the magnet holder. This is
 interchangeable, so different distances between sensor and magnet can be
 realised.
@@ -759,8 +759,8 @@ can be adapted to different magnets. It can be produced quickly due to
 the small number of parts used. The two recesses lock the magnet holder
 with the inserted magnet over the sensor. The specified tolerances allow
 the magnet to be inserted into the holder with repeat accuracy and
-without backlash. This is important if several magnets have to be
-measured, where the positioning over the sensor must always be the same.
+without backlash. This is important if several magnets must be measured,
+where the positioning over the sensor must always be the same.
 
 \hypertarget{electrical-interface}{%
 \section{Electrical Interface}\label{electrical-interface}}
@@ -780,8 +780,8 @@ The focus is on utilising existing microcontroller development and
 evaluation boards, which already integrate all the components required
 for basic operation. This not only enabled a time-saving implementation,
 but also ensured a cost-efficient realisation. A \emph{Raspberry Pi
-Pico} and a \emph{STM32F4} are used as an computer-sensor interface for
-this thesis, which are populare, cost-effective and simple to implement.
+Pico} and a \emph{STM32F4} are used as a computer-sensor interface for
+this thesis, which are popular, cost-effective and simple to implement.
 
 All the necessary components and their circuitry are recorded on a
 \gls{pcb} shown in figure
@@ -789,17 +789,17 @@ All the necessary components and their circuitry are recorded on a
 and subsequently manufactured. In addition, footprints are provided for
 various sensor \gls{ic} packages. By placing mounting holes on the
 \gls{pcb}, it is possible to attach various mechanical mounts on top of
-the sensor \gls{ic}s. These hole are necessary for later adaptions and
+the sensor \gls{ic}s. These holes are necessary for later adaptions and
 sensor changes, such as different magnet holders or measurement
 equipment (e.g.~temperature sensors).
 
 Special attention is paid to the provision of an accessible
 SYNC-\gls{gpio} connector. This enables subsequent multi-sensor
-synchronization and also offers options for later sensor-extensions.
-This functionality opens up the possibility of synchronising data from
-different sensors to achieve precise and coherent measurement results.
-Overall, this integrated approach represents an effective solution for
-the flexible evaluation of sensors and helps to optimise the development
+synchronization and offers options for later sensor-extensions. This
+functionality opens the possibility of synchronising data from different
+sensors to achieve precise and coherent measurement results. Overall,
+this integrated approach represents an effective solution for the
+flexible evaluation of sensors and helps to optimise the development
 process.
 
 \hypertarget{firmware}{%
@@ -819,7 +819,7 @@ enables the execution of predefined functions. The firmware is used to
 process input data, control output devices and performs specific tasks
 according to the program code.
 
-It handles communication with sensors, actuators and other peripheral
+It manages communication with sensors, actuators and other peripheral
 devices, processing data and making decisions. Firmware is critical to
 the functioning of devices.
 
@@ -829,12 +829,12 @@ shown in table
 and query measurements. This measured data can be forwarded to a host
 \gls{pc} via a user interface and can then be further processed there.
 
-An important component is that as many common sensors as possible can be
-easily connected without having to adapt the firmware. This modularity
-is implemented using abstract class design. These are initiated
-according to the sensors found at startup. If new hardware needs to be
-integrated, only the required functions in listing
-\ref{lst:CustomSensorClass} need to be implemented.
+A key component is that as many common sensors as possible can be easily
+connected without having to adapt the firmware. This modularity is
+implemented using abstract class design. These are initiated according
+to the sensors found at startup. If new hardware needs to be integrated,
+only the required functions in listing \ref{lst:CustomSensorClass} need
+to be implemented.
 
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package}, label=lst:CustomSensorClass]
 #ifndef __CustomSensor_h__
@@ -845,10 +845,10 @@ class CustomSensor: public baseSensor
 public:
   CustomSensor();
   ~CustomSensor();
-  // implement depending sensor communication interface
+  // implement depending on sensor communication interface
   bool begin(TwoWire& _wire_instance); // I2C
   bool begin(HardwareSerial& _serial_instance); // UART
-  bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
+  bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like one wire
   // FUNCTIONS USED BY READOUT LOGIC
   bool is_valid() override;
   String capabilities() override;
@@ -873,7 +873,7 @@ and these can later be used to read out measurement results.
 
 The next initialisation system is dedicated for multi-sensor
 synchronisation described in chapter
-\ref{sensor-syncronisation-interface}. The last step in the setup is to
+\ref{sensor-synchronisation-interface}. The last step in the setup is to
 configure communication with the host or connected \gls{pc}. All
 implemented microcontroller platforms used (\emph{Raspberry Pi Pico},
 \emph{STM32F4}) have a \gls{usb} slave port.
@@ -884,14 +884,13 @@ virtual \emph{RS232} communication port using a \gls{usb} port on a
 systems.
 
 After execution of the setup routine is completed, the system switches
-to an infinite loop, which processes several possible actions. One task
-is, to react to user commands which can be sent to the system by the
-user via the integrated \gls{cli}. All sensors are read out via a timer
-interval set in the setup procedure and their values are stored in a
-ring buffer. Ring buffer offers efficient data management in limited
-memory. Its cyclic structure enables continuous overwriting of older
-data, saves memory space and facilitates seamless processing of
-real-time data.
+to an infinite loop, which processes several actions. One task is, to
+react to user commands which can be sent to the system by the user via
+the integrated \gls{cli}. All sensors are read out via a timer interval
+set in the setup procedure and their values are stored in a ring buffer.
+Ring buffer offers efficient data management in limited memory. Its
+cyclic structure enables continuous overwriting of older data, saves
+memory space and facilitates seamless processing of real-time data.
 
 Ring buffers are well suited for applications with variable data rates
 and minimise the need for complex memory management. The buffer can be
@@ -901,7 +900,7 @@ the host together with a time stamp and a sequential number.
 
 This ensures that in a multi-sensor setup with several sensors. The
 measurements are synchronized in time like described in chapter
-\ref{sensor-syncronisation-interface} and are not out of sequence or
+\ref{sensor-synchronisation-interface} and are not out of sequence or
 drift.
 
 \hypertarget{communication-interface}{%
@@ -958,9 +957,9 @@ command is only sent by the library, not by the user. The same commands
 are available as for \gls{cli}-based communication, but in a binary
 format.
 
-\hypertarget{sensor-syncronisation-interface}{%
-\subsection{Sensor Syncronisation
-Interface}\label{sensor-syncronisation-interface}}
+\hypertarget{sensor-synchronisation-interface}{%
+\subsection{Sensor Synchronisation
+Interface}\label{sensor-synchronisation-interface}}
 
 \begin{figure}
 \centering
@@ -973,7 +972,7 @@ processing
 
 One problem with the use of several sensors on one readout host \gls{pc}
 is that the measurements may drift over time. On the one hand, \gls{usb}
-latencies can occur. This can occur due to various factors, including
+latencies can occur. This can occur due to numerous factors, including
 device drivers, data transfer speed and system resources. High-quality
 \gls{usb} devices and modern drivers often minimise
 latencies.\customcite{W19} Nevertheless, complex data processing tasks and
@@ -1089,25 +1088,24 @@ software settings:
   Version \emph{1.0.1}
 \end{itemize}
 
-It can be seen that a jitter time of up to an additional \emph{1ms} is
-added between the triggering of the measurements by the host system and
-the receipt of the command by the sensor hardware. If the host system is
-still under load, this value increases many times over. This means that
-synchronising several sensors via the \gls{usb} connection alone is not
-sufficient.
+A jitter time of up to an additional \emph{1ms} is added between the
+triggering of the measurements by the host system and the receipt of the
+command by the sensor hardware. If the host system is still under load,
+this value increases many times over. This means that synchronising
+several sensors via the \gls{usb} connection alone is not sufficient.
 
 The other issue is sending the trigger signal from the readout software,
 which is described in chapter \ref{software-readout-framework}. At this
 point unpredictable latencies can occur, too, depending on which other
 tasks are also executed on this port.
 
-In order to enable the most stable possible synchronisation between
-several sensors, an option has already been created to establish an
-electrical connection between sensors. This is used together with the
-firmware to synchronise the readout intervals. The figure
+To enable the most stable possible synchronisation between several
+sensors, an option has already been created to establish an electrical
+connection between sensors. This is used together with the firmware to
+synchronise the readout intervals. The figure
 \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}
-illustrates the schematic how several sensors must be wired together in
-order to implement this form of synchronisation.
+illustrates the schematic how several sensors must be wired together to
+implement this form of synchronisation.
 
 \begin{figure}
 \centering
@@ -1126,7 +1124,7 @@ shows how the firmware handles the decision task if the sensor is
 \emph{register irq on sync pin} is overwritten. To set one
 \emph{primary} and several \emph{secondary} sensors, each sensor waits
 for an initial pulse on the SYNC-\gls{gpio}, which is a pin at the
-microcontroller with the funtionality to detect if the sensor is a
+microcontroller with the functionality to detect if the sensor is a
 primary or a secondary sensor. A random timer is started beforehand by
 each sensor, which sends a pulse on the sync line. All others receive
 this and switch to \emph{secondary mode} and synchronise the
@@ -1197,7 +1195,7 @@ The table
 \ref{Build_hardware_sensors_with_equipped_with_different_sensor_(+ic)s_to_cover_different_magnet_charaterisation_setups.csv}
 shows the various prototype sensor platforms equipped with different
 magnetic field sensors. These cover all the required functions described
-in the use cases \ref{use-cases}. The most important difference, apart
+in the use cases \ref{use-cases}. The most significant difference, apart
 from the sensor used, is the \emph{scan mode}. In this context, this
 describes whether the sensor can measure a \emph{static} fixed point on
 the magnet or if the sensor can move \emph{dynamically} around the
@@ -1229,7 +1227,7 @@ Sensor firmware.
 The electrical level is based on a \emph{Raspberry Pi Pico} together
 with the \emph{MMC5603NJ} magnetic sensor. The mechanical setup consists
 of four 3D printed components, which are fixed together with nylon
-screws to minimise possible influences on the measurement.
+screws to minimise influences on the measurement.
 
 Since the \emph{MMC5603NJ} only has limited measurement range of total
 \emph{6uT}, even small coin sized neodymium magnets already saturates
@@ -1240,9 +1238,9 @@ the sensor to increase the distance between the magnet and the sensor
 and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes
-and can be placed on the spacer without backlash in order to be able to
-perform a repeatable measurement without introducing measurement
-irregularities by mechanically changing the magnet.
+and can be placed on the spacer without backlash to be able to perform a
+repeatable measurement without introducing measurement irregularities by
+mechanically changing the magnet.
 
 \hypertarget{d-full-sphere}{%
 \subsection{3D: Full Sphere}\label{d-full-sphere}}
@@ -1269,8 +1267,8 @@ recognisable and corresponds to the orientation of the magnet in the
 holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180
-degrees around the magnet on one axis. In order to be able to map the
-full sphere, the magnet is mounted on a turntable. This permits the
+degrees around the magnet on one axis. To be able to map the full
+sphere, the magnet is mounted on a turntable. This permits the
 manipulator to move a polar coordinate system.
 
 \begin{figure}
@@ -1302,8 +1300,8 @@ As the sensors shown so far relate exclusively to self-built, low-cost
 hardware, the following chapter shows how existing hardware can be
 integrated into the system. A temperature-compensated \emph{Voltcraft
 GM-70} telsameter shown in figure
-\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png} is
-used, which has a measuring range of \emph{0T} to \emph{3T} with a
+\ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}
+is used, which has a measuring range of \emph{0T} to \emph{3T} with a
 resolution of \emph{0.1mT}. It offers an \emph{RS232} interface with a
 documented protocol for connection to a \gls{pc}.
 
@@ -1326,15 +1324,17 @@ the data from the microcontroller, the serial protocol of the sensor is
 implemented in a customised version of the \emph{CustomSensor} class as
 shown in listing \ref{lst:CustomSensorClass}.
 
-This software or hardware integration can be carried out on any other
+This software or hardware integration can be conducted on any other
 measuring device with a suitable communication interface and a known
 protocol thanks to the modular design.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}
+\includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}
 \caption{Voltcraft GM70 teslameter with custom \gls{pc} interface board
-\label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board.png}}
+using a \gls{usb} to serial converter and needed additional pull-up
+resistors
+\label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}}
 \end{figure}
 
 \hypertarget{software-readout-framework}{%
@@ -1419,8 +1419,8 @@ of the magnet holder.
 As a result, there are two projects which are both suitable for the task
 of optimizing and creating Halbach magnets for \gls{mri} applications.
 The data structures are not compatible with each other. However, they
-are executed manually one after the other to obtain a final result with
-manual data conversation.
+are executed manually one after the other to obtain a result with manual
+data conversation.
 
 The library created is intended to solve this compatibility problem by
 providing standardized and flexible data structures with this format of
@@ -1442,8 +1442,8 @@ The input parameters of the \emph{HalbachOptimisation} \customcite{O24}
 project are on the one hand the mechanical dimensions and the number of
 magnets to be used. Idal magnets are assumed at this point. However, it
 should also be possible to import field data in a more measured form
-later on. Using the DataAquisition sub-step, it is possible to generate
-any number of ideal magnets.
+later. Using the DataAquisition sub-step, it is possible to generate any
+number of ideal magnets.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1453,15 +1453,15 @@ any number of ideal magnets.
   \textbf{Add custom analysis processing step}
 \end{enumerate}
 
-Next, the user creates his own analysis step in order to be able to call
-up its functions. In the case of the \emph{HalbachOptimisation}
-\customcite{O24} project, the function signature of the start function
-must be changed. This receives the result of the previous step, in this
-case the generated magnet data. By optionally setting meta data in the
-universal library data type, constants can be replaced in the analysis
-function and made dynamically configurable. The return result also
-corresponds to this data type so that subsequent steps are compatible
-and contains the magnet data with modified position and rotation data.
+Next, the user creates his own analysis step to be able to call up its
+functions. In the case of the \emph{HalbachOptimisation} \customcite{O24}
+project, the function signature of the start function must be changed.
+This receives the result of the previous step, in this case the
+generated magnet data. By optionally setting meta data in the universal
+library data type, constants can be replaced in the analysis function
+and made dynamically configurable. The return result also corresponds to
+this data type so that subsequent steps are compatible and contains the
+magnet data with modified position and rotation data.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1476,8 +1476,7 @@ which creates the \gls{cad} model of the magnet holder. The data can
 also be exported as files. To make the project compatible, the function
 signatures are also adapted. In this case, more changes are required, as
 the configuration file is loaded from the file system. This logic needs
-to be removed in order to use the added meta data as input parameter
-instead.
+to be removed to use the added meta data as input parameter instead.
 
 After these customisation steps, executing both projects one after the
 other is possible and all required configuration parameters are
@@ -1584,20 +1583,20 @@ hand, the focus during development is that it is also possible to use
 the data in other programs.
 
 For this purpose, an open, documented export format must be selected.
-Ideally, this should be human-readable and viewable with a simple text
+Ideally, this should be human-readable and viewable with a plain text
 editor. This eliminates all binary-based formats such as the
 \href{https://docs.python.org/3/library/pickle.html}{Python-Pickle}
 package.
 
 Taking these points into account, the \gls{json} format is chosen. This
-is human and machine readable and there is a compatible parser for
-almost every programming language.
+is human and machine readable and there is a compatible parser for every
+programming language.
 
 The following listing \ref{lst:json_export_format_example} shows an
 example \gls{json} structure which is generated when a measurement that
-using the library is dumped to the filesystem. It can be seen that by
-using the \gls{json} format, all measurement points and metadata are
-available in readable plain text.
+using the library is dumped to the filesystem. By using the \gls{json}
+format, all measurement points and metadata are available in readable
+plain text.
 
 This means that they can also be read out in other programs. Using
 serialization, the \emph{MRPReading} class inherited from
@@ -1605,7 +1604,7 @@ Python-\emph{Object} class is serialized via a dictionary conversion
 step. This \gls{json} string can then be processed directly or written
 to the file system as a file.
 
-\begin{lstlisting}[caption={JSON export structure of an MRPReading based measurement}, label=lst:json_export_format_example]
+\begin{lstlisting}[caption={JSON structure of an exported MRPReading based measurement with information about the measurement environment, additional meta-data and raw data value objects}, label=lst:json_export_format_example]
 {
   "time_start": "Wed Sep 20 08:50:13 2023",
   "time_end": "Wed Sep 20 08:54:13 2023",
@@ -1724,9 +1723,9 @@ instance based on the sensor capabilities.
 \hypertarget{visualisation}{%
 \subsubsection{Visualisation}\label{visualisation}}
 
-In order to give the user the possibility to display the recorded data
-visually, two modules are created, which can graphically prepare
-\emph{MRPReading} instances:
+To give the user the possibility to display the recorded data visually,
+two modules are created, which can graphically prepare \emph{MRPReading}
+instances:
 
 \begin{itemize}
 \tightlist
@@ -1789,8 +1788,8 @@ measurement setups where space or cable routing options are limited.
 
 Multiple sensors can be connected to any \gls{pc} which is available on
 the network. This can be a \gls{sbc} (e.g.~a \emph{Raspberry Pi}). The
-small footprint and low power consumption make it a good choice. It can
-also be used in a temperature chamber.
+small footprint and low power consumption make it a viable choice. It
+can also be used in a temperature chamber.
 
 The \emph{MRPProxy} module in figure
 \ref{MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png}
@@ -1813,7 +1812,7 @@ communicating together using the http protocol
 Another application example is when sensors are physically separated or
 there are long distances between them. By connecting several sensors via
 the proxy module, it is possible to link several instances and all
-sensors available in the network are accessable to the \emph{control}
+sensors available in the network are accessible to the \emph{control}
 \gls{pc}.
 
 \begin{figure}
@@ -1844,7 +1843,7 @@ user, nothing changes in the procedure for setting up a measurement. The
 in listing \ref{lst:mrpcli_proxy_start} on the \gls{pc} with connected
 hardware sensors attached.
 
-\begin{lstlisting}[language=bash, caption={MRPproxy usage to enable local sensor usage over network}, label=lst:mrpcli_proxy_start]
+\begin{lstlisting}[language=bash, caption={MRPproxy usage to enable local sensor forwarding over the network. The (+cli) output shows the available sensor to the connected (+host) pc}, label=lst:mrpcli_proxy_start]
 # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
 $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
 Proxy started. http://remotepc.local:5556/
@@ -1857,7 +1856,7 @@ After the proxy instance has been successfully started, it is optionally
 possible to check the status via the \gls{rest} interface, which is
 shown in listing \ref{lst:mrpcli_config_rest}:
 
-\begin{lstlisting}[language=bash, caption={MRPProxy REST endpoint query examples}, label=lst:mrpcli_config_rest]
+\begin{lstlisting}[language=bash, caption={MRPProxy provided (+rest) endpoint query example using wget command line tool to send requests}, label=lst:mrpcli_config_rest]
 # GET PROXY STATUS
 $ wget http://proxyinstance.local:5556/proxy/status
 {
@@ -1894,15 +1893,15 @@ configure a measurement on the \emph{control} \gls{pc}, only the
 instance is required as shown in listing
 \ref{lst:mrpcli_config_using_rpc}.
 
-\begin{lstlisting}[language=bash, caption={MRPcli usage example to connect with a network sensor}, label=lst:mrpcli_config_using_rpc]
+\begin{lstlisting}[language=bash, caption={MRPcli usage example to connect with a MRPproxy based network sensor}, label=lst:mrpcli_config_using_rpc]
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
 $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 > remote sensor connected: True using proxy connection:
 > http://proxyinstance.local:5556 with 1 local sensor connected
 \end{lstlisting}
 
-\hypertarget{sensor-syncronisation}{%
-\subsection{Sensor Syncronisation}\label{sensor-syncronisation}}
+\hypertarget{sensor-synchronisation}{%
+\subsection{Sensor Synchronisation}\label{sensor-synchronisation}}
 
 Another important aspect for using several sensors via the proxy system
 is the synchronisation of the measurement intervals between the sensors.
@@ -1912,8 +1911,8 @@ information, as this is communicated via the \gls{usb} interface.
 If several sensors are connected locally, they can be connected to each
 other via their sync input using short cables. One sensor acts as the
 central clock as described in chapter
-\ref{sensor-syncronisation-interface}. This no longer works for long
-distances and the syncronisation must be established via a shared
+\ref{sensor-synchronisation-interface}. This no longer works for long
+distances and the synchronisation must be established via a shared
 network connection.
 
 If time-critical synchronisation over the network is required, \gls{ptp}
@@ -1981,7 +1980,7 @@ Duplicate entries are summarised (see table
 host when the \emph{info} \ref{lst:mtsc} command is received over
 network.
 
-\begin{lstlisting}[language=bash, caption={MRPproxy REST entry point query examples}, label=lst:mtsc]
+\begin{lstlisting}[language=bash, caption={MRPproxy (+rest) capabilities query result after execution of the merging algorithm}, label=lst:mtsc]
 # QUERY Network-Proxy capabilities
 $ wget http://proxyinstance.local:5556/proxy/status
 {"capabilities":[
@@ -2000,11 +1999,11 @@ each sensor, to merge available commands of connected sensors into the
 \subsubsection{Dynamic extension of the available Network-Proxy
 Commands}\label{dynamic-extension-of-the-available-network-proxy-commands}}
 
-In order for the host to be able to send a command to the network
-multi-sensor setup, the command received needs to be forwarded to the
-correct sensor. In addition, there are commands such as the previously
-used \emph{info} or \emph{status} command, which must be intercepted by
-the \emph{MRPProxy} module so that it can be handled differently (see
+For the host to be able to send a command to the network multi-sensor
+setup, the command received needs to be forwarded to the correct sensor.
+In addition, there are commands such as the previously used \emph{info}
+or \emph{status} command, which must be intercepted by the
+\emph{MRPProxy} module so that it can be handled differently (see
 example listing \ref{lst:mtsc}).
 
 To realize this, a \gls{lut} is created in the previous steps, which
@@ -2014,7 +2013,7 @@ sensor} and allows the commands to be routed.
 
 For commands, which have several entries for \emph{CAPABLE SENSORS ID
 LUT} from table \ref{Sensor_capabilities_merging_algorithm.csv}, there
-are two possible approaches to how the command is processed:
+are two approaches to how the command is processed:
 
 \begin{itemize}
 \tightlist
@@ -2067,11 +2066,11 @@ The following example listing \ref{lst:mrpexample_reading} shows how a
 measurement is created and measurement points are added in the form of
 \emph{MRPReadingEntry} instances.
 
-An important point is the management of the meta data, which further
+A crucial point is the management of the meta data, which further
 describes the measurement. This is realised in the example using the
 \emph{set\_additional\_data} function.
 
-\begin{lstlisting}[language=Python, caption={MRPReading example for setting up a basic measurement}, label=lst:mrpexample_reading]
+\begin{lstlisting}[language=Python, caption={MRPReading example for setting up a basic measurement using Python code}, label=lst:mrpexample_reading]
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -2119,14 +2118,14 @@ listing \ref{lst:mrpexample_hal}, an \emph{1D: Single Sensor}, which is
 explained in chapter \ref{d-single-sensor}, is connected locally to the
 host \gls{pc}.
 
-\begin{lstlisting}[language=Python, caption={MRPHal example to use a connected hardware sensor to store readings inside of a measurement}, label=lst:mrpexample_hal]
+\begin{lstlisting}[language=Python, caption={MRPHal example to use a connected hardware sensor to store raw sensor readings inside of a measurement}, label=lst:mrpexample_hal]
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
 system_ports = MRPHalSerialPortInformation.list_sensors()
 sensor = MRPHal(system_ports[0])
 # OR USE SPECIFIED SENSOR DEVICE
-device_path = MRPHalSerialPortInformation("UNFSensor1")
+device_path = MRPHalSerialPortInformation("UnifiedSensor_4242")
 sensor = MRPHal(device_path)
 # RAW SENSOR INTERACTION MODE
 sensor.connect()
@@ -2270,7 +2269,7 @@ for idx in range(8):
 ## GENERATE HALBACH
 halbach_array: MRPHalbachArrayGenerator.MRPHalbachArrayResult = MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_1k_halbach_using_polarisation_direction(readings)
 # EXPORT TO OPENSCAD
-## 2D MODE DXF e.g. for lasercutting
+## 2D MODE DXF e.g. for laser cutting
 MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halbach_array], "./2d_test.scad",_2d_object_code=True)
 ## 3D MODE e.g. for 3D printing
 MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halbach_array], "./3d_test.scad",_2d_object_code=False)
@@ -2353,7 +2352,7 @@ again using the \emph{MRPReading} module and processed further. The
 following bash listing \ref{lst:mrpcli_config_run} shows the setup
 procedure in detail:
 
-\begin{lstlisting}[language=bash, caption={CLI example for configuring a measurement run}, label=lst:mrpcli_config_run]
+\begin{lstlisting}[language=bash, caption={MRP(+cli) example usage for configuration of a measurement run}, label=lst:mrpcli_config_run]
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
 ## CONFIGURE THE SENSOR TO USE
 $ MRPcli config setupsensor testcfg
@@ -2423,7 +2422,7 @@ steps:
   Create a graphical plot of all measurements with standard deviation
 \end{enumerate}
 
-In order to implement such a pipeline, the \emph{yaml} file format is
+In order to implement such a pipeline, the\gls{yaml} file format is
 chosen for the definition of the pipeline, as this is for
 non-programmers to understand and can also be easily edited with a plain
 text editor. Detailed examples can be found in the
@@ -2432,19 +2431,19 @@ text editor. Detailed examples can be found in the
 The pipeline definition consists of sections which execute the
 appropriate Python commands in the background.
 
-The signatures in the \emph{yaml} file are called using reflection and a
+The signatures in the \gls{yaml} file are called using reflection and a
 real-time search of the loaded \emph{global()} functions
 \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
-This system makes almost all Python functions available to the user. To
-simplify usage, a pre-defined list of verified functions for use in
-pipelines is listed in the
+This system is capable to make all Python functions available to the
+user. To simplify usage, a pre-defined list of verified functions for
+use in pipelines is listed in the
 \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
 The following pipeline definition in listing
 \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown
-in figure \ref{Example_measurement_analysis_pipeline.png} as \emph{yaml}
+in figure \ref{Example_measurement_analysis_pipeline.png} as \gls{yaml}
 syntax.
 
-\begin{lstlisting}[caption={Example YAML code of a user defined processing pipeline with six stages linked together}, label=lst:mrpuddp_example_yaml]
+\begin{lstlisting}[caption={Example (+yaml) code of a user defined processing pipeline with six stages linked together}, label=lst:mrpuddp_example_yaml]
 stage import_readings:
   function: import_readings
   parameters:
@@ -2487,11 +2486,11 @@ the function to be executed and its parameters.
 
 \newpage
 
-The various steps are linked by using the \emph{stage } makro as input
+The various steps are linked by using the \emph{stage } macro as input
 parameter of the next function to be executed (see comments in listing
 \ref{lst:mrpuddp_example_yaml}).
 
-Therefore it is feasable to use the results of one function in several
+Therefore, it is feasible to use the results of one function in several
 others without them directly following each other. The disadvantages of
 this system are the following:
 
@@ -2507,12 +2506,11 @@ To determine the order of the pipeline steps, the parser script created
 converts them into one problem of the graph theories. Each step
 represents a node in the graph and the steps referred to by the input
 parameter form the edges. After several simplification steps,
-determination of possible start steps and repeated traversal, the final
-execution sequence can be determined in the form of a call tree in
-figure
+determination of start steps and repeated traversal, the final execution
+sequence can be determined in the form of a call tree in figure
 \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph. The intermediate
-results and the final results in figure
+results and the results in figure
 \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
 are saved for optional later use.
 
@@ -2545,7 +2543,7 @@ PyCharm \gls{ide}
 
 Software tests in libraries offer numerous advantages for improving
 quality and efficiency. Software tests ease to identify errors and
-vulnerabilities before the software is released as a new version.
+vulnerabilities before the software is released as an updated version.
 
 This significantly improves the reliability of \gls{mrp}-library
 applications. Tests also ensure consistent and reliable performance,
@@ -2606,7 +2604,7 @@ could be carried out with real data.
 \newpage
 
 In the other scenario, the tests are to be carried out before a new
-release in the repository on the basis of
+release in the repository based on
 \href{https://github.com/features/actions}{GithubActions}. It has the
 possibility to host local runner software, which then has access to the
 hardware, but in this case a \gls{pc} must be permanently available for
@@ -2623,22 +2621,22 @@ executed via virtualisation on the services systems.
 \label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
 \end{figure}
 
-One important point that improves usability for users is the simple
+One crucial point that improves usability for users is the simple
 installation of all \gls{mrp} modules. As it is created in the Python
 programming language, there are several public package registries where
 users can provide their software modules.
 
 For this purpose \href{https://pypi.org}{PyPI} figure
 \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most
-commonly used package registry and offers direct support for the package
+used package registry and offers direct support for the package
 installation program \gls{pip} shown in listing
 \ref{lst:setup_lib_with_pip}.
 
-\gls{pip} not only manages possible package dependencies, but also
-manages the installation of different versions of a package. In
-addition, the version compatibility is also checked during the
-installation of a new package, which can be resolved manually by the
-user in the event of conflicts.
+\gls{pip} not only manages package dependencies, but also manages the
+installation of different versions of a package. In addition, the
+version compatibility is also checked during the installation of a new
+package, which can be resolved manually by the user in the event of
+conflicts.
 
 \begin{lstlisting}[language=bash, caption={Bash commands to install the MagneticReadoutProcessing library using pip}, label=lst:setup_lib_with_pip]
 # https://pypi.org/project/MagneticReadoutProcessing/
@@ -2680,8 +2678,8 @@ setup(name='MagneticReadoutProcessing',
 )
 \end{lstlisting}
 
-The \gls{cli} scripts are written in Python and simplifiys the execution
-for the user since there ist no \emph{python3} prefix needed. This has
+The \gls{cli} scripts are written in Python and simplify the execution
+for the user since there is no \emph{python3} prefix needed. This has
 been configured in the installation configuration using the
 \emph{entry\_points} option, and the following commands are available to
 the user:
@@ -2697,18 +2695,18 @@ the user:
 \end{itemize}
 
 In addition, these commands are available globally in the system without
-the terminal shell being located in the \gls{mrp}-library folder.
+the terminal shell located in the \gls{mrp}-library folder.
 
 \hypertarget{documentation}{%
 \subsection{Documentation}\label{documentation}}
 
-In order to provide comprehensive documentation for the end-user, the
-source code is documented using
+To provide comprehensive documentation for the end-user, the source code
+is documented using
 Python-\href{https://peps.python.org/pep-0257/}{Docstrings} and the
 Python type annotations. The use of type annotations also simplifies
 further development, as modern \gls{ide}s can more reliably display
-possible methods to the user as an assistance. It is implemented in
-listing \ref{lst:pydocstring}.
+methods to the user as an assistance. It is implemented in listing
+\ref{lst:pydocstring}.
 
 \begin{lstlisting}[language=Python, caption={Documentation using Python docstring example}, label=lst:pydocstring]
 # MRPDataVisualisation.py - example docstring
@@ -2925,9 +2923,9 @@ the queue in the background.
 \subsection{Alternative Filter Algorithm
 Implementation}\label{alternative-filter-algorithm-implementation}}
 
-Another possibility for filterin is to use a reference measurement
+Another possibility for filtering is to use a reference measurement
 instead of a simulated ideal magnet as a reference, as described before.
-This can initialy come from a magnet selected as a reference magnet. As
+This can initially come from a magnet selected as a reference magnet. As
 a result, the filter algorithm returns the measurements that are most
 similar to the selected reference magnet. The code snipped in listing
 \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the
@@ -2960,7 +2958,7 @@ integrated into the analysis pipeline in listing
 pipeline in figure \ref{Example_measurement_analysis_pipeline.png} is
 simplified and an additional stage \emph{find\_similar\_values} has been
 added, which has set \emph{FindSimilarValuesAlgorithm} as the function
-to be called. As a final step, the result is used in the
+to be called. As a decisive step, the result is used in the
 \emph{plot\_filtered} stage for visualisation.
 
 \begin{lstlisting}[caption={User defined processing pipeline using custom implemented filter algorithm}, label=lst:pipeline_mrp_evaluation_yaml]
@@ -3052,8 +3050,8 @@ point, the same result is returned if the magnet measurement with
 
 The filter algorithm implemented by the user is thus successfully
 executed using the user-programmable pipeline. The calculation result is
-successfully verified using raw measurement data and the final result of
-the algorithm.
+successfully verified using raw measurement data and the result of the
+algorithm.
 
 \hypertarget{evaluation}{%
 \chapter{Evaluation}\label{evaluation}}
@@ -3079,7 +3077,7 @@ selected sensors meet the requirements:
   their systematic field strength
 \item
   Automated measurement of the homogeneity with an accuracy of less than
-  \emph{1000\gls{ppm}} what is demanded to measure Halbach rings
+  \emph{1000 \gls{ppm}} what is demanded to measure Halbach rings
 \end{itemize}
 
 These questions are answered in the following as a basic readout and
@@ -3218,12 +3216,13 @@ the sensor without external magnetic fields. For this purpose, a sample
 size of \emph{N=10000} measured values is recorded for the baseline
 measurement. The output signal of the sensor is continuously measured
 and recorded. It is important to carry out the measurement over a
-sufficiently long period of time in order to record both short-term and
-long-term fluctuations. For this purpose, \emph{N=2000} further measured
-values are taken with a trigger and readout rate of one measurement per
-second. In order to quantify the noise, the \gls{sd} of the signal is
-calculated. These parameters provide information about the variation of
-the signal over time and therefore about the sensor background noise.
+sufficiently lengthy period of time in order to record both short-term
+and long-term fluctuations. For this purpose, \emph{N=2000} further
+measured values are taken with a trigger and readout rate of one
+measurement per second. In order to quantify the noise, the \gls{sd} of
+the signal is calculated. These parameters provide information about the
+variation of the signal over time and therefore about the sensor
+background noise.
 
 \begin{figure}
 \centering
@@ -3470,7 +3469,7 @@ measurements
 \label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}}
 \end{figure}
 
-As the temperature sensor \emph{TLV493D} in particular produced very
+As the temperature sensor \emph{TLV493D} in particular produced vastly
 different results in the previous measurements, an additional
 temperature sensor is attached to the sensor circuit board for this
 measurement. The figure
@@ -3526,7 +3525,7 @@ of -5.13 \(\mu\)T / \(^{\circ}\)C, and it is also not as linear as the
 \emph{MMC5603NJ}; there are clear jumps in the gradient. However, the
 total change between the temperature regions of 175\(\mu\)T is less than
 that of the \emph{MMC5603NJ} with \emph{70\(\mu\)T}, if the total
-measurement range of the sensors is also taken into account.
+measurement range of the sensors is also considered.
 
 In the evaluation (see figure
 \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png})
@@ -3579,13 +3578,13 @@ The \emph{TLV493D} performs in noise measurements worse than specified
 in the data sheet (\emph{98\(\mu\)T} instead of \emph{175\(\mu\)T}), but
 the large measuring range, which fulfils the required specifications
 from chapter \emph{Research Question} in chapter
-\ref{research-question-and-approach}, must be taken into account here,
-which is not met by the \emph{MMC5603NJ}.
+\ref{research-question-and-approach}, must be considered here, which is
+not met by the \emph{MMC5603NJ}.
 
 The \emph{MMC5603NJ} can be used directly without additional software
 calibration for measuring permanent magnets. Even without additional
 measurement averaging, very precise measurement results can be achieved,
-which achieve a measurement accuracy of less than \emph{1000\gls{ppm}}.
+which achieve a measurement accuracy of less than \emph{1000 \gls{ppm}}.
 
 However, due to the limited measuring range of \emph{±3mT}, direct
 measurement of stronger magnets is not possible using the
@@ -3613,7 +3612,7 @@ as a simplified characterisation procedure can be applied due to the
 lack of a base offset.
 
 In the following, alternative methods for sensor adaptions will be
-described that the sensors can still be used for these measurement.
+described that the sensors can still be used for these measurements.
 
 \hypertarget{permanent-magnet-characterisation}{%
 \subsubsection{Permanent Magnet
@@ -3642,8 +3641,8 @@ hardware setup, software calibration methods and precise
 characterisations can be carried out.
 
 \hypertarget{homogeneity-measurement-of-a-halbach-ring-based-b0-field}{%
-\subsubsection{Homogeneity Measurement of a Halbach ring-based B0
-field}\label{homogeneity-measurement-of-a-halbach-ring-based-b0-field}}
+\subsubsection{Homogeneity Measurement of a Halbach Ring-based B0
+Field}\label{homogeneity-measurement-of-a-halbach-ring-based-b0-field}}
 
 The \emph{MMC5603NJ} cannot be used for this due to the limited value
 range. The method of increasing the distance, as with permanent magnet
@@ -3652,7 +3651,7 @@ limited space in the Halbach ring.
 
 In contrast, the \emph{TLV493D} has too much noise, so that the measured
 values cannot be used directly without post-processing. With software
-calibration, it is probably possible to reduce the noise to below
+calibration, it is possible to reduce the noise to below
 \emph{50\(\mu\)T} with the \emph{TLV493D}. As a test, several further
 measurement runs are carried out, which achieved results for the sensor
 noise of \emph{71\(\mu\)T} to \emph{41\(\mu\)T} when averaging

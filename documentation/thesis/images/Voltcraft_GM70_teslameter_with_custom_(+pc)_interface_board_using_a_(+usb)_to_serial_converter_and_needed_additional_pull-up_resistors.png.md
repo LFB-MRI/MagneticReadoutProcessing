@@ -1,0 +1,2 @@
+![Voltcraft GM70 teslameter with custom (+pc) interface board using a (+usb) to serial converter and needed additional pull-up resistors \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}](./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png)
+
