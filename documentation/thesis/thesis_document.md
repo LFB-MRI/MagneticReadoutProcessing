@@ -194,11 +194,11 @@ This work prioritises the development of both hardware and software customised f
 
 ## Use cases
 
-The following chapter defines possible use cases that the future project need to cover. These use cases define the setup of the hard- and software. 
+The following chapter defines desirable use cases that the future project need to cover. These use cases define the setup of the hard- and software. 
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
-The use cases are defined in the course of project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process in chapter \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the end result accordingly.
+The use cases are defined during project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
+In the later accomplished evaluation process in chapter \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the result accordingly.
 
 1. **Ready to use hardware sensor designs**
 
