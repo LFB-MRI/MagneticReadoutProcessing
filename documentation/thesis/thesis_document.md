@@ -273,7 +273,7 @@ It simplifies of own measuring devices into the (+mrp) ecosystem at a later date
 
 ## Sensor Selection
 
-The selection process for possible magnetic field sensors initially focisses on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
+The selection process for possible magnetic field sensors initially focuses on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
 
 A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
@@ -304,7 +304,7 @@ The focus is on providing a stable foundation for the sensor (+ic) and an exchan
 
 Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}.
 
-All parts are produced using 3D printing additive manufacturing proces. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
+All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
 The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
@@ -317,7 +317,7 @@ This is important if several magnets have to be measured, where the positioning 
 
 The electronics consist of the magnetic field sensor and the electrical interface to connect it to a (+pc) in the form of a microcontroller.
 
-The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation. This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation. A *Raspberry Pi Pico* and a *STM32F4* are used as an computer-sensor interface for this thesis, which are populare, cost-effective and simple to implement.
+The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation. This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation. A *Raspberry Pi Pico* and a *STM32F4* are used as a computer-sensor interface for this thesis, which are populae, cost-effective and simple to implement.
 
 All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
@@ -358,7 +358,7 @@ public:
   // implement depending sensor communication interface
   bool begin(TwoWire& _wire_instance); // I2C
   bool begin(HardwareSerial& _serial_instance); // UART
-  bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like onewire
+  bool begin(Pin& _pin_instance); // ANALOG or DIGITAL PIN like one wire
   // FUNCTIONS USED BY READOUT LOGIC
   bool is_valid() override;
   String capabilities() override;
@@ -374,7 +374,7 @@ When the microcontroller is started, the software checks whether known sensors a
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
 
-The next initialisation system is dedicated for multi-sensor synchronisation described in chapter \ref{sensor-syncronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
+The next initialisation system is dedicated for multi-sensor synchronisation described in chapter \ref{sensor-synchronisation-interface}. The last step in the setup is to configure communication with the host or connected (+pc).
 All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) have a (+usb) slave port.
 
 The used usb descriptor is a (+usb)-(+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
@@ -388,7 +388,7 @@ Ring buffers are well suited for applications with variable data rates and minim
 The buffer can be read out by command and the result of the measurement is sent to the host.
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number.
 
-This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like described in chapter \ref{sensor-syncronisation-interface} and are not out of sequence or drift.
+This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like described in chapter \ref{sensor-synchronisation-interface} and are not out of sequence or drift.
 
 ### Communication Interface
 
@@ -410,7 +410,7 @@ The other option is to use the (+mrp)-library explained in chapter \ref{software
 The same commands are available as for (+cli)-based communication, but in a binary format.
 
 
-### Sensor Syncronisation Interface
+### Sensor Synchronisation Interface
 
 %%Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png%%
 
@@ -440,7 +440,7 @@ The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_
 
 Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
 The figure \ref{Unified_sensor_fiUnified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.pngrmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} shows how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
-The firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the funtionality to detect if the sensor is a primary or a secondary sensor.
+The firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the functionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
@@ -844,13 +844,13 @@ $ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
 ```
 
 
-### Sensor Syncronisation
+### Sensor Synchronisation
 
 Another important aspect for using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
 
-If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-syncronisation-interface}.
-This no longer works for long distances and the syncronisation must be established via a shared network connection. 
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-synchronisation-interface}.
+This no longer works for long distances and the synchronisation must be established via a shared network connection. 
 
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@O24] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
 
@@ -1807,7 +1807,7 @@ This is shown in the chapter *Use Case Evaluation* \ref{use-case-evaluation} by 
 
 Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characterising permanent magnets. By using suitable hardware setup, software calibration methods and precise characterisations can be carried out.
 
-#### Homogeneity Measurement of a Halbach ring-based B0 field
+#### Homogeneity Measurement of a Halbach Ring-based B0 Field
 
 The *MMC5603NJ* cannot be used for this due to the limited value range. The method of increasing the distance, as with permanent magnet characterisation, cannot be used as the magnet is located within a limited space in the Halbach ring.
 
