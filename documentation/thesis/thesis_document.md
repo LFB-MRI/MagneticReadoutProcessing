@@ -1,11 +1,11 @@
 # Introduction
 
-As the following, the motivation for the development of this framework is listed.
+In the following, the motivation for the development of this framework is listed.
 The chapter provides a brief introduction into the problem domain, delineates the scope and boundaries of the present research, surveys the current state of the art in low-field (+mri) research and applications, articulates the research question driving this thesis and delineates the anticipated use cases and benefits that will be explored and analysed throughout the study.
 
 ## Background and Motivation
 
-Magnetic Resonance Imaging (+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
+(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
 
 Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electromagnets are energized by electrical currents and superconducting electromagnets produce magnetic fields through electric induction.
 Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
@@ -93,12 +93,12 @@ In order to compensate for inhomogeneities in a finished system, there are vario
 
 ### Shimming Procedure
 
-The shimming process is an essential step in magnetic resonance imaging (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
+The shimming process is an essential step in (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
 
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
-The sources for the shimming process can be hardware and software based.
-Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field.
+The sources for the shimming process can be hardware and software based. 
+Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field. [@Boer2022-vp]
 Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@10.3389/fphy.2021.704566].
 
 In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
@@ -138,7 +138,7 @@ Standard sorting algorithms are used as well as specialized algorithms for optim
 These are each separate projects that implement individual aspects of data processing, which realize the process of measuring individual magnets by manual combination.
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
-Special algorithms from various projects are used to optimize homogeneity. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
+Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithms which O'Reilly implemented [@HalbachOptimisation]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
 This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring.
 
 ## Aim of this Thesis
@@ -222,7 +222,7 @@ In the later accomplished evaluation process in chapter \ref{use-case-evaluation
   Once it is possible to record and store measured values, it should be possible for the user to analyse and visualize this data using various algorithms.
   The focus at this point should be on extending the framework with user-created algorithms.
 
-5. **User programmable data processing pipelines**
+5. **User-programmable data processing pipelines**
 
   User-programmable data processing pipelines enable the flexible design of data processing sequences as pipeline by users.
   The framework should enable users to create their own pipelines with the previously defined data analysis functions.
@@ -264,7 +264,7 @@ The focus is on mapping different sensors and being compatible with different ma
 Another goal is reproducibility to ensure uniform results, which as a result reduces the susceptibility to errors. Easy communication with standard (+pc) hardware, which offers a variety of common interface options, maximizes the user-friendliness.
 
 The flexibility to support different sensors and magnets makes the system versatile and opens the possibility for use in different applications.
-A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors in different contexts.
+A low-cost magnetic field sensors interface will therefore not only be economically attractive, but also facilitate the integration of magnetic field sensors in different contexts like for compasses or other devices.
 
 In addition, the low-cost sensor interface will serve as a development platform for the data evaluation (+mrp) library and provide real measurement data from magnets.
 Further, the interface firmware creates a basis for the development of a data protocol for exchanging measured values.
@@ -273,7 +273,7 @@ It simplifies of own measuring devices into the (+mrp) ecosystem at a later date
 
 ## Sensor Selection
 
-The selection process for possible magnetic field sensors initially focussed on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
+The selection process for possible magnetic field sensors initially focisses on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
 
 A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
@@ -302,9 +302,9 @@ In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods a
 The mechanical design of a sensor is kept as simple as possible so that it can be replicated as easily as possible.
 The focus is on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
-The following figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor in chapter \ref{d-single-sensor}.
+Figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor, which is described in chapter \ref{d-single-sensor}.
 
-All parts are produced using the 3D printing additive manufacturing processes. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
+All parts are produced using 3D printing additive manufacturing proces. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
 The exchangeable magnetic holder (shown in green in figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
@@ -317,15 +317,14 @@ This is important if several magnets have to be measured, where the positioning 
 
 The electronics consist of the magnetic field sensor and the electrical interface to connect it to a (+pc) in the form of a microcontroller.
 
-The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation.
-This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation.
+The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation. This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation. A *Raspberry Pi Pico* and a *STM32F4* are used as an computer-sensor interface for this thesis, which are populare, cost-effective and simple to implement.
 
 All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_and_circuit_board.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
-By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s.
+By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These hole are necessary for later adaptions and sensor changes.
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
-This enables subsequent multi-sensor synchronization and also offers options for later extensions.
+This enables subsequent multi-sensor synchronization and also offers options for later extensions. 
 This functionality opens up the possibility of synchronising data from different sensors to achieve precise and coherent measurement results.
 Overall, this integrated approach represents an effective solution for the flexible evaluation of sensors and helps to optimise the development process.
 
@@ -1410,7 +1409,7 @@ These are previously described in the *Use cases* \ref{use-cases} chapter.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
-## Hardware preparation
+## Hardware Preparation
 
 %%Ten_numbered_test_magnets_in_separate_holders.png%%
 
