@@ -19,7 +19,7 @@ While typically calculated images have lower resolution due to lower magnetic fi
 
 Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
-Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is taken into account.
+Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is considered.
 It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system.
 
 The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems.
@@ -802,7 +802,7 @@ Terminate Proxy instance [y/N] [n]:
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface, which is shown in listing \ref{lst:mrpcli_config_rest}:
 
-```bash {#lst:mrpcli_config_rest caption="MRPProxy provided (+rest) endpoint query example using wget commandline tool to send requests"}
+```bash {#lst:mrpcli_config_rest caption="MRPProxy provided (+rest) endpoint query example using wget command line tool to send requests"}
 # GET PROXY STATUS
 $ wget http://proxyinstance.local:5556/proxy/status
 {
@@ -1778,7 +1778,7 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} represents a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must beconsidered here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be considered here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000 (+ppm)*.
 
