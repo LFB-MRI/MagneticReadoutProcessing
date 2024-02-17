@@ -180,7 +180,7 @@ To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
 
   $$ 0.05 \, mT \times 1000 = 50 \, \mu T $$
 
-This means that to measure a deviation of better than *1000*(+ppm) in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
+This means that to measure a deviation of better than *1000 (+ppm)* in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
 The primary objectives of this work revolve around addressing two pivotal research questions:
 
@@ -402,9 +402,9 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly determine whether the hardware is working properly after installation.
 The (+cli) behaves like terminal programmes, displaying a detailed command reference as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user after connecting.
-The figure \ref{Result_of_an_executed_b_field_query_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
+The figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
 
-%%Result_of_an_executed_b_field_query_using_the_sensors_(+cli)_with_immediate_user_readable_response.png%%
+%%Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png%%
 
 The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command. The command is only sent by the library, not by the user.
 The same commands are available as for (+cli)-based communication, but in a binary format.
@@ -460,9 +460,9 @@ The sensor differentiation takes place later in the (+mrp)-library \ref{software
 
 Two functional sensor platforms are built in order to create a solid test platform for later tests and for the development of the (+mrp)-library \ref{software-readout-framework} with the previously developed sensor concepts.
 
-%%Build_hardware_sensors_with_equipped_with_different_sensor_(+ic)s_to_cover_different_magnet_charaterisation_setups.csv%%
+%%Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv%%
 
-The table \ref{Build_hardware_sensors_with_equipped_with_different_sensor_(+ic)s_to_cover_different_magnet_charaterisation_setups.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
+The table \ref{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
 These cover all the required functions described in the use cases \ref{use-cases}. The most significant difference, apart from the sensor used, is the *scan mode*.
 In this context, this describes whether the sensor can measure a *static* fixed point on the magnet or if the sensor can move *dynamically* around the magnet using a controllable manipulator.
 
@@ -470,33 +470,33 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 ### 1D: Single Sensor
 
-%%Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png%%
+%%Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png%%
 
 
-The 1D sensor shown in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
+The 1D sensor shown in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
 
 
 The electrical level is based on a *Raspberry Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise influences on the measurement.
 
 Since the *MMC5603NJ* only has limited measurement range of total *6uT*, even small coin sized neodymium magnets already saturates the sensor.
-It is possible to mount 3D printed spacers (see green part in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png})over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
+It is possible to mount 3D printed spacers (see green part in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
 
 ### 3D: Full Sphere
 
-%%Full-sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
+%%Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png%%
 
-The 3D full sphere sensor shown in figure \ref{Full-sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
+The 3D full sphere sensor shown in figure \ref{Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full-sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
+The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
 The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis.
 To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
-%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full-sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png%%
+%%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png%%
 
 As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these components and the sensor or magnets is increased. The turntable and its drive motor are connected to each other via a belt.
 
@@ -540,7 +540,7 @@ This concept is explained in the following chapter.
 
 User interaction points represent one core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other. For this thesis it also eases the option to change sensors for measurements. 
 
-For this purpose, the library is divided into individual modules, which are shown in the figure \ref{MRP_library_implemented_modules_high_level_overview_each_of_which_can_be_replaced_by_the_user_with_custom_ones.png}.
+For this purpose, the library is divided into individual modules, which are shown in the figure \ref{A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types is developed and packed together in an extendable Python library.
 
@@ -548,7 +548,7 @@ For this purpose, a module system with standardised functional patterns and data
 
 According to this concept, the user should be able to replace individual components from this chain with own modules without having to worry about implementing other of these to make the project work.
 
-%%MRP_library_implemented_modules_high_level_overview_each_of_which_can_be_replaced_by_the_user_with_custom_ones.png%%
+%%A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png%%
 
 ### User Interaction Points Example
 
@@ -768,18 +768,18 @@ Multiple sensors can be connected to any (+pc) which is available on the network
 This can be a (+sbc) (e.g. a *Raspberry Pi*).
 The small footprint and low power consumption make it a viable choice. It can also be used in a temperature chamber.
 
-The *MRPProxy* module in figure \ref{MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png} has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
+The *MRPProxy* module in figure \ref{MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png} has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
 
 The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with one remote sensor setup.
 
-%%MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png%%
+%%MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png%%
 
 Another application example is when sensors are physically separated or there are long distances between them.
 By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are accessible to the *control* (+pc).
 
-%%Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png%%
+%%Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png%%
 
-Figure \ref{Example_MRP_proxy_module_usage,_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
+Figure \ref{Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
 Both proxy instances do not communicate directly with the *control* (+pc), but the proxy instance *remote* (+pc) *#2* can access the proxy running on *remote* (+pc) *#1*.
 
 The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can access all sensors in this chain.
@@ -791,7 +791,7 @@ For the user, nothing changes in the procedure for setting up a measurement.
 The *MRPProxy* (+cli) application must always be started like shown in listing \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
 
 
-```bash {#lst:mrpcli_proxy_start caption="MRPproxy usage to enable local sensor forwarding over the network. The (+cli) output shows the available sensor to the connected (+host) pc"}
+```bash {#lst:mrpcli_proxy_start caption="MRPProxy usage to enable local sensor forwarding over the network. The CLI output shows the available sensor to the connected host PC"}
 # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
 $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
 Proxy started. http://remotepc.local:5556/
@@ -802,7 +802,7 @@ Terminate Proxy instance [y/N] [n]:
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface, which is shown in listing \ref{lst:mrpcli_config_rest}:
 
-```bash {#lst:mrpcli_config_rest caption="MRPProxy provided (+rest) endpoint query example using wget command line tool to send requests"}
+```bash {#lst:mrpcli_config_rest caption="MRPProxy provided REST endpoint query example using wget command line tool to send requests"}
 # GET PROXY STATUS
 $ wget http://proxyinstance.local:5556/proxy/status
 {
@@ -836,9 +836,9 @@ The query result shows that the sensors are connected correctly and that the cap
 To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required as shown in listing \ref{lst:mrpcli_config_using_rpc}. 
 
 
-```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPproxy based network sensor"}
+```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPProxy based network sensor"}
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
-$ MRPcli config setupsensor testcfg --path http://proxyinstance.local:5556
+$ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
 > remote sensor connected: True using proxy connection:
 > http://proxyinstance.local:5556 with 1 local sensor connected
 ```
@@ -879,7 +879,7 @@ For this purpose, the *info* command of each sensor is queried.
 This information is added to the previously created (+lut). Duplicate entries are summarised (see table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
 
 
-```bash {#lst:mtsc caption="MRPproxy (+rest) capabilities query result after execution of the merging algorithm"}
+```bash {#lst:mtsc caption="MRPProxy REST capabilities query result after executing the merging algorithm"}
 # QUERY Network-Proxy capabilities
 $ wget http://proxyinstance.local:5556/proxy/status
 {"capabilities":[
@@ -965,7 +965,7 @@ Finally, the measurement is exported for archiving and further processing; vario
 
 After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors. In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 
-```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store raw sensor readings inside of a measurement"}
+```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store raw sensor readings inside a measurement"}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
@@ -1120,24 +1120,24 @@ To simplify these tasks, a (+cli) is implemented and implements the following fu
 * Simple commands for checking recorded measurement series and their data
 
 Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
-These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:mrpcli_config_run} shows the setup procedure in detail:
+These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:MRPCli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:mrpcli_config_run caption="MRP(+cli) example usage for configuration of a measurement run"}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
 ## CONFIGURE THE SENSOR TO USE
-$ MRPcli config setupsensor testcfg
+$ MRPCli config setupsensor testcfg
 > 0 - Unified Sensor 386731533439 - /dev/cu.usbmodem3867315334391
 > Please select one of the found sensors [0]:
 > sensor connected: True 1243455
 ## CONFIGURE THE MEASUREMENT
-$ MRPcli config setup testcfg
+$ MRPCli config setup testcfg
 > CONFIGURE testcfg
 > READING-NAME: [testreading]: testreading
 > OUTPUT-FOLDER [/cli/reading]: /tmp/reading_folder_path
 > NUMBER DATAPOINTS: [1]: 10
 > NUMBER AVERAGE READINGS PER DATAPOINT: [1]: 100
 # RUN THE CONFIGURED MEASUREMENT
-$ MRPcli measure run
+$ MRPCli measure run
 > STARTING MEASUREMENT RUN WITH FOLLOWING CONFIGS: ['testcfg']
 > config-test: OK
 > sensor-connection-test: OK
@@ -1327,13 +1327,13 @@ with pathlib.Path(req_path).open() as requirements_txt:
 setup(name='MagneticReadoutProcessing',
   version='1.4.3',
   url='https://github.com/LFB-MRI/MagnetCharacterization/',
-  packages= ['MRP', 'MRPcli', 'MRPudpp', 'MRPproxy'],
+  packages= ['MRP', 'MRPCli', 'MRPudpp', 'MRPproxy'],
   install_requires=install_requires,
   entry_points={
     'console_scripts': [
-      'MRPCli = MRPcli.cli:run',
-      'MRPUdpp = MRPudpp.uddp:run',
-      'MRPproxy = MRPproxy.mrpproxy:run'
+      'MRPCli = MRPCli.cli:run',
+      'MRPUdpp = MRPUdpp.uddp:run',
+      'MRPProxy = MRPProxy.mrpproxy:run'
     ]
   }
 )
@@ -1341,9 +1341,9 @@ setup(name='MagneticReadoutProcessing',
 
 The (+cli) scripts are written in Python and simplify the execution for the user since there is no *python3* prefix needed. This has been configured in the installation configuration using the *entry_points* option, and the following commands are available to the user:
 
-* *$ MRPcli --help* instead of *$ python3 cli.py --help*
-* *$ MRPudpp --help* instead of *$ python3 udpp.py --help*
-* *$ MRPproxy --help* instead of *$ python3 proxy.py --help*
+* *$ MRPCli --help* instead of *$ python3 cli.py --help*
+* *$ MRPUdpp --help* instead of *$ python3 udpp.py --help*
+* *$ MRPProxy --help* instead of *$ python3 proxy.py --help*
 
 In addition, these commands are available globally in the system without the terminal shell located in the (+mrp)-library folder.
 
@@ -1423,21 +1423,21 @@ These are placed in modified 3D printed holders shown in figure \ref{Ten_numbere
 
 ## Configuration of the Measurement
 
-The configured hardware is connected to the host system using the *MRPcli config setupsensor*-(+cli) command.
+The configured hardware is connected to the host system using the *MRPCli config setupsensor*-(+cli) command.
 The measurement is configured for a measurement run, using the following configuration commands from listing \ref{lst:evaluation_measurement_config}.
 
 \newpage
 
 ```bash {#lst:evaluation_measurement_config caption="Measurement configuration for evaluation measurement"}
 ## CONFIGURE THE MEASUREMENT
-$ MRPcli config setup eval_measurement_config
+$ MRPCli config setup eval_measurement_config
 > READING-NAME: 360_eval_magnet_<id>
 > OUTPUT-FOLDER: ./readings/evaluation/ 
 > NUMBER DATAPOINTS: 18 # FOR A FULL SPHERE READING USE MULTIBLE OF 18
 > NUMBER AVERAGE READINGS PER DATAPOINT: 10
 ```
 
-The *MRPcli measure ruxn* command is then called up for each individual magnet to execute a measurement. 
+The *MRPCli measure ruxn* command is then called up for each individual magnet to execute a measurement. 
 After each run, the *READING-NAME* parameter is filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
 ## Custom Algorithm Implementation
