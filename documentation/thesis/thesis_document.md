@@ -5,7 +5,7 @@ The chapter provides a brief introduction into the problem domain, delineates th
 
 ## Background and Motivation
 
-(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@Nitz2016]
+(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a central role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@NK16]
 
 Various types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electromagnets are energized by electrical currents and superconducting electromagnets produce magnetic fields through electric induction.
 Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
@@ -15,7 +15,7 @@ The challenge with conventional homogeneity systems lies in their substantial si
 
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
-While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OReilly2019-rn] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
+While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
 
 Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
@@ -41,13 +41,13 @@ For modern medical imaging high-field superconducting magnets dominate most (+mr
 
 (+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The initial *B0* field of an (+mri) aims to be homogeneous, for image acquisition  the second step requires inhomogeneity  of the *B0* field to stimulate spin in the atoms of materials. For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
 
-Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@Nitz2016]
+Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@NK16]
 
-Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)-systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@Hori2021-pt].
+Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)-systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@HH21].
 
-This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@Hori2021-pt], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@Arnold2023-cn]
+This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@Nitz2016]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@NK16]
 
 In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and needs to be analysed.
 
@@ -55,9 +55,9 @@ In particular, the advantages of the small design, the fast and simple image acq
 
 %%Example_Halbach_ring_with_cutouts_for_eight_magnets.png%%
 
-The positioning of permanent magnets holds an important role in constructing an (+mri) and is influencing the homogeneity of the *B0* magnetic field. Halbach ring magnets [@Halbach1980DesignOP] have become a common design for low field (+mri) and (+nmr) systems [@cmr.a.20165].
+The positioning of permanent magnets holds an important role in constructing an (+mri) and is influencing the homogeneity of the *B0* magnetic field. Halbach ring magnets [@H80] have become a common design for low field (+mri) and (+nmr) systems [@SB10].
 
-This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@Wickenbrock_2021].
+This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@WZC21].
 
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
 The figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
@@ -93,13 +93,13 @@ In order to compensate for inhomogeneities in a finished system, there are vario
 
 ### Shimming Procedure
 
-The shimming process is an essential step in (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@10.3389/fphy.2021.704566].
+The shimming process is an essential step in (+mri) to ensure homogeneous magnetic fields for precise imaging. Shimming corrects irregularities in the static magnetic field that can be caused by external influences or internal system errors. This process optimizes field homogeneity, which is essential for high-resolution and artifact-free images [@WAH21].
 
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
 The sources for the shimming process can be hardware and software based. 
-Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field. [@Boer2022-vp]
-Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@10.3389/fphy.2021.704566].
+Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field. [@BPA22]
+Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
 
 In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
 
@@ -107,11 +107,11 @@ In this thesis, reference is made exclusively to the hardware shimming processes
 
 **Low-Field MRI**
 
-According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) systems are low-field (+mri) (*66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T*). [@Nitz2016]
+According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) systems are low-field (+mri) (*66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T*). [@NK16]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
-Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OReilly2019-rn] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OReilly2021-ep]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@De_Vos2023-pb].
+Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OTW19] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of 2400(+ppm) over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
@@ -125,20 +125,20 @@ The shimming process described describes how, after the field magnet has been se
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Halbach configuration.
 
-In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@Wickenbrock_2021].
+In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@WZC21].
 
 There are two ways of using the data from the magnets that are previously measured:
 
 * By using binning or sorting algorithms to filter for the most similar magnets
 * Adjustment of the rotation and position within the Halbach configuration
 
-This form of data processing of previously characterised magnetic data is currently being implemented experimentally in projects using various algorithms [@Wickenbrock_2021].
-Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Halbach ring relative to each other [@HalbachMRIDesigner].
+This form of data processing of previously characterised magnetic data is currently being implemented experimentally in projects using various algorithms [@WZC21].
+Standard sorting algorithms are used as well as specialized algorithms for optimizing homogeneity by rotating the individual magnets in a Halbach ring relative to each other [@MWO24].
 
 These are each separate projects that implement individual aspects of data processing, which realize the process of measuring individual magnets by manual combination.
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
-Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithms which O'Reilly implemented [@HalbachOptimisation]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
+Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithms which O'Reilly implemented [@O24]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
 This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring.
 
 ## Aim of this Thesis
@@ -297,16 +297,16 @@ In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods a
 
 ## Mechanical Structure
 
-%%Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png%%
+%%Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png%%
 
 The mechanical design of a sensor is kept as simple as possible so that it can be replicated as easily as possible.
 The focus is on providing a stable foundation for the sensor (+ic) and an exchangeable holder for different magnets.
 
-Figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}, shows a sectional view of the (+cad) drawing of the 1D-Single sensor, which is described in chapter \ref{d-single-sensor}.
+Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}.
 
 All parts are produced using 3D printing additive manufacturing proces. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised.
 
-The exchangeable magnetic holder (shown in green in figure \ref{Mechanical_components_for_the_1D_sensor_using_3D_printed_parts.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
+The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model._Different_parts_are_colored_separately,_with_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
 
@@ -415,7 +415,7 @@ The same commands are available as for (+cli)-based communication, but in a bina
 %%Multi_sensor_synchronisation_wiring_example.png%%
 
 One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur.
-This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.[@Wimmer2019]
+This can occur due to various factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.[@W19]
 Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
 
 %%Measured_sensor_readout_to_processing_using_host_software.csv%%
@@ -469,15 +469,15 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 ### 1D: Single Sensor
 
-%%1D_sensor_construction_with_universal_magnet_mount.png%%
+%%Manufactured_1D_sensor_construction_from_different_angles._Universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png%%
 
-The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
+The 1D sensor shown in figure \ref{Manufactured_1D_sensor_construction_from_different_angles._Universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
 
 The electrical level is based on a *Raspberry Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
 
 Since the *MMC5603NJ* only has limited measurement range of total *6uT*, even small coin sized neodymium magnets already saturates the sensor.
-It is possible to mount 3D printed spacers over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
+It is possible to mount 3D printed spacers (see green part in figure \ref{Manufactured_1D_sensor_construction_from_different_angles._Universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png})over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
 
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash in order to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
@@ -551,9 +551,9 @@ According to this concept, the user should be able to replace individual compone
 
 The following example shows the advantages of using the *User interaction points*:
 
-A project called *HalbachOptimisation* [@HalbachOptimisation] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
+A project called *HalbachOptimisation* [@O24] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The *HalbachMRIDesigner* [@HalbachMRIDesigner] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@OpenSCAD] based 3D model of the magnet holder.
+The *MWO24* [@MWO24] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@MMN19] based 3D model of the magnet holder.
 
 As a result, there are two projects which are both suitable for the task of optimizing and creating Halbach magnets for (+mri) applications. The data structures are not compatible with each other.
 However, they are executed manually one after the other to obtain a final result with manual data conversation.
@@ -566,21 +566,21 @@ The implementation of the same functionalities appears as the following by using
 
 1. **Create a static set of magnets**
 
-  The input parameters of the *HalbachOptimisation* [@HalbachOptimisation] project are on the one hand the mechanical dimensions and the number of magnets to be used.
+  The input parameters of the *HalbachOptimisation* [@O24] project are on the one hand the mechanical dimensions and the number of magnets to be used.
   Idal magnets are assumed at this point. However, it should also be possible to import field data in a more measured form later on.
   Using the DataAquisition sub-step, it is possible to generate any number of ideal magnets.
 
 2. **Add custom analysis processing step**
 
   Next, the user creates his own analysis step in order to be able to call up its functions.
-  In the case of the *HalbachOptimisation* [@HalbachOptimisation] project, the function signature of the start function must be changed.
+  In the case of the *HalbachOptimisation* [@O24] project, the function signature of the start function must be changed.
   This receives the result of the previous step, in this case the generated magnet data.
   By optionally setting meta data in the universal library data type, constants can be replaced in the analysis function and made dynamically configurable.
   The return result also corresponds to this data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
 
 3. **Generate fabrication data** 
 
-  The last step is to call up the *HalbachMRIDesigner* [@HalbachMRIDesigner] project, which creates the (+cad) model of the magnet holder.
+  The last step is to call up the *MWO24* [@MWO24] project, which creates the (+cad) model of the magnet holder.
   The data can also be exported as files.
   To make the project compatible, the function signatures are also adapted.
   In this case, more changes are required, as the configuration file is loaded from the file system.
@@ -590,7 +590,7 @@ After these customisation steps, executing both projects one after the other is 
 This also maps the functionality of a project file, which can be executed or passed on repeatedly.
 
 This also fulfils the goal of making individual user-created algorithms interchangeable.
-If the user now wishes to use a different (+cad) algorithm instead of the *HalbachMRIDesigner* [@HalbachMRIDesigner], the other steps can simply be preserved and only the new step needs to be implemented.
+If the user now wishes to use a different (+cad) algorithm instead of the example *HalbachMRIDesigner* [@MWO24] project, the other steps can simply be preserved and only the new step needs to be implemented.
 
 ## Modules
 
@@ -690,7 +690,7 @@ The exported example listing \ref{lst:json_export_format_example} contains diffe
 
 In addition, further custom objects can be inserted into the (+json) using the functions provided.
 
-Since there are popular data processing frameworks such as *Numpy* [@harris2020array], or the program for mathematical calculations, *MATLAB* are often used, the library also supports export formats for these systems.
+Since there are popular data processing frameworks such as *Numpy* [@HMW20], or the program for mathematical calculations, *MATLAB* are often used, the library also supports export formats for these systems.
 
 The different formats can be triggered by the user by calling up the corresponding *MRPReading* class functions:
 
@@ -753,7 +753,7 @@ For this reason, *MRPAnalysis* contains functions for calculating the following 
 * *binning* - Distribution of a sample by means of a histogram
 * *k-nearest* - K-nearest neighbours
 
-In addition, the export function *.to_numpy_matrix* enables further processing of the data in the *Numpy* [@harris2020array] framework, in which many other standard analysis functions are implemented.
+In addition, the export function *.to_numpy_matrix* enables further processing of the data in the *Numpy* [@HMW20] framework, in which many other standard analysis functions are implemented.
 
 ## Multi Sensor Setup
 
@@ -849,7 +849,7 @@ Individual sensor setups do not require any additional synchronisation informati
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-syncronisation-interface}.
 This no longer works for long distances and the syncronisation must be established via a shared network connection. 
 
-If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@PTPIEEE1588] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
+If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@O24] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
 
 ### Command-Router
 
@@ -992,7 +992,7 @@ If no hardware sensor is available for the generation of test data, the *MRPSimu
 
 The example listing \ref{lst:mrpexample_simulation} illustrates the basic usage.
 Different variations of the *generate_reading* function offer the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
-The data is generated in the background using the *magpylib* [@ortner2020magpylib] library according to the specified parameters.
+The data is generated in the background using the *magpylib* [@OB20] library according to the specified parameters.
 
 ```python {#lst:mrpexample_simulation caption="MRPSimulation example illustrates the usage of several data analysis functions"}
 from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
@@ -1066,7 +1066,7 @@ Eight random measurements are generated at this point.
 It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model.
 
-After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@HalbachOptimisation] using the *MRPHalbachArrayGenerator* module.
+After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@O24] using the *MRPHalbachArrayGenerator* module.
 
 ```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based Halbach ring"}
 readings = []
@@ -1083,7 +1083,7 @@ MRPHalbachArrayGenerator.MRPHalbachArrayGenerator.generate_openscad_model([halba
 ```
 
 In the last step, a 3D model with the dimensions of the magnet type set is generated from the generated magnet positions.
-The result is an *OpenSCAD* [@OpenSCAD] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering shown in figure \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
+The result is an *OpenSCAD* [@MMN19] file, which contains the module generated. After computing the model using the *OpenSCAD* (+cli) utility, the following model rendering shown in figure \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png} can be generated.
 
 
 %%Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png%%
@@ -1242,7 +1242,7 @@ This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensure consistent and reliable performance, which is particularly important when libraries are used by different users and for different use cases.
 
 During the development of the (+mrp)-library, test cases are also created for all important functionalities and use cases.
-The test framework *PyTest* [@Pajankar2017] is used for this purpose, as it offers direct integration in most (+ide)s (see figure \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
+The test framework *PyTest* [@P17] is used for this purpose, as it offers direct integration in most (+ide)s (see figure \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}) and also because it provides detailed and easy-to-understand test reports as output in order to quickly identify and correct errors.
 It also allows to tag tests, which is useful for grouping tests or excluding certain tests in certain build environment scenarios.
 Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants of listing \ref{lst:pytest_example_code} as examples for the documentation. 
 
@@ -1368,7 +1368,7 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
   # ...
 ```
 
-Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@SphinxDocumentation] is used for this purpose.
+Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@G17] is used for this purpose.
 This framework offers the functionality to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used *docstrings*.
 
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
@@ -1632,7 +1632,7 @@ The recorded measurement series are automatically analysed using the *Programmab
 
 %%Sensor_evaluation_setup_for_noise_measurements.png%%
 
-Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet and static environment to minimize external field interference. The temperature chamber for all noise tests is set to *$\mu_{trev}$=21.0$^{\circ}$* and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
+Measuring the noise in a magnetic field sensor requires a precise procedure and a special measurement setup. First, the magnetic field sensor is placed in a quiet and static environment to minimize external field interference. The temperature chamber for all noise tests is set to *$\mu_{trev}$=21.0$^{\circ}$C* and the sensors are placed *24* hours before the measurement run in the final measurement configuration inside of the chamber.
 
 The procedure starts with the acquisition of the baseline by operating the sensor without external magnetic fields.
 For this purpose, a sample size of *N=10000* measured values is recorded for the baseline measurement.
@@ -1678,7 +1678,7 @@ This provides a reference baseline value of *$\mu_{rev}$=-21.0$\mu$T*.
 
 The noise of the sensor is drawn around this using the blue line. 
 For the *TLV493D* the (+sd) *$\sigma_{rv}$=172.0$^{\mu}$T*, which is twice the value given by the datasheet as the noise value.
-Under the same conditions, the *MMC5603NJ* undercuts the value specified by the manufacturer. The (+sd) approaches *$\sigma_{rv}$=0.20$^{\mu}$T* and is negligible, especially when additional averaging is used.
+Under the same conditions, the *MMC5603NJ* undercuts the value specified by the manufacturer. The (+sd) approaches *$\sigma_{rv}$=0.20${\mu}$T* and is negligible, especially when additional averaging is used.
 
 As the baseline is determined first for each sensor, it can be seen that the 
 Another recognisable feature is 
@@ -1694,7 +1694,7 @@ This means that the output signals of the sensor vary directly proportional to t
 
 This is achieved by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
-The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise* chapter \ref{sensor-characterisation-background-noise} setup.
+The ambient temperature is set to *$\mu_{trev}$=21.0$^{\circ}$C* in the measurement runs and thus corresponds to the same conditions as in the *Background-Noise* chapter \ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} contains this updated measurement setup with the added components.
 To control the linear axis an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
@@ -1753,7 +1753,7 @@ With this setup, it is possible to automatically acquire measured values from th
 The same procedure is used as for the *Linearity* measurement in chapter \ref{sensor-characterisation-linearity}, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
 Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
 
-The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality type N magnets [@magna-c]).
+The field of permanent magnets is very temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality type N magnets [@GKT16]).
 The temperature range is selected so that it is within a sufficient range for the application.
 
 ### Temperature Sensitivity Analysis
