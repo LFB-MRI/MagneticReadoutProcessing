@@ -254,7 +254,7 @@ Chapter \ref{evaluation}. **Evaluation**
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
   bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This chapter ensures closure and aids readers in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework needs to be established, which is capable of measuring diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
+Finally, a comprehensive hardware and software framework needs to be established, which can measure diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
 
 # Unified Sensor
 
@@ -269,7 +269,7 @@ A low-cost magnetic field sensors interface will therefore not only be economica
 In addition, the low-cost sensor interface will serve as a development platform for the data evaluation (+mrp) library and provide real measurement data from magnets.
 Further, the interface firmware creates a basis for the development of a data protocol for exchanging measured values.
 
-It simplifies of own measuring devices into the (+mrp) ecosystem at a later date. This is only applicable with a minimal functional hardware and firmware setup; it is developed for this purpose in the first step.
+It simplifies of own measuring devices into the (+mrp) ecosystem later. This is only applicable with a minimal functional hardware and firmware setup; it is developed for this purpose in the first step.
 
 ## Sensor Selection
 
@@ -292,7 +292,7 @@ This strategic choice forms the basis for a flexible, universally applicable Hal
 The table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
-In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} with regard to their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
+In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} regarding their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
 
 
 ## Mechanical Structure
@@ -308,7 +308,7 @@ All parts are produced using 3D printing additive manufacturing process. The sen
 
 The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
-This is important if several magnets have to be measured, where the positioning over the sensor must always be the same.
+This is important if several magnets must be measured, where the positioning over the sensor must always be the same.
 
 
 ## Electrical Interface
@@ -324,8 +324,8 @@ In addition, footprints are provided for various sensor (+ic) packages.
 By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These holes are necessary for later adaptions and sensor changes, such as different magnet holders or measurement equipment (e.g. temperature sensors).
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
-This enables subsequent multi-sensor synchronization and also offers options for later sensor-extensions. 
-This functionality opens up the possibility of synchronising data from different sensors to achieve precise and coherent measurement results.
+This enables subsequent multi-sensor synchronization and offers options for later sensor-extensions. 
+This functionality opens the possibility of synchronising data from different sensors to achieve precise and coherent measurement results.
 Overall, this integrated approach represents an effective solution for the flexible evaluation of sensors and helps to optimise the development process.
 
 ## Firmware
@@ -379,7 +379,7 @@ All implemented microcontroller platforms used (*Raspberry Pi Pico*, *STM32F4*) 
 
 The used usb descriptor is a (+usb)-(+cdc). This is used to emulate a virtual *RS232* communication port using a (+usb) port on a (+pc) and usually no additional driver is needed on modern host systems.
 
-After execution of the setup routine is completed, the system switches to an infinite loop, which processes several possible actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
+After execution of the setup routine is completed, the system switches to an infinite loop, which processes several actions. One task is, to react to user commands which can be sent to the system by the user via the integrated (+cli).
 All sensors are read out via a timer interval set in the setup procedure and their values are stored in a ring buffer.
 Ring buffer offers efficient data management in limited memory.
 Its cyclic structure enables continuous overwriting of older data, saves memory space and facilitates seamless processing of real-time data.
@@ -427,14 +427,14 @@ Table \ref{(+usb)_connected_sensor_latency_test_results_using_several_sensor_rea
 * Unified Sensor-firmware described in chapter \ref{unified-sensor} - Version *1.0.1*
 
 
-It can be seen that a jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
+A jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
 
 The other issue is sending the trigger signal from the readout software, which is described in chapter \ref{software-readout-framework}. At this point unpredictable latencies can occur, too, depending on which other tasks are also executed on this port.
 
-In order to enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
+To enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
-The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together in order to implement this form of synchronisation.
+The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together to implement this form of synchronisation.
 
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png%%
 
@@ -1230,7 +1230,7 @@ The disadvantages of this system are the following:
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
 After several simplification steps, determination of start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree in figure \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph.
-The intermediate results and the final results in figure \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
+The intermediate results and the results in figure \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
 %%Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png%%
 
@@ -1240,7 +1240,7 @@ The intermediate results and the final results in figure \ref{Pipeline_output_fi
 
 %%MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png%%
 
-Software tests in libraries offer numerous advantages for improving quality and efficiency. Software tests ease to identify errors and vulnerabilities before the software is released as a updated version.
+Software tests in libraries offer numerous advantages for improving quality and efficiency. Software tests ease to identify errors and vulnerabilities before the software is released as an updated version.
 
 This significantly improves the reliability of (+mrp)-library applications.
 Tests also ensure consistent and reliable performance, which is particularly important when libraries are used by different users and for different use cases.
@@ -1301,7 +1301,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 One crucial point that improves usability for users is the simple installation of all (+mrp) modules.
 As it is created in the Python programming language, there are several public package registries where users can provide their software modules.
 
-For this purpose \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most commonly used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
+For this purpose \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
@@ -1747,7 +1747,7 @@ An accurate temperature sensitivity characteristic is therefore crucial for subs
 
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
 
-As the temperature sensor *TLV493D* in particular produced very different results in the previous measurements, an additional temperature sensor is attached to the sensor circuit board for this measurement. 
+As the temperature sensor *TLV493D* in particular produced vastly different results in the previous measurements, an additional temperature sensor is attached to the sensor circuit board for this measurement. 
 The figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} represents these modifications in detail. These changes makes it possible to accurately determine the sensors (+ic) temperature.
 The temperature measuring device *VC-7055BT* can be analysed using a (+pc) interface.
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
@@ -1767,7 +1767,7 @@ The temperature range is selected so that it is within a sufficient range for th
 The figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} represents the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
-The graph of the *TLV493d* is significantly steeper with a gradient of -5.13 $\mu$T / $^{\circ}$C, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with *70$\mu$T*, if the total measurement range of the sensors is also taken into account.
+The graph of the *TLV493d* is significantly steeper with a gradient of -5.13 $\mu$T / $^{\circ}$C, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with *70$\mu$T*, if the total measurement range of the sensors is also considered.
 
 In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}) a linear function is also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
 
@@ -1778,7 +1778,7 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} represents a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be taken into account here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large measuring range, which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must beconsidered here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000 (+ppm)*.
 
@@ -1812,7 +1812,7 @@ Overall, both the *TLV493D* and the *MMC5603NJ* offer possibilities for characte
 
 The *MMC5603NJ* cannot be used for this due to the limited value range. The method of increasing the distance, as with permanent magnet characterisation, cannot be used as the magnet is located within a limited space in the Halbach ring.
 
-In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is probably possible to reduce the noise to below *50$\mu$T* with the *TLV493D*. 
+In contrast, the *TLV493D* has too much noise, so that the measured values cannot be used directly without post-processing. With software calibration, it is possible to reduce the noise to below *50$\mu$T* with the *TLV493D*. 
 As a test, several further measurement runs are carried out, which achieved results for the sensor noise of *71$\mu$T* to *41$\mu$T* when averaging *100* to *1000* measured values.
 However, further measurement runs must be carried out to verify these results.
 
