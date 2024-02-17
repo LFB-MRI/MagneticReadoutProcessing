@@ -22,12 +22,15 @@ rm -f *.fls
 rm -f *.fdb_latexmk
 rm -f *.run.xml
 rm -Rf tmp
-rm -Rf generated_images
-mkdir -p generated_images
+
+
+if [[ ! -v BUILD_FAST ]]; then
 
 rm -f ./thesis_document_tmp.md
 rm -f ./thesis_document_tmp.md.*
-if [[ ! -v BUILD_FAST ]]; then
+
+rm -Rf generated_images
+mkdir -p generated_images
 # REMOVE GENERATED TEX
 rm -f ./thesis_declaration.tex
 rm -f ./thesis_document.tex
@@ -119,20 +122,30 @@ do
 done
 fi
 
+if [[ ! -v BUILD_FAST ]]; then
 # CONVERT LISTINGS
 python3 convert_listings_head.py ./thesis_document_tmp.md 
 
 
 pandoc ./thesis_document_tmp.md.listings -o ./thesis_document.tex --from markdown --biblatex --template ./pandoc_template.tex --listings --top-level-division=chapter --lua-filter ./pandoc_filters/pandoc-gls.lua #x -M codeBlockCaptions=true
 # NOW THE HACKY PART WE WANT TO USE THE STANDART cite command instead the from pandoc used cite to we use sed to hard replace the stuff
-sed -i 's/\\autocite{/\\cite{/g' ./thesis_document.tex
-# python3 ./fix-table-color-bleed.py ./thesis_document.tex > ./thesis_document.tex
+# sed -i 's/\\autocite{/\\cite{/g' ./thesis_document.tex
 
+# python3 ./fix-table-color-bleed.py ./thesis_document.tex > ./thesis_document.tex
 pandoc ./thesis_declaration.md -o ./thesis_declaration.tex --from markdown --top-level-division=chapter --listings
 pandoc ./thesis_abstract.md -o ./thesis_abstract.tex --from markdown --top-level-division=chapter --listings
 pandoc ./thesis_attachments.md -o ./thesis_attachments.tex --from markdown --top-level-division=chapter --listings
 
+sed -i 's/\\autocite{/\\customcite{/g' ./thesis_document.tex
+
 echo "------------- PANDOC GENERATION FINISHED -----------"
+fi
+
+
+python3 ./generate_citealias.py ./thesis_document.tex  ./thesis_references_alias.tex
+#sed -i 's/\\autocite{/\\cite{/g' ./thesis_document.tex
+
+
 
 # BUILD THESIS FIRST TIME GENERATE .AUX and .TOC FILE
 pdflatex ./thesis.tex ./thesis.pdf
