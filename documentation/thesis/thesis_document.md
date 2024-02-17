@@ -324,7 +324,7 @@ In addition, footprints are provided for various sensor (+ic) packages.
 By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These hole are necessary for later adaptions and sensor changes.
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
-This enables subsequent multi-sensor synchronization and also offers options for later extensions. 
+This enables subsequent multi-sensor synchronization and also offers options for later sensor-extensions. 
 This functionality opens up the possibility of synchronising data from different sensors to achieve precise and coherent measurement results.
 Overall, this integrated approach represents an effective solution for the flexible evaluation of sensors and helps to optimise the development process.
 
@@ -388,7 +388,7 @@ Ring buffers are well suited for applications with variable data rates and minim
 The buffer can be read out by command and the result of the measurement is sent to the host.
 Each sensor measurement result is transmitted from the buffer to the host together with a time stamp and a sequential number.
 
-This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like shown in chapter \ref{sensor-syncronisation-interface} and are not out of sequence or drift.
+This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like described in chapter \ref{sensor-syncronisation-interface} and are not out of sequence or drift.
 
 ### Communication Interface
 
@@ -406,7 +406,7 @@ The figure \ref{Query_sensors_b_value_using_(+cli).png} shows the current measur
 
 %%Query_sensors_b_value_using_(+cli).png%%
 
-The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command.
+The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command. The command is only sent by the library, not by the user.
 The same commands are available as for (+cli)-based communication, but in a binary format.
 
 
@@ -420,7 +420,7 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 %%Measured_sensor_readout_to_processing_using_host_software.csv%%
 
-The table \ref{Measured_sensor_readout_to_processing_using_host_software.csv} shows various jitter measurements. These are performed on a *Raspberry Pi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
+Table \ref{Measured_sensor_readout_to_processing_using_host_software.csv} contains various jitter measurements. These are performed on a *Raspberry Pi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
 
 * *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*
 * (+mrp)-library described in chapter \ref{software-readout-framework} - Version *1.4.1*
@@ -439,7 +439,7 @@ The figure \ref{Multi_sensor_synchronisation_wiring_example.png} illustrates the
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure.png%%
 
 Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
-To do this, the function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio).
+To do this, the firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the funtionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
@@ -471,7 +471,7 @@ In the following, the hardware structure of a *static* and *dynamic* sensor is d
 
 %%1D_sensor_construction_with_universal_magnet_mount.png%%
 
-The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the simplest possible sensor that is compatible with the Unified Sensor firmware.
+The 1D sensor shown in figure \ref{1D_sensor_construction_with_universal_magnet_mount.png} is the applicable sensor that is compatible with the Unified Sensor firmware.
 
 The electrical level is based on a *Raspberry Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise possible influences on the measurement.
