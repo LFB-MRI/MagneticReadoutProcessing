@@ -777,7 +777,7 @@ various sensor \gls{ic} packages. By placing mounting holes on the
 \gls{pcb}, it is possible to attach various mechanical mounts on top of
 the sensor \gls{ic}s. These holes are necessary for later adaptions and
 sensor changes, such as different magnet holders or measurement
-equipment (e.g.~temperature sensors).
+equipment (e.g.~for additional temperature sensors).
 
 Special attention is paid to the provision of an accessible
 SYNC-\gls{gpio} connector. This enables subsequent multi-sensor
@@ -803,13 +803,10 @@ The microcontroller firmware is software that is executed on a
 microcontroller in an embedded system. It controls the hardware and
 enables the execution of predefined functions. The firmware is used to
 process input data, control output devices and performs specific tasks
-according to the program code.
-
-It manages communication with sensors, actuators and other peripheral
-devices, processing data and making decisions. Firmware is critical to
-the functioning of devices.
-
-The firmware is responsible for detecting the possible connected sensors
+according to the program code. It manages communication with sensors,
+actuators and other peripheral devices, processing data and making
+decisions. Firmware is critical to the functioning of devices. The
+firmware is responsible for detecting the possible connected sensors
 shown in table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 and query measurements. This measured data can be forwarded to a host
@@ -1079,15 +1076,15 @@ triggering of the measurements by the host system and the receipt of the
 command by the sensor hardware. If the host system is still under load,
 this value increases many times over. This means that synchronising
 several sensors via the \gls{usb} connection alone is not sufficient.
-
 The other issue is sending the trigger signal from the readout software,
 which is described in chapter \ref{software-readout-framework}. At this
 point unpredictable latencies can occur, too, depending on which other
-tasks are also executed on this port. \newpage To enable the most stable
-possible synchronisation between several sensors, an option has already
-been created to establish an electrical connection between sensors. This
-is used together with the firmware to synchronise the readout intervals.
-The figure
+tasks are also executed on this port.
+
+To enable the most stable possible synchronisation between several
+sensors, an option has already been created to establish an electrical
+connection between sensors. This is used together with the firmware to
+synchronise the readout intervals. The figure
 \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}
 illustrates the schematic how several sensors must be wired together to
 implement this form of synchronisation.
@@ -1130,13 +1127,11 @@ shows the synchronisation status of the sensor which can be queried via
 the user interface described in chapter \ref{communication-interface} by
 using the \emph{opmode} command. An important aspect of the
 implementation is that there is no numbering or sequence of the
-individual sensors.
-
-This means that for the subsequent readout of the measurements, it is
-only important that they are taken at the same interval across all
-sensors. The sensor differentiation takes place later in the
-\gls{mrp}-library \ref{software-readout-framework} by using the sensor
-\gls{uuid}.
+individual sensors. This means that for the subsequent readout of the
+measurements, it is only important that they are taken at the same
+interval across all sensors. The sensor differentiation takes place
+later in the \gls{mrp}-library \ref{software-readout-framework} by using
+the sensor \gls{uuid}.
 
 \begin{figure}
 \centering
@@ -1218,7 +1213,7 @@ screws to minimise influences on the measurement.
 \newpage
 
 Since the \emph{MMC5603NJ} only has limited measurement range of total
-\emph{6uT}, even small coin sized neodymium magnets already saturates
+\emph{6mT}, even small coin sized neodymium magnets already saturates
 the sensor. It is possible to mount 3D printed spacers (see green part
 in figure
 \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over
@@ -1253,7 +1248,7 @@ strength (red) to a negative field strength (blue) is clearly
 recognisable and corresponds to the orientation of the magnet in the
 holder.
 
-The magnet sensor is mounted on a movable arm, which can move 180
+The magnet sensor is mounted on a movable arm, which can move \emph{180}
 degrees around the magnet on one axis. To be able to map the full
 sphere, the magnet is mounted on a turntable. This permits the
 manipulator to move a polar coordinate system.
@@ -1431,8 +1426,8 @@ The input parameters of the \emph{HalbachOptimisation} \customcite{O24}
 project are on the one hand the mechanical dimensions and the number of
 magnets to be used. Idal magnets are assumed at this point. However, it
 should also be possible to import field data in a more measured form
-later. Using the DataAquisition sub-step, it is possible to generate any
-number of ideal magnets.
+later. Using the data aquisition sub-step, it is possible to generate
+any number of ideal magnets.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1987,12 +1982,11 @@ setup, the command received needs to be forwarded to the correct sensor.
 In addition, there are commands such as the previously used \emph{info}
 or \emph{status} command, which must be intercepted by the
 \emph{MRPProxy} module so that it can be handled differently (see
-example listing \ref{lst:mtsc}).
-
-To realize this, a \gls{lut} is created in the previous steps, which
-contains information regarding \emph{requested capability}
--\textgreater{} \emph{sensor}-\gls{uuid} -\textgreater{} \emph{physical
-sensor} and allows the commands to be routed.
+example listing \ref{lst:mtsc}). To realize this, a \gls{lut} is created
+in the previous steps, which contains information regarding
+\emph{requested capability} -\textgreater{} \emph{sensor}-\gls{uuid}
+-\textgreater{} \emph{physical sensor} and allows the commands to be
+routed.
 
 For commands, which have several entries for \emph{CAPABLE SENSORS ID
 LUT} from table \ref{Sensor_capabilities_merging_algorithm.csv}, there

@@ -322,7 +322,7 @@ The focus is on utilising existing microcontroller development and evaluation bo
 
 All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
-By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These holes are necessary for later adaptions and sensor changes, such as different magnet holders or measurement equipment (e.g. temperature sensors).
+By placing mounting holes on the (+pcb), it is possible to attach various mechanical mounts on top of the sensor (+ic)s. These holes are necessary for later adaptions and sensor changes, such as different magnet holders or measurement equipment (e.g. for additional temperature sensors).
 
 Special attention is paid to the provision of an accessible SYNC-(+gpio) connector.
 This enables subsequent multi-sensor synchronization and offers options for later sensor-extensions. 
@@ -334,13 +334,8 @@ Overall, this integrated approach represents an effective solution for the flexi
 %%Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png%%
 
 The microcontroller firmware is software that is executed on a microcontroller in an embedded system. 
-It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and performs specific tasks according to the program code.
-
-It manages communication with sensors, actuators and other peripheral devices, processing data and making decisions.
-Firmware is critical to the functioning of devices.
-
-
-The firmware is responsible for detecting the possible connected sensors shown in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} and query measurements.
+It controls the hardware and enables the execution of predefined functions. The firmware is used to process input data, control output devices and performs specific tasks according to the program code. It manages communication with sensors, actuators and other peripheral devices, processing data and making decisions.
+Firmware is critical to the functioning of devices. The firmware is responsible for detecting the possible connected sensors shown in table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} and query measurements.
 This measured data can be forwarded to a host (+pc) via a user interface and can then be further processed there.
 
 A key component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
@@ -429,9 +424,8 @@ Table \ref{(+usb)_connected_sensor_latency_test_results_using_several_sensor_rea
 
 A jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
-
 The other issue is sending the trigger signal from the readout software, which is described in chapter \ref{software-readout-framework}. At this point unpredictable latencies can occur, too, depending on which other tasks are also executed on this port.
-\newpage
+
 To enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
 The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together to implement this form of synchronisation.
@@ -449,7 +443,6 @@ This means that in a chain of sensors there is exactly one *primary* and many *s
 In single-sensor operation, this automatically jumps to *primary* sensor operation through the *got impulse within 1000ms* branch result.
 The figure \ref{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
 An important aspect of the implementation is that there is no numbering or sequence of the individual sensors.
-
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
 The sensor differentiation takes place later in the (+mrp)-library \ref{software-readout-framework} by using the sensor (+uuid).
 
@@ -479,7 +472,7 @@ The mechanical setup consists of four 3D printed components, which are fixed tog
 
 \newpage
 
-Since the *MMC5603NJ* only has limited measurement range of total *6uT*, even small coin sized neodymium magnets already saturates the sensor.
+Since the *MMC5603NJ* only has limited measurement range of total *6mT*, even small coin sized neodymium magnets already saturates the sensor.
 It is possible to mount 3D printed spacers (see green part in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
@@ -492,7 +485,7 @@ The 3D full sphere sensor shown in figure \ref{Full_sphere_sensor_implementation
 
 The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
 
-The magnet sensor is mounted on a movable arm, which can move 180 degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
+The magnet sensor is mounted on a movable arm, which can move *180* degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
 %%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png%%
 
@@ -571,7 +564,7 @@ The implementation of the same functionalities appears as the following by using
 
   The input parameters of the *HalbachOptimisation* [@O24] project are on the one hand the mechanical dimensions and the number of magnets to be used.
   Idal magnets are assumed at this point. However, it should also be possible to import field data in a more measured form later.
-  Using the DataAquisition sub-step, it is possible to generate any number of ideal magnets.
+  Using the data aquisition sub-step, it is possible to generate any number of ideal magnets.
 
 2. **Add custom analysis processing step**
 
@@ -889,9 +882,7 @@ The same procedure is performed for all available (+cli)-command of each sensor,
 #### Dynamic extension of the available Network-Proxy Commands
 
 For the host to be able to send a command to the network multi-sensor setup, the command received needs to be forwarded to the correct sensor.
-In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example listing \ref{lst:mtsc}).
-
-To realize this, a (+lut) is created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
+In addition, there are commands such as the previously used *info* or *status* command, which must be intercepted by the *MRPProxy* module so that it can be handled differently (see example listing \ref{lst:mtsc}). To realize this, a (+lut) is created in the previous steps, which contains information regarding *requested capability* -> *sensor*-(+uuid) -> *physical sensor* and allows the commands to be routed.
 
 For commands, which have several entries for *CAPABLE SENSORS ID LUT* from table \ref{Sensor_capabilities_merging_algorithm.csv}, there are two approaches to how the command is processed:
 

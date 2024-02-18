@@ -7,7 +7,7 @@
 \contentsline {lstlisting}{\numberline {3.3}MRPProxy provided REST endpoint query example using wget command line tool to send requests}{43}{lstlisting.3.3}%
 \contentsline {lstlisting}{\numberline {3.4}MRPcli usage example to connect with a MRPProxy based network sensor}{44}{lstlisting.3.4}%
 \contentsline {lstlisting}{\numberline {3.5}MRPProxy REST capabilities query result after executing the merging algorithm}{46}{lstlisting.3.5}%
-\contentsline {lstlisting}{\numberline {3.6}MRPReading example for setting up a basic measurement using Python code}{48}{lstlisting.3.6}%
+\contentsline {lstlisting}{\numberline {3.6}MRPReading example for setting up a basic measurement using Python code}{47}{lstlisting.3.6}%
 \contentsline {lstlisting}{\numberline {3.7}MRPHal example to use a connected hardware sensor to store raw sensor readings inside a measurement}{49}{lstlisting.3.7}%
 \contentsline {lstlisting}{\numberline {3.8}MRPSimulation example illustrates the usage of several functions how to generate simulated magnets}{50}{lstlisting.3.8}%
 \contentsline {lstlisting}{\numberline {3.9}MRPAnalysis example code performs several data analysis steps}{50}{lstlisting.3.9}%
