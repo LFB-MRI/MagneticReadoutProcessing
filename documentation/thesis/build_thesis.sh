@@ -46,12 +46,15 @@ echo "-- STARTING BUILDING THESIS DOCUMENT --"
 pandoc --version
 
 # CONVERT CSV TABLES to MARKDOWN
-if [[ ! -v BUILD_FAST ]]; then
+
 cp ./thesis_document.md ./thesis_document_tmp.md 
+
 FILES="./tables/*.csv"
 for f in $FILES
 do
     FN="${f##*/}"
+
+    if [[ ! -v BUILD_FAST ]]; then
     FNWOE="${FN%%.*}"
     echo "Processing table $FN file..."
     cat "$f"
@@ -68,7 +71,7 @@ do
     ## INSERT TABLE
     csv2md "$f" >> "$f.md"
     cat "$f.md"
-
+    fi
 
     # REPLACE CONTENT WITH SED
     #cat "$f.md" | sed -e 's/[@table:'$FN']/g/' ./thesis_document_tmp.md 
@@ -76,12 +79,12 @@ do
     echo "$str"
     sed -e "/$str/ {" -e "r $f.md" -e 'd' -e '}' -i ./thesis_document_tmp.md 
 done
-fi
 
 
 
 
-if [[ ! -v BUILD_FAST ]]; then
+
+
 # ADD IMAGES
 imagefiles="./images/*.png"
 for f in $imagefiles
@@ -95,8 +98,9 @@ do
     filenameimageboarder="./generated_images/border_$FN"
     cp "$f" "$filenameimageboarder"
     # ADD IMAGE BORDERS
+    if [[ ! -v BUILD_FAST ]]; then
     convert -bordercolor transparent -border 10 "$f" "$filenameimageboarder"
-
+    fi
 
     
     # CREATE TABLE MARKDOWN FILE
@@ -120,9 +124,8 @@ do
     echo "$str"
     sed -e "/$str/ {" -e "r $f.md" -e 'd' -e '}' -i ./thesis_document_tmp.md 
 done
-fi
 
-if [[ ! -v BUILD_FAST ]]; then
+
 # CONVERT LISTINGS
 python3 convert_listings_head.py ./thesis_document_tmp.md 
 
@@ -139,7 +142,7 @@ pandoc ./thesis_attachments.md -o ./thesis_attachments.tex --from markdown --top
 sed -i 's/\\autocite{/\\customcite{/g' ./thesis_document.tex
 
 echo "------------- PANDOC GENERATION FINISHED -----------"
-fi
+
 
 
 python3 ./generate_citealias.py ./thesis_document.tex  ./thesis_references_alias.tex
@@ -189,18 +192,5 @@ rm -f *.run.xml
 rm -Rf tmp
 
 
-
-# COPY INTO BUILD FOLDER
-rm -f ./build_out/*.*
-cp thesis.pdf ./build_out/
-cp -Rf ./deploly_server ./build_out
-
-DIR="/tmp/thesis_build"
-if [ -d "$DIR" ]; then
-  echo "copy build into ${DIR}"
-  cp -Rf ./build_out/ $DIR
-fi
-# TODO IF ENV IS sET
-# START HTTP SERVER
 
 exit 0

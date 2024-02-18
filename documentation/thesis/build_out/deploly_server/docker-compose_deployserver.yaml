@@ -1,7 +1,0 @@
-services:
-  mrptheis:
-    image: docker.io/library/mrpthesisdeployserver:latest
-    container_name: mrpthesisdeployserver
-    build: .
-    ports:
-      - "8081:80"
