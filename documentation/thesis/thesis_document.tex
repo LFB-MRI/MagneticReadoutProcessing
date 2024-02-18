@@ -3638,26 +3638,38 @@ sensor in the \emph{B0} field).
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-This work describes the development of a universal Python library that
-is used to efficiently process data from magnetic field sensors from
-acquisition to analysis. In order to ensure a practical application and
-to give users the opportunity to directly acquire their own magnetic
-field data, cost-effective and easily reproducible hardware is also
-developed.
-
-The hardware is based on widely used magnetic field sensors and low-cost
-microcontrollers, which enables an easily expandable and applicable
-solution for measuring magnets with repeatable accuracy.
-
-A particular focus is placed on expandability by the user.
-Interchangeable modules allow the user to develop their own analysis
-algorithms without having to redesign everything from scratch.
-
-This extensibility and customisability is successfully demonstrated
-during the evaluation. This underlines the performance of the developed
-framework and shows that it is not only effective in the processing of
-magnetic field sensor data, but also offers a flexible platform for the
-implementation of user-specific analyses.
+This thesis describes the development of a universal Python library that
+can be used to efficiently process data from magnetic field sensors from
+acquisition to analysis. To ensure a practical application and allow
+users to acquire their own magnetic field data directly, a low-cost and
+easily reproducible hardware is also developed. The hardware is based on
+widely used consumer magnetic field sensors and low-cost
+microcontrollers, enabling an easily expandable and applicable solution
+for measuring magnets with repeatable accuracy. Special attention is
+paid to the expandability by the user. Interchangeable modules allow the
+user to develop their own analysis algorithms without having to design
+everything from scratch. The software framework was evaluated on the
+basis of the previously defined use cases. A user-defined sorting
+algorithm was implemented and integrated into the framework. The result
+is a list of the magnets that deviate least from the magnetic strength.
+The result was successfully verified by means of manual checks for
+various other series of measurements. In this way, extensibility and
+customisability were also successfully demonstrated during the software
+evaluation. This underlines the power of the developed framework and
+shows that it is not only effective in processing magnetic field sensor
+data, but also provides a flexible platform for the implementation of
+user-specific analyses. Subsequently, the developed framework was used
+to automatically characterise various magnetic field sensors. For this
+purpose, the developed pipeline feature of the software was used to
+determine various sensor characteristics, including background noise,
+temperature coefficients and linearity. The evaluation of the
+measurement data showed that the selected sensors only partially fulfil
+the defined requirements. Based on these results, it is proposed to
+characterise further digital and analogue sensors, in particular
+analogue magnetic field sensors with separate bias voltage. Alternative
+methods for sensor adaptation are described in order to be able to use
+these widely used consumer magnetic field sensors for the
+characterisation of neodymium magnet-based permanent magnets.
 
 \hypertarget{outlook}{%
 \section{Outlook}\label{outlook}}
