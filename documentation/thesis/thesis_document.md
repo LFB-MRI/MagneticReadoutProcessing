@@ -399,7 +399,7 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
-This allows to quickly inspeaction whether the hardware is working properly after firmware installation.
+This allows to quickly inspect whether the hardware is working properly after firmware installation.
 The command *help*, displays a detailed command reference wit all available commands as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
 The figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
 
@@ -903,7 +903,7 @@ The *extend commands using an id parameter* strategy is used to differentiate se
 * *readsensor AXIS SENSOR_INDEX* -> *readsensor ID AXIS SENSOR_INDEX*
 * *opmode* -> *opmode ID*
 
-This allows the host to address individual sensors directly via their specific (+uuid) and extendet id parameter.
+This allows the host to address individual sensors directly via their specific (+uuid) and extended id parameter.
 
 ## Examples
 
@@ -1813,5 +1813,5 @@ Alternative methods for sensor adaptation are described in order to be able to u
 
 With this version of the framework, a solid basis has been created that contains all the necessary functions to solve various problems in the acquisition and processing of magnetic fields. Easy-to-assemble measurement hardware has created an easy-to-use platform for the characterisation of permanent magnets, for example. An exemplary characterisation of the magnetic field sensors used allows the possible areas of application for these to be narrowed down. The framework has already been published in a first stable version, but extensions and improvements are still necessary.
 The stable version is also distributed via a package registration and can therefore be quickly evaluated by new users. 
-In addition, further user experience and actual measurements under real laboratory conditions on (+mri) B0 field magnets are still missing. This is limited by the currently restricted selection of characterised sensors. The aim for the next revision of the hardware and software framework is therefore to support additional magnetic field sensors. The current restriction to purely digital sensor interfaces is also to be extended to analogue interfaces. This will open up the use of a wide range of magnetic field sensors. It is also possible to integrate high-resolution magnetic field probes based onNMR samples, which can cover measurement errors of less than *10nT* in fields of more than *1T* [@DBN08].
+In addition, further user experience and actual measurements under real laboratory conditions on (+mri) B0 field magnets are still missing. This is limited by the currently restricted selection of characterised sensors. The aim for the next revision of the hardware and software framework is therefore to support additional magnetic field sensors. The current restriction to purely digital sensor interfaces is also to be extended to analogue interfaces. This will open up the use of a wide range of magnetic field sensors. It is also possible to integrate high-resolution magnetic field probes based on NMR samples, which can cover measurement errors of less than *10nT* in fields of more than *1T* [@DBN08].
 Another possibility already supported by the software, but for which hardware development is still necessary, is 2D arrays of magnetic field sensors to display fields on a surface[@CP16]. This means that deviations can also be visualised graphically without physically moving the senso such as in the implemented *3D: Full Sphere* \ref{d-full-sphere} sensor. In addition, larger areas or volumes, such as in a large *B0* field, can be measured more quickly.
