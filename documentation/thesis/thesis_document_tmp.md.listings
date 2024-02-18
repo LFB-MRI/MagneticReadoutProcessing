@@ -395,6 +395,7 @@ Each sensor measurement result is transmitted from the buffer to the host togeth
 
 This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like described in chapter \ref{sensor-synchronisation-interface} and are not out of sequence or drift.
 
+
 ### Communication Interface
 
 ![Unified sensor firmware provided serial terminal based (+cli) allows the user to configure the sensor manually \label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}](./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png)
@@ -514,9 +515,7 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 The 3D full sphere sensor shown in figure \ref{Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder.
-
-The magnet sensor is mounted on a movable arm, which can move *180* degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
+The figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder. The magnet sensor is mounted on a movable arm, which can move *180* degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
 ![3D plot of an N45 12x12x12mm magnet using the build 3D full sphere sensor with visible magnetic field strength deviations using different shaded vertices on a sphere \label{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}](./generated_images/border_3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png)
 
@@ -530,17 +529,12 @@ This is chosen because of its larger measuring range and can therefore be used m
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
 A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
-It offers an *RS232* interface with a documented protocol for connection to a (+pc). 
-
-This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
+It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer a physical *RS232* interface.
-As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter.
-
-The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
+As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter. The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware is adapted using a separate build configuration.
-In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class as shown in listing \ref{lst:CustomSensorClass}.
-
+In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class as shown in listing \ref{lst:CustomSensorClass}. 
 This software or hardware integration can be conducted on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
 ![Voltcraft GM70 teslameter with custom (+pc) interface board using a (+usb) to serial converter and needed additional pull-up resistors \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}](./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png)
