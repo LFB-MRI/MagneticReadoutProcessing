@@ -79,9 +79,10 @@ around a permanent magnet using different sensors. Several existing
 open-source software solutions implement individual parts, but do not
 provide a complete data processing pipeline from acquisition to
 analysis, and their data storage formats are not compatible with each
-other. The accompanying open-source software for this thesis is designed
-not only to facilitate measurements with different sensors but also to
-enable the characterisation of different objects.
+other. The accompanying open source software for this work is not only
+designed to enable measurements with various sensors, but also to
+characterise permanent magnets, magnetic fields and the sensors
+themselves.
 
 The sensor testing process involves three key test procedures for two
 digital sensors. Firstly, the background noise for both sensors is
@@ -183,11 +184,14 @@ flux-to-mass ratio \customcite{WZC21}.
 A Halbach ring of this type is usually based on a ring with permanent
 magnets arranged in a circle. The figure
 \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an
-example \gls{cad} model of such a ring. In this generated model eight
-cubic \emph{12x12x12mm} magnets are embedded to generate homogeneous
-magnetic flux densities of around \emph{20mT}. The homogeneity in this
-configuration depends, among other things, on the following main
-aspects:
+example \gls{cad} model of such a ring.
+
+\newpage
+
+In this generated model eight cubic \emph{12x12x12mm} magnets are
+embedded to generate homogeneous magnetic flux densities of around
+\emph{20mT}. The homogeneity in this configuration depends, among other
+things, on the following main aspects:
 
 \begin{itemize}
 \item
@@ -416,8 +420,8 @@ properties, with customisation possible at each step of the process.
 Complete documentation, tutorials and tests will enable users to use the
 framework efficiently and adapt it to their specific requirements.
 
-The application of the develox field sensors serve the practical
-application and validation of the developed solution.
+The characterisation of field sensors in consumer quality serves the
+practical application and validation of the developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study.
 The ultimate objective is to assess whether these selected sensors align
@@ -608,9 +612,9 @@ insights for future work. This chapter ensures closure and aids readers
 in grasping the broader context and significance of the research.
 
 Finally, a comprehensive hardware and software framework needs to be
-established, which can measure diverse objects using various sensors.
-Additionally, remarks need to be provided regarding the suitability of
-the employed sensors for magnetic field measurements.
+established, which can measure diverse objects using various sensors. In
+addition, comments must be made on the suitability of the sensors used
+for magnetic field measurements.
 
 \hypertarget{unified-sensor}{%
 \chapter{Unified Sensor}\label{unified-sensor}}
@@ -731,12 +735,11 @@ shown in green
 Figure
 \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png},
 shows rendered view of the 1D-Single sensor \gls{cad} drawing, which is
-described in chapter \ref{d-single-sensor}.
-
-All parts are produced using 3D printing additive manufacturing process.
-The sensor circuit board is glued underneath the magnet holder. This is
-interchangeable, so different distances between sensor and magnet can be
-realised. The exchangeable magnetic holder (shown in green in figure
+described in chapter \ref{d-single-sensor}. All parts are produced using
+3D printing additive manufacturing process. The sensor circuit board is
+glued underneath the magnet holder. This is interchangeable, so
+different distances between sensor and magnet can be realised. The
+exchangeable magnetic holder (shown in green in figure
 \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png})
 can be adapted to different magnets. It can be produced quickly due to
 the small number of parts used. The two recesses lock the magnet holder
@@ -912,10 +915,10 @@ interact with the sensor:
 
 The \gls{cli} mode is a simple text-based interface with which it is
 possible to read out current measured values, obtain debug information
-and set operating parameters. This allows to quickly inspeaction whether
-the hardware is working properly after firmware installation. The
-command \emph{help}, displays a detailed command reference wit all
-available commands as shown in the figure
+and set operating parameters. This allows to quickly inspect whether the
+hardware is working properly after firmware installation. The command
+\emph{help}, displays a detailed command reference with all available
+commands as shown in the figure
 \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
 to the user. The figure
 \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
@@ -1098,10 +1101,11 @@ decision
 \label{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}}
 \end{figure}
 
-Once the hardware has been prepared, the task of the firmware of the
-various sensors is to find a common synchronisation clock. The figure
-\ref{Unified_sensor_fiUnified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.pngrmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}
-shows how the firmware handles the decision task if the sensor is
+Once the hardware has been prepared, the task of the firmware of each of
+the chained sensors is to find a common synchronisation clock. The
+figure
+\ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}
+illustrates how the firmware handles the decision task if the sensor is
 \emph{primary} or \emph{secondary} at startup. The firmware-function
 \emph{register irq on sync pin} is overwritten. To set one
 \emph{primary} and several \emph{secondary} sensors, each sensor waits
@@ -1156,12 +1160,12 @@ to cover various magnet charaterisation setups
 \label{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}}\tabularnewline
 \toprule
 & 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
-Fullsphere\ref{d-fullsphere}\tabularnewline
+Fullsphere\ref{d-full-sphere}\tabularnewline
 \midrule
 \endfirsthead
 \toprule
 & 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
-Fullsphere\ref{d-fullsphere}\tabularnewline
+Fullsphere\ref{d-full-sphere}\tabularnewline
 \midrule
 \endhead
 Maximal magnet size & Cubic 30x30x30mm & Cubic 30x30x30mm & Cubic
@@ -2025,7 +2029,7 @@ by another \gls{uuid} parameter, according to the following scheme:
 \end{itemize}
 
 This allows the host to address individual sensors directly via their
-specific \gls{uuid} and extendet id parameter.
+specific \gls{uuid} and extended id parameter.
 
 \hypertarget{examples}{%
 \section{Examples}\label{examples}}
@@ -2457,10 +2461,10 @@ stage export_readings:
 Each pipeline step is divided into \emph{stages}, which contain a name,
 the function to be executed and its parameters.
 
-The various steps are linked by using the \emph{stage } macro as input
-parameter of the next function to be executed (see comments in listing
-\ref{lst:mrpuddp_example_yaml}). Therefore, it is feasible to use the
-results of one function in several others without them directly
+The various steps are linked by using the \emph{stage NAME} macro as
+input parameter of the next function to be executed (see comments in
+listing \ref{lst:mrpuddp_example_yaml}). Therefore, it is feasible to
+use the results of one function in several others without them directly
 following each other. The disadvantages of this system are the
 following:
 
@@ -2481,7 +2485,7 @@ sequence can be determined in the form of a call tree in figure
 \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph. The intermediate
 results and the results in figure
-\ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
+\ref{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}
 are saved for optional later use.
 
 \begin{figure}
@@ -2494,10 +2498,10 @@ processing pipeline
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}
-\caption{Pipeline output files after running example pipeline on a set
-of readings
-\label{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png}}
+\includegraphics{./generated_images/border_Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}
+\caption{Generated pipeline output files and example results combined
+into one plot after running example pipeline on a set of readings
+\label{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}}
 \end{figure}
 
 \hypertarget{testing}{%
@@ -2533,7 +2537,7 @@ all intended use cases are mapped using the test cases created, the code
 of the test cases could later be used in slightly simplified variants of
 listing \ref{lst:pytest_example_code} as examples for the documentation.
 
-\begin{lstlisting}[language=Python, caption={Example pytest class for testing MRPReading module functions}, label=lst:pytest_example_code]
+\begin{lstlisting}[language=Python, caption={Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules}, label=lst:pytest_example_code]
 class TestMPRReading(unittest.TestCase):
   # PREPARE AN INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
@@ -2732,8 +2736,8 @@ always automatically kept up to date with new features.
 \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
 \end{figure}
 
-\hypertarget{haluation}{%
-\chapter{Haluation}\label{haluation}}
+\hypertarget{use-case-evaluation}{%
+\chapter{Use Case Evaluation}\label{use-case-evaluation}}
 
 The practical application of the hardware and software framework is
 shown below. It is implemented by using the previously defined use cases
@@ -2785,9 +2789,10 @@ algorithms to meet the requirements of different research projects.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Ten_numbered_test_magnets_in_separate_holders.png}
-\caption{Ten numbered test magnets in separate holders
-\label{Ten_numbered_test_magnets_in_separate_holders.png}}
+\includegraphics{./generated_images/border_Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}
+\caption{Ten numbered N45 12x12x12mm test magnets in separate 3D printed
+holders
+\label{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}}
 \end{figure}
 
 For the hardware setup, the 3D-Full Sphere sensor, explained in chapter
@@ -2795,12 +2800,13 @@ For the hardware setup, the 3D-Full Sphere sensor, explained in chapter
 this is equipped with an exchangeable magnetic holder mount, suitable
 holders are required for the magnets to be measured. Ten random
 \emph{N45 12x12x12mm} neodymium magnets are used, which are shown in
-figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+figure
+\ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}.
 
 These are placed in modified 3D printed holders shown in figure
-\ref{Ten_numbered_test_magnets_in_separate_holders.png} and afterwards
-numbered. This allows to match the magnets to the measurement results
-later.
+\ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}
+and afterwards numbered. This allows to match the magnets to the
+measurement results later.
 
 \hypertarget{configuration-of-the-measurement}{%
 \section{Configuration of the
@@ -2922,14 +2928,14 @@ Pipeline}\label{execution-of-analysis-pipeline}}
 
 Once the filter function has been implemented, it still needs to be
 integrated into the analysis pipeline in listing
-\ref{lst:pipeline_mrp_evaluation_yaml}. At this point, he example
+\ref{lst:pipeline_mrp_evaluation_yaml}. At this point, the example
 pipeline in figure \ref{Example_measurement_analysis_pipeline.png} is
 simplified and an additional stage \emph{find\_similar\_values} has been
 added, which has set \emph{FindSimilarValuesAlgorithm} as the function
 to be called. As a decisive step, the result is used in the
 \emph{plot\_filtered} stage for visualisation.
 
-\begin{lstlisting}[caption={User defined processing pipeline using custom implemented filter algorithm}, label=lst:pipeline_mrp_evaluation_yaml]
+\begin{lstlisting}[caption={User defined processing pipeline using custom implemented filter algorithm in third stage}, label=lst:pipeline_mrp_evaluation_yaml]
 settings:
   enabled: true
   export_intermediate_results: false
@@ -2986,8 +2992,9 @@ The figure
 summarizes this result. The plot of the raw measured values is
 represented on the left. The value of the determined \emph{GoG} \(\mu\)T
 values is plotted on ten individual measured values. It can be seen that
-there are measured values with larger deviations (see measurement
-\emph{7:0},\emph{10-2:0},\emph{10-1:0}).
+there are measured values with larger deviations (see measurement plots
+\emph{7:0},\emph{10-2:0},\emph{10-1:0} in figure
+\ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
 
 \begin{figure}
 \centering
@@ -3213,7 +3220,7 @@ The following data is shown in the plots:
 \item
   Plot of the raw data of the sensor
 \item
-  Plot of the sensors internal temperature sensor
+  Plot of the sensor's internal temperature sensor
 \item
   Background noise level with reference to the initial baseline
 \item
@@ -3692,7 +3699,7 @@ software framework is therefore to support additional magnetic field
 sensors. The current restriction to purely digital sensor interfaces is
 also to be extended to analogue interfaces. This will open up the use of
 a wide range of magnetic field sensors. It is also possible to integrate
-high-resolution magnetic field probes based onNMR samples, which can
+high-resolution magnetic field probes based on NMR samples, which can
 cover measurement errors of less than \emph{10nT} in fields of more than
 \emph{1T} \customcite{DBN08}. Another possibility already supported by the
 software, but for which hardware development is still necessary, is 2D

@@ -1,0 +1,2 @@
+![Generated pipeline output files and example results combined into one plot after running example pipeline on a set of readings \label{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}](./generated_images/border_Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png)
+

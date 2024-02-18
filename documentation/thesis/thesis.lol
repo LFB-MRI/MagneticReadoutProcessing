@@ -16,7 +16,7 @@
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {4.1}MRPCli example usage for configuration of a measurement run}{55}{lstlisting.4.1}%
 \contentsline {lstlisting}{\numberline {4.2}Example YAML code of a user defined processing pipeline with six stages linked together}{57}{lstlisting.4.2}%
-\contentsline {lstlisting}{\numberline {4.3}Example pytest class for testing MRPReading module functions}{60}{lstlisting.4.3}%
+\contentsline {lstlisting}{\numberline {4.3}Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules}{60}{lstlisting.4.3}%
 \contentsline {lstlisting}{\numberline {4.4}Bash commands to install the MagneticReadoutProcessing library using pip}{62}{lstlisting.4.4}%
 \contentsline {lstlisting}{\numberline {4.5}setup.py with dynamic requirement parsing using a given requirements.txt}{62}{lstlisting.4.5}%
 \contentsline {lstlisting}{\numberline {4.6}Documentation using Python docstring example}{63}{lstlisting.4.6}%
@@ -24,7 +24,7 @@
 \contentsline {lstlisting}{\numberline {5.1}Measurement configuration for evaluation measurement}{68}{lstlisting.5.1}%
 \contentsline {lstlisting}{\numberline {5.2}User implemented custom find most similar readings algorithm}{68}{lstlisting.5.2}%
 \contentsline {lstlisting}{\numberline {5.3}Modified user implemented custom find algorithm using a reference magnet reading}{69}{lstlisting.5.3}%
-\contentsline {lstlisting}{\numberline {5.4}User defined processing pipeline using custom implemented filter algorithm}{70}{lstlisting.5.4}%
+\contentsline {lstlisting}{\numberline {5.4}User defined processing pipeline using custom implemented filter algorithm in third stage}{70}{lstlisting.5.4}%
 \contentsline {lstlisting}{\numberline {5.5}Bash result log of the analysis pipeline run}{71}{lstlisting.5.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

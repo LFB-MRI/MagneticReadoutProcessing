@@ -28,7 +28,7 @@ The variability in the strength of permanent magnets leads to significant diffic
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework.
 The hardware system aims to selectively measure magnetic fields at various locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
-The accompanying open-source software for this thesis is designed not only to facilitate measurements with different sensors but also to enable the characterisation of different objects. 
+The accompanying open source software for this work is not only designed to enable measurements with various sensors, but also to characterise permanent magnets, magnetic fields and the sensors themselves.
 
 The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
 
@@ -257,7 +257,7 @@ Chapter \ref{evaluation}. **Evaluation**
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
   bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This chapter ensures closure and aids readers in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework needs to be established, which can measure diverse objects using various sensors. Additionally, remarks need to be provided regarding the suitability of the employed sensors for magnetic field measurements.
+Finally, a comprehensive hardware and software framework needs to be established, which can measure diverse objects using various sensors. In addition, comments must be made on the suitability of the sensors used for magnetic field measurements.
 
 # Unified Sensor
 
@@ -307,9 +307,7 @@ The focus is on providing a stable foundation for the sensor (+ic) and an exchan
 
 %%Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png%%
 
-Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}. 
-
-All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised. The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
+Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}. All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised. The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets must be measured, where the positioning over the sensor must always be the same.
 
@@ -440,8 +438,8 @@ The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_
 
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png%%
 
-Once the hardware has been prepared, the task of the firmware of the various sensors is to find a common synchronisation clock.
-The figure \ref{Unified_sensor_fiUnified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.pngrmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} shows how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
+Once the hardware has been prepared, the task of the firmware of each of the chained sensors is to find a common synchronisation clock.
+The figure \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} illustrates how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
 The firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the functionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
@@ -1203,7 +1201,7 @@ stage export_readings:
 
 Each pipeline step is divided into *stages*, which contain a name, the function to be executed and its parameters.
 
-The various steps are linked by using the *stage <name>* macro as input parameter of the next function to be executed (see comments in listing \ref{lst:mrpuddp_example_yaml}).
+The various steps are linked by using the *stage NAME* macro as input parameter of the next function to be executed (see comments in listing \ref{lst:mrpuddp_example_yaml}).
 Therefore, it is feasible to use the results of one function in several others without them directly following each other.
 The disadvantages of this system are the following:
 
@@ -1213,11 +1211,11 @@ The disadvantages of this system are the following:
 To determine the order of the pipeline steps, the parser script created converts them into one problem of the graph theories. Each step represents a node in the graph and the steps referred to by the input parameter form the edges.
 After several simplification steps, determination of start steps and repeated traversal, the final execution sequence can be determined in the form of a call tree in figure \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph.
-The intermediate results and the results in figure \ref{Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
+The intermediate results and the results in figure \ref{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png} are saved for optional later use.
 
 %%Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png%%
 
-%%Pipeline_output_files_after_running_example_pipeline_on_a_set_of_readings.png%%
+%%Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png%%
 
 ## Testing
 
@@ -1234,7 +1232,7 @@ It also allows to tag tests, which is useful for grouping tests or excluding cer
 Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants of listing \ref{lst:pytest_example_code} as examples for the documentation. 
 
 
-```python {#lst:pytest_example_code caption="Example pytest class for testing MRPReading module functions"}
+```python {#lst:pytest_example_code caption="Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules"}
 class TestMPRReading(unittest.TestCase):
   # PREPARE AN INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
@@ -1397,11 +1395,11 @@ The developed framework not only offers a cost-effective and flexible hardware s
 
 ## Hardware Preparation
 
-%%Ten_numbered_test_magnets_in_separate_holders.png%%
+%%Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png%%
 
-For the hardware setup, the 3D-Full Sphere sensor, explained in chapter \ref{d-full-sphere}, is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png}.
+For the hardware setup, the 3D-Full Sphere sensor, explained in chapter \ref{d-full-sphere}, is used for the evaluation of the framework. As this is equipped with an exchangeable magnetic holder mount, suitable holders are required for the magnets to be measured. Ten random *N45 12x12x12mm* neodymium magnets are used, which are shown in figure \ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}.
 
-These are placed in modified 3D printed holders shown in figure \ref{Ten_numbered_test_magnets_in_separate_holders.png} and afterwards numbered. This allows to match the magnets to the measurement results later.
+These are placed in modified 3D printed holders shown in figure \ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png} and afterwards numbered. This allows to match the magnets to the measurement results later.
 
 ## Configuration of the Measurement
 
@@ -1490,10 +1488,10 @@ def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRP
 ## Execution of Analysis Pipeline
 
 Once the filter function has been implemented, it still needs to be integrated into the analysis pipeline in listing \ref{lst:pipeline_mrp_evaluation_yaml}.
-At this point, he example pipeline in figure \ref{Example_measurement_analysis_pipeline.png} is simplified and an additional stage *find_similar_values* has been added, which has set *FindSimilarValuesAlgorithm* as the function to be called.
+At this point, the example pipeline in figure \ref{Example_measurement_analysis_pipeline.png} is simplified and an additional stage *find_similar_values* has been added, which has set *FindSimilarValuesAlgorithm* as the function to be called.
 As a decisive step, the result is used in the *plot_filtered* stage for visualisation.
 
-```yaml {#lst:pipeline_mrp_evaluation_yaml caption="User defined processing pipeline using custom implemented filter algorithm"}
+```yaml {#lst:pipeline_mrp_evaluation_yaml caption="User defined processing pipeline using custom implemented filter algorithm in third stage"}
 settings:
   enabled: true
   export_intermediate_results: false
@@ -1543,7 +1541,7 @@ $ MRPudpp pipeline run
 The figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} summarizes this result.
 The plot of the raw measured values is represented on the left.
 The value of the determined *GoG* $\mu$T values is plotted on ten individual measured values.
-It can be seen that there are measured values with larger deviations (see measurement *7:0*,*10-2:0*,*10-1:0*).
+It can be seen that there are measured values with larger deviations (see measurement plots *7:0*,*10-2:0*,*10-1:0* in figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
 
 %%MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png%%
 

@@ -4,10 +4,10 @@ The magnetic properties of these magnets must be similar to a certain degree in 
 Due to the complex manufacturing process of neodymium magnets, the different properties, i.e. the direction of magnetisation, can deviate from each other.
 This affects the homogeneity of the field and the image acquisition. 
 
-A passive shimming process is typically used to adjust the field afterwards.
+A passive shimming process is typically used to adjust the B0 field afterwards.
 This is complex and time-consuming and requires manual corrections to the magnets used.
 To avoid this process, magnets can be systematically measured in advance.
-Sensor accuracy and repeatability Data acquisition, storage and subsequent analysis play an important role in this methodology.
+Sensor accuracy and repeatability data acquisition, storage and subsequent analysis play an important role in this methodology.
 
 Several existing open source solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
 
