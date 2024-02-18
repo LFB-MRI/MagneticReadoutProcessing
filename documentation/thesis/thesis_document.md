@@ -400,7 +400,7 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly inspect whether the hardware is working properly after firmware installation.
-The command *help*, displays a detailed command reference wit all available commands as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
+The command *help*, displays a detailed command reference with all available commands as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
 The figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
 
 %%Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png%%
@@ -1626,7 +1626,7 @@ The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC560
 The following data is shown in the plots:
 
 * Plot of the raw data of the sensor
-* Plot of the sensors internal temperature sensor
+* Plot of the sensor's internal temperature sensor
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 
