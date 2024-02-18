@@ -1811,14 +1811,7 @@ Alternative methods for sensor adaptation are described in order to be able to u
 
 ## Outlook
 
-A solid basement has been built in this version of the framework, which contains all the necessary functions and is ready for immediate use. During development, particular emphasis is placed on comprehensive documentation to make it easier to get started.
-Together with examples for various use cases, a user can quickly evaluate the framework.
-
-However, it should be noted that the framework has already been released with its first stable version, but extensions and improvements are still necessary.
-The stable version distributed via the package registry is well suited for the intended purpose.
-All tests and evaluations took place under normal conditions, especially for the developed hardware sensors, as the (+mrp) library works successfully with the measurement data.
-
-On the software side, the focus is on integration for the support of more professional measuring devices. Only in this way is it possible to evaluate and improve the sensor hardware and quantify the measurement results.
-
-To summarise, it can be said that a solid software framework has been created that can be used directly for the intended purpose.
-It provides a suitable base for working, but further developments by integrating professional measurement devices to enable a more comprehensive evaluation and improvement of the sensor hardware are necessary.
+With this version of the framework, a solid basis has been created that contains all the necessary functions to solve various problems in the acquisition and processing of magnetic fields. Easy-to-assemble measurement hardware has created an easy-to-use platform for the characterisation of permanent magnets, for example. An exemplary characterisation of the magnetic field sensors used allows the possible areas of application for these to be narrowed down. The framework has already been published in a first stable version, but extensions and improvements are still necessary.
+The stable version is also distributed via a package registration and can therefore be quickly evaluated by new users. 
+In addition, further user experience and actual measurements under real laboratory conditions on (+mri) B0 field magnets are still missing. This is limited by the currently restricted selection of characterised sensors. The aim for the next revision of the hardware and software framework is therefore to support additional magnetic field sensors. The current restriction to purely digital sensor interfaces is also to be extended to analogue interfaces. This will open up the use of a wide range of magnetic field sensors. It is also possible to integrate high-resolution magnetic field probes based onNMR samples, which can cover measurement errors of less than *10nT* in fields of more than *1T* [@DBN08].
+Another possibility already supported by the software, but for which hardware development is still necessary, is 2D arrays of magnetic field sensors to display fields on a surface[@CP16]. This means that deviations can also be visualised graphically without physically moving the senso such as in the implemented *3D: Full Sphere* \ref{d-full-sphere} sensor. In addition, larger areas or volumes, such as in a large *B0* field, can be measured more quickly.
