@@ -652,6 +652,25 @@ firmware setup; it is developed for this purpose in the first step.
 \hypertarget{sensor-selection}{%
 \section{Sensor Selection}\label{sensor-selection}}
 
+The selection process for possible magnetic field sensors initially
+focuses on the most common and cost-effective ones, especially those
+that are already used in smartphones and are therefore widely available.
+
+A key aspect of this selection is the preference for sensors with
+digital interfaces to facilitate implementation in the circuit layout
+since these kinds of sensors are easy to integrate compared to
+non-digital sensors, which require specific frameworks. The integration
+of integrated temperature sensors represents a significant enhancement
+that will later enable precise temperature compensation.
+
+Focussing on the digital \gls{i2c} interface not only facilitates
+implementation, but also contributes to overall cost efficiency. At the
+same time, the integration of temperature sensors enables precise
+measurements under varying environmental conditions. This strategic
+choice forms the basis for a flexible, universally applicable Hall
+sensor interface that can be seamlessly integrated into various existing
+systems.
+
 \begin{longtable}[]{@{}lllll@{}}
 \caption{List of in unified firmware implemented digital magnetic field
 sensors with focus on different sensor capabilities
@@ -672,17 +691,6 @@ Interface & \gls{i2c} & \gls{i2c} & \gls{i2c} & \gls{i2c}\tabularnewline
 \bottomrule
 \end{longtable}
 
-The selection process for possible magnetic field sensors initially
-focuses on the most common and cost-effective ones, especially those
-that are already used in smartphones and are therefore widely available.
-
-A key aspect of this selection is the preference for sensors with
-digital interfaces to facilitate implementation in the circuit layout
-since these kinds of sensors are easy to integrate compared to
-non-digital sensors, which require specific frameworks. The integration
-of integrated temperature sensors represents a significant enhancement
-that will later enable precise temperature compensation.
-
 The use of analogue sensors is purposefully avoided, though they are
 suitable for more precise measurements and extended measuring ranges.
 They are excluded because they require more carefully designed circuits
@@ -690,16 +698,6 @@ and more complicated energy management. In the context of the desired
 goal of developing a cost-efficient and universally expandable Hall
 sensor interface, the decision in favour of digital sensors seems
 appropriate.
-
-\newpage
-
-Focussing on the digital \gls{i2c} interface not only facilitates
-implementation, but also contributes to overall cost efficiency. At the
-same time, the integration of temperature sensors enables precise
-measurements under varying environmental conditions. This strategic
-choice forms the basis for a flexible, universally applicable Hall
-sensor interface that can be seamlessly integrated into various existing
-systems.
 
 The table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
@@ -761,7 +759,6 @@ footprint in the center
 
 The electronics consist of the magnetic field sensor and the electrical
 interface to connect it to a \gls{pc} in the form of a microcontroller.
-
 The focus is on utilising existing microcontroller development and
 evaluation boards, which already integrate all the components required
 for basic operation. This not only enabled a time-saving implementation,
@@ -818,6 +815,8 @@ implemented using abstract class design. These are initiated according
 to the sensors found at startup. If new hardware needs to be integrated,
 only the required functions in listing \ref{lst:CustomSensorClass} need
 to be implemented.
+
+\newpage
 
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package}, label=lst:CustomSensorClass]
 #ifndef __CustomSensor_h__
@@ -1262,8 +1261,6 @@ different shaded vertices on a sphere
 \label{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}}
 \end{figure}
 
-\newpage
-
 As the magnets in the motors, as with the screws used in the 1D sensor,
 can influence the measurements of the magnetic field sensor, the
 distance between these and the sensor and magnet is increased by using
@@ -1524,7 +1521,7 @@ the centralized management of measurement data. It serves as a storage
 provider for various measurements, offering functionalities that
 facilitate the creation and addition of data records. To customise and
 add meta-data, users have the flexibility to configure parameters
-through the dedicated \emph{MRPMeasurementConfig} module into an
+through the dedicated \emph{MRPMeasurementConfig} module into a
 \emph{MRPReading} instance.
 
 Within the realm of measurement data, a diverse range of data points can
@@ -2049,7 +2046,9 @@ describes the measurement. This is realised in the example using the
 \emph{set\_additional\_data} function. Finally, the measurement is
 exported for archiving and further processing; various export formats
 are available. Using the \emph{dump\_to\_file} function, the measurement
-can be converted into an open \gls{json} format.
+can be converted into a open \gls{json} format.
+
+\newpage
 
 \begin{lstlisting}[language=Python, caption={MRPReading example for setting up a basic measurement using Python code}, label=lst:mrpexample_reading]
 from MRP import MRPReading, MRPMeasurementConfig
@@ -2623,6 +2622,8 @@ actual installation. These can be specified in the library installation
 configuration \emph{setup.py} in listing \ref{lst:setup_py_req} for this
 purpose.
 
+\newpage
+
 \begin{lstlisting}[language=Python, caption={setup.py with dynamic requirement parsing using a given requirements.txt}, label=lst:setup_py_req]
 # dynamic requirement loading using requirements.txt
 req_path = './requirements.txt'
@@ -2673,6 +2674,8 @@ Python type annotations. The use of type annotations also simplifies
 further development, as modern \gls{ide}s can more reliably display
 methods to the user as an assistance. It is implemented in listing
 \ref{lst:pydocstring}.
+
+\newpage
 
 \begin{lstlisting}[language=Python, caption={Documentation using Python docstring example}, label=lst:pydocstring]
 # MRPDataVisualisation.py - example docstring
@@ -2899,6 +2902,8 @@ similar to the selected reference magnet. The code snipped in listing
 \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the
 modified filter algorithm code, with added \_ref input parameter for the
 reference measurement.
+
+\newpage
 
 \begin{lstlisting}[language=Python, caption={Modified user implemented custom find algorithm using a reference magnet reading}, label=lst:custom_find_similar_values_algorithm_refmagnet]
 @staticmethod

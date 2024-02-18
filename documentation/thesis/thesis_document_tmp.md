@@ -279,6 +279,15 @@ It simplifies of own measuring devices into the (+mrp) ecosystem later. This is 
 
 ## Sensor Selection
 
+The selection process for possible magnetic field sensors initially focuses on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
+
+A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
+The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
+
+Focussing on the digital (+i2c) interface not only facilitates implementation, but also contributes to overall cost efficiency.
+At the same time, the integration of temperature sensors enables precise measurements under varying environmental conditions.
+This strategic choice forms the basis for a flexible, universally applicable Hall sensor interface that can be seamlessly integrated into various existing systems.
+
 : List of in unified firmware implemented digital magnetic field sensors with focus on different sensor capabilities \label{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 
 |                    | TLV493D-A1B6 | HMC5883L | MMC5603NJ | AS5510 |
@@ -289,19 +298,8 @@ It simplifies of own measuring devices into the (+mrp) ecosystem later. This is 
 | Range [mT]         | ±130.0       | ±0.8     | ±3        | ±50    |
 | Interface          | (+i2c)       | (+i2c)   | (+i2c)    | (+i2c) |
 
-The selection process for possible magnetic field sensors initially focuses on the most common and cost-effective ones, especially those that are already used in smartphones and are therefore widely available. 
-
-A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
-The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
-
 The use of analogue sensors is purposefully avoided, though they are suitable for more precise measurements and extended measuring ranges.
 They are excluded because they require more carefully designed circuits and more complicated energy management. In the context of the desired goal of developing a cost-efficient and universally expandable Hall sensor interface, the decision in favour of digital sensors seems appropriate.
-
-\newpage
-
-Focussing on the digital (+i2c) interface not only facilitates implementation, but also contributes to overall cost efficiency.
-At the same time, the integration of temperature sensors enables precise measurements under varying environmental conditions.
-This strategic choice forms the basis for a flexible, universally applicable Hall sensor interface that can be seamlessly integrated into various existing systems.
 
 The table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
@@ -317,7 +315,7 @@ The focus is on providing a stable foundation for the sensor (+ic) and an exchan
 ![Rendered mechanical structure of the 1D sensor (+cad) model with different parts colored separately, and universal magnet mount shown in green \label{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}](./generated_images/border_Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png)
 
 
-Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the  1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}. All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised. The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
+Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the 1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}. All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised. The exchangeable magnetic holder (shown in green in figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
 The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
 This is important if several magnets must be measured, where the positioning over the sensor must always be the same.
 
@@ -327,9 +325,7 @@ This is important if several magnets must be measured, where the positioning ove
 ![1D sensor schematic using an Raspberry Pi Pico with a TLV493D footprint in the center \label{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png}](./generated_images/border_1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png)
 
 
-The electronics consist of the magnetic field sensor and the electrical interface to connect it to a (+pc) in the form of a microcontroller.
-
-The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation. This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation. A *Raspberry Pi Pico* and a *STM32F4* are used as a computer-sensor interface for this thesis, which are popular, cost-effective and simple to implement.
+The electronics consist of the magnetic field sensor and the electrical interface to connect it to a (+pc) in the form of a microcontroller. The focus is on utilising existing microcontroller development and evaluation boards, which already integrate all the components required for basic operation. This not only enabled a time-saving implementation, but also ensured a cost-efficient realisation. A *Raspberry Pi Pico* and a *STM32F4* are used as a computer-sensor interface for this thesis, which are popular, cost-effective and simple to implement.
 
 All the necessary components and their circuitry are recorded on a (+pcb) shown in figure \ref{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png} and subsequently manufactured.
 In addition, footprints are provided for various sensor (+ic) packages.
@@ -353,6 +349,7 @@ This measured data can be forwarded to a host (+pc) via a user interface and can
 A key component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
 These are initiated according to the sensors found at startup. If new hardware needs to be integrated, only the required functions in listing \ref{lst:CustomSensorClass} need to be implemented.
 
+\newpage
 
 ```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package"}
 #ifndef __CustomSensor_h__
@@ -524,8 +521,6 @@ The magnet sensor is mounted on a movable arm, which can move *180* degrees arou
 ![3D plot of an N45 12x12x12mm magnet using the build 3D full sphere sensor with visible magnetic field strength deviations using different shaded vertices on a sphere \label{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}](./generated_images/border_3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png)
 
 
-\newpage
-
 As the magnets in the motors, as with the screws used in the 1D sensor, can influence the measurements of the magnetic field sensor, the distance between these and the sensor and magnet is increased by using nylon and 3D printed spacer. The turntable and its drive motor are connected to each other via a belt.
 
 On the electrical side, consists of a *SKR-Pico* stepper motor controller on the one hand side and a *TLV493D* magnetic field sensor on the other hand side.
@@ -650,7 +645,7 @@ The following modules are implemented in detail:
 
 
 The *MRPReading* module performs an essential role in streamlining the centralized management of measurement data. It serves as a storage provider for various measurements, offering functionalities that facilitate the creation and addition of data records.
-To customise and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into an *MRPReading* instance.
+To customise and add meta-data, users have the flexibility to configure parameters through the dedicated *MRPMeasurementConfig* module into a *MRPReading* instance.
 
 Within the realm of measurement data, a diverse range of data points can be seamlessly incorporated.
 The process is initiated by employing specialized functions designed for the creation and addition of data records.
@@ -957,7 +952,9 @@ It is used to manage the measurement data and can be imported and exported.
 The following example listing \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
 
 A crucial point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
-Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into an open (+json) format.
+Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
+
+\newpage
 
 ```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement using Python code"}
 from MRP import MRPReading, MRPMeasurementConfig
@@ -1341,6 +1338,8 @@ To make the (+mrp) file structure compatible with the package registry, Python p
 This can be uploaded to the package registry.
 Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* in listing \ref{lst:setup_py_req} for this purpose.
 
+\newpage
+
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing using a given requirements.txt"}
 # dynamic requirement loading using requirements.txt
 req_path = './requirements.txt'
@@ -1374,6 +1373,8 @@ In addition, these commands are available globally in the system without the ter
 
 To provide comprehensive documentation for the end-user, the source code is documented using Python-\href{https://peps.python.org/pep-0257/}{Docstrings} and the Python type annotations.
 The use of type annotations also simplifies further development, as modern (+ide)s can more reliably display methods to the user as an assistance. It is implemented in listing \ref{lst:pydocstring}.
+
+\newpage
 
 ```python {#lst:pydocstring caption="Documentation using Python docstring example"}
 # MRPDataVisualisation.py - example docstring
@@ -1515,6 +1516,8 @@ The calculated distances from the *CoG* value of the measurements to are inserte
 Another possibility for filtering is to use a reference measurement instead of a simulated ideal magnet as a reference, as described before.
 This can initially come from a magnet selected as a reference magnet.
 As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet. The code snipped in listing \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added _ref input parameter for the reference measurement.
+
+\newpage
 
 ```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading"}
 @staticmethod
