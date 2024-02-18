@@ -61,7 +61,11 @@ The positioning of permanent magnets holds a significant role in constructing an
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@WZC21].
 
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
+The figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. 
+
+\newpage
+
+In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 The homogeneity in this configuration depends, among other things, on the following main aspects:
 
 * **Material**:
@@ -159,7 +163,7 @@ To achieve this, a versatile hardware setup is in development, designed to accom
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customisation possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
-The application of the develox field sensors serve the practical application and validation of the developed solution.
+The characterisation of field sensors in consumer quality serves the practical application and validation of the developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000 (+ppm)*. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
@@ -1362,7 +1366,7 @@ The process of creating and publishing the documentation has been automated usin
 
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
-# Haluation
+# Use Case Evaluation
 
 The practical application of the hardware and software framework is shown below.
 It is implemented by using the previously defined use cases in chapter *Use cases* \ref{use-cases}.
