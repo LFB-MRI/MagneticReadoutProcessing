@@ -87,7 +87,7 @@ If these are joined together to form a ring, positioning tolerances are also add
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term *Halbach Array* (commonly known as *magic rings*) denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@BC16]
 
-The Halbach magnetic array appears as an essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors' applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
+The Halbach magnetic array appears as an essential element for future Magnet characterisation. Based on this fact this thesis centres on assessing the sensors applicability, the Halbach magnetic array serves as a tool for later measurements, although its implementation and further discussion will not be the primary focus.
 
 In order to compensate for inhomogeneities in a finished system, there are various so-called shimming procedures which further improve homogeneity after the system has been assembled. This procedure is explained in the following chapter.
 
@@ -110,15 +110,11 @@ In this thesis, reference is made exclusively to the hardware shimming processes
 
 According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) systems are low-field (+mri) (*66.6% 1.5T systems, 20% 3.0 T system, 14.4% low field with <0.5T*). [@NK16]
 
-Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet" [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
-
-Within the research domain, various implementations came up. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking "three-dimensional (+mri) in a homogeneous 27cm diameter Bore Halbach Array magnet" [@OTW19] in 2019. This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
-
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of 50.4mT, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
 The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
 
-To further refine the magnet's homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
+To further refine the magnets homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
 **Magnet Characterisation**
 
@@ -164,7 +160,7 @@ To achieve this, a versatile hardware setup is in development, designed to accom
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customisation possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
 
-The application of the developed framework for the characterisation of different magnets and the integration of various available magnetic field sensors serve the practical application and validation of the developed solution.
+The application of the develox field sensors serve the practical application and validation of the developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000 (+ppm)*. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
 
@@ -188,7 +184,7 @@ The primary objectives of this work revolve around addressing two pivotal resear
 
 * Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000 (+ppm)*? The desired outcome is a measurement of less than *50* $\mu$T at *1000 (+ppm)*, with a specific focus on determining the sensors' viability for noise measurements.
+* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000 (+ppm)*? The desired outcome is a measurement of less than *50* $\mu$T at *1000 (+ppm)*, with a specific focus on determining the sensors viability for noise measurements.
 
 It is essential to emphasize that the intention is not to characterize the magnets; the sensors which might be used for characterisation are be analysed and evaluated.
 
@@ -730,7 +726,7 @@ In addition, further custom objects can be inserted into the (+json) using the f
 Since there are popular data processing frameworks such as *Numpy* [@HMW20], or the program for mathematical calculations, *MATLAB* are often used, the library also supports export formats for these systems.
 The different formats can be triggered by the user by calling up the corresponding *MRPReading* class functions:
 
-* *.dump()` - (+json)
+* *.dump() - (+json)
 * *.to_numpy_matrix()* - *Numpy*-Array of *data* object with different options
 * *.dump_savemat()* - *MATLAB* mat-file with measurement values and temperatures
 
@@ -1353,7 +1349,7 @@ This can be uploaded to the package registry.
 Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* in listing \ref{lst:setup_py_req} for this purpose.
 
 ```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing using a given requirements.txt"}
-# dynamic requirement loading using 'requirements.txt'
+# dynamic requirement loading using requirements.txt
 req_path = './requirements.txt'
 with pathlib.Path(req_path).open() as requirements_txt:
   install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
@@ -1421,7 +1417,7 @@ The process of creating and publishing the documentation has been automated usin
 ![MagneticReadoutProcessing documentation hosted on ReadTheDocs \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}](./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png)
 
 
-# Use Case Evaluation
+# Haluation
 
 The practical application of the hardware and software framework is shown below.
 It is implemented by using the previously defined use cases in chapter *Use cases* \ref{use-cases}.
@@ -1698,7 +1694,7 @@ The following figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC560
 The following data is shown in the plots:
 
 * Plot of the raw data of the sensor
-* Plot of the sensor's internal temperature sensor
+* Plot of the sensors internal temperature sensor
 * Background noise level with reference to the initial baseline
 * Histogram of the background noise level
 

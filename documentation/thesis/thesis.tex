@@ -25,7 +25,10 @@
 
 \usepackage{amsmath,amssymb}
 
-
+\graphicspath{
+    {./}
+    {./generated_images/}
+}
 
 
 
@@ -215,16 +218,20 @@
 \newcolumntype{g}{>{\columncolor{Gray}}c}
 \renewcommand*{\arraystretch}{2} %2.0 IS  THE SPACING
 
-
-\usepackage[square,numbers]{natbib}
-\bibliographystyle{abbrvnat}
-\newcommand{\customcite}[1]{\citepalias{#1}}
+\usepackage[
+    backend=bibtex,
+    style=alphabetic,
+  ]{biblatex}
+\addbibresource{thesis_references.bib}
+%\usepackage[square,numbers]{natbib}
+%\bibliographystyle{ieeetr}
+%\newcommand{\customcite}[1]{\citepalias{#1}}
 %\bibliographystyle{plaindin}
-%\newcommand{\customcite}[1]{\cite{#1}}
+\newcommand{\customcite}[1]{\cite{#1}}
 
 \begin{document}
 
-\input{thesis_references_alias}
+%\input{thesis_references_alias}
 
 %%MOD%%
 % Einige Anpassungen müssen nach \begin{document} stehen !!
@@ -317,10 +324,8 @@
 %% Verschiedene Versionen, nach DIN 1505 zu zitieren
 %\bibliographystyle{plaindin}
 %\interlinepenalty=10000
-\bibliography{thesis_references}
-
-
-
+%\bibliography{thesis_references}
+\printbibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ABBILDUNGSVERZEICHNIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

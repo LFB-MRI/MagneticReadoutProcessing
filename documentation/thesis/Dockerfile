@@ -12,7 +12,8 @@ RUN apt install -y texlive-full
 RUN apt install -y pandoc
 RUN apt install -y sed
 RUN apt install -y nano
-RUN apt-install -y python3.8
+RUN apt install -y python3.8
+RUN apt install -y biber
 #texmaker
 
 RUN apt install -y imagemagick

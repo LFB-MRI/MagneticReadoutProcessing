@@ -226,7 +226,7 @@ opposite side. \customcite{BC16}
 
 The Halbach magnetic array appears as an essential element for future
 Magnet characterisation. Based on this fact this thesis centres on
-assessing the sensors' applicability, the Halbach magnetic array serves
+assessing the sensors applicability, the Halbach magnetic array serves
 as a tool for later measurements, although its implementation and
 further discussion will not be the primary focus.
 
@@ -275,30 +275,13 @@ systems, 20\% 3.0 T system, 14.4\% low field with \textless0.5T}).
 
 Within the research domain, various implementations have emerged. An
 exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who
-introduced a groundbreaking ``three-dimensional \gls{mri} in a
-homogeneous \emph{27cm} diameter Bore Halbach Array magnet''
-\customcite{OTW19} in 2019.This innovative setup is subsequently employed
-in 2020 to acquire in vivo MR images, showcasing the practical
-applications of their pioneering research \customcite{OTW21}. In 2023, de
-Vos, Remis and Webb published a summary of the design of a point-of-care
-Halbach array low-field \gls{mri} system \customcite{DRW23}.
-
-Within the research domain, various implementations came up. An exemplar
-instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a
-groundbreaking ``three-dimensional \gls{mri} in a homogeneous 27cm
-diameter Bore Halbach Array magnet'' \customcite{OTW19} in 2019. This
-innovative setup is subsequently employed in 2020 to acquire in vivo MR
-images, showcasing the practical applications of their pioneering
-research \customcite{OTW21}. In 2023, de Vos, Remis and Webb published a
-summary of the design of a point-of-care Halbach array low-field
-\gls{mri} system \customcite{DRW23}.
-
-The Halbach magnet incorporated in this system boasts a \emph{27cm}
-diameter, a \emph{B0} field strength of 50.4mT, and an impressive
-homogeneity of \emph{2400 \gls{ppm}} over a \emph{20cm} diameter using
-smaller magnets (\(12 x 12 x 12 mm^3\)). This exceptional homogeneity
-enables the utilization of coil-based gradients for spatial encoding,
-significantly enhancing the flexibility of image acquisition.
+introduced a groundbreaking three-dimensional \gls{mri} in a homogeneous
+\emph{27cm} diameter Bore Halbach Array magnet \customcite{OTW19} in
+2019.This innovative setup is subsequently employed in 2020 to acquire
+in vivo MR images, showcasing the practical applications of their
+pioneering research \customcite{OTW21}. In 2023, de Vos, Remis and Webb
+published a summary of the design of a point-of-care Halbach array
+low-field \gls{mri} system \customcite{DRW23}.
 
 The Halbach magnet incorporated in this system boasts a \emph{27cm}
 diameter, a \emph{B0} field strength of \emph{50.4 mT}, and an
@@ -307,7 +290,7 @@ diameter using smaller magnets (\(12 x 12 x 12 mm^3\)). This exceptional
 homogeneity enables the utilization of coil-based gradients for spatial
 encoding, significantly enhancing the flexibility of image acquisition.
 
-To further refine the magnet's homogeneity, optimisation techniques are
+To further refine the magnets homogeneity, optimisation techniques are
 employed by adjusting the radius of the Halbach ring along the length of
 the magnet. The deliberate choice of smaller magnets, as opposed to
 other Halbach designs, serves to compensate for inherent manufacturing
@@ -433,10 +416,8 @@ properties, with customisation possible at each step of the process.
 Complete documentation, tutorials and tests will enable users to use the
 framework efficiently and adapt it to their specific requirements.
 
-The application of the developed framework for the characterisation of
-different magnets and the integration of various available magnetic
-field sensors serve the practical application and validation of the
-developed solution.
+The application of the develox field sensors serve the practical
+application and validation of the developed solution.
 
 Two sensors have been meticulously chosen for inclusion in the study.
 The ultimate objective is to assess whether these selected sensors align
@@ -488,8 +469,8 @@ pivotal research questions:
   measure the homogeneity of a Halbach ring-based B0 field within the
   stringent limit of less than \emph{1000 \gls{ppm}}? The desired
   outcome is a measurement of less than \emph{50} \(\mu\)T at \emph{1000
-  \gls{ppm}}, with a specific focus on determining the sensors'
-  viability for noise measurements.
+  \gls{ppm}}, with a specific focus on determining the sensors viability
+  for noise measurements.
 \end{itemize}
 
 It is essential to emphasize that the intention is not to characterize
@@ -1659,7 +1640,7 @@ can be triggered by the user by calling up the corresponding
 \begin{itemize}
 \tightlist
 \item
-  *.dump()` - \gls{json}
+  *.dump() - \gls{json}
 \item
   \emph{.to\_numpy\_matrix()} - \emph{Numpy}-Array of \emph{data} object
   with different options
@@ -2645,7 +2626,7 @@ configuration \emph{setup.py} in listing \ref{lst:setup_py_req} for this
 purpose.
 
 \begin{lstlisting}[language=Python, caption={setup.py with dynamic requirement parsing using a given requirements.txt}, label=lst:setup_py_req]
-# dynamic requirement loading using 'requirements.txt'
+# dynamic requirement loading using requirements.txt
 req_path = './requirements.txt'
 with pathlib.Path(req_path).open() as requirements_txt:
   install_requires = [str(requirement) for requirement in pkg_resources.parse_requirements(requirements_txt)]
@@ -2751,8 +2732,8 @@ always automatically kept up to date with new features.
 \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
 \end{figure}
 
-\hypertarget{use-case-evaluation}{%
-\chapter{Use Case Evaluation}\label{use-case-evaluation}}
+\hypertarget{haluation}{%
+\chapter{Haluation}\label{haluation}}
 
 The practical application of the hardware and software framework is
 shown below. It is implemented by using the previously defined use cases
@@ -3232,7 +3213,7 @@ The following data is shown in the plots:
 \item
   Plot of the raw data of the sensor
 \item
-  Plot of the sensor's internal temperature sensor
+  Plot of the sensors internal temperature sensor
 \item
   Background noise level with reference to the initial baseline
 \item

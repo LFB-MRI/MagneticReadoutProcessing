@@ -1,2 +1,0 @@
-![Manufactured 1D sensor construction from different angles \label{Manufactured_1D_sensor_construction_from_different_angles._Universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png}](./generated_images/border_Manufactured_1D_sensor_construction_from_different_angles._Universal_magnet_mount_(green_3D_printed_part)_populated_with_N45_12x12x12mm_magnet.png)
-

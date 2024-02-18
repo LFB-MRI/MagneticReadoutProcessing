@@ -46,7 +46,7 @@ echo "-- STARTING BUILDING THESIS DOCUMENT --"
 pandoc --version
 
 # CONVERT CSV TABLES to MARKDOWN
-
+if [[ ! -v BUILD_FAST ]]; then
 cp ./thesis_document.md ./thesis_document_tmp.md 
 
 FILES="./tables/*.csv"
@@ -54,7 +54,7 @@ for f in $FILES
 do
     FN="${f##*/}"
 
-    if [[ ! -v BUILD_FAST ]]; then
+
     FNWOE="${FN%%.*}"
     echo "Processing table $FN file..."
     cat "$f"
@@ -71,7 +71,7 @@ do
     ## INSERT TABLE
     csv2md "$f" >> "$f.md"
     cat "$f.md"
-    fi
+
 
     # REPLACE CONTENT WITH SED
     #cat "$f.md" | sed -e 's/[@table:'$FN']/g/' ./thesis_document_tmp.md 
@@ -98,9 +98,8 @@ do
     filenameimageboarder="./generated_images/border_$FN"
     cp "$f" "$filenameimageboarder"
     # ADD IMAGE BORDERS
-    if [[ ! -v BUILD_FAST ]]; then
     convert -bordercolor transparent -border 10 "$f" "$filenameimageboarder"
-    fi
+    
 
     
     # CREATE TABLE MARKDOWN FILE
@@ -143,7 +142,7 @@ sed -i 's/\\autocite{/\\customcite{/g' ./thesis_document.tex
 
 echo "------------- PANDOC GENERATION FINISHED -----------"
 
-
+fi
 
 python3 ./generate_citealias.py ./thesis_document.tex  ./thesis_references_alias.tex
 #sed -i 's/\\autocite{/\\cite{/g' ./thesis_document.tex
@@ -154,8 +153,11 @@ python3 ./generate_citealias.py ./thesis_document.tex  ./thesis_references_alias
 pdflatex ./thesis.tex ./thesis.pdf
 # GENERATE BIBTEX INDEX
 makeglossaries thesis # ACRONYM
-bibtex thesis # REFERENCES
+#bibtex thesis # REFERENCES
+bibtex thesis
 pdflatex ./thesis.tex ./thesis.pdf
+
+#biber thesis
 # BUILD FINAL DOCUMENT
 pdflatex ./thesis.tex ./thesis.pdf
 

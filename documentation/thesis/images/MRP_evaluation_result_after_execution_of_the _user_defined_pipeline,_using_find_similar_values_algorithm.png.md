@@ -1,2 +1,0 @@
-![MRP evaluation result after execution of the  user defined pipeline, using find similar values algorithm \label{MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png}](./generated_images/border_MRP_evaluation_result_after_execution_of_the _user_defined_pipeline,_using_find_similar_values_algorithm.png)
-

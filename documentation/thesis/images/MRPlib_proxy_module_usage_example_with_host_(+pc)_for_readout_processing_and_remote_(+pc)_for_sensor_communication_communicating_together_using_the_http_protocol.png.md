@@ -1,2 +1,0 @@
-![MRPlib proxy module usage example with host (+pc) for readout processing and remote (+pc) for sensor communication communicating together using the http protocol \label{MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png}](./generated_images/border_MRPlib_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_communicating_together_using_the_http_protocol.png)
-
