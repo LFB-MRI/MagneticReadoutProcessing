@@ -1,4 +1,4 @@
-,1D\ref{d-single-sensor},1D: dual sensor,3D: Fullsphere\ref{d-full-sphere}
+,1D: single sensor,1D: dual sensor,3D: Fullsphere
 Maximal magnet size,Cubic 30x30x30mm,Cubic 30x30x30mm,Cubic 20x20x20mm
 Sensor type,MMC5603NJ,TLV493D,TLV493D
 Sensor count,1,2,1

@@ -416,7 +416,7 @@ Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead
 
 Table \ref{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv} contains various jitter measurements. These are performed on a *Raspberry Pi 4 4GB*-(+sbc) together with an *1D: Single Sensor* explained in chapter \ref{d-single-sensor} and the following software settings:
 
-* *Raspberry Pi OS Lite* - (+os) *Debian bookworm x64*
+* *Raspberry Pi OS Lite* - (+os)
 * (+mrp)-library described in chapter \ref{software-readout-framework} - Version *1.4.1*
 * Unified Sensor-firmware described in chapter \ref{unified-sensor} - Version *1.0.1*
 
@@ -432,7 +432,7 @@ The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_
 
 Once the hardware has been prepared, the task of the firmware of each of the chained sensors is to find a common synchronisation clock.
 The figure \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} illustrates how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
-The firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the functionality to detect if the sensor is a primary or a secondary sensor.
+The internal firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the functionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
 Since the presumed *primary* sensor cannot register its own sync pulse (because the pin is switched to output), there is a timeout branch condition *got pulse within 1000ms* and this becomes the *primary* sensor.
@@ -494,7 +494,7 @@ This is chosen because of its larger measuring range and can therefore be used m
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
 A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
-It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the unified sensor ecosystem using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
+It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the previously build unified sensor firmware using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer a physical *RS232* interface.
 As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter. The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
@@ -534,40 +534,37 @@ According to this concept, the user should be able to replace individual compone
 
 ### User Interaction Points Example
 
-The following example shows the advantages of using the *User interaction points*:
+The following example shows the advantages of using *user interaction points*. In the following, two different projects are shown, which are based on each other in terms of their functions for analysing and optimising magnetic fields, but they are not compatible with each other due to the different data formats and programming paradigms used.
 
-A project called *HalbachOptimisation* [@O24] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
+The first project is a project called *HalbachOptimisation* [@O24] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The *MWO24* [@MWO24] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@MMN19] based 3D model of the magnet holder.
+The *HalbachMRIDesigner* [@MWO24] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@MMN19] based 3D model of the magnet holder.
 
-As a result, there are two projects which are both suitable for the task of optimizing and creating Halbach magnets for (+mri) applications. The data structures are not compatible with each other.
-However, they are executed manually one after the other to obtain a result with manual data conversation.
+As a result, there are two projects which are both in combination suitable for the task of optimizing and generating Halbach magnets for (+mri) applications. The data structures are not compatible with each other and are usually executed manually one after the other by the user in order to obtain a result, whereby additional manual data conversion is required.
 
-The library created is intended to solve this compatibility problem by providing standardized and flexible data structures with this format of magnetic field data.
-By separating the processing pipeline into defined sub-steps, it is feasible to connect individual modules and as a result functionalities interchangeable by the user.
+The (+mrp)-library solve this compatibility problem by providing standardized and flexible data structures for of magnetic field data and specified data flow guidelines.
 
-The implementation of the same functionalities appears as the following by using the library:
+The functionalities mapped by the two projects mentioned can be broken down into the following steps so that an optimised Halbach array can be generated from magnetic field data.
+The implementation of the same functionalities from the mentioned projects above looks as follows when using the (+mrp)-library:
 
+1. **Create magnetic field data**
 
-1. **Create a static set of magnets**
-
-  The input parameters of the *HalbachOptimisation* [@O24] project are on the one hand the mechanical dimensions and the number of magnets to be used.
-  Idal magnets are assumed at this point. However, it should also be possible to import field data in a more measured form later.
-  Using the data aquisition sub-step, it is possible to generate any number of ideal magnets.
-
+  The input parameters of the *HalbachOptimisation* [@O24] project are the mechanical dimensions and the number of magnets to be used.
+  Ideal magnets are assumed at this point. However, it should also be possible to import measured magnetic field data from measured magnets.
+  Using the (+mri)-library data aquisition sub-step, it is possible to generate any number of ideal magnets or import measured magnets using sensor data from hardware sensors (see chapter \ref{example-sensors}).
+ 
 2. **Add custom analysis processing step**
 
   Next, the user creates his own analysis step to be able to call up its functions.
   In the case of the *HalbachOptimisation* [@O24] project, the function signature of the start function must be changed.
   This receives the result of the previous step, in this case the generated magnet data.
-  By optionally setting meta data in the universal library data type, constants can be replaced in the analysis function and made dynamically configurable.
-  The return result also corresponds to this data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
+  By optionally setting meta data in data type, constants can be replaced in the analysis function and made dynamically configurable.
+  The return result also corresponds to the same data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
 
 3. **Generate fabrication data** 
 
-  The last step is to call up the *MWO24* [@MWO24] project, which creates the (+cad) model of the magnet holder.
-  The data can also be exported as files.
-  To make the project compatible, the function signatures are also adapted.
+  The last step is to call the *MWO24* [@MWO24] project, which creates the (+cad) model of the magnet holder and the model can be exported as file.
+  To make the project compatible, the function signatures are adapted.
   In this case, more changes are required, as the configuration file is loaded from the file system.
   This logic needs to be removed to use the added meta data as input parameter instead.
 
@@ -575,11 +572,12 @@ After these customisation steps, executing both projects one after the other is 
 This also maps the functionality of a project file, which can be executed or passed on repeatedly.
 
 This also fulfils the goal of making individual user-created algorithms interchangeable.
-If the user now wishes to use a different (+cad) algorithm instead of the example *HalbachMRIDesigner* [@MWO24] project, the other steps can simply be preserved and only the new step needs to be implemented.
+If the user wishes to use a different (+cad) algorithm instead of the example *HalbachMRIDesigner* [@MWO24] project, the other steps can simply be preserved and only the new step needs to be implemented.
 
 ## Modules
 
-In order to realise the concept of user interaction points, the library is divided into different modules. These modules can be divided into two main categories:
+
+In order to realise the concept of *user interaction points* from chapter \ref{user-interaction-points}, the library is divided into different modules. These modules can be divided into two main categories:
 
 * Core - All modules related to measurement data management
 * Extensions - Contains modules for visualisations, hardware sensor access
@@ -593,6 +591,8 @@ There are also introductory examples which provide an overview of the provided f
 The included core modules are essential for using the library.
 Basic data types are implemented, as well as functions for import and export.
 In addition, there are other support scripts that are required internally.
+
+\newpage
 
 The following modules are implemented in detail:
 
@@ -624,8 +624,6 @@ This process is described in the following subchapter.
 
 An important aspect is data import and export. On the one hand, this allows the library to reuse and archive the measurements.
 On the other hand, the focus during development is that it is also possible to use the data in other programs.
-
-\newpage
 
 For this purpose, an open, documented export format must be selected.
 Ideally, this should be human-readable and viewable with a plain text editor.
@@ -690,8 +688,6 @@ These include functions for data acquisition, visualisation and analysis.
 Another collection of optional modules provided by the library is the connection of external hardware sensors.
 All compatible sensors that are compatible with the firmware developed in the *Unified Sensor* \ref{unified-sensor} chapter are supported.
 The library provides the following sensor (+hal) modules for this purpose:
-
-\newpage
 
 * *MRPHal* - Firmware protocol implementation
 * *MRPHalLocal* - (+usb) sensor interface
@@ -813,7 +809,6 @@ $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
 The query result shows that the sensors are connected correctly and that the capabilities have also been recognised correctly.
 To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required as shown in listing \ref{lst:mrpcli_config_using_rpc}. 
 
-
 ```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPProxy based network sensor"}
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
 $ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
@@ -825,30 +820,25 @@ $ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 Another important aspect for using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
-
 If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-synchronisation-interface}.
 This no longer works for long distances and the synchronisation must be established via a shared network connection. 
-
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@O24] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
 
 ### Command-Router
 
 As it is possible to connect many identical sensors to one host, therefore it needs to be possible to address them separately.
 This separation is done by the *MRPProxy* module, which is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
-Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli).
-The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
-
-#### Construct the Sensor ID Lookup-Table
-
-Immediately after starting the *MRPProxy*, the (+uuid)s of all locally connected sensors are read out.
-These are stored together with the class instance of the *MRPHal* module in a (+lut).
-This makes it possible to address a sensor directly using its (+uuid).
+Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli). The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
 
 #### Merging the Sensor Capabilities
 
+Immediately after starting the *MRPProxy*, the (+uuid)s of all locally connected sensors are read out.
+These are stored together with the class instance of the *MRPHal* module in a (+lut).
+This makes it possible to address and interact with a  sensor directly using its (+uuid).
+
 %%Sensor_capabilities_merging_algorithm.csv%%
 
-When using sensors with different capabilities, these must be combined.
+When using sensors with the same capabilities, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the *info* command of each sensor is queried.
 This information is added to the previously created (+lut). Duplicate entries are summarised (see table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
@@ -902,7 +892,6 @@ The following example listing \ref{lst:mrpexample_reading} shows how a measureme
 A crucial point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
 Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
 
-\newpage
 
 ```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement using Python code"}
 from MRP import MRPReading, MRPMeasurementConfig
@@ -1339,14 +1328,13 @@ def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _file
 Since *docstrings* only document the source code, but do not provide simple how-to-use instructions, the documentation framework *Sphinx* [@G17] is used for this purpose.
 This framework offers the functionality to generate (+html) or (+pdf) documentation from various source code documentation formats, such as the used *docstrings*.
 
-These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions.
-
-Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
+These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions. Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
 Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
 
 The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. The figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also lists separate menu items for tutorials on the individual functionalities.
-
 The process of creating and publishing the documentation has been automated using \href{https://github.com/features/actions}{GithubActions}, so that it is always automatically kept up to date with new features.
+
+
 
 %%MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png%%
 
@@ -1788,14 +1776,29 @@ In general, post-processing of the measurements should, include temperature comp
 
 ## Conclusion
 
-This thesis describes the development of a universal Python library that can be used to efficiently process data from magnetic field sensors from acquisition to analysis.
+This thesis describes the development of a (+mrp) Python library that can be used to efficiently process data from magnetic field sensors from acquisition to analysis.
 To ensure a practical application and allow users to acquire their own magnetic field data directly, a low-cost and easily reproducible hardware is also developed.
 The hardware is based on widely used consumer magnetic field sensors and low-cost microcontrollers, enabling an easily expandable and applicable solution for measuring magnets with repeatable accuracy.
 Special attention is paid to the expandability by the user. Interchangeable modules allow the user to develop their own analysis algorithms without having to design everything from scratch. The software framework was evaluated on the basis of the previously defined use cases.
-A user-defined sorting algorithm was implemented and integrated into the framework. The result is a list of the magnets that deviate least from the magnetic strength. The result was successfully verified by means of manual checks for various other series of measurements. In this way, extensibility and customisability were also successfully demonstrated during the software evaluation.
+A user-defined sorting algorithm was implemented and integrated into the framework. The result is a list of the magnets that deviate least from the magnetic strength.
+
+The result was successfully verified by means of manual checks for various other series of measurements. In this way, extensibility and customisability were also successfully demonstrated during the software evaluation.
 This underlines the power of the developed framework and shows that it is not only effective in processing magnetic field sensor data, but also provides a flexible platform for the implementation of user-specific analyses.
 Subsequently, the developed framework was used to automatically characterise various magnetic field sensors.
-For this purpose, the developed pipeline feature of the software was used to determine various sensor characteristics, including background noise, temperature coefficients and linearity. The evaluation of the measurement data showed that the selected sensors only partially fulfil the defined requirements. Based on these results, it is proposed to characterise further digital and analogue sensors, in particular analogue magnetic field sensors with separate bias voltage.
+For this purpose, the developed pipeline feature of the software was used to determine various sensor characteristics, including background noise, temperature coefficients and linearity.
+
+The evaluation of the measurement data showed that the selected sensors only partially fulfil the defined requirements. 
+
+The *TLV493D* and *MMC5603NJ* sensors are both suitable for characterising permanent magnets and enable linearity compensation with a defined measurement setup. Although the *MMC5603NJ* has a limited measuring range, it can still be used for relative comparisons of permanent magnets without additional devices and without software calibration.
+It also has a minimal long-term background noise.
+Absolute comparability can be achieved by prior software calibration and using reference measurements, making it an ideal sensor for the task of characterising permanent magnets in field tests.
+
+The *MMC5603NJ* is not recommended for measuring the homogeneity of a *50$\mu$T* *B0* field on a Halbach ring basis with an accuracy of better than *1000 (+ppm)* due to its limited measuring range. The *TLV493D* sensor, on the other hand, has too much noise.
+It has been shown that this can be compensated for by software calibration and long-term averaging of measured values. Despite constant ambient conditions, temperature compensation is necessary for this sensor.
+Due to the large measuring range and the constant linearity, no software compensation is necessary.
+These results show that the analysed sensors are generally suitable for the application scenarios using the developed (+mrp) library with some limitations.
+
+Based on these results, it is proposed to characterise further digital and analogue sensors, in particular analogue magnetic field sensors with separate bias voltage.
 Alternative methods for sensor adaptation are described in order to be able to use these widely used consumer magnetic field sensors for the characterisation of neodymium magnet-based permanent magnets. 
 
 

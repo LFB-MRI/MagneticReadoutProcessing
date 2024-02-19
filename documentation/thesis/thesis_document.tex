@@ -1061,7 +1061,7 @@ software settings:
 \begin{itemize}
 \tightlist
 \item
-  \emph{Raspberry Pi OS Lite} - \gls{os} \emph{Debian bookworm x64}
+  \emph{Raspberry Pi OS Lite} - \gls{os}
 \item
   \gls{mrp}-library described in chapter
   \ref{software-readout-framework} - Version \emph{1.4.1}
@@ -1102,10 +1102,10 @@ the chained sensors is to find a common synchronisation clock. The
 figure
 \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}
 illustrates how the firmware handles the decision task if the sensor is
-\emph{primary} or \emph{secondary} at startup. The firmware-function
-\emph{register irq on sync pin} is overwritten. To set one
-\emph{primary} and several \emph{secondary} sensors, each sensor waits
-for an initial pulse on the SYNC-\gls{gpio}, which is a pin at the
+\emph{primary} or \emph{secondary} at startup. The internal
+firmware-function \emph{register irq on sync pin} is overwritten. To set
+one \emph{primary} and several \emph{secondary} sensors, each sensor
+waits for an initial pulse on the SYNC-\gls{gpio}, which is a pin at the
 microcontroller with the functionality to detect if the sensor is a
 primary or a secondary sensor. A random timer is started beforehand by
 each sensor, which sends a pulse on the sync line. All others receive
@@ -1153,13 +1153,11 @@ developed sensor concepts.
 to cover various magnet charaterisation setups
 \label{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}}\tabularnewline
 \toprule
-& 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
-Fullsphere\ref{d-full-sphere}\tabularnewline
+& 1D: single sensor & 1D: dual sensor & 3D: Fullsphere\tabularnewline
 \midrule
 \endfirsthead
 \toprule
-& 1D\ref{d-single-sensor} & 1D: dual sensor & 3D:
-Fullsphere\ref{d-full-sphere}\tabularnewline
+& 1D: single sensor & 1D: dual sensor & 3D: Fullsphere\tabularnewline
 \midrule
 \endhead
 Maximal magnet size & Cubic 30x30x30mm & Cubic 30x30x30mm & Cubic
@@ -1283,9 +1281,9 @@ GM-70} telsameter shown in figure
 is used, which has a measuring range of \emph{0T} to \emph{3T} with a
 resolution of \emph{0.1mT}. It offers an \emph{RS232} interface with a
 documented protocol for connection to a \gls{pc}. This connectivity
-makes it possible to make the device compatible with the unified sensor
-ecosystem using a separate
-\href{https://github.com/RBEGamer/VoltcraftGM70Rest}{interface software}
+makes it possible to make the device compatible with the previously
+build unified sensor firmware using a separate
+\href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software}
 executable on the host \gls{pc}. However, it does not offer the range of
 functions that the unified sensor firmware offers.
 
@@ -1373,52 +1371,59 @@ modules which can be changed by the user
 \subsection{User Interaction Points
 Example}\label{user-interaction-points-example}}
 
-The following example shows the advantages of using the \emph{User
-interaction points}:
+The following example shows the advantages of using \emph{user
+interaction points}. In the following, two different projects are shown,
+which are based on each other in terms of their functions for analysing
+and optimising magnetic fields, but they are not compatible with each
+other due to the different data formats and programming paradigms used.
 
-A project called \emph{HalbachOptimisation} \customcite{O24} implements a
-data analysis step and optimizes a magnetic field that is as homogeneous
-as possible within a circular section using given mechanical dimensions
-as input parameters of the magnets which are used. For this purpose, a
-mutation of the magnet positions and rotations is performed. The result
-is a list of positions for each magnet.
+The first project is a project called \emph{HalbachOptimisation}
+\customcite{O24} implements a data analysis step and optimizes a magnetic
+field that is as homogeneous as possible within a circular section using
+given mechanical dimensions as input parameters of the magnets which are
+used. For this purpose, a mutation of the magnet positions and rotations
+is performed. The result is a list of positions for each magnet.
 
-The \emph{MWO24} \customcite{MWO24} is an opensource project and generates
-basic \gls{cad} drawings for \gls{mri} magnets in a Halbach
-configuration. To do this, the number of magnets and additional
+The \emph{HalbachMRIDesigner} \customcite{MWO24} is an opensource project
+and generates basic \gls{cad} drawings for \gls{mri} magnets in a
+Halbach configuration. To do this, the number of magnets and additional
 parameters for the properties of the \gls{cad} model to be created are
 passed to the function provided as input parameters using a \gls{json}
 file. The result is an \emph{OpenSCAD} \customcite{MMN19} based 3D model
 of the magnet holder.
 
-As a result, there are two projects which are both suitable for the task
-of optimizing and creating Halbach magnets for \gls{mri} applications.
-The data structures are not compatible with each other. However, they
-are executed manually one after the other to obtain a result with manual
-data conversation.
+As a result, there are two projects which are both in combination
+suitable for the task of optimizing and generating Halbach magnets for
+\gls{mri} applications. The data structures are not compatible with each
+other and are usually executed manually one after the other by the user
+in order to obtain a result, whereby additional manual data conversion
+is required.
 
-The library created is intended to solve this compatibility problem by
-providing standardized and flexible data structures with this format of
-magnetic field data. By separating the processing pipeline into defined
-sub-steps, it is feasible to connect individual modules and as a result
-functionalities interchangeable by the user.
+The \gls{mrp}-library solve this compatibility problem by providing
+standardized and flexible data structures for of magnetic field data and
+specified data flow guidelines.
 
-The implementation of the same functionalities appears as the following
-by using the library:
+The functionalities mapped by the two projects mentioned can be broken
+down into the following steps so that an optimised Halbach array can be
+generated from magnetic field data. The implementation of the same
+functionalities from the mentioned projects above looks as follows when
+using the \gls{mrp}-library:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{Create a static set of magnets}
+  \textbf{Create magnetic field data}
 \end{enumerate}
 
 The input parameters of the \emph{HalbachOptimisation} \customcite{O24}
-project are on the one hand the mechanical dimensions and the number of
-magnets to be used. Idal magnets are assumed at this point. However, it
-should also be possible to import field data in a more measured form
-later. Using the data aquisition sub-step, it is possible to generate
-any number of ideal magnets.
+project are the mechanical dimensions and the number of magnets to be
+used. Ideal magnets are assumed at this point. However, it should also
+be possible to import measured magnetic field data from measured
+magnets. Using the \gls{mri}-library data aquisition sub-step, it is
+possible to generate any number of ideal magnets or import measured
+magnets using sensor data from hardware sensors (see chapter
+\ref{example-sensors}).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1432,11 +1437,11 @@ Next, the user creates his own analysis step to be able to call up its
 functions. In the case of the \emph{HalbachOptimisation} \customcite{O24}
 project, the function signature of the start function must be changed.
 This receives the result of the previous step, in this case the
-generated magnet data. By optionally setting meta data in the universal
-library data type, constants can be replaced in the analysis function
-and made dynamically configurable. The return result also corresponds to
-this data type so that subsequent steps are compatible and contains the
-magnet data with modified position and rotation data.
+generated magnet data. By optionally setting meta data in data type,
+constants can be replaced in the analysis function and made dynamically
+configurable. The return result also corresponds to the same data type
+so that subsequent steps are compatible and contains the magnet data
+with modified position and rotation data.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1446,12 +1451,12 @@ magnet data with modified position and rotation data.
   \textbf{Generate fabrication data}
 \end{enumerate}
 
-The last step is to call up the \emph{MWO24} \customcite{MWO24} project,
-which creates the \gls{cad} model of the magnet holder. The data can
-also be exported as files. To make the project compatible, the function
-signatures are also adapted. In this case, more changes are required, as
-the configuration file is loaded from the file system. This logic needs
-to be removed to use the added meta data as input parameter instead.
+The last step is to call the \emph{MWO24} \customcite{MWO24} project,
+which creates the \gls{cad} model of the magnet holder and the model can
+be exported as file. To make the project compatible, the function
+signatures are adapted. In this case, more changes are required, as the
+configuration file is loaded from the file system. This logic needs to
+be removed to use the added meta data as input parameter instead.
 
 After these customisation steps, executing both projects one after the
 other is possible and all required configuration parameters are
@@ -1460,7 +1465,7 @@ meta data. This also maps the functionality of a project file, which can
 be executed or passed on repeatedly.
 
 This also fulfils the goal of making individual user-created algorithms
-interchangeable. If the user now wishes to use a different \gls{cad}
+interchangeable. If the user wishes to use a different \gls{cad}
 algorithm instead of the example \emph{HalbachMRIDesigner}
 \customcite{MWO24} project, the other steps can simply be preserved and
 only the new step needs to be implemented.
@@ -1468,9 +1473,10 @@ only the new step needs to be implemented.
 \hypertarget{modules}{%
 \section{Modules}\label{modules}}
 
-In order to realise the concept of user interaction points, the library
-is divided into different modules. These modules can be divided into two
-main categories:
+In order to realise the concept of \emph{user interaction points} from
+chapter \ref{user-interaction-points}, the library is divided into
+different modules. These modules can be divided into two main
+categories:
 
 \begin{itemize}
 \tightlist
@@ -1496,6 +1502,8 @@ The included core modules are essential for using the library. Basic
 data types are implemented, as well as functions for import and export.
 In addition, there are other support scripts that are required
 internally.
+
+\newpage
 
 The following modules are implemented in detail:
 
@@ -1556,8 +1564,6 @@ An important aspect is data import and export. On the one hand, this
 allows the library to reuse and archive the measurements. On the other
 hand, the focus during development is that it is also possible to use
 the data in other programs.
-
-\newpage
 
 For this purpose, an open, documented export format must be selected.
 Ideally, this should be human-readable and viewable with a plain text
@@ -1658,8 +1664,6 @@ connection of external hardware sensors. All compatible sensors that are
 compatible with the firmware developed in the \emph{Unified Sensor}
 \ref{unified-sensor} chapter are supported. The library provides the
 following sensor \gls{hal} modules for this purpose:
-
-\newpage
 
 \begin{itemize}
 \tightlist
@@ -1879,18 +1883,16 @@ $ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
 Another important aspect for using several sensors via the proxy system
 is the synchronisation of the measurement intervals between the sensors.
 Individual sensor setups do not require any additional synchronisation
-information, as this is communicated via the \gls{usb} interface.
-
-If several sensors are connected locally, they can be connected to each
+information, as this is communicated via the \gls{usb} interface. If
+several sensors are connected locally, they can be connected to each
 other via their sync input using short cables. One sensor acts as the
 central clock as described in chapter
 \ref{sensor-synchronisation-interface}. This no longer works for long
 distances and the synchronisation must be established via a shared
-network connection.
-
-If time-critical synchronisation over the network is required, \gls{ptp}
-and \gls{pps} output functionality \customcite{O24} can be used on many
-\gls{sbc}, such as the \emph{Raspberry Pi Compute Module}.
+network connection. If time-critical synchronisation over the network is
+required, \gls{ptp} and \gls{pps} output functionality \customcite{O24}
+can be used on many \gls{sbc}, such as the \emph{Raspberry Pi Compute
+Module}.
 
 \hypertarget{command-router}{%
 \subsection{Command-Router}\label{command-router}}
@@ -1907,18 +1909,15 @@ be a sensor to the host \gls{pc} running \gls{mrp} \gls{cli}, so
 multiple sensors must be combined into one virtual one. This is done in
 several steps, start procedure described by the following sub-chapters.
 
-\hypertarget{construct-the-sensor-id-lookup-table}{%
-\subsubsection{Construct the Sensor ID
-Lookup-Table}\label{construct-the-sensor-id-lookup-table}}
+\hypertarget{merging-the-sensor-capabilities}{%
+\subsubsection{Merging the Sensor
+Capabilities}\label{merging-the-sensor-capabilities}}
 
 Immediately after starting the \emph{MRPProxy}, the \gls{uuid}s of all
 locally connected sensors are read out. These are stored together with
 the class instance of the \emph{MRPHal} module in a \gls{lut}. This
-makes it possible to address a sensor directly using its \gls{uuid}.
-
-\hypertarget{merging-the-sensor-capabilities}{%
-\subsubsection{Merging the Sensor
-Capabilities}\label{merging-the-sensor-capabilities}}
+makes it possible to address and interact with a sensor directly using
+its \gls{uuid}.
 
 \begin{longtable}[]{@{}llll@{}}
 \caption{Sensor capabilities merging algorithm
@@ -1940,7 +1939,7 @@ axis\_x & axis\_x & axis\_x & A B\tabularnewline
 \bottomrule
 \end{longtable}
 
-When using sensors with different capabilities, these must be combined.
+When using sensors with the same capabilities, these must be combined.
 These are used to select the appropriate measurement mode for a
 measurement. For this purpose, the \emph{info} command of each sensor is
 queried. This information is added to the previously created \gls{lut}.
@@ -2041,8 +2040,6 @@ describes the measurement. This is realised in the example using the
 exported for archiving and further processing; various export formats
 are available. Using the \emph{dump\_to\_file} function, the measurement
 can be converted into a open \gls{json} format.
-
-\newpage
 
 \begin{lstlisting}[language=Python, caption={MRPReading example for setting up a basic measurement using Python code}, label=lst:mrpexample_reading]
 from MRP import MRPReading, MRPMeasurementConfig
@@ -2700,23 +2697,20 @@ the used \emph{docstrings}.
 
 These are converted into a Markdown format in an intermediate step and
 this also allows to add further user documentation such as examples or
-installation instructions.
-
-Once the finished documentation has been generated from static
-\gls{html} files, it is stored in the project repository. Another
-publication option is to host the documentation via online services such
-as \href{https://readthedocs.com}{ReadTheDocs}, where users can make
-documentation for typical software projects available to others.
+installation instructions. Once the finished documentation has been
+generated from static \gls{html} files, it is stored in the project
+repository. Another publication option is to host the documentation via
+online services such as \href{https://readthedocs.com}{ReadTheDocs},
+where users can make documentation for typical software projects
+available to others.
 
 The documentation has also been uploaded to the
 \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs}
 service. The figure
 \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
 shows a screenshot of the start page, which also lists separate menu
-items for tutorials on the individual functionalities.
-
-The process of creating and publishing the documentation has been
-automated using
+items for tutorials on the individual functionalities. The process of
+creating and publishing the documentation has been automated using
 \href{https://github.com/features/actions}{GithubActions}, so that it is
 always automatically kept up to date with new features.
 
@@ -3638,7 +3632,7 @@ sensor in the \emph{B0} field).
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-This thesis describes the development of a universal Python library that
+This thesis describes the development of a \gls{mrp} Python library that
 can be used to efficiently process data from magnetic field sensors from
 acquisition to analysis. To ensure a practical application and allow
 users to acquire their own magnetic field data directly, a low-cost and
@@ -3652,6 +3646,7 @@ everything from scratch. The software framework was evaluated on the
 basis of the previously defined use cases. A user-defined sorting
 algorithm was implemented and integrated into the framework. The result
 is a list of the magnets that deviate least from the magnetic strength.
+
 The result was successfully verified by means of manual checks for
 various other series of measurements. In this way, extensibility and
 customisability were also successfully demonstrated during the software
@@ -3662,14 +3657,39 @@ user-specific analyses. Subsequently, the developed framework was used
 to automatically characterise various magnetic field sensors. For this
 purpose, the developed pipeline feature of the software was used to
 determine various sensor characteristics, including background noise,
-temperature coefficients and linearity. The evaluation of the
-measurement data showed that the selected sensors only partially fulfil
-the defined requirements. Based on these results, it is proposed to
-characterise further digital and analogue sensors, in particular
-analogue magnetic field sensors with separate bias voltage. Alternative
-methods for sensor adaptation are described in order to be able to use
-these widely used consumer magnetic field sensors for the
-characterisation of neodymium magnet-based permanent magnets.
+temperature coefficients and linearity.
+
+The evaluation of the measurement data showed that the selected sensors
+only partially fulfil the defined requirements.
+
+The \emph{TLV493D} and \emph{MMC5603NJ} sensors are both suitable for
+characterising permanent magnets and enable linearity compensation with
+a defined measurement setup. Although the \emph{MMC5603NJ} has a limited
+measuring range, it can still be used for relative comparisons of
+permanent magnets without additional devices and without software
+calibration. It also has a minimal long-term background noise. Absolute
+comparability can be achieved by prior software calibration and using
+reference measurements, making it an ideal sensor for the task of
+characterising permanent magnets in field tests.
+
+The \emph{MMC5603NJ} is not recommended for measuring the homogeneity of
+a \emph{50\(\mu\)T} \emph{B0} field on a Halbach ring basis with an
+accuracy of better than \emph{1000 \gls{ppm}} due to its limited
+measuring range. The \emph{TLV493D} sensor, on the other hand, has too
+much noise. It has been shown that this can be compensated for by
+software calibration and long-term averaging of measured values. Despite
+constant ambient conditions, temperature compensation is necessary for
+this sensor. Due to the large measuring range and the constant
+linearity, no software compensation is necessary. These results show
+that the analysed sensors are generally suitable for the application
+scenarios using the developed \gls{mrp} library with some limitations.
+
+Based on these results, it is proposed to characterise further digital
+and analogue sensors, in particular analogue magnetic field sensors with
+separate bias voltage. Alternative methods for sensor adaptation are
+described in order to be able to use these widely used consumer magnetic
+field sensors for the characterisation of neodymium magnet-based
+permanent magnets.
 
 \hypertarget{outlook}{%
 \section{Outlook}\label{outlook}}
