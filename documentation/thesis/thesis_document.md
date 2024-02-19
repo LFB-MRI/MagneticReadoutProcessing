@@ -1788,7 +1788,6 @@ Subsequently, the developed framework was used to automatically characterise var
 For this purpose, the developed pipeline feature of the software was used to determine various sensor characteristics, including background noise, temperature coefficients and linearity.
 
 The evaluation of the measurement data showed that the selected sensors only partially fulfil the defined requirements. 
-
 The *TLV493D* and *MMC5603NJ* sensors are both suitable for characterising permanent magnets and enable linearity compensation with a defined measurement setup. Although the *MMC5603NJ* has a limited measuring range, it can still be used for relative comparisons of permanent magnets without additional devices and without software calibration.
 It also has a minimal long-term background noise.
 Absolute comparability can be achieved by prior software calibration and using reference measurements, making it an ideal sensor for the task of characterising permanent magnets in field tests.
