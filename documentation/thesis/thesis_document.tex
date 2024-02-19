@@ -399,8 +399,6 @@ assessments of homogeneity characteristics. This approach aims to
 provide insights into magnetic field uniformity before the magnets are
 integrated, thereby streamlining the optimisation process. Furthermore,
 
-\newpage
-
 It is important to note that the primary objective of this thesis is not
 merely to characterize the magnet itself; rather, the emphasis lies in
 the selection and comparison of potential sensors for the
@@ -496,11 +494,15 @@ functionality and added value of the implemented solution for the user.
 
 The use cases are defined during project planning and provide an
 overview of how the user interacts with the project and what
-functionalities can be expected. In the later accomplished evaluation
-process in chapter \ref{use-case-evaluation}, the defined use cases are
-also used as a reference to demonstrate the implemented capabilities of
-the solution. This is essential for understanding the needs of the
-target group and designing the result accordingly.
+functionalities can be expected.
+
+In the later accomplished evaluation process in chapter
+\ref{use-case-evaluation}, the defined use cases are also used as a
+reference to demonstrate the implemented capabilities of the solution.
+
+This is important in order to understand the needs of the target group
+and design the result accordingly. For this purpose, these were defined
+into the following blocks:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -888,14 +890,6 @@ drift.
 \hypertarget{communication-interface}{%
 \subsection{Communication Interface}\label{communication-interface}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
-\caption{Unified sensor firmware provided serial terminal based
-\gls{cli} allows the user to configure the sensor manually
-\label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}}
-\end{figure}
-
 Each sensor that is loaded with the firmware, registers on to the host
 \gls{pc} as a serial interface. There are several ways for the user to
 interact with the sensor:
@@ -916,18 +910,20 @@ hardware is working properly after firmware installation. The command
 \emph{help}, displays a detailed command reference with all available
 commands as shown in the figure
 \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
-to the user. The figure
-\ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
-shows the current measured value queried by using the \emph{readout}
-command by the user.
+to the user.
 
 \begin{figure}
 \centering
-\includegraphics{./generated_images/border_Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
-\caption{Result of an executed b value measurement readout command using
-the sensors \gls{cli} with immediate user readable response
-\label{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}}
+\includegraphics{./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
+\caption{Unified sensor firmware provided serial terminal based
+\gls{cli} allows the user to configure the sensor manually
+\label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}}
 \end{figure}
+
+The figure
+\ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
+shows the current measured value queried by using the \emph{readout}
+command by the user.
 
 The other option is to use the \gls{mrp}-library explained in chapter
 \ref{software-readout-framework}. The serial interface is also used at
@@ -938,6 +934,14 @@ binary mode, which is initiated using the \emph{sbm} command. The
 command is only sent by the library, not by the user. The same commands
 are available to \gls{mrp}-library as for user \gls{cli}-based
 communication, but in a binary format.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
+\caption{Result of an executed b value measurement readout command using
+the sensors \gls{cli} with immediate user readable response
+\label{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}}
+\end{figure}
 
 \hypertarget{sensor-synchronisation-interface}{%
 \subsection{Sensor Synchronisation
@@ -957,8 +961,8 @@ is that the measurements may drift over time. On the one hand, \gls{usb}
 latencies can occur. This can occur due to numerous factors, including
 device drivers, data transfer speed and system resources. High-quality
 \gls{usb} devices and modern drivers often minimise
-latencies.\customcite{W19} Nevertheless, complex data processing tasks and
-overloaded \gls{usb} ports can lead to delays.
+latencies.\customcite{WSB19} Nevertheless, complex data processing tasks
+and overloaded \gls{usb} ports can lead to delays.
 
 \begin{longtable}[]{@{}lllll@{}}
 \caption{\gls{usb} connected sensor latency test results using several
@@ -1078,12 +1082,11 @@ several sensors via the \gls{usb} connection alone is not sufficient.
 The other issue is sending the trigger signal from the readout software,
 which is described in chapter \ref{software-readout-framework}. At this
 point unpredictable latencies can occur, too, depending on which other
-tasks are also executed on this port.
-
-To enable the most stable possible synchronisation between several
-sensors, an option has already been created to establish an electrical
-connection between sensors. This is used together with the firmware to
-synchronise the readout intervals. The figure
+tasks are also executed on this port. To enable the most stable possible
+synchronisation between several sensors, an option has already been
+created to establish an electrical connection between sensors. This is
+used together with the firmware to synchronise the readout intervals.
+The figure
 \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}
 illustrates the schematic how several sensors must be wired together to
 implement this form of synchronisation.
@@ -1207,19 +1210,18 @@ with the \emph{MMC5603NJ} magnetic sensor. The mechanical setup consists
 of four 3D printed components, which are fixed together with nylon
 screws to minimise influences on the measurement.
 
-\newpage
-
 Since the \emph{MMC5603NJ} only has limited measurement range of total
 \emph{6mT}, even small coin sized neodymium magnets already saturates
 the sensor. It is possible to mount 3D printed spacers (see green part
 in figure
 \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over
 the sensor to increase the distance between the magnet and the sensor
-and thus also measure these magnets. The designed magnet holder can be
-adapted for different magnet shapes and can be placed on the spacer
-without backlash to be able to perform a repeatable measurement without
-introducing measurement irregularities by mechanically changing the
-magnet.
+and thus also measure these magnets.
+
+The designed magnet holder can be adapted for different magnet shapes
+and can be placed on the spacer without backlash to be able to perform a
+repeatable measurement without introducing measurement irregularities by
+mechanically changing the magnet.
 
 \hypertarget{d-full-sphere}{%
 \subsection{3D: Full Sphere}\label{d-full-sphere}}
@@ -1284,8 +1286,9 @@ documented protocol for connection to a \gls{pc}. This connectivity
 makes it possible to make the device compatible with the previously
 build unified sensor firmware using a separate
 \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software}
-executable on the host \gls{pc}. However, it does not offer the range of
-functions that the unified sensor firmware offers.
+executable on the host \gls{pc}.
+
+\newpage
 
 Another option is a custom interface board between the meter and the PC.
 This is a good option as many modern \gls{pc}s or \gls{sbc}s no longer
@@ -1293,13 +1296,14 @@ offer a physical \emph{RS232} interface. As with the other sensors, this
 interface consists of a \emph{Raspberry Pi Pico} with an additional
 level shifter. The teslameter is connected to the microcontroller using
 two free \gls{gpio}s in \gls{uart} mode. The firmware is adapted using a
-separate build configuration. In order to be able to read and correctly
-interpret the data from the microcontroller, the serial protocol of the
-sensor is implemented in a customised version of the \emph{CustomSensor}
-class as shown in listing \ref{lst:CustomSensorClass}. This software or
-hardware integration can be conducted on any other measuring device with
-a suitable communication interface and a known protocol thanks to the
-modular design.
+separate build configuration.
+
+In order to be able to read and correctly interpret the data from the
+microcontroller, the serial protocol of the sensor is implemented in a
+customised version of the \emph{CustomSensor} class as shown in listing
+\ref{lst:CustomSensorClass}. This software or hardware integration can
+be conducted on any other measuring device with a suitable communication
+interface and a known protocol thanks to the modular design.
 
 \begin{figure}
 \centering
@@ -1384,7 +1388,7 @@ given mechanical dimensions as input parameters of the magnets which are
 used. For this purpose, a mutation of the magnet positions and rotations
 is performed. The result is a list of positions for each magnet.
 
-The \emph{HalbachMRIDesigner} \customcite{MWO24} is an opensource project
+The \emph{HalbachMRIDesigner} \customcite{MWO24} is an open-source project
 and generates basic \gls{cad} drawings for \gls{mri} magnets in a
 Halbach configuration. To do this, the number of magnets and additional
 parameters for the properties of the \gls{cad} model to be created are
@@ -1442,6 +1446,8 @@ constants can be replaced in the analysis function and made dynamically
 configurable. The return result also corresponds to the same data type
 so that subsequent steps are compatible and contains the magnet data
 with modified position and rotation data.
+
+\newpage
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1502,8 +1508,6 @@ The included core modules are essential for using the library. Basic
 data types are implemented, as well as functions for import and export.
 In addition, there are other support scripts that are required
 internally.
-
-\newpage
 
 The following modules are implemented in detail:
 
@@ -1591,23 +1595,17 @@ to the file system as a file.
       "sensor_device_path": "/dev/ttyUnifiedSensorSingle",
       "sensor_name": "Unified Sensor Single Sensor",
       "sensor_id": "386731533439",
-      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "axis_stimestamp"],
+      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "time"],
       "configname": "calibrationtemp30.yaml",
-      "runner": "cli"
-  },
+      "runner": "cli"},
   "data": [{
-      "value": 0.135,
-      "is_valid": true,
+      "value": {"b":0.135},
       "id": 0,
-      "temperature": 34.32
-  }],
+      "temperature": 34.32}],
   "measurement_config": {
-      "id": "525771256544952",
       "sensor_distance_radius": 40.0,
-      "magnet_type": 0
-  },
-  "name": "calibrationtemp30",
-}
+      "magnet_type": 1// CUBIC 12x12x12mm N45
+  },}
 \end{lstlisting}
 
 The exported example listing \ref{lst:json_export_format_example}
@@ -1664,6 +1662,8 @@ connection of external hardware sensors. All compatible sensors that are
 compatible with the firmware developed in the \emph{Unified Sensor}
 \ref{unified-sensor} chapter are supported. The library provides the
 following sensor \gls{hal} modules for this purpose:
+
+\newpage
 
 \begin{itemize}
 \tightlist
@@ -1767,6 +1767,8 @@ the network. This can be a \gls{sbc} (e.g.~a \emph{Raspberry Pi}). The
 small footprint and low power consumption make it a viable choice. It
 can also be used in a temperature chamber.
 
+\newpage
+
 The \emph{MRPProxy} module in figure
 \ref{MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png}
 has been developed to allow forwarding and interaction with several
@@ -1789,7 +1791,8 @@ Another application example is when sensors are physically separated or
 there are long distances between them. By connecting several sensors via
 the proxy module, it is possible to link several instances and all
 sensors available in the network are accessible to the \emph{control}
-\gls{pc}.
+\gls{pc} by routing the requests through each \emph{control} \gls{pc} in
+the chain to the target.
 
 \begin{figure}
 \centering
@@ -1802,10 +1805,9 @@ Figure \ref{Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png}
 shows the modified \emph{multi-proxy - multi-sensor} topology. Both
 proxy instances do not communicate directly with the \emph{control}
 \gls{pc}, but the proxy instance \emph{remote} \gls{pc} \emph{\#2} can
-access the proxy running on \emph{remote} \gls{pc} \emph{\#1}.
-
-The \emph{control} \gls{pc} only communicates with the \emph{remote}
-\gls{pc} \emph{\#1}, but can access all sensors in this chain.
+access the proxy running on \emph{remote} \gls{pc} \emph{\#1}. The
+\emph{control} \gls{pc} only communicates with the \emph{remote}
+\gls{pc} \emph{\#1}, but can access all sensors in this chain thought
 
 \hypertarget{network-proxy}{%
 \subsection{Network-Proxy}\label{network-proxy}}
@@ -1913,12 +1915,6 @@ several steps, start procedure described by the following sub-chapters.
 \subsubsection{Merging the Sensor
 Capabilities}\label{merging-the-sensor-capabilities}}
 
-Immediately after starting the \emph{MRPProxy}, the \gls{uuid}s of all
-locally connected sensors are read out. These are stored together with
-the class instance of the \emph{MRPHal} module in a \gls{lut}. This
-makes it possible to address and interact with a sensor directly using
-its \gls{uuid}.
-
 \begin{longtable}[]{@{}llll@{}}
 \caption{Sensor capabilities merging algorithm
 \label{Sensor_capabilities_merging_algorithm.csv}}\tabularnewline
@@ -1939,11 +1935,15 @@ axis\_x & axis\_x & axis\_x & A B\tabularnewline
 \bottomrule
 \end{longtable}
 
-When using sensors with the same capabilities, these must be combined.
-These are used to select the appropriate measurement mode for a
-measurement. For this purpose, the \emph{info} command of each sensor is
-queried. This information is added to the previously created \gls{lut}.
-Duplicate entries are summarised (see table
+Immediately after starting the \emph{MRPProxy}, the \gls{uuid}s of all
+locally connected sensors are read out. These are stored together with
+the class instance of the \emph{MRPHal} module in a \gls{lut}. This
+makes it possible to address and interact with a sensor directly using
+its \gls{uuid}. When using sensors with the same capabilities, these
+must be combined. These are used to select the appropriate measurement
+mode for a measurement. For this purpose, the \emph{info} command of
+each sensor is queried. This information is added to the previously
+created \gls{lut}. Duplicate entries are summarised (see table
 \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the
 host when the \emph{info} \ref{lst:mtsc} command is received over
 network.
@@ -2122,8 +2122,10 @@ If no hardware sensor is available for the generation of test data, the
 \emph{MRPSimulation} module is available. This contains a series of
 functions that simulate various magnets and their fields. The result is
 a complete \emph{MRPReading} measurement with a wide range of set meta
-data. The example listing \ref{lst:mrpexample_simulation} illustrates
-the basic usage. Different variations of the \emph{generate\_reading}
+data.
+
+The example listing \ref{lst:mrpexample_simulation} illustrates the
+basic usage. Different variations of the \emph{generate\_reading}
 function offer the user additional parameterisation options, such as
 random polarisation direction or a defined centre-of-gravity vector. The
 data is generated in the background using the \emph{magpylib}
@@ -2213,15 +2215,15 @@ MRPVisualisation module using different shaded vertices on a sphere
 The following example listing \ref{lst:mrpexample_halbach} shows how a
 simple Halbach magnetic ring can be generated. This can be used to
 construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a
-low-field \gls{mri}.
+low-field \gls{mri}. Eight random measurements are generated at this
+point. It is important that the magnet type (for example
+\emph{N45\_CUBIC\_15x15x15}) is specified. This is necessary so that the
+correct magnet cutouts can be generated when creating the 3D model.
 
-Eight random measurements are generated at this point. It is important
-that the magnet type (for example \emph{N45\_CUBIC\_15x15x15}) is
-specified. This is necessary so that the correct magnet cutouts can be
-generated when creating the 3D model. After the measurements have been
-generated, they are provided with a position and rotation offset
-according to the Halbach design and calculation scheme \customcite{O24}
-using the \emph{MRPHalbachArrayGenerator} module.
+After the measurements have been generated, they are provided with a
+position and rotation offset according to the Halbach design and
+calculation scheme \customcite{O24} using the
+\emph{MRPHalbachArrayGenerator} module.
 
 \begin{lstlisting}[language=Python, caption={MRPHalbachArrayGenerator example for generating an OpenSCAD based Halbach ring}, label=lst:mrpexample_halbach]
 readings = []
@@ -2260,8 +2262,8 @@ Usability improvements in software libraries are essential for efficient
 and user-friendly development. Intuitive API documentation, clearly
 structured code examples and improved error messages promote a smooth
 developer experience. A \gls{gui} or \gls{cli} application for complex
-libraries can make it easier to use, especially for developers with less
-experience. Continuous feedback through automated tests and
+libraries can make them more user-friendly, especially for developers
+with less experience. Continuous feedback through automated tests and
 comprehensive error logs enable faster bug fixing.
 
 The integration of user feedback and regular updates promotes the
@@ -2305,13 +2307,13 @@ following functionalities:
   data
 \end{itemize}
 
-Thanks to this functionality of the \gls{cli}, it is now possible to
-connect a sensor to the \gls{pc}, configure a measurement series with it
-and run it at the end, which is shown in figure
-\ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result
-is an exported file with the measured values. These can then be read in
-again using the \emph{MRPReading} module and processed further. The
-following bash listing \ref{lst:MRPCli_config_run} shows the setup
+As a result of this implemented functionality of the \gls{cli}, it is
+now possible to connect a sensor to the \gls{pc}, configure a
+measurement series with it and run it at the end, which is shown in
+figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The
+result is an exported file with the measured values. These can then be
+read in again using the \emph{MRPReading} module and processed further.
+The following bash listing \ref{lst:MRPCli_config_run} shows the setup
 procedure in detail:
 
 \begin{lstlisting}[language=bash, caption={MRPCli example usage for configuration of a measurement run}, label=lst:MRPCli_config_run]
@@ -2344,14 +2346,6 @@ $ MRPCli measure run
 \section{Programmable Data Processing
 Pipeline}\label{programmable-data-processing-pipeline}}
 
-It is more applicable for users to carry out measurements using the
-\gls{cli}-, the next logical step is to analyse the recorded data. This
-can involve one or several hundred data records. Again, the procedure
-for the user is to write their own evaluation scripts using the
-\gls{mrp}-library. This is particularly useful for complex analyses or
-custom algorithms, but not necessarily for simple standard tasks such as
-bias compensation or graphical plot outputs.
-
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Example_measurement_analysis_pipeline.png}
@@ -2359,12 +2353,18 @@ bias compensation or graphical plot outputs.
 \label{Example_measurement_analysis_pipeline.png}}
 \end{figure}
 
-For this purpose, \gls{cli} application is created further, to enable
-the user to create and execute complex evaluation pipelines for
-measurement data without programming. The figure
-\ref{Example_measurement_analysis_pipeline.png} shows a typical
-measurement data analysis pipeline, which consists of the following
-steps:
+It is more applicable for users to carry out measurements using the
+\gls{cli}-, the next logical step is to analyse the recorded data. This
+can involve one or several hundred data records. Again, the procedure
+for the user is to write their own evaluation scripts using the
+\gls{mrp}-library. This is particularly useful for complex analyses or
+custom algorithms, but not necessarily for simple standard tasks such as
+bias compensation or graphical plot outputs. For this purpose, \gls{cli}
+application is created further, to enable the user to create and execute
+complex evaluation pipelines for measurement data without programming.
+The figure \ref{Example_measurement_analysis_pipeline.png} shows a
+typical measurement data analysis pipeline, which consists of the
+following steps:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2388,19 +2388,20 @@ non-programmers to understand and can also be easily edited with a plain
 text editor. Detailed examples can be found in the
 \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
 The pipeline definition consists of sections which execute the
-appropriate Python commands in the background.
-
-The signatures in the \gls{yaml} file are called using reflection and a
-real-time search of the loaded \emph{global()} functions
+appropriate Python commands in the background. The function signatures
+in the \gls{yaml} file are called using reflection and a real-time
+search of the loaded \emph{global()} functions
 \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system is capable to make all Python functions available to the
-user. To simplify usage, a pre-defined list of verified functions for
-use in pipelines is listed in the
+user. To simplify usage, a pre-defined list of verified and tested
+functions for use in pipelines is listed in the
 \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
 The following pipeline definition in listing
 \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown
 in figure \ref{Example_measurement_analysis_pipeline.png} as \gls{yaml}
 syntax.
+
+\newpage
 
 \begin{lstlisting}[caption={Example YAML code of a user defined processing pipeline with six stages linked together}, label=lst:mrpuddp_example_yaml]
 stage import_readings:
@@ -2555,17 +2556,27 @@ Difficulties arise with the parts of the \gls{mrp}-library that require
 direct access to external hardware. These are, for example, the
 \emph{MRPHal} and \emph{MRPHalRest} modules, which are required to read
 out sensors connected via the network. Two different approaches are
-used. In the case of local development, the test runs are carried out on
-a \gls{pc} that can reach the network hardware and thus the test run
-could be carried out with real data.
+used:
 
-In the other scenario, the tests are to be carried out before a new
-release in the repository based on
-\href{https://github.com/features/actions}{GithubActions}. It has the
-possibility to host local runner software, which then has access to the
-hardware, but in this case a \gls{pc} must be permanently available for
-this task. Instead, the hardware sensors are simulated by software and
-executed via virtualisation on the services systems.
+\begin{itemize}
+\item
+  \textbf{Local Test Execution}: In the case of local development, the
+  test runs are carried out on a \gls{pc} that can reach the network
+  hardware and thus the test run could be carried out with real data.
+\item
+  \textbf{Remote Test Execution}: In the other scenario, the tests are
+  to be executed out before a new published release in the repository
+  based on \href{https://github.com/features/actions}{GithubActions}. It
+  has the possibility to host local build (runner) software, which then
+  has access to the hardware, but in this case a \gls{pc} must be
+  permanently available for this task. Instead, the hardware sensors are
+  simulated by software and executed via virtualisation on the services
+  systems. The simulation of the hardware is implemented using \gls{usb}
+  emulation, which uses a \gls{lut} to provide the expected or incorrect
+  feedback.
+\end{itemize}
+
+\newpage
 
 \hypertarget{package-distribution}{%
 \section{Package Distribution}\label{package-distribution}}
@@ -2580,9 +2591,8 @@ executed via virtualisation on the services systems.
 One crucial point that improves usability for users is the simple
 installation of all \gls{mrp} modules. As it is created in the Python
 programming language, there are several public package registries where
-users can provide their software modules.
-
-For this purpose \href{https://pypi.org}{PyPI} figure
+users can provide their software modules. For this purpose
+\href{https://pypi.org}{PyPI} figure
 \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most
 used package registry and offers direct support for the package
 installation program \gls{pip} shown in listing
@@ -2606,12 +2616,13 @@ To make the \gls{mrp} file structure compatible with the package
 registry, Python provides separate installation routines that build a
 package in an isolated environment and then provide an installation
 \href{https://peps.python.org/pep-0427/}{wheel} archive. This can be
-uploaded to the package registry. Since the \gls{mrp}-library requires
-additional Python dependencies, which cannot be assumed to be already
-installed on the target system, these must be installed prior to the
-actual installation. These can be specified in the library installation
-configuration \emph{setup.py} in listing \ref{lst:setup_py_req} for this
-purpose.
+uploaded to the package registry.
+
+Since the \gls{mrp}-library requires additional Python dependencies,
+which cannot be assumed to be already installed on the target system,
+these must be installed prior to the actual installation. These can be
+specified in the library installation configuration \emph{setup.py} in
+listing \ref{lst:setup_py_req} for this purpose.
 
 \newpage
 
@@ -3513,8 +3524,8 @@ Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 \endhead
 \(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
 \(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
-\(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean sensor value
-(Baseline)\tabularnewline
+\(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean Baseline without offset
+compensation\tabularnewline
 \(\sigma_{rv}\) & 172.00 & 0.20 & \(\mu\)T & \gls{sd} sensor
 value\tabularnewline
 \(\mu_{t}\) & 20.68 & 19.40 & \(^{\circ}\)C & Mean sensor

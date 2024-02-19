@@ -156,8 +156,6 @@ This comprehensive effort serves to bolster the prototyping phase of the low-fie
 
 In addition, *DeLoRI* efforts to achieve heightened accuracy, striving for precision levels below *1000 (+ppm)*. While O'Reilly, Teeuwisse, and Webb were able to modify the ring diameter to influence field homogeneity, the unique goal at this point is to characterize the magnets pre-installation, allowing for proactive assessments of homogeneity characteristics. This approach aims to provide insights into magnetic field uniformity before the magnets are integrated, thereby streamlining the optimisation process. Furthermore, 
 
-\newpage
-
 It is important to note that the primary objective of this thesis is not merely to characterize the magnet itself; rather, the emphasis lies in the selection and comparison of potential sensors for the characterisation process.
 To achieve this, a versatile hardware setup is in development, designed to accommodate various sensors for the measurement of magnets or other objects. Simultaneously, a software interface is being crafted to universally read data from different sensors and interact seamlessly with the diverse firmware associated with various Halbach sensors. A key feature of this system is the ease of sensor interchangeability, facilitating adaptability and versatility in the characterisation process.
 
@@ -200,7 +198,10 @@ The following chapter defines desirable use cases that the future project need t
 These illustrate practical situations to understand the functionality and added value of the implemented solution for the user.
 
 The use cases are defined during project planning and provide an overview of how the user interacts with the project and what functionalities can be expected.
-In the later accomplished evaluation process in chapter \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution. This is essential for understanding the needs of the target group and designing the result accordingly.
+
+In the later accomplished evaluation process in chapter \ref{use-case-evaluation}, the defined use cases are also used as a reference to demonstrate the implemented capabilities of the solution.
+
+This is important in order to understand the needs of the target group and design the result accordingly. For this purpose, these were defined into the following blocks:
 
 1. **Ready to use hardware sensor designs**
 
@@ -395,11 +396,7 @@ Each sensor measurement result is transmitted from the buffer to the host togeth
 
 This ensures that in a multi-sensor setup with several sensors. The measurements are synchronized in time like described in chapter \ref{sensor-synchronisation-interface} and are not out of sequence or drift.
 
-
 ### Communication Interface
-
-![Unified sensor firmware provided serial terminal based (+cli) allows the user to configure the sensor manually \label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}](./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png)
-
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
@@ -409,13 +406,16 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly inspect whether the hardware is working properly after firmware installation.
 The command *help*, displays a detailed command reference with all available commands as shown in the figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
+
+![Unified sensor firmware provided serial terminal based (+cli) allows the user to configure the sensor manually \label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}](./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png)
+
+
 The figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
-
-![Result of an executed b value measurement readout command using the sensors (+cli) with immediate user readable response \label{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}](./generated_images/border_Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png)
-
 
 The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command. The command is only sent by the library, not by the user.
 The same commands are available to (+mrp)-library as for user (+cli)-based communication, but in a binary format.
+
+![Result of an executed b value measurement readout command using the sensors (+cli) with immediate user readable response \label{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}](./generated_images/border_Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png)
 
 
 ### Sensor Synchronisation Interface
@@ -424,7 +424,8 @@ The same commands are available to (+mrp)-library as for user (+cli)-based commu
 
 
 One problem with the use of several sensors on one readout host (+pc) is that the measurements may drift over time. On the one hand, (+usb) latencies can occur.
-This can occur due to numerous factors, including device drivers, data transfer speed and system resources. High-quality (+usb) devices and modern drivers often minimise latencies.[@W19]
+This can occur due to numerous factors, including device drivers, data transfer speed and system resources.
+High-quality (+usb) devices and modern drivers often minimise latencies.[@WSB19]
 Nevertheless, complex data processing tasks and overloaded (+usb) ports can lead to delays.
 
 : (+usb) connected sensor latency test results using several sensor readout requests togehter with variable host system cpu loads testing for jitter variations \label{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv}
@@ -446,7 +447,6 @@ Table \ref{(+usb)_connected_sensor_latency_test_results_using_several_sensor_rea
 A jitter time of up to an additional *1ms* is added between the triggering of the measurements by the host system and the receipt of the command by the sensor hardware.
 If the host system is still under load, this value increases many times over. This means that synchronising several sensors via the (+usb) connection alone is not sufficient. 
 The other issue is sending the trigger signal from the readout software, which is described in chapter \ref{software-readout-framework}. At this point unpredictable latencies can occur, too, depending on which other tasks are also executed on this port.
-
 To enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
 The figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together to implement this form of synchronisation.
@@ -501,10 +501,9 @@ The 1D sensor shown in figure \ref{Manufactured_1D_sensor_construction_from_diff
 The electrical level is based on a *Raspberry Pi Pico* together with the *MMC5603NJ* magnetic sensor.
 The mechanical setup consists of four 3D printed components, which are fixed together with nylon screws to minimise influences on the measurement.
 
-\newpage
-
 Since the *MMC5603NJ* only has limited measurement range of total *6mT*, even small coin sized neodymium magnets already saturates the sensor.
 It is possible to mount 3D printed spacers (see green part in figure \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over the sensor to increase the distance between the magnet and the sensor and thus also measure these magnets.
+
 The designed magnet holder can be adapted for different magnet shapes and can be placed on the spacer without backlash to be able to perform a repeatable measurement without introducing measurement irregularities by mechanically changing the magnet.
 
 
@@ -529,11 +528,15 @@ This is chosen because of its larger measuring range and can therefore be used m
 
 As the sensors shown so far relate exclusively to self-built, low-cost hardware, the following chapter shows how existing hardware can be integrated into the system.
 A temperature-compensated *Voltcraft GM-70* telsameter shown in figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
-It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the previously build unified sensor firmware using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software} executable on the host (+pc). However, it does not offer the range of functions that the unified sensor firmware offers.
+It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the previously build unified sensor firmware using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software} executable on the host (+pc).
+
+\newpage
 
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer a physical *RS232* interface.
-As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter. The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
+As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter.
+The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
 The firmware is adapted using a separate build configuration.
+
 In order to be able to read and correctly interpret the data from the microcontroller, the serial protocol of the sensor is implemented in a customised version of the *CustomSensor* class as shown in listing \ref{lst:CustomSensorClass}. 
 This software or hardware integration can be conducted on any other measuring device with a suitable communication interface and a known protocol thanks to the modular design.
 
@@ -575,7 +578,7 @@ The following example shows the advantages of using *user interaction points*. I
 
 The first project is a project called *HalbachOptimisation* [@O24] implements a data analysis step and optimizes a magnetic field that is as homogeneous as possible within a circular section using given mechanical dimensions as input parameters of the magnets which are used. For this purpose, a mutation of the magnet positions and rotations is performed. The result is a list of positions for each magnet.
 
-The *HalbachMRIDesigner* [@MWO24] is an opensource project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@MMN19] based 3D model of the magnet holder.
+The *HalbachMRIDesigner* [@MWO24] is an open-source project and generates basic (+cad) drawings for (+mri) magnets in a Halbach configuration. To do this, the number of magnets and additional parameters for the properties of the (+cad) model to be created are passed to the function provided as input parameters using a (+json) file. The result is an *OpenSCAD* [@MMN19] based 3D model of the magnet holder.
 
 As a result, there are two projects which are both in combination suitable for the task of optimizing and generating Halbach magnets for (+mri) applications. The data structures are not compatible with each other and are usually executed manually one after the other by the user in order to obtain a result, whereby additional manual data conversion is required.
 
@@ -597,6 +600,8 @@ The implementation of the same functionalities from the mentioned projects above
   This receives the result of the previous step, in this case the generated magnet data.
   By optionally setting meta data in data type, constants can be replaced in the analysis function and made dynamically configurable.
   The return result also corresponds to the same data type so that subsequent steps are compatible and contains the magnet data with modified position and rotation data.
+
+\newpage
 
 3. **Generate fabrication data** 
 
@@ -628,8 +633,6 @@ There are also introductory examples which provide an overview of the provided f
 The included core modules are essential for using the library.
 Basic data types are implemented, as well as functions for import and export.
 In addition, there are other support scripts that are required internally.
-
-\newpage
 
 The following modules are implemented in detail:
 
@@ -679,23 +682,17 @@ Using serialization, the *MRPReading* class inherited from Python-*Object* class
       "sensor_device_path": "/dev/ttyUnifiedSensorSingle",
       "sensor_name": "Unified Sensor Single Sensor",
       "sensor_id": "386731533439",
-      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "axis_stimestamp"],
+      "sensor_capabilities": ["static", "axis_b", "axis_x", "axis_y", "axis_z", "axis_temp", "time"],
       "configname": "calibrationtemp30.yaml",
-      "runner": "cli"
-  },
+      "runner": "cli"},
   "data": [{
-      "value": 0.135,
-      "is_valid": true,
+      "value": {"b":0.135},
       "id": 0,
-      "temperature": 34.32
-  }],
+      "temperature": 34.32}],
   "measurement_config": {
-      "id": "525771256544952",
       "sensor_distance_radius": 40.0,
-      "magnet_type": 0
-  },
-  "name": "calibrationtemp30",
-}
+      "magnet_type": 1// CUBIC 12x12x12mm N45
+  },}
 ```
 
 The exported example listing \ref{lst:json_export_format_example} contains different object keys, which contain the following information:
@@ -725,6 +722,8 @@ These include functions for data acquisition, visualisation and analysis.
 Another collection of optional modules provided by the library is the connection of external hardware sensors.
 All compatible sensors that are compatible with the firmware developed in the *Unified Sensor* \ref{unified-sensor} chapter are supported.
 The library provides the following sensor (+hal) modules for this purpose:
+
+\newpage
 
 * *MRPHal* - Firmware protocol implementation
 * *MRPHalLocal* - (+usb) sensor interface
@@ -779,6 +778,8 @@ Multiple sensors can be connected to any (+pc) which is available on the network
 This can be a (+sbc) (e.g. a *Raspberry Pi*).
 The small footprint and low power consumption make it a viable choice. It can also be used in a temperature chamber.
 
+\newpage
+
 The *MRPProxy* module in figure \ref{MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png} has been developed to allow forwarding and interaction with several sensors over a network connection using a (+rest) interface.
 
 The approach of implementing this via a (+rest) interface also offers the advantage that several measurements or experiments can be recorded at the same time with one remote sensor setup.
@@ -787,15 +788,14 @@ The approach of implementing this via a (+rest) interface also offers the advant
 
 
 Another application example is when sensors are physically separated or there are long distances between them.
-By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are accessible to the *control* (+pc).
+By connecting several sensors via the proxy module, it is possible to link several instances and all sensors available in the network are accessible to the *control* (+pc) by routing the requests through each *control* (+pc) in the chain to the target.
 
 ![Example MRP proxy module usage using two remote (+pc)s \label{Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png}](./generated_images/border_Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png)
 
 
 Figure \ref{Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png} shows the modified *multi-proxy - multi-sensor* topology.
 Both proxy instances do not communicate directly with the *control* (+pc), but the proxy instance *remote* (+pc) *#2* can access the proxy running on *remote* (+pc) *#1*.
-
-The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can access all sensors in this chain.
+The *control* (+pc) only communicates with the *remote* (+pc) *#1*, but can access all sensors in this chain thought
 
 ### Network-Proxy
 
@@ -859,7 +859,8 @@ $ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
 
 Another important aspect for using several sensors via the proxy system is the synchronisation of the measurement intervals between the sensors. 
 Individual sensor setups do not require any additional synchronisation information, as this is communicated via the (+usb) interface.
-If several sensors are connected locally, they can be connected to each other via their sync input using short cables. One sensor acts as the central clock as described in chapter \ref{sensor-synchronisation-interface}.
+If several sensors are connected locally, they can be connected to each other via their sync input using short cables.
+One sensor acts as the central clock as described in chapter \ref{sensor-synchronisation-interface}.
 This no longer works for long distances and the synchronisation must be established via a shared network connection. 
 If time-critical synchronisation over the network is required, (+ptp) and (+pps) output functionality [@O24] can be used on many (+sbc), such as the *Raspberry Pi Compute Module*.
 
@@ -871,10 +872,6 @@ Each connected sensor is accessed via the text-based (+cli), which is initially 
 
 #### Merging the Sensor Capabilities
 
-Immediately after starting the *MRPProxy*, the (+uuid)s of all locally connected sensors are read out.
-These are stored together with the class instance of the *MRPHal* module in a (+lut).
-This makes it possible to address and interact with a  sensor directly using its (+uuid).
-
 : Sensor capabilities merging algorithm \label{Sensor_capabilities_merging_algorithm.csv}
 
 | SENSOR A  | SENSOR B  |  MERGED CAPABILITIES |  CAPABLE SENSORS ID LUT |
@@ -884,6 +881,9 @@ This makes it possible to address and interact with a  sensor directly using its
 | axis_temp | axis_temp | axis_temp            |  A B                    |
 | axis_x    | axis_x    | axis_x               |  A B                    |
 
+Immediately after starting the *MRPProxy*, the (+uuid)s of all locally connected sensors are read out.
+These are stored together with the class instance of the *MRPHal* module in a (+lut).
+This makes it possible to address and interact with a  sensor directly using its (+uuid).
 When using sensors with the same capabilities, these must be combined.
 These are used to select the appropriate measurement mode for a measurement.
 For this purpose, the *info* command of each sensor is queried.
@@ -973,7 +973,8 @@ imported_reading.load_from_file("exported_reading.mag.json")
 
 ### MRPHal
 
-After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors. In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
+After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors.
+In the following example listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 
 \newpage
 
@@ -1004,6 +1005,7 @@ Once connected, these are then converted into a usable data source using the *MR
 ### MRPSimulation
 
 If no hardware sensor is available for the generation of test data, the *MRPSimulation* module is available. This contains a series of functions that simulate various magnets and their fields. The result is a complete *MRPReading* measurement with a wide range of set meta data.
+
 The example listing \ref{lst:mrpexample_simulation} illustrates the basic usage.
 Different variations of the *generate_reading* function offer the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
 The data is generated in the background using the *magpylib* [@OB20] library according to the specified parameters.
@@ -1071,12 +1073,11 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 ### MRPHalbachArrayGenerator
 
 The following example listing \ref{lst:mrpexample_halbach} shows how a simple Halbach magnetic ring can be generated. This can be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
-
-
-
 Eight random measurements are generated at this point.
 It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
-This is necessary so that the correct magnet cutouts can be generated when creating the 3D model. After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@O24] using the *MRPHalbachArrayGenerator* module.
+This is necessary so that the correct magnet cutouts can be generated when creating the 3D model. 
+
+After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@O24] using the *MRPHalbachArrayGenerator* module.
 
 ```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based Halbach ring"}
 readings = []
@@ -1102,7 +1103,7 @@ The result is an *OpenSCAD* [@MMN19] file, which contains the module generated. 
 
 Usability improvements in software libraries are essential for efficient and user-friendly development.
 Intuitive API documentation, clearly structured code examples and improved error messages promote a smooth developer experience.
-A (+gui) or (+cli) application for complex libraries can make it easier to use, especially for developers with less experience.
+A (+gui) or (+cli) application for complex libraries can make them more user-friendly, especially for developers with less experience.
 Continuous feedback through automated tests and comprehensive error logs enable faster bug fixing.
 
 The integration of user feedback and regular updates promotes the adaptability of the (+mrp)-library.
@@ -1125,7 +1126,7 @@ To simplify these tasks, a (+cli) is implemented and implements the following fu
 * Recording of measured values from stored measurement series
 * Simple commands for checking recorded measurement series and their data
 
-Thanks to this functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
+As a result of this implemented functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
 These can then be read in again using the *MRPReading* module and processed further. The following bash listing \ref{lst:MRPCli_config_run} shows the setup procedure in detail:
 
 ```bash {#lst:MRPCli_config_run caption="MRPCli example usage for configuration of a measurement run"}
@@ -1156,13 +1157,12 @@ $ MRPCli measure run
 
 ## Programmable Data Processing Pipeline
 
-It is more applicable for users to carry out measurements using the (+cli)-, the next logical step is to analyse the recorded data.
-This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library.
-This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
-
 ![Example measurement analysis pipeline \label{Example_measurement_analysis_pipeline.png}](./generated_images/border_Example_measurement_analysis_pipeline.png)
 
 
+It is more applicable for users to carry out measurements using the (+cli)-, the next logical step is to analyse the recorded data.
+This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library.
+This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 For this purpose, (+cli) application is created further, to enable the user to create and execute complex evaluation pipelines for measurement data without programming.
 The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
@@ -1174,11 +1174,12 @@ The figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measu
 
 In order to implement such a pipeline, the(+yaml) file format is chosen for the definition of the pipeline, as this is for non-programmers to understand and can also be easily edited with a plain text editor.
 Detailed examples can be found in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}. The pipeline definition consists of sections which execute the appropriate Python commands in the background.
-
-The signatures in the (+yaml) file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
+The function signatures in the (+yaml) file are called using reflection and a real-time search of the loaded *global()* functions \href{https://docs.python.org/3/library/functions.html#globals}{symbol table}.
 This system is capable to make all Python functions available to the user.
-To simplify usage, a pre-defined list of verified functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
+To simplify usage, a pre-defined list of verified and tested functions for use in pipelines is listed in the \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
 The following pipeline definition in listing \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown in figure \ref{Example_measurement_analysis_pipeline.png} as (+yaml) syntax.
+
+\newpage
 
 ```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
 stage import_readings:
@@ -1286,15 +1287,19 @@ class TestMPRReading(unittest.TestCase):
     self.assertIsNotNone(reading_imported.compare(MRPSimulation.generate_reading()))
 ```
 
-
 Difficulties arise with the parts of the (+mrp)-library that require direct access to external hardware.
 These are, for example, the *MRPHal* and *MRPHalRest* modules, which are required to read out sensors connected via the network.
-Two different approaches are used.
-In the case of local development, the test runs are carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
+Two different approaches are used:
 
-In the other scenario, the tests are to be carried out before a new release in the repository based on \href{https://github.com/features/actions}{GithubActions}.
-It has the possibility to host local runner software, which then has access to the hardware, but in this case a (+pc) must be permanently available for this task.
-Instead, the hardware sensors are simulated by software and executed via virtualisation on the services systems.
+* **Local Test Execution**:
+  In the case of local development, the test runs are carried out on a (+pc) that can reach the network hardware and thus the test run could be carried out with real data.
+
+* **Remote Test Execution**: 
+  In the other scenario, the tests are to be executed out before a new published release in the repository based on \href{https://github.com/features/actions}{GithubActions}.
+  It has the possibility to host local build (runner) software, which then has access to the hardware, but in this case a (+pc) must be permanently available for this task.
+  Instead, the hardware sensors are simulated by software and executed via virtualisation on the services systems. The simulation of the hardware is implemented using (+usb) emulation, which uses a (+lut) to provide the expected or incorrect feedback.
+
+\newpage
 
 ## Package Distribution
 
@@ -1302,9 +1307,7 @@ Instead, the hardware sensors are simulated by software and executed via virtual
 
 
 One crucial point that improves usability for users is the simple installation of all (+mrp) modules.
-As it is created in the Python programming language, there are several public package registries where users can provide their software modules.
-
-For this purpose \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
+As it is created in the Python programming language, there are several public package registries where users can provide their software modules. For this purpose \href{https://pypi.org}{PyPI} figure \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most used package registry and offers direct support for the package installation program (+pip) shown in listing \ref{lst:setup_lib_with_pip}.
 
 (+pip) not only manages package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
@@ -1319,6 +1322,7 @@ $ pip3 install MagneticReadoutProcessing==1.4.0
 
 To make the (+mrp) file structure compatible with the package registry, Python provides separate installation routines that build a package in an isolated environment and then provide an installation \href{https://peps.python.org/pep-0427/}{wheel} archive.
 This can be uploaded to the package registry.
+
 Since the (+mrp)-library requires additional Python dependencies, which cannot be assumed to be already installed on the target system, these must be installed prior to the actual installation. These can be specified in the library installation configuration *setup.py* in listing \ref{lst:setup_py_req} for this purpose.
 
 \newpage
@@ -1811,18 +1815,18 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 
 : Overview of all characterised sensor properties \label{Overview_of_all_characterised_sensor_properties.csv}
 
-| Symbol        | TLV493D | MMC5603NJ | Unit                 | Description                           |
-| ------------- | ------- | --------- | -------------------- | ------------------------------------- |
-| $\mu_{nl}$    | 0.79    | 0.00      | %                    |  Mean noise level                     |
-| $\sigma_{nl}$ | 0.76    | 0.00      | %                    | (+sd) noise level                     |
-| $\mu_{rv}$    | 157.23  | -50.39    | $\mu$T               |  Mean sensor value (Baseline)         |
-| $\sigma_{rv}$ | 172.00  | 0.20      | $\mu$T               | (+sd) sensor value                    |
-| $\mu_{t}$     | 20.68   | 19.40     | $^{\circ}$C          | Mean sensor temperature               |
-| $\sigma_{t}$  | 0.53    | 0.00      | $^{\circ}$C          | (+sd) sensor temperature              |
-| $\mu_{trev}$  | 21.0    | 21.0      | $^{\circ}$C          | Ambient temperature                   |
-| $\mu_{sl}$    | 0.25    | 0.04      | %                    |  Mean sensor linearity deviation      |
-| $\sigma_{sl}$ | 3.64    | 0.56      | %                    | (+sd) sensor linearity                |
-| $\mu_{td}$    | -1.99   | -5.13     | $\mu$T / $^{\circ}$C |  Mean sensor temperature coefficients |
+| Symbol        | TLV493D | MMC5603NJ | Unit                 | Description                                |
+| ------------- | ------- | --------- | -------------------- | ------------------------------------------ |
+| $\mu_{nl}$    | 0.79    | 0.00      | %                    |  Mean noise level                          |
+| $\sigma_{nl}$ | 0.76    | 0.00      | %                    | (+sd) noise level                          |
+| $\mu_{rv}$    | 157.23  | -50.39    | $\mu$T               |  Mean Baseline without offset compensation |
+| $\sigma_{rv}$ | 172.00  | 0.20      | $\mu$T               | (+sd) sensor value                         |
+| $\mu_{t}$     | 20.68   | 19.40     | $^{\circ}$C          | Mean sensor temperature                    |
+| $\sigma_{t}$  | 0.53    | 0.00      | $^{\circ}$C          | (+sd) sensor temperature                   |
+| $\mu_{trev}$  | 21.0    | 21.0      | $^{\circ}$C          | Ambient temperature                        |
+| $\mu_{sl}$    | 0.25    | 0.04      | %                    |  Mean sensor linearity deviation           |
+| $\sigma_{sl}$ | 3.64    | 0.56      | %                    | (+sd) sensor linearity                     |
+| $\mu_{td}$    | -1.99   | -5.13     | $\mu$T / $^{\circ}$C |  Mean sensor temperature coefficients      |
 
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} represents a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.

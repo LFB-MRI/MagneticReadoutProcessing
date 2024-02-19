@@ -11,6 +11,8 @@ rm -f *.gls
 rm -f *.aux
 rm -f *.lof
 rm -f *.lot
+rm -f *.bcf
+rm -f *.lol
 rm -f *.aux
 rm -f *.out
 rm -f *.toc
@@ -18,6 +20,7 @@ rm -f *.log
 rm -f *.synctex.gz
 rm -f *.bbl
 rm -f *.blg
+rm -f *-blx.bib
 rm -f *.fls
 rm -f *.fdb_latexmk
 rm -f *.run.xml
@@ -192,7 +195,8 @@ rm -f *.fls
 rm -f *.fdb_latexmk
 rm -f *.run.xml
 rm -Rf tmp
-
-
+rm -f *-blx.bib
+rm -f *.bcf
+rm -f *.lol
 
 exit 0
