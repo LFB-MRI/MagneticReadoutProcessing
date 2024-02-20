@@ -1,0 +1,2 @@
+![Typical block diagram of a digital hall sensor sensing chain using three hall plates \label{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}](./generated_images/border_Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png)
+

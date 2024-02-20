@@ -501,7 +501,7 @@ In the later accomplished evaluation process in chapter
 reference to demonstrate the implemented capabilities of the solution.
 
 This is important in order to understand the needs of the target group
-and design the result accordingly. For this purpose, these were defined
+and design the result accordingly. For this purpose, these are defined
 into the following blocks:
 
 \begin{enumerate}
@@ -655,8 +655,23 @@ firmware setup; it is developed for this purpose in the first step.
 \section{Sensor Selection}\label{sensor-selection}}
 
 The selection process for possible magnetic field sensors initially
-focuses on the most common and cost-effective ones, especially those
-that are already used in smartphones and are therefore widely available.
+focuses on the most common and cost-effective hall effect ones,
+especially those that are already used in smartphones and are therefore
+widely available to consumers.
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}
+\caption{Typical block diagram of a digital hall sensor sensing chain
+using three hall plates
+\label{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}}
+\end{figure}
+
+A Hall effect sensor utilises the Hall effect that occurs when current
+flows in a conductor through which a magnetic field passes. The sensor
+consists of a semiconductor material such as gallium arsenide or indium
+antimonide. Inside the sensor are Hall effect plates, which essentially
+consist of a thin layer of this semiconductor material \customcite{BJJ16}.
 
 A key aspect of this selection is the preference for sensors with
 digital interfaces to facilitate implementation in the circuit layout
@@ -700,6 +715,14 @@ and more complicated energy management. In the context of the desired
 goal of developing a cost-efficient and universally expandable Hall
 sensor interface, the decision in favour of digital sensors seems
 appropriate.
+
+Another point that contributed to the selection of this module is the
+availability of the sensor \gls{ic}s as a ready-made and readily
+available evaluation module. This ensured that the electrical design is
+verified by the manufacturer so that the sensor could be operated with
+the correct electrical parameters. On the other hand, it is possible to
+evaluate several sensors in a shorter time, as a separate \gls{pcb} has
+to be produced here.
 
 The table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
@@ -3071,10 +3094,13 @@ automated sensor characterisation can be performed.
 \hypertarget{sensors-for-evaluation}{%
 \section{Sensors for Evaluation}\label{sensors-for-evaluation}}
 
-The developed framework is directly compatible with a variety of
-magnetic field sensors without modifications, including those listed in
-the table
-\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
+For this evaluation, the sensors listed in the table
+\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
+are used for sensor characterisation. The selection of sensors is
+described in chapter \ref{sensor-selection}. The additional column for
+the \emph{Background Noise} is taken from the respective data sheets of
+the sensors and will be verified in the later \emph{Background Noise}
+measurement in chapter \ref{sensor-characterisation-background-noise}.
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Digital magnetic field sensors characterised for evaluation
@@ -3097,18 +3123,8 @@ Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
 
 The values in table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
-were taken from the data sheets of the relevant manufacturers as a
+are taken from the data sheets of the relevant manufacturers as a
 reference for comparison with the later measurement results.
-
-For this evaluation, the sensors listed in the table
-\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
-are used for sensor characterisation. The selection of sensors is
-described in chapter \ref{sensor-selection}. The additional column for
-the \emph{Background Noise} is taken from the respective data sheets of
-the sensors and will be verified in the later \emph{Background Noise}
-measurement in chapter \ref{sensor-characterisation-background-noise}.
-
-This selection is made for the following reasons:
 
 The developed framework is directly compatible with a variety of
 magnetic field sensors without modifications, including those listed in
@@ -3132,7 +3148,7 @@ measurements in chapter \ref{command-line-interface} and analysis
 pipelines in chapter \ref{programmable-data-processing-pipeline}, which
 are available for this purpose, are packaged within the library.
 
-The following parameters were determined and analysed for the sensor
+The following parameters are determined and analysed for the sensor
 evaulation:
 
 \begin{itemize}
@@ -3147,13 +3163,13 @@ evaulation:
   Temperature Sensitivity
 \end{itemize}
 
-The characterisation methodology was modified and adapted from
-Crescentini,Gibiino and Piero \customcite{CSG22}, as their approaches are
-geared towards the analysis of analogue Hall sensors. Direct
+The characterisation methodology is modified and adapted from
+Crescentini, Gibiino and Piero \customcite{CSG22}, as their approaches are
+focused towards the analysis of analogue Hall sensors. Direct
 transmission is not possible, as their methods are specially tailored to
 these sensors. This includes measuring the analogue bias currents and
 raw sensor output voltages, which are not accessible with these
-digital-only sensors. Adaptations were therefore necessary to extend the
+digital-only sensors. Adaptations are therefore necessary to extend the
 characterisation to the choosen digital sensors
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
 
@@ -3175,11 +3191,11 @@ conductive adhesive. This compensates for thermal differences. This is
 essential for the subsequent temperature deviation tests in order to
 obtain comparable measurement results.\customcite{J21}
 
-The setup is placed and pre-wired in the temperature chamber 24 hours
-before the series of measurements are carried out. The insulated housing
+The set-up is set up and pre-wired in the temperature chamber \emph{24}
+hours before the measurement series is performed. The insulated housing
 of a \emph{Voron 2.4} 3D printer, which has a separately controlled
 internal equipped heating system, is used as the temperature chamber. To
-verify the temperature, an additional thermometer \emph{VC-7055BT} is
+verify the temperature, an additional thermometer \emph{7055BT} is
 placed on the base plate. A \emph{10mm} thick \emph{PTFE} insulation
 plate is placed between the floor and the sensor base plate to prevent
 direct and uneven heating of the base plate by the heated floor.
@@ -3207,9 +3223,9 @@ The recorded measurement series are automatically analysed using the
 \ref{programmable-data-processing-pipeline} and the results are
 visualised.
 
-\hypertarget{sensor-characterisation-backgroundnoise}{%
-\section{Sensor Characterisation:
-BackgroundNoise}\label{sensor-characterisation-backgroundnoise}}
+\hypertarget{sensor-characterisation-background-noise}{%
+\section{Sensor Characterisation: Background
+Noise}\label{sensor-characterisation-background-noise}}
 
 \begin{figure}
 \centering
@@ -3233,9 +3249,9 @@ the baseline measurement. The output signal of the sensor is
 continuously measured and recorded. It is important to carry out the
 measurement over a sufficiently lengthy period of time in order to
 record both short-term and long-term fluctuations. For this purpose,
-\emph{\(N_{measurement}\)=2000} further measured values are taken with a
-trigger and readout rate of one measurement per second. In order to
-quantify the noise, the \gls{sd} of the signal is calculated. These
+\emph{\(N_{measurement}\)=2000} additional measured values are taken
+with a trigger and readout rate of one measurement per second. In order
+to quantify the noise, the \gls{sd} of the signal is calculated. These
 parameters provide information about the variation of the signal over
 time and therefore about the sensor background noise.
 
@@ -3261,7 +3277,7 @@ The following data is shown in the plots:
 \item
   Plot of the sensor's internal temperature sensor
 \item
-  Background noise level with reference to the initial baseline
+  Noise level with reference to the initial baseline
 \item
   Histogram of the background noise level
 \end{itemize}
@@ -3303,16 +3319,18 @@ temperature\tabularnewline
 Analysis}\label{sensor-temperature-analysis}}
 
 The temperature stability of the \emph{TLV493D} with a mean value of
-20.68\(^{\circ}\)C and a \gls{sd} of \(\sigma_{t}\)=0.53\(^{\circ}\)C
-indicates a consistent trend. This implies a constant tendency. The
-close grouping of the measured values around the mean value indicates
-good stability. The confidence interval is expected to be between
-\emph{20.15\(^{\circ}\)C} and \emph{21.21\(^{\circ}\)C}, which indicates
-a stable and consistent temperature measurement. This result is noisier
-compared to the temperature stability of the \emph{MMC5603}.
+20.68\(^{\circ}\)C and a \gls{sd} of
+\(\sigma_{t,tlv}\)=0.53\(^{\circ}\)C indicates a consistent trend. This
+implies a constant tendency. The close grouping of the measured values
+around the mean value indicates good stability. The confidence interval
+is expected to be between \emph{20.15\(^{\circ}\)C} and
+\emph{21.21\(^{\circ}\)C}, which indicates a stable and consistent
+temperature measurement. This result is noisier compared to the
+temperature stability of the \emph{MMC5603} with stable
+\emph{19.40\(^{\circ}\)C} with an accuracy of two decimal places.
 
 Both sensors provide an offset to the measured chamber temperature
-\(\mu_{trev}\).
+\(\mu_{trev, 7055BT}\).
 
 With an additional measurement run with a different temperature setting
 of \emph{30.0\(^{\circ}\)C}, the measured temperature deviations and
@@ -3334,7 +3352,7 @@ measured values in order to perform temperature compensation.
 The noise of a sensor describes unwanted, random fluctuations or signals
 in the measured data. These are clearly recognisable in the figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
-in the raw data plot. The baseline measurement which was previously
+in the raw data plot. The baseline measurement which is previously
 determined for each sensor is shown by the red \(\mu_{rv}\)
 {[}\(\mu\)T{]} line. It can be seen that each sensor has a different
 baseline offset in the same environment. This variable is the result of
@@ -3345,17 +3363,17 @@ and the test environment.
 For verification, a reference measurement of the environment is carried
 out with the calibrated \emph{Voltcraft GM70} Telsameter next to the
 sensor \gls{ic}. This provides a reference baseline value of
-\emph{\(\mu_{rev}\)=-21.0\(\mu\)T}.
+\emph{\(\mu_{rev, GM70}\)=-21.0\(\mu\)T}.
 
 The noise of the sensor is drawn around this using the blue line. For
-the \emph{TLV493D} the \gls{sd} \emph{\(\sigma_{rv}\)=172.0\({\mu}\)T},
-which is twice the value given by the datasheet as the noise value
-(refer to table
+the \emph{TLV493D} the \gls{sd}
+\emph{\(\sigma_{rv,tlv}\)=172.0\({\mu}\)T}, which is twice the value
+given by the datasheet as the noise value (refer to table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}).
 Under the same conditions, the \emph{MMC5603NJ} undercuts the value
 specified by the manufacturer. The \gls{sd} approaches
-\emph{\(\sigma_{rv}\)=0.20\({\mu}\)T} and is negligible, especially when
-additional averaging is used.
+\emph{\(\sigma_{rv, mmc}\)=0.20\({\mu}\)T} and is negligible, especially
+when additional averaging is used.
 
 As the baseline is determined first for each sensor, it can be seen that
 the Another recognisable feature is Further measurement series are also
@@ -3369,6 +3387,13 @@ range across the measuring range.
 \section{Sensor Characterisation:
 Linearity}\label{sensor-characterisation-linearity}}
 
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
+\caption{Sensor evaluation setup for linearity measurements
+\label{Sensor_evaluation_setup_for_linearity_measurements.png}}
+\end{figure}
+
 The sensor linearity of a magnetic field sensor or describes the ability
 of the sensor to provide a proportional linear response to changes in
 the magnetic field without non-linear distortions \customcite{CSG22}. This
@@ -3381,9 +3406,9 @@ This is achieved by means of an additional linear axis installed above
 the sensor setup. A holder for an \emph{N45 12x12x12mm} magnet is
 attached to the end effector of this axis, which can thus be moved at
 different distances above the respective sensor \gls{ic}. The ambient
-temperature is set to \emph{\(\mu_{trev}\)=21.0\(^{\circ}\)C} in the
-measurement runs and thus corresponds to the same conditions as in the
-\emph{Background Noise} chapter
+temperature is set to \emph{\(\mu_{trev, 7055BT}\)=21.0\(^{\circ}\)C} in
+the measurement runs and thus corresponds to the same conditions as in
+the \emph{Background Noise} chapter
 \ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
@@ -3392,7 +3417,7 @@ control the linear axis an additional motion controller of the type
 \emph{SKR-Pico} placed outside the temperature chamber is required,
 which can be controlled via a network interface.
 
-In addition, the \gls{dr} for both sensors was measured before the
+In addition, the \gls{dr} for both sensors are measured before the
 measurement run to determine the linearity. In this case, this indicates
 the minimum and maximum linear measuring range for the selected linear
 Hall sensors. A high \gls{dr} enables a more precise detection of
@@ -3452,10 +3477,10 @@ combines the visual representation of linearity as a plot. The distance
 from the magnet to the sensor is plotted in \emph{mm} on the x-axis. The
 measured value of the sensor is plotted on the y-axis. This is not
 directly comparable for both plots, as the sensors have different
-measuring ranges. To ensure comparability, the ideal curve is
-determined. In order to be able to make quantifiable statements about
-the measurement results, the mean and \gls{sd} deviation of these two
-curves is determined.
+measuring ranges. To ensure comparability, the ideal curve is determined
+\customcite{CSG22}. In order to be able to make quantifiable statements
+about the measurement results, the mean and \gls{sd} deviation of these
+two curves is determined.
 
 For both sensors, the deviation is less than \emph{1\%} over the entire
 resolution. With the \emph{MMC5603NJ} this is on average only
@@ -3498,7 +3523,7 @@ measurement. The figure
 \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
 represents these modifications in detail. These changes makes it
 possible to accurately determine the sensors \gls{ic} temperature. The
-temperature measuring device \emph{VC-7055BT} can be analysed using a
+temperature measuring device \emph{7055BT} can be analysed using a
 \gls{pc} interface. The controller of the temperature chamber can also
 be programmed via a \gls{pc} interface and a target temperature can be
 specified.
@@ -3514,11 +3539,11 @@ systematically increased from \emph{20\(^{\circ}\)} to
 system is given a waiting time of 30 minutes after reaching the target
 temperature.
 
-The field of permanent magnets is very temperature-dependent and can
+The field of permanent magnets is high temperature-dependent and can
 lose its magnetisation at higher temperatures (typically
-\emph{\textgreater=80\(^{\circ}\)} for non-high-quality type N magnets
-\customcite{GKT16}). The temperature range is selected so that it is
-within a sufficient range for the application.
+\emph{\textgreater=80\(^{\circ}\)} for non-high-quality \emph{Type-N}
+magnets \customcite{GKT16}). The temperature range is selected so that it
+is within a sufficient range for the application.
 
 \hypertarget{temperature-sensitivity-analysis}{%
 \subsection{Temperature Sensitivity
@@ -3708,20 +3733,20 @@ microcontrollers, enabling an easily expandable and applicable solution
 for measuring magnets with repeatable accuracy. Special attention is
 paid to the expandability by the user. Interchangeable modules allow the
 user to develop their own analysis algorithms without having to design
-everything from scratch. The software framework was evaluated on the
+everything from scratch. The software framework is evaluated on the
 basis of the previously defined use cases. A user-defined sorting
-algorithm was implemented and integrated into the framework. The result
+algorithm is implemented and integrated into the framework. The result
 is a list of the magnets that deviate least from the magnetic strength.
 
-The result was successfully verified by means of manual checks for
+The result is successfully verified by means of manual checks for
 various other series of measurements. In this way, extensibility and
-customisability were also successfully demonstrated during the software
+customisability are also successfully demonstrated during the software
 evaluation. This underlines the power of the developed framework and
 shows that it is not only effective in processing magnetic field sensor
 data, but also provides a flexible platform for the implementation of
-user-specific analyses. Subsequently, the developed framework was used
-to automatically characterise various magnetic field sensors. For this
-purpose, the developed pipeline feature of the software was used to
+user-specific analyses. Subsequently, the developed framework is used to
+automatically characterise various magnetic field sensors. For this
+purpose, the developed pipeline feature of the software is used to
 determine various sensor characteristics, including background noise,
 temperature coefficients and linearity.
 
@@ -3783,8 +3808,8 @@ cover measurement errors of less than \emph{10nT} in fields of more than
 software, but for which hardware development is still necessary, is 2D
 arrays of magnetic field sensors to display fields on a
 surface\customcite{CP16}. This means that deviations can also be
-visualised graphically without physically moving the senso such as in
+visualised graphically without physically moving the sensors such as in
 the implemented \emph{3D: Full Sphere} \ref{d-full-sphere} sensor. In
-addition, larger areas or volumes, such as in a large \emph{B0} field,
-can be measured more quickly.
+addition, larger areas or volumes, for example in a large \emph{B0}
+field, can be measured more quickly.
 
