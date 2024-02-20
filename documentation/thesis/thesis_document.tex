@@ -2884,10 +2884,23 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
 \end{lstlisting}
 
 The calculated distances from the \emph{CoG} value of the measurements
-to are inserted into a \emph{heapq} priority queue. Subsequently, as
-many elements of the queue are returned as defined by the
-\emph{IP\_return\_count} parameter. The actual sorting is carried out by
-the queue in the background.
+to are inserted into a \emph{heapq} priority queue. As the measured
+values are full sphere measurements, the \emph{CoG} in this
+implementation is calculated using this formula:
+
+\[\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}\]
+
+Where \emph{\(D_{distance}\)} corresponds to the set distance from the
+centre of the magnet to the surface of the sensor \gls{ic}. This is the
+same for each measuring point in the measurement and corresponds to the
+mechanical structure of the \emph{3D: Full Sphere} \ref{d-full-sphere}
+sensor \emph{40mm}. The weighting \emph{\(W_{eight}\)} corresponds here
+to the \emph{B}-field value in \(\mu\)T measured by the \emph{TLV493D}
+sensor.
+
+Subsequently, as many elements of the queue are returned as defined by
+the \emph{IP\_return\_count} parameter. The actual sorting is carried
+out by the queue in the background.
 
 \hypertarget{alternative-filter-algorithm-implementation}{%
 \subsection{Alternative Filter Algorithm
@@ -2901,8 +2914,6 @@ similar to the selected reference magnet. The code snipped in listing
 \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the
 modified filter algorithm code, with added \_ref input parameter for the
 reference measurement.
-
-\newpage
 
 \begin{lstlisting}[language=Python, caption={Modified user implemented custom find algorithm using a reference magnet reading}, label=lst:custom_find_similar_values_algorithm_refmagnet]
 @staticmethod
@@ -3069,11 +3080,11 @@ the table
 \caption{Digital magnetic field sensors characterised for evaluation
 \label{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}}\tabularnewline
 \toprule
-& TLV493D-A1B6 & MMC5603NJ\tabularnewline
+& TLV493D & MMC5603NJ\tabularnewline
 \midrule
 \endfirsthead
 \toprule
-& TLV493D-A1B6 & MMC5603NJ\tabularnewline
+& TLV493D & MMC5603NJ\tabularnewline
 \midrule
 \endhead
 Readout-Axis & 3D & 3D\tabularnewline
@@ -3084,12 +3095,17 @@ Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
 \bottomrule
 \end{longtable}
 
+The values in table
+\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
+were taken from the data sheets of the relevant manufacturers as a
+reference for comparison with the later measurement results.
+
 For this evaluation, the sensors listed in the table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
 are used for sensor characterisation. The selection of sensors is
 described in chapter \ref{sensor-selection}. The additional column for
-the \emph{Background-Noise} is taken from the respective data sheets of
-the sensors and will be verified in the later \emph{Background-Noise}
+the \emph{Background Noise} is taken from the respective data sheets of
+the sensors and will be verified in the later \emph{Background Noise}
 measurement in chapter \ref{sensor-characterisation-background-noise}.
 
 This selection is made for the following reasons:
@@ -3116,6 +3132,31 @@ measurements in chapter \ref{command-line-interface} and analysis
 pipelines in chapter \ref{programmable-data-processing-pipeline}, which
 are available for this purpose, are packaged within the library.
 
+The following parameters were determined and analysed for the sensor
+evaulation:
+
+\begin{itemize}
+\tightlist
+\item
+  Background Noise
+\item
+  Linearity
+\item
+  \gls{dr}
+\item
+  Temperature Sensitivity
+\end{itemize}
+
+The characterisation methodology was modified and adapted from
+Crescentini,Gibiino and Piero \customcite{CSG22}, as their approaches are
+geared towards the analysis of analogue Hall sensors. Direct
+transmission is not possible, as their methods are specially tailored to
+these sensors. This includes measuring the analogue bias currents and
+raw sensor output voltages, which are not accessible with these
+digital-only sensors. Adaptations were therefore necessary to extend the
+characterisation to the choosen digital sensors
+\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
+
 \hypertarget{evaluation-sensor-setup}{%
 \section{Evaluation Sensor Setup}\label{evaluation-sensor-setup}}
 
@@ -3132,7 +3173,7 @@ Sensor} from chapter \ref{d-single-sensor} sensor platform. The sensors
 to be measured are fixed together on an aluminium plate with thermally
 conductive adhesive. This compensates for thermal differences. This is
 essential for the subsequent temperature deviation tests in order to
-obtain comparable measurement results.
+obtain comparable measurement results.\customcite{J21}
 
 The setup is placed and pre-wired in the temperature chamber 24 hours
 before the series of measurements are carried out. The insulated housing
@@ -3166,9 +3207,9 @@ The recorded measurement series are automatically analysed using the
 \ref{programmable-data-processing-pipeline} and the results are
 visualised.
 
-\hypertarget{sensor-characterisation-background-noise}{%
+\hypertarget{sensor-characterisation-backgroundnoise}{%
 \section{Sensor Characterisation:
-Background-Noise}\label{sensor-characterisation-background-noise}}
+BackgroundNoise}\label{sensor-characterisation-backgroundnoise}}
 
 \begin{figure}
 \centering
@@ -3187,16 +3228,16 @@ configuration inside of the chamber.
 
 The procedure starts with the acquisition of the baseline by operating
 the sensor without external magnetic fields. For this purpose, a sample
-size of \emph{N=10000} measured values is recorded for the baseline
-measurement. The output signal of the sensor is continuously measured
-and recorded. It is important to carry out the measurement over a
-sufficiently lengthy period of time in order to record both short-term
-and long-term fluctuations. For this purpose, \emph{N=2000} further
-measured values are taken with a trigger and readout rate of one
-measurement per second. In order to quantify the noise, the \gls{sd} of
-the signal is calculated. These parameters provide information about the
-variation of the signal over time and therefore about the sensor
-background noise.
+size of \emph{\(N_{baseline}\)=10000} measured values is recorded for
+the baseline measurement. The output signal of the sensor is
+continuously measured and recorded. It is important to carry out the
+measurement over a sufficiently lengthy period of time in order to
+record both short-term and long-term fluctuations. For this purpose,
+\emph{\(N_{measurement}\)=2000} further measured values are taken with a
+trigger and readout rate of one measurement per second. In order to
+quantify the noise, the \gls{sd} of the signal is calculated. These
+parameters provide information about the variation of the signal over
+time and therefore about the sensor background noise.
 
 \begin{figure}
 \centering
@@ -3293,17 +3334,24 @@ measured values in order to perform temperature compensation.
 The noise of a sensor describes unwanted, random fluctuations or signals
 in the measured data. These are clearly recognisable in the figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
-in the raw data plot. The baseline determined for each sensor is shown
-by the red \(\mu_{rv}\) {[}\(\mu\)T{]} line. It can be seen that each
-sensor has a different mean value or baseline offset in the same
-environment. For verification, a reference measurement of the
-environment is carried out with the calibrated \emph{Voltcraft GM70}
-Telsameter next to the sensor \gls{ic}. This provides a reference
-baseline value of \emph{\(\mu_{rev}\)=-21.0\(\mu\)T}.
+in the raw data plot. The baseline measurement which was previously
+determined for each sensor is shown by the red \(\mu_{rv}\)
+{[}\(\mu\)T{]} line. It can be seen that each sensor has a different
+baseline offset in the same environment. This variable is the result of
+multiple effects, including the electrical offset introduced by the
+front end and the effect of the earth's magnetic field \customcite{CSG22}
+and the test environment.
+
+For verification, a reference measurement of the environment is carried
+out with the calibrated \emph{Voltcraft GM70} Telsameter next to the
+sensor \gls{ic}. This provides a reference baseline value of
+\emph{\(\mu_{rev}\)=-21.0\(\mu\)T}.
 
 The noise of the sensor is drawn around this using the blue line. For
-the \emph{TLV493D} the \gls{sd} \emph{\(\sigma_{rv}\)=172.0\(^{\mu}\)T},
-which is twice the value given by the datasheet as the noise value.
+the \emph{TLV493D} the \gls{sd} \emph{\(\sigma_{rv}\)=172.0\({\mu}\)T},
+which is twice the value given by the datasheet as the noise value
+(refer to table
+\ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}).
 Under the same conditions, the \emph{MMC5603NJ} undercuts the value
 specified by the manufacturer. The \gls{sd} approaches
 \emph{\(\sigma_{rv}\)=0.20\({\mu}\)T} and is negligible, especially when
@@ -3321,20 +3369,13 @@ range across the measuring range.
 \section{Sensor Characterisation:
 Linearity}\label{sensor-characterisation-linearity}}
 
-\begin{figure}
-\centering
-\includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
-\caption{Sensor evaluation setup for linearity measurements
-\label{Sensor_evaluation_setup_for_linearity_measurements.png}}
-\end{figure}
-
-The sensor linearity of a magnetic field sensor describes the ability of
-the sensor to provide a proportional linear response to changes in the
-magnetic field without non-linear distortions. This means that the
-output signals of the sensor vary directly proportional to the input
-magnetic fields without deviations or distortions and is therefore an
-important indicator for measurements of fields at different distances or
-objects.
+The sensor linearity of a magnetic field sensor or describes the ability
+of the sensor to provide a proportional linear response to changes in
+the magnetic field without non-linear distortions \customcite{CSG22}. This
+means that the output signals of the sensor vary directly proportional
+to the input magnetic fields without deviations or distortions and is
+therefore an important indicator for measurements of fields at different
+distances or objects.
 
 This is achieved by means of an additional linear axis installed above
 the sensor setup. A holder for an \emph{N45 12x12x12mm} magnet is
@@ -3342,7 +3383,7 @@ attached to the end effector of this axis, which can thus be moved at
 different distances above the respective sensor \gls{ic}. The ambient
 temperature is set to \emph{\(\mu_{trev}\)=21.0\(^{\circ}\)C} in the
 measurement runs and thus corresponds to the same conditions as in the
-\emph{Background-Noise} chapter
+\emph{Background Noise} chapter
 \ref{sensor-characterisation-background-noise} setup.
 
 The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
@@ -3351,16 +3392,23 @@ control the linear axis an additional motion controller of the type
 \emph{SKR-Pico} placed outside the temperature chamber is required,
 which can be controlled via a network interface.
 
+In addition, the \gls{dr} for both sensors was measured before the
+measurement run to determine the linearity. In this case, this indicates
+the minimum and maximum linear measuring range for the selected linear
+Hall sensors. A high \gls{dr} enables a more precise detection of
+magnetic fields, while a low \gls{dr} can lead to the sensor detecting
+magnetic fields outside its detection range \customcite{CSG22}.
+
 \hypertarget{measurement-setup}{%
 \subsection{Measurement Setup}\label{measurement-setup}}
 
-After the sensor baseline has been determined with \emph{N=10000}
-samples, the magnet is inserted into the holder. The linear axis is
-moved by the user until it is maximally saturated. With the
-\emph{TLV493D}, this corresponds to \emph{250.000\(\mu\)T} and below in
-low resolution mode. \emph{MCC5603NJ} around \emph{3000\(\mu\)T}. This
-ensures that the linearity is determined over the entire measuring
-range.
+After the sensor baseline has been determined with
+\emph{\(N_{baseline}\)=10000} samples, the magnet is inserted into the
+holder. The linear axis is moved by the user until it is maximally
+saturated. With the \emph{TLV493D}, this corresponds to
+\emph{250.000\(\mu\)T} and below in low resolution mode.
+\emph{MCC5603NJ} around \emph{3000\(\mu\)T}. This ensures that the
+linearity is determined over the entire measuring range.
 
 \hypertarget{measurement-run}{%
 \subsection{Measurement Run}\label{measurement-run}}
@@ -3376,10 +3424,10 @@ process then runs as follows:
 \item
   Move the linear axis upwards by the selected distance
 \item
-  De-energise the axis motor
+  De-energise the axis stepper motor
 \item
-  Create measurement using \emph{MRPCli} with \emph{N=2000} data points
-  per reading
+  Create measurement using \emph{MRPCli} with
+  \emph{\(N_{measurement}\)=2000} data points per reading and step
 \item
   Export reading to filesystem with current linear axis position in
   meta-data and filename
@@ -3413,8 +3461,8 @@ For both sensors, the deviation is less than \emph{1\%} over the entire
 resolution. With the \emph{MMC5603NJ} this is on average only
 \emph{0.04\%}. With the \emph{TLV493D} the \gls{sd} is \emph{3.64\%},
 for which the deviations at the end in particular (with field strengths
-towards zero) are decisive. The previously performed
-\emph{Background-Noise} characterisation in chapter
+towards zero) are decisive. The previously performed \emph{Background
+Noise} characterisation in chapter
 \ref{sensor-characterisation-background-noise} is explained that the
 linearity deviation is due to the sensitivity of the sensor.
 
@@ -3431,9 +3479,9 @@ The temperature sensitivity of magnetic field sensors describes how
 sensitively the sensors output is sensitive to temperature changes. It
 is important to ensure that temperature fluctuations do not affect
 measurement accuracy. A low temperature sensitivity reduces errors due
-to temperature changes. An accurate temperature sensitivity
-characteristic is therefore crucial for subsequent precise magnetic
-field measurements.
+to temperature changes \customcite{J21}. An accurate temperature
+sensitivity characteristic is therefore crucial for subsequent precise
+magnetic field measurements.
 
 \begin{figure}
 \centering
@@ -3522,6 +3570,10 @@ Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 \midrule
 \endhead
+\(N_{baseline}\) & 10000 & 10000 & - & Number of samples measured for
+baseline run\tabularnewline
+\(N_{measurement}\) & 2000 & 2000 & - & Number of samples measured for
+measurement run\tabularnewline
 \(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
 \(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
 \(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean Baseline without offset
@@ -3540,6 +3592,8 @@ deviation\tabularnewline
 linearity\tabularnewline
 \(\mu_{td}\) & -1.99 & -5.13 & \(\mu\)T / \(^{\circ}\)C & Mean sensor
 temperature coefficients\tabularnewline
+DR & {[}-138;220{]} & {[}-3.1;3.4{]} & \(\mu\)T & maximum linear
+\gls{dr}\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -3550,8 +3604,8 @@ clearly seen that these differ significantly by a factor of \emph{x10}.
 
 The \emph{TLV493D} performs in noise measurements worse than specified
 in the data sheet (\emph{98\(\mu\)T} instead of \emph{175\(\mu\)T}), but
-the large measuring range, which fulfils the required specifications
-from chapter \emph{Research Question} in chapter
+the large \gls{dr}, which fulfils the required specifications from
+chapter \emph{Research Question} in chapter
 \ref{research-question-and-approach}, must be considered here, which is
 not met by the \emph{MMC5603NJ}.
 
@@ -3560,17 +3614,18 @@ calibration for measuring permanent magnets. Even without additional
 measurement averaging, very precise measurement results can be achieved,
 which achieve a measurement accuracy of less than \emph{1000 \gls{ppm}}.
 
-However, due to the limited measuring range of \emph{±3mT}, direct
+However, due to the limited \gls{dr} of around \emph{±3mT}, direct
 measurement of stronger magnets is not possible using the
 \emph{MMC5603NJ}. The \emph{N45 12x12x12mm} magnets used in the
 application typically have a field strength of around \emph{100mT} at a
 distance of \emph{10mm} which is more than the \emph{MMC5603NJ} can
 measure.
 
-The \emph{TLV493D}, on the other hand, is able to measure these ranges,
-but does not achieve the required accuracy due to strong noise and steep
-temperature coefficients. In the following chapter, recommendations for
-action are defined, which are derived from the analysis results.
+The \emph{TLV493D}, on the other hand, is able to measure these ranges
+with a specified \gls{dr} of \emph{±150mT}, but does not achieve the
+required accuracy due to strong noise and steep temperature
+coefficients. In the following chapter, recommendations for action are
+defined, which are derived from the analysis results.
 
 \hypertarget{recommendation-for-action}{%
 \subsection{Recommendation for Action}\label{recommendation-for-action}}

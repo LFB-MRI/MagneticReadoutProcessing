@@ -1,4 +1,6 @@
 Symbol,TLV493D,MMC5603NJ,Unit,Description
+$N_{baseline}$,10000,10000,-,Number of samples measured for baseline run
+$N_{measurement}$,2000,2000,-,Number of samples measured for measurement run
 $\mu_{nl}$,0.79,0.00,%, Mean noise level
 $\sigma_{nl}$,0.76,0.00,%,(+sd) noise level
 $\mu_{rv}$,157.23,-50.39,$\mu$T, Mean Baseline without offset compensation
@@ -9,3 +11,4 @@ $\mu_{trev}$,21.0,21.0,$^{\circ}$C,Ambient temperature
 $\mu_{sl}$,0.25,0.04,%, Mean sensor linearity deviation 
 $\sigma_{sl}$,3.64,0.56,%,(+sd) sensor linearity
 $\mu_{td}$,-1.99,-5.13,$\mu$T / $^{\circ}$C, Mean sensor temperature coefficients
+DR,"[-138;220]","[-3.1;3.4]", $\mu$T, maximum linear (+dr)
