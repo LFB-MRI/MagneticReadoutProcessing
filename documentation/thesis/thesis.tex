@@ -24,6 +24,28 @@
 %
 
 \usepackage{amsmath,amssymb}
+\numberwithin{equation}{section}
+
+\usepackage{tocloft}    % for list of equations
+\usepackage{ragged2e}   % to undo \centering
+\usepackage{hyperref}   % to make references hyperlinks
+
+
+% define list of equations
+\newcommand{\listequationsname}{\Large{List of Equations}}
+\newlistof{myequations}{equ}{\listequationsname}
+\newcommand{\myequations}[1]{
+   \addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}
+}
+\setlength{\cftmyequationsnumwidth}{2.3em}
+\setlength{\cftmyequationsindent}{1.5em}
+
+% command to box, label, reference, and 
+% include noteworthy equation in list of equations
+\newcommand{\noteworthy}[2]{
+\begin{align} \label{#2} \ensuremath{#1} \end{align} 
+\myequations{#2} \centering \small \normalsize \justify }
+
 
 \graphicspath{
     {./}
@@ -316,8 +338,6 @@
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % REFERENZEN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -335,6 +355,11 @@
 % ABBILDUNGSVERZEICHNIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listoftables
+
+
+\pagebreak
+\listofmyequations
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CODEVERZEICHNIS

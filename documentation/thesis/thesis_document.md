@@ -172,12 +172,11 @@ Concerning the *DeLoRI* project, this study exclusively delves into the realm of
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
 
-  $$\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT $$
-
+  \noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{1000ppm from 50mT needed resolution calucation I}
 
 To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
 
-  $$ 0.05 \, mT \times 1000 = 50 \, \mu T $$
+  \noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{1000ppm from 50mT needed resolution calucation II}
 
 This means that to measure a deviation of better than *1000 (+ppm)* in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
@@ -731,8 +730,7 @@ For this reason, *MRPAnalysis* contains functions for calculating the following 
 * *std_deviation* - (+sd)
 * *mean* - Mean value
 * *variance* - Variance
-* *CoG* - Centre of gravity
-* *binning* - Distribution of a sample by means of a histogram
+* *binning* - Distribution of a sample by means of a histogram using bins
 * *k-nearest* - K-nearest neighbours
 
 In addition, the export function *.to_numpy_matrix* enables further processing of the data in the *Numpy* [@HMW20] framework, in which many other standard analysis functions are implemented.
@@ -1410,7 +1408,12 @@ As this is a short algorithm, it is inserted directly into the file.
 
 The parameter _readings should later receive the imported measurements from the *stage rawimport* in listing \ref{lst:pipeline_mrp_evaluation_yaml} and the optional *IP_return_count* parameter specifies the number of best measurements that are returned.
 The return parameter is a list of measurements containing the most similar measurements, measured by the smallest distance between all measurements.
-The distance for each measurement is determined using the centre of gravity function *CoG*, the length is then calculated from the result vector. This value can then be used for sorting.
+
+The sorting indicator for each measurement is determined using the centre of gravity function *(+cog)*,and is implemented using the following formula:
+
+\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{Center of Gravity} 
+
+Where *$D_{distance}$* corresponds to the set distance from the centre of the magnet to the surface of the sensor (+ic). This is the same for each measuring point in the measurement and corresponds to the mechanical structure of the *3D: Full Sphere* \ref{d-full-sphere} sensor *40mm*. The weighting *$W_{eight}$* corresponds here to the *B*-field value in $\mu$T measured by the *TLV493D* sensor.
 
 ```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm"}
 @staticmethod
@@ -1426,7 +1429,7 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   target_value = 0.0
   for idx, r in enumerate(_readings):
       cog = MRPAnalysis.MRPAnalysis.calculate_center_of_gravity(r)
-      # COMPUTE LENGTH OF VECTOR
+      # COMPUTE LENGTH OF VECTOR = B value
       cog_value: float = math.sqrt(cog[0]**2 + cog[1]**2 cog[2]**2)
       target_value = target_value + cog
   target_value = target_value / len(_readings)
@@ -1445,14 +1448,7 @@ def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_cou
   return similar_values
 ```
 
-
-The calculated distances from the *CoG* value of the measurements to are inserted into a *heapq* priority queue. 
-As the measured values are full sphere measurements, the *CoG* in this implementation is calculated using this formula:
-
-$$\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}$$
-
-Where *$D_{distance}$* corresponds to the set distance from the centre of the magnet to the surface of the sensor (+ic). This is the same for each measuring point in the measurement and corresponds to the mechanical structure of the *3D: Full Sphere* \ref{d-full-sphere} sensor *40mm*. The weighting *$W_{eight}$* corresponds here to the *B*-field value in $\mu$T measured by the *TLV493D* sensor.
-
+The calculated distances from the *(+cog)* value of the measurements to are inserted into a *heapq* priority queue. 
 Subsequently, as many elements of the queue are returned as defined by the *IP_return_count* parameter. The actual sorting is carried out by the queue in the background.
 
 ### Alternative Filter Algorithm Implementation
@@ -1539,7 +1535,7 @@ It can be seen that there are measured values with larger deviations (see measur
 %%MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png%%
 
 Also, the figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} illustrates, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported.
-It can be seen from the plotted *CoG* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
+It can be seen from the plotted *(+cog)* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
 
 If the alternative filter algorithm from chapter *Alternative Filter Algorithm Implementation* \ref{alternative-filter-algorithm-implementation} is executed at this point, the same result is returned if the magnet measurement with (+id) *5:0* is used as the reference magnet.
 
