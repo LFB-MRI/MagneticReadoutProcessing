@@ -24,6 +24,7 @@ rm -f *-blx.bib
 rm -f *.fls
 rm -f *.fdb_latexmk
 rm -f *.run.xml
+rm -f *.equ
 rm -Rf tmp
 
 
@@ -198,5 +199,6 @@ rm -Rf tmp
 rm -f *-blx.bib
 rm -f *.bcf
 rm -f *.lol
+rm -f *.equ
 
 exit 0
