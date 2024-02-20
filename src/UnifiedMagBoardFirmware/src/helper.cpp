@@ -1,6 +1,6 @@
 #include "helper.h"
 
-bool i2c_scan(arduino::MbedI2C& _wire_instance, const int _check_for_addr = -1, const bool _log = true)
+bool i2c_scan(TwoWire& _wire_instance, const int _check_for_addr = -1, const bool _log = true)
 {
   byte error, address;
   int nDevices;
@@ -65,7 +65,7 @@ bool i2c_scan(arduino::MbedI2C& _wire_instance, const int _check_for_addr = -1, 
 }
 
 
-bool is_i2c_device_present(arduino::MbedI2C& _i2c_interface, const byte _addr)
+bool is_i2c_device_present(TwoWire& _i2c_interface, const byte _addr)
 {
   return i2c_scan(_i2c_interface, _addr, false);
 }
