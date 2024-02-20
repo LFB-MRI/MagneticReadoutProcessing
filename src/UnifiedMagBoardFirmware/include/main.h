@@ -1,7 +1,7 @@
 #ifndef __main_h__
 #define __main_h__
 
-#include "usf_plattform.h"
+
 #include "version.h"
 
 #ifdef USING_PLATFORMIO
@@ -13,6 +13,8 @@
 #include "ArduinoUniqueID.h"
 
 
+
+#include "usf_plattform.h"
 
 // PRIVATE CLASSES
 //#include "baseSensor.h"

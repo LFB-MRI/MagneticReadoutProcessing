@@ -1,6 +1,6 @@
 #ifndef __usf_plattform_h__
 #define __usf_plattform_h__
-
+    #include <Wire.h>
     #define GENERAL_SERIAL_SPEED 115200
 
     #ifdef IS_STM32F4_BOARD
@@ -37,6 +37,10 @@
         //I2C INTERFACE TO COMMUNICATE WITH ATTACHED SENSORS
         #define SENSOR_WIRE Wire //ON RP2040 SDA4/SCL5
 
+        // ENALE SECOND I2C PORT
+        //#define SENSOR_WIRE_ALT
+        #define SENSOR_WIRE_ALT_SCL_PIN 3
+        #define SENSOR_WIRE_ALT_SDA_PIN 2
         // SERIAL PORT FOR DEBUGGING
         #define DEBUG_SERIAL Serial  //ON RP2040 WITH DEBUG PROBE PINS TX0/ RX1
         //SERIAL PINS FOR COMMUNICATING WITH HOST FOR ANC NUMBERING
