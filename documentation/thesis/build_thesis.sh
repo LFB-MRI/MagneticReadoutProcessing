@@ -70,7 +70,7 @@ do
     TABLENAME="${FNWOE//${replace}/${replacewith}}"
     echo "tablename: $TABLENAME"
     ## INSERT TABLE HEADER AND REF
-    echo ": $TABLENAME \label{$FN}" >> "$f.md"
+    echo ": $TABLENAME. \label{$FN}" >> "$f.md"
     echo "" >> "$f.md"
     ## INSERT TABLE
     csv2md "$f" >> "$f.md"
@@ -111,10 +111,10 @@ do
     touch "$f.md"
     replace="_"
     replacewith=" "
-    IMAGENAME="${FNWOE//${replace}/${replacewith}}"
+    IMAGENAME="${FNWOE//${replace}/${replacewith}}" # CAPTION
     echo "image: $IMAGENAME"
     ## INSERT TABLE HEADER AND REF
-    echo "![$IMAGENAME \label{$FN}]($filenameimageboarder)" >> "$f.md"
+    echo "![$IMAGENAME. \label{$FN}]($filenameimageboarder)" >> "$f.md"
     #echo ": $IMAGENAME \label{$FN}" >> "$f.md"
     echo "" >> "$f.md"
     ## INSERT TABLE

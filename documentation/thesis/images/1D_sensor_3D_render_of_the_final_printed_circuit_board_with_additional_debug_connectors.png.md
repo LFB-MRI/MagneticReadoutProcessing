@@ -1,2 +1,2 @@
-![1D sensor 3D render of the final printed circuit board with additional debug connectors \label{1D_sensor_3D_render_of_the_final_printed_circuit_board_with_additional_debug_connectors.png}](./generated_images/border_1D_sensor_3D_render_of_the_final_printed_circuit_board_with_additional_debug_connectors.png)
+![1D sensor 3D render of the final printed circuit board with additional debug connectors. \label{1D_sensor_3D_render_of_the_final_printed_circuit_board_with_additional_debug_connectors.png}](./generated_images/border_1D_sensor_3D_render_of_the_final_printed_circuit_board_with_additional_debug_connectors.png)
 

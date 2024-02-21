@@ -1,4 +1,4 @@
-: List of in unified firmware implemented digital magnetic field sensors with focus on different sensor capabilities \label{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
+: List of in unified firmware implemented digital magnetic field sensors with focus on different sensor capabilities. \label{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 
 |                    | TLV493D | HMC5883L | MMC5603NJ | AS5510 |
 | ------------------ | ------- | -------- | --------- | ------ |

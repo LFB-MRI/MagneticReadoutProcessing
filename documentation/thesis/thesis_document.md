@@ -27,7 +27,8 @@ The focus of this thesis is to improve low-frequency (+mri) technology by examin
 The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) magnet with the necessary precision for homogenous field generation.
 
 To address this challenge, the thesis proposes the development of a comprehensive hardware and software framework.
-The hardware system aims to selectively measure magnetic fields at various locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other.
+The hardware system aims to selectively measure magnetic fields at various locations or fully around a permanent magnet using different sensors. Several existing open-source software solutions implement individual parts, but do not provide a complete data processing pipeline from acquisition to analysis, and their data storage formats are not compatible with each other. These projects and their incompatibilities are explained in detail in chapter \ref{user-interaction-points-example}.
+
 The accompanying open source software for this work is not only designed to enable measurements with various sensors, but also to characterise permanent magnets, magnetic fields and the sensors themselves.
 
 The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
@@ -38,7 +39,7 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 ### Low-Field MRI
 
-For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing high black-withe image resolution. However, the substantial costs, space requirements and safety considerations cause considerable challenges.
+For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing in general a higher image contrast. The substantial costs, space requirements and safety and installation considerations cause considerable challenges.
 
 (+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The initial *B0* field of an (+mri) aims to be homogeneous, for image acquisition the second step requires inhomogeneity of the *B0* field to stimulate spin in the atoms of materials. For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
 
@@ -63,7 +64,6 @@ This positioning has the ability to generate extremely homogeneous magnetic flux
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
 The Figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. 
 
-\newpage
 
 In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
 The homogeneity in this configuration depends, among other things, on the following main aspects:
@@ -83,9 +83,9 @@ The homogeneity in this configuration depends, among other things, on the follow
 * **Manufacturing process**:
   The manufacturing process can influence the magnetic properties of the material.
   This is dependent on the purity of the starting materials used and the processing methods.
-  There may also be deviations in field strength if different magnets from different production batches are compared. [@BC16]
+  There may also be deviations in field strength if different magnets from different production batches are compared.
 
-These aspects can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
+These aspects [@BC16] can also be applied to individual magnets. As a result, this also complicates the effect on the structure of a Halbach ring magnet.
 If these are joined together to form a ring, positioning tolerances are also added.
 
 Halbach magnetic arrays present a choice for mobile (+nmr) due to their ability to produce highly homogeneous and robust magnetic fields per unit of magnetic mass, coupled with minimal stray fields. The term *Halbach Array* (commonly known as *magic rings*) denotes a precise configuration of permanent magnets designed to amplify magnetic flux on one side while concurrently mitigating or eliminating it on the opposite side. [@BC16]
@@ -901,20 +901,16 @@ config.magnet_type(N45_CUBIC_12x12x12) # CHECK MRPMagnetTypes.py FOR IMPLEMENTED
 reading: MRPReading = MRPReading(config)
 # ADD METADATA
 reading.set_name("example reading")
-## ADD FURTHER DETAILS
 reading.set_additional_data("description", "abc")
 reading.set_additional_data("test-number", 1)
-# INSERT A DATAPOINT
+# EXAMPLE: INSERT A RANDOM DATAPOINT HERE
 measurement = MRPReadingEntry.MRPReadingEntry()
 measurement.value = random.random()
 reading.insert_reading_instance(measurement, False)
-# USE MEASURED VALUES IN OTHER FRAMEWORKS / DATAFORMATS
-## NUMPY
-npmatrix: np.ndarray = reading.to_numpy_matrix()
-## CSV
-csv: []= reading.to_value_array()
-## JSON
-js: dict= reading.dump()
+# EXPORT MEASURED VALUES INto OTHER DATAFORMATS
+npmatrix: np.ndarray = reading.to_numpy_matrix() ## NUMPY
+csv: []= reading.to_value_array() ## CSV
+js: dict= reading.dump() ## JSON
 # EXPORT READING TO FILE
 reading.dump_to_file("exported_reading.mag.json")
 # IMPORT READING
@@ -924,8 +920,9 @@ imported_reading.load_from_file("exported_reading.mag.json")
 
 
 ### MRPHal
-TODO: * after creating a MRPREadin instance which is a body for the measurement data....
-After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors.
+
+The main function of the *MRPReading* module is to manage the measurement and meta-data. The next step is to record and store real sensor data.
+For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* compatible sensors (refer to chapter \ref{unified-sensor}).
 In the following example Listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 \newpage
 
@@ -976,7 +973,7 @@ reading.dump_to_file("simulated_reading.mag.json")
 ### MRPAnalysis
 
 Once data can be acquired using hardware or software sensors, the next step is to analyse this data. (+mrp) provides some simple analysis functions for this purpose. The code example shows the basic use of the module.
-The *Evaluation* in chapter \ref{evaluation} chapter shows how the user can implement their own algorithms and add them to the library.
+The chapter *Evaluation* \ref{evaluation} shows how the user can implement their own algorithms and add them to the library.
 
 ```python {#lst:mrpexample_analysis caption="MRPAnalysis example code performs several data analysis steps"}
 from MRP import MRPAnalysis, MRPReading
@@ -1023,7 +1020,7 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 
 The following example Listing \ref{lst:mrpexample_halbach} shows how a simple Halbach magnetic ring can be generated. This can be used to construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a low-field (+mri).
 Eight random measurements are generated at this point.
-It is important that the magnet type (for example *N45_CUBIC_15x15x15*) is specified.
+It is important that the magnet type (for example *N45_CUBIC_15x15x15* refers to a type *N45* cubic 15x15x15mm neodymium magnet) is specified.
 This is necessary so that the correct magnet cutouts can be generated when creating the 3D model. 
 
 After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@O24] using the *MRPHalbachArrayGenerator* module.
@@ -1106,8 +1103,8 @@ $ MRPCli measure run
 
 %%Example_measurement_analysis_pipeline.png%%
 
-It is more applicable for users to carry out measurements using the (+cli)-, the next logical step is to analyse the recorded data.
-This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation scripts using the (+mrp)-library.
+The next logical step is to analyse the recorded data.
+This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation Python scripts using the (+mrp)-library.
 This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 For this purpose, (+cli) application is created further, to enable the user to create and execute complex evaluation pipelines for measurement data without programming.
 The Figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
@@ -1363,7 +1360,7 @@ The process is broken down into the following steps and the practical applicatio
 \newpage
 
 This process covers all the essential functionalities required for a comprehensive characterisation of permanent magnets.
-These are previously described in the *Use cases* \ref{use-cases} chapter.
+These are previously described in the chapter *Use cases* \ref{use-cases}.
 The developed framework not only offers a cost-effective and flexible hardware solution, but also enables customisation of the analysis algorithms to meet the requirements of different research projects.
 
 
@@ -1573,7 +1570,7 @@ The following parameters are determined and analysed for the sensor evaulation:
 The characterisation methodology is modified and adapted from Crescentini, Gibiino and Piero [@CSG22], as their approaches are focused towards the analysis of analogue Hall sensors.
 Direct transmission is not possible, as their methods are specially tailored to these sensors.
 This includes measuring the analogue bias currents and raw sensor output voltages, which are not accessible with these digital-only sensors.
-Adaptations are therefore necessary to extend the characterisation to the choosen digital sensors \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
+Adaptations are therefore necessary to extend the characterisation to the choosen digital sensors listed in Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
 
 ## Evaluation Sensor Setup
 
@@ -1669,7 +1666,7 @@ The sensor linearity of a magnetic field sensor or describes the ability of the 
 This means that the output signals of the sensor vary directly proportional to the input magnetic fields without deviations or distortions and is therefore an important indicator for measurements of fields at different distances or objects.
 This is achieved by means of an additional linear axis installed above the sensor setup.
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
-The ambient temperature is set to *$\mu_{trev, 7055BT}$=21.0$^{\circ}$C* in the measurement runs and thus corresponds to the same conditions as in the *Background Noise* chapter \ref{sensor-characterisation-background-noise} setup.
+The ambient temperature is set to *$\mu_{trev, 7055BT}$=21.0$^{\circ}$C* in the measurement runs and thus corresponds to the same conditions as in the chapter *Background Noise* \ref{sensor-characterisation-background-noise} setup.
 
 The Figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} contains this updated measurement setup with the added components.
 To control the linear axis an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
@@ -1754,7 +1751,7 @@ In the evaluation (see Figure \ref{Sensor_temperature_sensitivity_evaluation_res
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} represents a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.
 
-The *TLV493D* performs in noise measurements worse than specified in the data sheet (*98$\mu$T* instead of *175$\mu$T*), but the large (+dr), which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be considered here, which is not met by the *MMC5603NJ*.
+The *TLV493D* performs in noise measurements worse than specified in the data sheet (*100$\mu$T* instead of *175$\mu$T*), but the large (+dr), which fulfils the required specifications from chapter *Research Question* in chapter \ref{research-question-and-approach}, must be considered here, which is not met by the *MMC5603NJ*.
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000 (+ppm)*.
 Due to the limited (+dr) of around *±3mT*, direct measurement of stronger magnets is not possible using the *MMC5603NJ*. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm* which is more than the *MMC5603NJ* can measure.

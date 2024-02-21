@@ -1,2 +1,2 @@
-![MRP evaluation result after find similar values algorithm execution in the user defined pipeline \label{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}](./generated_images/border_MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png)
+![MRP evaluation result after find similar values algorithm execution in the user defined pipeline. \label{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}](./generated_images/border_MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png)
 

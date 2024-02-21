@@ -1,4 +1,4 @@
-: Digital magnetic field sensors characterised for evaluation \label{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
+: Digital magnetic field sensors characterised for evaluation. \label{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
 
 |                       | TLV493D | MMC5603NJ |
 | --------------------- | ------- | --------- |

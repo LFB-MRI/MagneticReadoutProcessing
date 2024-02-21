@@ -1,4 +1,4 @@
-: Build hardware sensors equipped with different sensor (+ic)s to cover various magnet charaterisation setups \label{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}
+: Build hardware sensors equipped with different sensor (+ic)s to cover various magnet charaterisation setups. \label{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}
 
 |                     | 1D: single sensor | 1D: dual sensor   | 3D: Fullsphere       |
 | ------------------- | ----------------- | ----------------- | -------------------- |

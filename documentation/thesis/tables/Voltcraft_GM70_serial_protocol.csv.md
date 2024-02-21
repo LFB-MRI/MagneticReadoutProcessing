@@ -1,4 +1,4 @@
-: Voltcraft GM70 serial protocol \label{Voltcraft_GM70_serial_protocol.csv}
+: Voltcraft GM70 serial protocol. \label{Voltcraft_GM70_serial_protocol.csv}
 
 | BYTE-INDEX | REPRESENTATION |  VALUE                   |
 | ---------- | -------------- | ------------------------ |

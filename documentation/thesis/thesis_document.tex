@@ -79,10 +79,12 @@ around a permanent magnet using different sensors. Several existing
 open-source software solutions implement individual parts, but do not
 provide a complete data processing pipeline from acquisition to
 analysis, and their data storage formats are not compatible with each
-other. The accompanying open source software for this work is not only
-designed to enable measurements with various sensors, but also to
-characterise permanent magnets, magnetic fields and the sensors
-themselves.
+other. These projects and their incompatibilities are explained in
+detail in chapter \ref{user-interaction-points-example}.
+
+The accompanying open source software for this work is not only designed
+to enable measurements with various sensors, but also to characterise
+permanent magnets, magnetic fields and the sensors themselves.
 
 The sensor testing process involves three key test procedures for two
 digital sensors. Firstly, the background noise for both sensors is
@@ -108,8 +110,8 @@ technologies.
 \subsection{Low-Field MRI}\label{low-field-mri}}
 
 For modern medical imaging high-field superconducting magnets dominate
-most \gls{mri} machines, providing high black-withe image resolution.
-However, the substantial costs, space requirements and safety
+most \gls{mri} machines, providing in general a higher image contrast.
+The substantial costs, space requirements and safety and installation
 considerations cause considerable challenges.
 
 \gls{mri} relies on the presence of a robust magnetic field, and over
@@ -166,7 +168,7 @@ and needs to be analysed.
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Example_Halbach_ring_with_cutouts_for_eight_magnets.png}
-\caption{Example Halbach ring with cutouts for eight magnets
+\caption{Example Halbach ring with cutouts for eight magnets.
 \label{Example_Halbach_ring_with_cutouts_for_eight_magnets.png}}
 \end{figure}
 
@@ -182,11 +184,9 @@ particularly attractive for larger magnets as their design has the best
 flux-to-mass ratio \customcite{WZC21}.
 
 A Halbach ring of this type is usually based on a ring with permanent
-magnets arranged in a circle. The figure
+magnets arranged in a circle. The Figure
 \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an
 example \gls{cad} model of such a ring.
-
-\newpage
 
 In this generated model eight cubic \emph{12x12x12mm} magnets are
 embedded to generate homogeneous magnetic flux densities of around
@@ -212,13 +212,12 @@ things, on the following main aspects:
   on the purity of the starting materials used and the processing
   methods. There may also be deviations in field strength if different
   magnets from different production batches are compared.
-  \customcite{BC16}
 \end{itemize}
 
-These aspects can also be applied to individual magnets. As a result,
-this also complicates the effect on the structure of a Halbach ring
-magnet. If these are joined together to form a ring, positioning
-tolerances are also added.
+These aspects \customcite{BC16} can also be applied to individual magnets.
+As a result, this also complicates the effect on the structure of a
+Halbach ring magnet. If these are joined together to form a ring,
+positioning tolerances are also added.
 
 Halbach magnetic arrays present a choice for mobile \gls{nmr} due to
 their ability to produce highly homogeneous and robust magnetic fields
@@ -274,7 +273,7 @@ low-field \gls{mri} field magnet from permanent magnets.
 
 According to Wolfgang R. Nitz in 2016, just \emph{13.4\%} of actively
 used \gls{mri} systems are low-field \gls{mri} (\emph{66.6\% 1.5T
-systems, 20\% 3.0 T system, 14.4\% low field with \textless0.5T}).
+systems, 20\% 3.0T system, 14.4\% low field with \textless0.5T}).
 \customcite{NK16}
 
 Within the research domain, various implementations have emerged. An
@@ -305,7 +304,7 @@ process.
 
 \textbf{Magnet Characterisation}
 
-The shimming process described describes how, after the field magnet has
+The shimming process mentioned describes how, after the field magnet has
 been set up, if the homogeneous magnetic flux densities are not
 sufficient, these can be adjusted manually by means of adjustments to
 the setup or, if the hardware allows it, by software. In addition, the
@@ -380,10 +379,10 @@ scanners, the project encompasses electromagnetic simulation of
 components within the low-field \gls{mri} system, coupled with machine
 learning-driven control and data acquisition. The resultant software
 will be instrumental in reconstruction, with a specific focus on
-leveraging AI-based methodologies.
+leveraging \gls{ai}-based methodologies.
 
-This comprehensive effort serves to bolster the prototyping phase of the
-low-field \gls{mri}. Diverging from the approach implemented by
+This comprehensive effort is designed to support the prototyping phase
+of the low-field \gls{mri}. Diverging from the approach implemented by
 O'Reilly, Teeuwisse, and Webb, \emph{DeLoRI} aims to design an open
 \gls{mri}, departing from the circular \gls{mri} configuration discussed
 in the publication. This innovation is geared towards streamlining
@@ -398,8 +397,7 @@ characterize the magnets pre-installation, allowing for proactive
 assessments of homogeneity characteristics. This approach aims to
 provide insights into magnetic field uniformity before the magnets are
 integrated, thereby streamlining the optimisation process. Furthermore,
-
-It is important to note that the primary objective of this thesis is not
+it is important to note that the primary objective of this thesis is not
 merely to characterize the magnet itself; rather, the emphasis lies in
 the selection and comparison of potential sensors for the
 characterisation process. To achieve this, a versatile hardware setup is
@@ -445,12 +443,7 @@ system. To measure a deviation of better than \emph{1000 \gls{ppm}} in a
 \emph{50mT} magnetic field, a resolution that is less than \emph{1000
 \gls{ppm}} of \emph{50mT} is needed.
 
-\noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{: 1000ppm from 50mT needed resolution calucation I}
-
-To convert this into microtesla (\(\mu\)T), a multiplication by
-\emph{1000} is needed:
-
-\noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{: 1000ppm from 50mT needed resolution calucation II}
+\noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT \times 1000 = 50 \, \mu T}{: 1000ppm from 50mT needed resolution calucation I}
 
 This means that to measure a deviation of better than \emph{1000
 \gls{ppm}} in a \(50mT\) magnetic field, a resolution of less than
@@ -661,7 +654,7 @@ widely available to consumers.
 \centering
 \includegraphics{./generated_images/border_Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}
 \caption{Typical block diagram of a digital hall sensor sensing chain
-using three hall plates
+using three hall plates.
 \label{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}}
 \end{figure}
 
@@ -671,7 +664,7 @@ consists of a semiconductor material such as gallium arsenide or indium
 antimonide. Inside the sensor are Hall effect plates, which essentially
 consist of a thin layer of this semiconductor material. \customcite{BJJ16}
 
-The figure
+The Figure
 \ref{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png}
 shows the internal structure of a digital Hall effect sensor as a block
 diagram. The Hall effect takes place in the Hall plates. These are
@@ -697,7 +690,7 @@ systems.
 
 \begin{longtable}[]{@{}lllll@{}}
 \caption{List of in unified firmware implemented digital magnetic field
-sensors with focus on different sensor capabilities
+sensors with focus on different sensor capabilities.
 \label{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}}\tabularnewline
 \toprule
 & TLV493D & HMC5883L & MMC5603NJ & AS5510\tabularnewline
@@ -728,10 +721,10 @@ availability of the sensor \gls{ic}s as a ready-made and readily
 available evaluation module. This ensured that the electrical design is
 verified by the manufacturer so that the sensor could be operated with
 the correct electrical parameters. On the other hand, it is possible to
-evaluate several sensors in a shorter time, as a separate \gls{pcb} has
-to be produced here.
+analyse several sensors in a shorter time, so that no separate \gls{pcb}
+has to be designed and manufactured.
 
-The table
+The Table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 shows a selection of sensors for which hardware and software support has
 been implemented. The resolution of the selected sensors covers the
@@ -739,7 +732,7 @@ expected range of values required by the various magnets to be tested.
 
 In the \emph{Evaluation} in chapter \ref{evaluation} basic
 characterisation methods are used to evaluate the sensors listed in
-table
+Table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 regarding their sensitivity and other parameters. This is done at this
 point, as the components of the readout interface that enable
@@ -758,7 +751,7 @@ different magnets.
 \includegraphics{./generated_images/border_Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}
 \caption{Rendered mechanical structure of the 1D sensor \gls{cad} model
 with different parts colored separately, and universal magnet mount
-shown in green
+shown in green.
 \label{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}}
 \end{figure}
 
@@ -769,7 +762,7 @@ described in chapter \ref{d-single-sensor}. All parts are produced using
 3D printing additive manufacturing process. The sensor circuit board is
 glued underneath the magnet holder. This is interchangeable, so
 different distances between sensor and magnet can be realised. The
-exchangeable magnetic holder (shown in green in figure
+exchangeable magnetic holder (shown in green in Figure
 \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png})
 can be adapted to different magnets. It can be produced quickly due to
 the small number of parts used. The two recesses lock the magnet holder
@@ -785,7 +778,7 @@ where the positioning over the sensor must always be the same.
 \centering
 \includegraphics{./generated_images/border_1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png}
 \caption{1D sensor schematic using an Raspberry Pi Pico with a TLV493D
-footprint in the center
+footprint in the center.
 \label{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png}}
 \end{figure}
 
@@ -799,7 +792,7 @@ Pico} and a \emph{STM32F4} are used as a computer-sensor interface for
 this thesis, which are popular, cost-effective and simple to implement.
 
 All the necessary components and their circuitry are recorded on a
-\gls{pcb} shown in figure
+\gls{pcb} shown in Figure
 \ref{1D_sensor_schematic_using_an_Raspberry_Pi_Pico_with_a_TLV493D_footprint_in_the_center.png}
 and subsequently manufactured. In addition, footprints are provided for
 various sensor \gls{ic} packages. By placing mounting holes on the
@@ -824,7 +817,7 @@ process.
 \centering
 \includegraphics{./generated_images/border_Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png}
 \caption{Unified sensor firmware program structure with listed setup and
-main loop routines using simplified function blocks
+main loop routines using simplified function blocks.
 \label{Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png}}
 \end{figure}
 
@@ -836,7 +829,7 @@ according to the program code. It manages communication with sensors,
 actuators and other peripheral devices, processing data and making
 decisions. Firmware is critical to the functioning of devices. The
 firmware is responsible for detecting the possible connected sensors
-shown in table
+shown in Table
 \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv}
 and query measurements. This measured data can be forwarded to a host
 \gls{pc} via a user interface and can then be further processed there.
@@ -845,7 +838,7 @@ A key component is that as many common sensors as possible can be easily
 connected without having to adapt the firmware. This modularity is
 implemented using abstract class design. These are initiated according
 to the sensors found at startup. If new hardware needs to be integrated,
-only the required functions in listing \ref{lst:CustomSensorClass} need
+only the required functions in Listing \ref{lst:CustomSensorClass} need
 to be implemented.
 
 \begin{lstlisting}[language={C++}, caption={CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package}, label=lst:CustomSensorClass]
@@ -871,7 +864,7 @@ public:
 #endif
 \end{lstlisting}
 
-The figure
+The Figure
 \ref{Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png}
 shows a flow chart of the start process after powering on the sensor and
 the subsequent main loop for processing the user commands and sensor
@@ -910,8 +903,8 @@ read out by command and the result of the measurement is sent to the
 host. Each sensor measurement result is transmitted from the buffer to
 the host together with a time stamp and a sequential number.
 
-This ensures that in a multi-sensor setup with several sensors. The
-measurements are synchronized in time like described in chapter
+This ensures that in a multi-sensor setup with several sensors are
+synchronized in time like described in chapter
 \ref{sensor-synchronisation-interface} and are not out of sequence or
 drift.
 
@@ -925,7 +918,7 @@ interact with the sensor:
 \begin{itemize}
 \tightlist
 \item
-  Use with \gls{mrp}-library, explained in chapter
+  \gls{mrp}-library, explained in chapter
   \ref{software-readout-framework}
 \item
   Stand-alone mode via sending commands using built-in \gls{cli}
@@ -936,7 +929,7 @@ possible to read out current measured values, obtain debug information
 and set operating parameters. This allows to quickly inspect whether the
 hardware is working properly after firmware installation. The command
 \emph{help}, displays a detailed command reference with all available
-commands as shown in the figure
+commands as shown in the Figure
 \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
 to the user.
 
@@ -944,11 +937,11 @@ to the user.
 \centering
 \includegraphics{./generated_images/border_Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}
 \caption{Unified sensor firmware provided serial terminal based
-\gls{cli} allows the user to configure the sensor manually
+\gls{cli} allows the user to configure the sensor manually.
 \label{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png}}
 \end{figure}
 
-The figure
+The Figure
 \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
 shows the current measured value queried by using the \emph{readout}
 command by the user.
@@ -967,7 +960,7 @@ communication, but in a binary format.
 \centering
 \includegraphics{./generated_images/border_Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}
 \caption{Result of an executed b value measurement readout command using
-the sensors \gls{cli} with immediate user readable response
+the sensors \gls{cli} with immediate user readable response.
 \label{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png}}
 \end{figure}
 
@@ -980,7 +973,7 @@ Interface}\label{sensor-synchronisation-interface}}
 \includegraphics{./generated_images/border_Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}
 \caption{Multi sensor synchronisation wiring example using three sensors
 together with one host \gls{pc} performing the triggering and readout
-processing
+processing.
 \label{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}}
 \end{figure}
 
@@ -995,7 +988,7 @@ overloaded \gls{usb} ports can lead to delays.
 \begin{longtable}[]{@{}lllll@{}}
 \caption{\gls{usb} connected sensor latency test results using several
 sensor readout requests togehter with variable host system cpu loads
-testing for jitter variations
+testing for jitter variations.
 \label{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv}}\tabularnewline
 \toprule
 \begin{minipage}[b]{0.08\columnwidth}\raggedright
@@ -1116,7 +1109,7 @@ tasks are also executed on this port. To enable the most stable possible
 synchronisation between several sensors, an option has already been
 created to establish an electrical connection between sensors. This is
 used together with the firmware to synchronise the readout intervals.
-The figure
+The Figure
 \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png}
 illustrates the schematic how several sensors must be wired together to
 implement this form of synchronisation.
@@ -1126,13 +1119,13 @@ implement this form of synchronisation.
 \includegraphics{./generated_images/border_Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}
 \caption{Unified sensor firmware multi sensor synchronisation procedure
 using sync \gls{gpio} input for operation (primary or secondary) mode
-decision
+decision.
 \label{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}}
 \end{figure}
 
 Once the hardware has been prepared, the task of the firmware of each of
 the chained sensors is to find a common synchronisation clock. The
-figure
+Figure
 \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png}
 illustrates how the firmware handles the decision task if the sensor is
 \emph{primary} or \emph{secondary} at startup. The internal
@@ -1153,7 +1146,7 @@ exactly one \emph{primary} and many \emph{secondary} sensors.
 
 In single-sensor operation, this automatically jumps to \emph{primary}
 sensor operation through the \emph{got impulse within 1000ms} branch
-result. The figure
+result. The Figure
 \ref{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png}
 shows the synchronisation status of the sensor which can be queried via
 the user interface described in chapter \ref{communication-interface} by
@@ -1169,7 +1162,7 @@ the sensor \gls{uuid}.
 \centering
 \includegraphics{./generated_images/border_Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png}
 \caption{Result of the opmode command execution on a sensor which is
-connected to another as primary configured sensor
+connected to another as primary configured sensor.
 \label{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png}}
 \end{figure}
 
@@ -1183,7 +1176,7 @@ developed sensor concepts.
 
 \begin{longtable}[]{@{}llll@{}}
 \caption{Build hardware sensors equipped with different sensor \gls{ic}s
-to cover various magnet charaterisation setups
+to cover various magnet charaterisation setups.
 \label{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}}\tabularnewline
 \toprule
 & 1D: single sensor & 1D: dual sensor & 3D: Fullsphere\tabularnewline
@@ -1202,7 +1195,7 @@ Scanmode & static (1 point) & static (2 points) & dynamic
 \bottomrule
 \end{longtable}
 
-The table
+The Table
 \ref{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv}
 shows the various prototype sensor platforms equipped with different
 magnetic field sensors. These cover all the required functions described
@@ -1226,11 +1219,11 @@ from the structure of the \emph{1D: dual sensor}, except it uses two
 \includegraphics{./generated_images/border_Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png}
 \caption{Manufactured 1D sensor construction from different angles and
 universal magnet mount (green 3D printed part) equipped with N45
-12x12x12mm magnet
+12x12x12mm magnet.
 \label{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png}}
 \end{figure}
 
-The 1D sensor shown in figure
+The 1D sensor shown in Figure
 \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png}
 is the simplest possible sensor that is compatible with the Unified
 Sensor firmware.
@@ -1243,7 +1236,7 @@ screws to minimise influences on the measurement.
 Since the \emph{MMC5603NJ} only has limited measurement range of total
 \emph{6mT}, even small coin sized neodymium magnets already saturates
 the sensor. It is possible to mount 3D printed spacers (see green part
-in figure
+in Figure
 \ref{Manufactured_1D_sensor_construction_from_different_angles_and_universal_magnet_mount_(green_3D_printed_part)_equipped_with_N45_12x12x12mm_magnet.png})over
 the sensor to increase the distance between the magnet and the sensor
 and thus also measure these magnets.
@@ -1260,15 +1253,15 @@ mechanically changing the magnet.
 \centering
 \includegraphics{./generated_images/border_Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}
 \caption{Full sphere sensor implementation using two Nema17 stepper
-motors in a polar coordinate system
+motors in a polar coordinate system.
 \label{Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}}
 \end{figure}
 
-The 3D full sphere sensor shown in figure
+The 3D full sphere sensor shown in Figure
 \ref{Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png}
 offers the possibility to create a 3D map of the inserted magnet.
 
-The figure
+The Figure
 \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}
 shows the visualisation of such a scan in the form of a spherical 3D
 map. On the sphere is the magnetic field strength, which is detected by
@@ -1285,7 +1278,7 @@ manipulator to move a polar coordinate system.
 \includegraphics{./generated_images/border_3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}
 \caption{3D plot of an N45 12x12x12mm magnet using the build 3D full
 sphere sensor with visible magnetic field strength deviations using
-different shaded vertices on a sphere
+different shaded vertices on a sphere.
 \label{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}}
 \end{figure}
 
@@ -1308,7 +1301,7 @@ Industry-Teslameter}\label{integration-of-an-industry-teslameter}}
 As the sensors shown so far relate exclusively to self-built, low-cost
 hardware, the following chapter shows how existing hardware can be
 integrated into the system. A temperature-compensated \emph{Voltcraft
-GM-70} telsameter shown in figure
+GM-70} telsameter shown in Figure
 \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}
 is used, which has a measuring range of \emph{0T} to \emph{3T} with a
 resolution of \emph{0.1mT}. It offers an \emph{RS232} interface with a
@@ -1330,7 +1323,7 @@ separate build configuration.
 
 In order to be able to read and correctly interpret the data from the
 microcontroller, the serial protocol of the sensor is implemented in a
-customised version of the \emph{CustomSensor} class as shown in listing
+customised version of the \emph{CustomSensor} class as shown in Listing
 \ref{lst:CustomSensorClass}. This software or hardware integration can
 be conducted on any other measuring device with a suitable communication
 interface and a known protocol thanks to the modular design.
@@ -1340,7 +1333,7 @@ interface and a known protocol thanks to the modular design.
 \includegraphics{./generated_images/border_Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}
 \caption{Voltcraft GM70 teslameter with custom \gls{pc} interface board
 using a \gls{usb} to serial converter and needed additional pull-up
-resistors
+resistors.
 \label{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png}}
 \end{figure}
 
@@ -1380,7 +1373,7 @@ the other. For this thesis it also eases the option to change sensors
 for measurements.
 
 For this purpose, the library is divided into individual modules, which
-are shown in the figure
+are shown in the Figure
 \ref{A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}.
 In combination, these represent a typical
 measurement-analysis-evaluation workflow of data. For this purpose, a
@@ -1397,7 +1390,7 @@ about implementing other of these to make the project work.
 \centering
 \includegraphics{./generated_images/border_A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}
 \caption{A high level overview of all MRP library implemented Python
-modules which can be changed by the user
+modules which can be changed by the user.
 \label{A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}}
 \end{figure}
 
@@ -1607,7 +1600,7 @@ package. Taking these points into account, the \gls{json} format is
 chosen. This is human and machine readable and there is a compatible
 parser for every programming language.
 
-The following listing \ref{lst:json_export_format_example} shows an
+The following Listing \ref{lst:json_export_format_example} shows an
 example \gls{json} structure which is generated when a measurement that
 using the library is dumped to the filesystem. By using the \gls{json}
 format, all measurement points and metadata are available in readable
@@ -1638,7 +1631,7 @@ to the file system as a file.
   },}
 \end{lstlisting}
 
-The exported example listing \ref{lst:json_export_format_example}
+The exported example Listing \ref{lst:json_export_format_example}
 contains different object keys, which contain the following information:
 
 \begin{itemize}
@@ -1674,8 +1667,11 @@ can be triggered by the user by calling up the corresponding
 \end{itemize}
 
 Currently, data re-import of an exported measurement is only supported
-via the \gls{json} format, as an export using the other options
-(\emph{Numpy}, \emph{MATLAB})loses data during the export procedure.
+via the \gls{json} format, as an export using the \emph{Numpy} or
+\emph{MATLAB} based formats loses meta-data during the export procedure.
+These only exports the raw measured values as an array represenation, so
+the additional attributes such as \emph{additional\_data} meta-data
+field (refer to Listing: \ref{lst:json_export_format_example}) are lost.
 
 \hypertarget{extension-modules}{%
 \subsection{Extension Modules}\label{extension-modules}}
@@ -1796,7 +1792,7 @@ the network. This can be a \gls{sbc} (e.g.~a \emph{Raspberry Pi}). The
 small footprint and low power consumption make it a viable choice. It
 can also be used in a temperature chamber.
 
-The \emph{MRPProxy} module in figure
+The \emph{MRPProxy} module in Figure
 \ref{MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png}
 has been developed to allow forwarding and interaction with several
 sensors over a network connection using a \gls{rest} interface. The
@@ -1809,7 +1805,7 @@ the same time with one remote sensor setup.
 \includegraphics{./generated_images/border_MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png}
 \caption{MRP library proxy module usage example with host \gls{pc} for
 readout processing and remote \gls{pc} for sensor communication using
-the http protocol
+the http protocol.
 \label{MRP_library_proxy_module_usage_example_with_host_(+pc)_for_readout_processing_and_remote_(+pc)_for_sensor_communication_using_the_http_protocol.png}}
 \end{figure}
 
@@ -1823,7 +1819,7 @@ the chain to the target.
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png}
-\caption{Example MRP proxy module usage using two remote \gls{pc}s
+\caption{Example MRP proxy module usage using two remote \gls{pc}s.
 \label{Example_MRP_proxy_module_usage_using_two_remote_(+pc)s.png}}
 \end{figure}
 
@@ -1844,7 +1840,7 @@ communicate with the physically connected sensors on the \emph{remote}
 \gls{pc} and the \emph{control} \gls{pc} side, which communicates with
 the remote side via the network. For the user, nothing changes in the
 procedure for setting up a measurement. The \emph{MRPProxy} \gls{cli}
-application must always be started like shown in listing
+application must always be started like shown in Listing
 \ref{lst:mrpcli_proxy_start} on the \gls{pc} with connected hardware
 sensors attached.
 
@@ -1859,7 +1855,7 @@ Terminate Proxy instance [y/N] [n]:
 
 After the proxy instance has been successfully started, it is optionally
 possible to check the status via the \gls{rest} interface, which is
-shown in listing \ref{lst:mrpcli_config_rest}.
+shown in Listing \ref{lst:mrpcli_config_rest}.
 
 \begin{lstlisting}[language=bash, caption={MRPProxy provided REST endpoint query example using wget command line tool to send requests}, label=lst:mrpcli_config_rest]
 # GET PROXY STATUS
@@ -1895,7 +1891,7 @@ The query result shows that the sensors are connected correctly and that
 the capabilities have also been recognised correctly. To be able to
 configure a measurement on the \emph{control} \gls{pc}, only the
 \gls{ip} address or hostname of the \gls{pc} running an \emph{MRPProxy}
-instance is required as shown in listing
+instance is required as shown in Listing
 \ref{lst:mrpcli_config_using_rpc}.
 
 \begin{lstlisting}[language=bash, caption={MRPcli usage example to connect with a MRPProxy based network sensor}, label=lst:mrpcli_config_using_rpc]
@@ -1935,14 +1931,14 @@ identification feature is the sensor \gls{uuid} by using the \emph{id}
 command of the sensor \gls{cli}. The \emph{MRPProxy} instance claims to
 be a sensor to the host \gls{pc} running \gls{mrp} \gls{cli}, so
 multiple sensors must be combined into one virtual one. This is done in
-several steps, start procedure described by the following sub-chapters.
+several steps, the procedure described by the following sub-chapters.
 
 \hypertarget{merging-the-sensor-capabilities}{%
 \subsubsection{Merging the Sensor
 Capabilities}\label{merging-the-sensor-capabilities}}
 
 \begin{longtable}[]{@{}llll@{}}
-\caption{Sensor capabilities merging algorithm
+\caption{Sensor capabilities merging algorithm.
 \label{Sensor_capabilities_merging_algorithm.csv}}\tabularnewline
 \toprule
 SENSOR A & SENSOR B & MERGED CAPABILITIES & CAPABLE SENSORS ID
@@ -1969,7 +1965,7 @@ its \gls{uuid}. When using sensors with the same capabilities, these
 must be combined. These are used to select the appropriate measurement
 mode for a measurement. For this purpose, the \emph{info} command of
 each sensor is queried. This information is added to the previously
-created \gls{lut}. Duplicate entries are summarised (see table
+created \gls{lut}. Duplicate entries are summarised (see Table
 \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the
 host when the \emph{info} \ref{lst:mtsc} command is received over
 network. \newpage
@@ -1998,14 +1994,14 @@ setup, the command received needs to be forwarded to the correct sensor.
 In addition, there are commands such as the previously used \emph{info}
 or \emph{status} command, which must be intercepted by the
 \emph{MRPProxy} module so that it can be handled differently (see
-example listing \ref{lst:mtsc}). To realize this, a \gls{lut} is created
+example Listing \ref{lst:mtsc}). To realize this, a \gls{lut} is created
 in the previous steps, which contains information regarding
 \emph{requested capability} -\textgreater{} \emph{sensor}-\gls{uuid}
 -\textgreater{} \emph{physical sensor} and allows the commands to be
 routed.
 
 For commands, which have several entries for \emph{CAPABLE SENSORS ID
-LUT} from table \ref{Sensor_capabilities_merging_algorithm.csv}, there
+LUT} from Table \ref{Sensor_capabilities_merging_algorithm.csv}, there
 are two approaches to how the command is processed:
 
 \begin{itemize}
@@ -2056,7 +2052,7 @@ for testing in chapter \ref{testing}.
 
 The \emph{MRPReading} is the key module of the \gls{mrp} core. It is
 used to manage the measurement data and can be imported and exported.
-The following example listing \ref{lst:mrpexample_reading} shows how a
+The following example Listing \ref{lst:mrpexample_reading} shows how a
 measurement is created and measurement points are added in the form of
 \emph{MRPReadingEntry} instances.
 
@@ -2079,20 +2075,16 @@ config.magnet_type(N45_CUBIC_12x12x12) # CHECK MRPMagnetTypes.py FOR IMPLEMENTED
 reading: MRPReading = MRPReading(config)
 # ADD METADATA
 reading.set_name("example reading")
-## ADD FURTHER DETAILS
 reading.set_additional_data("description", "abc")
 reading.set_additional_data("test-number", 1)
-# INSERT A DATAPOINT
+# EXAMPLE: INSERT A RANDOM DATAPOINT HERE
 measurement = MRPReadingEntry.MRPReadingEntry()
 measurement.value = random.random()
 reading.insert_reading_instance(measurement, False)
-# USE MEASURED VALUES IN OTHER FRAMEWORKS / DATAFORMATS
-## NUMPY
-npmatrix: np.ndarray = reading.to_numpy_matrix()
-## CSV
-csv: []= reading.to_value_array()
-## JSON
-js: dict= reading.dump()
+# EXPORT MEASURED VALUES INto OTHER DATAFORMATS
+npmatrix: np.ndarray = reading.to_numpy_matrix() ## NUMPY
+csv: []= reading.to_value_array() ## CSV
+js: dict= reading.dump() ## JSON
 # EXPORT READING TO FILE
 reading.dump_to_file("exported_reading.mag.json")
 # IMPORT READING
@@ -2103,12 +2095,12 @@ imported_reading.load_from_file("exported_reading.mag.json")
 \hypertarget{mrphal}{%
 \subsection{MRPHal}\label{mrphal}}
 
-After generating simple measurements with random values in the previous
-example in chapter \ref{mrpreading}, the next step is to record real
+The main function of the \emph{MRPReading} module is to manage the
+measurement and meta-data. The next step is to record and store real
 sensor data. For this purpose, the \emph{MRPHal} module is developed,
-which can interact with all \emph{Unified Sensor} from chapter
-\ref{unified-sensor}-compatible sensors. In the following example
-listing \ref{lst:mrpexample_hal}, an \emph{1D: Single Sensor}, which is
+which can interact with all \emph{Unified Sensor} compatible sensors
+(refer to chapter \ref{unified-sensor}). In the following example
+Listing \ref{lst:mrpexample_hal}, an \emph{1D: Single Sensor}, which is
 explained in chapter \ref{d-single-sensor}, is connected locally to the
 host \gls{pc}. \newpage
 
@@ -2148,7 +2140,7 @@ If no hardware sensor is available for the generation of test data, the
 \emph{MRPSimulation} module is available. This contains a series of
 functions that simulate various magnets and their fields. The result is
 a complete \emph{MRPReading} measurement with a wide range of set meta
-data. The example listing \ref{lst:mrpexample_simulation} illustrates
+data. The example Listing \ref{lst:mrpexample_simulation} illustrates
 the basic usage. Different variations of the \emph{generate\_reading}
 function offer the user additional parameterisation options, such as
 random polarisation direction or a defined centre-of-gravity vector. The
@@ -2174,9 +2166,8 @@ reading.dump_to_file("simulated_reading.mag.json")
 Once data can be acquired using hardware or software sensors, the next
 step is to analyse this data. \gls{mrp} provides some simple analysis
 functions for this purpose. The code example shows the basic use of the
-module. The \emph{Evaluation} in chapter \ref{evaluation} chapter shows
-how the user can implement their own algorithms and add them to the
-library.
+module. The chapter \emph{Evaluation} \ref{evaluation} shows how the
+user can implement their own algorithms and add them to the library.
 
 \begin{lstlisting}[language=Python, caption={MRPAnalysis example code performs several data analysis steps}, label=lst:mrpexample_analysis]
 from MRP import MRPAnalysis, MRPReading
@@ -2207,7 +2198,7 @@ specially designed for these. Figure
 shows a plot of a full sphere measurement. It is also possible to export
 the data from the \emph{MRPAnalysis} module graphically as diagrams. The
 \emph{MRPVisualisation} modules are used for this. The following example
-listing \ref{lst:mrpexample_visualisation} shows the usage of both
+Listing \ref{lst:mrpexample_visualisation} shows the usage of both
 modules.
 
 \begin{lstlisting}[language=Python, caption={MRPVisualisation example which plots a full sphere to an image file}, label=lst:mrpexample_visualisation]
@@ -2229,20 +2220,21 @@ MRPDataVisualization.MRPDataVisualization.plot_error([reading_a, reading_b, read
 \centering
 \includegraphics{./generated_images/border_Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png}
 \caption{Example full sphere plot of an measurement using the
-MRPVisualisation module using different shaded vertices on a sphere
+MRPVisualisation module using different shaded vertices on a sphere.
 \label{Example_full_sphere_plot_of_an_measurement_using_the_MRPVisualisation_module_using_different_shaded_vertices_on_a_sphere.png}}
 \end{figure}
 
 \hypertarget{mrphalbacharraygenerator}{%
 \subsection{MRPHalbachArrayGenerator}\label{mrphalbacharraygenerator}}
 
-The following example listing \ref{lst:mrpexample_halbach} shows how a
+The following example Listing \ref{lst:mrpexample_halbach} shows how a
 simple Halbach magnetic ring can be generated. This can be used to
 construct a Halbach ring magnet (see chapter \ref{magnet-system}) for a
 low-field \gls{mri}. Eight random measurements are generated at this
 point. It is important that the magnet type (for example
-\emph{N45\_CUBIC\_15x15x15}) is specified. This is necessary so that the
-correct magnet cutouts can be generated when creating the 3D model.
+\emph{N45\_CUBIC\_15x15x15} refers to a type \emph{N45} cubic 15x15x15mm
+neodymium magnet) is specified. This is necessary so that the correct
+magnet cutouts can be generated when creating the 3D model.
 
 After the measurements have been generated, they are provided with a
 position and rotation offset according to the Halbach design and
@@ -2267,7 +2259,7 @@ In the last step, a 3D model with the dimensions of the magnet type set
 is generated from the generated magnet positions. The result is an
 \emph{OpenSCAD} \customcite{MMN19} file, which contains the module
 generated. After computing the model using the \emph{OpenSCAD} \gls{cli}
-utility, the following model rendering shown in figure
+utility, the following model rendering shown in Figure
 \ref{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png}
 can be generated.
 
@@ -2275,7 +2267,7 @@ can be generated.
 \centering
 \includegraphics{./generated_images/border_Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png}
 \caption{Generated Halbach array with generated cutouts for eight
-magnets
+magnets.
 \label{Generated_Halbach_array_with_generated_cutouts_for_eight_magnets.png}}
 \end{figure}
 
@@ -2303,7 +2295,7 @@ components for the intended use.
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_MRP_(+cli)_output_to_configure_a_new_measurement.png}
-\caption{MRP \gls{cli} output to configure a new measurement
+\caption{MRP \gls{cli} output to configure a new measurement.
 \label{MRP_(+cli)_output_to_configure_a_new_measurement.png}}
 \end{figure}
 
@@ -2334,10 +2326,10 @@ following functionalities:
 As a result of this implemented functionality of the \gls{cli}, it is
 now possible to connect a sensor to the \gls{pc}, configure a
 measurement series with it and run it at the end, which is shown in
-figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The
+Figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The
 result is an exported file with the measured values. These can then be
 read in again using the \emph{MRPReading} module and processed further.
-The following bash listing \ref{lst:MRPCli_config_run} shows the setup
+The following bash Listing \ref{lst:MRPCli_config_run} shows the setup
 procedure in detail:
 
 \begin{lstlisting}[language=bash, caption={MRPCli example usage for configuration of a measurement run}, label=lst:MRPCli_config_run]
@@ -2373,20 +2365,19 @@ Pipeline}\label{programmable-data-processing-pipeline}}
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Example_measurement_analysis_pipeline.png}
-\caption{Example measurement analysis pipeline
+\caption{Example measurement analysis pipeline.
 \label{Example_measurement_analysis_pipeline.png}}
 \end{figure}
 
-It is more applicable for users to carry out measurements using the
-\gls{cli}-, the next logical step is to analyse the recorded data. This
-can involve one or several hundred data records. Again, the procedure
-for the user is to write their own evaluation scripts using the
+The next logical step is to analyse the recorded data. This can involve
+one or several hundred data records. Again, the procedure for the user
+is to write their own evaluation Python scripts using the
 \gls{mrp}-library. This is particularly useful for complex analyses or
 custom algorithms, but not necessarily for simple standard tasks such as
 bias compensation or graphical plot outputs. For this purpose, \gls{cli}
 application is created further, to enable the user to create and execute
 complex evaluation pipelines for measurement data without programming.
-The figure \ref{Example_measurement_analysis_pipeline.png} shows a
+The Figure \ref{Example_measurement_analysis_pipeline.png} shows a
 typical measurement data analysis pipeline, which consists of the
 following steps:
 
@@ -2420,9 +2411,9 @@ This system is capable to make all Python functions available to the
 user. To simplify usage, a pre-defined list of verified and tested
 functions for use in pipelines is listed in the
 \href{https://magneticreadoutprocessing.readthedocs.io/en/latest/}{documentation}.
-The following pipeline definition in listing
+The following pipeline definition in Listing
 \ref{lst:mrpuddp_example_yaml} shows the previously defined steps shown
-in figure \ref{Example_measurement_analysis_pipeline.png} as \gls{yaml}
+in Figure \ref{Example_measurement_analysis_pipeline.png} as \gls{yaml}
 syntax.
 
 \newpage
@@ -2472,7 +2463,7 @@ the function to be executed and its parameters.
 
 The various steps are linked by using the \emph{stage NAME} macro as
 input parameter of the next function to be executed (see comments in
-listing \ref{lst:mrpuddp_example_yaml}). Therefore, it is feasible to
+Listing \ref{lst:mrpuddp_example_yaml}). Therefore, it is feasible to
 use the results of one function in several others without them directly
 following each other. The disadvantages of this system are the
 following:
@@ -2490,10 +2481,10 @@ converts them into one problem of the graph theories. Each step
 represents a node in the graph and the steps referred to by the input
 parameter form the edges. After several simplification steps,
 determination of start steps and repeated traversal, the final execution
-sequence can be determined in the form of a call tree in figure
+sequence can be determined in the form of a call tree in Figure
 \ref{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}.
 The individual steps are then executed along the graph. The intermediate
-results and the results in figure
+results and the results in Figure
 \ref{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}
 are saved for optional later use.
 
@@ -2501,7 +2492,7 @@ are saved for optional later use.
 \centering
 \includegraphics{./generated_images/border_Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}
 \caption{Example result of an step execution tree from user defined
-processing pipeline
+processing pipeline.
 \label{Example_result_of_an_step_execution_tree_from_user_defined_processing_pipeline.png}}
 \end{figure}
 
@@ -2509,7 +2500,7 @@ processing pipeline
 \centering
 \includegraphics{./generated_images/border_Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}
 \caption{Generated pipeline output files and example results combined
-into one plot after running example pipeline on a set of readings
+into one plot after running example pipeline on a set of readings.
 \label{Generated_pipeline_output_files_and example_results_combined_into_one_plot_after_running_example_pipeline_on_a_set_of_readings.png}}
 \end{figure}
 
@@ -2520,7 +2511,7 @@ into one plot after running example pipeline on a set of readings
 \centering
 \includegraphics{./generated_images/border_MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}
 \caption{MRP library test results for different submodules executed in
-PyCharm \gls{ide}
+PyCharm \gls{ide}.
 \label{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png}}
 \end{figure}
 
@@ -2536,7 +2527,7 @@ users and for different use cases.
 During the development of the \gls{mrp}-library, test cases are also
 created for all important functionalities and use cases. The test
 framework \emph{PyTest} \customcite{P17} is used for this purpose, as it
-offers direct integration in most \gls{ide}s (see figure
+offers direct integration in most \gls{ide}s (see Figure
 \ref{MRP_library_test_results_for_different_submodules_executed_in_PyCharm_(+ide).png})
 and also because it provides detailed and easy-to-understand test
 reports as output in order to quickly identify and correct errors. It
@@ -2544,7 +2535,7 @@ also allows to tag tests, which is useful for grouping tests or
 excluding certain tests in certain build environment scenarios. Since
 all intended use cases are mapped using the test cases created, the code
 of the test cases could later be used in slightly simplified variants of
-listing \ref{lst:pytest_example_code} as examples for the documentation.
+Listing \ref{lst:pytest_example_code} as examples for the documentation.
 
 \begin{lstlisting}[language=Python, caption={Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules}, label=lst:pytest_example_code]
 class TestMPRReading(unittest.TestCase):
@@ -2608,7 +2599,7 @@ used:
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_MagneticReadoutProcessing_library_hosted_on_PyPi.png}
-\caption{MagneticReadoutProcessing library hosted on PyPi
+\caption{MagneticReadoutProcessing library hosted on PyPi.
 \label{MagneticReadoutProcessing_library_hosted_on_PyPi.png}}
 \end{figure}
 
@@ -2616,10 +2607,10 @@ One crucial point that improves usability for users is the simple
 installation of all \gls{mrp} modules. As it is created in the Python
 programming language, there are several public package registries where
 users can provide their software modules. For this purpose
-\href{https://pypi.org}{PyPI} figure
+\href{https://pypi.org}{PyPI} Figure
 \ref{MagneticReadoutProcessing_library_hosted_on_PyPi.png} is the most
 used package registry and offers direct support for the package
-installation program \gls{pip} shown in listing
+installation program \gls{pip} shown in Listing
 \ref{lst:setup_lib_with_pip}.
 
 \gls{pip} not only manages package dependencies, but also manages the
@@ -2646,7 +2637,7 @@ Since the \gls{mrp}-library requires additional Python dependencies,
 which cannot be assumed to be already installed on the target system,
 these must be installed prior to the actual installation. These can be
 specified in the library installation configuration \emph{setup.py} in
-listing \ref{lst:setup_py_req} for this purpose.
+Listing \ref{lst:setup_py_req} for this purpose.
 
 \newpage
 
@@ -2698,7 +2689,7 @@ is documented using
 Python-\href{https://peps.python.org/pep-0257/}{Docstrings} and the
 Python type annotations. The use of type annotations also simplifies
 further development, as modern \gls{ide}s can more reliably display
-methods to the user as an assistance. It is implemented in listing
+methods to the user as an assistance. It is implemented in Listing
 \ref{lst:pydocstring}.
 
 \newpage
@@ -2741,7 +2732,7 @@ available to others.
 
 The documentation has also been uploaded to the
 \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs}
-service. The figure
+service. The Figure
 \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
 shows a screenshot of the start page, which also lists separate menu
 items for tutorials on the individual functionalities. The process of
@@ -2752,7 +2743,7 @@ always automatically kept up to date with new features.
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}
-\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs
+\caption{MagneticReadoutProcessing documentation hosted on ReadTheDocs.
 \label{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png}}
 \end{figure}
 
@@ -2799,7 +2790,7 @@ application of \emph{User Interaction Points} in chapter
 
 This process covers all the essential functionalities required for a
 comprehensive characterisation of permanent magnets. These are
-previously described in the \emph{Use cases} \ref{use-cases} chapter.
+previously described in the chapter \emph{Use cases} \ref{use-cases}.
 The developed framework not only offers a cost-effective and flexible
 hardware solution, but also enables customisation of the analysis
 algorithms to meet the requirements of different research projects.
@@ -2811,7 +2802,7 @@ algorithms to meet the requirements of different research projects.
 \centering
 \includegraphics{./generated_images/border_Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}
 \caption{Ten numbered N45 12x12x12mm test magnets in separate 3D printed
-holders
+holders.
 \label{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}}
 \end{figure}
 
@@ -2820,10 +2811,10 @@ For the hardware setup, the 3D-Full Sphere sensor, explained in chapter
 this is equipped with an exchangeable magnetic holder mount, suitable
 holders are required for the magnets to be measured. Ten random
 \emph{N45 12x12x12mm} neodymium magnets are used, which are shown in
-figure
+Figure
 \ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}.
 
-These are placed in modified 3D printed holders shown in figure
+These are placed in modified 3D printed holders shown in Figure
 \ref{Ten_numbered_N45_12x12x12mm_test_magnets_in_separate_3D_printed_holders.png}
 and afterwards numbered. This allows to match the magnets to the
 measurement results later.
@@ -2835,7 +2826,7 @@ Measurement}\label{configuration-of-the-measurement}}
 The configured hardware is connected to the host system using the
 \emph{MRPCli config setupsensor}-\gls{cli} command. The measurement is
 configured for a measurement run, using the following configuration
-commands from listing \ref{lst:evaluation_measurement_config}.
+commands from Listing \ref{lst:evaluation_measurement_config}.
 
 The \emph{MRPCli measure ruxn} command is then called up for each
 individual magnet to execute a measurement. After each run, the
@@ -2856,7 +2847,7 @@ $ MRPCli config setup eval_measurement_config
 Implementation}\label{custom-algorithm-implementation}}
 
 The next step for the user is the implementation of the filter algorithm
-in listing \ref{lst:custom_find_similar_values_algorithm}. This can have
+in Listing \ref{lst:custom_find_similar_values_algorithm}. This can have
 any function signature and is implemented in the file
 \emph{UDPPFunctionCollection.py}. This Python file is loaded when the
 pipeline is started and all functions that are imported as a module or
@@ -2864,7 +2855,7 @@ implemented directly can be called via the pipeline. As this is a short
 algorithm, it is inserted directly into the file.
 
 The parameter \_readings should later receive the imported measurements
-from the \emph{stage rawimport} in listing
+from the \emph{stage rawimport} in Listing
 \ref{lst:pipeline_mrp_evaluation_yaml} and the optional
 \emph{IP\_return\_count} parameter specifies the number of best
 measurements that are returned. The return parameter is a list of
@@ -2932,7 +2923,7 @@ Another possibility for filtering is to use a reference measurement
 instead of a simulated ideal magnet as a reference, as described before.
 This can initially come from a magnet selected as a reference magnet. As
 a result, the filter algorithm returns the measurements that are most
-similar to the selected reference magnet. The code snipped in listing
+similar to the selected reference magnet. The code snipped in Listing
 \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the
 modified filter algorithm code, with added \_ref input parameter for the
 reference measurement.
@@ -2958,9 +2949,9 @@ def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRP
 Pipeline}\label{execution-of-analysis-pipeline}}
 
 Once the filter function has been implemented, it still needs to be
-integrated into the analysis pipeline in listing
+integrated into the analysis pipeline in Listing
 \ref{lst:pipeline_mrp_evaluation_yaml}. At this point, the example
-pipeline in figure \ref{Example_measurement_analysis_pipeline.png} is
+pipeline in Figure \ref{Example_measurement_analysis_pipeline.png} is
 simplified and an additional stage \emph{find\_similar\_values} has been
 added, which has set \emph{FindSimilarValuesAlgorithm} as the function
 to be called. As a decisive step, the result is used in the
@@ -2993,7 +2984,7 @@ stage plot_filtered:
 The final pipeline has been saved in the pipeline directory as
 \emph{pipeline\_mrp\_evaluation.yaml} file and is ready for execution.
 This is carried out using the \emph{MRPudpp} \gls{cli}, which is
-described in listing \ref{lst:bash_pipeline_mrp_evaluation_yaml}. After
+described in Listing \ref{lst:bash_pipeline_mrp_evaluation_yaml}. After
 the run has been successfully completed, the results are saved in the
 result folder specified in the pipeline using the
 \emph{IP\_export\_folder} parameter.
@@ -3016,24 +3007,24 @@ $ MRPudpp pipeline run
 \hypertarget{result-analysis}{%
 \section{Result Analysis}\label{result-analysis}}
 
-The figure
+The Figure
 \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}
 summarizes this result. The plot of the raw measured values is
 represented on the left. The value of the determined \emph{GoG} \(\mu\)T
 values is plotted on ten individual measured values. It can be seen that
 there are measured values with larger deviations (see measurement plots
-\emph{7:0},\emph{10-2:0},\emph{10-1:0} in figure
+\emph{7:0},\emph{10-2:0},\emph{10-1:0} in Figure
 \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
 
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}
 \caption{MRP evaluation result after find similar values algorithm
-execution in the user defined pipeline
+execution in the user defined pipeline.
 \label{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}}
 \end{figure}
 
-Also, the figure
+Also, the Figure
 \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}
 illustrates, the measured values are plotted as a result of the filter
 algorithm. As the \emph{IP\_return\_count} parameter is set to four,
@@ -3091,7 +3082,7 @@ automated sensor characterisation can be performed.
 \hypertarget{sensors-for-evaluation}{%
 \section{Sensors for Evaluation}\label{sensors-for-evaluation}}
 
-For this evaluation, the sensors listed in the table
+For this evaluation, the sensors listed in the Table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
 are used for sensor characterisation. The selection of sensors is
 described in chapter \ref{sensor-selection}. The additional column for
@@ -3100,7 +3091,7 @@ the sensors and will be verified in the later \emph{Background Noise}
 measurement in chapter \ref{sensor-characterisation-background-noise}.
 
 \begin{longtable}[]{@{}lll@{}}
-\caption{Digital magnetic field sensors characterised for evaluation
+\caption{Digital magnetic field sensors characterised for evaluation.
 \label{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}}\tabularnewline
 \toprule
 & TLV493D & MMC5603NJ\tabularnewline
@@ -3118,14 +3109,14 @@ Background-Noise {[}uT{]} & 100 & 0.2\tabularnewline
 \bottomrule
 \end{longtable}
 
-The values in table
+The values in Table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}
 are taken from the data sheets of the relevant manufacturers as a
 reference for comparison with the later measurement results.
 
 The developed framework is directly compatible with a variety of
 magnetic field sensors without modifications, including those listed in
-the table. For this evaluation, the sensors listed in the table are used
+the Table. For this evaluation, the sensors listed in the Table are used
 for sensor characterisation. This selection is made for the following
 reasons:
 
@@ -3166,7 +3157,7 @@ transmission is not possible, as their methods are specially tailored to
 these sensors. This includes measuring the analogue bias currents and
 raw sensor output voltages, which are not accessible with these
 digital-only sensors. Adaptations are therefore necessary to extend the
-characterisation to the choosen digital sensors
+characterisation to the choosen digital sensors listed in Table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}.
 
 \hypertarget{evaluation-sensor-setup}{%
@@ -3176,7 +3167,7 @@ characterisation to the choosen digital sensors
 \centering
 \includegraphics{./generated_images/border_Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
 \caption{Sensor evaluation plattform with TLV493D and MMC5603 sensors
-placed with thermal conductive glue on an aluminium baseplate
+placed with thermal conductive glue on an aluminium baseplate.
 \label{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}}
 \end{figure}
 
@@ -3196,7 +3187,7 @@ placed on the base plate. A \emph{10mm} thick \emph{PTFE} insulation
 plate is placed between the floor and the sensor base plate to prevent
 direct and uneven heating of the base plate by the heated floor.
 
-The figure
+The Figure
 \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png}
 shows this basic setup, the \emph{Raspberry Pi Pico} is used as the
 readout hardware, on which the \emph{Unified Sensor Firmware} is
@@ -3226,7 +3217,7 @@ Noise}\label{sensor-characterisation-background-noise}}
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensor_evaluation_setup_for_noise_measurements.png}
-\caption{Sensor evaluation setup for noise measurements
+\caption{Sensor evaluation setup for noise measurements.
 \label{Sensor_evaluation_setup_for_noise_measurements.png}}
 \end{figure}
 
@@ -3239,7 +3230,7 @@ to \emph{\(\mu_{trev}\)=21.0\(^{\circ}\)C} and the sensors are placed
 configuration inside of the chamber.
 
 \begin{longtable}[]{@{}lllll@{}}
-\caption{Sensor noise evaluation results
+\caption{Sensor noise evaluation results.
 \label{Sensor_noise_evaluation_results.csv}}\tabularnewline
 \toprule
 Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
@@ -3249,8 +3240,6 @@ Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 \midrule
 \endhead
-\(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
-\(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
 \(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Mean sensor value
 (Baseline)\tabularnewline
 \(\sigma_{rv}\) & 172.00 & 0.20 & \(\mu\)T & \gls{sd} sensor
@@ -3283,11 +3272,11 @@ time and therefore about the sensor background noise.
 \centering
 \includegraphics{./generated_images/border_Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
 \caption{Sensor noise evaluation results for TLV493D and MMC5603NJ with
-N=2000 samples and no averaging
+N=2000 samples and no averaging.
 \label{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}}
 \end{figure}
 
-The following figure
+The following Figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
 contains the measured values of these sensors. In the next phases these
 are analysed for each sensor examined. The following data is shown in
@@ -3305,9 +3294,9 @@ the plots:
   Histogram of the background noise level
 \end{itemize}
 
-The table \ref{Sensor_noise_evaluation_results.csv} lists the measured
+The Table \ref{Sensor_noise_evaluation_results.csv} lists the measured
 values that are extracted from the measurement data of the sensors in
-figure
+Figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
 
@@ -3348,7 +3337,7 @@ measured values in order to perform temperature compensation.
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
 
 The noise of a sensor describes unwanted, random fluctuations or signals
-in the measured data. These are clearly recognisable in the figure
+in the measured data. These are clearly recognisable in the Figure
 \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}
 in the raw data plot. The baseline measurement which is previously
 determined for each sensor is shown by the red \(\mu_{rv}\)
@@ -3366,7 +3355,7 @@ sensor \gls{ic}. This provides a reference baseline value of
 The noise of the sensor is drawn around this using the blue line. For
 the \emph{TLV493D} the \gls{sd}
 \emph{\(\sigma_{rv,TLV493D}\)=172.0\({\mu}\)T}, which is twice the value
-given by the datasheet as the noise value (refer to table
+given by the datasheet as the noise value (refer to Table
 \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}).
 Under the same conditions, the \emph{MMC5603NJ} undercuts the value
 specified by the manufacturer. The \gls{sd} approaches
@@ -3388,7 +3377,7 @@ Linearity}\label{sensor-characterisation-linearity}}
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensor_evaluation_setup_for_linearity_measurements.png}
-\caption{Sensor evaluation setup for linearity measurements
+\caption{Sensor evaluation setup for linearity measurements.
 \label{Sensor_evaluation_setup_for_linearity_measurements.png}}
 \end{figure}
 
@@ -3404,10 +3393,11 @@ axis installed above the sensor setup. A holder for an \emph{N45
 can thus be moved at different distances above the respective sensor
 \gls{ic}. The ambient temperature is set to
 \emph{\(\mu_{trev, 7055BT}\)=21.0\(^{\circ}\)C} in the measurement runs
-and thus corresponds to the same conditions as in the \emph{Background
-Noise} chapter \ref{sensor-characterisation-background-noise} setup.
+and thus corresponds to the same conditions as in the chapter
+\emph{Background Noise} \ref{sensor-characterisation-background-noise}
+setup.
 
-The figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
+The Figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png}
 contains this updated measurement setup with the added components. To
 control the linear axis an additional motion controller of the type
 \emph{SKR-Pico} placed outside the temperature chamber is required,
@@ -3463,11 +3453,11 @@ using \emph{MRPAnalysis} functions in chapter \ref{mrpanalysis}.
 \begin{figure}
 \centering
 \includegraphics{./generated_images/border_Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
-\caption{Sensor linearity evaluation results for TLV493D and MMC5603NJ
+\caption{Sensor linearity evaluation results for TLV493D and MMC5603NJ.
 \label{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
 \end{figure}
 
-The figure
+The Figure
 \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
 combines the visual representation of linearity as a plot. The distance
 from the magnet to the sensor is plotted in \emph{mm} on the x-axis. The
@@ -3482,15 +3472,11 @@ For both sensors, the deviation is less than \emph{1\%} over the entire
 resolution. With the \emph{MMC5603NJ} this is on average only
 \emph{0.04\%}. With the \emph{TLV493D} the \gls{sd} is \emph{3.64\%},
 for which the deviations at the end in particular (with field strengths
-towards zero) are decisive. The previously performed \emph{Background
-Noise} characterisation in chapter
-\ref{sensor-characterisation-background-noise} is explained that the
-linearity deviation is due to the sensitivity of the sensor.
-
-In general, the measured values correspond to the data sheet
-specifications of both sensors, which specify a value of \emph{5\%}. It
-is also feasible to calculate these small deviations using curve fitting
-methods. Suitable functions are implemented in the library.
+towards zero) are decisive. In general, the measured values correspond
+to the data sheet specifications of both sensors, which specify a value
+of \emph{5\%}. It is also feasible to calculate these small deviations
+using curve fitting methods. Suitable functions are implemented in the
+library.
 
 \hypertarget{sensor-characterisation-temperature-sensitivity}{%
 \section{Sensor Characterisation: Temperature
@@ -3508,7 +3494,7 @@ magnetic field measurements.
 \centering
 \includegraphics{./generated_images/border_Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
 \caption{Sensor evaluation setup for temperature sensitivity
-measurements
+measurements.
 \label{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}}
 \end{figure}
 
@@ -3517,7 +3503,7 @@ different results in the previous measurements, an additional
 temperature sensor is attached to the sensor circuit board for this
 measurement.
 
-The figure
+The Figure
 \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png}
 represents these modifications in detail. These changes makes it
 possible to accurately determine the sensors \gls{ic} temperature. The
@@ -3537,7 +3523,7 @@ systematically increased from \emph{20\(^{\circ}\)} to
 system is given a waiting time of 30 minutes after reaching the target
 temperature.
 
-The field of permanent magnets is high temperature-dependent and can
+The field of permanent magnets is highly temperature-dependent and can
 lose its magnetisation at higher temperatures (typically
 \emph{\textgreater=80\(^{\circ}\)} for non-high-quality \emph{Type-N}
 magnets \customcite{GKT16}). The temperature range is selected so that it
@@ -3551,11 +3537,11 @@ Analysis}\label{temperature-sensitivity-analysis}}
 \centering
 \includegraphics{./generated_images/border_Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
 \caption{Sensor temperature sensitivity evaluation results for TLV493D
-and MMC5603NJ
+and MMC5603NJ.
 \label{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
 \end{figure}
 
-The figure
+The Figure
 \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
 represents the measured data as a plot with the temperature measured by
 the measuring devices on the X-axis and the sensor measured value on the
@@ -3572,7 +3558,7 @@ total change between the temperature regions of 175\(\mu\)T is less than
 that of the \emph{MMC5603NJ} with \emph{70\(\mu\)T}, if the total
 measurement range of the sensors is also considered.
 
-In the evaluation (see figure
+In the evaluation (see Figure
 \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png})
 a linear function is also calculated using curve fitting to determine
 the temperature coefficients of the sensors. This makes it possible to
@@ -3585,7 +3571,7 @@ software calibration.
 \section{Result Analysis}\label{result-analysis-1}}
 
 \begin{longtable}[]{@{}lllll@{}}
-\caption{Overview of all characterised sensor properties
+\caption{Overview of all characterised sensor properties.
 \label{Overview_of_all_characterised_sensor_properties.csv}}\tabularnewline
 \toprule
 Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
@@ -3599,8 +3585,6 @@ Symbol & TLV493D & MMC5603NJ & Unit & Description\tabularnewline
 baseline\tabularnewline
 \(N_{measurement}\) & 2000 & 2000 & - & Samples measured for
 measurement\tabularnewline
-\(\mu_{nl}\) & 0.79 & 0.00 & \% & Mean noise level\tabularnewline
-\(\sigma_{nl}\) & 0.76 & 0.00 & \% & \gls{sd} noise level\tabularnewline
 \(\mu_{rv}\) & 157.23 & -50.39 & \(\mu\)T & Baseline without offset
 compensation\tabularnewline
 \(\sigma_{rv}\) & 172.00 & 0.20 & \(\mu\)T & \gls{sd} sensor
@@ -3628,8 +3612,8 @@ two characterised sensors \emph{TLV493D} and \emph{MMC5603NJ}. It can be
 clearly seen that these differ significantly by a factor of \emph{x10}.
 
 The \emph{TLV493D} performs in noise measurements worse than specified
-in the data sheet (\emph{98\(\mu\)T} instead of \emph{175\(\mu\)T}), but
-the large \gls{dr}, which fulfils the required specifications from
+in the data sheet (\emph{100\(\mu\)T} instead of \emph{175\(\mu\)T}),
+but the large \gls{dr}, which fulfils the required specifications from
 chapter \emph{Research Question} in chapter
 \ref{research-question-and-approach}, must be considered here, which is
 not met by the \emph{MMC5603NJ}.

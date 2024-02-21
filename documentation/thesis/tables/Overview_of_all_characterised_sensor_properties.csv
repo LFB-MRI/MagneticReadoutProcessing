@@ -1,8 +1,6 @@
 Symbol,TLV493D,MMC5603NJ,Unit,Description
 $N_{baseline}$,10000,10000,-,Samples measured for baseline
 $N_{measurement}$,2000,2000,-,Samples measured for measurement
-$\mu_{nl}$,0.79,0.00,%, Mean noise level
-$\sigma_{nl}$,0.76,0.00,%,(+sd) noise level
 $\mu_{rv}$,157.23,-50.39,$\mu$T,Baseline without offset compensation
 $\sigma_{rv}$,172.00,0.20,$\mu$T,(+sd) sensor value
 $\mu_{t}$,20.68,19.40,$^{\circ}$C,Mean sensor temperature

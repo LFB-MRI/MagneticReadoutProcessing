@@ -1,4 +1,4 @@
-: (+usb) connected sensor latency test results using several sensor readout requests togehter with variable host system cpu loads testing for jitter variations \label{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv}
+: (+usb) connected sensor latency test results using several sensor readout requests togehter with variable host system cpu loads testing for jitter variations. \label{(+usb)_connected_sensor_latency_test_results_using_several_sensor_readout_requests_togehter_with_variable_host_system_cpu_loads_testing_for_jitter_variations.csv}
 
 | Data-Points | Run runtime [ms] | Average Sensor communication time per reading [ms] |  Communication jitter time [ms]  | Comment         |
 | ----------- | ---------------- | -------------------------------------------------- | -------------------------------- | --------------- |

@@ -1,4 +1,4 @@
-: Sensor capabilities merging algorithm \label{Sensor_capabilities_merging_algorithm.csv}
+: Sensor capabilities merging algorithm. \label{Sensor_capabilities_merging_algorithm.csv}
 
 | SENSOR A  | SENSOR B  |  MERGED CAPABILITIES |  CAPABLE SENSORS ID LUT |
 | --------- | --------- | -------------------- | ----------------------- |
