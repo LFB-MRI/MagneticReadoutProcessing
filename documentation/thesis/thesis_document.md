@@ -1514,29 +1514,29 @@ $ MRPudpp pipeline run
 
 ## Result Analysis
 
-The Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} summarizes this result.
-The plot of the raw measured values is represented on the left.
-The value of the determined *GoG* $\mu$T values is plotted on ten individual measured values.
-It can be seen that there are measured values with larger deviations (see measurement plots *7:0*,*10-2:0*,*10-1:0* in Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
+
 
 %%MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png%%
 
-Also, the Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} illustrates, the measured values are plotted as a result of the filter algorithm. As the *IP_return_count* parameter is set to four, only the four most similar measurements are exported.
-It can be seen from the plotted *(+cog)* $\mu$T deviation values, that these are closest to an ideal Magnet with a CoG value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (magnet type, dimensions, sensor distance) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
+The Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} shows the measured values filtered by the implemented filter algorithm of Listing \ref{lst:custom_find_similar_values_algorithm}. It can be seen that of the initial *10* measurements (upper plot), only four measurements that are most similar to the *(+cog)* mean value were filtered (lower plot). The number of desired result measurements was defined here by the parameter *IP_return_count*. 
+It can be seen from the plotted *(+cog)* $\mu$T mean values values, that these are closest to an ideal Magnet with a *(+cog)* value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (*magnet type*, *dimensions*, *sensor distance*) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
+
+It can be seen that there are measured magnets with larger deviations (see magnet index plots for *7:0*,*10-2:0*,*10-1:0* in Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
 
 If the alternative filter algorithm from chapter *Alternative Filter Algorithm Implementation* \ref{alternative-filter-algorithm-implementation} is executed at this point, the same result is returned if the magnet measurement with (+id) *5:0* is used as the reference magnet.
 
-The filter algorithm implemented by the user is thus successfully executed using the user-programmable pipeline. 
-The calculation result is successfully verified using raw measurement data and the result of the algorithm.
+The filter algorithm implemented by the user is thus successfully executed via the user-programmable pipeline
+The calculation result was successfully verified using raw measurement data and the result of the algorithm and verified using reference measurements.
+The streamlined pipeline approach enables the user to re-execute the implemented measurement pipeline example with further measurement data. Changes to filter parameters, for example, are also possible without having to adapt the code.
+Using this example, all the required functional capabilities from the chapter *Use cases* \ref{use-cases} of this implemented solution were demonstrated in their functional capability.
 
 # Evaluation
 
-In the previous chapter *Use Case Evaluation* \ref{use-case-evaluation} it is demonstrated that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented.
+In the previous chapter *Use Case Evaluation* \ref{use-case-evaluation} it is demonstrated that the implementation of the hardware and software framework for various magnetic field sensors is successfully implemented. In addition, the basic application of the framework for the user and the resulting advantages are demonstrated using the specific example.
 
-In addition, the basic application by the user is demonstrated based on an example.
 Based on this it is possible to systematically characterise magnets from the software and readout hardware side by means of data acquisition, storage and analysis.
 
-After discussing the developed hardware and software components in particular, the following chapter answers the question of whether the selected sensors meet the requirements:
+After the hardware and software components developed have been discussed in detail, the following chapter answers the question of which sensors fulfill the requirements described in chapter \ref{research-question-and-approach}:
 
 * Measure a wide range of different permanent magnets with regard to their systematic field strength
 * Automated measurement of the homogeneity with an accuracy of less than *1000 (+ppm)* what is demanded to measure Halbach rings
