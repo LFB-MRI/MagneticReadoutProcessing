@@ -31,7 +31,7 @@
 \usepackage{hyperref}   % to make references hyperlinks
 \usepackage{xspace}
 % define list of equations
-\newcommand{\listequationsname}{\Large{List of Equations}}
+\newcommand{\listequationsname}{\Large{}}
 \newlistof{myequations}{equ}{\listequationsname}
 \newcommand{\myequations}[1]{
    \addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}
@@ -348,15 +348,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ABBILDUNGSVERZEICHNIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
 \listoffigures
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ABBILDUNGSVERZEICHNIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
 \listoftables
 
 
 \pagebreak
+
+\chapter*{Equations}
+\addcontentsline{toc}{chapter}{Equations} 
 \listofmyequations
 
 
