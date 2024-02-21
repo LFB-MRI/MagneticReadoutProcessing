@@ -29,8 +29,7 @@
 \usepackage{tocloft}    % for list of equations
 \usepackage{ragged2e}   % to undo \centering
 \usepackage{hyperref}   % to make references hyperlinks
-
-
+\usepackage{xspace}
 % define list of equations
 \newcommand{\listequationsname}{\Large{List of Equations}}
 \newlistof{myequations}{equ}{\listequationsname}
@@ -44,7 +43,7 @@
 % include noteworthy equation in list of equations
 \newcommand{\noteworthy}[2]{
 \begin{align} \label{#2} \ensuremath{#1} \end{align} 
-\myequations{#2} \centering \small \normalsize \justify }
+\myequations{#2} \centering \small \textit{\xspace \xspace \xspace} \normalsize \justify }
 
 
 \graphicspath{
@@ -310,7 +309,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printglossaries
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Inhaltsverzeichnis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -2,7 +2,19 @@
 The master thesis behind MagnetCharacterization project
 
 
+# TODO
 
+formeln mittels 
+```formular {caption='abc'}
+``
+
+bilder generierieren neu als order:
+LABEL_FOLDER:
+=> caption.txt
+=> image.png
+
+
+`\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{Center of Gravity}`
 
 ## Build thesis document as PDF
 

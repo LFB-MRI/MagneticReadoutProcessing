@@ -1,1 +1,0 @@
-chrakterisation: [@J21] [@GH13]
