@@ -172,11 +172,11 @@ Concerning the *DeLoRI* project, this study exclusively delves into the realm of
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
 
-  \noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{1000ppm from 50mT needed resolution calucation I}
+  \noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{: 1000ppm from 50mT needed resolution calucation I}
 
 To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
 
-  \noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{1000ppm from 50mT needed resolution calucation II}
+  \noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{: 1000ppm from 50mT needed resolution calucation II}
 
 This means that to measure a deviation of better than *1000 (+ppm)* in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
@@ -1409,7 +1409,7 @@ The return parameter is a list of measurements containing the most similar measu
 
 The sorting indicator for each measurement is determined using the *(+cog)* function and is implemented using the following equation:
 
-\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{Center of Gravity} 
+\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{: Center of Gravity} 
 
 Where *$D_{distance}$* corresponds to the set distance from the centre of the magnet to the surface of the sensor (+ic). This is the same for each measuring point in the measurement and corresponds to the mechanical structure of the *3D: Full Sphere* \ref{d-full-sphere} sensor *40mm*. The weighting *$W_{eight}$* corresponds here to the *B*-field value in $\mu$T measured by the *TLV493D* sensor.
 

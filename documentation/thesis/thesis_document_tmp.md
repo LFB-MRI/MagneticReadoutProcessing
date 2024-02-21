@@ -173,11 +173,11 @@ Concerning the *DeLoRI* project, this study exclusively delves into the realm of
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
 
-  \noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{1000ppm from 50mT needed resolution calucation I}
+  \noteworthy{\frac{1000}{1000000} \times 50 \, mT = 0.05 \, mT }{: 1000ppm from 50mT needed resolution calucation I}
 
 To convert this into microtesla ($\mu$T), a multiplication by *1000* is needed:
 
-  \noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{1000ppm from 50mT needed resolution calucation II}
+  \noteworthy{0.05 \, mT \times 1000 = 50 \, \mu T}{: 1000ppm from 50mT needed resolution calucation II}
 
 This means that to measure a deviation of better than *1000 (+ppm)* in a $50mT$ magnetic field, a resolution of less than *50* $\mu$T is needed.
 
@@ -1466,7 +1466,7 @@ The return parameter is a list of measurements containing the most similar measu
 
 The sorting indicator for each measurement is determined using the *(+cog)* function and is implemented using the following equation:
 
-\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{Center of Gravity} 
+\noteworthy{\text{CoG} = \frac{\sum{D_{istance} \times W_{eight}}}{\sum{W_{eight}}}}{: Center of Gravity} 
 
 Where *$D_{distance}$* corresponds to the set distance from the centre of the magnet to the surface of the sensor (+ic). This is the same for each measuring point in the measurement and corresponds to the mechanical structure of the *3D: Full Sphere* \ref{d-full-sphere} sensor *40mm*. The weighting *$W_{eight}$* corresponds here to the *B*-field value in $\mu$T measured by the *TLV493D* sensor.
 
@@ -1856,7 +1856,7 @@ In the evaluation (see figure \ref{Sensor_temperature_sensitivity_evaluation_res
 | $\mu_{sl}$        | 0.25       | 0.04       | %                    |  Mean sensor linearity deviation     |
 | $\sigma_{sl}$     | 3.64       | 0.56       | %                    | (+sd) sensor linearity               |
 | $\mu_{td}$        | -1.99      | -5.13      | $\mu$T / $^{\circ}$C |  Sensor temperature coefficients     |
-| DR                | [-138;220] | [-3.1;3.4] |  $\mu$T              |  maximum linear (+dr)                |
+| DR                | [-178;220] | [-3.1;3.4] |  $\mu$T              |  maximum linear (+dr)                |
 
 Table \ref{Overview_of_all_characterised_sensor_properties.csv} represents a summary of all recorded and analysed measured values of the two characterised sensors *TLV493D* and *MMC5603NJ*.
 It can be clearly seen that these differ significantly by a factor of *x10*.

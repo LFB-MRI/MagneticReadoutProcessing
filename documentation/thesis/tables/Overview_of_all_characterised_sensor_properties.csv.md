@@ -14,4 +14,4 @@
 | $\mu_{sl}$        | 0.25       | 0.04       | %                    |  Mean sensor linearity deviation     |
 | $\sigma_{sl}$     | 3.64       | 0.56       | %                    | (+sd) sensor linearity               |
 | $\mu_{td}$        | -1.99      | -5.13      | $\mu$T / $^{\circ}$C |  Sensor temperature coefficients     |
-| DR                | [-138;220] | [-3.1;3.4] |  $\mu$T              |  maximum linear (+dr)                |
+| DR                | [-178;220] | [-3.1;3.4] |  $\mu$T              |  maximum linear (+dr)                |
