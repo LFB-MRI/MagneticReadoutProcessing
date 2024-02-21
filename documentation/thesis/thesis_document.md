@@ -672,8 +672,8 @@ The different formats can be triggered by the user by calling up the correspondi
 * *.to_numpy_matrix()* - *Numpy*-Array of *data* object with different options
 * *.dump_savemat()* - *MATLAB* mat-file with measurement values and temperatures
 
-Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the other options (*Numpy*, *MATLAB*)loses data during the export procedure.
-
+Currently, data re-import of an exported measurement is only supported via the (+json) format, as an export using the *Numpy* or *MATLAB* based formats loses meta-data during the export procedure.
+These only exports the raw measured values as an array represenation, so the additional attributes such as *additional_data* meta-data field (refer to Listing: \ref{lst:json_export_format_example}) are lost.
 
 ### Extension Modules
 
@@ -826,7 +826,7 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 
 As it is possible to connect many identical sensors to one host, therefore it needs to be possible to address them separately.
 This separation is done by the *MRPProxy* module, which is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
-Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli). The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, start procedure described by the following sub-chapters.
+Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli). The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, the procedure described by the following sub-chapters.
 
 #### Merging the Sensor Capabilities
 
@@ -924,7 +924,7 @@ imported_reading.load_from_file("exported_reading.mag.json")
 
 
 ### MRPHal
-
+TODO: * after creating a MRPREadin instance which is a body for the measurement data....
 After generating simple measurements with random values in the previous example in chapter \ref{mrpreading}, the next step is to record real sensor data. For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* from chapter \ref{unified-sensor}-compatible sensors.
 In the following example Listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 \newpage
