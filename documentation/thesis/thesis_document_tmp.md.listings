@@ -21,7 +21,7 @@ While typically calculated images have lower resolution due to lower magnetic fi
 Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
 Completed (+mri) systems pose significant challenges for retrospective adjustments, particularly when individual magnets impact the overall homogeneity of the magnetic field. While deviations in homogeneity can be measured post-assembly, the intricate task of readjustment is considered.
-It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system.
+It is less cost-intensive and less complicated to measure the magnets proactively, prior to the finalization of the (+mri) system. [@W14]
 
 The focus of this thesis is to improve low-frequency (+mri) technology by examining the usability of magnetic field sensors for characterising permanent magnets used in these systems.
 The variability in the strength of permanent magnets leads to significant difficulties in constructing an (+mri) magnet with the necessary precision for homogenous field generation.
