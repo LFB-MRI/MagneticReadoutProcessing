@@ -33,6 +33,7 @@ public:
     bool is_valid();
     String capabilities();
     String get_sensor_name();
+    String get_sensor_unit();
     bool query_sensor();
     sensor_result get_result();
 

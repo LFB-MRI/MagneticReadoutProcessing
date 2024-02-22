@@ -32,6 +32,7 @@ class ProxyGlobals:
     combined_capabilities: [str] = [] # contains all caps from all connected devices
     combined_commands: [] = []
     ids: [str] = []
+    combined_sensornames: [str] = []
 
 
     lock: Lock = Lock()
@@ -79,6 +80,8 @@ class ProxyGlobals:
     def get_combined_commands(self) -> [str]:
         return self.combined_commands
 
+    def get_combined_sensor_names(self) -> [str]:
+        return self.combined_sensornames
     def get_combined_capabilities(self) -> [str]:
         return self.combined_capabilities
 
@@ -127,6 +130,7 @@ class ProxyGlobals:
                 # GET CAPABILITIES
                 self.combined_capabilities.extend(hal.get_sensor_capabilities())
 
+                self.combined_sensornames.extend(hal.get_sensor_names())
                 # NOW CHECK WICH COMMANDS CAN BE EXECUTED BY THIS DEVICE
                 cmdlist: [str] = hal.get_sensor_commandlist()
                 self.combined_commands.extend(cmdlist)
@@ -322,7 +326,8 @@ def status():
     ret.sensortype = "rotationsensor"
     ret.id = machineid.id()
     ret.capabilities = []
-    ret.commands = ['status', 'initialize', 'disconnect', 'combinedsensorcnt']
+    ret.sensornames = []
+    ret.commands = ['status', 'initialize', 'disconnect', 'combinedsensorcnt', 'sid']
 
     ret.version = __version__
     # also add startconfig
@@ -338,10 +343,12 @@ def status():
             # GET CAPS AND AVAILABLE CMDS FOR THE LOCALLY CONNECTED DEVICES
             ret.capabilities.extend(hardware_instances.get_combined_capabilities())
             ret.commands.extend(hardware_instances.get_combined_commands())
+            ret.sensornames.extend(hardware_instances.get_combined_sensor_names())
 
             resdict['id'] = "{}".format(hardware_instances.get_combined_id())
         resdict['commands'] = ret.commands
         resdict['capabilities'] = ret.capabilities
+        resdict['sensornames'] = ret.sensornames
 
 
     else:

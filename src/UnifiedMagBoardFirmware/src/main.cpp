@@ -275,7 +275,7 @@ void setup()
 
   debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
 
-  debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < sensor_number; i++){ Serial.print(i);Serial.print(":");Serial.println(sensors_found[i].sensor_instance.get_sensor_name()); }});
+  debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < sensor_number; i++){ Serial.print(sensors_found[i].sensor_instance.get_sensor_name());Serial.print(", "); }});
 
   debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(System_State_STR[system_state]); });

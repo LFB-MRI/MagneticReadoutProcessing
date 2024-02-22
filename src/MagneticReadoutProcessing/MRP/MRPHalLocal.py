@@ -261,6 +261,23 @@ class MRPHalLocal:
         except MRPHalLocalException as e:
             return 0
 
+    def get_sensor_names(self) -> [str]:
+        """
+        returns the sensor names defined in the sensor firmware as string list
+
+        :returns: capabilities e.g. static, axis_x,..
+        :rtype: [str]
+        """
+        try:
+            res: str = self.query_command_str('sid')
+            res = res.replace(" ", "")
+
+            if ',' in res:
+                return res.split(',')
+            return res
+        except MRPHalLocalException as e:
+            return []
+
     def get_sensor_capabilities(self) -> [str]:
         """
         returns the sensor capabilities defined in the sensor firmware as string list

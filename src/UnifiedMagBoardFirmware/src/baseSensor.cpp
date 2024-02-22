@@ -100,19 +100,34 @@ String baseSensor::capabilities()
 {
 }
 
-
+String baseSensor::get_sensor_unit()
+{
+    switch (found_sensor)
+    {
+    case ImplementedSensors::SIMULATED_START:
+        return "uT";
+    case ImplementedSensors::SIMULATED_END:
+        return "uT";
+    case ImplementedSensors::TLV493D:
+        return "uT";
+    case ImplementedSensors::MMC56X3:
+        return "uT";
+    default:
+        return "UNKNOWN";
+    }
+}
 String baseSensor::get_sensor_name()
 {
     switch (found_sensor)
     {
     case ImplementedSensors::SIMULATED_START:
-        return "SIMULATED [+uT]";
+        return "SIMULATED";
     case ImplementedSensors::SIMULATED_END:
-        return "SIMULATED [-uT]";
+        return "SIMULATED";
     case ImplementedSensors::TLV493D:
-        return "TLV493D [uT]";
+        return "TLV493D";
     case ImplementedSensors::MMC56X3:
-        return "MMC56X3 [uT]";
+        return "MMC56X3";
     default:
         return "UNKNOWN";
     }

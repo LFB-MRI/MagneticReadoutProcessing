@@ -250,6 +250,13 @@ class MRPHalRest(MRPHal.MRPHal):
         except Exception as e:
             return 0
 
+    def get_sensor_names(self) -> [str]:
+        r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
+        if r.success:
+            return r.sensornames
+        else:
+            return []
+
     def get_sensor_capabilities(self) -> [str]:
         """
         returns the sensor capabilities defined in the sensor firmware as string list
