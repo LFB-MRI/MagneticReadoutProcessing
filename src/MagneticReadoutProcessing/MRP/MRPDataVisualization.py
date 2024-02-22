@@ -47,7 +47,7 @@ class MRPDataVisualization:
         gs = gridspec.GridSpec(1, 1)
 
 
-        raw_x = np.linspace(0, len(_readings), len(_readings), dtype=np.int32)
+
         raw_y = []
         xlabels = []
         raw_plot = plt.subplot(gs[0, :])
@@ -57,6 +57,11 @@ class MRPDataVisualization:
         zero_offset: float = 0.0
         for reading in _readings:
             zero_offset = min([zero_offset, abs(MRPAnalysis.MRPAnalysis.calculate_mean(reading))])
+
+
+        min_temp: int = 1000000
+        max_temp: int = -1000000
+
 
         temps: [int] = []
         for r in _readings:
@@ -69,6 +74,10 @@ class MRPDataVisualization:
                     temperature = ne.split("TEMPERATURE=")[1]
                     was_in = True
                     temps.append(int(temperature))
+
+                    max_temp = max([max_temp, int(temperature)])
+                    min_temp = min([min_temp, int(temperature)])
+
             if not was_in:
                 temps.append(0)
             xlabels.append("{}".format(temperature, _uni_temp))
@@ -78,8 +87,14 @@ class MRPDataVisualization:
 
         xlabels = [v for _, v in sorted(zip(temps, xlabels))]
         temps = [v for _, v in sorted(zip(temps, temps))]
-        #xlabels = xlabels.reverse()
 
+
+        # FILL FRONT UP
+        raw_x = np.linspace(min([min_temp, 0]), max_temp, max_temp, dtype=np.int32)
+        needed_fill_up_values =  min([min_temp]) - 0
+        v_to_add = raw_y[0]
+        for i in range(needed_fill_up_values-1):
+           raw_y.insert(0, v_to_add)
         raw_plot.plot(raw_x, raw_y, linewidth=0.8, label="Raw Values") #label='Raw Values at {}{} with '.format(temperature, _uni_temp) + '$\mu_'+'{'+ 'mtd{}'.format(temperature) +'}'+'={:.2f}${}'.format(mean, _unit_mag))
 
 
@@ -103,26 +118,31 @@ class MRPDataVisualization:
         raw_plot.axhline(y=raw_y[0], color='red', linestyle='--', linewidth=1, label='Ideal baseline $\mu_{bl}$=' + '{:.2f}{}'.format(raw_y[0], _unit_mag))
 
         try:
-            opt_params, pcov = opt.curve_fit(MRPDataVisualization.linear_curve_func, raw_x[:-1], raw_y[:-1])
+            opt_params, pcov = opt.curve_fit(MRPDataVisualization.linear_curve_func, raw_x[needed_fill_up_values:], raw_y[needed_fill_up_values:])
             a = opt_params[0]
             b = opt_params[1]
             ideal_y: [float] = []
 
             temp_dev_mean = a
 
-            for xe in raw_x:
+            for xe in raw_x[needed_fill_up_values:]:
                 ideal_y.append(MRPDataVisualization.linear_curve_func(xe, a, b))
+            v_to_add = ideal_y[0]
+            for i in range(needed_fill_up_values):
+                ideal_y.insert(0, v_to_add)
             raw_plot.plot(raw_x, ideal_y, linewidth=0.5, color='orange', linestyle='--', label='Fitted curve f(c)={:.2f}c+'.format(temp_dev_mean) + "$\mu_{bl}$")
         except Exception as e:
             pass
 
         raw_plot.set_title("With maximum deviation of d={:.2f}{}/{} and ".format(max_temp_dev, _unit_mag, _uni_temp) + "$\mu_{td}$" + "={:.2f}{}/{}".format(temp_dev_mean, _unit_mag, _uni_temp), fontsize=7)
 
-            #raw_plot.axhline(y=mean, linestyle='--', linewidth=1, label='Mean of {}{}'.format(temperature, _uni_temp))
-        raw_plot.set_xticks(raw_x, xlabels, fontsize=7)
-        raw_plot.set_xlim([0, len(_readings)-1])
+        raw_plot.set_xlim([min_temp, max_temp])
+        #raw_plot.set_xticks([min_temp, max_temp])
+        #raw_plot.set_xticks(raw_x[needed_fill_up_values:], raw_x[needed_fill_up_values:], fontsize=5)
         if min_value is not None and max_value is not None:
-            raw_plot.set_ylim([min_value, max_value*1.1])
+            raw_plot.set_ylim(min_value, max_value)
+        #else:
+        #    raw_plot.set_ylim([min(raw_y)*1.3, max(raw_y)*1.3])
         raw_plot.legend(fontsize=7)
 
 
