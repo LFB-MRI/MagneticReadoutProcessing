@@ -161,7 +161,7 @@ class MRPDataVisualization:
     def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
     @staticmethod
-    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False):
+    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False, _max_y: int = None):
         """
         Plots the linearity from several readings
 
@@ -270,7 +270,8 @@ class MRPDataVisualization:
         distance_plot.set_title('Sensor linearity with mean deviation $\mu_{sl}' + '={:.2f}$% ({:.2f}{}) '.format(deviation_mu, deviation__ut_mu, _unit) + 'and $\sigma_{sl}' + '={:.2f}$% from ideal curve'.format(sigma), fontsize=8)
         distance_plot.legend(loc='lower left', fontsize=8)
 
-
+        if _max_y is not None:
+            distance_plot.set_ylim([0, _max_y])
 
         fig.tight_layout()
         plt.interactive(False)
