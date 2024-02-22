@@ -128,7 +128,7 @@ class MRPDataVisualization:
 
         fig.tight_layout()
         plt.interactive(False)
-        plt.show()
+        #plt.show()
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
             plt.savefig(_filename, dpi=1200)
