@@ -34,9 +34,9 @@
 typedef CommandParser<> DBGCommandParser;
 typedef CommandParser<> HostCommandParser;
 typedef enum System_Error_Code{
-    System_Error_Code_TCA_SCAN_FAILED = 1,
-    System_Error_Code_TLV_NO_SENSORS_FOUND = 2,
-    System_Error_Code_UNKNWON = 3,
+    System_Error_Code_TCA_SCAN_FAILED = 0,
+    System_Error_Code_TLV_NO_SENSORS_FOUND = 1,
+    System_Error_Code_UNKNWON = 2
 }System_Error_Code_t;
 
 const String System_Error_Code_STR[3] = {

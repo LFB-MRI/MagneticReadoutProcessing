@@ -16,5 +16,16 @@
         "/home/marcel/MollyControlSoftware/src/ros2_ws/install/joystick/lib/python3.8/site-packages",
         "/home/marcel/MollyControlSoftware/src/ros2_ws/install/ackermann_msgs/lib/python3.9/site-packages",
         "/opt/ros/rolling/lib/python3.8/site-packages"
-    ]
+    ],
+    "files.associations": {
+        "*.ejs": "html",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp"
+    }
 }

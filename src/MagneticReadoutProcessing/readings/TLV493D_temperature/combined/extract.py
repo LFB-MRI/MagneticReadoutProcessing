@@ -23,7 +23,7 @@ for e in files:
 
 
     values: [float] = reading.to_value_array()
-    values = [v for _, v in sorted(zip(values, values))]
+    #values = [v for _, v in sorted(zip(values, values))]
 
     for tidx, tv in enumerate(values):
         new_reading: MRPReading.MRPReading = MRPReading.MRPReading()
@@ -38,5 +38,5 @@ for e in files:
             e.temperature = tidx+initial_temp
             new_reading.insert_reading_instance(e, _autoupdate_measurement_config=False)
 
-        export_path: str = os.path.join(result_folder_path, new_reading.get_name().replace(" ", "_") + ".mag.json")
+        export_path: str = os.path.join(result_folder_path, new_reading.get_name().replace(" ", "_")+ "_NTS" + ".mag.json")
         new_reading.dump_to_file(export_path)

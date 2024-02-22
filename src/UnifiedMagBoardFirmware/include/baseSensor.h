@@ -28,6 +28,7 @@ public:
         
 
     baseSensor();
+    bool begin(TwoWire &_wire_instance, ImplementedSensors _sensor);
     bool begin(TwoWire &_wire_instance);
     bool is_valid();
     String capabilities();
@@ -39,7 +40,7 @@ public:
 
     private:
         TwoWire* i2c_inst;
-        ImplementedSensors found_sensor = ImplementedSensors::SIMULATED;
+        ImplementedSensors found_sensor = ImplementedSensors::SIMULATED_START;
         sensor_result last_query_result;
         //POSSIBLE FOUND SENSOR INSTANCES HERE
         Tlv493d_Address_t addr = Tlv493d_Address::TLV493D_ADDRESS1;

@@ -27,7 +27,7 @@
 
 
     #ifdef IS_RP2040_BOARD
-       
+        #define CREATE_VIRTUAL_SENSOR_IF_NOT_HARDWARE_SENSORS_FOUND
         #define ERROR_LED_PIN 25
         #define STATUS_LED_PIN 6
         #define SINGLE_MODE_PIN 13
@@ -38,7 +38,7 @@
         #define SENSOR_WIRE Wire //ON RP2040 SDA4/SCL5
 
         // ENALE SECOND I2C PORT
-        //#define SENSOR_WIRE_ALT
+        #define SENSOR_WIRE_ALT
         #define SENSOR_WIRE_ALT_SCL_PIN 3
         #define SENSOR_WIRE_ALT_SDA_PIN 2
         // SERIAL PORT FOR DEBUGGING

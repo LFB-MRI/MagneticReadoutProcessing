@@ -19,7 +19,6 @@ HardwareSerial HOST_SERIAL(HOST_SERIAL_RX, HOST_SERIAL_TX); // RX TX  // FOR SER
 arduino::MbedI2C Wire1(SENSOR_WIRE_ALT_SDA_PIN, SENSOR_WIRE_ALT_SCL_PIN);
 #endif
 
-
 sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SENSORS PER TCA CHANNEL S0 16 SENSORS PER SLICE
 sensor_result sensor_results[MAX_TLV_SENSORS] = {sensor_result()};
@@ -32,6 +31,9 @@ int anc_base_id = -1;
 void error(const bool _critical, const int _code)
 {
   pinMode(ERROR_LED_PIN, OUTPUT);
+  DEBUG_SERIAL.println("error:" + System_Error_Code_STR[_code]);
+  HOST_SERIAL.println("error:" + System_Error_Code_STR[_code]);
+
   while (_critical)
   {
     for (int i = 0; i < _code; i++)
@@ -146,12 +148,12 @@ void process_anc_information(DBGCommandParser::Argument *args, char *response)
   }
 }
 
-void scan_for_sensors()
-
+int scan_for_sensors()
 {
   // SCAN FOR TLV SENSORS
   // if not tca found only one channel/sensor can be connected
   int max_tca_channels = 1;
+  int found_sensors = 0;
   if (tca9584a.isEnabled())
   {
     max_tca_channels = TCA9548A_Channels;
@@ -162,40 +164,69 @@ void scan_for_sensors()
       // SET TCA CHANNEL
       tca9584a.setChannel(i, true);
       // SCAN FOR SENSORS
-      const int arr_index = sensor_number;
-      sensors_found[arr_index].index = sensor_number;
+      const int arr_index = found_sensors;
+      sensors_found[arr_index].index = found_sensors;
       sensors_found[arr_index].tca_channel = i;
       sensors_found[arr_index].valid = sensors_found[arr_index].sensor_instance.begin(SENSOR_WIRE);
       sensor_number++;
       // UNSET TCA CHANNEL
       tca9584a.setChannel(i, false);
     }
-  }else{
-    // TCA IS NOT PRESENT JUST TRY TO ADD ONE SENSOR
-   
-    //i2c_scan
-    sensor_number = 0;
-    for (size_t i = ImplementedSensors::SIMULATED; i < ImplementedSensors::MMC56X3; i++)
-    {
-      sensors_found[i].index = i;
-      sensors_found[i].tca_channel = 0;
-      sensors_found[i].valid = sensors_found[i].sensor_instance.begin(SENSOR_WIRE);
-      sensor_number++;;
-    }
-    
-  #ifdef SENSOR_WIRE_ALT
-  int tmp = 0;
-    for (size_t i = ImplementedSensors::SIMULATED; i < ImplementedSensors::MMC56X3; i++)
-    {
-      sensors_found[i+sensor_number].index = i+sensor_number;
-      sensors_found[i+sensor_number].tca_channel = 0;
-      sensors_found[i+sensor_number].valid = sensors_found[i].sensor_instance.begin(Wire1);
-      tmp++;
-    }
-    sensor_number += tmp;
-  #endif
-    
   }
+  else
+  {
+    // TCA IS NOT PRESENT JUST TRY TO ADD ONE SENSOR
+
+    // i2c_scan
+    delay(1000);
+    for (size_t i = 0; i < IMPLEMENTED_SENSOR_COUNT; i++)
+    {
+      const ImplementedSensors sensor_to_scan = static_cast<ImplementedSensors>(i);
+      const int sensor_to_scan_addr = ImplementedSensorsAddressLookup[sensor_to_scan];
+      if (sensor_to_scan_addr == I2C_ADDR_INVALID)
+      {
+        continue;
+      }
+
+      HOST_SERIAL.println(ImplementedSensors_STR[sensor_to_scan]);
+
+      sensors_found[found_sensors].index = found_sensors;
+      sensors_found[found_sensors].tca_channel = 0;
+      sensors_found[found_sensors].valid = sensors_found[found_sensors].sensor_instance.begin(SENSOR_WIRE, sensor_to_scan);
+
+      if (sensors_found[found_sensors].valid)
+      {
+        found_sensors++;
+      }
+
+#ifdef SENSOR_WIRE_ALT
+    sensors_found[found_sensors].index = found_sensors;
+    sensors_found[found_sensors].tca_channel = 0;
+    sensors_found[found_sensors].valid = sensors_found[found_sensors].sensor_instance.begin(Wire1, sensor_to_scan);
+    if (sensors_found[found_sensors].valid)
+    {
+      found_sensors++;
+    }
+#endif
+
+      if (found_sensors >= MAX_TLV_SENSORS)
+      {
+        DEBUG_SERIAL.println("MAX_SENSORS_REACHED");
+        break;
+      }
+    }
+  }
+
+#ifdef CREATE_VIRTUAL_SENSOR_IF_NOT_HARDWARE_SENSORS_FOUND
+  if (found_sensors <= 0)
+  {
+    sensors_found[0].index = 0;
+    sensors_found[0].tca_channel = 0;
+    sensors_found[0].valid = sensors_found[found_sensors].sensor_instance.begin(SENSOR_WIRE, ImplementedSensors::SIMULATED_START);
+  }
+#endif
+
+  return found_sensors;
 }
 
 void setup()
@@ -205,7 +236,7 @@ void setup()
 
   // SETUP HOST SERIAL ANC
   HOST_SERIAL.begin(GENERAL_SERIAL_SPEED);
-
+  delay(2000);
   system_state = System_State_SETUP;
   DEBUG_SERIAL.println("sysstate_" + System_State_STR[system_state]);
 
@@ -230,14 +261,21 @@ void setup()
       DEBUG_SERIAL.println(F("> reset                        performs reset of the system"));
       DEBUG_SERIAL.println(F("> info                         logs sensor capabilities"));
       DEBUG_SERIAL.println(F("> commands                     lists sensor implemented commamnds which can be used by hal"));
+      DEBUG_SERIAL.println(F("> sid                          lists detected sensor types"));
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { DEBUG_SERIAL.println("v" + String(VERSION_MAJOR) + "." + String(VERSION_MINOR) + "." + String(VERSION_REVISION)); });
+                                       {
+                                        #ifdef VERSION
+                                        DEBUG_SERIAL.println(VERSION);
+                                        #else
+                                        DEBUG_SERIAL.println("v" + String(VERSION_MAJOR) + "." + String(VERSION_MINOR) + "." + String(VERSION_REVISION));
+                                        #endif
+                                        });
 
-  debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { 
-                                        for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
+  debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
+
+  debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < sensor_number; i++){ Serial.print(i);Serial.print(":");Serial.println(sensors_found[i].sensor_instance.get_sensor_name()); }});
 
   debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(System_State_STR[system_state]); });
@@ -284,8 +322,6 @@ void setup()
   pinMode(SYNC_PIN_STATUS_LED, OUTPUT);
   digitalWrite(SYNC_PIN_STATUS_LED, LOW);
 
-  
-
   // I2C SENSOR INTERFACE SETUP
 #if defined(SENSOR_WIRE_SCL_PIN) && defined(SENSOR_WIRE_SDA_PIN)
   SENSOR_WIRE.setSCL(SENSOR_WIRE_SCL_PIN);
@@ -294,13 +330,9 @@ void setup()
 
   SENSOR_WIRE.begin();
 
-
-
-
 #ifdef SENSOR_WIRE_ALT
   Wire1.begin();
 #endif
-
 
   if (!digitalRead(SINGLE_MODE_PIN))
   {
@@ -324,14 +356,19 @@ void setup()
     tca9584a.begin(TCA9548A_ADDRESS0, false);
   }
 
-  scan_for_sensors();
+  delay(1000);
+  sensor_number = scan_for_sensors();
   if (sensor_number <= 0)
   {
-    error(true, System_Error_Code_TLV_NO_SENSORS_FOUND);
+
+    error(false, System_Error_Code_TLV_NO_SENSORS_FOUND);
+    while (sensor_number <= 0)
+    {
+      sensor_number = scan_for_sensors();
+    }
   }
 
-  
-  // INIT SENSORS  
+  // INIT SENSORS
   tca9584a.resetChannels();
 
   for (int i = 0; i < sensor_number; i++)
