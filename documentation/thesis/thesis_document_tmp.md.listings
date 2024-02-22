@@ -251,7 +251,7 @@ Chapter \ref{evaluation}. **Evaluation**
 Chapter \ref{conclusion-and-discussion}. **Conclusion and Discussion**
   bringing together essential research components, it synthesizes study outcomes, discusses implications, and provides insights for future work. This chapter ensures closure and aids readers in grasping the broader context and significance of the research.
 
-Finally, a comprehensive hardware and software framework needs to be established, which can measure diverse objects using various sensors. In addition, comments must be made on the suitability of the sensors used for magnetic field measurements.
+A comprehensive hardware and software framework needs to be established, which can measure diverse objects using various sensors. In addition, comments must be made on the suitability of the sensors used for magnetic field measurements.
 
 # Unified Sensor
 
@@ -1805,11 +1805,13 @@ The controller of the temperature chamber can also be programmed via a (+pc) int
 
 With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
-The same procedure is used as for the *Linearity* measurement in chapter \ref{sensor-characterisation-linearity}, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
-Between each of these temperature changes, the system is given a waiting time of 30 minutes after reaching the target temperature.
-
 The field of permanent magnets is highly temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality *Type-N* magnets [@GKT16]).
-The temperature range is selected so that it is within a sufficient range for the application.
+The temperature range is selected so that it lies within a sufficient range for typical subsequent measurement tasks.
+
+The same procedure is used as for the *Linearity* measurement in chapter \ref{sensor-characterisation-linearity}, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
+Between each of these temperature changes, the system is given a additional waiting time of *30* minutes after reaching the target temperature.
+
+
 
 ### Temperature Sensitivity Analysis
 
