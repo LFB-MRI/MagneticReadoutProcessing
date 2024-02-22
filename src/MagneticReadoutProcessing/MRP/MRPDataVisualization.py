@@ -36,6 +36,8 @@ class MRPDataVisualization:
         """
         if _readings is None or len(_readings) <= 0:
             raise MRPDataVisualizationException("no readings in _reading given")
+        elif len(_readings) <= 3:
+            raise MRPDataVisualizationException("_readings list need at least three entries")
 
 
 
@@ -101,7 +103,7 @@ class MRPDataVisualization:
         raw_plot.axhline(y=raw_y[0], color='red', linestyle='--', linewidth=1, label='Ideal baseline $\mu_{bl}$=' + '{:.2f}{}'.format(raw_y[0], _unit_mag))
 
         try:
-            opt_params, pcov = opt.curve_fit(MRPDataVisualization.linear_curve_func, raw_x, raw_y)
+            opt_params, pcov = opt.curve_fit(MRPDataVisualization.linear_curve_func, raw_x[:-1], raw_y[:-1])
             a = opt_params[0]
             b = opt_params[1]
             ideal_y: [float] = []
@@ -118,6 +120,7 @@ class MRPDataVisualization:
 
             #raw_plot.axhline(y=mean, linestyle='--', linewidth=1, label='Mean of {}{}'.format(temperature, _uni_temp))
         raw_plot.set_xticks(raw_x, xlabels, fontsize=7)
+        raw_plot.set_xlim([0, len(_readings)-1])
         if min_value is not None and max_value is not None:
             raw_plot.set_ylim([min_value, max_value*1.1])
         raw_plot.legend(fontsize=7)
@@ -125,7 +128,7 @@ class MRPDataVisualization:
 
         fig.tight_layout()
         plt.interactive(False)
-        # plt.show()
+        plt.show()
         # SAVE FIGURE IF NEEDED
         if _filename is not None:
             plt.savefig(_filename, dpi=1200)
@@ -138,7 +141,7 @@ class MRPDataVisualization:
     def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
     @staticmethod
-    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
+    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False):
         """
         Plots the linearity from several readings
 
