@@ -223,7 +223,7 @@ class MRPDataVisualization:
         gs = gridspec.GridSpec(1, 1)
 
         if _as_linear_fkt:
-            mscale.register_scale('squareroot', MRPDataVisualizationHelper)
+            mscale.register_scale(MRPDataVisualisationHelper.SquareRootScale)
 
 
         fig = plt.figure()
@@ -277,6 +277,9 @@ class MRPDataVisualization:
         if _max_y is not None:
             distance_plot.set_ylim([0, _max_y])
 
+        if _as_linear_fkt:
+            distance_plot.set_yscale('squareroot')
+
         fig.tight_layout()
         plt.interactive(False)
         # plt.show()
@@ -287,7 +290,6 @@ class MRPDataVisualization:
             plt.show()
 
         plt.close()
-
 
     @staticmethod
     def plot_histogram(_reading: MRPReading.MRPReading, _title: str = '', _filename: str = None, _unit: str = "$\mu$T"):
@@ -315,7 +317,7 @@ class MRPDataVisualization:
         noise_y: [float] = []
 
         for v in raw_y:
-            deviation = abs(1.0 - (v / mean))
+            deviation = v - mean
             noise_y.append(deviation)
 
         noise_mean: float = np.sum(noise_y) / len(noise_y)
@@ -336,34 +338,12 @@ class MRPDataVisualization:
 
 
 
-        noise_plot = plt.subplot(gs[0, 0])
-        noise_plot.plot(raw_x, noise_y, linewidth=0.8, label='Noise Level')
-        noise_plot.axhline(y=noise_mean, color='red', linestyle='--', linewidth=1, label='Noise Mean $\mu_{nl}$')
-        noise_plot.set_xlabel('Data-Point Index', fontsize=8)
-        noise_plot.set_ylabel('Noise Level\n[%]', fontsize=8)
-        noise_plot.set_title('Noise Level $\mu_{nl}'+'={:.2f}'.format(noise_mean)+'$% of $\mu_'+'{rv}'+'={:.2f}${}'.format(mean, _unit), fontsize=9)
-        noise_plot.legend(fontsize=4)
-
-
-
-        hist_plot = plt.subplot(gs[0, 1])
-        hist_mu: float = noise_mean
-        hist_sigma: float = np.sqrt(noise_variance)  # standard deviation of distribution
-        num_bins: int = int(math.log(_reading.len()) * 4)
-        # the histogram of the data
-        n, bins, patches = hist_plot.hist(noise_y, num_bins, density=True)
-        # add a 'best fit' line
-        hist_best_fit_y = ((1 / (np.sqrt(2 * np.pi) * hist_sigma)) * np.exp(-0.5 * (1 / hist_sigma * (bins - hist_mu)) ** 2))
-        hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8, label='Standard Deviation $\sigma_{nl}$')
-        hist_plot.set_xlabel('Noise Level [%]', fontsize=8)
-        hist_plot.set_ylabel('Probability\ndensity', fontsize=8)
-        hist_plot.set_title('Histogram of Noise Level\n$\mu_{nl}'+'={:.2f}$%'.format(hist_mu)+ ', $\sigma_{nl}'+'={:.2f}$% bins={}'.format( hist_sigma, num_bins), fontsize=9)
-        hist_plot.legend(fontsize=4)
 
 
 
 
-        raw_plot = plt.subplot(gs[1, :])
+
+        raw_plot = plt.subplot(gs[0, :])
         raw_plot.plot(raw_x, raw_y, linewidth=0.8, label='Raw Values')
         ylim = max(abs(raw_y.max()), abs(raw_y.min())) * 1.3
         raw_plot.set_xlim([0, _reading.len()])
@@ -383,12 +363,43 @@ class MRPDataVisualization:
         temperature_plot.plot(raw_x, _reading.to_temperature_value_array(), linewidth=0.8, label='Sensor Raw Temperature')
         temperature_plot.set_xlim([0, _reading.len()])
         temperature_plot.axhline(y=temperature_mean, color='red', linestyle='--', linewidth=1, label='Temperature Mean $\mu_{t}$')
-        temperature_plot.set_xlabel('Data-Point Index', fontsize=8)
-        temperature_plot.set_ylabel('Temperature\n[$^\circ\mathrm{C}$]', fontsize=8)
-        temperature_plot.set_title('Sensor Temperature $\mu_{t}'+'={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$'+'   $\sigma_{t}$'+'={:.2f}'.format(MRPAnalysis.MRPAnalysis.calculate_std_deviation(_reading, True), _unit) + '$^\circ\mathrm{C}$', fontsize=9)
-        temperature_plot.legend(fontsize=4)
+        temperature_plot.set_xlabel('Data-Point Index', fontsize=7)
+        temperature_plot.set_ylabel('Temperature\n[$^\circ\mathrm{C}$]', fontsize=7)
+        temperature_plot.set_title('Sensor Temperature $\mu_{t}'+'={:.2f}$'.format(temperature_mean) + '$^\circ\mathrm{C}$'+'   $\sigma_{t}$'+'={:.2f}'.format(MRPAnalysis.MRPAnalysis.calculate_std_deviation(_reading, True), _unit) + '$^\circ\mathrm{C}$', fontsize=8)
+        temperature_plot.legend(fontsize=3)
+
+        box_plot = plt.subplot(gs[1, 1])
+        ##### Set style options here #####
+        boxprops = dict(linestyle='-', linewidth=1.0, color='#00145A')
+        flierprops = dict(marker='o', markersize=1,
+                          linestyle='none')
+        whiskerprops = dict(color='#fe7f2e')
+        capprops = dict(color='#fe7f2e')
+        medianprops = dict(linewidth=1.0, linestyle='-', color='#fe161d')
+
+        box_plot.boxplot(raw_y, vert=False, notch=False, boxprops=boxprops, whiskerprops=whiskerprops,capprops=capprops, flierprops=flierprops, medianprops=medianprops,showmeans=False)
+        box_plot.set_title('Boxplot'.format(), fontsize=8)
+        box_plot.set_xlabel('Raw Sensor Values [{}]'.format(_unit), fontsize=8)
+        box_plot.set_yticklabels([""])
+        box_plot.tick_params(left=False)
+        box_plot.xaxis.set_ticks_position('none')
 
 
+        hist_plot = plt.subplot(gs[1, 0])
+        hist_mu: float = MRPAnalysis.MRPAnalysis.calculate_mean(_reading)
+        hist_sigma: float = MRPAnalysis.MRPAnalysis.calculate_std_deviation(_reading)
+        num_bins: int = int(math.log(_reading.len()) * 4)
+        ## the histogram of the data
+        n, bins, patches = hist_plot.hist(raw_y, num_bins, density=True)
+        ## add a 'best fit' line
+        hist_best_fit_y = ((1 / (np.sqrt(2 * np.pi) * hist_sigma)) * np.exp(-0.5 * (1 / hist_sigma * (bins - hist_mu)) ** 2))
+        hist_plot.plot(bins, hist_best_fit_y, '--', linewidth=0.8, label='Standard Deviation $\sigma_{nl}$')
+        hist_plot.set_ylabel('Raw Value [{}]'.format(_unit), fontsize=7)
+        hist_plot.axvline(hist_mu, color='red', linestyle='--', linewidth=1, label='Sensor Raw Mean $\mu_{rv}$')
+        hist_plot.set_ylabel('Probability\ndensity', fontsize=7)
+        hist_plot.set_title('Histogram using {} bins'.format( num_bins), fontsize=8)
+        hist_plot.set_xlabel('Raw Sensor Values [{}]'.format(_unit), fontsize=8)
+        hist_plot.legend(fontsize=4)
 
 
         fig.tight_layout()

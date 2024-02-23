@@ -249,7 +249,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             if 'mmc' in k.lower():
                 my = 3000
 
-            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=True,_max_y=my)
+            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=False,_max_y=my)
 
     def test_histogram_realdata(self):
 
