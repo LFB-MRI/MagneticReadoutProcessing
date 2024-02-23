@@ -1697,7 +1697,7 @@ After the measurements are exported, these are analysed for linearity using *MRP
 
 %%Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
-The Figure \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} combines the visual representation of linearity as a plot.
+The Figure \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} combines the visual representation of linearity as a plot. Only the measuring range specified in the sensors data sheet is considered here, as linearity is guaranteed for this range. In terms of the *TLV493D* this is *0.5%* and in the case of the *MMC5603NJ* *0.1%*.
 The distance from the magnet to the sensor is plotted in *mm* on the x-axis.
 The measured value of the sensor is plotted on the y-axis.
 This is not directly comparable for both plots, as the sensors have different measuring ranges.
