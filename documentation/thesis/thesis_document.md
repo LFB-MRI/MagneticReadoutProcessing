@@ -5,18 +5,17 @@ The chapter provides a brief introduction into the problem domain, delineates th
 
 ## Background and Motivation
 
-(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a significant role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@NK16]
+(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional images of the body. This indispensable method plays a significant role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@NK16]
 
-Several types of magnets are applicated in different (+mri) systems. Permanent magnets generate a steady yet relatively weak magnetic field, electromagnets are energized by electrical currents and superconducting electromagnets produce magnetic fields through electric induction.
-Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
+Several types of magnets are applicated in different (+mri) systems. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
 This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
 \newpage
 
-The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary. 
-In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets.
+The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary with a higher field-strength of at least 1.5 T. [@HH21]
+In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets. Permanent magnets generate a steady yet relatively weak magnetic field.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
-While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
+Low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly, Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
 
 Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
@@ -39,17 +38,17 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 ### Low-Field MRI
 
-For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing in general a higher image contrast. The substantial costs, space requirements and safety and installation considerations cause considerable challenges.
+For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing in general a higher contrast. The substantial costs, space requirements and safety and installation considerations cause considerable challenges.
 
-(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The initial *B0* field of an (+mri) aims to be homogeneous, for image acquisition the second step requires inhomogeneity of the *B0* field to stimulate spin in the atoms of materials. For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
+(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
 
 Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@NK16]
 
 Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)-systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@HH21].
 
-This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
+This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved contrasting of soft material. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@NK16]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and used in (+mri)s a limited (+snr) due to the constrained field strength. [@NK16]
 
 In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and needs to be analysed.
 
@@ -62,7 +61,7 @@ The positioning of permanent magnets holds a significant role in constructing an
 This positioning has the ability to generate extremely homogeneous magnetic flux densities, produce virtually no stray fields and is particularly attractive for larger magnets as their design has the best flux-to-mass ratio [@WZC21].
 
 A Halbach ring of this type is usually based on a ring with permanent magnets arranged in a circle.
-The Figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. 
+Figure \ref{Example_Halbach_ring_with_cutouts_for_eight_magnets.png} shows an example (+cad) model of such a ring. 
 
 
 In this generated model eight cubic *12x12x12mm* magnets are embedded to generate homogeneous magnetic flux densities of around *20mT*.
@@ -102,7 +101,7 @@ The shimming process is an essential step in (+mri) to ensure homogeneous magnet
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
 The sources for the shimming process can be hardware and software based. 
-Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field. [@BPA22]
+Hardware shimming uses metal plates inserted into the magnet body. [@BPA22]
 Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
 
 In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
@@ -115,7 +114,7 @@ According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) syst
 
 Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$).
 
 To further refine the magnets homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -125,7 +124,7 @@ The shimming process mentioned describes how, after the field magnet has been se
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Halbach configuration.
 
-In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@WZC21].
+In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. [@WZC21]
 
 There are two ways of using the data from the magnets that are previously measured:
 
@@ -139,7 +138,7 @@ These are each separate projects that implement individual aspects of data proce
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
 Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithm which O'Reilly implemented [@O24]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
-This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring.
+This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring and the selection of suitable magnets. 
 
 ## Aim of this Thesis
 
@@ -165,7 +164,7 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 ## Research Question and Approach
 
-Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
+Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
 
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
@@ -277,7 +276,7 @@ The selection process for possible magnetic field sensors initially focuses on t
 
 A Hall effect sensor utilises the Hall effect that occurs when current flows in a conductor that is exposed to a magnetic field. The sensor consists of a semiconductor material such as gallium arsenide or indium antimonide. Inside the sensor are Hall effect plates, which essentially consist of a thin layer of this semiconductor material. [@BJJ16]
 
-The Figure \ref{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png} shows the internal structure of a digital Hall effect sensor as a block diagram. The Hall effect takes place in the Hall plates. These are orientated differently depending on the axis inside the (+ic)s. In this case, it is a three-axis hall effect sensor. The output voltage generated by the Hall plates is then digitised by a (+adc). The values can then be read out via a digital interface.
+Figure \ref{Typical_block_diagram_of_a_digital_hall_sensor_sensing_chain_using_three_hall_plates.png} shows the internal structure of a digital Hall effect sensor as a block diagram. The Hall effect takes place in the Hall plates. These are orientated differently depending on the axis inside the (+ic)s. In this case, it is a three-axis hall effect sensor. The output voltage generated by the Hall plates is then digitised by a (+adc). The values can then be read out via a digital interface.
 
 A key aspect of this selection is the preference for sensors with digital interfaces to facilitate implementation in the circuit layout since these kinds of sensors are easy to integrate compared to non-digital sensors, which require specific frameworks.
 The integration of integrated temperature sensors represents a significant enhancement that will later enable precise temperature compensation.
@@ -293,7 +292,7 @@ They are excluded because they require more carefully designed circuits and more
 
 Another point that contributed to the selection of this module is the availability of the sensor (+ic)s as a ready-made and readily available evaluation module. This ensured that the electrical design is verified by the manufacturer so that the sensor could be operated with the correct electrical parameters. On the other hand, it is possible to analyse several sensors in a shorter time, so that no separate (+pcb) has to be designed and manufactured.
 
-The Table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} shows a selection of sensors for which hardware and software support has been implemented.
+Table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} shows a selection of sensors for which hardware and software support has been implemented.
 The resolution of the selected sensors covers the expected range of values required by the various magnets to be tested.
 
 In the *Evaluation* in chapter \ref{evaluation} basic characterisation methods are used to evaluate the sensors listed in Table \ref{List_of_in_unified_firmware_implemented_digital_magnetic_field_sensors_with_focus_on_different_sensor_capabilities.csv} regarding their sensitivity and other parameters. This is done at this point, as the components of the readout interface that enable interaction with the sensors are considered first.
@@ -361,7 +360,7 @@ public:
 #endif
 ```
 
-The Figure \ref{Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png} shows a flow chart of the start process after powering on the sensor and the subsequent main loop for processing the user commands and sensor results.
+Figure \ref{Unified_sensor_firmware_program_structure_with_listed_setup_and_main_loop_routines_using_simplified_function_blocks.png} shows a flow chart of the start process after powering on the sensor and the subsequent main loop for processing the user commands and sensor results.
 When the microcontroller is started, the software checks whether known sensors are connected to (+i2c) or (+uart) interfaces.
 
 If any are found (using a dedicated (+lut) with sensor address translation information), the appropriate class instances are created and these can later be used to read out measurement results.
@@ -391,11 +390,11 @@ Each sensor that is loaded with the firmware, registers on to the host (+pc) as 
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
 This allows to quickly inspect whether the hardware is working properly after firmware installation.
-The command *help*, displays a detailed command reference with all available commands as shown in the Figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
+The command *help*, displays a detailed command reference with all available commands as shown in Figure \ref{Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png} to the user.
 
 %%Unified_sensor_firmware_provided_serial_terminal_based_(+cli)_allows_the_user_to_configure_the_sensor_manually.png%%
 
-The Figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
+Figure \ref{Result_of_an_executed_b_value_measurement_readout_command_using_the_sensors_(+cli)_with_immediate_user_readable_response.png} shows the current measured value queried by using the *readout* command by the user. 
 
 The other option is to use the (+mrp)-library explained in chapter \ref{software-readout-framework}. The serial interface is also used at this point. However, after a connection attempt by the (+hal) module (explained in chapter \ref{mrphal}) of the (+mrp)-library (explained in chapter \ref{software-readout-framework}), the system switches to binary mode, which is initiated using the *sbm* command. The command is only sent by the library, not by the user.
 The same commands are available to (+mrp)-library as for user (+cli)-based communication, but in a binary format.
@@ -426,12 +425,12 @@ If the host system is still under load, this value increases many times over. Th
 The other issue is sending the trigger signal from the readout software, which is described in chapter \ref{software-readout-framework}. At this point unpredictable latencies can occur, too, depending on which other tasks are also executed on this port.
 To enable the most stable possible synchronisation between several sensors, an option has already been created to establish an electrical connection between sensors.
 This is used together with the firmware to synchronise the readout intervals.
-The Figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together to implement this form of synchronisation.
+Figure \ref{Multi_sensor_synchronisation_wiring_example_using_three_sensors_together_with_one_host_(+pc)_performing_the_triggering_and_readout_processing.png} illustrates the schematic how several sensors must be wired together to implement this form of synchronisation.
 
 %%Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png%%
 
 Once the hardware has been prepared, the task of the firmware of each of the chained sensors is to find a common synchronisation clock.
-The Figure \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} illustrates how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
+Figure \ref{Unified_sensor_firmware_multi_sensor_synchronisation_procedure_using_sync_(+gpio)_input_for_operation_(primary_or_secondary)_mode_decision.png} illustrates how the firmware handles the decision task if the sensor is *primary* or *secondary* at startup.
 The internal firmware-function *register irq on sync pin* is overwritten. To set one *primary* and several *secondary* sensors, each sensor waits for an initial pulse on the SYNC-(+gpio), which is a pin at the microcontroller with the functionality to detect if the sensor is a primary or a secondary sensor.
 A random timer is started beforehand by each sensor, which sends a pulse on the sync line. All others receive this and switch to *secondary mode* and synchronise the measurements based on each sync pulse received.
 
@@ -439,7 +438,7 @@ Since the presumed *primary* sensor cannot register its own sync pulse (because 
 This means that in a chain of sensors there is exactly one *primary* and many *secondary* sensors.
 
 In single-sensor operation, this automatically jumps to *primary* sensor operation through the *got impulse within 1000ms* branch result.
-The Figure \ref{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
+Figure \ref{Result_of_the_opmode_command_execution_on_a_sensor_which_is_connected_to_another_as_primary_configured_sensor.png} shows the synchronisation status of the sensor which can be queried via the user interface described in chapter \ref{communication-interface} by using the *opmode* command.
 An important aspect of the implementation is that there is no numbering or sequence of the individual sensors.
 This means that for the subsequent readout of the measurements, it is only important that they are taken at the same interval across all sensors.
 The sensor differentiation takes place later in the (+mrp)-library \ref{software-readout-framework} by using the sensor (+uuid).
@@ -452,7 +451,7 @@ Two functional sensor platforms are built in order to create a solid test platfo
 
 %%Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv%%
 
-The Table \ref{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
+Table \ref{Build_hardware_sensors_equipped_with_different_sensor_(+ic)s_to_cover_various_magnet_charaterisation_setups.csv} shows the various prototype sensor platforms equipped with different magnetic field sensors.
 These cover all the required functions described in the use cases \ref{use-cases}. The most significant difference, apart from the sensor used, is the *scan mode*.
 In this context, this describes whether the sensor can measure a *static* fixed point on the magnet or if the sensor can move *dynamically* around the magnet using a controllable manipulator.
 
@@ -480,7 +479,7 @@ The designed magnet holder can be adapted for different magnet shapes and can be
 
 The 3D full sphere sensor shown in Figure \ref{Full_sphere_sensor_implementation_using_two_Nema17_stepper_motors_in_a_polar_coordinate_system.png} offers the possibility to create a 3D map of the inserted magnet.
 
-The Figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder. The magnet sensor is mounted on a movable arm, which can move *180* degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
+Figure \ref{3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png} shows the visualisation of such a scan in the form of a spherical 3D map. On the sphere is the magnetic field strength, which is detected by the sensor at the position. The transition from a fully positive field strength (red) to a negative field strength (blue) is clearly recognisable and corresponds to the orientation of the magnet in the holder. The magnet sensor is mounted on a movable arm, which can move *180* degrees around the magnet on one axis. To be able to map the full sphere, the magnet is mounted on a turntable. This permits the manipulator to move a polar coordinate system.
 
 %%3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png%%
 
@@ -525,7 +524,7 @@ This concept is explained in the following chapter.
 
 User interaction points represent one core concept of the developed library and are intended to provide user-friendliness on the one hand and the rapid development of own analysis and optimisation algorithms on the other. For this thesis it also eases the option to change sensors for measurements. 
 
-For this purpose, the library is divided into individual modules, which are shown in the Figure \ref{A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}.
+For this purpose, the library is divided into individual modules, which are shown in Figure \ref{A_high_level_overview_of_all_MRP_library_implemented_Python_modules_which_can_be_changed_by_the_user.png}.
 In combination, these represent a typical measurement-analysis-evaluation workflow of data.
 For this purpose, a module system with standardised functional patterns and data types is developed and packed together in an extendable Python library.
 
@@ -887,7 +886,7 @@ It is used to manage the measurement data and can be imported and exported.
 The following example Listing \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
 
 A crucial point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
-Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
+The measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
 
 \newpage
 
@@ -1107,7 +1106,7 @@ The next logical step is to analyse the recorded data.
 This can involve one or several hundred data records. Again, the procedure for the user is to write their own evaluation Python scripts using the (+mrp)-library.
 This is particularly useful for complex analyses or custom algorithms, but not necessarily for simple standard tasks such as bias compensation or graphical plot outputs.
 For this purpose, (+cli) application is created further, to enable the user to create and execute complex evaluation pipelines for measurement data without programming.
-The Figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
+Figure \ref{Example_measurement_analysis_pipeline.png} shows a typical measurement data analysis pipeline, which consists of the following steps:
 
 1. Import the measurements
 2. Determine sensor bias value from imported measurements using a reference measurement
@@ -1328,7 +1327,7 @@ This framework offers the functionality to generate (+html) or (+pdf) documentat
 These are converted into a Markdown format in an intermediate step and this also allows to add further user documentation such as examples or installation instructions. Once the finished documentation has been generated from static (+html) files, it is stored in the project repository.
 Another publication option is to host the documentation via online services such as \href{https://readthedocs.com}{ReadTheDocs}, where users can make documentation for typical software projects available to others.
 
-The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. The Figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also lists separate menu items for tutorials on the individual functionalities.
+The documentation has also been uploaded to the \href{https://magneticreadoutprocessing.readthedocs.io/}{ReadTheDocs} service. Figure \ref{MagneticReadoutProcessing_documentation_hosted_on_ReadTheDocs.png} shows a screenshot of the start page, which also lists separate menu items for tutorials on the individual functionalities.
 The process of creating and publishing the documentation has been automated using \href{https://github.com/features/actions}{GithubActions}, so that it is always automatically kept up to date with new features.
 
 
@@ -1518,17 +1517,17 @@ $ MRPudpp pipeline run
 
 %%MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png%%
 
-The Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} shows the measured values filtered by the implemented filter algorithm of Listing \ref{lst:custom_find_similar_values_algorithm}. It can be seen that of the initial *10* measurements (upper plot), only four measurements that are most similar to the *(+cog)* mean value were filtered (lower plot). The number of desired result measurements was defined here by the parameter *IP_return_count*. 
-It can be seen from the plotted *(+cog)* $\mu$T mean values values, that these are closest to an ideal Magnet with a *(+cog)* value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, with the same measurement parameters (*magnet type*, *dimensions*, *sensor distance*) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
+Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png} shows the measured values filtered by the implemented filter algorithm of Listing \ref{lst:custom_find_similar_values_algorithm}. It can be seen that out of the initial *10* measurements (upper plot) only four measurements that are most similar to the *(+cog)* mean value are filtered (lower plot). The number of desired result measurements are defined here by the parameter *IP_return_count*. 
+It can be seen from the plotted *(+cog)* $\mu$T mean values are close to an ideal Magnet with a *(+cog)* value of 0$\mu$T. This ideal value is calculated with the function *MRP.MRPSimulation.generate_simulated_reading*, using the same measurement parameters (*magnet type*, *dimensions*, *sensor distance*) as they correspond to the mechanical structure of the used hardware sensor in chapter \ref{d-full-sphere}.
 
 It can be seen that there are measured magnets with larger deviations (see magnet index plots for *7:0*,*10-2:0*,*10-1:0* in Figure \ref{MRP_evaluation_result_after_find_similar_values_algorithm_execution_in_the_user_defined_pipeline.png}).
 
 If the alternative filter algorithm from chapter *Alternative Filter Algorithm Implementation* \ref{alternative-filter-algorithm-implementation} is executed at this point, the same result is returned if the magnet measurement with (+id) *5:0* is used as the reference magnet.
 
-The filter algorithm implemented by the user is thus successfully executed via the user-programmable pipeline
-The calculation result was successfully verified using raw measurement data and the result of the algorithm and verified using reference measurements.
+The filter algorithm implemented by the user is thus successfully executed via the user-programmable pipeline.
+The calculation result is successfully verified using raw measurement data and the result of the algorithm and verified using reference measurements.
 The streamlined pipeline approach enables the user to re-execute the implemented measurement pipeline example with further measurement data. Changes to filter parameters, for example, are also possible without having to adapt the code.
-Using this example, all the required functional capabilities from the chapter *Use cases* \ref{use-cases} of this implemented solution were demonstrated in their functional capability.
+Using this example, all the required functional capabilities from the chapter *Use cases* \ref{use-cases} of this implemented solution are demonstrated in their functional capability.
 
 # Evaluation
 
@@ -1545,15 +1544,15 @@ These questions are answered in the following as a basic readout and analysis fu
 
 ## Sensors for Evaluation
 
-For this evaluation, the sensors listed in the Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} are used for sensor characterisation. The selection of sensors is described in chapter \ref{sensor-selection}.
+For this evaluation, the sensors listed in Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} are used for sensor characterisation. The selection of sensors is described in chapter \ref{sensor-selection}.
 The additional column for the *Background Noise* is taken from the respective data sheets of the sensors and will be verified in the later *Background Noise* measurement in chapter \ref{sensor-characterisation-background-noise}.
 
 %%Digital_magnetic_field_sensors_characterised_for_evaluation.csv%%
 
 The values in Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv} are taken from the data sheets of the relevant manufacturers as a reference for comparison with the later measurement results.
 
-The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the Table.
-For this evaluation, the sensors listed in the Table are used for sensor characterisation. This selection is made for the following reasons:
+The developed framework is directly compatible with a variety of magnetic field sensors without modifications, including those listed in the table.
+For this evaluation, the sensors listed in the table are used for sensor characterisation. This selection is made for the following reasons:
 
 * Availability of ready to use development boards
 * Specifications correspond to the application areas
@@ -1587,7 +1586,7 @@ The insulated housing of a *Voron 2.4* 3D printer, which has a separately contro
 To verify the temperature, an additional thermometer *7055BT* is placed on the base plate.
 A *10mm* thick *PTFE* insulation plate is placed between the floor and the sensor base plate to prevent direct and uneven heating of the base plate by the heated floor.
 
-The Figure \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
+Figure \ref{Sensor_evaluation_plattform_with_TLV493D_and MMC5603_sensors_placed_with_thermal_conductive_glue_on_an_aluminium_baseplate.png} shows this basic setup, the *Raspberry Pi Pico* is used as the readout hardware, on which the *Unified Sensor Firmware* is running.
 With additional connected switch, it is possible to isolate or select a sensor or both sensors to be queried from the firmware.
 
 A separate battery power supply is used as low-noise power supply for the sensor boards.
@@ -1621,7 +1620,7 @@ The following data is shown in the plots:
 * Noise level with reference to the initial baseline
 * Histogram of the background noise level
 
-The Table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that are extracted from the measurement data of the sensors in Figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
+Table \ref{Sensor_noise_evaluation_results.csv} lists the measured values that are extracted from the measurement data of the sensors in Figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png}.
 These measured values are categorised below.
 
 
@@ -1642,7 +1641,7 @@ Though it is recommended to use a separate temperature sensor when using the *TL
 
 ### Raw Sensor Data Analysis
 
-The noise of a sensor describes unwanted, random fluctuations or signals in the measured data. These are clearly recognisable in the Figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} in the raw data plot. 
+The noise of a sensor describes unwanted, random fluctuations or signals in the measured data. These are clearly recognisable in Figure \ref{Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png} in the raw data plot. 
 The baseline measurement which is previously determined for each sensor is shown by the red $\mu_{rv}$ [$\mu$T] line. It can be seen that each sensor has a different baseline offset in the same environment.
 This variable is the result of multiple effects, including the electrical offset introduced by the front end and the effect of the earth's magnetic field [@CSG22] and the test environment.
 
@@ -1668,7 +1667,7 @@ This is achieved by means of an additional linear axis installed above the senso
 A holder for an *N45 12x12x12mm* magnet is attached to the end effector of this axis, which can thus be moved at different distances above the respective sensor (+ic). 
 The ambient temperature is set to *$\mu_{trev, 7055BT}$=21.0$^{\circ}$C* in the measurement runs and thus corresponds to the same conditions as in the chapter *Background Noise* \ref{sensor-characterisation-background-noise} setup.
 
-The Figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} contains this updated measurement setup with the added components.
+Figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} contains this updated measurement setup with the added components.
 To control the linear axis an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
 
 In addition, the (+dr) for both sensors are measured before the measurement run to determine the linearity. In this case, this indicates the minimum and maximum linear measuring range for the selected linear Hall sensors.
@@ -1697,7 +1696,8 @@ After the measurements are exported, these are analysed for linearity using *MRP
 
 %%Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
-The Figure \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} combines the visual representation of linearity as a plot.
+Figure \ref{Sensor_linearity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} combines the visual representation of linearity as a plot. Only the measuring range specified in the sensors data sheet is considered here, as linearity is guaranteed for this range. In terms of the *TLV493D* this is *0.5%* and in the case of the *MMC5603NJ* *0.1%*.
+
 The distance from the magnet to the sensor is plotted in *mm* on the x-axis.
 The measured value of the sensor is plotted on the y-axis.
 This is not directly comparable for both plots, as the sensors have different measuring ranges.
@@ -1719,7 +1719,7 @@ An accurate temperature sensitivity characteristic is therefore crucial for subs
 
 As the temperature sensor *TLV493D* in particular produced vastly different results in the previous measurements, an additional temperature sensor is attached to the sensor circuit board for this measurement. 
 
-The Figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} represents these modifications in detail. These changes makes it possible to accurately determine the sensors (+ic) temperature.
+Figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} represents these modifications in detail. These changes makes it possible to accurately determine the sensors (+ic) temperature.
 The temperature measuring device *7055BT* can be analysed using a (+pc) interface.
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
 
@@ -1737,7 +1737,7 @@ Between each of these temperature changes, the system is given a additional wait
 
 %%Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
 
-The Figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} represents the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
+Figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png} represents the measured data as a plot with the temperature measured by the measuring devices on the X-axis and the sensor measured value on the Y-axis. The ideal baseline is also shown as a red line.
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
 The graph of the *TLV493d* is significantly steeper with a gradient of -5.13 $\mu$T / $^{\circ}$C, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with *70$\mu$T*, if the total measurement range of the sensors is also considered.
