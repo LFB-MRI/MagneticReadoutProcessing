@@ -5,17 +5,17 @@ The chapter provides a brief introduction into the problem domain, delineates th
 
 ## Background and Motivation
 
-(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional black-and-white images of the body. This indispensable method plays a significant role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@NK16]
+(+mri) stands as a cornerstone in clinical diagnostics, utilizing the principles of nuclear magnetic resonance (+nmr) to generate cross-sectional images of the body. This indispensable method plays a significant role in contemporary medicine and research, contributing significantly to saving lives. Despite its widespread use, traditional (+mri) systems often rely on large, heavy, and expensive magnets to achieve the necessary homogeneity of the magnetic field for accurate imaging. [@NK16]
 
 Several types of magnets are applicated in different (+mri) systems. Regardless of the type, the primary objective is to create a homogeneous magnetic field within the (+mri). The higher the homogeneity, the more accurate the measurements. Homogeneity in composed (+mri) can be adapted using the shimming procedure which requires a lot of effort and is prone to errors. 
 This uniform magnetic field aligns the molecules within the body or object, setting the stage for a second magnetic system to stimulate these molecules for spin-measurements.
 
 \newpage
 
-The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary with a higher field-strength of at least 1.5 T.
+The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary with a higher field-strength of at least 1.5 T. [@HH21]
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets. Permanent magnets generate a steady yet relatively weak magnetic field.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
-While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
+Low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
 
 Permanent magnets, usually arranged in a circular *Halbach array* inside the (+mri), are commonly used in low-field systems. However, their drawback is the inherent variability in strength, complicating the achievement of a homogeneous field and requiring precise strength information for correct magnet ordering and (+mri) construction.
 
@@ -38,17 +38,17 @@ This research initiative contributes to the improvement of low-frequency (+mri) 
 
 ### Low-Field MRI
 
-For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing in general a higher image contrast. The substantial costs, space requirements and safety and installation considerations cause considerable challenges.
+For modern medical imaging high-field superconducting magnets dominate most (+mri) machines, providing in general a higher contrast. The substantial costs, space requirements and safety and installation considerations cause considerable challenges.
 
-(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). The initial *B0* field of an (+mri) aims to be homogeneous, for image acquisition the second step requires inhomogeneity of the *B0* field to stimulate spin in the atoms of materials. For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
+(+mri) relies on the presence of a robust magnetic field, and over time, there has been a continual push to enhance the strength of these magnetic fields. This strength is quantified in units of Tesla [T], commonly referred to as the *B0* field in medical contexts, while physicists use the term magnetic field induction. The (+snr) is proportional to the magnetic *B0* field; growing magnetic field leads automatically to higher (+snr). For high resolution images, the initial *B0* field aims to be a homogeneous as possible. 
 
 Notably, the focus on high-field systems dominated discussions until around 1991 when the possibility of constructing (+mri) machines with lower magnetic field strengths came up. This marked a shift in exploring the potential advantages and applications of low-field (+mri) systems. [@NK16]
 
 Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique that operates at a lower magnetic field strength compared to conventional high-field (+mri) scanners. Typically, the magnetic field in low-field (+mri)-systems measured between *0.1T* and *0.3T* compared to the usual *1.5T* to *3T* and above in high-field (+mri) scanners [@HH21].
 
-This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved imaging of soft material, especially when examining joints and muscles. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
+This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved contrasting of soft material. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and a limited (+snr) due to the constrained field strength. [@NK16]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and used in (+mri)s a limited (+snr) due to the constrained field strength. [@NK16]
 
 In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and needs to be analysed.
 
@@ -101,7 +101,7 @@ The shimming process is an essential step in (+mri) to ensure homogeneous magnet
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
 The sources for the shimming process can be hardware and software based. 
-Hardware shimming involves the use of gradient and radio frequency coils that are specifically placed to align the magnetic field. [@BPA22]
+Hardware shimming uses metal plates inserted into the magnet body. [@BPA22]
 Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
 
 In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
@@ -114,7 +114,7 @@ According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) syst
 
 Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). This exceptional homogeneity enables the utilization of coil-based gradients for spatial encoding, significantly enhancing the flexibility of image acquisition.
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$).
 
 To further refine the magnets homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -124,7 +124,7 @@ The shimming process mentioned describes how, after the field magnet has been se
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Halbach configuration.
 
-In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. This data is then evaluated in separate software [@WZC21].
+In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. [@WZC21]
 
 There are two ways of using the data from the magnets that are previously measured:
 
@@ -138,7 +138,7 @@ These are each separate projects that implement individual aspects of data proce
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
 Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithm which O'Reilly implemented [@O24]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
-This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring.
+This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring and the selection of suitable magnets. 
 
 ## Aim of this Thesis
 
