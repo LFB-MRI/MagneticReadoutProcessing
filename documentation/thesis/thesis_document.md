@@ -164,7 +164,7 @@ Two sensors have been meticulously chosen for inclusion in the study. The ultima
 
 ## Research Question and Approach
 
-Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems and spin generation for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
+Concerning the *DeLoRI* project, this study exclusively delves into the realm of permanent magnets employed for creating a homogeneous *B0* field through Halbach rings. Other systems for measurements are deliberately excluded from consideration but will be necessary in later stages of the *DeLoRI* project. 
 
 Before naming the research focus, it is important to understand the difference and connection between deviation and resolution of the system. 
 To measure a deviation of better than *1000 (+ppm)* in a *50mT* magnetic field, a resolution that is less than *1000 (+ppm)* of *50mT* is needed.
@@ -886,7 +886,7 @@ It is used to manage the measurement data and can be imported and exported.
 The following example Listing \ref{lst:mrpexample_reading} shows how a measurement is created and measurement points are added in the form of *MRPReadingEntry* instances.
 
 A crucial point is the management of the meta data, which further describes the measurement. This is realised in the example using the *set_additional_data* function.
-Finally, the measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
+The measurement is exported for archiving and further processing; various export formats are available. Using the *dump_to_file* function, the measurement can be converted into a open (+json) format.
 
 \newpage
 
