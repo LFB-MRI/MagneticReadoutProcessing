@@ -32,8 +32,6 @@ The accompanying open source software for this work is not only designed to enab
 
 The sensor testing process involves three key test procedures for two digital sensors. Firstly, the background noise for both sensors is quantified by measuring with the sensors in a constant environment without any magnets. Secondly, the linearity of the magnetic fields is measured for all sensors to detect deviations from the estimated ideal magnetic curve.
 
-At last, the temperature drift is measured by repeating the background noise test in different temperature environments. Sensor noise should be less than *50$\mu$T* to characterise precisely a magnetic field in a Halbach-Array of an (+mri) with precision greater than *1000 (+ppm)*.
-
 This research initiative contributes to the improvement of low-frequency (+mri) systems by enhancing the accuracy of permanent magnet characterisation. The outcome of this thesis provides insights into the selection and evaluation of sensors for future low-field (+mri) research, ultimately contributing to advancements in medical imaging technologies.
 
 ### Low-Field MRI
@@ -101,10 +99,10 @@ The shimming process is an essential step in (+mri) to ensure homogeneous magnet
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
 The sources for the shimming process can be passive and active based. 
-Passive shimming uses ferromagnetic metal materials inserted into the inner magnet bore. [@BPA22]
+In passive shimming, ferromagnetic metal materials are inserted into the inner magnetic bore. This is measured in particular with regard to homogeneity.  This process is complex and time-consuming and may have to be repeated several times. [@BPA22]
 Active shimming, on the other hand, can use additional coils or existing gradient coils controlled by special circuitry. Also, software algorithms can be used to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
 
-In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
+In this theis, reference is made exclusively to the passive shimming process, as this project is to be used in the future to construct a low-field magnet (+mri) from permanent magnets and to try to simplify the passive shimming process by means of various software optimizations.
 
 ## State of the Art 
 
@@ -123,7 +121,6 @@ To further refine the magnets homogeneity, optimisation techniques are employed 
 The shimming process mentioned describes how, after the field magnet has been set up, if the homogeneous magnetic flux densities are not sufficient, these can be adjusted manually by means of adjustments to the setup or, if the hardware allows it, by software.
 In addition, the causes that cause the inhomogeneity, the output permanent magnet, are also known.
 As a result, there is the possibility of using the shimming process or checking the permanent magnets used in advance before they are used in a Halbach configuration.
-
 In order to measure the magnets individually, there are already implementations that use different measurement methods to determine the field strength of individual magnets and individual measuring points are recorded. [@WZC21]
 
 There are two ways of using the data from the magnets that are previously measured:
@@ -146,7 +143,7 @@ The present work aims to provide an efficient and comprehensive solution for the
 
 Within the framework of the *DeLoRI* (Dedicated Low-field (+mri) for breast) project, *Fraunhofer MEVIS* in Bremen is actively engaged in crafting a compact and mobile low-field (+mri) unit customised specifically for screening purposes. As described before, since 1991 low-field (+mri)s have evolved into a growing realm of research, showcasing significant opportunities within the field of medical technology. The efforts by *Fraunhofer MEVIS* exemplifies the ongoing commitment to utilizing the potential of low-field (+mri) for enhanced breast screening applications.
 
-The focus of the ongoing efforts is to improve the homogeneity of magnets within low-field (+mri) systems below *1000 (+ppm)*, primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. 
+The focus of the ongoing efforts is to improve the homogeneity of magnets within low-field (+mri) systems below *1000 (+ppm)*, primarily driven by the goal of establishing a compact low-field (+mri) for breast cancer detection. This value was defined as a rough target value for the homogeneity of the experimental test magnet to be set up for the project, as a result of which the performance can be compared with existing approaches for such magnets. [@HPB04]
 
 Beyond the development and prototype construction of low-field (+mri) scanners, the project encompasses electromagnetic simulation of components within the low-field (+mri) system, coupled with machine learning-driven control and data acquisition. The resultant software will be instrumental in reconstruction, with a specific focus on leveraging (+ai)-based methodologies.
 
@@ -157,7 +154,6 @@ To achieve this, a versatile hardware setup is in development, designed to accom
 
 The scope of the software library is to lay the foundation for the systematic characterisation of magnets based on permanent magnets.
 The library will enable data acquisition, storage and analysis of magnetic properties, with customisation possible at each step of the process. Complete documentation, tutorials and tests will enable users to use the framework efficiently and adapt it to their specific requirements.
-
 The characterisation of field sensors in consumer quality serves the practical application and validation of the developed solution.
 
 A practical application of the framework is shown, which demonstrates the characterization of two magnetic field sensors. For this use case, two sensors were selected to be included in the study.
@@ -176,9 +172,9 @@ This means that to measure a deviation of better than *1000 (+ppm)* in a $50mT$ 
 
 The primary objectives of this work revolve around addressing two pivotal research questions:
 
-* Sensor characterisation: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
+* **Sensor characterisation**: Can the carefully selected sensors effectively measure a magnet? Specifically, this involves investigating the saturation of the sensors, the linearity of field strength concerning distance from the sensor, and, in a subsequent phase, exploring temperature dependence.
 
-* Homogeneity Measurement: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000 (+ppm)*? The desired outcome is a measurement of less than *50* $\mu$T at *1000 (+ppm)*, with a specific focus on determining the sensors viability for noise measurements.
+* **Homogeneity Measurement**: Can the chosen sensors be adeptly utilized to measure the homogeneity of a Halbach ring-based B0 field within the stringent limit of less than *1000 (+ppm)*? The desired outcome is a measurement of less than *50* $\mu$T at *1000 (+ppm)*, with a specific focus on determining the sensors viability for noise measurements.
 
 It is essential to emphasize that the intention is not to characterize the magnets; the sensors which might be used for characterisation are be analysed and evaluated.
 
@@ -310,7 +306,7 @@ Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_dif
 The two recesses lock the magnet holder with the inserted magnet over the sensor.
 The mechanical design created is able to accommodate cylinders, cubes, up to a maximum length of *30mm*.
 Other magnet shapes require a modification of the base plate and the sensor holder.
-The specified tolerances of *0.45mm* allow the magnet to be inserted into the 3D printed holder with repeat accuracy and without backlash. This was accomplished with the help of tolerance tests for the 3D printing material used (+pla) and the 3D printer used *Voron 2.4 350mm* through several series of tests.
+The specified tolerances of *0.45mm* allow the magnet to be inserted into the 3D printed holder with repeat accuracy and without backlash. This was accomplished with the help of tolerance tests for the 3D printing material (+pla) and the used *Voron 2.4 350mm* 3D printer through several series of tests.
 This is important if several magnets must be measured, where the positioning over the sensor must always be the same.
 
 
@@ -341,7 +337,7 @@ This measured data can be forwarded to a host (+pc) via a user interface and can
 A key component is that as many common sensors as possible can be easily connected without having to adapt the firmware. This modularity is implemented using abstract class design.
 These are initiated according to the sensors found at startup. If new hardware needs to be integrated, only the required functions in Listing \ref{lst:CustomSensorClass} need to be implemented.
 
-```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package"}
+```cpp {#lst:CustomSensorClass caption="CustomSensor-Class for adding new sensor hardware support into the unified sensor firmware package."}
 #ifndef __CustomSensor_h__
 #define __CustomSensor_h__
 // register custom sensor in implemented_sensors.h also
@@ -498,8 +494,6 @@ As the sensors shown so far relate exclusively to self-built, low-cost hardware,
 A temperature-compensated *Voltcraft GM-70* telsameter shown in Figure \ref{Voltcraft_GM70_teslameter_with_custom_(+pc)_interface_board_using_a_(+usb)_to_serial_converter_and_needed_additional_pull-up_resistors.png} is used, which has a measuring range of *0T* to *3T* with a resolution of *0.1mT*.
 It offers an *RS232* interface with a documented protocol for connection to a (+pc). This connectivity makes it possible to make the device compatible with the previously build unified sensor firmware using a separate \href{https://github.com/RBEGamer/VoltcraftGM70Rest}{VoltcraftGM70Rest interface software} executable on the host (+pc).
 
-\newpage
-
 Another option is a custom interface board between the meter and the PC. This is a good option as many modern (+pc)s or (+sbc)s no longer offer a physical *RS232* interface.
 As with the other sensors, this interface consists of a *Raspberry Pi Pico* with an additional level shifter.
 The teslameter is connected to the microcontroller using two free (+gpio)s in (+uart) mode.
@@ -640,7 +634,7 @@ The following Listing \ref{lst:json_export_format_example} shows an example (+js
 By using the (+json) format, all measurement points and metadata are available in readable plain text. This means that they can also be read out in other programs.
 Using serialization, the *MRPReading* class inherited from Python-*Object* class is serialized via a dictionary conversion step. This (+json) string can then be processed directly or written to the file system as a file.
 
-```json {#lst:json_export_format_example caption="JSON structure of an exported MRPReading based measurement with information about the measurement environment, additional meta-data and raw data value objects"}
+```json {#lst:json_export_format_example caption="JSON structure of an exported MRPReading based measurement with information about the measurement environment, additional meta-data and raw data value objects."}
 {
   "time_start": "Wed Sep 20 08:50:13 2023",
   "time_end": "Wed Sep 20 08:54:13 2023",
@@ -765,7 +759,7 @@ For the user, nothing changes in the procedure for setting up a measurement.
 The *MRPProxy* (+cli) application must always be started like shown in Listing \ref{lst:mrpcli_proxy_start} on the (+pc) with connected hardware sensors attached.
 
 
-```bash {#lst:mrpcli_proxy_start caption="MRPProxy usage to enable local sensor forwarding over the network. The CLI output shows the available sensor to the connected host PC"}
+```bash {#lst:mrpcli_proxy_start caption="MRPProxy usage to enable local sensor forwarding over the network. The CLI output shows the available sensor to the connected host PC."}
 # START PROXY INSTNACE WITH TWO LOCALLY CONNECTED SENSORS
 $ python3 mrpproxy.py proxy launch /dev/ttySENSOR_A /dev/ttySENSOR_B # add another proxy instance http://proxyinstance_2.local for multi-sensor, multi-proxy chain
 Proxy started. http://remotepc.local:5556/
@@ -776,7 +770,7 @@ Terminate Proxy instance [y/N] [n]:
 
 After the proxy instance has been successfully started, it is optionally possible to check the status via the (+rest) interface, which is shown in Listing \ref{lst:mrpcli_config_rest}.
 
-```bash {#lst:mrpcli_config_rest caption="MRPProxy provided REST endpoint query example using wget command line tool to send requests"}
+```bash {#lst:mrpcli_config_rest caption="MRPProxy provided REST endpoint query example using wget command line tool to send requests."}
 # GET PROXY STATUS
 $ wget http://proxyinstance.local:5556/proxy/status
 {
@@ -809,7 +803,7 @@ $ wget http://proxyinstance.local:5556/proxy/command?cmd=combinedsensorcnt
 The query result shows that the sensors are connected correctly and that the capabilities have also been recognised correctly.
 To be able to configure a measurement on the *control* (+pc), only the (+ip) address or hostname of the (+pc) running an *MRPProxy* instance is required as shown in Listing \ref{lst:mrpcli_config_using_rpc}. 
 
-```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPProxy based network sensor"}
+```bash {#lst:mrpcli_config_using_rpc caption="MRPcli usage example to connect with a MRPProxy based network sensor."}
 # CONFIGURE MEASUREMENT JOB USING A PROXY INSTANCE
 $ MRPCli config setupsensor testcfg --path http://proxyinstance.local:5556
 > remote sensor connected: True using proxy connection:
@@ -844,7 +838,7 @@ For this purpose, the *info* command of each sensor is queried.
 This information is added to the previously created (+lut). Duplicate entries are summarised (see Table \ref{Sensor_capabilities_merging_algorithm.csv}) and returned to the host when the *info* \ref{lst:mtsc} command is received over network.
 \newpage
 
-```bash {#lst:mtsc caption="MRPProxy REST capabilities query result after executing the merging algorithm"}
+```bash {#lst:mtsc caption="MRPProxy REST capabilities query result after executing the merging algorithm."}
 # QUERY Network-Proxy capabilities
 $ wget http://proxyinstance.local:5556/proxy/status
 {"capabilities":[
@@ -894,7 +888,7 @@ The measurement is exported for archiving and further processing; various export
 
 \newpage
 
-```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement using Python code"}
+```python {#lst:mrpexample_reading caption="MRPReading example for setting up a basic measurement using Python code."}
 from MRP import MRPReading, MRPMeasurementConfig
 # [OPTIONAL] CONFIGURE READING USING MEASUREMENT CONFIG INSTANCE
 config: MRPMeasurementConfig = MRPMeasurementConfig
@@ -930,7 +924,7 @@ In the following example Listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor
 \newpage
 
 
-```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store raw sensor readings inside a measurement"}
+```python {#lst:mrpexample_hal caption="MRPHal example to use a connected hardware sensor to store raw sensor readings inside a measurement."}
 from MRP import MRPHalSerialPortInformation, MRPHal, MRPBaseSensor, MRPReadingSource
 # SEARCH FOR CONNECTED SENSORS
 ## LISTS LOCAL CONNECTED OR NETWORK SENSORS
@@ -960,7 +954,7 @@ If no hardware sensor is available for the generation of test data, the *MRPSimu
 Different variations of the *generate_reading* function offer the user additional parameterisation options, such as random polarisation direction or a defined centre-of-gravity vector.
 The data is generated in the background using the *magpylib* [@OB20] library according to the specified parameters.
 
-```python {#lst:mrpexample_simulation caption="MRPSimulation example illustrates the usage of several functions how to generate simulated magnets"}
+```python {#lst:mrpexample_simulation caption="MRPSimulation example illustrates the usage of several functions how to generate simulated magnets."}
 from MRP import MRPSimulation, MRPPolarVisualization, MRPReading
 # GENERATE SILUMATED READING USING A SIMULATED HALLSENSOR FROM magpy LIBRARY
 reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_12x12x12,_add_random_polarisation=True)
@@ -978,19 +972,19 @@ reading.dump_to_file("simulated_reading.mag.json")
 Once data can be acquired using hardware or software sensors, the next step is to analyse this data. (+mrp) provides some simple analysis functions for this purpose. The code example shows the basic use of the module.
 The chapter *Evaluation* \ref{evaluation} shows how the user can implement their own algorithms and add them to the library.
 
-```python {#lst:mrpexample_analysis caption="MRPAnalysis example code performs several data analysis steps"}
+```python {#lst:mrpexample_analysis caption="MRPAnalysis example code performs several data analysis steps."}
 from MRP import MRPAnalysis, MRPReading
 # CREATE A SAMPLE MEASUREMENT WITH SIMULATED DATA
 reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_10x10x10)
 # CALCULATE MEAN
 print(MRPAnalysis.calculate_mean(reading))
 # CALCULATE STD DEVIATION ON TEMPERATURE AXIS
-print(MRPAnalysis.calculate_std_deviation(reading, _temperature_axis=True))
+print(MRPAnalysis.calculate_std_deviation(reading, _temp_axis=True))
 # CALCULATE CENTER OF GRAVITY
 (x, y, z) = MRPAnalysis.calculate_center_of_gravity(reading)
 # APPLY CALIBRATION READING TO REMOVE BACKGROUND NOISE
 calibration_reading = MRPSimulation.generate_reading(MagnetType.N45_CUBIC_10x10x10, _ideal = True)
-MRPAnalysis.apply_calibration_data_inplace(calibration_reading, reading)
+MRPAnalysis.apply_calibration_data_inplace(calibration_reading,reading)
 ```
 
 ### MRPVisualisation
@@ -1002,7 +996,7 @@ It is also possible to export the data from the *MRPAnalysis* module graphically
 The *MRPVisualisation* modules are used for this.
 The following example Listing \ref{lst:mrpexample_visualisation} shows the usage of both modules.
 
-```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a full sphere to an image file"}
+```python {#lst:mrpexample_visualisation caption="MRPVisualisation example which plots a full sphere to an image file."}
 from MRP import MRPPolarVisualization
 # CREATE MRPPolarVisualization INSTANCE
 ## IT CAN BE REUSED CALLING plot2d AGAIN, AFTER LINKED READING DATA ARE MODIFIED
@@ -1028,7 +1022,7 @@ This is necessary so that the correct magnet cutouts can be generated when creat
 
 After the measurements have been generated, they are provided with a position and rotation offset according to the Halbach design and calculation scheme [@O24] using the *MRPHalbachArrayGenerator* module.
 
-```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based Halbach ring"}
+```python {#lst:mrpexample_halbach caption="MRPHalbachArrayGenerator example for generating an OpenSCAD based Halbach ring."}
 readings = []
 for idx in range(8):
   # GENERATE EXAMPLE READINGS USING N45 CUBIC 15x15x15 MAGNETS
@@ -1076,7 +1070,7 @@ To simplify these tasks, a (+cli) is implemented and implements the following fu
 As a result of this implemented functionality of the (+cli), it is now possible to connect a sensor to the (+pc), configure a measurement series with it and run it at the end, which is shown in Figure \ref{MRP_(+cli)_output_to_configure_a_new_measurement.png}. The result is an exported file with the measured values.
 These can then be read in again using the *MRPReading* module and processed further. The following bash Listing \ref{lst:MRPCli_config_run} shows the setup procedure in detail:
 
-```bash {#lst:MRPCli_config_run caption="MRPCli example usage for configuration of a measurement run"}
+```bash {#lst:MRPCli_config_run caption="MRPCli example usage for configuration of a measurement run."}
 # CLI EXAMPLE FOR CONFIGURING A MEASUREMENT RUN
 ## CONFIGURE THE SENSOR TO USE
 $ MRPCli config setupsensor testcfg
@@ -1127,7 +1121,7 @@ The following pipeline definition in Listing \ref{lst:mrpuddp_example_yaml} show
 
 \newpage
 
-```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together"}
+```yaml {#lst:mrpuddp_example_yaml caption="Example YAML code of a user defined processing pipeline with six stages linked together."}
 stage import_readings:
   function: import_readings
   parameters:
@@ -1200,7 +1194,7 @@ It also allows to tag tests, which is useful for grouping tests or excluding cer
 Since all intended use cases are mapped using the test cases created, the code of the test cases could later be used in slightly simplified variants of Listing \ref{lst:pytest_example_code} as examples for the documentation. 
 
 
-```python {#lst:pytest_example_code caption="Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules"}
+```python {#lst:pytest_example_code caption="Example of a PyTest class for testing the internal functions of the MRPReading and MRPSimulation modules."}
 class TestMPRReading(unittest.TestCase):
   # PREPARE AN INITIAL CONFIGURATION FILE FOR ALL FOLLOWING TEST CASES IN THIS FILE
   def setUp(self) -> None:
@@ -1254,7 +1248,7 @@ As it is created in the Python programming language, there are several public pa
 (+pip) not only manages package dependencies, but also manages the installation of different versions of a package.
 In addition, the version compatibility is also checked during the installation of a new package, which can be resolved manually by the user in the event of conflicts.
 
-```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing library using pip"}
+```bash {#lst:setup_lib_with_pip caption="Bash commands to install the MagneticReadoutProcessing library using PIP."}
 # https://pypi.org/project/MagneticReadoutProcessing/
 # install the latest version
 $ pip3 install MagneticReadoutProcessing
@@ -1269,7 +1263,7 @@ Since the (+mrp)-library requires additional Python dependencies, which cannot b
 
 \newpage
 
-```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing using a given requirements.txt"}
+```python {#lst:setup_py_req caption="setup.py with dynamic requirement parsing using a given requirements.txt."}
 # dynamic requirement loading using requirements.txt
 req_path = './requirements.txt'
 with pathlib.Path(req_path).open() as requirements_txt:
@@ -1305,7 +1299,7 @@ The use of type annotations also simplifies further development, as modern (+ide
 
 \newpage
 
-```python {#lst:pydocstring caption="Documentation using Python docstring example"}
+```python {#lst:pydocstring caption="Documentation using Python docstring example."}
 # MRPDataVisualisation.py - example docstring
 def plot_temperature(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "degree C") -> str:
   """
@@ -1383,7 +1377,7 @@ The measurement is configured for a measurement run, using the following configu
 The *MRPCli measure ruxn* command is then called up for each individual magnet to execute a measurement. 
 After each run, the *READING-NAME* parameter is filled with the id of the next magnet so that all measurements could be assigned to the physical magnets.
 
-```bash {#lst:evaluation_measurement_config caption="Measurement configuration for evaluation measurement"}
+```bash {#lst:evaluation_measurement_config caption="Measurement configuration for evaluation measurement."}
 ## CONFIGURE THE MEASUREMENT
 $ MRPCli config setup eval_measurement_config
 > READING-NAME: 360_eval_magnet_<id>
@@ -1407,7 +1401,7 @@ The sorting indicator for each measurement is determined using the *(+cog)* func
 
 Where *$D_{distance}$* corresponds to the set distance from the centre of the magnet to the surface of the sensor (+ic). This is the same for each measuring point in the measurement and corresponds to the mechanical structure of the *3D: Full Sphere* \ref{d-full-sphere} sensor *40mm*. The weighting *$W_{eight}$* corresponds here to the *B*-field value in $\mu$T measured by the *TLV493D* sensor.
 
-```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm"}
+```python {#lst:custom_find_similar_values_algorithm caption="User implemented custom find most similar readings algorithm."}
 @staticmethod
 def FindSimilarValuesAlgorithm(_readings: [MRPReading.MRPReading], IP_return_count: int = -1) -> [MRPReading.MRPReading]:
   import heapq
@@ -1450,7 +1444,7 @@ This can initially come from a magnet selected as a reference magnet.
 As a result, the filter algorithm returns the measurements that are most similar to the selected reference magnet. The code snipped in Listing \ref{lst:custom_find_similar_values_algorithm_refmagnet} shows the modified filter algorithm code, with added _ref input parameter for the reference measurement.
 
 
-```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading"}
+```python {#lst:custom_find_similar_values_algorithm_refmagnet caption="Modified user implemented custom find algorithm using a reference magnet reading."}
 @staticmethod
 def FindSimilarValuesAlgorithmREF(_readings: [MRPReading.MRPReading], _ref: [MRPReading.MRPReading], IP_return_count: int = 4) -> [MRPReading.MRPReading]:
   # CALCULATE CoG VALUE OF REFERENCE MAGNET
@@ -1474,7 +1468,7 @@ As a decisive step, the result is used in the *plot_filtered* stage for visualis
 
 \newpage
 
-```yaml {#lst:pipeline_mrp_evaluation_yaml caption="User defined processing pipeline using custom implemented filter algorithm in third stage"}
+```yaml {#lst:pipeline_mrp_evaluation_yaml caption="User defined processing pipeline using custom implemented filter algorithm in third stage."}
 name: pipeline_mrp_evaluation
 stage rawimport:
   function: import_readings
@@ -1500,7 +1494,7 @@ The final pipeline has been saved in the pipeline directory as *pipeline_mrp_eva
 This is carried out using the *MRPudpp* (+cli), which is described in Listing \ref{lst:bash_pipeline_mrp_evaluation_yaml}.
 After the run has been successfully completed, the results are saved in the result folder specified in the pipeline using the *IP_export_folder* parameter.
 
-```bash {#lst:bash_pipeline_mrp_evaluation_yaml caption="Bash result log of the analysis pipeline run"}
+```bash {#lst:bash_pipeline_mrp_evaluation_yaml caption="Bash result log of the analysis pipeline run."}
 # LIST ACTIVE PIPELINES IN PIPELINE DIRECTORY 
 $ MRPudpp pipeline listenabledpipelines
 > Found enabled pipelines:
@@ -1611,7 +1605,6 @@ For this purpose, a sample size of *$N_{baseline}$=10000* measured values is rec
 The output signal of the sensor is continuously measured and recorded. It is important to carry out the measurement over a sufficiently lengthy period of time in order to record both short-term and long-term fluctuations. For this purpose, *$N_{measurement}$=2000* additional measured values are taken with a trigger and readout rate of one measurement per second.
 In order to quantify the noise, the (+sd) of the signal is calculated. These parameters provide information about the variation of the signal over time and therefore about the sensor background noise. 
 
-\newpage
 
 %%Sensor_noise_evaluation_results_for_TLV493D_and_MMC5603NJ_with_N=2000_samples_and_no_averaging.png%%
 
@@ -1651,12 +1644,13 @@ For verification, a reference measurement of the environment is carried out with
 This provides a reference baseline value of *$\mu_{rev, GM70}$=-21.0$\mu$T*.
 
 The noise of the sensor is drawn around this using the blue line. 
-For the *TLV493D* the (+sd) *$\sigma_{rv,TLV493D}$=172.0${\mu}$T*, which is twice the value given by the datasheet as the noise value (refer to Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}).
-Under the same conditions, the *MMC5603NJ* undercuts the value specified by the manufacturer. The (+sd) approaches *$\sigma_{rv, MMC5603NJ}$=0.20${\mu}$T* and is negligible, especially when additional averaging is used.
+For the *TLV493D* the (+sd) *$\sigma_{rv,TLV493D}$=172.0${\mu}$T*, which is twice the value given by the datasheet as the noise value (refer to Table \ref{Digital_magnetic_field_sensors_characterised_for_evaluation.csv}). The histogram of the measured values shows that the  *TLV493D* exhibits a asymmetry to measured values that are higher than the long-term mean values and as a result does not provide normally distributed data and provides isolated outliers. As a result, it is necessary to work with floating averages to obtain representative measured values.
 
-As the baseline is determined first for each sensor, it can be seen that the 
-Another recognisable feature is 
-Further measurement series are also recorded with inserted *N45 12x12x12mm* magnets, so that these are saturated halfway through the measurement range.
+Under the same conditions, the *MMC5603NJ* undercuts the value specified by the manufacturer. The (+sd) approaches *$\sigma_{rv, MMC5603NJ}$=0.20${\mu}$T* and is negligible, especially when additional averaging is used. The mean and median of the data are approximately the same, as the normal distribution is symmetrical, as shown by the hinstrogram.
+As a result, most of the measured values are close to the long-term mean even without additional averaging.
+
+
+Further measurement series are also recorded with inserted *N45 12x12x12mm* magnets, so that the sensors are saturated halfway through their (+dr).
 This allows the noise measurement values to be compared with a blank measurement. These values correspond, so it can be concluded that the noise is within the same range across the measuring range.
 
 ## Sensor Characterisation: Linearity
@@ -1728,21 +1722,17 @@ This extended characterized (+dr) is not used in the further analyses. Reference
 
 The temperature sensitivity of magnetic field sensors describes how sensitively the sensors output is sensitive to temperature changes.
 It is important to ensure that temperature fluctuations do not affect measurement accuracy. A low temperature sensitivity reduces errors due to temperature changes [@J21].
-An accurate temperature sensitivity characteristic is therefore crucial for subsequent precise magnetic field measurements.
+An accurate temperature sensitivity characteristic is therefore crucial for subsequent precise magnetic field measurements. As the temperature sensor *TLV493D* in particular produced vastly different results in the previous measurements, an additional temperature sensor is attached to the sensor circuit board for this measurement. 
 
 %%Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png%%
-
-As the temperature sensor *TLV493D* in particular produced vastly different results in the previous measurements, an additional temperature sensor is attached to the sensor circuit board for this measurement. 
 
 Figure \ref{Sensor_evaluation_setup_for_temperature_sensitivity_measurements.png} represents these modifications in detail. These changes makes it possible to accurately determine the sensors (+ic) temperature.
 The temperature measuring device *7055BT* can be analysed using a (+pc) interface.
 The controller of the temperature chamber can also be programmed via a (+pc) interface and a target temperature can be specified.
-
 With this setup, it is possible to automatically acquire measured values from the sensors under controlled temperature conditions.
 
 The field of permanent magnets is highly temperature-dependent and can lose its magnetisation at higher temperatures (typically *>=80$^{\circ}$* for non-high-quality *Type-N* magnets [@GKT16]).
 The temperature range is selected so that it lies within a sufficient range for typical subsequent measurement tasks.
-
 The same procedure is used as for the *Linearity* measurement in chapter \ref{sensor-characterisation-linearity}, except that instead of moving the linear axis, the temperature of the temperature chamber is systematically increased from *20$^{\circ}$* to *50$^{\circ}$*.
 Between each of these temperature changes, the system is given a additional waiting time of *30* minutes after reaching the target temperature.
 
@@ -1756,7 +1746,6 @@ Figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MM
 It can be seen that the *MMC5603NJ* shows a straight-line drop in the measured field strength with increasing temperatures. However, this is very constant with a value of *-2 $\mu$T / $^{\circ}$C* and is therefore predictable.
 
 The graph of the *TLV493d* is significantly steeper with a gradient of -5.13 $\mu$T / $^{\circ}$C, and it is also not as linear as the *MMC5603NJ*; there are clear jumps in the gradient. However, the total change between the temperature regions of 175$\mu$T is less than that of the *MMC5603NJ* with *70$\mu$T*, if the total measurement range of the sensors is also considered.
-
 In the evaluation (see Figure \ref{Sensor_temperature_sensitivity_evaluation_results_for_TLV493D_and_MMC5603NJ.png}) a linear function is also calculated using curve fitting to determine the temperature coefficients of the sensors. This makes it possible to compensate these deviations based on the ambient temperature during the software calibration.
 
 \newpage
