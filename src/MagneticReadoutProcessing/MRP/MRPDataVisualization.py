@@ -161,7 +161,7 @@ class MRPDataVisualization:
     def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
     @staticmethod
-    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False, _max_y: int = None):
+    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False, _max_y: int = None,_min_y: int = None):
         """
         Plots the linearity from several readings
 
@@ -276,6 +276,8 @@ class MRPDataVisualization:
 
         if _max_y is not None:
             distance_plot.set_ylim([0, _max_y])
+        if _min_y is not None and _max_y is not None:
+            distance_plot.set_ylim([_min_y, _max_y])
 
         if _as_linear_fkt:
             distance_plot.set_yscale('squareroot')

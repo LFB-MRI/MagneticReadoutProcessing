@@ -108,12 +108,11 @@ class TestMPRDataVisualization(unittest.TestCase):
     def test_dynamicrange_realdata(self):
         files = [f for f in os.listdir(self.asset_linearity_folder_path) if re.match(r'(.)*.mag.json', f)]
 
-        sensors:set = set()
+        sensors: set = set()
 
         for e in files:
             sp: [str] = e.split('_')
             sensors.add(sp[0])
-
 
         to_process: dict = {}
         for sensor in sensors:
@@ -153,8 +152,10 @@ class TestMPRDataVisualization(unittest.TestCase):
             e = to_process[k]
 
             total_dst: int = to_process[s]['dist_max'] - to_process[s]['dist_min']
-            reading_name: str = "Dynamic Range of " + k + " using " + str(len(e['files'])-1) + " samples over an distance of {}".format(total_dst) + "mm"
-            export_filename: str = os.path.join(self.result_folder_path, reading_name.replace(" ", "_").replace("mm", "").replace("{}","") + ".png")
+            reading_name: str = "Linearity outside of the manufacturer specified range of " + k
+            export_filename: str = os.path.join(self.result_folder_path,
+                                                reading_name.replace(" ", "_").replace("mm", "").replace("{}",
+                                                                                                         "") + ".png")
 
             # IMPORT READINGS
             readings: [MRPReading.MRPReading] = []
@@ -164,16 +165,21 @@ class TestMPRDataVisualization(unittest.TestCase):
                 if 'tlv493d' in k.lower() and not 'ID230972496757412434' in reading.get_name():
                     reading.set_unit_import_scale_factor(10000.0)
 
-
-
-
                 import_file: str = os.path.join(self.asset_linearity_folder_path, r)
                 reading.load_from_file(import_file)
                 reading.set_name("DISTANCE={}".format(e['distance'][idx]))
+
                 readings.append(reading)
+            my: int = None
+            mx: int = None
+            if 'tlv' in k.lower():
+                mx = 250000
+                my = 100000
+            if 'mmc' in k.lower():
+                mx = 4000
+                my = 2500
 
-
-            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=False)
+            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename,_as_linear_fkt=False, _min_y=my, _max_y=mx)
 
 
     def test_linearity_realdata(self):
