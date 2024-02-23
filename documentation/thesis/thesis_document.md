@@ -12,7 +12,7 @@ This uniform magnetic field aligns the molecules within the body or object, sett
 
 \newpage
 
-The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary with a higher field strength. 
+The challenge with conventional homogeneity systems lies in their substantial size, weight, and cost. Even when targeting smaller areas of the body, large devices are often necessary with a higher field-strength of at least 1.5 T.
 In response to this, there is a growing interest in developing low-field (+mri) systems that utilize in many cases permanent magnets. Permanent magnets generate a steady yet relatively weak magnetic field.
 These systems, while offering advantages in energy efficiency and reduced complexity, face a significant challenge related to the inherent variability in the strength of permanent magnets. Achieving homogeneity in the magnetic field is crucial for accurate imaging or comparative analyses.
 While typically calculated images have lower resolution due to lower magnetic field strength, low-field systems facilitate the comparison of different field behaviours and the identification of all kinds of irritations. O'Reilly and Teeuwisse and de Gans [@OTW19] have already demonstrated low-cost and small-scale implementations with low-field (+mri) in 2021 calculating images of a head successfully. 
