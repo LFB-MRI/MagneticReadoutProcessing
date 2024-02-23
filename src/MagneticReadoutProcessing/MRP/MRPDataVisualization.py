@@ -6,8 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec, mlab
 import scipy.optimize as opt
-
-from MRP import MRPReading, MRPAnalysis
+import matplotlib.scale as mscale
+from MRP import MRPReading, MRPAnalysis, MRPDataVisualisationHelper
 
 class MRPDataVisualizationException(Exception):
     def __init__(self, message="MRPDataVisualizationException thrown"):
@@ -91,7 +91,7 @@ class MRPDataVisualization:
 
         # FILL FRONT UP
         raw_x = np.linspace(min([min_temp, 0]), max_temp, max_temp, dtype=np.int32)
-        needed_fill_up_values =  min([min_temp]) - 0
+        needed_fill_up_values = min([min_temp]) - 0
         v_to_add = raw_y[0]
         for i in range(needed_fill_up_values-1):
            raw_y.insert(0, v_to_add)
@@ -221,6 +221,10 @@ class MRPDataVisualization:
 
         # Create 2x2 sub plots
         gs = gridspec.GridSpec(1, 1)
+
+        if _as_linear_fkt:
+            mscale.register_scale('squareroot', MRPDataVisualizationHelper)
+
 
         fig = plt.figure()
         fig.suptitle('{}'.format(_title), fontsize=10)
