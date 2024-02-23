@@ -241,10 +241,15 @@ class TestMPRDataVisualization(unittest.TestCase):
                 import_file: str = os.path.join(self.asset_linearity_folder_path, r)
                 reading.load_from_file(import_file)
                 reading.set_name("DISTANCE={}".format(e['distance'][idx]))
+
                 readings.append(reading)
+            my:int = None
+            if'tlv' in k.lower():
+                my = 130000
+            if 'mmc' in k.lower():
+                my = 3000
 
-
-            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=True)
+            MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=True,_max_y=my)
 
     def test_histogram_realdata(self):
 

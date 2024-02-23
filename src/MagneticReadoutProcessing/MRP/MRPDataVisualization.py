@@ -6,8 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec, mlab
 import scipy.optimize as opt
-
-from MRP import MRPReading, MRPAnalysis
+import matplotlib.scale as mscale
+from MRP import MRPReading, MRPAnalysis, MRPDataVisualisationHelper
 
 class MRPDataVisualizationException(Exception):
     def __init__(self, message="MRPDataVisualizationException thrown"):
@@ -91,7 +91,7 @@ class MRPDataVisualization:
 
         # FILL FRONT UP
         raw_x = np.linspace(min([min_temp, 0]), max_temp, max_temp, dtype=np.int32)
-        needed_fill_up_values =  min([min_temp]) - 0
+        needed_fill_up_values = min([min_temp]) - 0
         v_to_add = raw_y[0]
         for i in range(needed_fill_up_values-1):
            raw_y.insert(0, v_to_add)
@@ -161,7 +161,7 @@ class MRPDataVisualization:
     def inverse_proportional_curve_func(x, a, b, c):
         return a * np.exp(-b * x) + c
     @staticmethod
-    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False):
+    def plot_linearity(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None, _unit: str = "$\mu$T", _as_linear_fkt: bool = False, _max_y: int = None):
         """
         Plots the linearity from several readings
 
@@ -222,6 +222,10 @@ class MRPDataVisualization:
         # Create 2x2 sub plots
         gs = gridspec.GridSpec(1, 1)
 
+        if _as_linear_fkt:
+            mscale.register_scale('squareroot', MRPDataVisualizationHelper)
+
+
         fig = plt.figure()
         fig.suptitle('{}'.format(_title), fontsize=10)
 
@@ -270,7 +274,8 @@ class MRPDataVisualization:
         distance_plot.set_title('Sensor linearity with mean deviation $\mu_{sl}' + '={:.2f}$% ({:.2f}{}) '.format(deviation_mu, deviation__ut_mu, _unit) + 'and $\sigma_{sl}' + '={:.2f}$% from ideal curve'.format(sigma), fontsize=8)
         distance_plot.legend(loc='lower left', fontsize=8)
 
-
+        if _max_y is not None:
+            distance_plot.set_ylim([0, _max_y])
 
         fig.tight_layout()
         plt.interactive(False)
