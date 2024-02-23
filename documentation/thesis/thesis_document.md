@@ -100,9 +100,9 @@ The shimming process is an essential step in (+mri) to ensure homogeneous magnet
 
 Optimal homogeneity is attained through intricate designs facilitating active shimming, a technique essential for achieving high-resolution spectroscopy. Beyond this, simpler combinations and adaptations of Halbach rings offer versatility, making them suitable for variable field magnets or magnets that can be effortlessly opened without applying force. [@BC16]
 
-The sources for the shimming process can be hardware and software based. 
-Hardware shimming uses metal plates inserted into the magnet body. [@BPA22]
-Software shimming, on the other hand, uses algorithms to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
+The sources for the shimming process can be passive and active based. 
+Passive shimming uses ferromagnetic metal materials inserted into the inner magnet bore. [@BPA22]
+Active shimming, on the other hand, can use additional coils or existing gradient coils controlled by special circuitry. Also, software algorithms can be used to adjust the control parameters of the (+mri) system and improve homogeneity [@WAH21].
 
 In this thesis, reference is made exclusively to the hardware shimming processes, since this project is to be used in the future to construct a low-field (+mri) field magnet from permanent magnets.
 
@@ -114,7 +114,7 @@ According to Wolfgang R. Nitz in 2016, just *13.4%* of actively used (+mri) syst
 
 Within the research domain, various implementations have emerged. An exemplar instance is the work by O'Reilly, Teeuwisse, and Webb, who introduced a groundbreaking three-dimensional (+mri) in a homogeneous *27cm* diameter Bore Halbach Array magnet [@OTW19] in 2019.This innovative setup is subsequently employed in 2020 to acquire in vivo MR images, showcasing the practical applications of their pioneering research [@OTW21]. In 2023, de Vos, Remis and Webb published a summary of the design of a point-of-care Halbach array low-field (+mri) system [@DRW23].
 
-The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$).
+The Halbach magnet incorporated in this system boasts a *27cm* diameter, a *B0* field strength of *50.4 mT*, and an impressive homogeneity of *2400 (+ppm)* over a *20cm* diameter using smaller magnets ($12 x 12 x 12 mm^3$). [@OTW19]
 
 To further refine the magnets homogeneity, optimisation techniques are employed by adjusting the radius of the Halbach ring along the length of the magnet. The deliberate choice of smaller magnets, as opposed to other Halbach designs, serves to compensate for inherent manufacturing imperfections in each individual magnet. This strategic decision not only mitigates structural demands on the magnet housing in terms of strength and weight but also augments safety throughout the construction process.
 
@@ -138,7 +138,7 @@ These are each separate projects that implement individual aspects of data proce
 However, there are still compatibility problems and limitations in the adaptation of hardware and software.
 
 Special algorithms from various, public projects are used to optimize homogeneity, like a genetic algorithm which O'Reilly implemented [@O24]. Therefore, the challenge is to ensure the seamless integration and compatibility of these algorithms into the overall process.
-This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring and the selection of suitable magnets. 
+This should make it possible to create a workflow from the individual magnet to the finished optimized (+cad) model of a Halbach ring. In addition, it is possible to find a selection of suitable magnets whose magnetic field is as identical as possible
 
 ## Aim of this Thesis
 
@@ -160,7 +160,8 @@ The library will enable data acquisition, storage and analysis of magnetic prope
 
 The characterisation of field sensors in consumer quality serves the practical application and validation of the developed solution.
 
-Two sensors have been meticulously chosen for inclusion in the study. The ultimate objective is to assess whether these selected sensors align with the stringent criteria of achieving an accuracy level of *1000 (+ppm)*. Furthermore, the study seeks to validate whether the measuring range of these sensors appropriately corresponds to the required field strength, ensuring their suitability for the intended application.
+A practical application of the framework is shown, which demonstrates the characterization of two magnetic field sensors. For this use case, two sensors were selected to be included in the study.
+The aim is to use the framework to verify whether the selected sensors meet the strict criteria for an accuracy of *1000 (+ppm)*. It is also to check whether the measuring range of these sensors corresponds to the required field strength and whether they are suitable for the intended application.
 
 ## Research Question and Approach
 
@@ -306,7 +307,10 @@ The focus is on providing a stable foundation for the sensor (+ic) and an exchan
 %%Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png%%
 
 Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}, shows rendered view of the 1D-Single sensor (+cad) drawing, which is described in chapter \ref{d-single-sensor}. All parts are produced using 3D printing additive manufacturing process. The sensor circuit board is glued underneath the magnet holder. This is interchangeable, so different distances between sensor and magnet can be realised. The exchangeable magnetic holder (shown in green in Figure \ref{Rendered_mechanical_structure_of_the_1D_sensor_(+cad)_model_with_different_parts_colored_separately,_and_universal_magnet_mount_shown_in_green.png}) can be adapted to different magnets. It can be produced quickly due to the small number of parts used.
-The two recesses lock the magnet holder with the inserted magnet over the sensor. The specified tolerances allow the magnet to be inserted into the holder with repeat accuracy and without backlash.
+The two recesses lock the magnet holder with the inserted magnet over the sensor.
+The mechanical design created is able to accommodate cylinders, cubes, up to a maximum length of *30mm*.
+Other magnet shapes require a modification of the base plate and the sensor holder.
+The specified tolerances of *0.45mm* allow the magnet to be inserted into the 3D printed holder with repeat accuracy and without backlash. This was accomplished with the help of tolerance tests for the 3D printing material used (+pla) and the 3D printer used *Voron 2.4 350mm* through several series of tests.
 This is important if several magnets must be measured, where the positioning over the sensor must always be the same.
 
 
@@ -385,7 +389,7 @@ This ensures that in a multi-sensor setup with several sensors are synchronized 
 
 Each sensor that is loaded with the firmware, registers on to the host (+pc) as a serial interface. There are several ways for the user to interact with the sensor:
 
-* (+mrp)-library, explained in chapter \ref{software-readout-framework}
+* (+mrp)-library, is introduced in chapter \ref{software-readout-framework}
 * Stand-alone mode via sending commands using built-in (+cli)
 
 The (+cli) mode is a simple text-based interface with which it is possible to read out current measured values, obtain debug information and set operating parameters.
@@ -825,7 +829,7 @@ If time-critical synchronisation over the network is required, (+ptp) and (+pps)
 
 As it is possible to connect many identical sensors to one host, therefore it needs to be possible to address them separately.
 This separation is done by the *MRPProxy* module, which is a separate part from the core (+mrp)-library, to keep installation package dependencies small.
-Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli). The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, the procedure described by the following sub-chapters.
+Each connected sensor is accessed via the text-based (+cli), which is initially the same for each sensor. The only identification feature is the sensor (+uuid) by using the *id* command of the sensor (+cli). The *MRPProxy* instance claims to be a sensor to the host (+pc) running (+mrp) (+cli), so multiple sensors must be combined into one virtual one. This is done in several steps, the procedure is described in the following sub-chapters.
 
 #### Merging the Sensor Capabilities
 
@@ -920,7 +924,7 @@ imported_reading.load_from_file("exported_reading.mag.json")
 
 ### MRPHal
 
-The main function of the *MRPReading* module is to manage the measurement and meta-data. The next step is to record and store real sensor data.
+The main function of the *MRPReading* module is to manage the measurement and meta-data. The next step is to record and store data points using hardware sensors.
 For this purpose, the *MRPHal* module is developed, which can interact with all *Unified Sensor* compatible sensors (refer to chapter \ref{unified-sensor}).
 In the following example Listing \ref{lst:mrpexample_hal}, an *1D: Single Sensor*, which is explained in chapter \ref{d-single-sensor}, is connected locally to the host (+pc).
 \newpage
@@ -1563,7 +1567,6 @@ The following parameters are determined and analysed for the sensor evaulation:
 
 * Background Noise
 * Linearity
-* (+dr)
 * Temperature Sensitivity
 
 The characterisation methodology is modified and adapted from Crescentini, Gibiino and Piero [@CSG22], as their approaches are focused towards the analysis of analogue Hall sensors.
@@ -1757,7 +1760,7 @@ The *TLV493D* performs in noise measurements worse than specified in the data sh
 
 The *MMC5603NJ* can be used directly without additional software calibration for measuring permanent magnets. Even without additional measurement averaging, very precise measurement results can be achieved, which achieve a measurement accuracy of less than *1000 (+ppm)*.
 Due to the limited (+dr) of around *±3mT*, direct measurement of stronger magnets is not possible using the *MMC5603NJ*. The *N45 12x12x12mm* magnets used in the application typically have a field strength of around *100mT* at a distance of *10mm* which is more than the *MMC5603NJ* can measure.
-The *TLV493D*, on the other hand, is able to measure these ranges with a specified (+dr) of *±150mT*, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
+The *TLV493D*, on the other hand, is able to measure these ranges with a specified (+dr) of *±130mT*, but does not achieve the required accuracy due to strong noise and steep temperature coefficients.
 In the following chapter, recommendations for action are defined, which are derived from the analysis results.
 
 ### Recommendation for Action

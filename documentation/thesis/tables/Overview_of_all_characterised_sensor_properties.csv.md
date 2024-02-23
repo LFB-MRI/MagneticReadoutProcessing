@@ -1,15 +1,14 @@
 : Overview of all characterised sensor properties. \label{Overview_of_all_characterised_sensor_properties.csv}
 
-| Symbol            | TLV493D    | MMC5603NJ  | Unit                 | Description                          |
-| ----------------- | ---------- | ---------- | -------------------- | ------------------------------------ |
-| $N_{baseline}$    | 10000      | 10000      | -                    | Samples measured for baseline        |
-| $N_{measurement}$ | 2000       | 2000       | -                    | Samples measured for measurement     |
-| $\mu_{rv}$        | 157.23     | -50.39     | $\mu$T               | Baseline without offset compensation |
-| $\sigma_{rv}$     | 172.00     | 0.20       | $\mu$T               | (+sd) sensor value                   |
-| $\mu_{t}$         | 20.68      | 19.40      | $^{\circ}$C          | Mean sensor temperature              |
-| $\sigma_{t}$      | 0.53       | 0.00       | $^{\circ}$C          | (+sd) sensor temperature             |
-| $\mu_{trev}$      | 21.0       | 21.0       | $^{\circ}$C          | Ambient temperature                  |
-| $\mu_{sl}$        | 0.25       | 0.04       | %                    |  Mean sensor linearity deviation     |
-| $\sigma_{sl}$     | 3.64       | 0.56       | %                    | (+sd) sensor linearity               |
-| $\mu_{td}$        | -1.99      | -5.13      | $\mu$T / $^{\circ}$C |  Sensor temperature coefficients     |
-| DR                | [-178;220] | [-3.1;3.4] |  $\mu$T              |  maximum linear (+dr)                |
+| Symbol            | TLV493D | MMC5603NJ | Unit                 | Description                          |
+| ----------------- | ------- | --------- | -------------------- | ------------------------------------ |
+| $N_{baseline}$    | 10000   | 10000     | -                    | Samples measured for baseline        |
+| $N_{measurement}$ | 2000    | 2000      | -                    | Samples measured for measurement     |
+| $\mu_{rv}$        | 157.23  | -50.39    | $\mu$T               | Baseline without offset compensation |
+| $\sigma_{rv}$     | 172.00  | 0.20      | $\mu$T               | (+sd) sensor value                   |
+| $\mu_{t}$         | 20.68   | 19.40     | $^{\circ}$C          | Mean sensor temperature              |
+| $\sigma_{t}$      | 0.53    | 0.00      | $^{\circ}$C          | (+sd) sensor temperature             |
+| $\mu_{trev}$      | 21.0    | 21.0      | $^{\circ}$C          | Ambient temperature                  |
+| $\mu_{sl}$        | 0.25    | 0.04      | %                    |  Mean sensor linearity deviation     |
+| $\sigma_{sl}$     | 3.64    | 0.56      | %                    | (+sd) sensor linearity               |
+| $\mu_{td}$        | -1.99   | -5.13     | $\mu$T / $^{\circ}$C |  Sensor temperature coefficients     |

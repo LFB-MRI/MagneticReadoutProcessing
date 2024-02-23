@@ -1,0 +1,2 @@
+![ 3D plot of an N45 12x12x12mm magnet using the build 3D full sphere sensor with visible magnetic field strength deviations using different shaded vertices on a sphere. \label{_3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png}](./generated_images/border__3D_plot_of_an_N45_12x12x12mm_magnet_using_the_build_3D_full_sphere_sensor_with_visible_magnetic_field_strength_deviations_using_different_shaded_vertices_on_a_sphere.png)
+

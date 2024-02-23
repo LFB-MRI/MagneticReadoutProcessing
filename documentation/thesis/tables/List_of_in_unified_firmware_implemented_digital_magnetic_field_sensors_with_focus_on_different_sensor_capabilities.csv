@@ -2,5 +2,5 @@
 Readout-Axis,3D,3D,3D,1D
 Temperature-Sensor,yes,no,yes,no
 Resolution [uT],98,0.2,0.007,48
-Range [mT],±130.0,±0.8,±3,±50
+(+dr) [mT],±130.0,±0.8,±3,±50
 Interface,(+i2c),(+i2c),(+i2c),(+i2c)
