@@ -48,7 +48,7 @@ Low-field magnetic resonance imaging (low-field (+mri)) is a (+mri) technique th
 
 This technology is used in medical imaging as well as in preclinical research. The main advantage of low-field (+mri)s is the improved contrasting of soft material. It also offers more cost-effective alternatives to high-field (+mri) systems [@HH21], cost reduction, a smaller device footprint, alleviated safety concerns and leading to diminished image resolution within clinically feasible scan durations. [@AFL23]
 
-Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependence and used in (+mri)s a limited (+snr) due to the constrained field strength. [@NK16]
+Low-field (+mri) systems are predominantly composed of permanent magnets. Through the connection of these permanent magnets, a consistent magnetic field of up to *0.35T* can be generated. However, this achievement comes at the cost of an average system weight of *14t*. Despite their cost-effectiveness in production and maintenance, permanent magnets show drawbacks such as high temperature dependencies. [@NK16]
 
 In particular, the advantages of the small design, the fast and simple image acquisition and the low costs are advantages that will become increasingly important in the future. However, the use of permanent magnets and their structure is particularly important in such systems and needs to be analysed.
 
@@ -1631,16 +1631,15 @@ These measured values are categorised below.
 
 ### Sensor Temperature Analysis
 
-The temperature stability of the *TLV493D* with a mean value of 20.68$^{\circ}$C and a (+sd) of $\sigma_{t,TLV493D}$=0.53$^{\circ}$C indicates a consistent trend. This implies a constant tendency. The close grouping of the measured values around the mean value indicates good stability. The confidence interval is expected to be between *20.15$^{\circ}$C* and *21.21$^{\circ}$C*, which indicates a stable and consistent temperature measurement.
-This result is noisier compared to the temperature stability of the *MMC5603* with stable *$\mu_{t, MMC5603NJ}$=0.53$^{\circ}$C* with an accuracy of two decimal places.
+The temperature stability of the *TLV493D* with a mean value of *20.68$^{\circ}$C* and a (+sd) of $\sigma_{t,TLV493D}$=0.53$^{\circ}$C shows a strongly noisy characteristic with an accuracy of two decimal places. The confidence interval varies between *20.15$^{\circ}$C* and *21.21$^{\circ}$C*, which is 
+In contrast to the *MMC5603* with stable *19.40$^{\circ}$C*, this result is not suitable for use, e.g. for temperature compensation.
+A second measurement run with another *TLV493D* confirms this result.
 
 Both sensors provide an offset to the measured chamber temperature $\mu_{trev, 7055BT}$.
 
 With an additional measurement run with a different temperature setting of *30.0$^{\circ}$C*, the measured temperature deviations and offsets remains constant.
 
-The sensor internal temperature sensors of both tested sensors are suitable to perform an ambient temperature compensation of measured values and calibration of the sensor. This is considered in chapter *Temperature Sensitivity* \ref{sensor-characterisation-temperature-sensitivity}.
-
-Though it is recommended to use a separate temperature sensor when using the *TLV493D* or to use a suitable averaging of the temperature and measured values in order to perform temperature compensation.
+As a result, an external temperature sensor should be used for temperature-critical measurements with the *TLV493D*. This is considered for the *Temperature Sensitivity* run in chapter \ref{sensor-characterisation-temperature-sensitivity}.
 
 ### Raw Sensor Data Analysis
 
@@ -1673,8 +1672,6 @@ The ambient temperature is set to *$\mu_{trev, 7055BT}$=21.0$^{\circ}$C* in the 
 Figure \ref{Sensor_evaluation_setup_for_linearity_measurements.png} contains this updated measurement setup with the added components.
 To control the linear axis an additional motion controller of the type *SKR-Pico* placed outside the temperature chamber is required, which can be controlled via a network interface.
 
-In addition, the (+dr) for both sensors are measured before the measurement run to determine the linearity. In this case, this indicates the minimum and maximum linear measuring range for the selected linear Hall sensors.
-A high (+dr) enables a more precise detection of magnetic fields, while a low (+dr) can lead to the sensor detecting magnetic fields outside its detection range [@CSG22].
 
 ### Measurement Setup
 
@@ -1710,6 +1707,21 @@ In order to be able to make quantifiable statements about the measurement result
 For both sensors, the deviation is less than *1%* over the entire resolution. With the *MMC5603NJ* this is on average only *0.04%*. With the *TLV493D* the (+sd) is *3.64%*, for which the deviations at the end in particular (with field strengths towards zero) are decisive.
 In general, the measured values correspond to the data sheet specifications of both sensors, which specify a value of *5%*.
 It is also feasible to calculate these small deviations using curve fitting methods. Suitable functions are implemented in the library.
+
+
+### Dynamic Range Analysis
+
+%%Sensor_dynamic_range_evaluation_results_for_TLV493D_and_MMC5603NJ.png%%
+
+With the same setup as for the linearity measurement, the (+dr) can be determined outside the range specified by the manufacturer. As a result, it is possible to analyze how the sensor behaves when the defined (+dr) is exceeded. This allows the extent to which the limits of the sensors can be exhausted to be taken into account in subsequent measurement setups.
+A high (+dr) enables a more precise detection of magnetic fields, while a low (+dr) can lead to the sensor detecting magnetic fields outside its detection range.
+
+Figure \ref{Sensor_dynamic_range_evaluation_results_for_TLV493D_and_MMC5603NJ.png} shows the plot of the linearity measurement outside the specified (+dr) for the respective sensor. 
+For the *TLV493D* a (+dr) of almost double the specified (+dr) could be measured, with a peak value of *240mT* with constant linearity deviation.
+The *MMC5603NJ* measures the same linear values as in the linearity measurement. From a measured value of *3.4mT* it reaches a plateau and does not increase any further.
+As a result, the full specified (+dr) can be fully utilized with both sensors.
+
+This extended characterized (+dr) is not used in the further analyses. Reference is made exclusively to the values specified by the manufacturer, as the values determined do not apply to every sensor (+ic) of the same type.
 
 
 ## Sensor Characterisation: Temperature Sensitivity

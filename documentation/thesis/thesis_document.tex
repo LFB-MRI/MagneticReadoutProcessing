@@ -147,9 +147,8 @@ magnets. Through the connection of these permanent magnets, a consistent
 magnetic field of up to \emph{0.35T} can be generated. However, this
 achievement comes at the cost of an average system weight of \emph{14t}.
 Despite their cost-effectiveness in production and maintenance,
-permanent magnets show drawbacks such as high temperature dependence and
-used in \gls{mri}s a limited \gls{snr} due to the constrained field
-strength. \customcite{NK16}
+permanent magnets show drawbacks such as high temperature dependencies.
+\customcite{NK16}
 
 In particular, the advantages of the small design, the fast and simple
 image acquisition and the low costs are advantages that will become
@@ -3310,16 +3309,14 @@ These measured values are categorised below.
 Analysis}\label{sensor-temperature-analysis}}
 
 The temperature stability of the \emph{TLV493D} with a mean value of
-20.68\(^{\circ}\)C and a \gls{sd} of
-\(\sigma_{t,TLV493D}\)=0.53\(^{\circ}\)C indicates a consistent trend.
-This implies a constant tendency. The close grouping of the measured
-values around the mean value indicates good stability. The confidence
-interval is expected to be between \emph{20.15\(^{\circ}\)C} and
-\emph{21.21\(^{\circ}\)C}, which indicates a stable and consistent
-temperature measurement. This result is noisier compared to the
-temperature stability of the \emph{MMC5603} with stable
-\emph{\(\mu_{t, MMC5603NJ}\)=0.53\(^{\circ}\)C} with an accuracy of two
-decimal places.
+\emph{20.68\(^{\circ}\)C} and a \gls{sd} of
+\(\sigma_{t,TLV493D}\)=0.53\(^{\circ}\)C shows a strongly noisy
+characteristic with an accuracy of two decimal places. The confidence
+interval varies between \emph{20.15\(^{\circ}\)C} and
+\emph{21.21\(^{\circ}\)C}, which is In contrast to the \emph{MMC5603}
+with stable \emph{19.40\(^{\circ}\)C}, this result is not suitable for
+use, e.g.~for temperature compensation. A second measurement run with
+another \emph{TLV493D} confirms this result.
 
 Both sensors provide an offset to the measured chamber temperature
 \(\mu_{trev, 7055BT}\).
@@ -3328,15 +3325,10 @@ With an additional measurement run with a different temperature setting
 of \emph{30.0\(^{\circ}\)C}, the measured temperature deviations and
 offsets remains constant.
 
-The sensor internal temperature sensors of both tested sensors are
-suitable to perform an ambient temperature compensation of measured
-values and calibration of the sensor. This is considered in chapter
-\emph{Temperature Sensitivity}
+As a result, an external temperature sensor should be used for
+temperature-critical measurements with the \emph{TLV493D}. This is
+considered for the \emph{Temperature Sensitivity} run in chapter
 \ref{sensor-characterisation-temperature-sensitivity}.
-
-Though it is recommended to use a separate temperature sensor when using
-the \emph{TLV493D} or to use a suitable averaging of the temperature and
-measured values in order to perform temperature compensation.
 
 \hypertarget{raw-sensor-data-analysis}{%
 \subsection{Raw Sensor Data Analysis}\label{raw-sensor-data-analysis}}
@@ -3407,13 +3399,6 @@ contains this updated measurement setup with the added components. To
 control the linear axis an additional motion controller of the type
 \emph{SKR-Pico} placed outside the temperature chamber is required,
 which can be controlled via a network interface.
-
-In addition, the \gls{dr} for both sensors are measured before the
-measurement run to determine the linearity. In this case, this indicates
-the minimum and maximum linear measuring range for the selected linear
-Hall sensors. A high \gls{dr} enables a more precise detection of
-magnetic fields, while a low \gls{dr} can lead to the sensor detecting
-magnetic fields outside its detection range \customcite{CSG22}.
 
 \hypertarget{measurement-setup}{%
 \subsection{Measurement Setup}\label{measurement-setup}}
@@ -3487,6 +3472,42 @@ to the data sheet specifications of both sensors, which specify a value
 of \emph{5\%}. It is also feasible to calculate these small deviations
 using curve fitting methods. Suitable functions are implemented in the
 library.
+
+\hypertarget{dynamic-range-analysis}{%
+\subsection{Dynamic Range Analysis}\label{dynamic-range-analysis}}
+
+\begin{figure}
+\centering
+\includegraphics{./generated_images/border_Sensor_dynamic_range_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+\caption{Sensor dynamic range evaluation results for TLV493D and
+MMC5603NJ.
+\label{Sensor_dynamic_range_evaluation_results_for_TLV493D_and_MMC5603NJ.png}}
+\end{figure}
+
+With the same setup as for the linearity measurement, the \gls{dr} can
+be determined outside the range specified by the manufacturer. As a
+result, it is possible to analyze how the sensor behaves when the
+defined \gls{dr} is exceeded. This allows the extent to which the limits
+of the sensors can be exhausted to be taken into account in subsequent
+measurement setups. A high \gls{dr} enables a more precise detection of
+magnetic fields, while a low \gls{dr} can lead to the sensor detecting
+magnetic fields outside its detection range.
+
+Figure
+\ref{Sensor_dynamic_range_evaluation_results_for_TLV493D_and_MMC5603NJ.png}
+shows the plot of the linearity measurement outside the specified
+\gls{dr} for the respective sensor. For the \emph{TLV493D} a \gls{dr} of
+almost double the specified \gls{dr} could be measured, with a peak
+value of \emph{240mT} with constant linearity deviation. The
+\emph{MMC5603NJ} measures the same linear values as in the linearity
+measurement. From a measured value of \emph{3.4mT} it reaches a plateau
+and does not increase any further. As a result, the full specified
+\gls{dr} can be fully utilized with both sensors.
+
+This extended characterized \gls{dr} is not used in the further
+analyses. Reference is made exclusively to the values specified by the
+manufacturer, as the values determined do not apply to every sensor
+\gls{ic} of the same type.
 
 \hypertarget{sensor-characterisation-temperature-sensitivity}{%
 \section{Sensor Characterisation: Temperature
