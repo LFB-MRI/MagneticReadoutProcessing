@@ -1,8 +1,11 @@
 #ifndef __main_h__
 #define __main_h__
 
-
+// VERSION INFORMATION
 #include "version.h"
+// PLATTFORM INFORMATION
+#include "usf_plattform.h"
+
 
 #ifdef USING_PLATFORMIO
     #include <Arduino.h>
@@ -14,7 +17,21 @@
 
 
 
-#include "usf_plattform.h"
+#ifdef ENABLE_HARDWARE_AVERAGING
+#include <RingBuf.h>
+#endif
+
+
+#ifdef ENABLE_HARDWARE_AVERAGING
+#define READOUT_SPEED_IN_SINGLEMODE_HZ 500 // Hz // GIVE IT TIME TO FILL UP THE BUFFER
+
+#else
+#define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
+#endif
+
+#define READOUT_SPEED_IN_SINGLEMODE_DELAY (1000/READOUT_SPEED_IN_SINGLEMODE_HZ)
+
+
 
 // PRIVATE CLASSES
 //#include "baseSensor.h"
@@ -24,8 +41,7 @@
 #include "helper.h"
 #include "TCA9458A.h"
 
-#define READOUT_SPEED_IN_SINGLEMODE_HZ 100 // Hz
-#define READOUT_SPEED_IN_SINGLEMODE_DELAY (1000/READOUT_SPEED_IN_SINGLEMODE_HZ)
+
 
 
 #define MAX_TLV_SENSORS (TCA9548A_Channels * 2) // each TLV493d can have two possible addresses and the i2c multiplexer has 8 channels

@@ -16,13 +16,24 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
         index: int = len(_reading.data) + 1
         print("sampling {} datapoints with {} average readings".format(index,_average_readings_per_datapoint))
         ret: [MRPReadingEntry.MRPReadingEntry] = []
+
+        has_hardware_averaging: bool = False
+        avaraging_readounts: int = _average_readings_per_datapoint
+        if _sensor.has_hardware_averaging():
+            has_hardware_averaging = True
+            # request hardware averaging
+            got_hwavg = _sensor.setup_hardware_averaging(_average_readings_per_datapoint)
+
+            avaraging_readounts = int(_average_readings_per_datapoint / got_hwavg)
+            print("hardware averaging supported by sensor: with max {} in sensor samples so {} software averaging needed to fulfill the requests {}".format(got_hwavg, avaraging_readounts, _average_readings_per_datapoint))
         for s_idx in range(_sensor.sensor_count):
 
             avg_temp: float = 0.0
             avg_bf: float = 0.0
             valid: bool = True
+
             # CALCULATE AVERAGE
-            for avg_idx in range(_average_readings_per_datapoint):
+            for avg_idx in range(max([avaraging_readounts, 1])):
                 # READOUT SENSOR
                 try:
                     _sensor.query_readout()
@@ -31,8 +42,8 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
                 avg_temp = avg_temp + _sensor.get_temp(_sensor_id=s_idx)
                 avg_bf = avg_bf + _sensor.get_b(_sensor_id=s_idx)
 
-            avg_temp = avg_temp / _average_readings_per_datapoint
-            avg_bf = avg_bf / _average_readings_per_datapoint
+            avg_temp = avg_temp / avaraging_readounts
+            avg_bf = avg_bf / avaraging_readounts
 
             # APPEND READING
             print("SID{} DP{} B{} TEMP{}".format(s_idx, index, avg_bf, avg_temp))

@@ -21,12 +21,22 @@ arduino::MbedI2C Wire1(SENSOR_WIRE_ALT_SDA_PIN, SENSOR_WIRE_ALT_SCL_PIN);
 
 sync_timer readout_timer(READOUT_SPEED_IN_SINGLEMODE_DELAY, false);
 sensor_info sensors_found[MAX_TLV_SENSORS] = {sensor_info()}; // TWO POSSIBLE SENSORS PER TCA CHANNEL S0 16 SENSORS PER SLICE
+
+#ifdef ENABLE_HARDWARE_AVERAGING
+RingBuf<sensor_result, MAX_AVERAGING_COUNT> sensor_results[MAX_TLV_SENSORS];
+int hw_averaging_samples = MAX_AVERAGING_COUNT;
+#else
 sensor_result sensor_results[MAX_TLV_SENSORS] = {sensor_result()};
+#endif
 System_State system_state = System_State_Error;
 
+bool wait_for_readout_ready = false;
+bool readout_ready = false;
 long readout_index = 0;
 int sensor_number = 0;
 int anc_base_id = -1;
+String readout_triggered_axis;
+int readout_triggered_id;
 
 void error(const bool _critical, const int _code)
 {
@@ -50,81 +60,71 @@ void error(const bool _critical, const int _code)
   }
 }
 
+void setup_hwavg(DBGCommandParser::Argument *args, char *response)
+{
+#ifdef ENABLE_HARDWARE_AVERAGING
+  const int hvavg = abs((int32_t)args[0].asInt64);
+  if (hvavg > MAX_AVERAGING_COUNT)
+  {
+    hw_averaging_samples = MAX_AVERAGING_COUNT;
+  }
+  else
+  {
+    hw_averaging_samples = hvavg;
+  }
+  DEBUG_SERIAL.println(String(hw_averaging_samples));
+#else
+  DEBUG_SERIAL.println("1");
+#endif
+}
+
+void trigger_hwavgcls(DBGCommandParser::Argument *args, char *response)
+{
+#ifdef ENABLE_HARDWARE_AVERAGING
+  for (int i = 0; i < sensor_number; i++)
+  {
+    sensor_results[i].clear();
+  }
+#endif
+  DEBUG_SERIAL.println("1");
+}
+
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void list_sensor_capabilities(DBGCommandParser::Argument *args, char *response)
 {
-  // todo check which sensor Tpes are presnet
+// todo check which sensor Tpes are presnet
+#ifdef ENABLE_HARDWARE_AVERAGING
+  DEBUG_SERIAL.println("static, axis_b, axis_x, axis_y, axis_z, axis_temp, axis_stimestamp, hwavg");
+#else
   DEBUG_SERIAL.println("static, axis_b, axis_x, axis_y, axis_z, axis_temp, axis_stimestamp");
+#endif
 }
 
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void list_sensor_commands(DBGCommandParser::Argument *args, char *response)
 {
-  // todo check which sensor Tpes are presnet
+// todo check which sensor Tpes are presnet
+#ifdef ENABLE_HARDWARE_AVERAGING
+  DEBUG_SERIAL.println("sensorcnt, readsensor, temp, hwavg, ");
+#else
   DEBUG_SERIAL.println("sensorcnt, readsensor, temp, ");
+#endif
 }
 
 // RETURNS THE SYSTE; TEMP HERE WE ARE USING THE SENSORS BUILD IN TEMPERATURE SENSOR
 void temp_debug(DBGCommandParser::Argument *args, char *response)
 {
-  float temp = 0.0f;
-  int c = 0;
-  for (int i = 0; i < sensor_number; i++)
-  {
-    sensor_info *sensor = &sensors_found[i];
-    if (sensor->valid)
-    {
-      sensor_result *result = &sensor_results[i];
-      temp += result->t;
-      c++;
-    }
-  }
-  if (c > 0)
-  {
-    DEBUG_SERIAL.println(temp / c * 1.0);
-  }
-  else
-  {
-    strlcpy(response, "error", DBGCommandParser::MAX_RESPONSE_SIZE);
-  }
+  readout_triggered_axis = "t";
+  readout_triggered_id = (int32_t)args[1].asInt64;
+  wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
 };
 
 void readsensor_debug(DBGCommandParser::Argument *args, char *response)
 {
-  const String axis = args[0].asString;
-  const int id = (int32_t)args[1].asInt64;
-
-  if (id < 0 && id > sensor_number)
-  {
-    return;
-  }
-
-  sensor_result *result = &sensor_results[id];
-
-  switch (axis.charAt(0))
-  {
-  case 'x':
-    DEBUG_SERIAL.println(result->x);
-    break;
-  case 'y':
-    DEBUG_SERIAL.println(result->y);
-    break;
-  case 'z':
-    DEBUG_SERIAL.println(result->z);
-    break;
-  case 'b':
-    DEBUG_SERIAL.println(result->b);
-    break;
-  case 't':
-    DEBUG_SERIAL.println(result->t);
-    break;
-  case 's':
-    DEBUG_SERIAL.println(result->ts);
-    break;
-  default:
-    strlcpy(response, "error", DBGCommandParser::MAX_RESPONSE_SIZE);
-    break;
-  }
+  readout_triggered_axis = args[0].asString;
+  readout_triggered_id = (int32_t)args[1].asInt64;
+  wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
+  readout_index++;
 }
 
 // WILL BE CALLED IF HOST REQUESTS A MEASUREMENT
@@ -200,13 +200,13 @@ int scan_for_sensors()
       }
 
 #ifdef SENSOR_WIRE_ALT
-    sensors_found[found_sensors].index = found_sensors;
-    sensors_found[found_sensors].tca_channel = 0;
-    sensors_found[found_sensors].valid = sensors_found[found_sensors].sensor_instance.begin(Wire1, sensor_to_scan);
-    if (sensors_found[found_sensors].valid)
-    {
-      found_sensors++;
-    }
+      sensors_found[found_sensors].index = found_sensors;
+      sensors_found[found_sensors].tca_channel = 0;
+      sensors_found[found_sensors].valid = sensors_found[found_sensors].sensor_instance.begin(Wire1, sensor_to_scan);
+      if (sensors_found[found_sensors].valid)
+      {
+        found_sensors++;
+      }
 #endif
 
       if (found_sensors >= MAX_TLV_SENSORS)
@@ -262,20 +262,27 @@ void setup()
       DEBUG_SERIAL.println(F("> info                         logs sensor capabilities"));
       DEBUG_SERIAL.println(F("> commands                     lists sensor implemented commamnds which can be used by hal"));
       DEBUG_SERIAL.println(F("> sid                          lists detected sensor types"));
+
+#ifdef ENABLE_HARDWARE_AVERAGING
+      DEBUG_SERIAL.println(F("> hwavg <avg_samples>          enables hardware averaging"));
+      DEBUG_SERIAL.println(F("> hwavgcls                     clears ringbuffer"));
+#endif
       DEBUG_SERIAL.println(F("=============================================================================================")); });
 
   debug_command_parser.registerCommand("version", "", [](DBGCommandParser::Argument *args, char *response)
                                        {
-                                        #ifdef VERSION
-                                        DEBUG_SERIAL.println(VERSION);
-                                        #else
-                                        DEBUG_SERIAL.println("v" + String(VERSION_MAJOR) + "." + String(VERSION_MINOR) + "." + String(VERSION_REVISION));
-                                        #endif
-                                        });
+#ifdef VERSION
+                                         DEBUG_SERIAL.println(VERSION);
+#else
+        DEBUG_SERIAL.println("v" + String(VERSION_MAJOR) + "." + String(VERSION_MINOR) + "." + String(VERSION_REVISION));
+#endif
+                                       });
 
-  debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
+  debug_command_parser.registerCommand("id", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
 
-  debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response){ for (size_t i = 0; i < sensor_number; i++){ Serial.print(sensors_found[i].sensor_instance.get_sensor_name());Serial.print(", "); }});
+  debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response)
+                                       { for (size_t i = 0; i < sensor_number; i++){ Serial.print(sensors_found[i].sensor_instance.get_sensor_name());Serial.print(", "); } });
 
   debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(System_State_STR[system_state]); });
@@ -298,6 +305,8 @@ void setup()
   debug_command_parser.registerCommand("temp", "", &temp_debug);
 
   debug_command_parser.registerCommand("anc", "i", &process_anc_information);
+  debug_command_parser.registerCommand("hwavg", "i", &setup_hwavg);
+  debug_command_parser.registerCommand("hwavgcls", "", &trigger_hwavgcls);
 
   debug_command_parser.registerCommand("ancid", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(anc_base_id); });
@@ -436,18 +445,93 @@ void loop()
         sensor->sensor_instance.query_sensor();
         tca9584a.setChannel(sensor->tca_channel, false);
       }
-      readout_index++;
 
       // READ RESULT // TODO OPTIMIZE
       for (int i = 0; i < sensor_number; i++)
       {
         sensor_info *sensor = &sensors_found[i];
+#ifdef ENABLE_HARDWARE_AVERAGING
+        sensor_result r = sensor->sensor_instance.get_result();
+        r.ts = readout_index;
+        sensor_results[i].lockedPush(r);
+
+        if (wait_for_readout_ready)
+        {
+          if (sensor_results[i].size() >= hw_averaging_samples || sensor_results[i].isFull())
+          {
+            readout_ready = true;
+          }
+          else
+          {
+            readout_ready = false;
+          }
+        }
+#else
         sensor_result *result = &sensor_results[i];
         // UPDATE DATA
         result->set(sensor->sensor_instance.get_result());
         result->ts = readout_index;
-
+        readout_ready = true;
+#endif
         digitalWrite(STATUS_LED_PIN, LOW);
+      }
+    }
+
+    if (wait_for_readout_ready && readout_ready)
+    {
+      readout_ready = false;
+
+      // REPONSE WITH READING
+      if (readout_triggered_id >= 0 && readout_triggered_id < sensor_number)
+      {
+#ifdef ENABLE_HARDWARE_AVERAGING
+        sensor_result result = sensor_result();
+
+        const int avg_samples = sensor_results[readout_triggered_id].size();
+        if (avg_samples > 0)
+        {
+          result.set(sensor_results[readout_triggered_id][0]);
+        }
+        for (int i = 0; i < avg_samples; i++)
+        {
+          sensor_result r;
+          sensor_results[readout_triggered_id].pop(r);
+
+          result.x = (result.x + r.x) / 2;
+          result.y = (result.y + r.y) / 2;
+          result.z = (result.z + r.z) / 2;
+          result.b = (result.b + r.b) / 2;
+          result.t = (result.t + r.t) / 2;
+        }
+
+#else
+        sensor_result result = sensor_results[readout_triggered_id];
+#endif
+        switch (readout_triggered_axis.charAt(0))
+        {
+        case 'x':
+          DEBUG_SERIAL.println(result.x);
+          break;
+        case 'y':
+          DEBUG_SERIAL.println(result.y);
+          break;
+        case 'z':
+          DEBUG_SERIAL.println(result.z);
+          break;
+        case 'b':
+          DEBUG_SERIAL.println(result.b);
+          break;
+        case 't':
+          DEBUG_SERIAL.println(result.t);
+          break;
+        case 's':
+          DEBUG_SERIAL.println(result.ts);
+          break;
+        default:
+          DEBUG_SERIAL.println("error");
+          break;
+        }
+        wait_for_readout_ready = false;
       }
     }
   }

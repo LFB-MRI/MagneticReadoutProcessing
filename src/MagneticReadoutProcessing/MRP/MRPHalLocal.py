@@ -28,8 +28,10 @@ class MRPHalLocal:
     """
 
     TERMINATION_CHARACTER = '\n'
-    READLINE_TIMEOUT = 0.1
-    READLINE_RETRY_ATTEMPT = 5
+
+    READLINE_TIMEOUT_MULTIPLIER: int = 10 * 5
+    READLINE_TIMEOUT: float = 0.1 * READLINE_TIMEOUT_MULTIPLIER
+    READLINE_RETRY_ATTEMPT: int = 5
 
     current_port: MRPHalSerialPortInformation = None
     serial_port_instance: serial = None
@@ -165,7 +167,7 @@ class MRPHalLocal:
 
         # wait for response
         result: str = ""
-        for i in range(min(self.READLINE_RETRY_ATTEMPT, 1)):
+        for i in range(max(self.READLINE_RETRY_ATTEMPT, 1)):
             result = self.sio.readline()
             if len(result) > 0:
                 break

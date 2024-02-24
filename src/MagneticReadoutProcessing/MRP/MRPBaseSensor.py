@@ -52,12 +52,33 @@ class MRPBaseSensor:
                 self.readout_result[sc][axis] = 0.0
 
 
+    def setup_hardware_averaging(self, _averaging_points: int) -> int:
+        """
+        setup sensors hardware averaging if supported by sensor
+        trigger a readout first using the query_readout function
 
+        :param _averaging_points: how many points to average the readout data
+        :type _averaging_points: int
 
+        :returns: True if setup was successful, False otherwise or sensor averaging is not supported by sensor firmware
+        :rtype: bool
+        """
+        if self.has_hardware_averaging():
+            return self.sensor_connection.query_command_int("hwavg {}".format(_averaging_points))
+        return 1
+
+    def has_hardware_averaging(self):
+        if 'hwavg' in self.sensor_connection.get_sensor_capabilities():
+            return True
+        else:
+            return False
     def query_readout(self):
         """
         queries a complete readout of all connected sensors and their axis
         """
+        if self.has_hardware_averaging():
+            self.sensor_connection.query_command_str("hwavgcls")
+
         for sensor_id in range(0, self.sensor_count):
             for axis in self.sensor_axis:
                 self.readout_result[sensor_id][axis] = self.sensor_connection.query_command_float("readsensor {} {}".format(axis, sensor_id))
