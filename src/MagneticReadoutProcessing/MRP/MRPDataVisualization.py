@@ -482,7 +482,7 @@ class MRPDataVisualization:
         # Add a table at the bottom of the axes
         ax0.axis('tight')
         ax0.axis('off')
-        ax0.set_title('{} Error'.format(_title))
+        ax0.set_title('{}'.format(_title))
         tbl = ax0.table(cellText=clust_data, colLabels=collabel, loc='center')
 
 

@@ -4,12 +4,13 @@ import os
 import re
 from pathlib import Path
 
+import numpy as np
+import scipy.optimize as opt
 
-from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization
+from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization, MRPReadingEntry
 from MRP import MRPSimulation
 from MRP import MRPAnalysis
 from MRP import MRPDataVisualization
-
 from MRPudpp import UDPPLogger
 
 
@@ -21,6 +22,59 @@ class UDPPFunctionCollectionException(Exception):
 
 class UDPPFunctionCollection:
     """This class only includes static methods which are able to used in a user defined pipeline"""
+
+
+    @staticmethod
+    def apply_sensor_temperature_calibration(_readings_to_calibrate: [MRPReading.MRPReading], _temperature_calibration_readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+        # REMOVE OFFSET
+        zero_offset: float = 0.0
+        for reading in _temperature_calibration_readings:
+            zero_offset = min([zero_offset, abs(MRPAnalysis.MRPAnalysis.calculate_mean(reading))])
+        # EXTRACT TEMPERATURES
+        min_temp: int = 1000000
+        max_temp: int = -1000000
+        raw_y = []
+        temps: [int] = []
+        for r in _temperature_calibration_readings:
+            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            raw_y.append(zero_offset - mean)
+            temperature = "-"
+            was_in: bool = False
+            for ne in r.get_name().split("_"):
+                if ne.startswith("TEMPERATURE="):
+                    temperature = ne.split("TEMPERATURE=")[1]
+                    was_in = True
+                    temps.append(int(temperature))
+                    max_temp = max([max_temp, int(temperature)])
+                    min_temp = min([min_temp, int(temperature)])
+            if not was_in:
+                temps.append(0)
+
+        # REORDER TEMPS FROM LOW TO HIGH
+        raw_y = [v for _, v in sorted(zip(temps, raw_y))]
+        temps = [v for _, v in sorted(zip(temps, temps))]
+        raw_x = np.linspace(min([min_temp, 0]), max_temp, max_temp, dtype=np.int32)
+
+        # PERFORM LINEAR FUNCTION FITTING
+        try:
+            opt_params, pcov = opt.curve_fit(MRPDataVisualization.MRPDataVisualization.linear_curve_func, raw_x,raw_y)
+            a = opt_params[0]
+            b = opt_params[1]
+            ideal_y: [float] = []
+
+            temp_dev_mean = a
+            # FINALLY RUN THE CALIBRATION RUN
+            for e in _readings_to_calibrate:
+                for dp in e.data:
+                    dp_value: float = 0.0
+                    dp_temp: float = 0.0
+                    #offset = MRPDataVisualization.MRPDataVisualization.linear_curve_func(dp_temp, a, b))
+
+
+
+        except Exception as e:
+            raise UDPPFunctionCollectionException("cant fit temperature linear funtion")
+
 
 
     @staticmethod
@@ -116,7 +170,7 @@ class UDPPFunctionCollection:
             report_text: str = """########## READING REPORT ##########
             NAME: %%NAME%%
             No Datapoints: %%NODP%%
-            B [mT]: %%BV%%
+            B [uT]: %%BV%%
             Temperature [°C]: %%TEMP%%
             CenterOfGravity [x y z] normalized: %%COG%%
             ######## END READING REPORT ########"""
@@ -391,24 +445,34 @@ class UDPPFunctionCollection:
             raise UDPPFunctionCollectionException("apply_sensor_bias_offset: readings_to_calibrate parameter empty")
 
         # CALCULATE AVERAGE OF GIVEN BIAS READINGS
-        mean_value: float = 0.0
-        for br in bias_readings:
-            v = MRPAnalysis.MRPAnalysis.calculate_mean(br)
-            mean_value = mean_value + v
-        mean_value = mean_value / len(bias_readings)
-        print("apply_sensor_bias_offset calculated sensor bias".format(mean_value))
+        mean_value: float = MRPAnalysis.MRPAnalysis.calculate_mean(bias_readings[0])
+        if len(bias_readings) > 1:
+            for br in bias_readings:
+                v = MRPAnalysis.MRPAnalysis.calculate_mean(br)
+                mean_value = mean_value + v
+            mean_value = mean_value / len(bias_readings)
+        print("apply_sensor_bias_offset calculated sensor bias {}".format(mean_value))
 
         # DEEP COPY READINGS
         new_readings: [MRPReading.MRPReading] = []
 
+        # APPLY BIAS OFFSET
         for r in readings_to_calibrate:
             obj: dict = r.dump_to_dict()
-            r: MRPReading.MRPReading = MRPReading.MRPReading()
-            r.load_from_dict(obj)
-            new_readings.append(r)
+            nr: MRPReading.MRPReading = MRPReading.MRPReading()
+            nr.load_from_dict(obj)
+            nr.data = []
+            for dp in r.data:
+                new_dp: MRPReadingEntry.MRPReadingEntry = dp
+                new_dp.value = new_dp.value - mean_value
+                nr.data.append(new_dp)
 
-        # APPLY BIAS OFFSET
-        MRPAnalysis.MRPAnalysis.apply_global_offset_inplace(new_readings, mean_value)
+            new_readings.append(nr)
+
+
+        for idx, r in enumerate(readings_to_calibrate):
+            mean_value: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            print("offset calibrated mean value for {} is {}".format(r.get_name(), mean_value))
 
         return new_readings
 
@@ -419,7 +483,7 @@ class UDPPFunctionCollection:
         # SET RESULT VALUE COUNT
         IP_return_count = int(IP_return_count)
         if IP_return_count < 0:
-            IP_return_count = int(len(_readings) / 5)
+            IP_return_count = min([int(len(_readings) / 5)], 1)
         # CALCULATE TARGET VALUE: MEAN FROM ALL VALUES
         target_value: float = 0.0
         for idx, r in enumerate(_readings):

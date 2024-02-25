@@ -1,0 +1,30 @@
+settings:
+  enabled: false
+  export_intermediate_results: false
+  name: pipeline_bias
+
+stage readings:
+  function: import_readings
+  parameters:
+    IP_input_folder: readings/EXAMPLE/minimal
+    IP_file_regex: (.)*.mag.json
+
+stage bias_readings:
+  function: import_readings
+  parameters:
+    IP_input_folder: readings/EXAMPLE/biasreadings
+    IP_file_regex: (.)*.mag.json
+
+# def apply_sensor_bias_offset(bias_readings: [MRPReading.MRPReading], readings_to_calibrate: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+stage readings_with_offset_removed:
+  function: apply_sensor_bias_offset
+  parameters:
+    bias_readings: stage bias_readings
+    readings_to_calibrate: stage readings
+
+stage plot_readings:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage readings_with_offset_removed
+    IP_plot_headline_prefix: pipeline_bias
+    IP_export_folder: readings/EXAMPLE/out/bias

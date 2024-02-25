@@ -1,0 +1,58 @@
+settings:
+  enabled: true
+  export_intermediate_results: false
+  name: pipeline_filter
+
+stage readings:
+  function: import_readings
+  parameters:
+    IP_input_folder: readings/EXAMPLE/filter
+    IP_file_regex: (.)*.mag.json
+
+stage bias_readings:
+  function: import_readings
+  parameters:
+    IP_input_folder: readings/EXAMPLE/biasreadings
+    IP_file_regex: (.)*.mag.json
+
+stage temp_readings:
+  function: import_readings
+  parameters:
+    IP_input_folder: readings/EXAMPLE/tempreadings
+    IP_file_regex: (.)*.mag.json
+
+
+# def apply_sensor_bias_offset(bias_readings: [MRPReading.MRPReading], readings_to_calibrate: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
+stage readings_with_offset_removed:
+  function: apply_sensor_bias_offset
+  parameters:
+    bias_readings: stage bias_readings
+    readings_to_calibrate: stage readings
+
+stage readings_with_temp_compensation:
+  function: apply_sensor_bias_offset
+  parameters:
+    _temperature_calibration_readings: stage temp_readings
+    _readings_to_calibrate: stage readings_with_offset_removed
+
+
+stage find_similar_values:
+  function: readings_with_temp_compensation
+  parameters:
+    _readings: stage readings_with_offset_removed
+    IP_return_count: 3
+
+
+stage plot_readings_filtered:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage find_similar_values
+    IP_plot_headline_prefix: pipeline_filtered
+    IP_export_folder: readings/EXAMPLE/out/filter
+
+stage plot_readings:
+  function: plot_readings
+  parameters:
+    readings_to_plot: stage readings
+    IP_plot_headline_prefix: pipeline_input_readings
+    IP_export_folder: readings/EXAMPLE/out/filter

@@ -26,6 +26,7 @@ def perform_measurement(configname: str, alternativefilename: str = "", generate
 
     READING_AVERAGE_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_AVERAGE_COUNT))
     READING_DATAPOINT_COUNT: int = int(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_DATAPOINT_COUNT))
+    READING_PREFIX: str = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX)
 
 
     result_readings: [MRPReading.MRPReading] = reading_source.perform_measurement(READING_DATAPOINT_COUNT, READING_AVERAGE_COUNT)
@@ -61,7 +62,7 @@ def perform_measurement(configname: str, alternativefilename: str = "", generate
         r.set_name(name)
 
         # EXPORT READING TO FILESYSTEM
-        filename = (r.get_name() + "_cIDX{}".format(idx)).strip('/').strip('.')
+        filename = (READING_PREFIX + "_cIDX{}".format(idx)).strip('/').strip('.')
         target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
         # RESOLVE REL TO ABS PATH
 
