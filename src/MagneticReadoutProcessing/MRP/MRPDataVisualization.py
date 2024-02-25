@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec, mlab
 import scipy.optimize as opt
 import matplotlib.scale as mscale
+from matplotlib.patches import Rectangle
+
 from MRP import MRPReading, MRPAnalysis, MRPDataVisualisationHelper
 
 class MRPDataVisualizationException(Exception):
@@ -180,7 +182,7 @@ class MRPDataVisualization:
         x = list(range(len(_readings)))
         xlabels: [str] = []
         distance_array: [float] = []
-        avg = "1000"
+        avg = "2000"
         zero_offset: float = 0.0
         for reading in _readings:
             zero_offset = min([zero_offset, abs(MRPAnalysis.MRPAnalysis.calculate_mean(reading))])
@@ -272,15 +274,19 @@ class MRPDataVisualization:
 
         sigma: float = np.sqrt(deviation_variance)
         distance_plot.set_title('Sensor linearity with mean deviation $\mu_{sl}' + '={:.2f}$% ({:.2f}{}) '.format(deviation_mu, deviation__ut_mu, _unit) + 'and $\sigma_{sl}' + '={:.2f}$% from ideal curve'.format(sigma), fontsize=8)
-        distance_plot.legend(loc='lower left', fontsize=8)
+
 
         if _max_y is not None:
-            distance_plot.set_ylim([0, _max_y])
-        if _min_y is not None and _max_y is not None:
-            distance_plot.set_ylim([_min_y, _max_y])
+            distance_plot.set_ylim([min(y), _max_y])
+        #if _min_y is not None and _max_y is not None:
+        #    distance_plot.set_ylim([_min_y, _max_y])
+        r = Rectangle((min(x), _min_y), max(x), abs(_max_y-_min_y), edgecolor='none', facecolor='orange', alpha=0.5, label='Dynamic range outside manufacturer specified range')
+        distance_plot.add_patch(r)
 
         if _as_linear_fkt:
             distance_plot.set_yscale('squareroot')
+
+        distance_plot.legend(loc='upper right', fontsize=8)
 
         fig.tight_layout()
         plt.interactive(False)

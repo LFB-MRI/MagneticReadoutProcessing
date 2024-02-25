@@ -152,7 +152,7 @@ class TestMPRDataVisualization(unittest.TestCase):
             e = to_process[k]
 
             total_dst: int = to_process[s]['dist_max'] - to_process[s]['dist_min']
-            reading_name: str = "Linearity outside of the manufacturer specified range of " + k
+            reading_name: str = "Linearity and dynamic range of " + k
             export_filename: str = os.path.join(self.result_folder_path,
                                                 reading_name.replace(" ", "_").replace("mm", "").replace("{}",
                                                                                                          "") + ".png")
@@ -173,10 +173,10 @@ class TestMPRDataVisualization(unittest.TestCase):
             my: int = None
             mx: int = None
             if 'tlv' in k.lower():
-                mx = 250000
-                my = 100000
+                mx = 220000
+                my = 130000
             if 'mmc' in k.lower():
-                mx = 4000
+                mx = 3500
                 my = 2500
 
             MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename,_as_linear_fkt=False, _min_y=my, _max_y=mx)
