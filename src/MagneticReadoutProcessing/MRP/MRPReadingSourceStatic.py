@@ -38,6 +38,7 @@ class MRPReadingSourceStatic(MRPReadingSource.MRPReadingSource):
                 try:
                     _sensor.query_readout()
                 except Exception as e:
+                    print(e)
                     valid = False
                 avg_temp = avg_temp + _sensor.get_temp(_sensor_id=s_idx)
                 avg_bf = avg_bf + _sensor.get_b(_sensor_id=s_idx)

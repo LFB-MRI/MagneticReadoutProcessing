@@ -29,9 +29,9 @@ class MRPHalLocal:
 
     TERMINATION_CHARACTER = '\n'
 
-    READLINE_TIMEOUT_MULTIPLIER: int = 10 * 5
+    READLINE_TIMEOUT_MULTIPLIER: int = 2
     READLINE_TIMEOUT: float = 0.1 * READLINE_TIMEOUT_MULTIPLIER
-    READLINE_RETRY_ATTEMPT: int = 5
+    READLINE_RETRY_ATTEMPT: int = 20
 
     current_port: MRPHalSerialPortInformation = None
     serial_port_instance: serial = None
@@ -169,7 +169,7 @@ class MRPHalLocal:
         result: str = ""
         for i in range(max(self.READLINE_RETRY_ATTEMPT, 1)):
             result = self.sio.readline()
-            if len(result) > 0:
+            if len(result) > 1: # read more than '\n'
                 break
 
         # REPLACE WINDOW NEWLINE CHARS
@@ -222,6 +222,7 @@ class MRPHalLocal:
             if '0x' in res:
                 return int(res, base=16)
             return int(res)
+        print(res)
         raise MRPHalLocalException("cant parse result {} for query {} into int".format(res, _cmd))
 
     def query_command_float(self, _cmd: str) -> float:
@@ -234,10 +235,12 @@ class MRPHalLocal:
         :returns: returns the as float parsed result
         :rtype: float
         """
-        res = self.query_command_str(_cmd)
-        if len(res) > 0:
-            return float(res)
-        raise MRPHalLocalException("cant parse result {} for query {} into int".format(res, _cmd))
+        for i in range(10):
+            res = self.query_command_str(_cmd)
+            if len(res) > 0:
+                return float(res)
+            print(res)
+        raise MRPHalLocalException("cant parse result {} for query {} into float".format(res, _cmd))
 
     def get_sensor_id(self) -> str:
         """

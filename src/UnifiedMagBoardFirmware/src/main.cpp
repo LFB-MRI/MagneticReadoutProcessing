@@ -223,6 +223,7 @@ int scan_for_sensors()
     sensors_found[0].index = 0;
     sensors_found[0].tca_channel = 0;
     sensors_found[0].valid = sensors_found[found_sensors].sensor_instance.begin(SENSOR_WIRE, ImplementedSensors::SIMULATED_START);
+    found_sensors++;
   }
 #endif
 
@@ -282,7 +283,7 @@ void setup()
                                        { for (size_t i = 0; i < 8; i++){Serial.print(UniqueID8[i], DEC);}Serial.println(); });
 
   debug_command_parser.registerCommand("sid", "", [](DBGCommandParser::Argument *args, char *response)
-                                       { for (size_t i = 0; i < sensor_number; i++){ Serial.print(sensors_found[i].sensor_instance.get_sensor_name());Serial.print(", "); } });
+                                       { for (size_t i = 0; i < sensor_number; i++){ Serial.print(sensors_found[i].sensor_instance.get_sensor_name());Serial.print(", "); }; Serial.println("");});
 
   debug_command_parser.registerCommand("sysstate", "", [](DBGCommandParser::Argument *args, char *response)
                                        { DEBUG_SERIAL.println(System_State_STR[system_state]); });
@@ -532,6 +533,11 @@ void loop()
           break;
         }
         wait_for_readout_ready = false;
+
+        while(DEBUG_SERIAL.available() > 0) {
+          char t = Serial.read();
+        }
+
       }
     }
   }
@@ -544,7 +550,10 @@ void loop()
 
     char response[DBGCommandParser::MAX_RESPONSE_SIZE];
     debug_command_parser.processCommand(line, response);
-    DEBUG_SERIAL.println(response);
+    if(response && response[0] != '\0'){
+     // DEBUG_SERIAL.println(response);
+    }
+   
   }
 
   if (HOST_SERIAL.available())
