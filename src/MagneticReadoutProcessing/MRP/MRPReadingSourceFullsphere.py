@@ -113,7 +113,7 @@ class MRPReadingSourceFullsphere(MRPReadingSource.MRPReadingSource):
             # CREATE A READING WITH CREATED CONFIG
             reading: MRPReading.MRPReading = MRPReading.MRPReading(mmc)
             # SET READING NAME
-            reading.set_name("ID{}_SID{}_MAG{}".format(mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
+            reading.set_name("SID{}".format(mmc.id, mmc.sensor_id, reading.get_magnet_type().name))
             result_readings.append(reading)
 
         # CALCULATE POSITIONS

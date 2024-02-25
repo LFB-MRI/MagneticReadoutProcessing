@@ -57,7 +57,7 @@ def perform_measurement(configname: str, alternativefilename: str = "", generate
         if alternativefilename is not None and len(alternativefilename):
             name = alternativefilename
         else:
-            name = "{}_{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), name)
+            name = "{}_{}".format(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX), name)
         r.set_name(name)
 
         # EXPORT READING TO FILESYSTEM
@@ -76,7 +76,7 @@ def perform_measurement(configname: str, alternativefilename: str = "", generate
 
     # GENERATE VISUALISATION GRAPHICS
     if generate_plots:
-        visu_name = "{}_{}".format(configname, cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX))
+        visu_name = "{}".format(cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_PREFIX))
         visu_target_folder = cfg.get_value(cli_datastorage.CLIDatastorageEntries.READING_OUTPUT_FOLDER)
         if not str(visu_target_folder).startswith('/'):
             visu_target_folder = str(Path(visu_target_folder).resolve())

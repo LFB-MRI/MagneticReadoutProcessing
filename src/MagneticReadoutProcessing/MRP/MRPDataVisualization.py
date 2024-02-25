@@ -637,6 +637,127 @@ class MRPDataVisualization:
         plt.close()
 
 
+    @staticmethod
+    def plot_linearity_linear(_readings: [MRPReading.MRPReading], _title: str = '', _filename: str = None,
+                       _unit: str = "$\mu$T", _max_y: int = None, _min_y: int = None, _min_x: int = None, _mx_plot: int = None):
+        """
+        Plots the linearity from several readings
 
+        :param _readings:
+        :type _readings: list(MRPReading.MRPReading)
+
+        :param _title: title of the graphic
+        :type _title: str
+
+        :param _filename: export graphic to abs filepath with .png
+        :type _filename: str
+        """
+        if _readings is None or len(_readings) <= 0:
+            raise MRPDataVisualizationException("no readings in _reading given")
+
+        x = list(range(len(_readings)))
+        xlabels: [str] = []
+        distance_array: [float] = []
+        avg = "2000"
+        zero_offset: float = 0.0
+        for reading in _readings:
+            zero_offset = min([zero_offset, abs(MRPAnalysis.MRPAnalysis.calculate_mean(reading))])
+
+
+
+        for reading in _readings:
+            name: str = reading.get_name().replace(".mag.json", "").split("_")
+            distance_was_in: bool = False
+            for n in name:
+                if 'DISTANCE=' in n:
+                    distance_was_in = True
+                    d = n.split('DISTANCE=')[1]
+                    xlabels.append(d)
+
+                    distance_array.append(int(re.findall(r'\d+', d)[0]))
+                elif 'AVG' in n:
+                    avg = avg.split('AVG=')[1]
+            if not distance_was_in:
+                xlabels.append('0mm')
+                distance_array.append(0)
+
+
+        y: [float] = []
+        for reading in _readings:
+            y.append(zero_offset - MRPAnalysis.MRPAnalysis.calculate_mean(reading))
+
+        #min_value = abs(min(y))
+        y = [abs(e) for e in y]
+        #raw_y = _reading.to_value_array()
+
+
+
+        #RESORT ARRAY TO DISTANCE
+        y = [v for _,v in sorted(zip(distance_array, y))]
+
+        # SKIP THE VALUES OUTSIDE OF THE SPECIFIED RANGE
+        if _min_x is not None:
+            x = x[_min_x:]
+            y = y[_min_x:]
+            xlabels= xlabels[_min_x:]
+        # plt.show()
+        ideal_y: [float] = []
+        try:
+            opt_params, pcov = opt.curve_fit(MRPDataVisualization.inverse_proportional_curve_func, x, y)
+            a = opt_params[0]
+            b = opt_params[1]
+            c = opt_params[2]
+
+
+            for xe in x:
+                ideal_y.append(MRPDataVisualization.inverse_proportional_curve_func(xe, a, b, c))
+
+        except Exception as e:
+            print(e)
+
+        deviation: [float] = []
+        for idx in range(len(x)):
+            t = (y[idx]-ideal_y[idx])
+            deviation.append(t)
+
+
+        # Create 2x2 sub plots
+        gs = gridspec.GridSpec(1, 1)
+
+
+
+        fig = plt.figure()
+        fig.suptitle('{}'.format(_title), fontsize=10)
+
+        distance_plot = plt.subplot(gs[0, 0])
+
+        distance_plot.set_xlabel('Distance between sensor IC package and N45 12x12x12mm cubic magnet [mm]', fontsize=8)
+        distance_plot.set_ylabel('Sensor mean value $\mu_{nl}$ ['+ _unit + '] using ' + avg + ' samples per captured datapoint', fontsize=8)
+
+        if len(xlabels) < 20:
+            distance_plot.set_xticklabels(xlabels)
+
+        distance_plot.plot(x, deviation, linewidth=0.8, linestyle='-', label='Deviation from ideal baseline [' + _unit +']')
+        distance_plot.axhline(y=0, color='red', linestyle='--', linewidth=1,label='Ideal baseline')
+
+        r = Rectangle((0,  min(deviation)-100), min(x), max(y)+500, edgecolor='none', facecolor='orange', alpha=0.5,label='Outside manufacturer specified range')
+        distance_plot.add_patch(r)
+
+        ts = MRPDataVisualisationHelper.find_nearest(deviation,0)
+        ts = deviation.index(ts)
+        if _mx_plot is not None:
+            distance_plot.set_xlim([_mx_plot, max(x)])
+        distance_plot.legend(loc='upper right', fontsize=8)
+
+        fig.tight_layout()
+        plt.interactive(False)
+        # plt.show()
+        # SAVE FIGURE IF NEEDED
+        if _filename is not None:
+            plt.savefig(_filename, dpi=1200)
+        else:
+            plt.show()
+
+        plt.close()
 
 

@@ -25,7 +25,6 @@ class TestMPRDataVisualization(unittest.TestCase):
             os.makedirs(self.result_folder_path)
 
 
-
     def normal_choice(self, lst, mean=None, stddev=None):
         if mean is None:
             # if mean is not specified, use center of list
@@ -39,8 +38,6 @@ class TestMPRDataVisualization(unittest.TestCase):
             index = int(normalvariate(mean, stddev) + 1)
             if 0 <= index < len(lst):
                 return lst[index]
-
-
 
     def test_temperature_deviation(self):
         files = [f for f in os.listdir(self.asset_temperaturedeviation_folder_path) if re.match(r'(.)*.mag.json', f)]
@@ -181,7 +178,6 @@ class TestMPRDataVisualization(unittest.TestCase):
 
             MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename,_as_linear_fkt=False, _min_y=my, _max_y=mx)
 
-
     def test_linearity_realdata(self):
         files = [f for f in os.listdir(self.asset_linearity_folder_path) if re.match(r'(.)*.mag.json', f)]
 
@@ -256,6 +252,88 @@ class TestMPRDataVisualization(unittest.TestCase):
                 my = 3000
 
             MRPDataVisualization.MRPDataVisualization.plot_linearity(readings, reading_name, export_filename, _as_linear_fkt=False,_max_y=my)
+
+    def test_linearity_realdata_linear(self):
+        files = [f for f in os.listdir(self.asset_linearity_folder_path) if re.match(r'(.)*.mag.json', f)]
+
+        sensors: set = set()
+
+        for e in files:
+            sp: [str] = e.split('_')
+            sensors.add(sp[0])
+
+        to_process: dict = {}
+        for sensor in sensors:
+            to_process[sensor] = {
+                'files': [],
+                'distance': [],
+                'N': [],
+                'RUN': [],
+                'dist_min': 1000,
+                'dist_max': 0
+            }
+
+        for s in sensors:
+            for e in files:
+                if e.startswith(s):
+                    DISTANCE = ""
+                    N = ""
+                    RUN = ""
+                    splr: [str] = e.split('_')
+                    for sp in splr:
+                        if "DISTANCE=" in sp:
+                            DISTANCE = sp.split("=")[1]
+                            d: int = (int(re.findall(r'\d+', DISTANCE)[0]))
+                            to_process[s]['dist_min'] = min(to_process[s]['dist_min'], d)
+                            to_process[s]['dist_max'] = max(to_process[s]['dist_max'], d)
+                        elif "RUN=" in sp:
+                            RUN = sp.split("=")[1]
+                        elif "N=" in sp:
+                            N = sp.split("=")[1]
+
+                    to_process[s]['files'].append(e)
+                    to_process[s]['distance'].append(DISTANCE)
+                    to_process[s]['N'].append(N)
+                    to_process[s]['RUN'].append(RUN)
+
+        for k in to_process:
+            e = to_process[k]
+
+            total_dst: int = to_process[s]['dist_max'] - to_process[s]['dist_min']
+            reading_name: str = "Linearity of " + k + " using " + str(
+                len(e['files']) - 1) + " samples over an distance of {}".format(total_dst) + "mm"
+            export_filename: str = os.path.join(self.result_folder_path,
+                                                reading_name.replace(" ", "_").replace("mm", "").replace("{}",
+                                                                                                         "") + "_linear.png")
+
+            # IMPORT READINGS
+            readings: [MRPReading.MRPReading] = []
+            for idx, r in enumerate(e['files']):
+                reading: MRPReading.MRPReading = MRPReading.MRPReading()
+
+                if 'tlv493d' in k.lower() and not 'ID230972496757412434' in reading.get_name():
+                    reading.set_unit_import_scale_factor(10000.0)
+
+                import_file: str = os.path.join(self.asset_linearity_folder_path, r)
+                reading.load_from_file(import_file)
+                reading.set_name("DISTANCE={}".format(e['distance'][idx]))
+
+                readings.append(reading)
+            my: int = None
+            mx: int = None
+            mx_plot: int = None
+            if 'tlv' in k.lower():
+                my = 130000
+                mx = 8
+                mx_plot = 10
+
+            if 'mmc' in k.lower():
+                my = 3000
+                mx = 5
+                mx_plot = 8
+
+            MRPDataVisualization.MRPDataVisualization.plot_linearity_linear(readings, reading_name, export_filename,
+                                                                      _max_y=my, _min_x=mx, _mx_plot=mx_plot)
 
     def test_histogram_realdata(self):
 
