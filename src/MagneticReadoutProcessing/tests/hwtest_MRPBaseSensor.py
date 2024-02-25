@@ -6,11 +6,12 @@ import random
 import unittest
 import numpy as np
 
-from MRP import MRPHalLocal, MRPBaseSensor, MRPDataVisualization, MRPReading, MRPReadingEntry
+from MRP import MRPHalLocal, MRPBaseSensor, MRPDataVisualization, MRPReading, MRPReadingEntry, MRPHal, \
+    MRPHalSerialPortInformation, MRPHalHelper
 
 
 class TestMPRHal(unittest.TestCase):
-    hal_instance: MRPHal.MRPPHalLocal = None
+    hal_instance: MRPHalLocal.MRPHalLocal = None
     # PREPARE A INITIAL CONFIGURATION FILE
     # CALLED BEFORE EACH SUB-TESTCASE
     def setUp(self) -> None:
@@ -22,17 +23,15 @@ class TestMPRHal(unittest.TestCase):
 
 
         # for testing this need to be set to a valid system port
-        self.DEVICE_SERIAl_PORT = "/dev/tty.usbmodem3867315334391"
+        self.DEVICE_SERIAl_PORT = "/dev/serial/by-id/usb-Arduino_RaspberryPi_Pico_601861E6227C4A4B-if00"
         # GET A UNIFIED SENSOR
-        ports: [MRPHal.MRPHalSerialPortInformation] = MRPHal.MRPPHalLocal.list_serial_ports()
-        selected_port: MRPHal.MRPHalSerialPortInformation = None
-        for port in ports:
-            if 'Unified Sensor' in port.name:
-                selected_port = port
-                print(port)
-        # CONNECT
-        self.hal_instance: MRPHal.MRPPHalLocal = MRPHal.MRPPHalLocal(selected_port)
-        self.hal_instance.connect()
+        device_path: MRPHalSerialPortInformation.MRPHalSerialPortInformation = MRPHalSerialPortInformation.MRPHalSerialPortInformation(_path=self.DEVICE_SERIAl_PORT, _name="Unified Sensor")
+        sensor_connection: MRPHal.MRPHal = MRPHalHelper.MRPHalHelper.createHalInstance(device_path)
+
+        sensor_connection.connect()
+
+        if not sensor_connection.is_connected():
+            print("sensor connection failed, please check dialout permissions")
 
     def tearDown(self) -> None:
         if self.hal_instance is not None:
