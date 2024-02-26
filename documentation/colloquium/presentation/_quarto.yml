@@ -1,7 +1,11 @@
 project:
   type: website
   title: "MagneticReadoutProcessing"
-
+  preview:
+    port: 8082
+    browser: false
+    host: 0.0.0.0
+    watch-inputs: true
 
 
 format:
@@ -10,6 +14,11 @@ format:
     progress: true
     incremental: true
     theme: dark
+    
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
 search: false
 
 

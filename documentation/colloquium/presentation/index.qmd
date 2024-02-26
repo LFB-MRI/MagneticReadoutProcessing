@@ -18,34 +18,75 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 
 
-
-
-## Table of Content
-
-
-
 ## Introduction
 
 * test
 
 ## Aim of this Project
 
+---
 
-## Software Framework
 
-Simply tasks of data: 
+##  
 
-* data aqusition
-* storage
-* analysis tasks
+<h1 class="r-fit-text" style="text-align: center;">MagneticReadoutProcessing</h1>
 
 ---
 
-### Software Concept
+##  
 
-test
+<h1 class="r-fit-text" style="text-align: center;">MagneticReadoutProcessing</h1>
+
+Provides and user-oriented **open** magnetic field data hardware and software framework:
+
+* Harware support for several magnetic field sensors
+* Easy to integrate into existing projects
+* Easy to extend
+
+
+
+---
+
+### Hardware Framework
+
+---
+
+### Software Framework
+
+Simply tasks of: 
+
+* data aqusition
+* data storage
+* data analysis tasks
+
+---
+
+### User Interaction Points
+
+![](images/MRP_high_level_overview.png)
+
+---
+
+### Usability Improvements
+
+<p class="fragment">Fade in</p>
+<p class="fragment fade-out">Fade out</p>
+<p class="fragment highlight-red">Highlight red</p>
+<p class="fragment fade-in-then-out">Fade in, then out</p>
+<p class="fragment fade-up">Slide up while fading in</p>
+
+
+---
 
 ## Use Cases
+
+### Sensor Chraterisation
+
+
+
+
+
+
 
 
 
