@@ -1,4 +1,3 @@
-from typing import Annotated, Optional
 import typer
 
 from MRPcli import cli_datastorage
@@ -19,7 +18,7 @@ def list(ctx: typer.Context):
 
 
 @app.command()
-def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
+def setup(ctx: typer.Context, configname: str):
     cfg = cli_datastorage.CLIDatastorage(configname)
 
 
@@ -108,7 +107,7 @@ def setup(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "")
 
 
 @app.command()
-def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", path: Optional[str] = None, exclude_network_sensors: bool = False):
+def setupsensor(ctx: typer.Context, configname: str, path: str = None, exclude_network_sensors: bool = False):
 
     device_path: MRPHalSerialPortInformation.MRPHalSerialPortInformation = None
 
@@ -179,7 +178,7 @@ def setupsensor(ctx: typer.Context, configname: Annotated[str, typer.Argument()]
 
 
 @app.command()
-def reset(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = ""):
+def reset(ctx: typer.Context, configname: str):
     cfg = cli_datastorage.CLIDatastorage(configname)
     cfg.reset()
     print("READING CONFIG RESET SUCCESS".format(cfg.config_filepath()))

@@ -6,11 +6,10 @@
 <br />
 <br />
 
-### Development of a hardware and software framework for the automated characterization of permanent magnets for low-field MRI systems
+### Development of a hardware and software framework for the automated characterisation of permanent magnets for low-field MRI systems
 
 <br />
 <br />
-
 Marcel Ochsendorf
 
 

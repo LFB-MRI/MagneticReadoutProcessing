@@ -1,5 +1,13 @@
 # DEMO
 
+### SETUP
+
+```bash
+$ bash build.sh
+$ clear
+```
+
+
 ### SENSOR
 
 * show sensor cli
@@ -33,14 +41,22 @@ $ MRPCli --basepath $(pwd) measure run --generate-plots demo
 
 ```
 
+### CLI USING DOCKER
+```bash
+$ docker run --rm -it --device=/dev/ttyACM0 -v $(pwd):/demo mrpdemo:latest /bin/bash
+$ cd demo
+```
+
+
+
+
 
 ## UDPP
 
 ### SETUP
 ```bash
-$ bash build.sh
-$ clear
-$ docker run --rm -it -v $(pwd):/mrpdemo mrpdemo:latest /bin/bash
+$ docker run --rm -it -v $(pwd):/demo mrpdemo:latest /bin/bash
+$ cd demo
 # INSTALL LATEST VERSION
 $ pip install MagneticReadoutProcessing
 # SHOW INSTALLED VERSION

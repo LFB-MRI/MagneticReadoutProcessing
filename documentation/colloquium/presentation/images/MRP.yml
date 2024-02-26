@@ -1,0 +1,327 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/marcel/MagneticReadoutProcessing/documentation/colloquium/demo
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 178
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 24
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      boxShadow: 5px
+      margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 667
+    content: "\e]0;marcel@Z490I-AORUS-ULTRA: ~/MagneticReadoutProcessing/documentation/colloquium/demo\a\e[01;32mmarcel@Z490I-AORUS-ULTRA\e[00m:\e[01;34m~/MagneticReadoutProcessing/documentation/colloquium/demo\e[00m$ "
+  - delay: 1040
+    content: >-
+      docker run --rm -it --device=/dev/ttyACM0 -v $(pwd):/demo mrpdemo:latest
+      /bin/bash
+  - delay: 959
+    content: "\r\n"
+  - delay: 781
+    content: "\e[?2004hroot@29285d2664c2:/# "
+  - delay: 2339
+    content: a
+  - delay: 144
+    content: p
+  - delay: 134
+    content: t
+  - delay: 129
+    content: ' '
+  - delay: 216
+    content: i
+  - delay: 145
+    content: 'n'
+  - delay: 105
+    content: s
+  - delay: 131
+    content: t
+  - delay: 165
+    content: a
+  - delay: 88
+    content: l
+  - delay: 127
+    content: l
+  - delay: 135
+    content: ' '
+  - delay: 150
+    content: p
+  - delay: 66
+    content: 'y'
+  - delay: 259
+    content: t
+  - delay: 37
+    content: h
+  - delay: 108
+    content: o
+  - delay: 114
+    content: 'n'
+  - delay: 186
+    content: '3'
+  - delay: 257
+    content: '-'
+  - delay: 298
+    content: p
+  - delay: 180
+    content: i
+  - delay: 125
+    content: p
+  - delay: 1168
+    content: "\r\n\e[?2004l\r"
+  - delay: 28
+    content: "\rReading package lists... 0%\r"
+  - delay: 34
+    content: "\rReading package lists... 0%\r"
+  - delay: 16
+    content: "\rReading package lists... 0%\r"
+  - delay: 262
+    content: "\rReading package lists... 97%\r\rReading package lists... 97%\r\rReading package lists... 97%\r\rReading package lists... 97%\r\rReading package lists... 99%\r\rReading package lists... 99%\r\rReading package lists... Done\r\r\n"
+  - delay: 8
+    content: "\rBuilding dependency tree... 0%\r\rBuilding dependency tree... 0%\r"
+  - delay: 15
+    content: "\rBuilding dependency tree... 50%\r\rBuilding dependency tree... 50%\r"
+  - delay: 56
+    content: "\rBuilding dependency tree... Done\r\r\n\rReading state information... 0% \r\rReading state information... 0%\r\rReading state information... Done\r\r\npython3-pip is already the newest version (23.0.1+dfsg-1).\r\n"
+  - delay: 98
+    content: "0 upgraded, 0 newly installed, 0 to remove and 15 not upgraded.\r\n"
+  - delay: 5
+    content: "\e[?2004hroot@29285d2664c2:/# "
+  - delay: 6637
+    content: c
+  - delay: 185
+    content: l
+  - delay: 116
+    content: e
+  - delay: 128
+    content: a
+  - delay: 148
+    content: r
+  - delay: 199
+    content: "\r\n\e[?2004l\r"
+  - delay: 17
+    content: "\e[H\e[2J\e[3J\e[?2004hroot@29285d2664c2:/# "
+  - delay: 768
+    content: "\e[7mpip install MagneticReadoutProcessing\e[27m"
+  - delay: 2616
+    content: "\r\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[C\e[Cpip install MagneticReadoutProcessing\r\n\e[?2004l\r"
+  - delay: 344
+    content: "Requirement already satisfied: MagneticReadoutProcessing in /usr/local/lib/python3.11/site-packages (1.9.1)\r\n"
+  - delay: 15
+    content: "Requirement already satisfied: pyserial>3.4.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (3.5)\r\nRequirement already satisfied: matplotlib>=3.5.3 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (3.8.3)\r\nRequirement already satisfied: numpy>=1.24.3 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.26.4)\r\n"
+  - delay: 5
+    content: "Requirement already satisfied: scipy>=1.10.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.12.0)\r\nRequirement already satisfied: lz4>=4.3.2 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (4.3.3)\r\nRequirement already satisfied: cobs>=1.2.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.2.1)\r\nRequirement already satisfied: ConfigParser>=5.3.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (6.0.1)\r\nRequirement already satisfied: tqdm>=4.65.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (4.66.2)\r\nRequirement already satisfied: magpylib>=4.2.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (4.5.1)\r\nRequirement already satisfied: magpy>=1.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.0.0)\r\nRequirement already satisfied: pytest>=7.4.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (8.0.2)\r\nRequirement already satisfied: solid>=0.2.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (0.2.0)\r\nRequirement already satisfied: openpyscad>=0.5.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (0.5.0)\r\nRequirement already satisfied: vector>=1.1.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.2.0)\r\nRequirement already satisfied: vg>=2.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (2.0.0)\r\nRequirement already satisfied: click>=8.1.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (8.1.7)\r\nRequirement already satisfied: typer>=0.9.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (0.9.0)\r\nRequirement already satisfied: python-dotenv>=1.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.0.1)\r\nRequirement already satisfied: tinydb>=4.8.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (4.8.0)\r\nRequirement already satisfied: pyyaml>=6.0.1 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (6.0.1)\r\nRequirement already satisfied: pyvis>=0.3.2 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (0.3.2)\r\nRequirement already satisfied: waitress>=2.1.2 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (3.0.0)\r\nRequirement already satisfied: flask>=3.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (3.0.2)\r\nRequirement already satisfied: bleach>=6.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (6.1.0)\r\nRequirement already satisfied: flask-cors>=4.0.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (4.0.0)\r\nRequirement already satisfied: requests>=2.31.0 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (2.31.0)\r\nRequirement already satisfied: json-fix>=0.5.2 in /usr/local/lib/python3.11/site-packages (from MagneticReadoutProcessing) (1.0.0)\r\n"
+  - delay: 5
+    content: "Requirement already satisfied: six>=1.9.0 in /usr/local/lib/python3.11/site-packages (from bleach>=6.0.0->MagneticReadoutProcessing) (1.16.0)\r\nRequirement already satisfied: webencodings in /usr/local/lib/python3.11/site-packages (from bleach>=6.0.0->MagneticReadoutProcessing) (0.5.1)\r\n"
+  - delay: 17
+    content: "Requirement already satisfied: Werkzeug>=3.0.0 in /usr/local/lib/python3.11/site-packages (from flask>=3.0.0->MagneticReadoutProcessing) (3.0.1)\r\nRequirement already satisfied: Jinja2>=3.1.2 in /usr/local/lib/python3.11/site-packages (from flask>=3.0.0->MagneticReadoutProcessing) (3.1.3)\r\nRequirement already satisfied: itsdangerous>=2.1.2 in /usr/local/lib/python3.11/site-packages (from flask>=3.0.0->MagneticReadoutProcessing) (2.1.2)\r\nRequirement already satisfied: blinker>=1.6.2 in /usr/local/lib/python3.11/site-packages (from flask>=3.0.0->MagneticReadoutProcessing) (1.7.0)\r\n"
+  - delay: 35
+    content: "Requirement already satisfied: plotly>=5.3 in /usr/local/lib/python3.11/site-packages (from magpylib>=4.2.0->MagneticReadoutProcessing) (5.19.0)\r\n"
+  - delay: 7
+    content: "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (1.2.0)\r\nRequirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (0.12.1)\r\nRequirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (4.49.0)\r\nRequirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (1.4.5)\r\nRequirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (23.2)\r\nRequirement already satisfied: pillow>=8 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (10.2.0)\r\nRequirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (3.1.1)\r\nRequirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.11/site-packages (from matplotlib>=3.5.3->MagneticReadoutProcessing) (2.8.2)\r\n"
+  - delay: 19
+    content: "Requirement already satisfied: iniconfig in /usr/local/lib/python3.11/site-packages (from pytest>=7.4.0->MagneticReadoutProcessing) (2.0.0)\r\nRequirement already satisfied: pluggy<2.0,>=1.3.0 in /usr/local/lib/python3.11/site-packages (from pytest>=7.4.0->MagneticReadoutProcessing) (1.4.0)\r\n"
+  - delay: 7
+    content: "Requirement already satisfied: ipython>=5.3.0 in /usr/local/lib/python3.11/site-packages (from pyvis>=0.3.2->MagneticReadoutProcessing) (8.22.1)\r\nRequirement already satisfied: jsonpickle>=1.4.1 in /usr/local/lib/python3.11/site-packages (from pyvis>=0.3.2->MagneticReadoutProcessing) (3.0.3)\r\nRequirement already satisfied: networkx>=1.11 in /usr/local/lib/python3.11/site-packages (from pyvis>=0.3.2->MagneticReadoutProcessing) (3.2.1)\r\n"
+  - delay: 8
+    content: "Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.11/site-packages (from requests>=2.31.0->MagneticReadoutProcessing) (3.3.2)\r\nRequirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/site-packages (from requests>=2.31.0->MagneticReadoutProcessing) (3.6)\r\nRequirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/site-packages (from requests>=2.31.0->MagneticReadoutProcessing) (2.2.1)\r\nRequirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/site-packages (from requests>=2.31.0->MagneticReadoutProcessing) (2024.2.2)\r\n"
+  - delay: 51
+    content: "Requirement already satisfied: typing-extensions>=3.7.4.3 in /usr/local/lib/python3.11/site-packages (from typer>=0.9.0->MagneticReadoutProcessing) (4.10.0)\r\n"
+  - delay: 106
+    content: "Requirement already satisfied: decorator in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (5.1.1)\r\nRequirement already satisfied: jedi>=0.16 in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.19.1)\r\nRequirement already satisfied: matplotlib-inline in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.1.6)\r\nRequirement already satisfied: prompt-toolkit<3.1.0,>=3.0.41 in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (3.0.43)\r\nRequirement already satisfied: pygments>=2.4.0 in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (2.17.2)\r\nRequirement already satisfied: stack-data in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.6.3)\r\nRequirement already satisfied: traitlets>=5.13.0 in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (5.14.1)\r\nRequirement already satisfied: pexpect>4.3 in /usr/local/lib/python3.11/site-packages (from ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (4.9.0)\r\n"
+  - delay: 7
+    content: "Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.11/site-packages (from Jinja2>=3.1.2->flask>=3.0.0->MagneticReadoutProcessing) (2.1.5)\r\n"
+  - delay: 51
+    content: "Requirement already satisfied: tenacity>=6.2.0 in /usr/local/lib/python3.11/site-packages (from plotly>=5.3->magpylib>=4.2.0->MagneticReadoutProcessing) (8.2.3)\r\n"
+  - delay: 59
+    content: "Requirement already satisfied: parso<0.9.0,>=0.8.3 in /usr/local/lib/python3.11/site-packages (from jedi>=0.16->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.8.3)\r\n"
+  - delay: 8
+    content: "Requirement already satisfied: ptyprocess>=0.5 in /usr/local/lib/python3.11/site-packages (from pexpect>4.3->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.7.0)\r\n"
+  - delay: 5
+    content: "Requirement already satisfied: wcwidth in /usr/local/lib/python3.11/site-packages (from prompt-toolkit<3.1.0,>=3.0.41->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.2.13)\r\n"
+  - delay: 34
+    content: "Requirement already satisfied: executing>=1.2.0 in /usr/local/lib/python3.11/site-packages (from stack-data->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (2.0.1)\r\nRequirement already satisfied: asttokens>=2.1.0 in /usr/local/lib/python3.11/site-packages (from stack-data->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (2.4.1)\r\nRequirement already satisfied: pure-eval in /usr/local/lib/python3.11/site-packages (from stack-data->ipython>=5.3.0->pyvis>=0.3.2->MagneticReadoutProcessing) (0.2.2)\r\n"
+  - delay: 357
+    content: "\e[33mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv\e[0m\e[33m\r\n\e[0m"
+  - delay: 70
+    content: "\e[?2004hroot@29285d2664c2:/# "
+  - delay: 4797
+    content: c
+  - delay: 128
+    content: l
+  - delay: 107
+    content: e
+  - delay: 137
+    content: a
+  - delay: 160
+    content: r
+  - delay: 84
+    content: "\r\n\e[?2004l\r\e[H\e[2J\e[3J\e[?2004hroot@29285d2664c2:/# "
+  - delay: 342
+    content: c
+  - delay: 120
+    content: d
+  - delay: 123
+    content: ' '
+  - delay: 114
+    content: d
+  - delay: 82
+    content: e
+  - delay: 93
+    content: m
+  - delay: 120
+    content: o/
+  - delay: 479
+    content: "\r\n\e[?2004l\r\e[?2004hroot@29285d2664c2:/demo# "
+  - delay: 1978
+    content: M
+  - delay: 181
+    content: R
+  - delay: 210
+    content: "\aP"
+  - delay: 268
+    content: "\a"
+  - delay: 371
+    content: "\r\nMRPCli         MRPProxy       MRPUdpp        MRPUdppeditor  \r\nroot@29285d2664c2:/demo# MRP"
+  - delay: 3427
+    content: C
+  - delay: 392
+    content: 'li '
+  - delay: 1170
+    content: "\r\n\e[?2004l\r"
+  - delay: 866
+    content: "\e[?2004hroot@29285d2664c2:/demo# "
+  - delay: 561
+    content: 'MRPCli '
+  - delay: 659
+    content: '-'
+  - delay: 133
+    content: '-'
+  - delay: 169
+    content: h
+  - delay: 161
+    content: e
+  - delay: 46
+    content: l
+  - delay: 175
+    content: p
+  - delay: 308
+    content: "\r\n\e[?2004l\r"
+  - delay: 667
+    content: "Usage: MRPCli [OPTIONS] COMMAND [ARGS]...\r\n\r\nOptions:\r\n  --basepath TEXT\r\n  --install-completion [bash|zsh|fish|powershell|pwsh]\r\n                                  Install completion for the specified shell.\r\n  --show-completion [bash|zsh|fish|powershell|pwsh]\r\n                                  Show completion for the specified shell, to\r\n                                  copy it or customize the installation.\r\n  --help                          Show this message and exit.\r\n\r\nCommands:\r\n  config\r\n  measure\r\n  proxy\r\n  sensor\r\n"
+  - delay: 77
+    content: "\e[?2004hroot@29285d2664c2:/demo# "
+  - delay: 4046
+    content: e
+  - delay: 177
+    content: x
+  - delay: 194
+    content: i
+  - delay: 158
+    content: t
+  - delay: 1400
+    content: "\r\n\e[?2004l\rexit\r\n"
+  - delay: 214
+    content: "\e]0;marcel@Z490I-AORUS-ULTRA: ~/MagneticReadoutProcessing/documentation/colloquium/demo\a\e[01;32mmarcel@Z490I-AORUS-ULTRA\e[00m:\e[01;34m~/MagneticReadoutProcessing/documentation/colloquium/demo\e[00m$ "
+  - delay: 701
+    content: "logout\r\n"

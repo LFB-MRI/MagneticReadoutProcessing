@@ -13,8 +13,8 @@ class MRPBaseSensor:
 
     sensor_connection: MRPHal.MRPHal = None
     readout_result: dict = {}
-    capabilities: list[str] = []
-    sensor_axis: list = []
+    capabilities: [str] = []
+    sensor_axis: [str] = []
     sensor_count: int = 0
 
     def __init__(self, _sensor_connection: MRPHal.MRPHal):
