@@ -20,6 +20,8 @@ def main(ctx: typer.Context, basepath: str = ""):
 
         print(f"set pipeline folder to: {udpp_config.UDPPConfig.get_pipeline_folder()}")
         print(f"set result folder to : {udpp_config.UDPPConfig.get_tmp_folder()}")
+        print(f"set functions folder to : {udpp_config.UDPPConfig.get_functions_folder()}")
+        print(f"set readings folder to : {udpp_config.UDPPConfig.get_readings_folder()}")
 
 
 def run():

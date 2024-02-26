@@ -76,8 +76,7 @@ def run(ctx: typer.Context):
                     continue
                 # RESOLVE FULL FOLDER PATH
                 if not str(module_path_entry).startswith('/'):
-                    module_path_entry = str(Path(module_path_entry).resolve())
-
+                    module_path_entry = str(Path(udpp_config.UDPPConfig.get_functions_folder()).joinpath(Path(module_path_entry)).resolve())
 
                 # GET FILENAME AS MODULE NAME
                 module_name: str = Path(module_path_entry).parts[-1:][0].replace(".py", "").replace(".", "")

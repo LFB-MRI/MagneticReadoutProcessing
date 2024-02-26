@@ -3,25 +3,25 @@ settings:
   export_intermediate_results: false
   name: pipeline_filter
   additional_custom_modules:
-    - ./readings/EXAMPLE/CustomUserImplementedFunctions.py # Load user defined 'apply_sensor_bias_offset' function from extern file
+    - CustomUserImplementedFunctions.py # Load user defined 'apply_sensor_bias_offset' function from extern file
 
 
 stage readings:
   function: import_readings
   parameters:
-    IP_input_folder: readings/EXAMPLE/filter
+    IP_input_folder: filter
     IP_file_regex: (.)*.mag.json
 
 stage bias_readings:
   function: import_readings
   parameters:
-    IP_input_folder: readings/EXAMPLE/biasreadings
+    IP_input_folder: biasreadings
     IP_file_regex: (.)*.mag.json
 
 stage temp_readings:
   function: import_readings
   parameters:
-    IP_input_folder: readings/EXAMPLE/tempreadings
+    IP_input_folder: tempreadings
     IP_file_regex: (.)*.mag.json
 
 
@@ -52,11 +52,11 @@ stage plot_readings_filtered:
   parameters:
     readings_to_plot: stage find_similar_values
     IP_plot_headline_prefix: pipeline_filtered
-    IP_export_folder: readings/EXAMPLE/out/filter
+    IP_export_folder: filter
 
 stage plot_readings:
   function: plot_readings
   parameters:
     readings_to_plot: stage readings
     IP_plot_headline_prefix: pipeline_input_readings
-    IP_export_folder: readings/EXAMPLE/out/filter
+    IP_export_folder: filter

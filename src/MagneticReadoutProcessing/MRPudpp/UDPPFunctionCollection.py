@@ -11,7 +11,7 @@ from MRP import MRPReading, MRPHallbachArrayGenerator, MRPPolarVisualization, MR
 from MRP import MRPSimulation
 from MRP import MRPAnalysis
 from MRP import MRPDataVisualization
-from MRPudpp import UDPPLogger
+from MRPudpp import UDPPLogger, udpp_config
 
 
 class UDPPFunctionCollectionException(Exception):
@@ -130,7 +130,7 @@ class UDPPFunctionCollection:
 
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
-                IP_export_folder = str(Path(IP_export_folder).resolve())
+                IP_export_folder = str(Path(udpp_config.UDPPConfig.get_result_folder()).joinpath(Path(IP_export_folder)).resolve())
             log.run_log("export_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
         else:
             raise UDPPFunctionCollectionException("export_readings: IP_export_folder parameter empty")
@@ -166,7 +166,7 @@ class UDPPFunctionCollection:
 
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
-                IP_export_folder = str(Path(IP_export_folder).resolve())
+                IP_export_folder = str(Path(udpp_config.UDPPConfig.get_result_folder()).joinpath(Path(IP_export_folder)).resolve())
 
             log.run_log("inspect_readings: IP_export_folder parameter set to {}".format(IP_export_folder))
 
@@ -230,7 +230,7 @@ class UDPPFunctionCollection:
         exp_path = None
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
-                IP_export_folder = str(Path(IP_export_folder).resolve())
+                IP_export_folder = str(Path(udpp_config.UDPPConfig.get_result_folder()).joinpath(Path(IP_export_folder)).resolve())
 
                 exp_path = IP_export_folder
             else:
@@ -272,7 +272,7 @@ class UDPPFunctionCollection:
         exp_path = None
         if len(IP_export_folder) > 0:
             if not str(IP_export_folder).startswith('/'):
-                IP_export_folder = str(Path(IP_export_folder).resolve())
+                IP_export_folder = str(Path(udpp_config.UDPPConfig.get_result_folder()).joinpath(Path(IP_export_folder)).resolve())
 
 
                 exp_path = IP_export_folder
@@ -347,7 +347,8 @@ class UDPPFunctionCollection:
         input_folder: str = IP_input_folder
 
         if not str(IP_input_folder).startswith('/'):
-            input_folder = str(Path(IP_input_folder).resolve())
+            input_folder = str(Path(udpp_config.UDPPConfig.get_readings_folder()).joinpath(Path(IP_input_folder)).resolve())
+
         # GET LOGGER
         log: UDPPLogger.UDPPLogger = UDPPLogger.UDPPLogger()
         log.run_log("import_readings: input_folder parameter set to {}".format(input_folder))
@@ -423,7 +424,7 @@ class UDPPFunctionCollection:
         exp_path = "./"
         if len(IP_output_folder) > 0:
             if not str(IP_output_folder).startswith('/'):
-                IP_output_folder = str(Path(IP_output_folder).resolve())
+                IP_output_folder = str(Path(udpp_config.UDPPConfig.get_result_folder()).joinpath(Path(IP_output_folder)).resolve())
 
                 exp_path = IP_output_folder
             else:
