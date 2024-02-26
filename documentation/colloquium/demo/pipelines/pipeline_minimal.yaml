@@ -1,18 +1,18 @@
 settings:
-  enabled: true
-  export_intermediate_results: false
+  enabled: false
+  export_intermediate_results: true
   name: pipeline_minimal
   additional_custom_modules: []
 
 stage import:
-  function: import_readings
+  function: import_readings # RETURNS [MRPReading.MRPReading]
   parameters:
-    IP_input_folder: minimal
-    IP_file_regex: (.)*.mag.json
+    IP_input_folder: minimal # STRING
+    IP_file_regex: (.)*.mag.json # REGEX
 
 stage inspect_readings:
   function: inspect_readings
   parameters:
-    readings_to_inspect: stage import
-    IP_export_folder: minimal
-    IP_plot_headline_prefix:  pipeline_minimal
+    readings_to_inspect: stage import #[MRPReading.MRPReading]
+    IP_export_folder: minimal # STRING
+    IP_plot_headline_prefix:  pipeline_minimal # STRING

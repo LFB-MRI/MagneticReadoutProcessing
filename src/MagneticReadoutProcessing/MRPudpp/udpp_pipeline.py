@@ -37,9 +37,12 @@ def currentpipelinefolder(ctx: typer.Context):
 
 
 @app.command()
-def run(ctx: typer.Context):
-    pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
-
+def run(ctx: typer.Context, pipeline: str = ""):
+    pipelines: [str] = []
+    if pipeline is None or len(pipeline) == 0:
+        pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
+    else:
+        pipelines.append(pipeline)
 
     # ITERATE OVER EACH PIPELINE
     for pipeline_k, pipeline_v in pipelines.items():

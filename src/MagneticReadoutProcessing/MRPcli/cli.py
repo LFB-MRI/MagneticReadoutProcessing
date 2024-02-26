@@ -14,7 +14,6 @@ app.add_typer(cli_config.app, name="config")
 app.add_typer(cli_measure.app, name="measure")
 app.add_typer(cli_proxy.app, name="proxy")
 
-
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context, basepath: str = ""):
     if basepath is not None and len(basepath) > 0:

@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "MagneticReadoutProcessing"
-version = "1.7.0"
+version = "1.8.0"
 description = "This library was created for the Low-Field MRI project and allows processing of data measured by magnetic field sensors. The focus is on visualization, followed by the provision of simple interfaces to work with this data. In general its possible to use this lib on all kinds of sensor data."
 license = {file = "LICENSE"}
 authors = [{name = "Marcel Ochsendorf", email = "info@marcelochsendorf.com"}]
