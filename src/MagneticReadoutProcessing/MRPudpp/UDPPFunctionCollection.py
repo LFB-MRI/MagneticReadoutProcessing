@@ -31,50 +31,55 @@ class UDPPFunctionCollection:
         for reading in _temperature_calibration_readings:
             zero_offset = min([zero_offset, abs(MRPAnalysis.MRPAnalysis.calculate_mean(reading))])
         # EXTRACT TEMPERATURES
-        min_temp: int = 1000000
-        max_temp: int = -1000000
-        raw_y = []
-        temps: [int] = []
-        for r in _temperature_calibration_readings:
-            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
-            raw_y.append(zero_offset - mean)
-            temperature = "-"
-            was_in: bool = False
-            for ne in r.get_name().split("_"):
-                if ne.startswith("TEMPERATURE="):
-                    temperature = ne.split("TEMPERATURE=")[1]
-                    was_in = True
-                    temps.append(int(temperature))
-                    max_temp = max([max_temp, int(temperature)])
-                    min_temp = min([min_temp, int(temperature)])
-            if not was_in:
-                temps.append(0)
 
-        # REORDER TEMPS FROM LOW TO HIGH
-        raw_y = [v for _, v in sorted(zip(temps, raw_y))]
-        temps = [v for _, v in sorted(zip(temps, temps))]
-        raw_x = np.linspace(min([min_temp, 0]), max_temp, max_temp, dtype=np.int32)
+        cr_temp: [float] = []
+        cr_means: [float] = []
+        for r in _temperature_calibration_readings:
+            mean_temp: float = MRPAnalysis.MRPAnalysis.calculate_mean(r, _temperature_axis=True)
+            cr_temp.append(mean_temp)
+
+        rsorted: [MRPReading.MRPReading] = [v for _, v in sorted(zip(cr_temp, _temperature_calibration_readings))]
+
+        cr_temp: [float] = []
+        cr_means: [float] = []
+        for r in rsorted:
+            mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(r)
+            mean_temp: float = MRPAnalysis.MRPAnalysis.calculate_mean(r, _temperature_axis=True)
+            cr_means.append(zero_offset - mean)
+            cr_temp.append(mean_temp)
+            print("reading imported for temp calibration {} m={:.2} c={:.2}".format(r.get_name(), mean_temp, mean))
+
 
         # PERFORM LINEAR FUNCTION FITTING
+        a: float = 1.0
+        b: float = 0.0
         try:
-            opt_params, pcov = opt.curve_fit(MRPDataVisualization.MRPDataVisualization.linear_curve_func, raw_x,raw_y)
+            opt_params, pcov = opt.curve_fit(MRPDataVisualization.MRPDataVisualization.linear_curve_func, cr_temp,cr_means)
             a = opt_params[0]
             b = opt_params[1]
-            ideal_y: [float] = []
-
-            temp_dev_mean = a
-            # FINALLY RUN THE CALIBRATION RUN
-            for e in _readings_to_calibrate:
-                for dp in e.data:
-                    dp_value: float = 0.0
-                    dp_temp: float = 0.0
-                    #offset = MRPDataVisualization.MRPDataVisualization.linear_curve_func(dp_temp, a, b))
-
 
 
         except Exception as e:
             raise UDPPFunctionCollectionException("cant fit temperature linear funtion")
 
+
+        return_readings: [MRPReading.MRPReading] = []
+        # FINALLY RUN THE CALIBRATION RUN
+        for e in _readings_to_calibrate:
+            nr: MRPReading.MRPReading = MRPReading.MRPReading()
+            nr.load_from_dict(e.dump_to_dict())
+            nr.data = []
+            for dp in e.data:
+                tfp: MRPReadingEntry = dp
+                dp_value: float = tfp.value
+                dp_temp: float = tfp.temperature
+                offset = MRPDataVisualization.MRPDataVisualization.linear_curve_func(dp_temp, a, b)
+
+                print("apply temp offset of {:.2} for m={:.2}".format(offset, dp_temp))
+                tfp.value = tfp.value - offset
+                nr.data.append(tfp)
+            return_readings.append(nr)
+        return return_readings
 
 
     @staticmethod
@@ -458,9 +463,8 @@ class UDPPFunctionCollection:
 
         # APPLY BIAS OFFSET
         for r in readings_to_calibrate:
-            obj: dict = r.dump_to_dict()
             nr: MRPReading.MRPReading = MRPReading.MRPReading()
-            nr.load_from_dict(obj)
+            nr.load_from_dict(r.dump_to_dict())
             nr.data = []
             for dp in r.data:
                 new_dp: MRPReadingEntry.MRPReadingEntry = dp

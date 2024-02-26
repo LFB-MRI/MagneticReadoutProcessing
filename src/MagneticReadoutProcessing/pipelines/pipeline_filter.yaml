@@ -2,6 +2,9 @@ settings:
   enabled: true
   export_intermediate_results: false
   name: pipeline_filter
+  additional_custom_modules:
+    - ./readings/EXAMPLE/CustomUserImplementedFunctions.py # Load user defined 'apply_sensor_bias_offset' function from extern file
+
 
 stage readings:
   function: import_readings
@@ -29,15 +32,16 @@ stage readings_with_offset_removed:
     bias_readings: stage bias_readings
     readings_to_calibrate: stage readings
 
+# apply_sensor_temperature_calibration(_readings_to_calibrate: [MRPReading.MRPReading], _temperature_calibration_readings: [MRPReading.MRPReading]) -> [MRPReading.MRPReading]:
 stage readings_with_temp_compensation:
-  function: apply_sensor_bias_offset
+  function: CUSTOM_apply_sensor_temperature_calibration #apply_sensor_temperature_calibration
   parameters:
     _temperature_calibration_readings: stage temp_readings
     _readings_to_calibrate: stage readings_with_offset_removed
 
 
 stage find_similar_values:
-  function: readings_with_temp_compensation
+  function: custom_find_similar_values_algorithm
   parameters:
     _readings: stage readings_with_offset_removed
     IP_return_count: 3

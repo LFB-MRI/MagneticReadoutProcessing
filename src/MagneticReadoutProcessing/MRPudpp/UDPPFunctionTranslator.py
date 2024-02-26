@@ -41,10 +41,10 @@ class UDPPFunctionTranslator():
     """This class is handling all the pipeline translations between the user level and the actual python function execution"""
 
     @staticmethod
-    def execute_stage_funktion(stage_information: dict, intermediate_results: dict) -> typing.Any:
+    def execute_stage_funktion(stage_information: dict, intermediate_results: dict, _additional_custom_modules: [] = []) -> typing.Any:
         stage_function_name: str = stage_information['function']
         function_parameters_from_stages: [dict] = UDPPFunctionTranslator.get_stage_parameters(stage_information)
-        function_parameters_from_inspector: [dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True)
+        function_parameters_from_inspector: [dict] = UDPPFunctionTranslator.get_function_parameters(stage_function_name, _get_inspector_parameter=True, _additional_custom_modules=_additional_custom_modules)
         # POPULATE PARAMETER DICT
         parameters: dict = {}
 
@@ -83,22 +83,34 @@ class UDPPFunctionTranslator():
 
         # EXECUTE FUNCTION STORE RETURN RESULT
         print("processing function:{}".format(stage_function_name))
-        fkt_call_result = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters)
+        fkt_call_result = UDPPFunctionTranslator.execute_function_by_name(stage_function_name, parameters, _additional_custom_modules)
 
         return fkt_call_result
 
 
     @staticmethod
-    def execute_function_by_name(_function_name: str, _parameters: dict) -> typing.Any:
+    def execute_function_by_name(_function_name: str, _parameters: dict, _additional_custom_modules: [] = []) -> typing.Any:
         if not _function_name or len(_function_name) <= 0:
             raise Exception("execute_function_by_name: _function_name")
+        # SEARCH ALL MODULES FOR FUNCTION ARE PRESENT
+        _additional_custom_modules.append(UDPPFunctionCollection)
+        module_needed_for_function_call = None
 
-        function_object = getattr(UDPPFunctionCollection, _function_name)
-        #try:
+        for module in _additional_custom_modules:
+            ms: [] = [func for func in dir(module) if callable(getattr(module, func)) and not func.startswith("__")]
+            if _function_name in ms:
+                module_needed_for_function_call = module
+                break
+
+
+
+        if module_needed_for_function_call is None:
+            raise UDPPFunctionTranslatorException("function {} cant be found or is not loaded".format(_function_name))
+
+        function_object = getattr(module_needed_for_function_call, _function_name)
         ret: typing.Any = function_object(**_parameters)
         return ret
-        #except Exception as e:
-        #return None
+
     @staticmethod
     def get_parameter_from_step(_pipelines: dict, _step: str, _only_step_dependencies: bool = False) -> [str]:
         """
@@ -131,7 +143,7 @@ class UDPPFunctionTranslator():
         return ret
 
     @staticmethod
-    def check_functions_exists(_pipelines: dict):
+    def check_functions_exists(_pipelines: dict, _additional_custom_modules: [] = []):
         """
         checks for every stage that the used function in function: <xY> exists in the UDPPFFuntionCollection file
         Raises exception if not valid
@@ -145,7 +157,7 @@ class UDPPFunctionTranslator():
         :rtype: bool
         """
 
-        functions: [str] = UDPPFunctionTranslator.listfunctions().keys()
+        functions: [str] = UDPPFunctionTranslator.listfunctions(_additional_custom_modules).keys()
 
         for stage_k, stage_v in _pipelines.items():
             if 'function' in stage_v:
@@ -160,8 +172,8 @@ class UDPPFunctionTranslator():
         return True
 
     @staticmethod
-    def get_function(_function_name: str) -> dict:
-        functions: dict = UDPPFunctionTranslator.listfunctions()
+    def get_function(_function_name: str, _additional_custom_modules: [] = []) -> dict:
+        functions: dict = UDPPFunctionTranslator.listfunctions(_additional_custom_modules)
 
         if not _function_name in functions:
             raise UDPPFunctionTranslatorException(
@@ -185,7 +197,7 @@ class UDPPFunctionTranslator():
 
         return ret
     @staticmethod
-    def get_function_parameters(_function_name: str, _get_inspector_parameter: bool = False, _strip_prefix: bool = False) -> [str]:
+    def get_function_parameters(_function_name: str, _get_inspector_parameter: bool = False, _strip_prefix: bool = False, _additional_custom_modules: [] = []) -> [str]:
         """
         returns the readable version of a function parameters, including name, type and default value
 
@@ -201,7 +213,7 @@ class UDPPFunctionTranslator():
         :returns: returns all function parameters in a list of dicts with name, value and type properties
         :rtype: [str]
         """
-        fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name)
+        fkt: dict = UDPPFunctionTranslator.get_function(_function_name=_function_name, _additional_custom_modules=_additional_custom_modules)
         res: [str] = []
         types: dict = fkt['parameter_types']
         defaults: dict = fkt['default']
@@ -300,7 +312,7 @@ class UDPPFunctionTranslator():
         return []
 
     @staticmethod
-    def check_parameter_types(_pipelines: dict, _calltree_graph: nx.DiGraph) -> bool:
+    def check_parameter_types(_pipelines: dict, _calltree_graph: nx.DiGraph, _additional_custom_modules: [] = []) -> bool:
         """
         checks for each connected pipeline stage the parameter types for input/return value
 
@@ -314,7 +326,7 @@ class UDPPFunctionTranslator():
         :rtype: bool
         """
 
-        functions: dict = UDPPFunctionTranslator.listfunctions()
+        functions: dict = UDPPFunctionTranslator.listfunctions(_additional_custom_modules)
 
         for stage_k, stage_v in _pipelines.items():
             caller_fkt: dict = stage_v['function']
@@ -793,23 +805,31 @@ class UDPPFunctionTranslator():
         # type(instance).__name__ doesnt works on [MRP.reading] returns list only
         return _typestr.replace("<class '", "").replace("'>", "").replace("[", "list(").replace("]", ")")
 
-
     @staticmethod
-    def listfunctions() -> dict:
+    def listfunctions(_additional_custom_modules: [] = []) -> dict:
         """
         returns all functions implemented in the UDPPFunctionCollection.py using the inspect function for live reflection
 
         :returns: implemented functions as dict with function name as key
         :rtype: dict
         """
-        method_list: [str] = [func for func in dir(UDPPFunctionCollection) if callable(getattr(UDPPFunctionCollection, func)) and not func.startswith("__")]
+
+        _additional_custom_modules.append(UDPPFunctionCollection)
+        method_list: [str] = []
+        for m in _additional_custom_modules:
+            method_list.extend([func for func in dir(m) if callable(getattr(m, func)) and not func.startswith("__")])
 
         resultdict: dict = {}
 
         for method in method_list:
             # get function object by name:string
-            function_obj = getattr(UDPPFunctionCollection, method)
-
+            function_obj = None
+            for ci in _additional_custom_modules:
+                try:
+                    function_obj = getattr(ci, method)
+                    break
+                except Exception as e:
+                    pass
             inspect_result: inspect.FullArgSpec = inspect.getfullargspec(function_obj)
             # get signature # todo merge with inspect.getfullargspec
             signature = inspect.signature(function_obj)

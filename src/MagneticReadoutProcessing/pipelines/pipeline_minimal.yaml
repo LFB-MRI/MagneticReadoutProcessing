@@ -2,6 +2,7 @@ settings:
   enabled: false
   export_intermediate_results: false
   name: pipeline_minimal
+  additional_custom_modules: []
 
 stage import:
   function: import_readings

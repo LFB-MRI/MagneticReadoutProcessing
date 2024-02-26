@@ -2,6 +2,7 @@ settings:
   enabled: false
   export_intermediate_results: false
   name: pipeline_bias
+  additional_custom_modules: []
 
 stage readings:
   function: import_readings

@@ -4,8 +4,10 @@ from pathlib import Path
 import typer
 from MRPudpp.UDPPFunctionTranslator import UDPPFunctionTranslator
 import networkx as nx
-from MRPudpp import udpp_config
+from MRPudpp import udpp_config, UDPPFunctionCollection
 import pickle
+import importlib.util
+import sys
 
 app = typer.Typer()
 
@@ -61,7 +63,38 @@ def run(ctx: typer.Context):
         steps = UDPPFunctionTranslator.extract_pipelines_steps(pipeline_v)
         print("found following valid steps: {}".format(steps))
 
+        # LOAD ADDITIONAL FUNCTIONS INTO GLOBAL SYMBOL TABLE
+        additional_modules: [] = []
+        if 'additional_custom_modules' in settings and len(settings['additional_custom_modules']) > 0:
 
+            for module_path_entry in settings['additional_custom_modules']:
+                if module_path_entry is None or len(module_path_entry) <= 0:
+                    continue
+                module_path_entry: str = module_path_entry
+                # CHECK FILE EXTENTIONS
+                if not module_path_entry.endswith(".py"):
+                    continue
+                # RESOLVE FULL FOLDER PATH
+                if not str(module_path_entry).startswith('/'):
+                    module_path_entry = str(Path(module_path_entry).resolve())
+
+
+                # GET FILENAME AS MODULE NAME
+                module_name: str = Path(module_path_entry).parts[-1:][0].replace(".py", "").replace(".", "")
+                print("try to load custom module {} ({})".format(module_name, module_path_entry))
+
+                # LOAD MODULE IN
+                spec = importlib.util.spec_from_file_location(module_name, module_path_entry)
+                module_instance = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module_instance
+                spec.loader.exec_module(module_instance) # LOAD FINALLY
+                # TO ALLOW A FUNCTION CALL THE ALL FOUND FUNCTIONS NEEDS TO BE MEMBER OF UDPPFFunctionCollection
+                ## GET FUNCTIONS INSIDE OF THE NEW LOADED MODULE
+                method_list: [str] = [func for func in dir(module_instance) if callable(getattr(module_instance, func)) and not func.startswith("__")]
+                print("for module {} the following functions are found {}".format(module_name, method_list))
+
+                additional_modules.append(module_instance)
+            print(UDPPFunctionTranslator.listfunctions(additional_modules).keys())
 
         # CREATE CALLTREE
         calltree_graph: nx.DiGraph = UDPPFunctionTranslator.create_calltree_graph(steps, pipeline_temp_folder_path)
@@ -69,12 +102,12 @@ def run(ctx: typer.Context):
 
         # CHECK FOR EXISTING FUNCTIONS
         # RAISES AN EXCEPTION IF SOMETHING IS WRONG
-        UDPPFunctionTranslator.check_functions_exists(steps)
+        UDPPFunctionTranslator.check_functions_exists(steps, additional_modules)
 
 
         # CHECK FOR MATCHING FUNCTION PARAMETERS
-        # => raises exception is a parameter is wring
-        UDPPFunctionTranslator.check_parameter_types(steps, calltree_graph)
+        # => raises exception is a parameter mismatch is present
+        UDPPFunctionTranslator.check_parameter_types(steps, calltree_graph, additional_modules)
 
 
         # get all possible start nodes
@@ -148,7 +181,7 @@ def run(ctx: typer.Context):
 
                 print("=====> execute stage {}".format(stage_name))
 
-                fkt_call_result = UDPPFunctionTranslator.execute_stage_funktion(stage_information, intermediate_results)
+                fkt_call_result = UDPPFunctionTranslator.execute_stage_funktion(stage_information, intermediate_results, additional_modules)
 
                 if fkt_call_result:
                     intermediate_results[str(stage_name)] = fkt_call_result
