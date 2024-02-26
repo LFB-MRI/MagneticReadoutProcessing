@@ -10,9 +10,9 @@ stage import:
     IP_input_folder: minimal # STRING
     IP_file_regex: (.)*.mag.json # REGEX
 
-stage inspect_readings:
+stage inspect_readings: # RETURNS None
   function: inspect_readings
   parameters:
-    readings_to_inspect: stage import #[MRPReading.MRPReading]
+    readings_to_inspect: stage import # [MRPReading.MRPReading]
     IP_export_folder: minimal # STRING
     IP_plot_headline_prefix:  pipeline_minimal # STRING

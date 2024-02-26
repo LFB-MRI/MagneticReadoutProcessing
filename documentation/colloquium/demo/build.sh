@@ -1,4 +1,4 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
-docker build -t mrpdemo:latest .
+docker build --no-cache -t mrpdemo:latest .

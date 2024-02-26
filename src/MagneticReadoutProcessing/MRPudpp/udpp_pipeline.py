@@ -38,14 +38,23 @@ def currentpipelinefolder(ctx: typer.Context):
 
 @app.command()
 def run(ctx: typer.Context, pipeline: str = ""):
-    pipelines: [str] = []
-    if pipeline is None or len(pipeline) == 0:
-        pipelines = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
-    else:
-        pipelines.append(pipeline)
+
+    pipelines: dict = UDPPFunctionTranslator.load_pipelines(udpp_config.UDPPConfig.get_pipeline_folder())
+
+    if not pipeline.endswith(".yaml"):
+        pipeline = pipeline + ".yaml"
 
     # ITERATE OVER EACH PIPELINE
     for pipeline_k, pipeline_v in pipelines.items():
+
+        dont_skip_disabled_pipeline: bool = False
+        if pipeline is not None and len(pipeline) > 0:
+            dont_skip_disabled_pipeline = True
+            if not pipeline_k == pipeline:
+                print("skipping {} due pipeline parameter is set".format(pipeline_k))
+                continue
+
+
         # CREATE TEMP FOLDER FOR PIPELINE to store some intermediate results
         pipeline_temp_folder_name: str = str(pipeline_k).replace('.', '_').replace('/', '')
         pipeline_temp_folder_path: str = str(Path(udpp_config.UDPPConfig.get_tmp_folder()).joinpath("{}/".format(pipeline_temp_folder_name)))
@@ -58,7 +67,7 @@ def run(ctx: typer.Context, pipeline: str = ""):
         settings: dict = pipeline_v['settings']
 
         # CHECK IF PIPELINE ENABLED
-        if 'enabled' in settings and not settings['enabled']:
+        if 'enabled' in settings and not settings['enabled'] and not dont_skip_disabled_pipeline:
             print("skipping pipeline {} => enabled is set to False or key is missing".format(settings['name']))
             continue
         # EXTRACT STEPS

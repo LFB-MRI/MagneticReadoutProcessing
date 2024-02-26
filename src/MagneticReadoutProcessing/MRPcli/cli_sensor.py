@@ -13,10 +13,11 @@ def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
     sensor_connection: MRPHal.MRPHal = cli_helper.create_hal_instance_using_config(_configname=configname)
 
     print("SENSOR INFORMATION")
-    print("NAME:".format(sensor_connection.current_port.name))
+    print("NAME:".format(sensor_connection.get_sensor_names()))
     print("ID: {}".format(sensor_connection.get_sensor_id()))
     print("CONNECTED SENSORS: {}".format(sensor_connection.get_sensor_count()))
     print("CAPABILITIES: {}".format(sensor_connection.get_sensor_capabilities()))
+
 
     sensor_connection.disconnect()
 
