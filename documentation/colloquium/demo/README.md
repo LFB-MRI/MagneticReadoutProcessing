@@ -55,6 +55,14 @@ $ pip3 freeze | grep MagneticReadoutProcessing
 $ MRPUdpp --basepath $(pwd) pipeline listfunctions
 
 $ MRPUdpp --basepath $(pwd) pipeline run --pipeline pipeline_minimal
+
+# > used sensor bias readings taken from sensor in evaluation used
+$ MRPUdpp --basepath $(pwd) pipeline run --pipeline pipeline_bias
+
+# > concept additional_custom_modules
+# > from usecase evaluation
+# >
+$ MRPUdpp --basepath $(pwd) pipeline run --pipeline pipeline_filter
 ```
 
 ###

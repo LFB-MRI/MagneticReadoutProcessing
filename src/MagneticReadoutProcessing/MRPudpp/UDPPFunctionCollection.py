@@ -172,13 +172,7 @@ class UDPPFunctionCollection:
 
         for r in readings_to_inspect:
             # REPORT TEMPLATE
-            report_text: str = """########## READING REPORT ##########
-            NAME: %%NAME%%
-            No Datapoints: %%NODP%%
-            B [uT]: %%BV%%
-            Temperature [°C]: %%TEMP%%
-            CenterOfGravity [x y z] normalized: %%COG%%
-            ######## END READING REPORT ########"""
+            report_text: str = "########## READING REPORT ##########\nNAME: %%NAME%%\nNo Datapoints: %%NODP%%\nB [uT]: %%BV%%\nTemperature [°C]: %%TEMP%%\nCenterOfGravity [x y z] normalized: %%COG%%\n######## END READING REPORT ########\n"
             # REPLACE TEMPLATE WITH REPORT DATA
             report_text = report_text.replace("%%NAME%%", "{}".format(r.get_name()))
             report_text = report_text.replace("%%NODP%%", "{}".format(len(r.data)))
