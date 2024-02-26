@@ -489,7 +489,7 @@ class MRPDataVisualization:
         ax1.errorbar(x, y, yerr=error, fmt='o')
         ax1.set_xticks(range(0, len(_readings)), labels)
         ax1.set_xlabel("Reading [id:sensor_id]")
-        ax1.set_ylabel("Error (Variance) [{}]".format(_unit))
+        ax1.set_ylabel("Mean [{}]".format(_unit))
 
 
         # SAVE FIGURE IF NEEDED
