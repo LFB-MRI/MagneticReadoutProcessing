@@ -1,16 +1,17 @@
-# Colloquium
-
-## Introduction
-This is a naive implementation of getting **fusuma** working through docker.
-The **fusuma** port is 8080: `http://localhost:8080`.
+#
 
 
-## Usage
+## SETUP
 
-From the parent directory with the `slides` directory (intended to run **fusuma**)
+
+* install r-base
+* install $ R => install.packages("rmarkdown") install.packages("ggplot2") install.packages("sysfonts")
+
+
 
 ```bash
-bash ./run_docker.sh
-```
 
-  
+$ Rscript -e 'install.packages("curl")'
+$ Rscript -e 'install.packages("showtext")'
+
+```

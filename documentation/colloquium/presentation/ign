@@ -1,0 +1,61 @@
+---
+title: "Development of a permanent magnet characterisation framework for use in low-field MRI systems"
+subtitle: "FH Aachen – University of Applied Sciences"
+author: Marcel Ochsendorf
+institute: Faculty of Electrical Enginnering and Information Technology - Information Systems Engineering
+date: today
+date-format: "dddd, [the] D[<sup style='font-size:65%;font-style:italic;'>th</sup>] [of] MMMM, YYYY"
+embed-resources: false
+format: coeos-revealjs
+---
+
+```{r}
+#| include: false
+sysfonts::font_add_google("Alegreya Sans", "Alegreya Sans", regular.wt = 300)
+showtext::showtext_auto()
+source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
+```
+
+## Introduction
+
+### Subtitle
+
+`some code` and some text.  
+A URL [mickael.canouil.fr](https://mickael.canouil.fr/).
+
+```{r}
+#| echo: true
+1 + 1
+```
+
+```{r}
+#| echo: true
+x <- 1
+y <- x + 1
+y
+```
+
+## GGPLOT2 With `code`
+
+```{r}
+#| echo: true
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) + geom_point()
+```
+
+# PART 1 With `code` {.center .center-x}
+
+## New slide
+
+With only text
+
+
+
+---
+
+<h2 class="r-fit-text">Questions ?</h2>
+
+
+<table>
+<tr><td><p>[<img src="images/github-mark-white.png" alt="image" width="100" height="auto">](https://github.com/LFB-MRI/MagneticReadoutProcessing) </p></td><td><p>[<img src="images/researchgate.svg" alt="image" width="100" height="auto">](https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterisation_framework_for_use_in_low-field_MRI_systems) </p></td></tr>
+</table>

@@ -1,0 +1,16 @@
+project:
+  type: website
+  title: "MagneticReadoutProcessing"
+
+
+
+format:
+  revealjs: 
+    menu: true
+    progress: true
+    incremental: true
+    theme: dark
+search: false
+
+
+

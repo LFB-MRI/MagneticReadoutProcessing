@@ -1,0 +1,59 @@
+---
+title: "Development of a permanent magnet characterisation framework for use in low-field MRI systems"
+subtitle: "FH Aachen – University of Applied Sciences"
+author: Marcel Ochsendorf
+institute: Faculty of Electrical Enginnering and Information Technology - Information Systems Engineering
+date: today
+date-format: "dddd, [the] D[<sup style='font-size:65%;font-style:italic;'>th</sup>] [of] MMMM, YYYY"
+embed-resources: false
+format: coeos-revealjs
+---
+
+```{r}
+#| include: false
+sysfonts::font_add_google("Alegreya Sans", "Alegreya Sans", regular.wt = 300)
+showtext::showtext_auto()
+source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
+```
+
+
+
+
+
+## Table of Content
+
+
+
+## Introduction
+
+* test
+
+## Aim of this Project
+
+
+## Software Framework
+
+Simply tasks of data: 
+
+* data aqusition
+* storage
+* analysis tasks
+
+---
+
+### Software Concept
+
+test
+
+## Use Cases
+
+
+
+
+# 
+<h1 class="r-fit-text" style="text-align: center;">Questions ?</h1>
+
+
+<table>
+<tr><td><p>[<img src="images/github-mark-white.png" alt="image" width="150" height="auto">](https://github.com/LFB-MRI/MagneticReadoutProcessing) </p></td><td><p>[<img src="images/researchgate.svg" alt="image" width="150" height="auto">](https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterisation_framework_for_use_in_low-field_MRI_systems) </p><td>[<img src="images/avatar.png" alt="image" width="150" height="auto">](https://marcelochsendorf.com)</td></td></tr>
+</table>
