@@ -192,7 +192,14 @@ class MRPHalKlipper(MRPHal.MRPHal):
         query = '/printer/objects/query?%s' % object
         return self.get(query)['result']['status'][object]
 
+    def get_sensor_names(self) -> [str]:
+        """
+        returns the sensor names defined in the sensor firmware as string list
 
+        :returns: sensor chip names e.g. static, axis_x,..
+        :rtype: [str]
+        """
+        return ['rotational']
 
 
 
