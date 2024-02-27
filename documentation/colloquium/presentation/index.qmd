@@ -290,7 +290,7 @@ Two examples are used to demonstrate the practical application of the framework:
 
 <aside class="notes">
 * unterschiedliche messbereiche
-*
+* sind diese passend für die magnet chrakterisierung bis zu welchem grad
 </aside>
 
 ---
@@ -299,17 +299,17 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ::: {.container}
 :::: {.col}
-<img src="images/eval/n_mmc.png" alt="image" >
+<img src="images/eval/n_tlv.png" alt="image" >
 ::::
 
 :::: {.col}
-<img src="images/eval/n_tlv.png" alt="image" >
+<img src="images/eval/n_mmc.png" alt="image" >
 ::::
 :::
 
 <aside class="notes">
 * TLV: 98uT MMC: 0.007uT
-* aufgenommen weil
+* rauschen gibt untere greenze an
 * TLV abweichung 0.2C (bitsprüunge) => nicht für temperatur compensation zu nutzen
 * TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)
 * Ergebnisse mit einem zweiten set an sensoren verifiziert
@@ -322,11 +322,11 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ::: {.container}
 :::: {.col}
-<img src="images/eval/t_mmc.png" alt="image" >
+<img src="images/eval/t_tlv.png" alt="image" >
 ::::
 
 :::: {.col}
-<img src="images/eval/t_tlv.png" alt="image" >
+<img src="images/eval/t_mmc.png" alt="image" >
 ::::
 :::
 
@@ -343,11 +343,11 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ::: {.container}
 :::: {.col}
-<img src="images/eval/dr_mmc.png" alt="image" >
+<img src="images/eval/dr_tlv.png" alt="image" >
 ::::
 
 :::: {.col}
-<img src="images/eval/dr_tlv.png" alt="image" >
+<img src="images/eval/dr_mmc.png" alt="image" >
 ::::
 :::
 
