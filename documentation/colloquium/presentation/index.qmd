@@ -31,17 +31,15 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 <h1 class="r-fit-text" style="text-align: center;">MagneticReadoutProcessing</h1>
 
----
+<p class="fragment">Provides and user-oriented **open** magnetic field data hardware and software framework:</p>
+<br />
+<p class="fragment">&#x2022; Harware support for several magnetic field sensors</p>
+<br />
+<p class="fragment">&#x2022; Easy to integrate into existing projects</p>
+<br />
+<p class="fragment">&#x2022; Easy to extend</p>
 
-##  
 
-<h1 class="r-fit-text" style="text-align: center;">MagneticReadoutProcessing</h1>
-
-Provides and user-oriented **open** magnetic field data hardware and software framework:
-
-* Harware support for several magnetic field sensors
-* Easy to integrate into existing projects
-* Easy to extend
 
 
 
@@ -49,13 +47,33 @@ Provides and user-oriented **open** magnetic field data hardware and software fr
 
 ### Hardware Framework
 
+![](images/3D_sensor.png)
+
+---
+
+### Hardware Framework
+
+Cheap and easy to construct using consumer grade magnetic field sensors:
+<br />
+<p class="fragment">&#x2022; One software for most common digital magnetic field sensors</p>
+<br />
+<p class="fragment">&#x2022; Synchronised multi sensor setups</p>
+<br />
+<p class="fragment">&#x2022; Universal and interachangable magnet mount</p>
+
+
+<aside class="notes">
+    In der software sind aktuelll 8 typische sensoren hinterlegt.
+    Magnet mount für viele Magnetformen anpassbar, ohne dass die sensor hardware geaendert werden muss
+</aside>
+
 ---
 
 ### Software Framework
 
 Simply tasks of: 
 
-* data aqusition
+* data aqusition using hardware sensors
 * data storage
 * data analysis tasks
 
@@ -67,29 +85,86 @@ Simply tasks of:
 
 ---
 
-### Usability Improvements
+### User Interaction Points
 
-<p class="fragment">Fade in</p>
-<p class="fragment fade-out">Fade out</p>
-<p class="fragment highlight-red">Highlight red</p>
-<p class="fragment fade-in-then-out">Fade in, then out</p>
-<p class="fragment fade-up">Slide up while fading in</p>
+Allows rapid development of software analysation functions, witout implementation of typical data processing pipelines needed by providing:
 
+<br />
+<p class="fragment">&#x2022; Expandable open datatypes for magnetic field data</p>
+<br />
+<p class="fragment">&#x2022; Prebuild pipelines ready for customisation</p>
+<br />
+<p class="fragment">&#x2022; Full online documentation, tested library and user tutorials</p>
 
 ---
 
 ## Use Cases
 
+Two pratical application of the framework will be shown using two examples:
+
+<br />
+<p class="fragment">&#x2022; Characterization of a *MM5603NJ* and determination of background noise and temperature linearity</p>
+<br />
+<p class="fragment">&#x2022; Usage of the chrakterised sensor for sorting permanent magnets</p>
+
+<aside class="notes">
+    Es wurden wärend der Arbeit weitere Sensoren chrakterisiert, es wird jedoch nur dieser sensor als beispiel genommen.
+    Mittels der chraktisierung im vorfeld ist eine genauerer chrakterisierung der Magnete möglich.
+
+</aside>
+---
+
+
+
 ### Sensor Chraterisation
 
+![](images/MRP_high_level_overview.png)
+
+<aside class="notes">
+    Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwendet wurde.
+    Platte zeigen, verschiedene Sensoren wurden unter den geleichen bedingungen vermessen.
+</aside>
+
+---
+
+### Manget Sorting
 
 
 
 
+<aside class="notes">
+    Die Sortierung wird anhand einer Demo des Frameworks durchgeführt.
+    Dabei werden die sensor charakterisiungsdaten verwendet
+    Hierbei wird eine preconfiguierte Pipeline verwendet.
+    Das ergebnis wird am ende eine reduktion der vermessenen Magnete sein.
+    Somit kann dann ein optimierter hallbach ring generiert werden um so die homogentität zu verbessern
+</aside>
+
+
+---
+
+#### DEMO: MRPCli
+
+![](images/MRPCli.gif)
+
+
+
+---
+
+#### DEMO: MRPUdpp
+
+![](images/MRPUdpp.gif)
 
 
 
 
+---
+
+## Conclusion
+
+
+
+---
 
 # 
 <h1 class="r-fit-text" style="text-align: center;">Questions ?</h1>

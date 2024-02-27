@@ -356,29 +356,62 @@ Marcel Ochsendorf
 <h1 class="r-fit-text" style="text-align: center;">
 MagneticReadoutProcessing
 </h1>
-</section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<h1 class="r-fit-text" style="text-align: center;">
-MagneticReadoutProcessing
-</h1>
-<p>Provides and user-oriented <strong>open</strong> magnetic field data hardware and software framework:</p>
-<ul>
-<li>Harware support for several magnetic field sensors</li>
-<li>Easy to integrate into existing projects</li>
-<li>Easy to extend</li>
-</ul>
+<p class="fragment">
+Provides and user-oriented <strong>open</strong> magnetic field data hardware and software framework:
+</p>
+<br>
+<p class="fragment">
+• Harware support for several magnetic field sensors
+</p>
+<br>
+<p class="fragment">
+• Easy to integrate into existing projects
+</p>
+<br>
+<p class="fragment">
+• Easy to extend
+</p>
 </section>
 <section class="slide level2">
 
 <h3 id="hardware-framework">Hardware Framework</h3>
+
+<img data-src="images/3D_sensor.png" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="hardware-framework-1">Hardware Framework</h3>
+Cheap and easy to construct using consumer grade magnetic field sensors: <br>
+<p class="fragment">
+• One software for most common digital magnetic field sensors
+</p>
+<br>
+<p class="fragment">
+• Synchronised multi sensor setups
+</p>
+<br>
+<p class="fragment">
+• Universal and interachangable magnet mount
+</p>
+<aside class="notes">
+In der software sind aktuelll 8 typische sensoren hinterlegt. Magnet mount für viele Magnetformen anpassbar, ohne dass die sensor hardware geaendert werden muss
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="software-framework">Software Framework</h3>
 <p>Simply tasks of:</p>
 <ul>
-<li>data aqusition</li>
+<li>data aqusition using hardware sensors</li>
 <li>data storage</li>
 <li>data analysis tasks</li>
 </ul>
@@ -390,28 +423,98 @@ MagneticReadoutProcessing
 <img data-src="images/MRP_high_level_overview.png" class="r-stretch"></section>
 <section class="slide level2">
 
-<h3 id="usability-improvements">Usability Improvements</h3>
+<h3 id="user-interaction-points-1">User Interaction Points</h3>
+<p>Allows rapid development of software analysation functions, witout implementation of typical data processing pipelines needed by providing:</p>
+<br>
 <p class="fragment">
-Fade in
+• Expandable open datatypes for magnetic field data
 </p>
-<p class="fragment fade-out">
-Fade out
+<br>
+<p class="fragment">
+• Prebuild pipelines ready for customisation
 </p>
-<p class="fragment highlight-red">
-Highlight red
-</p>
-<p class="fragment fade-in-then-out">
-Fade in, then out
-</p>
-<p class="fragment fade-up">
-Slide up while fading in
+<br>
+<p class="fragment">
+• Full online documentation, tested library and user tutorials
 </p>
 </section>
 <section id="use-cases" class="slide level2">
 <h2>Use Cases</h2>
-<h3 id="sensor-chraterisation">Sensor Chraterisation</h3>
+<p>Two pratical application of the framework will be shown using two examples:</p>
+<br>
+<p class="fragment">
+• Characterization of a <em>MM5603NJ</em> and determination of background noise and temperature linearity
+</p>
+<br>
+<p class="fragment">
+• Usage of the chrakterised sensor for sorting permanent magnets
+</p>
+<aside class="notes">
+<p>Es wurden wärend der Arbeit weitere Sensoren chrakterisiert, es wird jedoch nur dieser sensor als beispiel genommen. Mittels der chraktisierung im vorfeld ist eine genauerer chrakterisierung der Magnete möglich.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="section-2" class="title-slide slide level1 center">
+<section class="slide level2">
+
+<h3 id="sensor-chraterisation">Sensor Chraterisation</h3>
+
+<img data-src="images/MRP_high_level_overview.png" class="r-stretch"><aside class="notes">
+Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwendet wurde. Platte zeigen, verschiedene Sensoren wurden unter den geleichen bedingungen vermessen.
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="manget-sorting">Manget Sorting</h3>
+<aside class="notes">
+Die Sortierung wird anhand einer Demo des Frameworks durchgeführt. Dabei werden die sensor charakterisiungsdaten verwendet Hierbei wird eine preconfiguierte Pipeline verwendet. Das ergebnis wird am ende eine reduktion der vermessenen Magnete sein. Somit kann dann ein optimierter hallbach ring generiert werden um so die homogentität zu verbessern
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h4 id="demo-mrpcli">DEMO: MRPCli</h4>
+
+<img data-src="images/MRPCli.gif" class="r-stretch"></section>
+<section class="slide level2">
+
+<h4 id="demo-mrpudpp">DEMO: MRPUdpp</h4>
+
+<img data-src="images/MRPUdpp.gif" class="r-stretch"></section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+</section>
+<section class="slide level2">
+
+</section>
+<section id="section-1" class="title-slide slide level1 center">
 <h1></h1>
 <h1 class="r-fit-text" style="text-align: center;">
 Questions ?
