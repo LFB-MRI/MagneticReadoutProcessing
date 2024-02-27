@@ -52,7 +52,7 @@ $ cd demo
 # LAUNCH PROXY FIRST
 $ MRPProxy proxy launch tcp://169.254.40.154:10001 klipper://169.254.40.154:80 --disbaleprecheck 0
 # TEST PROXY
-$ curl 127.0.0.1:5556/
+$ curl -L 127.0.0.1:5556/ | json_pp
 # CONNECT SENSOR TO CLI
 $ MRPCli --basepath $(pwd) config setupsensor --path http://127.0.0.1:5556 demo  
 ```
