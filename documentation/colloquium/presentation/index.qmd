@@ -207,11 +207,11 @@ Cheap and easy to construct magnetic field sensors:
 Provides rapid development of analysis functions without the need to implement typical data processing pipelines:
 
 <br />
-<p class="fragment">&#x2022; Expandable **open** datatypes for magnetic field data</p>
+<p class="fragment">&#x2022; Expandable **open** data types for magnetic field data</p>
 <br />
 <p class="fragment">&#x2022; Prebuild analysis pipelines ready for user customisation</p>
 <br />
-<p class="fragment">&#x2022; Full online documentation, CI tested and user tutorials</p>
+<p class="fragment">&#x2022; Full online documentation,tests and user tutorials</p>
 
 <aside class="notes">
 * mit der hardware können wird magnetfeld daten aufnehmen
@@ -241,9 +241,9 @@ Provides rapid development of analysis functions without the need to implement t
 Two examples are used to demonstrate the practical application of the framework:
 
 <br />
-<p class="fragment">&#x2022; Characterization of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and linearity</p>
+<p class="fragment">&#x2022; Characterisation of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and linearity</p>
 <br />
-<p class="fragment">&#x2022; Usage of the chrakterised sensor for sorting permanent magnets and measure magnetic fields</p>
+<p class="fragment">&#x2022; Usage of the chracterised sensor for sorting permanent magnets and measure magnetic fields</p>
 
 
 <aside class="notes">
@@ -262,7 +262,7 @@ Two examples are used to demonstrate the practical application of the framework:
 ![](images/Sensor_evaluation_setup_for_linearity_measurements.png)
 
 <aside class="notes">
-* vereinfachter aufbau
+* vereinfachter aufbau fuer alle gleich
 * sensorplatte zeigen
 * gleiche befdinungen
 * zweites set an sensoren
@@ -283,6 +283,7 @@ Two examples are used to demonstrate the practical application of the framework:
 :::
 
 <aside class="notes">
+* aufgenommen weil
 * TLV abweichung 0.2C (bitsprüunge) => nicht für temperatur compensation zu nutzen
 * TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)
 * Ergebnisse mit einem zweiten set an sensoren verifiziert
@@ -332,7 +333,7 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ---
 
-### Manget Sorting
+### Magnet Sorting
 
 ![](images/magnet_sorting_pipeline.png)
 
@@ -353,7 +354,7 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ---
 
-#### Manget Sorting - DEMO MRP
+#### Magnet Sorting - DEMO MRP
 
 * Simple installation using pip
 * Commandline interface available system wide
@@ -363,7 +364,7 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ---
 
-#### Manget Sorting - DEMO MRPCli
+#### Magnet Sorting - DEMO MRPCli
 
 * Generate automated measurement using hardware sensors
 * Save results to filesystem for later analysation
@@ -374,7 +375,7 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ---
 
-#### Manget Sorting - DEMO MRPUdpp
+#### Magnet Sorting - DEMO MRPUdpp
 
 * Execution of pre-configured analysation and pipeline
 * User implements filter algorithm only
@@ -389,8 +390,8 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ## Conclusion
 
-* The implemented framework was successfully used to automatically record and analyze measurement data
-* Characterized sensors are only conditionally suitable for measuring low field MRI B0 fields
+* The implemented framework is successfully used to automatically record and analyse measurement data
+* Characterised sensors are only conditionally suitable for measuring low field MRI fields
 * Implementation of other sensor types required for a wider use of the implemented solution
 
 <aside class="notes">

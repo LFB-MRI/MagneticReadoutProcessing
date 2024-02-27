@@ -635,7 +635,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 <p>Provides rapid development of analysis functions without the need to implement typical data processing pipelines:</p>
 <br>
 <p class="fragment">
-• Expandable <strong>open</strong> datatypes for magnetic field data
+• Expandable <strong>open</strong> data types for magnetic field data
 </p>
 <br>
 <p class="fragment">
@@ -643,7 +643,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </p>
 <br>
 <p class="fragment">
-• Full online documentation, CI tested and user tutorials
+• Full online documentation,tests and user tutorials
 </p>
 <aside class="notes">
 <ul>
@@ -692,11 +692,11 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 <p>Two examples are used to demonstrate the practical application of the framework:</p>
 <br>
 <p class="fragment">
-• Characterization of a <em>MM5603NJ</em> and <em>TLV493D</em> to measure background noise, temperature coefficients and linearity
+• Characterisation of a <em>MM5603NJ</em> and <em>TLV493D</em> to measure background noise, temperature coefficients and linearity
 </p>
 <br>
 <p class="fragment">
-• Usage of the chrakterised sensor for sorting permanent magnets and measure magnetic fields
+• Usage of the chracterised sensor for sorting permanent magnets and measure magnetic fields
 </p>
 <aside class="notes">
 <ul>
@@ -724,7 +724,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 
 <img data-src="images/Sensor_evaluation_setup_for_linearity_measurements.png" class="r-stretch"><aside class="notes">
 <ul>
-<li>vereinfachter aufbau</li>
+<li>vereinfachter aufbau fuer alle gleich</li>
 <li>sensorplatte zeigen</li>
 <li>gleiche befdinungen</li>
 <li>zweites set an sensoren</li>
@@ -754,6 +754,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </div>
 <aside class="notes">
 <ul>
+<li>aufgenommen weil</li>
 <li>TLV abweichung 0.2C (bitsprüunge) =&gt; nicht für temperatur compensation zu nutzen</li>
 <li>TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)</li>
 <li>Ergebnisse mit einem zweiten set an sensoren verifiziert</li>
@@ -831,7 +832,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </section>
 <section class="slide level2">
 
-<h3 id="manget-sorting">Manget Sorting</h3>
+<h3 id="magnet-sorting">Magnet Sorting</h3>
 
 <img data-src="images/magnet_sorting_pipeline.png" class="r-stretch"><ol type="1">
 <li>Configure sensor and measurement parameters</li>
@@ -860,7 +861,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </section>
 <section class="slide level2">
 
-<h4 id="manget-sorting---demo-mrp">Manget Sorting - DEMO MRP</h4>
+<h4 id="magnet-sorting---demo-mrp">Magnet Sorting - DEMO MRP</h4>
 <ul>
 <li>Simple installation using pip</li>
 <li>Commandline interface available system wide</li>
@@ -870,7 +871,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 <img data-src="images/MRP.gif" class="r-stretch"></section>
 <section class="slide level2">
 
-<h4 id="manget-sorting---demo-mrpcli">Manget Sorting - DEMO MRPCli</h4>
+<h4 id="magnet-sorting---demo-mrpcli">Magnet Sorting - DEMO MRPCli</h4>
 <ul>
 <li>Generate automated measurement using hardware sensors</li>
 <li>Save results to filesystem for later analysation</li>
@@ -879,7 +880,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 <img data-src="images/MRPCli.gif" class="r-stretch"></section>
 <section class="slide level2">
 
-<h4 id="manget-sorting---demo-mrpudpp">Manget Sorting - DEMO MRPUdpp</h4>
+<h4 id="magnet-sorting---demo-mrpudpp">Magnet Sorting - DEMO MRPUdpp</h4>
 <ul>
 <li>Execution of pre-configured analysation and pipeline</li>
 <li>User implements filter algorithm only</li>
@@ -889,8 +890,8 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
-<li>The implemented framework was successfully used to automatically record and analyze measurement data</li>
-<li>Characterized sensors are only conditionally suitable for measuring low field MRI B0 fields</li>
+<li>The implemented framework is successfully used to automatically record and analyse measurement data</li>
+<li>Characterised sensors are only conditionally suitable for measuring low field MRI fields</li>
 <li>Implementation of other sensor types required for a wider use of the implemented solution</li>
 </ul>
 <aside class="notes">
