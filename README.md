@@ -16,8 +16,8 @@ MagneticReadoutProcessing is a Python library that makes it possible to store an
 ### PAPER
 
 ```
-@software{OM_MagneticReadoutProcessing_p23,
-author = {Ochsendorf, Marcel},
+@software{OM23,
+author = {OCHSENDORF, Marcel},
 license = {GPL-2.0},
 month = {1},
 title = {Development of a permanent magnet characterization framework for use in low-field MRI systems},
@@ -25,14 +25,14 @@ url = {https://github.com/LFB-MRI/MagneticReadoutProcessing},
 version = {1.0.0},
 year = {2023},
 pages={80},
-doi={},
+doi={10.13140/RG.2.2.36430.64325},
 }
 ```
 
 ### SOFTWARE
 ```
 @software{Ochsendorf_Marcel_MagneticReadoutProcessing_2023,
-author = {Ochsendorf, Marcel},
+author = {OCHSENDORF, Marcel},
 license = {GPL-2.0},
 month = {1},
 title = {MagneticReadoutProcessing is a Python library},
