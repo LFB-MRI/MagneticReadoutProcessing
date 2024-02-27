@@ -7,4 +7,5 @@ ENV TZ=Europe \
 RUN apt-get update && apt-get install -y --no-install-recommends python3-serial curl wget python3-pip
 RUN pip install MagneticReadoutProcessing
 WORKDIR /demo
+COPY . .
 RUN MRPCli --help
