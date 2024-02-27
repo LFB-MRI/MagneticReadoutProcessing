@@ -40,14 +40,51 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 <p class="fragment">&#x2022; Easy to extend</p>
 
 
-
+<aside class="notes">
+    *
+    Folgend ein paar beispiele
+</aside>
 
 
 ---
 
 ### Hardware Framework
 
-![](images/3D_sensor.png)
+::: {.container}
+:::: {.col}
+<h4 style="text-align: center;">3D Rotational Sensor</h4>
+::::
+:::
+
+::: {.container}
+:::: {.col}
+<img src="images/3D_sensor.png" alt="image" height="320px">
+::::
+
+:::: {.col}
+<img src="images/3D_sensor_measurement.png" alt="image" height="320px" >
+::::
+:::
+
+---
+
+### Hardware Framework
+
+::: {.container}
+:::: {.col}
+<h4 style="text-align: center;">1D Static Sensor</h4>
+::::
+:::
+
+::: {.container}
+:::: {.col}
+<img src="images/1D_sensor.png" alt="image" height="320px">
+::::
+
+:::: {.col}
+<img src="images/1D_sensor_measurement.png" alt="image" height="320px" >
+::::
+:::
 
 ---
 
@@ -73,7 +110,8 @@ Cheap and easy to construct using consumer grade magnetic field sensors:
 
 Simply tasks of: 
 
-* data aqusition using hardware sensors
+*
+* data aqusition
 * data storage
 * data analysis tasks
 
@@ -182,7 +220,6 @@ Two pratical application of the framework will be shown using two examples:
 # 
 <h1 class="r-fit-text" style="text-align: center;">Questions ?</h1>
 
-
 <table>
-<tr><td><p>[<img src="images/github-mark-white.png" alt="image" width="150" height="auto">](https://github.com/LFB-MRI/MagneticReadoutProcessing) </p></td><td><p>[<img src="images/researchgate.svg" alt="image" width="150" height="auto">](https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterisation_framework_for_use_in_low-field_MRI_systems) </p><td>[<img src="images/avatar.png" alt="image" width="150" height="auto">](https://marcelochsendorf.com)</td></td></tr>
+<tr><td><p>[<img src="images/github-mark-white.png" alt="image" width="150" height="auto">](https://github.com/LFB-MRI/MagneticReadoutProcessing) </p></td><td><p>[<img src="images/researchgate.svg" alt="image" width="150" height="auto">](https://www.researchgate.net/publication/374388764_Development_of_a_permanent_magnet_characterisation_framework_for_use_in_low-field_MRI_systems) </p><td>[<img src="images/avatar.png" alt="image" width="150" height="auto">](https://marcelochsendorf.com)</td><td><p>[<img src="images/pypi.svg" alt="image" width="150" height="auto">](https://pypi.org/project/MagneticReadoutProcessing/) </p></td><td><p>[<img src="images/rtd.png" alt="image" width="150" height="auto">](https://magneticreadoutprocessing.readthedocs.io/en/latest/) </p></td></tr>
 </table>
