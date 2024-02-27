@@ -253,7 +253,11 @@ class MRPHalRest(MRPHal.MRPHal):
     def get_sensor_names(self) -> [str]:
         r: MRPPHalRestRequestResponseState.MRPPHalRestRequestResponseState = self.request_status()
         if r.success:
-            return r.sensornames
+            try:
+                return r.sensornames
+            except Exception as e:
+                print(e)
+                return self.get_sensor_capabilities()
         else:
             return []
 
