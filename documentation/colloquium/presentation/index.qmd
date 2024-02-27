@@ -118,12 +118,18 @@ Two pratical application of the framework will be shown using two examples:
 
 ### Sensor Chraterisation
 
-![](images/MRP_high_level_overview.png)
+![](images/Sensor_evaluation_setup_for_linearity_measurements.png)
 
 <aside class="notes">
     Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwendet wurde.
     Platte zeigen, verschiedene Sensoren wurden unter den geleichen bedingungen vermessen.
 </aside>
+
+---
+
+### *MM5603NJ* chraterisation results
+
+
 
 ---
 
@@ -145,6 +151,9 @@ Two pratical application of the framework will be shown using two examples:
 
 #### DEMO: MRPCli
 
+* Generate automated measurement using hardware sensors
+* Save results to filesystem for later analysation
+
 ![](images/MRPCli.gif)
 
 
@@ -152,6 +161,10 @@ Two pratical application of the framework will be shown using two examples:
 ---
 
 #### DEMO: MRPUdpp
+
+* Execution of pre-configured analysation and pipeline
+* User implements filter algorithm only
+
 
 ![](images/MRPUdpp.gif)
 
