@@ -42,10 +42,7 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 <br />
 
-<p class="fragment">&#x2022; Permanent magnets differ in their field strength due to their manufacture process and environmental changes</p>
-
-<p class="fragment">&#x2022; This influences the homogeneity of the assembled magnet</p>
-
+<p class="fragment">&#x2022; Permanent magnets differ in their field strength due to their manufacturing process and environmental changes</p>
 <p class="fragment">&#x2022; This influences the homogeneity of the assembled magnet</p>
 <p class="fragment">&#x2022; It can be improved by means of a complex shimming process</p>
 
@@ -61,9 +58,27 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 ## Solution
 
 
-<p class="fragment"> Measure magnets in advance</p>
-<p class="fragment"> Execute optimization or sorting algorithms on the magnet field data</p>
-<p class="fragment"> Buld an optimized magnet</p>
+<p class="fragment">&#x2022; Measure magnets in advance</p>
+<p class="fragment">&#x2022; Execute optimization or sorting algorithms on the magnet field data</p>
+<p class="fragment">&#x2022; Build an optimized magnet</p>
+
+<aside class="notes">
+* diverse projekte welche einzelne algrothmen dazu haben
+* jedoch nicht kompatible zueinander
+
+DESWEGEN: wurde entwickelt
+</aside>
+
+---
+
+--- 
+
+## Solution
+
+
+<p class="">&#x2022; Measure magnets in advance</p>
+<p class="">&#x2022; Execute optimization or sorting algorithms on the magnet field data</p>
+<p class="">&#x2022; Build an optimized magnet</p>
 
 <hr>
 
@@ -75,10 +90,10 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 <hr>
 
-<p class="fragment">Projects exists that follow this approach but only implement individual parts</p>
-<p class="fragment">Incompatible dataformats</p>
-<p class="fragment">Complex magnetic field sensor integrations</p>
-<p class="fragment">Usage of non opensource software</p>
+<p class="fragment">&#x2022; Existing projects follow this approach but only implement individual parts</p>
+<p class="fragment">&#x2022; Incompatible data-formats</p>
+<p class="fragment">&#x2022; Complex magnetic field sensor integrations</p>
+<p class="fragment">&#x2022; Usage of non open source software</p>
 <aside class="notes">
 * diverse projekte welche einzelne algrothmen dazu haben
 * jedoch nicht kompatible zueinander
@@ -88,13 +103,14 @@ DESWEGEN: wurde entwickelt
 
 ---
 
+
 ##  
 
 <h1 class="r-fit-text" style="text-align: center;">MagneticReadoutProcessing</h1>
 
-<p class="fragment">Provides and user-oriented **open** magnetic field data hardware and software framework:</p>
+<p class="fragment">Provides and user-oriented **open** magnetic field hardware and software framework:</p>
 <br />
-<p class="fragment">&#x2022; Harware support for several magnetic field sensors</p>
+<p class="fragment">&#x2022; Hardware support for several magnetic field sensors</p>
 <br />
 <p class="fragment">&#x2022; Ready to use data analysis pipelines</p>
 <br />
@@ -115,14 +131,14 @@ DESWEGEN: wurde entwickelt
 
 ### Hardware Framework
 
-Cheap and easy to construct sensors using consumer grade magnetic field sensors:
+Cheap and easy to construct magnetic field sensors:
 <br />
 <br />
 <p class="fragment">&#x2022; One software for most common digital magnetic field sensors</p>
 <br />
 <p class="fragment">&#x2022; Synchronised multi sensor setups</p>
 <br />
-<p class="fragment">&#x2022; Universal and interachangable magnet mount</p>
+<p class="fragment">&#x2022; Universal and interchangeable mount for different magnet shapes</p>
 
 
 <aside class="notes">
@@ -188,7 +204,7 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 
 ### Software Framework
 
-Allows rapid development of software analysation functions, without implementation of typical data processing pipelines providing:
+Provides rapid development of analysis functions without the need to implement typical data processing pipelines:
 
 <br />
 <p class="fragment">&#x2022; Expandable **open** datatypes for magnetic field data</p>
@@ -198,6 +214,8 @@ Allows rapid development of software analysation functions, without implementati
 <p class="fragment">&#x2022; Full online documentation, CI tested and user tutorials</p>
 
 <aside class="notes">
+* mit der hardware können wird magnetfeld daten aufnehmen
+* jetzt fehlt noch die software dazu
 * messdaten und meta-daten management
 * integration zu andern projekten magpylib, matlab, 
 * analysepipeline schauen wir uns später an

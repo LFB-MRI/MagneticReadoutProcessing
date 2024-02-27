@@ -375,10 +375,7 @@ Marcel Ochsendorf
 <h2>Problem</h2>
 <p><br></p>
 <p class="fragment">
-• Permanent magnets differ in their field strength due to their manufacture process and environmental changes
-</p>
-<p class="fragment">
-• This influences the homogeneity of the assembled magnet
+• Permanent magnets differ in their field strength due to their manufacturing process and environmental changes
 </p>
 <p class="fragment">
 • This influences the homogeneity of the assembled magnet
@@ -408,13 +405,45 @@ Marcel Ochsendorf
 <section id="solution" class="slide level2">
 <h2>Solution</h2>
 <p class="fragment">
-Measure magnets in advance
+• Measure magnets in advance
 </p>
 <p class="fragment">
-Execute optimization or sorting algorithms on the magnet field data
+• Execute optimization or sorting algorithms on the magnet field data
 </p>
 <p class="fragment">
-Buld an optimized magnet
+• Build an optimized magnet
+</p>
+<aside class="notes">
+<ul>
+<li>diverse projekte welche einzelne algrothmen dazu haben</li>
+<li>jedoch nicht kompatible zueinander</li>
+</ul>
+DESWEGEN: wurde entwickelt
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+</section>
+<section id="solution-1" class="slide level2">
+<h2>Solution</h2>
+<p class="">
+• Measure magnets in advance
+</p>
+<p class="">
+• Execute optimization or sorting algorithms on the magnet field data
+</p>
+<p class="">
+• Build an optimized magnet
 </p>
 <hr>
 <div class="container">
@@ -426,16 +455,16 @@ BUT
 </div>
 <hr>
 <p class="fragment">
-Projects exists that follow this approach but only implement individual parts
+• Existing projects follow this approach but only implement individual parts
 </p>
 <p class="fragment">
-Incompatible dataformats
+• Incompatible data-formats
 </p>
 <p class="fragment">
-Complex magnetic field sensor integrations
+• Complex magnetic field sensor integrations
 </p>
 <p class="fragment">
-Usage of non opensource software
+• Usage of non open source software
 </p>
 <aside class="notes">
 <ul>
@@ -461,11 +490,11 @@ DESWEGEN: wurde entwickelt
 MagneticReadoutProcessing
 </h1>
 <p class="fragment">
-Provides and user-oriented <strong>open</strong> magnetic field data hardware and software framework:
+Provides and user-oriented <strong>open</strong> magnetic field hardware and software framework:
 </p>
 <br>
 <p class="fragment">
-• Harware support for several magnetic field sensors
+• Hardware support for several magnetic field sensors
 </p>
 <br>
 <p class="fragment">
@@ -498,7 +527,7 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 <section class="slide level2">
 
 <h3 id="hardware-framework">Hardware Framework</h3>
-Cheap and easy to construct sensors using consumer grade magnetic field sensors: <br> <br>
+Cheap and easy to construct magnetic field sensors: <br> <br>
 <p class="fragment">
 • One software for most common digital magnetic field sensors
 </p>
@@ -508,7 +537,7 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 </p>
 <br>
 <p class="fragment">
-• Universal and interachangable magnet mount
+• Universal and interchangeable mount for different magnet shapes
 </p>
 <aside class="notes">
 <ul>
@@ -603,7 +632,7 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <section class="slide level2">
 
 <h3 id="software-framework">Software Framework</h3>
-<p>Allows rapid development of software analysation functions, without implementation of typical data processing pipelines providing:</p>
+<p>Provides rapid development of analysis functions without the need to implement typical data processing pipelines:</p>
 <br>
 <p class="fragment">
 • Expandable <strong>open</strong> datatypes for magnetic field data
@@ -618,6 +647,8 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 </p>
 <aside class="notes">
 <ul>
+<li>mit der hardware können wird magnetfeld daten aufnehmen</li>
+<li>jetzt fehlt noch die software dazu</li>
 <li>messdaten und meta-daten management</li>
 <li>integration zu andern projekten magpylib, matlab,</li>
 <li>analysepipeline schauen wir uns später an</li>
