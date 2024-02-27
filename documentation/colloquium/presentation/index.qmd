@@ -270,6 +270,31 @@ Two examples are used to demonstrate the practical application of the framework:
 
 ---
 
+### Sensor Chraterisation Setup
+
+::: {.container}
+:::: {.col}
+<p style="text-align: center;"><img style="text-align: center;" src="images/eval.png" alt="image" height="270px"></p>
+::::
+:::
+
+
+|                       | TLV493D | MMC5603NJ |
+| --------------------- | ------- | --------- |
+| Temperature-Sensor    | yes     | yes       |
+| Resolution [uT]       | 98      | 0.007     |
+| Dynamic Range [mT]    | ±130.0  | ±3        |
+| Background-Noise [uT] | 100     | 0.2       |
+
+</p>
+
+<aside class="notes">
+* unterschiedliche messbereiche
+*
+</aside>
+
+---
+
 ### Chraterisation results : Noise
 
 ::: {.container}
@@ -283,6 +308,7 @@ Two examples are used to demonstrate the practical application of the framework:
 :::
 
 <aside class="notes">
+* TLV: 98uT MMC: 0.007uT
 * aufgenommen weil
 * TLV abweichung 0.2C (bitsprüunge) => nicht für temperatur compensation zu nutzen
 * TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)
@@ -305,6 +331,7 @@ Two examples are used to demonstrate the practical application of the framework:
 :::
 
 <aside class="notes">
+* TLV: keine Angabe
 * Temperaturen wurden mit ref thermometer erstellt.
 * TLV doppelt so steil liegt bei 5% jedoch im Datenblatt zum drift
 </aside>
@@ -325,6 +352,7 @@ Two examples are used to demonstrate the practical application of the framework:
 :::
 
 <aside class="notes">
+* TLV: 130mT MMC: 3mT
 * DR am äußeren messbreich weiterhin gut
 * TLV bleibt linearbis hin zum doppelten des messbereichs
 * nicht gültig für andere chips

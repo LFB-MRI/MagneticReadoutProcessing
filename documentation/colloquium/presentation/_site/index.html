@@ -743,6 +743,65 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </section>
 <section class="slide level2">
 
+<h3 id="sensor-chraterisation-setup-1">Sensor Chraterisation Setup</h3>
+<div class="container">
+<div class="col">
+<p style="text-align: center;">
+<img style="text-align: center;" src="images/eval.png" alt="image" height="270px">
+</p>
+</div>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>TLV493D</th>
+<th>MMC5603NJ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temperature-Sensor</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>Resolution [uT]</td>
+<td>98</td>
+<td>0.007</td>
+</tr>
+<tr class="odd">
+<td>Dynamic Range [mT]</td>
+<td>±130.0</td>
+<td>±3</td>
+</tr>
+<tr class="even">
+<td>Background-Noise [uT]</td>
+<td>100</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<aside class="notes">
+<ul>
+<li>unterschiedliche messbereiche</li>
+<li></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
 <h3 id="chraterisation-results-noise">Chraterisation results : Noise</h3>
 <div class="container">
 <div class="col">
@@ -754,6 +813,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </div>
 <aside class="notes">
 <ul>
+<li>TLV: 98uT MMC: 0.007uT</li>
 <li>aufgenommen weil</li>
 <li>TLV abweichung 0.2C (bitsprüunge) =&gt; nicht für temperatur compensation zu nutzen</li>
 <li>TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)</li>
@@ -785,6 +845,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </div>
 <aside class="notes">
 <ul>
+<li>TLV: keine Angabe</li>
 <li>Temperaturen wurden mit ref thermometer erstellt.</li>
 <li>TLV doppelt so steil liegt bei 5% jedoch im Datenblatt zum drift</li>
 </ul>
@@ -813,6 +874,7 @@ Cheap and easy to construct magnetic field sensors: <br> <br>
 </div>
 <aside class="notes">
 <ul>
+<li>TLV: 130mT MMC: 3mT</li>
 <li>DR am äußeren messbreich weiterhin gut</li>
 <li>TLV bleibt linearbis hin zum doppelten des messbereichs</li>
 <li>nicht gültig für andere chips</li>
