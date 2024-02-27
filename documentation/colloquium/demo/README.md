@@ -47,7 +47,24 @@ $ docker run --rm -it --device=/dev/ttyACM0 -v $(pwd):/demo mrpdemo:latest /bin/
 $ cd demo
 ```
 
+### CLI FOR ROTATIONAL SENSOR
+```bash
+# LAUNCH PROXY FIRST
+$ MRPProxy proxy launch tcp://169.254.40.154:10001 klipper://169.254.40.154:80 --disbaleprecheck 0
+# TEST PROXY
+$ curl -L 127.0.0.1:5556/ | json_pp
+# SETUP READING
+$ MRPCli --basepath $(pwd) config setup demo
+# > rotational
+# > measurements
+# > 18
+# > 1
 
+# CONNECT SENSOR TO CLI
+$ MRPCli --basepath $(pwd) config setupsensor --path http://127.0.0.1:5556 demo
+# RUN MEASUREMENT
+$ MRPCli --basepath $(pwd) measure run --generate-plots demo 
+```
 
 
 
