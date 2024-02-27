@@ -335,7 +335,7 @@
 Marcel Ochsendorf 
 </div>
         <p class="quarto-title-affiliation">
-            Faculty of Electrical Enginnering and Information Technology - Information Systems Engineering
+            Faculty of Electrical Engineering and Information Technology - Information Systems Engineering
           </p>
     </div>
 </div>
@@ -344,12 +344,116 @@ Marcel Ochsendorf
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
+<div class="container">
+<div class="col">
+<h4 style="text-align: center;">
+<img style="text-align: center;" src="images/open_source_magnetic_resonance_imaging_projects_MagnetLUMC_feature.png" alt="image">
+</h4>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li><p>stellen wir uns vor wir möchten ein kleines MRT</p></li>
+<li><p>dazu benötigen wir einen möglichst homogenen magneten welcher das Hauptfeld erzeugt.</p></li>
+<li><p>B0 oder Nullgradient stellt die resonanzbedingungen her = spinausrichtung</p></li>
+<li><p>für kleine Feldstärken von &lt;0.3T = niederfeld</p></li>
+<li><p>ist es möglich diesen aus vielen kleinen permanent Magneten zu bauen (s bild)</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="lets-build-an-mri" class="slide level2">
-<h2>Lets build an MRI</h2>
+<section id="problem" class="slide level2">
+<h2>Problem</h2>
+<p><br></p>
+<p class="fragment">
+• Permanent magnets differ in their field strength due to their manufacture process and environmental changes
+</p>
+<p class="fragment">
+• This influences the homogeneity of the assembled magnet
+</p>
+<p class="fragment">
+• This influences the homogeneity of the assembled magnet
+</p>
+<p class="fragment">
+• It can be improved by means of a complex shimming process
+</p>
+<aside class="notes">
+<ul>
+<li>das problem herstellung physik diese Magnete</li>
+<li>nicht optimal für die gemsamt homogenität</li>
+<li>mittels shimming im nachhinein = auswändig</li>
+<li>GIBT ES EINEN BESSEREN PROZESS ?</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="aim-of-this-project" class="slide level2">
-<h2>Aim of this Project</h2>
+<section id="solution" class="slide level2">
+<h2>Solution</h2>
+<p class="fragment">
+Measure magnets in advance
+</p>
+<p class="fragment">
+Execute optimization or sorting algorithms on the magnet field data
+</p>
+<p class="fragment">
+Buld an optimized magnet
+</p>
+<hr>
+<div class="container">
+<div class="col">
+<h4 style="text-align: center;">
+BUT
+</h4>
+</div>
+</div>
+<hr>
+<p class="fragment">
+Projects exists that follow this approach but only implement individual parts
+</p>
+<p class="fragment">
+Incompatible dataformats
+</p>
+<p class="fragment">
+Complex magnetic field sensor integrations
+</p>
+<p class="fragment">
+Usage of non opensource software
+</p>
+<aside class="notes">
+<ul>
+<li>diverse projekte welche einzelne algrothmen dazu haben</li>
+<li>jedoch nicht kompatible zueinander</li>
+</ul>
+DESWEGEN: wurde entwickelt
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
@@ -369,11 +473,7 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 </p>
 <br>
 <p class="fragment">
-• Easy to integrate into existing projects
-</p>
-<br>
-<p class="fragment">
-• Easy to extend
+• Easy to integrate and extend into existing projects
 </p>
 <aside class="notes">
 <ul>
@@ -398,7 +498,7 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 <section class="slide level2">
 
 <h3 id="hardware-framework">Hardware Framework</h3>
-Cheap and easy to construct sensors using consumer grade magnetic field sensors: <br>
+Cheap and easy to construct sensors using consumer grade magnetic field sensors: <br> <br>
 <p class="fragment">
 • One software for most common digital magnetic field sensors
 </p>
@@ -409,10 +509,6 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <br>
 <p class="fragment">
 • Universal and interachangable magnet mount
-</p>
-<br>
-<p class="fragment">
-• <strong>Open</strong> hardware designs
 </p>
 <aside class="notes">
 <ul>
@@ -439,25 +535,6 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <div class="container">
 <div class="col">
 <h4 style="text-align: center;">
-3D Rotational Sensor
-</h4>
-</div>
-</div>
-<div class="container">
-<div class="col">
-<p><img src="images/3D_sensor.png" alt="image" height="320px"></p>
-</div>
-<div class="col">
-<p><img src="images/3D_sensor_measurement.png" alt="image" height="320px"></p>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<h3 id="hardware-framework-2">Hardware Framework</h3>
-<div class="container">
-<div class="col">
-<h4 style="text-align: center;">
 1D Static Sensor
 </h4>
 </div>
@@ -470,11 +547,63 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <p><img src="images/1D_sensor_measurement.png" alt="image" height="320px"></p>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>einfachster möglicher sensor</li>
+<li>nur ein microcontroller und der mangetfeld sensor</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="hardware-framework-2">Hardware Framework</h3>
+<div class="container">
+<div class="col">
+<h4 style="text-align: center;">
+3D Rotational Sensor
+</h4>
+</div>
+</div>
+<div class="container">
+<div class="col">
+<p><img src="images/3D_sensor.png" alt="image" height="320px"></p>
+</div>
+<div class="col">
+<p><img src="images/3D_sensor_measurement.png" alt="image" height="320px"></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>kartographiert den eingesetzten magneten</li>
+<li>zeigt interaktion mit einem manipulator</li>
+<li>3D Karte des feldes</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="software-framework">Software Framework</h3>
-<p>Allows rapid development of software analysation functions, without implementation of typical data processing pipelines needed by providing:</p>
+<p>Allows rapid development of software analysation functions, without implementation of typical data processing pipelines providing:</p>
 <br>
 <p class="fragment">
 • Expandable <strong>open</strong> datatypes for magnetic field data
@@ -490,7 +619,9 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <aside class="notes">
 <ul>
 <li>messdaten und meta-daten management</li>
-<li>integration zu magpylib, matlab,</li>
+<li>integration zu andern projekten magpylib, matlab,</li>
+<li>analysepipeline schauen wir uns später an</li>
+<li>volle doku, getestet</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -511,7 +642,6 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <img data-src="images/MRP_high_level_overview.png" class="r-stretch"><aside class="notes">
 <ul>
 <li>nutzer kann jeden punkt implementieren ohne die komplette pipelines zu implemtieren</li>
-<li></li>
 <li>dieses konzept wird im folgenden demonstriert an zwei usecases</li>
 </ul>
 <style type="text/css">
@@ -528,7 +658,7 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 </section>
 <section id="use-cases" class="slide level2">
 <h2>Use Cases</h2>
-<p>Two pratical application of the framework will be shown using two examples:</p>
+<p>Two examples are used to demonstrate the practical application of the framework:</p>
 <br>
 <p class="fragment">
 • Characterization of a <em>MM5603NJ</em> and <em>TLV493D</em> to measure background noise, temperature coefficients and linearity
@@ -652,6 +782,8 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <aside class="notes">
 <ul>
 <li>DR am äußeren messbreich weiterhin gut</li>
+<li>TLV bleibt linearbis hin zum doppelten des messbereichs</li>
+<li>nicht gültig für andere chips</li>
 <li>gleiche aussehende abweichung weisst anfängliche fehler im messaufbau hin</li>
 </ul>
 <style type="text/css">
@@ -732,9 +864,9 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 </ul>
 <aside class="notes">
 <ul>
-<li><p>dies liegt vorallem an dem Messbereich und Aufloesung</p></li>
-<li><p>implementierung von besonders analogen sensoren ist notwendig um die geforderten genauigkeiten von B0 feldern genauigkeiten zu vermessen</p></li>
-<li><p>verbreitung des frameworks durch integration in bestehende optimierungs projekte such as the MRIHallbachDesigner</p></li>
+<li>dies liegt vorallem an dem Messbereich und Aufloesung</li>
+<li>implementierung von besonders analogen sensoren ist notwendig um die geforderten genauigkeiten von B0 feldern genauigkeiten zu vermessen</li>
+<li>verbreitung des frameworks durch integration in bestehende optimierungs projekte such as the MRIHallbachDesigner</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {

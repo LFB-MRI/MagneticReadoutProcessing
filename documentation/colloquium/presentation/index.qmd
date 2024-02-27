@@ -2,7 +2,7 @@
 title: "Development of a permanent magnet characterisation framework for use in low-field MRI systems"
 subtitle: "FH Aachen – University of Applied Sciences"
 author: Marcel Ochsendorf
-institute: Faculty of Electrical Enginnering and Information Technology - Information Systems Engineering
+institute: Faculty of Electrical Engineering and Information Technology - Information Systems Engineering
 date: today
 date-format: "dddd, [the] D[<sup style='font-size:65%;font-style:italic;'>th</sup>] [of] MMMM, YYYY"
 embed-resources: false
@@ -20,14 +20,73 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 ## Introduction
 
-## Lets build an MRI
-
-## Aim of this Project
 
 
+::: {.container}
+:::: {.col}
+<h4 style="text-align: center;"><img style="text-align: center;" src="images/open_source_magnetic_resonance_imaging_projects_MagnetLUMC_feature.png" alt="image"></h4>
+::::
+:::
 
+
+<aside class="notes">
+* stellen wir uns vor wir möchten ein kleines MRT
+* dazu benötigen wir einen möglichst homogenen magneten welcher das Hauptfeld erzeugt.
+* B0 oder Nullgradient stellt die resonanzbedingungen her = spinausrichtung
+
+* für kleine Feldstärken von <0.3T = niederfeld
+* ist es möglich diesen aus vielen kleinen permanent Magneten zu bauen (s bild)
+</aside>
+
+## Problem
+
+<br />
+
+<p class="fragment">&#x2022; Permanent magnets differ in their field strength due to their manufacture process and environmental changes</p>
+
+<p class="fragment">&#x2022; This influences the homogeneity of the assembled magnet</p>
+
+<p class="fragment">&#x2022; This influences the homogeneity of the assembled magnet</p>
+<p class="fragment">&#x2022; It can be improved by means of a complex shimming process</p>
+
+<aside class="notes">
+* das problem  herstellung physik diese Magnete
+* nicht optimal für die gemsamt homogenität
+* mittels shimming im nachhinein = auswändig
+* GIBT ES EINEN BESSEREN PROZESS ?
+</aside>
 
 --- 
+
+## Solution
+
+
+<p class="fragment"> Measure magnets in advance</p>
+<p class="fragment"> Execute optimization or sorting algorithms on the magnet field data</p>
+<p class="fragment"> Buld an optimized magnet</p>
+
+<hr>
+
+::: {.container}
+:::: {.col}
+<h4 style="text-align: center;">BUT</h4>
+::::
+:::
+
+<hr>
+
+<p class="fragment">Projects exists that follow this approach but only implement individual parts</p>
+<p class="fragment">Incompatible dataformats</p>
+<p class="fragment">Complex magnetic field sensor integrations</p>
+<p class="fragment">Usage of non opensource software</p>
+<aside class="notes">
+* diverse projekte welche einzelne algrothmen dazu haben
+* jedoch nicht kompatible zueinander
+
+DESWEGEN: wurde entwickelt
+</aside>
+
+---
 
 ##  
 
@@ -39,9 +98,8 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 <br />
 <p class="fragment">&#x2022; Ready to use data analysis pipelines</p>
 <br />
-<p class="fragment">&#x2022; Easy to integrate into existing projects</p>
-<br />
-<p class="fragment">&#x2022; Easy to extend</p>
+<p class="fragment">&#x2022; Easy to integrate and extend into existing projects</p>
+
 
 
 <aside class="notes">
@@ -50,7 +108,6 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 * viele derzeitigen magnetfeldmessungen in low field mrt bereich verwenden magentfeld sensoren
 * datenanalyse pipelines sind identsisch bis auf einzelne algorithmen
 * gemeinsame grundlage soll geschaffen werden um solche optimierungsalgorithmen verlgeichen zu können
-
 </aside>
 
 
@@ -60,19 +117,45 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 <br />
+<br />
 <p class="fragment">&#x2022; One software for most common digital magnetic field sensors</p>
 <br />
 <p class="fragment">&#x2022; Synchronised multi sensor setups</p>
 <br />
 <p class="fragment">&#x2022; Universal and interachangable magnet mount</p>
-<br />
-<p class="fragment">&#x2022; **Open** hardware designs</p>
+
 
 <aside class="notes">
 * es werden 8 von den günstigen sensoren verwendet
 * diese werden in ähnlichen projketen verwendet
 * Magnet mount für viele Magnetformen anpassbar
 * ohne dass die sensor hardware geaendert werden muss
+</aside>
+
+
+---
+
+### Hardware Framework
+
+::: {.container}
+:::: {.col}
+<h4 style="text-align: center;">1D Static Sensor</h4>
+::::
+:::
+
+::: {.container}
+:::: {.col}
+<img src="images/1D_sensor.png" alt="image" height="320px">
+::::
+
+:::: {.col}
+<img src="images/1D_sensor_measurement.png" alt="image" height="320px" >
+::::
+:::
+
+<aside class="notes">
+* einfachster möglicher sensor
+* nur ein microcontroller und der mangetfeld sensor
 </aside>
 
 ---
@@ -95,33 +178,17 @@ Cheap and easy to construct sensors using consumer grade magnetic field sensors:
 ::::
 :::
 
----
-
-### Hardware Framework
-
-::: {.container}
-:::: {.col}
-<h4 style="text-align: center;">1D Static Sensor</h4>
-::::
-:::
-
-::: {.container}
-:::: {.col}
-<img src="images/1D_sensor.png" alt="image" height="320px">
-::::
-
-:::: {.col}
-<img src="images/1D_sensor_measurement.png" alt="image" height="320px" >
-::::
-:::
-
-
+<aside class="notes">
+* kartographiert den eingesetzten magneten
+* zeigt interaktion mit einem manipulator
+* 3D Karte des feldes
+</aside>
 
 ---
 
 ### Software Framework
 
-Allows rapid development of software analysation functions, without implementation of typical data processing pipelines needed by providing:
+Allows rapid development of software analysation functions, without implementation of typical data processing pipelines providing:
 
 <br />
 <p class="fragment">&#x2022; Expandable **open** datatypes for magnetic field data</p>
@@ -132,7 +199,10 @@ Allows rapid development of software analysation functions, without implementati
 
 <aside class="notes">
 * messdaten und meta-daten management
-* integration zu magpylib, matlab, 
+* integration zu andern projekten magpylib, matlab, 
+* analysepipeline schauen wir uns später an
+* volle doku, getestet
+
 </aside>
 
 ---
@@ -143,7 +213,6 @@ Allows rapid development of software analysation functions, without implementati
 
 <aside class="notes">
 * nutzer kann jeden punkt implementieren ohne die komplette pipelines zu implemtieren
-* 
 * dieses konzept wird im folgenden demonstriert an zwei usecases
 </aside>
 
@@ -151,7 +220,7 @@ Allows rapid development of software analysation functions, without implementati
 
 ## Use Cases
 
-Two pratical application of the framework will be shown using two examples:
+Two examples are used to demonstrate the practical application of the framework:
 
 <br />
 <p class="fragment">&#x2022; Characterization of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and linearity</p>
@@ -237,11 +306,10 @@ Two pratical application of the framework will be shown using two examples:
 :::
 
 <aside class="notes">
-    
 * DR am äußeren messbreich weiterhin gut
+* TLV bleibt linearbis hin zum doppelten des messbereichs
+* nicht gültig für andere chips
 * gleiche aussehende abweichung weisst anfängliche fehler im messaufbau hin
-
-
 </aside>
 
 ---
@@ -258,7 +326,6 @@ Two pratical application of the framework will be shown using two examples:
 
 
 <aside class="notes">
-
 * Ziel: automatisierten Sortieren von Magneten um dann spätereinen Hallbach ring zu erstellen
 * Diese Daten dann in optimierungsalgorithmen zu verwenden.
 * Vordefinierte Pipeline verwendet
@@ -311,9 +378,7 @@ Two pratical application of the framework will be shown using two examples:
 <aside class="notes">
 * dies liegt vorallem an dem Messbereich und Aufloesung
 * implementierung von besonders analogen sensoren ist notwendig um die geforderten genauigkeiten von B0 feldern genauigkeiten zu vermessen
-
 * verbreitung des frameworks durch integration in bestehende optimierungs projekte such as the MRIHallbachDesigner
-
 </aside>
 
 
