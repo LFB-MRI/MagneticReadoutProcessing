@@ -41,10 +41,34 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 
 <aside class="notes">
-    *
-    Folgend ein paar beispiele
+* dazu wurde das MRP framework erstellt
+* welche die folgenden Probleme behen soll:
+
+*
+
 </aside>
 
+
+---
+
+### Hardware Framework
+
+Cheap and easy to construct sensors using consumer grade magnetic field sensors:
+<br />
+<p class="fragment">&#x2022; One software for most common digital magnetic field sensors</p>
+<br />
+<p class="fragment">&#x2022; Synchronised multi sensor setups</p>
+<br />
+<p class="fragment">&#x2022; Universal and interachangable magnet mount</p>
+<br />
+<p class="fragment">&#x2022; **Open** hardware designs</p>
+
+<aside class="notes">
+* es werden 8 von den günstigen sensoren verwendet
+* diese werden in ähnlichen projketen verwendet
+* Magnet mount für viele Magnetformen anpassbar
+* ohne dass die sensor hardware geaendert werden muss
+</aside>
 
 ---
 
@@ -86,34 +110,25 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 ::::
 :::
 
----
 
-### Hardware Framework
-
-Cheap and easy to construct using consumer grade magnetic field sensors:
-<br />
-<p class="fragment">&#x2022; One software for most common digital magnetic field sensors</p>
-<br />
-<p class="fragment">&#x2022; Synchronised multi sensor setups</p>
-<br />
-<p class="fragment">&#x2022; Universal and interachangable magnet mount</p>
-
-
-<aside class="notes">
-    In der software sind aktuelll 8 typische sensoren hinterlegt.
-    Magnet mount für viele Magnetformen anpassbar, ohne dass die sensor hardware geaendert werden muss
-</aside>
 
 ---
 
 ### Software Framework
 
-Simply tasks of: 
+Allows rapid development of software analysation functions, without implementation of typical data processing pipelines needed by providing:
 
-*
-* data aqusition
-* data storage
-* data analysis tasks
+<br />
+<p class="fragment">&#x2022; Expandable **open** datatypes for magnetic field data</p>
+<br />
+<p class="fragment">&#x2022; Prebuild analysis pipelines ready for user customisation</p>
+<br />
+<p class="fragment">&#x2022; Full online documentation, CI tested and user tutorials</p>
+
+<aside class="notes">
+* messdaten und meta-daten management
+* integration zu magpylib, matlab, 
+</aside>
 
 ---
 
@@ -121,18 +136,11 @@ Simply tasks of:
 
 ![](images/MRP_high_level_overview.png)
 
----
-
-### User Interaction Points
-
-Allows rapid development of software analysation functions, witout implementation of typical data processing pipelines needed by providing:
-
-<br />
-<p class="fragment">&#x2022; Expandable open datatypes for magnetic field data</p>
-<br />
-<p class="fragment">&#x2022; Prebuild pipelines ready for customisation</p>
-<br />
-<p class="fragment">&#x2022; Full online documentation, tested library and user tutorials</p>
+<aside class="notes">
+* nutzer kann jeden punkt implementieren ohne die komplette pipelines zu implemtieren
+* 
+* dieses konzept wird im folgenden demonstriert an zwei usecases
+</aside>
 
 ---
 
@@ -141,53 +149,131 @@ Allows rapid development of software analysation functions, witout implementatio
 Two pratical application of the framework will be shown using two examples:
 
 <br />
-<p class="fragment">&#x2022; Characterization of a *MM5603NJ* and determination of background noise and temperature linearity</p>
+<p class="fragment">&#x2022; Characterization of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and linearity</p>
 <br />
-<p class="fragment">&#x2022; Usage of the chrakterised sensor for sorting permanent magnets</p>
+<p class="fragment">&#x2022; Usage of the chrakterised sensor for sorting permanent magnets and measure magnetic fields</p>
+
 
 <aside class="notes">
-    Es wurden wärend der Arbeit weitere Sensoren chrakterisiert, es wird jedoch nur dieser sensor als beispiel genommen.
-    Mittels der chraktisierung im vorfeld ist eine genauerer chrakterisierung der Magnete möglich.
-
+* dazu wurde das entwicklete framework verwendet
+* voll automatisiert
+* diese sensoren als beispiel für die in anderen arbeiteten verwendeten sensoren
+* diese wie TLV wurden nur anhand von Datenblatt chrakterisiert
+* Ergebnisse werden bei der magnet chrakterisierung verwendet
 </aside>
 ---
 
 
 
-### Sensor Chraterisation
+### Sensor Chraterisation Setup
 
 ![](images/Sensor_evaluation_setup_for_linearity_measurements.png)
 
 <aside class="notes">
-    Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwendet wurde.
-    Platte zeigen, verschiedene Sensoren wurden unter den geleichen bedingungen vermessen.
+* vereinfachter aufbau
+* sensorplatte zeigen
+* gleiche befdinungen
+* zweites set an sensoren
 </aside>
 
 ---
 
-### *MM5603NJ* chraterisation results
+### Chraterisation results : Noise
+
+::: {.container}
+:::: {.col}
+<img src="images/eval/n_mmc.png" alt="image" >
+::::
+
+:::: {.col}
+<img src="images/eval/n_tlv.png" alt="image" >
+::::
+:::
+
+<aside class="notes">
+* TLV abweichung 0.2C (bitsprüunge) => nicht für temperatur compensation zu nutzen
+* TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)
+* Ergebnisse mit einem zweiten set an sensoren verifiziert
+* MMC im noise weit unter datenblatt
+</aside>
+
+---
+
+### Chraterisation results : Temperature
+
+::: {.container}
+:::: {.col}
+<img src="images/eval/t_mmc.png" alt="image" >
+::::
+
+:::: {.col}
+<img src="images/eval/t_tlv.png" alt="image" >
+::::
+:::
+
+<aside class="notes">
+* Temperaturen wurden mit ref thermometer erstellt.
+* TLV doppelt so steil liegt bei 5% jedoch im Datenblatt zum drift
+</aside>
 
 
+---
+
+### Chraterisation results : Dynamic Range
+
+::: {.container}
+:::: {.col}
+<img src="images/eval/dr_mmc.png" alt="image" >
+::::
+
+:::: {.col}
+<img src="images/eval/dr_tlv.png" alt="image" >
+::::
+:::
+
+<aside class="notes">
+    
+* DR am äußeren messbreich weiterhin gut
+* gleiche aussehende abweichung weisst anfängliche fehler im messaufbau hin
+
+
+</aside>
 
 ---
 
 ### Manget Sorting
 
+![](images/magnet_sorting_pipeline.png)
 
+
+1. Configure sensor and measurement parameters
+2. Run measurement
+3. Implement custom filter function
+4. Run analysation pipeline using custom algorithm
 
 
 <aside class="notes">
-    Die Sortierung wird anhand einer Demo des Frameworks durchgeführt.
-    Dabei werden die sensor charakterisiungsdaten verwendet
-    Hierbei wird eine preconfiguierte Pipeline verwendet.
-    Das ergebnis wird am ende eine reduktion der vermessenen Magnete sein.
-    Somit kann dann ein optimierter hallbach ring generiert werden um so die homogentität zu verbessern
+
+* Ziel: automatisierten Sortieren von Magneten um dann spätereinen Hallbach ring zu erstellen
+* Diese Daten dann in optimierungsalgorithmen zu verwenden.
+* Vordefinierte Pipeline verwendet
+* Die X besten Magnete sollen anhand mittelwert sollen zurueckgegben werden
 </aside>
 
 
 ---
 
-#### DEMO: MRPCli
+#### Manget Sorting - DEMO MRP
+
+* Simple installation using pip
+* Commandline interface available system wide
+* Compatible with Docker and CI pipelines
+
+![](images/MRP.gif)
+
+---
+
+#### Manget Sorting - DEMO MRPCli
 
 * Generate automated measurement using hardware sensors
 * Save results to filesystem for later analysation
@@ -198,7 +284,7 @@ Two pratical application of the framework will be shown using two examples:
 
 ---
 
-#### DEMO: MRPUdpp
+#### Manget Sorting - DEMO MRPUdpp
 
 * Execution of pre-configured analysation and pipeline
 * User implements filter algorithm only
@@ -215,7 +301,6 @@ Two pratical application of the framework will be shown using two examples:
 
 
 
----
 
 # 
 <h1 class="r-fit-text" style="text-align: center;">Questions ?</h1>

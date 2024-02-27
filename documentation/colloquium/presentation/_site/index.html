@@ -373,7 +373,9 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 </p>
 <aside class="notes">
 <ul>
-<li>Folgend ein paar beispiele</li>
+<li><p>dazu wurde das MRP framework erstellt</p></li>
+<li><p>welche die folgenden Probleme behen soll:</p></li>
+<li></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -390,6 +392,44 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 <section class="slide level2">
 
 <h3 id="hardware-framework">Hardware Framework</h3>
+Cheap and easy to construct sensors using consumer grade magnetic field sensors: <br>
+<p class="fragment">
+• One software for most common digital magnetic field sensors
+</p>
+<br>
+<p class="fragment">
+• Synchronised multi sensor setups
+</p>
+<br>
+<p class="fragment">
+• Universal and interachangable magnet mount
+</p>
+<br>
+<p class="fragment">
+• <strong>Open</strong> hardware designs
+</p>
+<aside class="notes">
+<ul>
+<li>es werden 8 von den günstigen sensoren verwendet</li>
+<li>diese werden in ähnlichen projketen verwendet</li>
+<li>Magnet mount für viele Magnetformen anpassbar</li>
+<li>ohne dass die sensor hardware geaendert werden muss</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="hardware-framework-1">Hardware Framework</h3>
 <div class="container">
 <div class="col">
 <h4 style="text-align: center;">
@@ -408,7 +448,7 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 </section>
 <section class="slide level2">
 
-<h3 id="hardware-framework-1">Hardware Framework</h3>
+<h3 id="hardware-framework-2">Hardware Framework</h3>
 <div class="container">
 <div class="col">
 <h4 style="text-align: center;">
@@ -427,21 +467,25 @@ Provides and user-oriented <strong>open</strong> magnetic field data hardware an
 </section>
 <section class="slide level2">
 
-<h3 id="hardware-framework-2">Hardware Framework</h3>
-Cheap and easy to construct using consumer grade magnetic field sensors: <br>
+<h3 id="software-framework">Software Framework</h3>
+<p>Allows rapid development of software analysation functions, without implementation of typical data processing pipelines needed by providing:</p>
+<br>
 <p class="fragment">
-• One software for most common digital magnetic field sensors
+• Expandable <strong>open</strong> datatypes for magnetic field data
 </p>
 <br>
 <p class="fragment">
-• Synchronised multi sensor setups
+• Prebuild analysis pipelines ready for user customisation
 </p>
 <br>
 <p class="fragment">
-• Universal and interachangable magnet mount
+• Full online documentation, CI tested and user tutorials
 </p>
 <aside class="notes">
-In der software sind aktuelll 8 typische sensoren hinterlegt. Magnet mount für viele Magnetformen anpassbar, ohne dass die sensor hardware geaendert werden muss
+<ul>
+<li>messdaten und meta-daten management</li>
+<li>integration zu magpylib, matlab,</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -456,50 +500,45 @@ In der software sind aktuelll 8 typische sensoren hinterlegt. Magnet mount für 
 </section>
 <section class="slide level2">
 
-<h3 id="software-framework">Software Framework</h3>
-<p>Simply tasks of:</p>
-<ul>
-<li></li>
-<li>data aqusition</li>
-<li>data storage</li>
-<li>data analysis tasks</li>
-</ul>
-</section>
-<section class="slide level2">
-
 <h3 id="user-interaction-points">User Interaction Points</h3>
 
-<img data-src="images/MRP_high_level_overview.png" class="r-stretch"></section>
-<section class="slide level2">
-
-<h3 id="user-interaction-points-1">User Interaction Points</h3>
-<p>Allows rapid development of software analysation functions, witout implementation of typical data processing pipelines needed by providing:</p>
-<br>
-<p class="fragment">
-• Expandable open datatypes for magnetic field data
-</p>
-<br>
-<p class="fragment">
-• Prebuild pipelines ready for customisation
-</p>
-<br>
-<p class="fragment">
-• Full online documentation, tested library and user tutorials
-</p>
+<img data-src="images/MRP_high_level_overview.png" class="r-stretch"><aside class="notes">
+<ul>
+<li>nutzer kann jeden punkt implementieren ohne die komplette pipelines zu implemtieren</li>
+<li></li>
+<li>dieses konzept wird im folgenden demonstriert an zwei usecases</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="use-cases" class="slide level2">
 <h2>Use Cases</h2>
 <p>Two pratical application of the framework will be shown using two examples:</p>
 <br>
 <p class="fragment">
-• Characterization of a <em>MM5603NJ</em> and determination of background noise and temperature linearity
+• Characterization of a <em>MM5603NJ</em> and <em>TLV493D</em> to measure background noise, temperature coefficients and linearity
 </p>
 <br>
 <p class="fragment">
-• Usage of the chrakterised sensor for sorting permanent magnets
+• Usage of the chrakterised sensor for sorting permanent magnets and measure magnetic fields
 </p>
 <aside class="notes">
-<p>Es wurden wärend der Arbeit weitere Sensoren chrakterisiert, es wird jedoch nur dieser sensor als beispiel genommen. Mittels der chraktisierung im vorfeld ist eine genauerer chrakterisierung der Magnete möglich.</p>
+<ul>
+<li>dazu wurde das entwicklete framework verwendet</li>
+<li>voll automatisiert</li>
+<li>diese sensoren als beispiel für die in anderen arbeiteten verwendeten sensoren</li>
+<li>diese wie TLV wurden nur anhand von Datenblatt chrakterisiert</li>
+<li>Ergebnisse werden bei der magnet chrakterisierung verwendet</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -514,10 +553,15 @@ In der software sind aktuelll 8 typische sensoren hinterlegt. Magnet mount für 
 </section>
 <section class="slide level2">
 
-<h3 id="sensor-chraterisation">Sensor Chraterisation</h3>
+<h3 id="sensor-chraterisation-setup">Sensor Chraterisation Setup</h3>
 
 <img data-src="images/Sensor_evaluation_setup_for_linearity_measurements.png" class="r-stretch"><aside class="notes">
-Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwendet wurde. Platte zeigen, verschiedene Sensoren wurden unter den geleichen bedingungen vermessen.
+<ul>
+<li>vereinfachter aufbau</li>
+<li>sensorplatte zeigen</li>
+<li>gleiche befdinungen</li>
+<li>zweites set an sensoren</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -532,13 +576,107 @@ Grafik zeigt den vereinfachten Aufbau welcher für die Chrakterisierung verwende
 </section>
 <section class="slide level2">
 
-<h3 id="mm5603nj-chraterisation-results"><em>MM5603NJ</em> chraterisation results</h3>
+<h3 id="chraterisation-results-noise">Chraterisation results : Noise</h3>
+<div class="container">
+<div class="col">
+<p><img src="images/eval/n_mmc.png" alt="image"></p>
+</div>
+<div class="col">
+<p><img src="images/eval/n_tlv.png" alt="image"></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>TLV abweichung 0.2C (bitsprüunge) =&gt; nicht für temperatur compensation zu nutzen</li>
+<li>TLV mehr als doppelt so hoch wie im datenblatt (12bit 4096/260mT)</li>
+<li>Ergebnisse mit einem zweiten set an sensoren verifiziert</li>
+<li>MMC im noise weit unter datenblatt</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="chraterisation-results-temperature">Chraterisation results : Temperature</h3>
+<div class="container">
+<div class="col">
+<p><img src="images/eval/t_mmc.png" alt="image"></p>
+</div>
+<div class="col">
+<p><img src="images/eval/t_tlv.png" alt="image"></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Temperaturen wurden mit ref thermometer erstellt.</li>
+<li>TLV doppelt so steil liegt bei 5% jedoch im Datenblatt zum drift</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="chraterisation-results-dynamic-range">Chraterisation results : Dynamic Range</h3>
+<div class="container">
+<div class="col">
+<p><img src="images/eval/dr_mmc.png" alt="image"></p>
+</div>
+<div class="col">
+<p><img src="images/eval/dr_tlv.png" alt="image"></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>DR am äußeren messbreich weiterhin gut</li>
+<li>gleiche aussehende abweichung weisst anfängliche fehler im messaufbau hin</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="manget-sorting">Manget Sorting</h3>
+
+<img data-src="images/magnet_sorting_pipeline.png" class="r-stretch"><ol type="1">
+<li>Configure sensor and measurement parameters</li>
+<li>Run measurement</li>
+<li>Implement custom filter function</li>
+<li>Run analysation pipeline using custom algorithm</li>
+</ol>
 <aside class="notes">
-Die Sortierung wird anhand einer Demo des Frameworks durchgeführt. Dabei werden die sensor charakterisiungsdaten verwendet Hierbei wird eine preconfiguierte Pipeline verwendet. Das ergebnis wird am ende eine reduktion der vermessenen Magnete sein. Somit kann dann ein optimierter hallbach ring generiert werden um so die homogentität zu verbessern
+<ul>
+<li>Ziel: automatisierten Sortieren von Magneten um dann spätereinen Hallbach ring zu erstellen</li>
+<li>Diese Daten dann in optimierungsalgorithmen zu verwenden.</li>
+<li>Vordefinierte Pipeline verwendet</li>
+<li>Die X besten Magnete sollen anhand mittelwert sollen zurueckgegben werden</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -553,7 +691,17 @@ Die Sortierung wird anhand einer Demo des Frameworks durchgeführt. Dabei werden
 </section>
 <section class="slide level2">
 
-<h4 id="demo-mrpcli">DEMO: MRPCli</h4>
+<h4 id="manget-sorting---demo-mrp">Manget Sorting - DEMO MRP</h4>
+<ul>
+<li>Simple installation using pip</li>
+<li>Commandline interface available system wide</li>
+<li>Compatible with Docker and CI pipelines</li>
+</ul>
+
+<img data-src="images/MRP.gif" class="r-stretch"></section>
+<section class="slide level2">
+
+<h4 id="manget-sorting---demo-mrpcli">Manget Sorting - DEMO MRPCli</h4>
 <ul>
 <li>Generate automated measurement using hardware sensors</li>
 <li>Save results to filesystem for later analysation</li>
@@ -562,7 +710,7 @@ Die Sortierung wird anhand einer Demo des Frameworks durchgeführt. Dabei werden
 <img data-src="images/MRPCli.gif" class="r-stretch"></section>
 <section class="slide level2">
 
-<h4 id="demo-mrpudpp">DEMO: MRPUdpp</h4>
+<h4 id="manget-sorting---demo-mrpudpp">Manget Sorting - DEMO MRPUdpp</h4>
 <ul>
 <li>Execution of pre-configured analysation and pipeline</li>
 <li>User implements filter algorithm only</li>
@@ -571,9 +719,6 @@ Die Sortierung wird anhand einer Demo des Frameworks durchgeführt. Dabei werden
 <img data-src="images/MRPUdpp.gif" class="r-stretch"></section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
-</section>
-<section class="slide level2">
-
 </section>
 <section id="section-1" class="title-slide slide level1 center">
 <h1></h1>

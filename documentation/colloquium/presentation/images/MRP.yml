@@ -50,10 +50,11 @@ config:
   # Don't forget to add a backgroundColor style with a null as type
   frameBox:
     type: floating
-    title: Terminalizer
+    title: MRP installation
     style:
+      backgroundColor: black
       border: 0px black solid
-      boxShadow: 5px
+      boxShadow: 0px
       margin: 0px
   
   # Add a watermark image to the rendered gif

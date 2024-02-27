@@ -50,11 +50,12 @@ config:
   # Don't forget to add a backgroundColor style with a null as type
   frameBox:
     type: floating
-    title: Terminalizer
+    title: MRPUdpp - User defined programmable pipeline
     style:
+      backgroundColor: black
       border: 0px black solid
-      # boxShadow: none
-      # margin: 0px
+      boxShadow: 0px
+      margin: 0px
   
   # Add a watermark image to the rendered gif
   # You need to specify an absolute path for
