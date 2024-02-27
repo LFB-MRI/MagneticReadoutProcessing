@@ -20,12 +20,14 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 ## Introduction
 
-* test
+## Lets build an MRI
 
 ## Aim of this Project
 
----
 
+
+
+--- 
 
 ##  
 
@@ -35,6 +37,8 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 <br />
 <p class="fragment">&#x2022; Harware support for several magnetic field sensors</p>
 <br />
+<p class="fragment">&#x2022; Ready to use data analysis pipelines</p>
+<br />
 <p class="fragment">&#x2022; Easy to integrate into existing projects</p>
 <br />
 <p class="fragment">&#x2022; Easy to extend</p>
@@ -43,8 +47,9 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 <aside class="notes">
 * dazu wurde das MRP framework erstellt
 * welche die folgenden Probleme behen soll:
-
-*
+* viele derzeitigen magnetfeldmessungen in low field mrt bereich verwenden magentfeld sensoren
+* datenanalyse pipelines sind identsisch bis auf einzelne algorithmen
+* gemeinsame grundlage soll geschaffen werden um solche optimierungsalgorithmen verlgeichen zu können
 
 </aside>
 
@@ -298,6 +303,18 @@ Two pratical application of the framework will be shown using two examples:
 ---
 
 ## Conclusion
+
+* The implemented framework was successfully used to automatically record and analyze measurement data
+* Characterized sensors are only conditionally suitable for measuring low field MRI B0 fields
+* Implementation of other sensor types required for a wider use of the implemented solution
+
+<aside class="notes">
+* dies liegt vorallem an dem Messbereich und Aufloesung
+* implementierung von besonders analogen sensoren ist notwendig um die geforderten genauigkeiten von B0 feldern genauigkeiten zu vermessen
+
+* verbreitung des frameworks durch integration in bestehende optimierungs projekte such as the MRIHallbachDesigner
+
+</aside>
 
 
 
