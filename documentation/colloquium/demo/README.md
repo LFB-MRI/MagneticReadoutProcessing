@@ -21,7 +21,7 @@ $ clear
 
 ```bash
 $ pip install MagneticReadoutProcessing
-
+$ pip install --upgrade MagneticReadoutProcessing
 # CONFIGURE MEASUREMENT
 $ MRPCli --basepath $(pwd) config setup demo
 # > demo
