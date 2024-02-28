@@ -42,7 +42,7 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 <br />
 
-<p class="fragment">&#x2022; Permanent magnets differ in their field strength due to their manufacturing process and environmental changes</p>
+<p class="fragment">&#x2022; Permanent magnets differ in their field strength due to the manufacturing process and environmental changes</p>
 <p class="fragment">&#x2022; This influences the homogeneity of the assembled magnet</p>
 <p class="fragment">&#x2022; It can be improved by means of a complex shimming process</p>
 
@@ -59,8 +59,8 @@ source("_extensions/mcanouil/coeos/setup-ggplot2-coeos.R")
 
 
 <p class="fragment">&#x2022; Measure magnets in advance</p>
-<p class="fragment">&#x2022; Execute optimization or sorting algorithms on the magnet field data</p>
-<p class="fragment">&#x2022; Build an optimized magnet</p>
+<p class="fragment">&#x2022; Execute optimisation or sorting algorithms on the magnetic field data</p>
+<p class="fragment">&#x2022; Build an optimised magnet</p>
 
 <aside class="notes">
 * diverse projekte welche einzelne algrothmen dazu haben
@@ -71,9 +71,8 @@ DESWEGEN: wurde entwickelt
 
 ---
 
---- 
 
-## But
+## ... but
 
 <p class="fragment">&#x2022; Existing projects follow this approach but only implement individual parts</p>
 <p class="fragment">&#x2022; Incompatible data-formats</p>
