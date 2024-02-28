@@ -2,7 +2,6 @@ import random
 import signal
 import string
 import time
-from typing import Annotated
 import typer
 import socket
 import sys
@@ -41,8 +40,8 @@ def getMachine_addr():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
 
 @app.command()
-def start(ctx: typer.Context, advertised_port: Annotated[int, typer.Argument()] = 10001,
-          advertised_sensor_id: Annotated[str, typer.Argument()] = ""):
+def start(ctx: typer.Context, advertised_port: int = 10001,
+          advertised_sensor_id: str = ""):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_address = ('', 9434)
 

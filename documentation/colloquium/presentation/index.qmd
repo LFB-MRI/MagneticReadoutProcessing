@@ -241,7 +241,7 @@ Provides rapid development of analysis functions without the need to implement t
 Two examples are used to demonstrate the practical application of the framework:
 
 <br />
-<p class="fragment">&#x2022; Characterisation of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and linearity</p>
+<p class="fragment">&#x2022; Characterisation of a *MM5603NJ* and *TLV493D* to measure background noise, temperature coefficients and dynamic range</p>
 <br />
 <p class="fragment">&#x2022; Usage of the chracterised sensor for sorting permanent magnets and measure magnetic fields</p>
 

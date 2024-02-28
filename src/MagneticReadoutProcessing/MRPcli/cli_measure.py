@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from typing import Annotated, List
 import typer
 from MRPcli import cli_helper
 from MRPcli import cli_datastorage
@@ -93,7 +92,7 @@ def perform_measurement(configname: str, alternativefilename: str = "", generate
 
 
 @app.command()
-def run(ctx: typer.Context, configname: Annotated[str, typer.Argument()] = "", alternativefilename: str = "", generate_plots: bool = False, ignoreinvalid: bool = False, ignoremeasurementerror: bool = True):
+def run(ctx: typer.Context, configname: str, alternativefilename: str = "", generate_plots: bool = False, ignoreinvalid: bool = False, ignoremeasurementerror: bool = True):
 
     configs:[str] = []
     if configname is not None and len(configname) > 0:

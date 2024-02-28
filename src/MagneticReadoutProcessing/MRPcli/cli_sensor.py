@@ -8,7 +8,7 @@ app = typer.Typer()
 
 
 @app.command()
-def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def info(ctx: typer.Context, configname: str):
 
     sensor_connection: MRPHal.MRPHal = cli_helper.create_hal_instance_using_config(_configname=configname)
 
@@ -23,7 +23,7 @@ def info(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
 
 
 @app.command()
-def query(ctx: typer.Context, configname: Annotated[str, typer.Argument()]):
+def query(ctx: typer.Context, configname: str):
     sensor_connection: MRPHal.MRPHal = cli_helper.create_hal_instance_using_config(_configname=configname)
     sensor_connection.connect()
     caps = sensor_connection.get_sensor_capabilities()
