@@ -1,5 +1,48 @@
 # DEMO
 
+
+## SHORT
+```bash
+
+# CLI
+
+MRPCli --basepath $(pwd) config setup demo
+MRPCli --basepath $(pwd) config setupsensor demo
+
+MRPCli --basepath $(pwd) sensor query demo
+
+MRPCli --basepath $(pwd) measure run --generate-plots demo 
+
+
+# UDPP
+
+docker run --rm -it -v $(pwd):/demo mrpdemo:latest /bin/bash && cd demo
+
+MRPUdpp --basepath $(pwd) pipeline run --pipeline pipeline_minimal
+
+MRPUdpp --basepath $(pwd) pipeline run --pipeline pipeline_filter
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### SETUP
 
 ```bash
@@ -72,7 +115,7 @@ $ MRPCli --basepath $(pwd) measure run --generate-plots demo
 
 ### SETUP
 ```bash
-$ docker run --rm -it -v $(pwd):/demo mrpdemo:latest /bin/bash
+$ docker run --rm -it -v $(pwd):/demo mrpdemo:latest /bin/bash && cd demo
 $ cd demo
 # INSTALL LATEST VERSION
 $ pip install MagneticReadoutProcessing
