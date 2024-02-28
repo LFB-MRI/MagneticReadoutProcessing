@@ -73,27 +73,13 @@ DESWEGEN: wurde entwickelt
 
 --- 
 
-## Solution
-
-
-<p class="">&#x2022; Measure magnets in advance</p>
-<p class="">&#x2022; Execute optimization or sorting algorithms on the magnet field data</p>
-<p class="">&#x2022; Build an optimized magnet</p>
-
-<hr>
-
-::: {.container}
-:::: {.col}
-<h4 style="text-align: center;">BUT</h4>
-::::
-:::
-
-<hr>
+## But
 
 <p class="fragment">&#x2022; Existing projects follow this approach but only implement individual parts</p>
 <p class="fragment">&#x2022; Incompatible data-formats</p>
 <p class="fragment">&#x2022; Complex magnetic field sensor integrations</p>
 <p class="fragment">&#x2022; Usage of non open source software</p>
+
 <aside class="notes">
 * diverse projekte welche einzelne algrothmen dazu haben
 * jedoch nicht kompatible zueinander
