@@ -1,0 +1,6 @@
+MRP.MRPMagnetTypes
+==================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPMagnetTypes

@@ -1,0 +1,6 @@
+MRP.MRPDataVisualisationHelper
+==============================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPDataVisualisationHelper
