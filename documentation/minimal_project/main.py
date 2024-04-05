@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 # IMPORT SOME HELPER FUNCTIONS FOR IMPORT EXPORT AND PLOTTING
 from MRPudpp.UDPPFunctionCollection import UDPPFunctionCollection as mrphelper
-from MRP import MRPAnalysis, MRPPolarVisualization, MRPReading
+from MRP import MRPAnalysis, MRPPolarVisualization, MRPReading, MRPReadingEntry
 # IMPORT OTHER FUNTIONS
 
 
@@ -29,6 +29,16 @@ def main():
     print("mean for magnet 1 is {:.2}".format(mean))
 
 
+    # ADVANCED DATA ACCESS
+    # entry is type of MRPReadingEntry.MRPReadingEntry
+    for entry in magnet_readings[0]:
+        pass
+        #entry.temperature()
+        #entry. value()
+        #entry.is_valid()
+        #entry.id()
+        #entry.theta()
+        #entry.phi
     
 
 
