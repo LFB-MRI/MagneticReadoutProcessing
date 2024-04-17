@@ -34,11 +34,9 @@ def main():
     for entry in magnet_readings[0]:
         pass
         #entry.temperature()
-        #entry. value()
+        #entry.value()
         #entry.is_valid()
         #entry.id()
-        #entry.theta()
-        #entry.phi
     
 
 
