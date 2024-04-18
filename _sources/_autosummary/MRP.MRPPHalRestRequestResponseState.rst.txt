@@ -1,0 +1,6 @@
+MRP.MRPPHalRestRequestResponseState
+===================================
+
+.. currentmodule:: MRP
+
+.. automodule:: MRPPHalRestRequestResponseState
