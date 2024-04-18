@@ -4,6 +4,10 @@
 
 ## Hardware Sensor
 
+### NOTE
+
+Example 360 degree fullsphere readings for the minimal example are located in the `readings/examples` folder, so its possible to skip the hardware sensor procedure.
+
 ### INSTALL CLI PACKAGES
 
 ```bash
