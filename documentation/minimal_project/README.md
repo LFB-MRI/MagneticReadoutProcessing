@@ -1,6 +1,11 @@
 # MINIMAL PROJECT
 
 
+
+## Hardware Sensor
+
+### INSTALL CLI PACKAGES
+
 ```bash
 # https://pypi.org/project/MagneticReadoutProcessing/
 $ python3 -m venv venv
@@ -8,31 +13,58 @@ $ source venv/bin/activate
 $ pip3 install -r requirements.txt
 ```
 
-## Hardware Sensor
-
 ### CHECK IF CLI IS WORKING
 ```bash
 # IN VENV
 $ MRPCli --help
 ```
 
-### EXAMPLE MAGNET MEASUREMENT USING HARDWARE SENSOR
+### EXAMPLE MAGNET MEASUREMENT USING STATIC SENSOR
 
 ```bash
 # IN VENV
 # EXTENDET HARDWARE DEMO IN:
 # https://github.com/LFB-MRI/MagneticReadoutProcessing/tree/main/documentation/colloquium/demo
 cd "$(dirname "$0")"
-$ MRPCli --basepath $PWD/readings config setup test
+$ MRPCli --basepath $PWD/readings config setup static_sensor
 
 # CONNECT SENSOR USING USB
-$ MRPCli --basepath $PWD/readings config setupsensor test
+$ MRPCli --basepath $PWD/readings config setupsensor static_sensor
 
 # CHECK IF SENSOR IS WORKING
-$ MRPCli --basepath $PWD/readings sensor query test
+$ MRPCli --basepath $PWD/readings sensor query static_sensor
 
 # RUN MEASUREMENT
-$ MRPCli --basepath $PWD/readings measure run test
+$ MRPCli --basepath $PWD/readings measure run static_sensor
+```
+
+### EXAMPLE MAGNET MEASUREMENT USING ROTATIONAL FULLSPHERE SENSOR
+
+```bash
+# IN VENV
+# EXTENDET HARDWARE DEMO IN:
+# https://github.com/LFB-MRI/MagneticReadoutProcessing/tree/main/documentation/colloquium/demo
+cd "$(dirname "$0")"
+# USE NUMBER DATAPOINTS: 18 (so of at least 18 datapoints)
+$ MRPCli --basepath $PWD/readings config setup rotationalsensor_measurement
+
+# !!!
+# CONNECT THE ROTATIONAL SENSOR USING THE PROXY MODULE
+$ MRPProxy proxy launch tcp://rotationsensor.local:10001 klipper://rotationsensor.local:80 --disbaleprecheck 0
+Proxy started. http://0.0.0.0:5556/
+Terminate  [Y/n] [y]: 
+
+# TEST IF PROXY IS WORKING RESULT IS A JSON OBJECT WITH "sensortype" : "rotationsensor"
+$ curl -L 127.0.0.1:5556/ | json_pp
+
+# FINALLYmCONFIGURE THE SENSOR CONNECTION IN THE CLI USING A MANUALLY SPECIFIED IP
+$ MRPCli --basepath $PWD/readings config setupsensor --path http://127.0.0.1:5556 rotationalsensor_measurement
+# !!!
+# CHECK IF SENSOR IS WORKING
+$ MRPCli --basepath $PWD/readings sensor query rotationalsensor_measurement
+
+# RUN MEASUREMENT
+$ MRPCli --basepath $PWD/readings measure run rotationalsensor_measurement
 ```
 
 
