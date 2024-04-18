@@ -10,6 +10,10 @@ MagneticReadoutProcessing is a Python library that makes it possible to store an
 
 [magneticreadoutprocessing.readthedocs.io](https://magneticreadoutprocessing.readthedocs.io/en/latest/)
 
+## OpenSourceImaging
+
+[opensourceimaging](https://www.opensourceimaging.org/project/magneticreadoutprocessing/)
+
 ## CITE
 
 
