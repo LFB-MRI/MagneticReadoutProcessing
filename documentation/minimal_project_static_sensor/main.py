@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 # IMPORT SOME HELPER FUNCTIONS FOR IMPORT EXPORT AND PLOTTING
 from MRPudpp.UDPPFunctionCollection import UDPPFunctionCollection as mrphelper
-from MRP import MRPAnalysis, MRPPolarVisualization, MRPReading, MRPReadingEntry
+from MRP import MRPAnalysis, MRPPolarVisualization, MRPReading, MRPReadingEntry, MRPPolarVisualization, MRPMagnetTypes, MRPMeasurementConfig
 # IMPORT OTHER FUNTIONS
 
 
@@ -29,14 +29,35 @@ def main():
     print("mean for magnet 1 is {:.2}".format(mean))
 
 
-    # ADVANCED DATA ACCESS
+    # GET META-DATA ABOUT THE READING
+    # SEE MRP.MRPMagnetTypes FOR POSSIBLE VALUES
+    meta_data_reading = magnet_readings[0]
+    magnet_type: MRPMagnetTypes.MagnetType = meta_data_reading.get_magnet_type() # SCANNED MAGNET TYPE SUCH AS N45_CUBIC_12x12x12 or NOT_SPECIFIED
+
+    measurement_config: MRPMeasurementConfig.MRPMeasurementConfig = meta_data_reading.measurement_config
+    measurement_config.sensor_id() # USED SENSOR ID
+        
+
+    
+
+    # RAW MEASUREMENT DATA ACCESS
     # entry is type of MRPReadingEntry.MRPReadingEntry
-    for entry in magnet_readings[0]:
-        pass
-        #entry.temperature()
-        #entry.value()
-        #entry.is_valid()
-        #entry.id()
+    for entry in magnet_readings[0].data:
+        # MEASURED B VALUE OF THE DATAPOINT
+        entry.value()
+        # MEASURED SENSOR TEMPERATURE VALUE OF THE DATAPOINT
+        entry.temperature()
+
+
+        # FOR FULLSPHERE READINGS THE COORDINATES IN POLAR SPACE ARE EMBEDDED INTO THE READING STRUCTURE
+        entry.theta()
+        entry.phi()
+        
+        # SOME OTHER INFORMATION
+        entry.is_valid() # SENSOR REPSONDS WITH VALID VALUES
+        entry.id() # ID OF THE READING STARTING FROM 0 TO LEN(data) = MAX READINGS
+        #...
+        
     
 
 
@@ -47,6 +68,10 @@ def main():
     # PLOT READINGS USING MATHPLOTLIB TO FILE
     # Please see MRP.MRPDataVisualization file for further examples
     mrphelper.plot_readings(magnet_readings, "example plot", RESULT_STORAGE_FOLDER)
+
+    # IF A FULLSPHERE READING IS IMPORTED ITS POSSIBLE TO PLOT THE FULL SPHERE
+    # Please refer to MRP.MRPPolarVisualization file for further usage documentation
+    mrphelper.plot_fullsphere(magnet_readings, "example fullsphere plot", RESULT_STORAGE_FOLDER)
     
 if __name__ == '__main__':
     main()
