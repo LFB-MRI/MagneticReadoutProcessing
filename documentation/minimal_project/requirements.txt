@@ -1,0 +1,2 @@
+MagneticReadoutProcessing
+numpy
