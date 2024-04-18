@@ -7,13 +7,14 @@ from MRP import MRPAnalysis, MRPPolarVisualization, MRPReading, MRPReadingEntry
 
 
 # GET FOLDER PATH WITH EXAMPLE READINGS
-READINGS_STORAGE_FOLDER: str = str(Path.joinpath(Path(__file__).parent, Path("readings/example")))
+#READINGS_STORAGE_FOLDER: str = str(Path.joinpath(Path(__file__).parent, Path("readings/readings")))
+READINGS_STORAGE_FOLDER: str = str(Path.joinpath(Path(__file__).parent, Path("readings/examples")))
 RESULT_STORAGE_FOLDER: str = str(Path.joinpath(Path(__file__).parent, Path("out")))
 
 def main():
     # IMPORT READINGS
     print("READINGS FOLDER PATH: {}".format(READINGS_STORAGE_FOLDER))
-    magnet_readings: List(MRPReading.MRPReading) = mrphelper.import_readings(READINGS_STORAGE_FOLDER, "fullsphere_magnet_(.)*.mag.json")
+    magnet_readings: list(MRPReading.MRPReading) = mrphelper.import_readings(READINGS_STORAGE_FOLDER, "fullsphere_magnet_(.)*.mag.json")
     bias_reading: [MRPReading.MRPReading]  = mrphelper.import_readings(READINGS_STORAGE_FOLDER, "fullsphere_bias.mag.json")
     print("found {} magnet readings and {} bias readings".format(len(magnet_readings), len(bias_reading)))
 
@@ -25,22 +26,23 @@ def main():
     print("CoG for magnet 0 is {}".format(cog))
 
     # CALCULATE MEAN 
-    mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(magnet_readings[1])
+    mean: float = MRPAnalysis.MRPAnalysis.calculate_mean(magnet_readings[0])
     print("mean for magnet 1 is {:.2}".format(mean))
 
 
     # ADVANCED DATA ACCESS
     # entry is type of MRPReadingEntry.MRPReadingEntry
-    for entry in magnet_readings[0]:
-        pass
+    #for entry in magnet_readings[0]:
+     #   pass
         #entry.temperature()
         #entry.value()
+
         #entry.is_valid()
         #entry.id()
 
         # COORINATES OF THE REDING IN POLAR COORDIANTS IF A FULLSPHERE READING IS USED
         #entry.theta()
-        #entry.phi
+        #entry.phi()
     
 
     # PLOT READINGS USING MATHPLOTLIB TO FILE
