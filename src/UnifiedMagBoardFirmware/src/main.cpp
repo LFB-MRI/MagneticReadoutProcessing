@@ -148,6 +148,20 @@ void process_anc_information(DBGCommandParser::Argument *args, char *response)
   }
 }
 
+
+#ifdef USER_BUTTON_TRIGGER_INPUT
+  void user_button_trigger_irq(){
+    if (system_state == System_State_READOUT_LOOP && !wait_for_readout_ready)
+    {
+      readout_triggered_axis = "b";
+      readout_triggered_id = 0;
+      wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
+      readout_index++;
+    }
+  }
+#endif
+
+
 int scan_for_sensors()
 {
   // SCAN FOR TLV SENSORS
@@ -241,6 +255,9 @@ void setup()
   system_state = System_State_SETUP;
   DEBUG_SERIAL.println("sysstate_" + System_State_STR[system_state]);
 
+#ifdef IS_RP2040_BOARD
+    DEBUG_SERIAL.println("IS_RP2040_BOARD");
+#endif
   // SETUP DEBUG COMMAND PARSER TO ALLOW SOME DEBUGGING
   debug_command_parser.registerCommand("help", "", [](DBGCommandParser::Argument *args, char *response)
                                        {
@@ -352,7 +369,14 @@ void setup()
   {
     DEBUG_SERIAL.println("log_singlemodedisabled");
     pinMode(SYNC_PIN_IRQ_INPUT, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, CHANGE);
+
+#if defined(IS_RP2040_BOARD)
+    attachInterrupt(SYNC_PIN_IRQ_INPUT, sync_irq_function, RISING);
+#elif defined(IS_STM32F4_BOARD)
+    attachInterrupt(SYNC_PIN_IRQ_INPUT, sync_irq_function, RISING);
+#else
+    attachInterrupt(digitalPinToInterrupt(SYNC_PIN_IRQ_INPUT), sync_irq_function, RISING);
+#endif
   }
 
   // i2c_scan(SENSOR_WIRE);
@@ -394,6 +418,20 @@ void setup()
   // SETUP ANC SERIAL
   system_state = System_State_WAIT_FOR_ANC;
   anc_base_id = -1;
+
+
+  //ATTACH IRQ IF ENABLED
+#ifdef USER_BUTTON_TRIGGER_INPUT
+  DEBUG_SERIAL.println("USER_BUTTON_TRIGGER_INPUT ENABLED");
+  pinMode(USER_BUTTON_TRIGGER_INPUT, INPUT_PULLUP);
+  #if defined(IS_RP2040_BOARD)
+    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, RISING);
+  #elif defined(IS_STM32F4_BOARD)
+    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, RISING);
+  #else
+    attachInterrupt(digitalPinToInterrupt(USER_BUTTON_TRIGGER_INPUT)), user_button_trigger_irq, RISING);
+  #endif
+#endif
 }
 
 void loop()
