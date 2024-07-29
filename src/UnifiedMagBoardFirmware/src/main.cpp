@@ -37,6 +37,11 @@ int sensor_number = 0;
 int anc_base_id = -1;
 String readout_triggered_axis;
 int readout_triggered_id;
+bool send_trigger_message = false;
+bool send_trigger_message_send = false;
+
+
+
 
 void error(const bool _critical, const int _code)
 {
@@ -125,6 +130,8 @@ void readsensor_debug(DBGCommandParser::Argument *args, char *response)
   readout_triggered_id = (int32_t)args[1].asInt64;
   wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
   readout_index++;
+
+  send_trigger_message_send = false;
 }
 
 // WILL BE CALLED IF HOST REQUESTS A MEASUREMENT
@@ -151,12 +158,15 @@ void process_anc_information(DBGCommandParser::Argument *args, char *response)
 
 #ifdef USER_BUTTON_TRIGGER_INPUT
   void user_button_trigger_irq(){
-    if (system_state == System_State_READOUT_LOOP && !wait_for_readout_ready)
-    {
-      readout_triggered_axis = "b";
-      readout_triggered_id = 0;
-      wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
-      readout_index++;
+    //if (system_state == System_State_READOUT_LOOP && !wait_for_readout_ready)
+    //{
+    //  readout_triggered_axis = "b";
+    //  readout_triggered_id = 0;
+    //  wait_for_readout_ready = true; // SET TO RESPONSE WITH READOUT
+    //  readout_index++;
+    //}
+    if(!send_trigger_message && !wait_for_readout_ready){
+      send_trigger_message = true;
     }
   }
 #endif
@@ -425,17 +435,25 @@ void setup()
   DEBUG_SERIAL.println("USER_BUTTON_TRIGGER_INPUT ENABLED");
   pinMode(USER_BUTTON_TRIGGER_INPUT, INPUT_PULLUP);
   #if defined(IS_RP2040_BOARD)
-    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, RISING);
+    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, CHANGE);
   #elif defined(IS_STM32F4_BOARD)
-    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, RISING);
+    attachInterrupt(USER_BUTTON_TRIGGER_INPUT, user_button_trigger_irq, CHANGE);
   #else
-    attachInterrupt(digitalPinToInterrupt(USER_BUTTON_TRIGGER_INPUT)), user_button_trigger_irq, RISING);
+    attachInterrupt(digitalPinToInterrupt(USER_BUTTON_TRIGGER_INPUT)), user_button_trigger_irq, CHANGE);
   #endif
 #endif
 }
 
+
 void loop()
 {
+
+
+  if(send_trigger_message && system_state == System_State_READOUT_LOOP && !send_trigger_message_send){
+    send_trigger_message_send = true;
+    DEBUG_SERIAL.println("USER_BUTTON_TRIGGER_INPUT_TRIGGER");
+  }
+
   // HANDLE SYSTEM STATE
   // WAIt FOR THE ANC PACKET
   if (system_state == System_State_WAIT_FOR_ANC)
@@ -572,6 +590,10 @@ void loop()
         }
         wait_for_readout_ready = false;
 
+        if(send_trigger_message){
+          send_trigger_message = false;
+        }
+        
         while(DEBUG_SERIAL.available() > 0) {
           char t = Serial.read();
         }
