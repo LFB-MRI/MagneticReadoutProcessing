@@ -1,4 +1,5 @@
 """ collection of magnet specifications for different magnet types such as cubic n45,... """
+import math
 from enum import Enum
 
 class MRPMagnetTypeException(Exception):
@@ -72,6 +73,14 @@ class MagnetType(Enum):
 
 
         raise MRPMagnetTypeException("get_dimension for this MagnetType not implemented")
+
+    def get_volume(self) -> float:
+        if self.is_cubic():
+            return self.get_dimension()[0] * self.get_dimension()[1] * self.get_dimension()[2]
+        elif self.is_cylindrical():
+            return math.pi *  math.pow(self.get_dimension()[0] / 2, 2)* self.get_dimension()[1]
+
+        raise MRPMagnetTypeException("get_volume for this MagnetType not implemented")
 
     def get_height(self) -> int:
         """
