@@ -21,6 +21,10 @@ class MagnetType(Enum):
     N45_CUBIC_15x15x15 = 3
     N45_CUBIC_9x9x9 = 4
 
+    N52_CUBIC_12x12x12 = 10
+    N52_CUBIC_15x15x15 = 11
+    N52_CUBIC_9x9x9 = 12
+
     # CYLINDER
     N45_CYLINDER_5x10 = 5
 

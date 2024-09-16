@@ -182,6 +182,20 @@ class MRPReading():
             ret.append(entry.value)
         return np.array(ret)
 
+
+    def to_measurement_entry_array(self) -> [MRPReadingEntry]:
+        """
+        Returns all values as 1d array in order of insertion.
+
+        :returns: Returns [value, value]
+        :rtype: list[MRPReadingEntry]
+        """
+
+        return self.data
+
+
+
+
     def len(self) -> int:
         return len(self.data)
     def to_temperature_value_array(self) -> np.ndarray:
