@@ -138,3 +138,4 @@ class MRPBaseSensor:
         :rtype: (float, float, float)
         """
         return (self.get_reading('x', _sensor_id), self.get_reading('y', _sensor_id), self.get_reading('z', _sensor_id))
+

@@ -1,8 +1,18 @@
+from enum import Enum
+
 """  one datapoint for a reading """
 class MRPReadingEntryException(Exception):
     def __init__(self, message="MRPReadingEntryException thrown"):
         self.message = message
         super().__init__(self.message)
+
+
+class MRPReadingEntryUnit(Enum):
+    UNIT_UNSPECIFIED = 0
+    UNIT_uT = 1
+    UNIT_mT = 2
+    UNIT_T = 3
+
 
 class MRPReadingEntry:
     """ Class holds all values for one read entry such as value and position"""
@@ -14,6 +24,17 @@ class MRPReadingEntry:
     _is_valid: bool = False
     _id: int = None
     _temperature: float = -254.0
+    _unit: MRPReadingEntryUnit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
+
+
+    @property
+    def unit(self):
+        return self._unit
+
+    @unit.setter
+    def unit(self, value: MRPReadingEntryUnit):
+        self._unit = value
+
 
     @property
     def temperature(self):
@@ -83,7 +104,7 @@ class MRPReadingEntry:
         self._id = value
 
 
-    def __init__(self, p_id: int = None, p_value: float = None, p_phi: float = None, p_theta: float = None, p_rip: int = None, p_rit: int = None, p_is_valid: bool = False, p_temperature: float = -254.0):
+    def __init__(self, p_id: int = None, p_value: float = None, p_phi: float = None, p_theta: float = None, p_rip: int = None, p_rit: int = None, p_is_valid: bool = False, p_temperature: float = -254.0, p_unit: MRPReadingEntryUnit = MRPReadingEntryUnit.UNIT_UNSPECIFIED):
             self._id = p_id
             self._value = p_value
             self._phi = p_phi
@@ -92,6 +113,7 @@ class MRPReadingEntry:
             self._reading_index_theta = p_rit
             self._is_valid = p_is_valid
             self._temperature = p_temperature
+            self._unit = p_unit
 
     def from_dict(self, _dict: dict, _import_scale_factor: float = 1.0):
         errors = 0
@@ -148,8 +170,18 @@ class MRPReadingEntry:
             self._temperature = float(v)
             errors = errors + 1
 
+        if 'unit' in _dict:
+            v = _dict.get('unit')
+            if v is None:
+                v = MRPReadingEntryUnit.UNIT_UNSPECIFIED
+            #self._unit = MRPReadingEntryUnit(v)
+            self._unit.value = v
+            errors = errors + 1
+
         if errors < len(self.__dict__()):
             raise MRPReadingEntryException("from_dict import failed")
+        
+        
     def __dict__(self) -> dict:
         return {
             'value': self._value,
@@ -159,7 +191,8 @@ class MRPReadingEntry:
             'reading_index_theta': self._reading_index_theta,
             'is_valid': self._is_valid,
             'id': self._id,
-            'temperature': self._temperature
+            'temperature': self._temperature,
+            'unit': self.value
         }
     def to_dict(self) -> dict:
         return self.__dict__()
