@@ -171,11 +171,14 @@ class MRPReadingEntry:
             errors = errors + 1
 
         if 'unit' in _dict:
-            v = _dict.get('unit')
-            
             self._unit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
-            #self._unit = MRPReadingEntryUnit(v)
-            self._unit.value = v
+            try:
+                v = _dict.get('unit')
+                #self._unit = MRPReadingEntryUnit(v)
+                self._unit.value = v
+            except:
+                pass
+                
             errors = errors + 1
 
         if errors < len(self.__dict__()):
