@@ -376,7 +376,8 @@ class UDPPFunctionCollection:
                     reading.measurement_config.id = cIDX
                     reading.set_additional_data("cIDX", cIDX)
                     reading.set_additional_data("IP_parse_idx_in_filename", "1")
-                    reading.set_name("{}_cIDX{}".format(reading.get_name(), cIDX))
+                    #reading.set_name("{}_cIDX{}".format(reading.get_name(), cIDX))
+                    reading.set_name(rti.replace(".mag", "").replace(".json", ""))
 
             imported_results.append(reading)
 
