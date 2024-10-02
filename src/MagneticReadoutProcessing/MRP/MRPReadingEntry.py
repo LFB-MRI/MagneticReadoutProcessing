@@ -172,8 +172,8 @@ class MRPReadingEntry:
 
         if 'unit' in _dict:
             v = _dict.get('unit')
-            if v is None:
-                v = MRPReadingEntryUnit.UNIT_UNSPECIFIED
+            
+            self._unit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
             #self._unit = MRPReadingEntryUnit(v)
             self._unit.value = v
             errors = errors + 1
