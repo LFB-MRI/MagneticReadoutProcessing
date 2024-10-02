@@ -116,73 +116,73 @@ class MRPReadingEntry:
             self._unit = p_unit
 
     def from_dict(self, _dict: dict, _import_scale_factor: float = 1.0):
-        errors = 0
-        if 'value' in _dict:
-            self._value = float(_dict['value']) * _import_scale_factor
-            errors = errors + 1
+        try:
+            if 'value' in _dict:
+                self._value = float(_dict['value']) * _import_scale_factor
+                errors = errors + 1
 
-        if 'phi' in _dict:
-            v = _dict.get('phi')
-            if v is None:
-                v = 0.0
-            self._phi = float(v)
-            errors = errors + 1
+            if 'phi' in _dict:
+                v = _dict.get('phi')
+                if v is None:
+                    v = 0.0
+                self._phi = float(v)
+                errors = errors + 1
 
-        if 'theta' in _dict:
-            v = _dict.get('theta')
-            if v is None:
-                v = 0.0
-            self._theta = float(v)
-            errors = errors + 1
+            if 'theta' in _dict:
+                v = _dict.get('theta')
+                if v is None:
+                    v = 0.0
+                self._theta = float(v)
+                errors = errors + 1
 
-        if 'reading_index_phi' in _dict:
-            v = _dict.get('reading_index_phi')
-            if v is None:
-                v = 0.0
-            self._reading_index_phi = int(v)
-            errors = errors + 1
+            if 'reading_index_phi' in _dict:
+                v = _dict.get('reading_index_phi')
+                if v is None:
+                    v = 0.0
+                self._reading_index_phi = int(v)
+                errors = errors + 1
 
-        if 'reading_index_theta' in _dict:
-            v = _dict.get('reading_index_theta')
-            if v is None:
-                v = 0.0
-            self._reading_index_theta = int(v)
-            errors = errors + 1
+            if 'reading_index_theta' in _dict:
+                v = _dict.get('reading_index_theta')
+                if v is None:
+                    v = 0.0
+                self._reading_index_theta = int(v)
+                errors = errors + 1
 
-        if 'is_valid' in _dict:
-            v = _dict.get('is_valid')
-            if v is None:
-                v = True
-            self._is_valid = bool(v)
-            errors = errors + 1
+            if 'is_valid' in _dict:
+                v = _dict.get('is_valid')
+                if v is None:
+                    v = True
+                self._is_valid = bool(v)
+                errors = errors + 1
 
-        if 'id' in _dict:
-            v = _dict.get('id')
-            if v is None:
-                v = 0
-            self._id = int(v)
-            errors = errors + 1
+            if 'id' in _dict:
+                v = _dict.get('id')
+                if v is None:
+                    v = 0
+                self._id = int(v)
+                errors = errors + 1
 
-        if 'temperature' in _dict:
-            v = _dict.get('temperature')
-            if v is None:
-                v = 0.0
-            self._temperature = float(v)
-            errors = errors + 1
+            if 'temperature' in _dict:
+                v = _dict.get('temperature')
+                if v is None:
+                    v = 0.0
+                self._temperature = float(v)
+                errors = errors + 1
 
-        if 'unit' in _dict:
-            self._unit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
-            try:
-                v = _dict.get('unit')
-                #self._unit = MRPReadingEntryUnit(v)
-                self._unit.value = v
-            except:
-                pass
-                
-            errors = errors + 1
+            if 'unit' in _dict:
+                self._unit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
+                try:
+                    v = _dict.get('unit')
+                    #self._unit = MRPReadingEntryUnit(v)
+                    self._unit.value = v
+                except:
+                    pass
 
-        if errors < len(self.__dict__()):
-            raise MRPReadingEntryException("from_dict import failed")
+                errors = errors + 1
+        except Exception as e:
+            print(e)
+            raise MRPReadingEntryException("from_dict import failed {}".format(e))
         
         
     def __dict__(self) -> dict:
