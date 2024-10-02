@@ -116,6 +116,7 @@ class MRPReadingEntry:
             self._unit = p_unit
 
     def from_dict(self, _dict: dict, _import_scale_factor: float = 1.0):
+        errors: int = 0
         try:
             if 'value' in _dict:
                 self._value = float(_dict['value']) * _import_scale_factor
