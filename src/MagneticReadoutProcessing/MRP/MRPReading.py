@@ -104,6 +104,29 @@ class MRPReading():
         except Exception as e:
             sys.stderr.write(str(e))
 
+    def get_additional_data(self, _k: str) -> any:
+        """
+        Retrieve additional data associated with the given key from the instance's 
+        additional_data dictionary.
+
+        Parameters:
+        - _k (str): The key for which to retrieve the associated data. This should 
+        be a non-empty string.
+
+        Returns:
+        - any: The value associated with the specified key if it exists; otherwise, 
+        returns None.
+        """
+    
+        # Check if the provided key is not None and has a length greater than 0
+        if _k is not None and len(_k) > 0:
+            # If the key exists in the additional_data dictionary, return its value
+            if _k in self.additional_data:
+                return self.additional_data.get(_k, None)
+
+        # Return None if the key is invalid or does not exist
+        return None
+    
     def set_additional_data(self, _k: str, _v: any):
         """
         Set a custom user meta-data entry.
