@@ -105,7 +105,7 @@ class MRPReading():
             sys.stderr.write(str(e))
 
 
-    def has_additional_data(self, _keys: list[str]) -> bool:
+    def has_additional_data_keys(self, _keys: list[str]) -> bool:
         """
         Checks if all the provided keys exist in the `additional_data` dictionary.
 
@@ -129,7 +129,7 @@ class MRPReading():
         # If all keys are found, return True
         return True
     
-    
+
     def has_additional_data(self, _k: str) -> bool:
         """
         Checks if the provided key exists and is valid in the `additional_data` dictionary.
