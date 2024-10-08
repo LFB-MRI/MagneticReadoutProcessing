@@ -13,54 +13,94 @@ from MRP import MRPHelpers, MRPReadingEntry, MRPMagnetTypes, MRPMeasurementConfi
 
 
 class MRPReadingException(Exception):
+    """
+    Custom exception class for handling errors related to MRP (Magnetometer Reading Processing).
+
+    Args:
+        message (str, optional): The error message to be displayed when the exception is raised.
+                                 Defaults to "MRPReadingException thrown".
+
+    This class extends the built-in `Exception` class to provide a specific exception type for 
+    errors encountered during MRP-related operations. The message can be customized or will 
+    default to a standard message.
+    """
+
     def __init__(self, message="MRPReadingException thrown"):
-        self.message = message
-        super().__init__(self.message)
+        self.message = message  # Set the exception message
+        super().__init__(self.message)  # Call the base class constructor
 
 
 class MRPReading():
     """ Stores the raw sensor data, including metadata and import/export functions"""
     EXPORT_TIME_FORMAT: str = "%a %b %d %H:%M:%S %Y"
 
+    import_scale_factor: float = 1.0
 
 
-    def __init__(self, _config: MRPMeasurementConfig.MRPMeasurementConfig = None, _magnet_id:int = 0):
+    def __init__(self, _config: MRPMeasurementConfig.MRPMeasurementConfig = None, _magnet_id: int = 0):
         """
-        The constructor create a new empty reading with some predefined meta-data.
+        Initializes a new instance of the reading class with default or provided configuration settings.
 
-        :param _config:
-        :type _config: MRPMeasurementConfig.MRPMeasurementConfig
+        Args:
+            _config (MRPMeasurementConfig.MRPMeasurementConfig, optional): Configuration object for the measurement.
+                                                                        If None, a default configuration is used.
+            _magnet_id (int, optional): The ID of the magnet used for the measurement. Defaults to 0.
+
+        This constructor sets up an empty reading object with some predefined metadata, including start and end times,
+        an empty list for reading data samples, and user-defined metadata storage. If no configuration is provided, 
+        a default full-sphere configuration is applied with a default sensor distance and ID.
         """
+
+        # Start and end times of the reading, initialized to the current time
         self.time_start: datetime = datetime.now()
         self.time_end: datetime = datetime.now()
-        # holds the reading data samples
+
+        # Holds the reading data samples (empty list of MRPReadingEntry objects)
         self.data: [MRPReadingEntry.MRPReadingEntry] = []
-        # stores import measurement information like
+
+        # Stores import measurement information
         self.measurement_config: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
-        # user defined metadata storage as kv pair
+
+        # User-defined metadata storage as key-value pairs
         self.additional_data: dict = dict()
-        self.additional_data['name'] = 'unknown'
-        # POPULATE SOMA DEFAULT DATA ABOUT THE READING
+        self.set_additional_data('name', 'unknown')  # Default name for the reading
+
+        # Populate some default data for the reading
         self.measurement_config: MRPMeasurementConfig.MRPMeasurementConfig = MRPMeasurementConfig.MRPMeasurementConfig()
 
-
-
+        # If a configuration is provided, deep copy its values into measurement_config
         if _config is not None:
-            # using deepcopy without using deepcopy :)
-            self.measurement_config.from_dict(_config.to_dict())
+            self.measurement_config.from_dict(_config.to_dict()) # Deep copy
         else:
+            # Use default configuration settings when no config is provided
             self.measurement_config = MRPMeasurementConfig.MRPMeasurementConfig()
-            self.measurement_config.configure_fullsphere()
-            self.measurement_config.sensor_distance_radius = 1
-            self.measurement_config.sensor_id = 0
+            self.measurement_config.configure_fullsphere()  # Set a full-sphere configuration
+            self.measurement_config.sensor_distance_radius = 1  # Default sensor distance radius
+            self.measurement_config.sensor_id = 0  # Default sensor ID
 
+            # Set the magnet ID, if provided
             if _magnet_id is not None:
                 self.measurement_config.id = _magnet_id
             else:
                 self.measurement_config.id = 0
 
-    import_scale_factor: float = 1.0
+        # Set the unit import scale factor (default is 1.0)
+        self.set_unit_import_scale_factor()
+    
+
+
     def set_unit_import_scale_factor(self, _factor: float = 1.0):
+        """
+        Sets the import scale factor for unit conversions or data imports.
+
+        Args:
+            _factor (float, optional): The scale factor to be applied during data import or unit conversion.
+                                    Defaults to 1.0.
+
+        This function updates the `import_scale_factor` attribute, which can be used to scale imported data 
+        or convert units as needed. By default, the factor is set to 1.0, indicating no scaling.
+        """
+        # Update the import_scale_factor attribute with the provided scale factor
         self.import_scale_factor = _factor
 
     def load_from_dict(self, _jsondict: dict):
@@ -198,9 +238,11 @@ class MRPReading():
         :returns: Returns reading name set using set_name(_name_)
         :rtype: str
         """
-        if 'name' not in self.additional_data:
+        if not self.has_additional_data("name"):
             self.set_name('unknown')
-        return self.additional_data['name']
+        return self.get_additional_data("name")
+    
+
     def set_name(self, _name: str = 'unknown'):
         """
         Sets the name of the reading
@@ -208,39 +250,77 @@ class MRPReading():
         :param _name: name of the reading
         :type _name: str
         """
-        self.additional_data['name'] = _name
+        self.set_additional_data('name', _name)
 
     def set_magnet_type(self, _type: MRPMagnetTypes.MagnetType):
+        """
+        Sets the magnet type in the `measurement_config` configuration.
+
+        Args:
+            _type (MRPMagnetTypes.MagnetType): The magnet type to be set.
+
+        This function updates the `magnet_type` attribute in the `measurement_config` object 
+        with the provided `_type` value. The `_type` should be a valid `MagnetType` from 
+        the `MRPMagnetTypes` class.
+        """
+        # Update the magnet_type attribute in the measurement_config with the provided type
         self.measurement_config.magnet_type = _type
 
     def get_magnet_type(self) -> MRPMagnetTypes.MagnetType:
+        """
+        Retrieves the current magnet type from the `measurement_config` configuration.
+
+        Returns:
+            MRPMagnetTypes.MagnetType: The currently set magnet type from the `measurement_config`.
+
+        This function accesses the `measurement_config` object and returns the current 
+        magnet type that is stored in the `magnet_type` attribute.
+        """
+        # Return the current magnet type from the measurement_config
         return self.measurement_config.magnet_type
 
-    def savemat(self):
-        import scipy.io
-        scipy.io.savemat('test.mat', dict(x=x, y=y))
-
+  
     def to_numpy_cartesian(self, _normalize: bool = True, _use_sensor_distance: bool = False) -> np.array:
+        """
+        Converts spherical coordinate data to Cartesian coordinates and returns them as a NumPy array.
 
-        # X Y Z GRID
+        Args:
+            _normalize (bool, optional): Whether to normalize the data (currently not used in the function). Defaults to True.
+            _use_sensor_distance (bool, optional): Whether to use the sensor distance radius for the conversion. Defaults to False.
+
+        Returns:
+            np.array: A NumPy array containing the converted Cartesian coordinates.
+
+        This function iterates over the spherical data (`phi`, `theta`, and `value`) in the `data` list. 
+        It converts the spherical coordinates to Cartesian using `MRPHelpers.asCartesian()`. 
+        If `_use_sensor_distance` is True, it uses the sensor distance radius from the `measurement_config` 
+        for the conversion; otherwise, it uses the `value` from the data for the conversion.
+        """
+
+        # Get the sensor distance radius from the measurement configuration
         sensor_distance_radius = self.measurement_config.sensor_distance_radius
 
+        # Initialize an empty list to store Cartesian coordinates
         inp = []
-        # TO ENSURE
+
+        # Iterate over the spherical data in self.data
         for entry in self.data:
+            phi = entry.phi    # Azimuthal angle
+            theta = entry.theta  # Polar angle
+            value = entry.value  # Radial distance
 
-            phi = entry.phi
-            theta = entry.theta
-            value = entry.value
-
+            # Convert to Cartesian coordinates using sensor distance or value
             if _use_sensor_distance:
-                cart = MRPHelpers.asCartesian((value, theta, phi))
+                cart = MRPHelpers.asCartesian((value, theta, phi))  # Use value from data
             else:
-                cart = MRPHelpers.asCartesian((sensor_distance_radius, theta, phi))
+                cart = MRPHelpers.asCartesian((sensor_distance_radius, theta, phi))  # Use fixed sensor distance radius
 
+            # Append the Cartesian coordinates to the list
             inp.append(cart)
 
-        return inp
+        # Return the list of Cartesian coordinates as a NumPy array
+        return np.array(inp)
+
 
     def to_value_array(self) -> np.ndarray:
         """
@@ -255,7 +335,7 @@ class MRPReading():
         return np.array(ret)
 
 
-    def to_measurement_entry_array(self) -> [MRPReadingEntry]:
+    def to_measurement_entry_array(self) -> list[MRPReadingEntry.MRPReadingEntry]:
         """
         Returns all values as 1d array in order of insertion.
 
@@ -265,11 +345,9 @@ class MRPReading():
 
         return self.data
 
-
-
-
     def len(self) -> int:
         return len(self.data)
+    
     def to_temperature_value_array(self) -> np.ndarray:
         """
         Returns all temperature values as 1d array in order of insertion.
@@ -281,7 +359,6 @@ class MRPReading():
         for entry in self.data:
             ret.append(entry.temperature * 1.0)
         return np.array(ret)
-
 
     def to_numpy_matrix(self) -> np.ndarray:
         """
@@ -438,6 +515,8 @@ class MRPReading():
             self.measurement_config.n_phi = max(self.measurement_config.n_phi, _measurement.reading_index_phi)
             self.measurement_config.n_theta = max(self.measurement_config.n_theta, _measurement.reading_index_theta)
 
+
+
     def insert_reading(self, _read_value: float, _phi: float, _theta: float, _reading_index_phi: int,
                        _reading_index_theta: int, _is_valid: bool = True, _autoupdate_measurement_config: bool = True):
         """
@@ -473,25 +552,54 @@ class MRPReading():
 
 
     def dump_to_dict(self) -> dict:
+        """
+        Serializes the current object into a dictionary format for data export.
+
+        Returns:
+            dict: A dictionary containing the serialized data of the object, including 
+                timestamps, additional data, the measurement configuration, and the main dataset.
+
+        This function creates a dictionary containing key pieces of information about the current object:
+        - `dump_time`: The time when the dump occurs.
+        - `time_start` and `time_end`: The start and end times of the measurement, formatted based on the export time format.
+        - `additional_data`: A dictionary containing any additional metadata associated with the object.
+        - `data`: The main dataset, with each entry converted to a dictionary.
+        - `measurement_config`: Serialized measurement configuration.
+
+        The function also ensures that any extra user data stored in `additional_data` is directly added to the final dictionary. 
+        A placeholder comment is added for potential serialization of more complex objects.
+        """
+
+        # Create the base dictionary with time and additional metadata
         final_dataset = dict({
-            'dump_time': datetime.now().strftime(self.EXPORT_TIME_FORMAT),
-            'time_start': self.time_start.strftime(self.EXPORT_TIME_FORMAT),
-            'time_end': self.time_end.strftime(self.EXPORT_TIME_FORMAT),
-            'additional_data': self.additional_data
+            'dump_time': datetime.now().strftime(self.EXPORT_TIME_FORMAT),  # Time of the dump
+            'time_start': self.time_start.strftime(self.EXPORT_TIME_FORMAT),  # Measurement start time
+            'time_end': self.time_end.strftime(self.EXPORT_TIME_FORMAT),  # Measurement end time
+            'additional_data': self.additional_data  # Extra metadata
         })
 
-        # TODO REAL OBJECT SERIALIZATION
+        # TODO: Implement real object serialization for more complex data structures
+        # Initialize an empty list for storing the serialized data entries
         final_dataset['data'] = []
+
+        # Convert each entry in self.data to a dictionary and append to the list
         for entry in self.data:
             final_dataset['data'].append(entry.to_dict())
 
+        # Serialize the measurement configuration to a dictionary
         final_dataset['measurement_config'] = self.measurement_config.to_dict()
-        # TODO REMOVE REDUNDANCY ?
-        # ADD ADDITIONAL USERDATA
+
+        # TODO: Remove redundancy if necessary
+        # If additional data exists, add it to the final dataset dictionary
+        # This adds user-defined additional data directly to the top-level dictionary
         if self.additional_data is not None:
             for item in self.additional_data.items():
                 final_dataset[str(item[0])] = item[1]
-        return  final_dataset
+
+        # Return the fully serialized dictionary
+        return final_dataset
+
+
 
     def dump(self) -> str:
         # DUMP TO BYTES
