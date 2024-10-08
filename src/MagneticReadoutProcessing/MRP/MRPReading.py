@@ -104,6 +104,55 @@ class MRPReading():
         except Exception as e:
             sys.stderr.write(str(e))
 
+
+    def has_additional_data(self, _keys: list[str]) -> bool:
+        """
+        Checks if all the provided keys exist in the `additional_data` dictionary.
+
+        Args:
+            _keys (list[str]): A list of keys to be checked in the `additional_data` dictionary.
+
+        Returns:
+            bool: 
+                - True if all keys in the list exist in `additional_data`.
+                - False if any key in the list is missing from `additional_data`.
+
+        This function iterates over a list of keys and checks if each one exists in the 
+        `additional_data` dictionary by calling the `has_additional_data` method for each key. 
+        If any key is missing, the function returns `False`; otherwise, it returns `True` when all keys are present.
+        """
+        # Iterate over each key in the provided list of keys
+        for k in _keys:
+            # If any key is not found in additional_data, return False
+            if not self.has_additional_data(k):
+                return False
+        # If all keys are found, return True
+        return True
+    
+    
+    def has_additional_data(self, _k: str) -> bool:
+        """
+        Checks if the provided key exists and is valid in the `additional_data` dictionary.
+
+        Args:
+            _k (str): The key to be checked in the `additional_data` dictionary.
+
+        Returns:
+            bool: 
+                - True if the key exists and is non-empty.
+                - False if the key is None, empty, or not found in `additional_data`.
+
+        The function first ensures that the input key `_k` is not None and has a length greater than zero. 
+        If the key passes this condition, it checks if the key exists in the `additional_data` dictionary.
+        """
+        if _k is not None and len(_k) > 0:
+            # If the key exists in the additional_data dictionary, return its value
+            if _k in self.additional_data:
+                return True
+        return False
+
+
+
     def get_additional_data(self, _k: str) -> any:
         """
         Retrieve additional data associated with the given key from the instance's 
