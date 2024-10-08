@@ -13,6 +13,12 @@ class MRPReadingEntryUnit(Enum):
     UNIT_mT = 2
     UNIT_T = 3
 
+    @staticmethod
+    def from_int(_val: int):
+        try:
+            return MRPReadingEntryUnit(_val)
+        except:
+            return None
 
 class MRPReadingEntry:
     """ Class holds all values for one read entry such as value and position"""
@@ -119,53 +125,53 @@ class MRPReadingEntry:
         errors: int = 0
         try:
             if 'value' in _dict:
-                self._value = float(_dict['value']) * _import_scale_factor
+                self._value = float(_dict.get('value', 0.0)) * _import_scale_factor
                 errors = errors + 1
 
             if 'phi' in _dict:
-                v = _dict.get('phi')
+                v = _dict.get('phi', 0.0)
                 if v is None:
                     v = 0.0
                 self._phi = float(v)
                 errors = errors + 1
 
             if 'theta' in _dict:
-                v = _dict.get('theta')
+                v = _dict.get('theta', 0.0)
                 if v is None:
                     v = 0.0
                 self._theta = float(v)
                 errors = errors + 1
 
             if 'reading_index_phi' in _dict:
-                v = _dict.get('reading_index_phi')
+                v = _dict.get('reading_index_phi', 0)
                 if v is None:
                     v = 0.0
                 self._reading_index_phi = int(v)
                 errors = errors + 1
 
             if 'reading_index_theta' in _dict:
-                v = _dict.get('reading_index_theta')
+                v = _dict.get('reading_index_theta', 0)
                 if v is None:
                     v = 0.0
                 self._reading_index_theta = int(v)
                 errors = errors + 1
 
             if 'is_valid' in _dict:
-                v = _dict.get('is_valid')
+                v = _dict.get('is_valid', False)
                 if v is None:
                     v = True
                 self._is_valid = bool(v)
                 errors = errors + 1
 
             if 'id' in _dict:
-                v = _dict.get('id')
+                v = _dict.get('id', -1)
                 if v is None:
                     v = 0
                 self._id = int(v)
                 errors = errors + 1
 
             if 'temperature' in _dict:
-                v = _dict.get('temperature')
+                v = _dict.get('temperature', 25.0)
                 if v is None:
                     v = 0.0
                 self._temperature = float(v)
@@ -174,9 +180,8 @@ class MRPReadingEntry:
             if 'unit' in _dict:
                 self._unit = MRPReadingEntryUnit.UNIT_UNSPECIFIED
                 try:
-                    v = _dict.get('unit')
-                    #self._unit = MRPReadingEntryUnit(v)
-                    self._unit.value = v
+                    v = _dict.get('unit', MRPReadingEntryUnit.UNIT_UNSPECIFIED.value)
+                    self._unit = MRPReadingEntryUnit.from_int(v)
                 except:
                     pass
 
@@ -196,7 +201,7 @@ class MRPReadingEntry:
             'is_valid': self._is_valid,
             'id': self._id,
             'temperature': self._temperature,
-            'unit': self.unit
+            'unit': self.unit.value
         }
     def to_dict(self) -> dict:
         return self.__dict__()
