@@ -44,8 +44,10 @@ class MagnetType(Enum):
 
     def __int__(self):
         return self.value
+    
     def to_int(self) -> int:
         return int(self.value)
+    
     def is_invalid(self) -> bool:
         if self.name == 'NOT_SPECIFIED' or self.value <= 0:
             return True
@@ -61,6 +63,7 @@ class MagnetType(Enum):
         if 'cylinder' in str(self.name).lower():
             return True
         return False
+    
     def get_dimension(self) -> (int, int, int):
         """
         Returns the dimension in mm from the selected magnet type
