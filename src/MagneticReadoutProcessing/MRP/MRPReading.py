@@ -227,6 +227,11 @@ class MRPReading():
         :param _v: Value
         :type _v: str
         """
+        if self.additional_data is None:
+            self.additional_data = {
+                
+            }
+
         if _k is not None and len(_k) > 0:
             self.additional_data[str(_k)] = _v
 
@@ -624,8 +629,8 @@ class MRPReading():
         self.set_additional_data('export_filepath', _filepath_name)
         self.set_additional_data('export_filename', os.path.basename(_filepath_name))
 
-        if self.additional_data['name'] != 'unknown':
-            self.set_additional_data('name', os.path.basename(_filepath_name))
+        if not self.has_additional_data("name"):
+            self.set_name(os.path.basename(_filepath_name))
 
         # FINALLY EXPORT TO FILE USING THE self.dump option
         try:

@@ -39,7 +39,7 @@ class MagnetType(Enum):
         try:
             return MagnetType(_val)
         except:
-            return None
+            return MagnetType.NOT_SPECIFIED
 
 
     def __int__(self):

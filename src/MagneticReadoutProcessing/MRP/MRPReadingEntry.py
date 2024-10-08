@@ -18,7 +18,7 @@ class MRPReadingEntryUnit(Enum):
         try:
             return MRPReadingEntryUnit(_val)
         except:
-            return None
+            return MRPReadingEntryUnit.UNIT_UNSPECIFIED
 
 class MRPReadingEntry:
     """ Class holds all values for one read entry such as value and position"""
@@ -34,7 +34,7 @@ class MRPReadingEntry:
 
 
     @property
-    def unit(self):
+    def unit(self) -> MRPReadingEntryUnit:
         return self._unit
 
     @unit.setter
@@ -43,7 +43,7 @@ class MRPReadingEntry:
 
 
     @property
-    def temperature(self):
+    def temperature(self) -> float:
         return self._temperature
 
     @temperature.setter
@@ -51,7 +51,7 @@ class MRPReadingEntry:
         self._temperature = value
 
     @property
-    def value(self):
+    def value(self) -> float:
         return self._value
 
     @value.setter
@@ -59,7 +59,7 @@ class MRPReadingEntry:
         self._value = value
 
     @property
-    def phi(self):
+    def phi(self) -> float:
         return self._phi
 
     @phi.setter
@@ -67,7 +67,7 @@ class MRPReadingEntry:
         self._phi = value
 
     @property
-    def theta(self):
+    def theta(self) -> float:
         return self._theta
 
     @theta.setter
@@ -78,7 +78,7 @@ class MRPReadingEntry:
 
 
     @property
-    def reading_index_phi(self):
+    def reading_index_phi(self) -> int:
         return self._reading_index_phi
 
     @reading_index_phi.setter
@@ -86,7 +86,7 @@ class MRPReadingEntry:
         self._reading_index_phi = value
 
     @property
-    def reading_index_theta(self):
+    def reading_index_theta(self) -> int:
         return self._reading_index_theta
 
     @reading_index_theta.setter
@@ -94,7 +94,7 @@ class MRPReadingEntry:
         self._reading_index_theta = value
 
     @property
-    def is_valid(self):
+    def is_valid(self) -> bool:
         return self._is_valid
 
     @is_valid.setter
@@ -102,7 +102,7 @@ class MRPReadingEntry:
         self._is_valid = value
 
     @property
-    def id(self):
+    def id(self) -> int:
         return self._id
 
     @id.setter
@@ -203,5 +203,7 @@ class MRPReadingEntry:
             'temperature': self._temperature,
             'unit': self._unit.value
         }
+    
+    
     def to_dict(self) -> dict:
         return self.__dict__()
