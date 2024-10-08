@@ -201,7 +201,7 @@ class MRPReadingEntry:
             'is_valid': self._is_valid,
             'id': self._id,
             'temperature': self._temperature,
-            'unit': self.unit.value
+            'unit': self._unit.value
         }
     def to_dict(self) -> dict:
         return self.__dict__()
